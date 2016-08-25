@@ -1,0 +1,121 @@
+@import "../utilities/swatch";
+
+.product-tile {
+    min-height: 32.1875em;
+
+    @include media-breakpoint-down(md) {
+        min-height: 23.4375em;
+    }
+
+    @include media-breakpoint-down(sm) {
+        min-height: 19.6875em;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    @include media-breakpoint-down(xs) {
+        min-height: 13.4375em;
+    }
+
+    border: 0;
+    margin-bottom: 0;
+
+    .card-block {
+        padding: 0.625em 0 1.875em;
+
+        @include media-breakpoint-down(sm) {
+            padding-left: 0.9375em;
+            padding-right: 0.9375em;
+        }
+
+        .color-swatches {
+            min-height: 2.25em;
+
+            .product-tile-color-label {
+                cursor: pointer;
+                font-size: 1em;
+
+                @include media-breakpoint-down(md) {
+                    font-size: 0.9375em;
+                }
+
+                @include media-breakpoint-down(sm) {
+                    font-size: 0.8125em;
+                }
+            }
+        }
+
+        p.pdpPrices {
+            font-size: 1.125em;
+            margin-bottom: 0;
+
+            @include media-breakpoint-down(md) {
+                font-size: 1.0625em;
+            }
+
+            @include media-breakpoint-down(sm) {
+                font-size: 1em;
+            }
+        }
+
+        .pdpLink {
+            height: 3.125em;
+            overflow: hidden;
+
+            a {
+                font-size: 1em;
+
+                @include media-breakpoint-down(md) {
+                    font-size: 0.9375em;
+                }
+
+                @include media-breakpoint-down(sm) {
+                    font-size: 0.8125em;
+                }
+            }
+        }
+
+        .compare {
+            text-align: right;
+            padding-right: 0;
+            font-size: 0.875em;
+        }
+
+        .reviews {
+            padding-left: 0;
+        }
+    }
+
+    .imageContainer {
+        position: relative;
+
+        .quickview {
+            position: absolute;
+            bottom: 0.6em;
+            height: 5.5em;
+            right: 0.6em;
+        }
+
+        a {
+            img.tile-image {
+                width: 100%;
+            }
+        }
+
+        img {
+
+            @include media-breakpoint-down(xs) {
+                width: 100%;
+            }
+        }
+    }
+
+    .swatch {
+        cursor: pointer;
+    }
+}
+
+.swatch-circle {
+    // $white will be replaced by color image background via Javascript
+    @include swatch(1.8em, $white);
+}

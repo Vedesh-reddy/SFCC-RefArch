@@ -1,0 +1,21 @@
+@import "../variables";
+@import "shapes";
+
+@mixin swatch($diameter, $color) {
+    @include circle($diameter, $color);
+
+    border: 0.063em solid rgba(0, 0, 0, 0.3);
+    display: inline-block;
+    margin-right: 0.313em;
+    position: relative;
+
+    &.color-value[data-selected=true]::after {
+        color: $black;
+        content: '\f058';
+        display: table-caption;
+        font-family: 'FontAwesome';
+        font-size: 1.625em;
+        left: 0.295em;
+        position: absolute;
+    }
+}

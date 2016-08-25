@@ -7,16 +7,16 @@ var scripts = [];
 
 module.exports = {
     addCss: function (src) {
-        if (/((http(s)?:)?\/\/).*.css/.test(src)) {
+        if (/((http(s)?:)?\/\/).*.css/.test(src) && styles.lastIndexOf(src) < 0) {
             styles.push(src);
-        } else {
+        } else if (styles.lastIndexOf(URLUtils.staticURL(src).toString()) < 0) {
             styles.push(URLUtils.staticURL(src).toString());
         }
     },
     addJs: function (src) {
-        if (/((http(s)?:)?\/\/).*.js/.test(src)) {
+        if (/((http(s)?:)?\/\/).*.js/.test(src) && scripts.lastIndexOf(src) < 0) {
             scripts.push(src);
-        } else {
+        } else if (scripts.lastIndexOf(URLUtils.staticURL(src).toString()) < 0) {
             scripts.push(URLUtils.staticURL(src).toString());
         }
     },
