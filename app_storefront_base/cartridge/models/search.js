@@ -10,7 +10,7 @@ var CatalogMgr = require('dw/catalog/CatalogMgr');
  * @constructor
  */
 function search(productSearchModel, dataForSearch) {
-<<<<<<< 271797ebb758a97b5ad252f43ef169c561e2582a
+
     if (dataForSearch.querystring.srule) {
         var sortingRule = CatalogMgr.getSortingRule(dataForSearch.querystring.srule);
         productSearchModel.setSortingRule(sortingRule);
@@ -23,8 +23,6 @@ function search(productSearchModel, dataForSearch) {
         productSearchModel.setSearchPhrase(dataForSearch.querystring.q);
     }
 
-=======
-    productSearchModel.setSearchPhrase(dataForSearch.searchPhrase);
     var refinementsToApply = dataForSearch.refinements;
     for (var i = 0; i < refinementsToApply.length; i++) {
         if (refinementsToApply[i].name && refinementsToApply[i].value) {
@@ -34,7 +32,7 @@ function search(productSearchModel, dataForSearch) {
             );
         }
     }
->>>>>>> [RAP-5151 : Set and apply refinements for searches]
+
     productSearchModel.search();
 
     this.products = productSearchModel.getProducts().asList();
