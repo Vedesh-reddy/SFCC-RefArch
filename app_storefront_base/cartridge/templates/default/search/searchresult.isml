@@ -1,14 +1,17 @@
 <isdecorate template="common/layout/page">
     <div class="container">
     	<!--- to display Product IDs --->
-        <isloop items="${pdict.productIds}" var="productId" status="loopStatus">
-        	${productId}
-        </isloop>
-        
+    	<div>
+	        <isloop items="${pdict.productIds}" var="productId" status="loopStatus">
+	        	${productId}
+	        </isloop>
+		</div>
+
         <!--- to display relevant Refinement Definition Names --->
-        <isloop items="${pdict.refinementNames}" var="refinementName" status="loopStatus">
-        	${refinementName}
-        </isloop>
-        
+        <div>
+        	<isloop items="${pdict.refinementNames}" var="refinementName" status="loopStatus">
+        		${refinementName}
+        	</isloop>
+        </div>
     </div>
 </isdecorate>
