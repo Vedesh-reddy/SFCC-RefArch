@@ -1,6 +1,6 @@
 # Mobile First SiteGenesis
 
-This is a repository for mobile first version of SiteGenesis. To install, clone this repository, manually upload `modules` folder to your sandbox (through CyborDuck software, or any other WebDAV client, you can't upload through Studio). Normally upload `app_storefront_base` cartridge and enable it in BM.
+This is a repository for mobile first version of SiteGenesis. To install, clone this repository and manually upload the `modules` folder to your sandbox through CyberDuck or any other WebDAV client. You can't upload the modules folder through Studio. Normally upload `app_storefront_base` cartridge and enable it in BM.
 
 # NPM scripts
 
