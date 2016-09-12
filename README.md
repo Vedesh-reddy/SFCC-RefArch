@@ -1,11 +1,12 @@
 # Mobile First SiteGenesis
 
 This is a repository for mobile first version of SiteGenesis. 
+
 To install:
 
 1. Clone this repository.
 1. Upload the `modules` folder to the WebDav location for cartridges for your Sandbox through CyberDuck or any other WebDAV client. *Note:* you can't upload the modules folder through Studio. 
-1. Upload the `app_storefront_base` cartridge via Studio or use a WebDAV client to upload it to the WebDAV Cartridge location..
+1. Upload the `app_storefront_base` cartridge via Studio or use a WebDAV client to upload it to the WebDAV Cartridge location.
 1. Add app_storefront_base to your cartridge path.
 
 # NPM scripts
