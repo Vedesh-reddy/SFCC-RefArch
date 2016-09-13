@@ -10,6 +10,20 @@ var CatalogMgr = require('dw/catalog/CatalogMgr');
  * @param {dw.catalog.ProductSearchModel} productSearchModel - Current product search
  * @param {Object} dataForSearch - request object
  */
+function getRefinementValues(refinementDefinitions, productSearchModel) {
+	var result = {};
+	helper.forEach(refinementDefinitions, function(item){
+		result[item.displayName] = productSearchModel.getRefinements().getAllRefinementValues(item);
+	})
+	return result;
+}
+
+/**
+ * Search class that represents product search
+ * @param {dw.catalog.ProductSearchModel} productSearchModel - Current product search
+ * @param {Object} req - local instance of request object
+ * @constructor
+ */
 function search(productSearchModel, dataForSearch) {
     if (dataForSearch.querystring.srule) {
         var sortingRule = CatalogMgr.getSortingRule(dataForSearch.querystring.srule);
@@ -38,9 +52,11 @@ function search(productSearchModel, dataForSearch) {
     productSearchModel.search();
 
     this.products = productSearchModel.getProducts().asList();
-    this.refinements = productSearchModel.getRefinements().getRefinementDefinitions();
+    this.refinements = productSearchModel.getRefinements();
+    this.refinementDefinitions = productSearchModel.getRefinements().getRefinementDefinitions();
     this.productIds = helper.pluck(this.products, 'ID');
-    this.refinementNames = helper.pluck(this.refinements, 'displayName');
+    this.refinementDefinitionNames = helper.pluck(this.refinementDefinitions, 'displayName');
+    this.refinementsValues = getRefinementValues(this.refinementDefinitions, productSearchModel);
 }
 
 module.exports = search;
