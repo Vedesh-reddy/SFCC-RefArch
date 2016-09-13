@@ -28,11 +28,7 @@ function search(productSearchModel, dataForSearch) {
     var refinementsToApply = dataForSearch.refinements;
     for (var i = 0; i < refinementsToApply.length; i++) {
         if (refinementsToApply[i].name && refinementsToApply[i].value) {
-            var name = refinementsToApply[i].name;
-            var value = refinementsToApply[i].value;
-            productSearchModel.addRefinementValues(name, value);
-        } else {
-            throw new Error('Applying refinements must have both: a name and a value');
+            productSearchModel.addRefinementValues(refinementsToApply[i].name, refinementsToApply[i].value);
         }
     }
 >>>>>>> [RAP-5151 : Set and apply refinements for searches]
