@@ -28,7 +28,10 @@ function search(productSearchModel, dataForSearch) {
     var refinementsToApply = dataForSearch.refinements;
     for (var i = 0; i < refinementsToApply.length; i++) {
         if (refinementsToApply[i].name && refinementsToApply[i].value) {
-            productSearchModel.addRefinementValues(refinementsToApply[i].name, refinementsToApply[i].value);
+            productSearchModel.addRefinementValues(
+                    refinementsToApply[i].name,
+                    refinementsToApply[i].value
+            );
         }
     }
 >>>>>>> [RAP-5151 : Set and apply refinements for searches]
