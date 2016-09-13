@@ -2,7 +2,7 @@
     <div class="container">
     	<!--- to display Product IDs --->
     	<div>
-	        <isloop items="${pdict.productIds}" var="productId" status="loopStatus">
+	        <isloop items="${pdict.productIds}" var="productId">
 	        	${productId}
 	        </isloop>
 		</div>
