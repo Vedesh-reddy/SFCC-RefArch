@@ -9,7 +9,7 @@
 
         <!--- to display relevant Refinement Definition Names --->
         <div>
-        	<isloop items="${pdict.refinementNames}" var="refinementName" status="loopStatus">
+        	<isloop items="${pdict.refinementNames}" var="refinementName">
         		${refinementName}
         	</isloop>
         </div>
