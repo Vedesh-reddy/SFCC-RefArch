@@ -21,6 +21,11 @@ var createOrderAddress = function () {
 };
 
 describe('address', function () {
+    it('should receive an null address', function () {
+        var result = new AddressModel(null);
+        assert.equal(result.address, null);
+    });
+
     it('should convert API Order Address to an object', function () {
         var result = new AddressModel(createOrderAddress());
         assert.equal(result.address.address1, '1 Drury Lane');

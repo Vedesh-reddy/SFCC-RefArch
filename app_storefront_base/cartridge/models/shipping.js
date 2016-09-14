@@ -23,7 +23,6 @@ function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods
         applicableShippingMethods = shippingMethods;
     } else {
         var shipmentModel = ShippingMgr.getShipmentShippingModel(defaultShipment);
-        // what if there is an address, this can narrow down the list of shipping methods
         applicableShippingMethods = shipmentModel.applicableShippingMethods;
     }
 
@@ -72,15 +71,32 @@ function getApplicableShippingMethods(shipmentModel) {
 }
 
 /**
+ * Converts API shipment into plain object
+ * @param {dw.order.shipment} defaultShipment -the default shipment of the current basket
+ * @returns {Object} object containing information about the selected shipping method
+ */
+function getSelectedShippingMethod(defaultShipment) {
+    return {
+        ID: defaultShipment.shippingMethod.ID,
+        displayName: defaultShipment.shippingMethod.displayName,
+        description: defaultShipment.shippingMethod.description
+    };
+}
+
+/**
  * Shipping Model
  * @param {dw.order.ShipmentShippingModel} shipmentShippingModel - Instance a demandware shipping
  *      model which shipment-level shipping information
  * @constructor
  */
-function shipping(shipmentModel) {
-    if (shipmentModel) {
-        this.applicableShippingMethods = getApplicableShippingMethods(shipmentModel);
-    }
+function shipping(defaultShipment, shipmentModel, addressModel) {
+    this.applicableShippingMethods = shipmentModel ?
+        getApplicableShippingMethods(shipmentModel) :
+        null;
+    this.shippingAddress = addressModel ? addressModel.address : null;
+    this.selectedShippingMethod = defaultShipment ?
+        getSelectedShippingMethod(defaultShipment) :
+        null;
 }
 
 shipping.selectShippingMethod = selectShippingMethod;

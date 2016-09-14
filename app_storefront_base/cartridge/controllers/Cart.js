@@ -59,6 +59,7 @@ server.get('Show', locale, function (req, res, next) {
         if (currentBasket && !currentBasket.defaultShipment.shippingMethod) {
             ShippingModel.selectShippingMethod(currentBasket.defaultShipment);
         }
+
         if (currentBasket) {
             calculateCart(currentBasket);
         }
@@ -68,11 +69,10 @@ server.get('Show', locale, function (req, res, next) {
         shipmentShippingModel = ShippingMgr.getShipmentShippingModel(
             currentBasket.defaultShipment
         );
-        shippingModel = new ShippingModel(shipmentShippingModel);
+        shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
     }
 
     productLineItemModel = new ProductLineItemModel(currentBasket);
-
     var basket = new Cart(currentBasket, shippingModel, productLineItemModel);
 
     res.render('cart/cart', basket);
@@ -83,7 +83,7 @@ server.get('RemoveProductLineItem', locale, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
-    var shippingModel = new ShippingModel(shipmentShippingModel);
+    var shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
     var isProductLineItemFound = false;
 
     Transaction.wrap(function () {
@@ -118,7 +118,7 @@ server.get('UpdateQuantity', locale, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
-    var shippingModel = new ShippingModel(shipmentShippingModel);
+    var shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
     var isProductLineItemFound = false;
     var error = false;
 
@@ -166,7 +166,7 @@ server.get('SelectShippingMethod', locale, function (req, res, next) {
     var error = false;
     var productLineItemModel;
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
-    var shippingModel = new ShippingModel(shipmentShippingModel);
+    var shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
 
     if (req.querystring.methodID) {
         Transaction.wrap(function () {

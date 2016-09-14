@@ -52,6 +52,11 @@ var defaultShippingMethod = new ArrayList([
 var defaultShipment = {
     setShippingMethod: function (shippingMethod) {
         return shippingMethod;
+    },
+    shippingMethod: {
+        ID: '001',
+        displayName: 'Ground',
+        description: 'Order received within 7-10 business days'
     }
 };
 
@@ -78,13 +83,28 @@ describe('Shipping', function () {
         }
     });
 
-    it('should receive an empty object when shipmentModel is null', function () {
-        var result = new ShippingModel(null);
-        assert.deepEqual(result, { });
+    it('should receive object with null properties ', function () {
+        var result = new ShippingModel(null, null);
+        assert.deepEqual(result, {
+            applicableShippingMethods: null,
+            shippingAddress: null,
+            selectedShippingMethod: null
+        });
+    });
+
+    it('should get the selected shipping method information', function () {
+        var result = new ShippingModel(defaultShipment, createShipmentShippingModel(), {});
+
+        assert.equal(result.selectedShippingMethod.ID, '001');
+        assert.equal(result.selectedShippingMethod.displayName, 'Ground');
+        assert.equal(
+            result.selectedShippingMethod.description,
+            'Order received within 7-10 business days'
+        );
     });
 
     it('should get shipping methods and convert to a plain object', function () {
-        var result = new ShippingModel(createShipmentShippingModel());
+        var result = new ShippingModel(null, createShipmentShippingModel(), {});
         assert.equal(
             result.applicableShippingMethods[0].description,
             'Order received within 7-10 business days'

@@ -6,20 +6,27 @@
  * @returns {Object} an object that contains information about the users address
  */
 function createAddressObject(addressObject) {
-    return {
-        address1: addressObject.address1,
-        address2: addressObject.address2,
-        city: addressObject.city,
-        countryCode: {
-            displayValue: addressObject.countryCode.displayValue,
-            value: addressObject.countryCode.value
-        },
-        firstName: addressObject.firstName,
-        lastName: addressObject.lastName,
-        phone: addressObject.phone,
-        postalCode: addressObject.postalCode,
-        stateCode: addressObject.stateCode
-    };
+    var result;
+    if (addressObject) {
+        result = {
+            address1: addressObject.address1,
+            address2: addressObject.address2,
+            city: addressObject.city,
+            countryCode: {
+                displayValue: addressObject.countryCode.displayValue,
+                value: addressObject.countryCode.value
+            },
+            firstName: addressObject.firstName,
+            lastName: addressObject.lastName,
+            phone: addressObject.phone,
+            postalCode: addressObject.postalCode,
+            stateCode: addressObject.stateCode
+        };
+    } else {
+        result = null;
+    }
+
+    return result;
 }
 
 /**
