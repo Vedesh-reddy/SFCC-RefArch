@@ -1,6 +1,7 @@
 'use strict';
 
 var helper = require('~/cartridge/scripts/dwHelpers');
+var CatalogMgr = require('dw/catalog/CatalogMgr');
 
 /**
  * Search class that represents product search
@@ -9,7 +10,18 @@ var helper = require('~/cartridge/scripts/dwHelpers');
  * @constructor
  */
 function search(productSearchModel, dataForSearch) {
-    productSearchModel.setSearchPhrase(dataForSearch.searchPhrase);
+    if (dataForSearch.querystring.srule) {
+        var sortingRule = CatalogMgr.getSortingRule(dataForSearch.querystring.srule);
+        productSearchModel.setSortingRule(sortingRule);
+    }
+
+    if (dataForSearch.querystring.cgid) {
+        var category = CatalogMgr.getCategory(dataForSearch.querystring.cgid);
+        productSearchModel.setCategoryID(category.getID());
+    } else {
+        productSearchModel.setSearchPhrase(dataForSearch.querystring.q);
+    }
+
     productSearchModel.search();
 
     this.products = productSearchModel.getProducts().asList();

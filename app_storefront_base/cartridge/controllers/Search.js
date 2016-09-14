@@ -47,7 +47,7 @@ function getModel(req) {
     var productSearchModel = new ProductSearchModel();
     var dataForSearch = {
         refinements: parseRefinements(req.querystring),
-        searchPhrase: req.querystring.q
+        querystring: req.querystring
     };
     return new SearchModel(productSearchModel, dataForSearch);
 }
