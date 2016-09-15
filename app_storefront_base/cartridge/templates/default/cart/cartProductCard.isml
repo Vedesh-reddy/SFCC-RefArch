@@ -33,7 +33,7 @@
                 <div class="row">
                     <!---product image--->
                     <div class="col-xs-4">
-                        <img src="${lineItem.image.src}" alt="${lineItem.image.alt}" title="${lineItem.image.title}">
+                        <img class="product-image" src="${lineItem.image.src}" alt="${lineItem.image.alt}" title="${lineItem.image.title}">
                     </div>
                     <!--product details-->
                     <div class="col-xs-8" >
