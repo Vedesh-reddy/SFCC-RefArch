@@ -53,7 +53,7 @@ exports.config = _.assign({
         deviceName: 'iPad Retina',
         platformVersion: '9.2',
         platformName: 'iOS',
-        app: 'Safari'
+        app: ''
     }],
     waitforTimeout: opts.timeout,
     baseUrl: opts.url,

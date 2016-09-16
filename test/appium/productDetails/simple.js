@@ -20,7 +20,6 @@ describe('Product Item', () => {
     it('should display its product ID', () => {
         console.log('[it] Starting test...');
         return browser
-            .pause(50000)
             // .getText(`#item-variantId .product-number`)
             .getText(`.product-id`)
             .then(itemNumber => {
