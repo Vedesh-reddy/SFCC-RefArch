@@ -26,18 +26,35 @@ footer {
 
     .copyright,
     .social {
-        margin-top: 20px;
+        margin-top: 1.25em;
     }
 
     .social-links {
 
         @include clearfix;
 
+        @include media-breakpoint-down(xs) {
+            width: 80%;
+        }
+
         float: left;
 
         li {
             float: left;
-            margin: 5px;
+            margin: 0.313em;
+
+            @include media-breakpoint-down(xs) {
+                width: 20%;
+                text-align: center;
+            }
+        }
+
+        a {
+            font-size: 2.25em;
+
+            &:hover {
+                text-decoration: none;
+            }
         }
     }
 
@@ -63,35 +80,35 @@ footer {
     }
 
     .content {
-        font-size: 0.875em; /* 14/16 */
+        font-size: 0.875em;
 
         li {
-            height: 1.875rem; /* 30/16 */
+            height: 1.875rem;
         }
     }
 
     .copyright,
     .postscript {
-        font-size: 0.8125em; /* 13/16 */
+        font-size: 0.8125em;
     }
 
     .copyright {
-        margin-bottom: 0.625em; /* 10/16 */
+        margin-bottom: 0.625em;
     }
 
     .back-to-top {
 
-        @include box-shadow(0 5px 15px rgba(0,0,0,0.5));
+        @include box-shadow(0 0.313em 0.938em rgba(0,0,0,0.5));
 
         background-color: white;
         border-radius: 50%;
         float: left;
-        margin: 5px;
+        margin: 0.313em;
         border-bottom-color: white;
         border-right-color: white;
 
         i {
-            font-size: 26px;
+            font-size: 1.625em;
         }
     }
 }
