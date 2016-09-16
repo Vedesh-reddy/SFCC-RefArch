@@ -11,6 +11,7 @@ var ProductMgr = require('dw/catalog/ProductMgr');
 var Resource = require('dw/web/Resource');
 var ShippingModel = require('~/cartridge/models/shipping');
 var ShippingMgr = require('dw/order/ShippingMgr');
+var Totals = require('~/cartridge/models/totals');
 var Transaction = require('dw/system/Transaction');
 
 /**
@@ -50,6 +51,7 @@ server.post('AddProduct', function (req, res, next) {
 });
 
 server.get('Show', locale, function (req, res, next) {
+    var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
     var shippingModel;
@@ -59,7 +61,6 @@ server.get('Show', locale, function (req, res, next) {
         if (currentBasket && !currentBasket.defaultShipment.shippingMethod) {
             ShippingModel.selectShippingMethod(currentBasket.defaultShipment);
         }
-
         if (currentBasket) {
             calculateCart(currentBasket);
         }
@@ -73,13 +74,16 @@ server.get('Show', locale, function (req, res, next) {
     }
 
     productLineItemModel = new ProductLineItemModel(currentBasket);
-    var basket = new Cart(currentBasket, shippingModel, productLineItemModel);
+    cartTotals = new Totals(currentBasket);
+
+    var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
 
     res.render('cart/cart', basket);
     next();
 });
 
 server.get('RemoveProductLineItem', locale, function (req, res, next) {
+    var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
@@ -103,7 +107,8 @@ server.get('RemoveProductLineItem', locale, function (req, res, next) {
 
     if (isProductLineItemFound) {
         productLineItemModel = new ProductLineItemModel(currentBasket);
-        var basket = new Cart(currentBasket, shippingModel, productLineItemModel);
+        cartTotals = new Totals(currentBasket);
+        var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
 
         res.json(basket);
         next();
@@ -115,6 +120,7 @@ server.get('RemoveProductLineItem', locale, function (req, res, next) {
 });
 
 server.get('UpdateQuantity', locale, function (req, res, next) {
+    var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
@@ -148,7 +154,8 @@ server.get('UpdateQuantity', locale, function (req, res, next) {
 
     if (isProductLineItemFound && !error) {
         productLineItemModel = new ProductLineItemModel(currentBasket);
-        var basket = new Cart(currentBasket, shippingModel, productLineItemModel);
+        cartTotals = new Totals(currentBasket);
+        var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
 
         res.json(basket);
         next();
@@ -162,6 +169,7 @@ server.get('UpdateQuantity', locale, function (req, res, next) {
 });
 
 server.get('SelectShippingMethod', locale, function (req, res, next) {
+    var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var error = false;
     var productLineItemModel;
@@ -186,7 +194,8 @@ server.get('SelectShippingMethod', locale, function (req, res, next) {
 
     if (!error) {
         productLineItemModel = new ProductLineItemModel(currentBasket);
-        var basket = new Cart(currentBasket, shippingModel, productLineItemModel);
+        cartTotals = new Totals(currentBasket);
+        var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
 
         res.json(basket);
         next();

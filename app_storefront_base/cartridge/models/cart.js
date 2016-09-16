@@ -1,41 +1,7 @@
 'use strict';
 
 var URLUtils = require('dw/web/URLUtils');
-var formatMoney = require('dw/util/StringUtils').formatMoney;
-var money = require('dw/value/Money');
 var Resource = require('dw/web/Resource');
-
-
-/**
- * Creates an object containing the order totals
- * @param {dw.order.Basket} basket - The current users's basket
- * @returns {Array} an array of objects containing the information of applicable shipping methods
- */
-function getTotals(basket) {
-    var totals = {};
-
-    totals.subTotal = !basket.adjustedMerchandizeTotalPrice.available ? '-' : formatMoney(money(
-        basket.adjustedMerchandizeTotalPrice.value,
-        basket.adjustedMerchandizeTotalPrice.currencyCode
-    ));
-
-    totals.grandTotal = !basket.totalGrossPrice.available ? totals.subTotal : formatMoney(money(
-        basket.totalGrossPrice.value,
-        basket.totalGrossPrice.currencyCode
-    ));
-
-    totals.totalTax = !basket.totalTax.available ? '-' : formatMoney(money(
-        basket.totalTax.value,
-        basket.totalTax.currencyCode
-    ));
-
-    totals.totalShippingCost = !basket.shippingTotalPrice.available ? '-' : formatMoney(money(
-        basket.shippingTotalPrice.value,
-        basket.shippingTotalPrice.currencyCode
-    ));
-
-    return totals;
-}
 
 /**
  * Generates an object of URLs
@@ -55,11 +21,11 @@ function getCartActionUrls() {
  * @param {Object} shippingModel - Instance of the shipping model
  * @constructor
  */
-function cart(basket, shippingModel, productLineItemModel) {
+function cart(basket, shippingModel, productLineItemModel, totalsModel) {
     if (basket !== null) {
         this.actionUrls = getCartActionUrls();
         this.numOfShipments = basket.shipments.length;
-        this.totals = getTotals(basket);
+        this.totals = totalsModel;
 
         if (shippingModel) {
             this.shippingMethods = shippingModel.applicableShippingMethods;
