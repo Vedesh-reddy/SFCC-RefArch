@@ -43,10 +43,10 @@ describe('Totals', function () {
 
     it('should accept/process a null Basket object', function () {
         var result = new Totals(null);
-        assert.equal(result.subTotal, null);
-        assert.equal(result.grandTotal, null);
-        assert.equal(result.totalTax, null);
-        assert.equal(result.totalShippingCost, null);
+        assert.equal(result.subTotal, '-');
+        assert.equal(result.grandTotal, '-');
+        assert.equal(result.totalTax, '-');
+        assert.equal(result.totalShippingCost, '-');
     });
 
     it('should accept a basket and format the totals', function () {

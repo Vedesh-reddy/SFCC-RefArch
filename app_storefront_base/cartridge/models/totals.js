@@ -3,6 +3,16 @@
 var formatMoney = require('dw/util/StringUtils').formatMoney;
 var money = require('dw/value/Money');
 
+
+/**
+ * Accepts a total object and formats the value
+ * @param {dw.value.Money} total
+ * @returns {String} the formatted money value
+ */
+function getTotals(total) {
+    return !total.available ? '-' : formatMoney(money(total.value, total.currencyCode));
+}
+
 /**
  * totals class that represents the order totals of the current basket
  * @param {dw.order.Basket} basket Current users's basket
@@ -10,30 +20,15 @@ var money = require('dw/value/Money');
  */
 function totals(basket) {
     if (basket) {
-        this.subTotal = !basket.adjustedMerchandizeTotalPrice.available ? '-' : formatMoney(money(
-            basket.adjustedMerchandizeTotalPrice.value,
-            basket.adjustedMerchandizeTotalPrice.currencyCode
-        ));
-
-        this.grandTotal = !basket.totalGrossPrice.available ? '-' : formatMoney(money(
-            basket.totalGrossPrice.value,
-            basket.totalGrossPrice.currencyCode
-        ));
-
-        this.totalTax = !basket.totalTax.available ? '-' : formatMoney(money(
-            basket.totalTax.value,
-            basket.totalTax.currencyCode
-        ));
-
-        this.totalShippingCost = !basket.shippingTotalPrice.available ? '-' : formatMoney(money(
-            basket.shippingTotalPrice.value,
-            basket.shippingTotalPrice.currencyCode
-        ));
+        this.subTotal = getTotals(basket.adjustedMerchandizeTotalPrice);
+        this.grandTotal = getTotals(basket.totalGrossPrice);
+        this.totalTax = getTotals(basket.totalTax);
+        this.totalShippingCost = getTotals(basket.shippingTotalPrice);
     } else {
-        this.subTotal = null;
-        this.grandTotal = null;
-        this.totalTax = null;
-        this.totalShippingCost = null;
+        this.subTotal = '-';
+        this.grandTotal = '-';
+        this.totalTax = '-';
+        this.totalShippingCost = '-';
     }
 }
 
