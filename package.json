@@ -55,6 +55,7 @@
     "proxyquire": "1.7.4",
     "q": "^1.4.1",
     "request": "^2.74.0",
+    "request-promise": "^4.1.1",
     "shelljs": "^0.7.0",
     "sinon": "^1.17.4",
     "stylelint": "^7.1.0",
