@@ -18,11 +18,11 @@ Use the provided NPM script to compile and upload changes to your Sandbox.
 * `npm run compile:js` - Compiles all js files and aggregates them.
 * `npm run compile:fonts` - Will copy all needed font files. Usually have to be run only once.
 
-# lint
+# Lint
 
 `npm run lint` - Execute linting for all JavaScript and SCSS files in the project. You should run this command before committing your code.
 
-# watches
+# Watches
 
 `npm run watch:static` - Watches js and scss files for changes, recompiles them and uploads result to the sandbox. Requires valid dw.json file at the root.
 `npm run watch:cartridge` - Watches all cartridge files (except for static content) and uploads it to sandbox. Requires valid dw.json file at the root.
