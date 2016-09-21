@@ -29,10 +29,7 @@ function cart(basket, shippingModel, productLineItemModel, totalsModel) {
 
         if (shippingModel) {
             this.shippingMethods = shippingModel.applicableShippingMethods;
-        }
-
-        if (basket.defaultShipment.shippingMethod) {
-            this.selectedShippingMethod = basket.defaultShipment.shippingMethod.ID;
+            this.selectedShippingMethod = shippingModel.selectedShippingMethod.ID;
         }
     }
 

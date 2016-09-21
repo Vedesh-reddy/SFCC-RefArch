@@ -75,11 +75,11 @@ function getApplicableShippingMethods(shipmentModel) {
  * @param {dw.order.shipment} defaultShipment -the default shipment of the current basket
  * @returns {Object} object containing information about the selected shipping method
  */
-function getSelectedShippingMethod(defaultShipment) {
+function getSelectedShippingMethod(shippingMethod) {
     return {
-        ID: defaultShipment.shippingMethod.ID,
-        displayName: defaultShipment.shippingMethod.displayName,
-        description: defaultShipment.shippingMethod.description
+        ID: shippingMethod.ID,
+        displayName: shippingMethod.displayName,
+        description: shippingMethod.description
     };
 }
 
@@ -94,8 +94,8 @@ function shipping(defaultShipment, shipmentModel, addressModel) {
         getApplicableShippingMethods(shipmentModel) :
         null;
     this.shippingAddress = addressModel ? addressModel.address : null;
-    this.selectedShippingMethod = defaultShipment ?
-        getSelectedShippingMethod(defaultShipment) :
+    this.selectedShippingMethod = defaultShipment && defaultShipment.shippingMethod ?
+        getSelectedShippingMethod(defaultShipment.shippingMethod) :
         null;
 }
 
