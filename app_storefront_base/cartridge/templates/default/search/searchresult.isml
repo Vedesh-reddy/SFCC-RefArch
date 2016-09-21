@@ -3,10 +3,10 @@
     
         <!--- to display relevant Refinement Definition Names ---> 
         <div class="col-md-2">   
-            <isloop items="${pdict.refinements.getRefinementDefinitions()}" var="definition">
+            <isloop items="${pdict.rawRefinements.getRefinementDefinitions()}" var="definition">
         	    <br><ul>${definition.displayName}</ul>
-        	    <isloop items="${pdict.refinements.getRefinementValues(definition)}" var="def">
-        	        <li>${def.displayValue}</li>
+        	    <isloop items="${pdict.rawRefinements.getRefinementValues(definition)}" var="value">
+        	        <li>${value.displayValue}</li>
         	    </isloop>
             </isloop>
         </div>
