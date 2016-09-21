@@ -24,14 +24,14 @@ function search(productSearchModel, dataForSearch) {
     }
 
     var refinementsToApply = dataForSearch.refinements;
-    for (var i = 0; i < refinementsToApply.length; i++) {
-        if (refinementsToApply[i].name && refinementsToApply[i].value) {
+    refinementsToApply.forEach(function (refinement) {
+        if (refinement.name && refinement.value) {
             productSearchModel.addRefinementValues(
-                    refinementsToApply[i].name,
-                    refinementsToApply[i].value
+                    refinement.name,
+                    refinement.value
             );
         }
-    }
+    });
 
     productSearchModel.search();
 
