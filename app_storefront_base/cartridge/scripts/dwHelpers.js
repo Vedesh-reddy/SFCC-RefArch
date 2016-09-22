@@ -108,10 +108,30 @@ function pluck(collection, property) {
     return result;
 }
 
+/**
+ * Find method for dw.util.Collection subclass instance
+ * @param {dw.utilCollection} collection - Collection subclass instance to find value in
+ * @param {Function} match - Match function
+ * @returns {Object|null} Single item from the collection
+ */
+function find(collection, match) {
+    var result = null;
+    var iterator = collection.iterator();
+    while (iterator.hasNext()) {
+        var item = iterator.next();
+        if (match(item)) {
+            result = item;
+            break;
+        }
+    }
+    return result;
+}
+
 module.exports = {
     map: map,
     forEach: forEach,
     concat: concat,
     reduce: reduce,
-    pluck: pluck
+    pluck: pluck,
+    find: find
 };
