@@ -57,20 +57,24 @@ describe('search', function () {
     it('should return search model with refinements applied', function () {
         var productSearchModel = new MockProductSearchModel();
         var dataForSearch = {
-            refinements: [{
-                name: 'refinementColor',
-                value: 'Blue'
-            },
+            refinements: [
+                {
+                    name: 'refinementColor',
+                    value: 'Blue'
+                },
                 {
                     name: 'brand',
                     value: 'Lacy-S'
-                }],
+                }
+            ],
             querystring: {
                 q: 'shirts',
                 srule: null
             }
         };
+
         new SearchModel(productSearchModel, dataForSearch);
+
         assert.equal(productSearchModel.count, 1);
         assert.equal(productSearchModel.emptyQuery, false);
         assert.equal(productSearchModel.refinedByAttribute, true);

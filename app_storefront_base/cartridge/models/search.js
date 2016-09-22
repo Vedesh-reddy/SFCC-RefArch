@@ -27,8 +27,8 @@ function search(productSearchModel, dataForSearch) {
     refinementsToApply.forEach(function (refinement) {
         if (refinement.name && refinement.value) {
             productSearchModel.addRefinementValues(
-                    refinement.name,
-                    refinement.value
+                refinement.name,
+                refinement.value
             );
         }
     });
