@@ -3,6 +3,9 @@
   "version": "0.0.1",
   "description": "Mobile first SiteGenesis",
   "main": "index.js",
+  "engines": {
+    "node": ">=4.0"
+  },
   "scripts": {
     "test": "mocha -R spec test/unit/**/*.js",
     "cover": "istanbul cover ./node_modules/.bin/_mocha -- -R spec test/unit/**/*.js",
