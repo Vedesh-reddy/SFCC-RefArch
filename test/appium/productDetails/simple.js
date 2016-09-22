@@ -25,15 +25,16 @@ describe('Product Details - Product Item', () => {
             })
     });
 
-    it('should display its product name', () =>
-        browser.getText(productDetailPage.PRODUCT_NAME)
+    it('should display its product name', () => {
+        return browser.waitUntil(() => browser.element(productDetailPage.PRODUCT_NAME))
+            .then(() => browser.getText(productDetailPage.PRODUCT_NAME))
             .then(name => assert.equal(name, 'No-Iron Textured Dress Shirt'))
-    );
+    });
 
-    it('should display its product image', () =>
-        browser.isExisting(elementImage)
+    it('should display its product image', () => {
+        return browser.isExisting(elementImage)
             .then(exists => assert.isTrue(exists))
-    );
+    });
 
     it('should display the default variant primary image', () => {
         return browser.element(elementPrimaryImage)
@@ -48,7 +49,17 @@ describe('Product Details - Product Item', () => {
             .then(() => browser.element(elementPrimaryImage))
             .then(el => browser.elementIdAttribute(el.value.ELEMENT, 'src'))
             .then(displayedImgSrc => assert.isTrue(displayedImgSrc.value.endsWith(expectedSecondaryImage)));
-
-
     })
+
+    it('should enable the "Add to Cart" button', () =>
+        browser.isEnabled('.add-to-cart')
+            .then(enabled => assert.isTrue(enabled))
+    );
+
+    it('should add product to Cart', () =>
+        browser.element('.add-to-cart')
+            .click()
+            .then(() => browser.getText('.minicart-quantity'))
+            .then(quantity => assert.equal(quantity, '1'))
+    );
 })
