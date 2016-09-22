@@ -22,6 +22,16 @@ function search(productSearchModel, dataForSearch) {
         productSearchModel.setSearchPhrase(dataForSearch.querystring.q);
     }
 
+    var refinementsToApply = dataForSearch.refinements;
+    refinementsToApply.forEach(function (refinement) {
+        if (refinement.name && refinement.value) {
+            productSearchModel.addRefinementValues(
+                refinement.name,
+                refinement.value
+            );
+        }
+    });
+
     productSearchModel.search();
 
     this.products = productSearchModel.getProducts().asList();
