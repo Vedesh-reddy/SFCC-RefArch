@@ -1,0 +1,19 @@
+machine:
+  node:
+    version: 4.4.6
+
+dependencies:
+  post:
+    - npm rebuild node-sass
+
+test:
+  pre:
+    - npm run lint
+  override:
+    - node node_modules/.bin/_mocha test/unit/**/*.js --reporter mocha-junit-reporter --reporter-options mochaFile="$CIRCLE_TEST_REPORTS"/junit/test-result.xml
+  post:
+    - npm run compile:js
+    - npm run compile:scss
+    - npm run compile:fonts
+    - dwupload --hostname "$hostname" --username "$user" --password "$password" --cartridge app_storefront_base
+    - npm run test:integration -- --baseUrl https://dev01-lab03b-dw.demandware.net/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/*
