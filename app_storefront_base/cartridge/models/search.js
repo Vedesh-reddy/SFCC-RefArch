@@ -10,7 +10,6 @@ var CatalogMgr = require('dw/catalog/CatalogMgr');
  * @constructor
  */
 function search(productSearchModel, dataForSearch) {
-
     if (dataForSearch.querystring.srule) {
         var sortingRule = CatalogMgr.getSortingRule(dataForSearch.querystring.srule);
         productSearchModel.setSortingRule(sortingRule);
