@@ -9,6 +9,8 @@ dependencies:
 test:
   pre:
     - npm run lint
+  override:
+    - node node_modules/.bin/_mocha test/unit/**/*.js --reporter mocha-junit-reporter --reporter-options mochaFile="$CIRCLE_TEST_REPORTS"/junit/test-result.xml
   post:
     - npm run compile:js
     - npm run compile:scss
