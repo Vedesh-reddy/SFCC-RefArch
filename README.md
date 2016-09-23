@@ -43,3 +43,7 @@ to run tests in sub-suite, i.e. storeLocator sub-suite:
 
 to run tests in integration suite:
 `npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/*`
+
+# Running Appium UI tests:
+Appium UI Tests are located at ../mfsg/test/Appium
+`npm run test:appium -- --url http://dev02-lab03b-dw.demandware.net/on/demandware.store/Sites-SiteGenesis-Site/`
