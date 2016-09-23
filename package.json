@@ -8,6 +8,7 @@
   },
   "scripts": {
     "test": "mocha -R spec test/unit/**/*.js",
+    "test:appium": "wdio test/appium/webdriver/wdio.appium.js",
     "cover": "istanbul cover ./node_modules/.bin/_mocha -- -R spec test/unit/**/*.js",
     "test:integration": "mocha --reporter spec",
     "test:functional": "wdio test/functional/webdriver/wdio.conf.js",
