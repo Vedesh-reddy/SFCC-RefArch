@@ -1,18 +1,17 @@
-"use strict";
+'use strict';
 
 var _ = require('lodash');
 var minimist = require('minimist');
 var getConfig = require('@tridnguyen/config');
 var argv = minimist(process.argv.slice(2));
-var webdriverio = require('webdriverio');
 
 var opts = _.assign({}, getConfig({
     client: 'chrome',
     url: 'http://dev02-lab03b-dw.demandware.net/on/demandware.store/Sites-SiteGenesis-Site/',
     suite: '*',
-    coverage : 'smoke',
+    coverage: 'smoke',
     reporter: 'spec',
-    timeout: 60000,
+    timeout: '60000',
     locale: 'x_default',
     user: 'testuser1'
 }, './config.json'), argv);
