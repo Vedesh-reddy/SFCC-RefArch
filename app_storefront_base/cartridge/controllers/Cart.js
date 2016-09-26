@@ -86,8 +86,8 @@ server.get('RemoveProductLineItem', locale, function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
-    var shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
+    var shipmentShippingModel;
+    var shippingModel;
     var isProductLineItemFound = false;
 
     Transaction.wrap(function () {
@@ -104,6 +104,11 @@ server.get('RemoveProductLineItem', locale, function (req, res, next) {
             calculateCart(currentBasket);
         }
     });
+
+    if (currentBasket) {
+        shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
+        shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
+    }
 
     if (isProductLineItemFound) {
         productLineItemModel = new ProductLineItemModel(currentBasket);
@@ -123,8 +128,8 @@ server.get('UpdateQuantity', locale, function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
-    var shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
+    var shipmentShippingModel;
+    var shippingModel;
     var isProductLineItemFound = false;
     var error = false;
 
@@ -152,6 +157,11 @@ server.get('UpdateQuantity', locale, function (req, res, next) {
         }
     });
 
+    if (currentBasket) {
+        shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
+        shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
+    }
+
     if (isProductLineItemFound && !error) {
         productLineItemModel = new ProductLineItemModel(currentBasket);
         cartTotals = new Totals(currentBasket);
@@ -173,8 +183,8 @@ server.get('SelectShippingMethod', locale, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var error = false;
     var productLineItemModel;
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
-    var shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
+    var shipmentShippingModel;
+    var shippingModel;
 
     if (req.querystring.methodID) {
         Transaction.wrap(function () {
@@ -190,6 +200,11 @@ server.get('SelectShippingMethod', locale, function (req, res, next) {
 
             calculateCart(currentBasket);
         });
+    }
+
+    if (currentBasket) {
+        shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
+        shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
     }
 
     if (!error) {

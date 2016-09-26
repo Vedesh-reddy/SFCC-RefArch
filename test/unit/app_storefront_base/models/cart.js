@@ -28,7 +28,10 @@ var createShipmentShippingModel = function () {
             ID: '001',
             shippingCost: '$0.00',
             estimatedArrivalTime: '7-10 Business Days'
-        }]
+        }],
+        selectedShippingMethod: {
+            ID: 'some ID'
+        }
     };
 };
 

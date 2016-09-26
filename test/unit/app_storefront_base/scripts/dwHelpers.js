@@ -158,4 +158,28 @@ describe('dwHelpers', function () {
             assert.sameMembers(result, []);
         });
     });
+
+    describe('find', function () {
+        it('should find correct item in the collection', function () {
+            var collection = new ArrayList([{ ID: 111, name: 'abc' }, { ID: 'def', name: 'ghi' }]);
+            var result = helpers.find(collection, function (item) {
+                return item.ID === 'def';
+            });
+            assert.deepEqual(result, { ID: 'def', name: 'ghi' });
+        });
+        it('should return null if it can not find correct value', function () {
+            var collection = new ArrayList([{ ID: 111, name: 'abc' }, { ID: 'def', name: 'ghi' }]);
+            var result = helpers.find(collection, function (item) {
+                return item.ID === 'blah';
+            });
+            assert.isNull(result);
+        });
+        it('should return an int from the simple collection', function () {
+            var collection = new ArrayList([1, 2, 3, 4, 5, 6]);
+            var result = helpers.find(collection, function (item) {
+                return item === 3;
+            });
+            assert.equal(result, 3);
+        });
+    });
 });

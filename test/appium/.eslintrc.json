@@ -1,0 +1,17 @@
+{
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "env": {
+        "browser": true,
+        "es6": true,
+        "mocha": true,
+        "commonjs": true
+     },
+    "globals": {
+        "browser": true,
+        "session": true,
+        "process": true,
+        "global": true
+    }
+}
