@@ -17,7 +17,8 @@
     "watch:static": "onchange 'app_storefront_base/cartridge/js/**/*.js' -- npm run compile:js & onchange 'app_storefront_base/cartridge/scss/**/*.scss' -- npm run compile:scss & onchange 'app_storefront_base/cartridge/static/**/*' -w -- npm run upload -- {{changed}}",
     "watch:cartridge": "onchange 'app_storefront_base/cartridge/(controllers|models|scripts|templates)/**/*' -w -- npm run upload -- {{changed}}",
     "watch": "npm run watch:static & npm run watch:cartridge",
-    "doc": "bin/doc.sh"
+    "doc": "bin/doc.sh",
+    "update-ecom": "cp -r ./app_storefront_base $DW_HOME/appserverinstance/sharedata/cartridges/version1/"  
   },
   "repository": {
     "type": "git",
