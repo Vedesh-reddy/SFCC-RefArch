@@ -18,7 +18,9 @@ function search(productSearchModel, dataForSearch) {
     if (dataForSearch.querystring.cgid) {
         var category = CatalogMgr.getCategory(dataForSearch.querystring.cgid);
         productSearchModel.setCategoryID(category.getID());
-    } else {
+    }
+
+    if (dataForSearch.querystring.q) {
         productSearchModel.setSearchPhrase(dataForSearch.querystring.q);
     }
 
