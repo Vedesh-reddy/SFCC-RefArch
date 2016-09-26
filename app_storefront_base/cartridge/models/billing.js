@@ -7,17 +7,8 @@
 * @constructor
 */
 function billing(addressModel, paymentModel) {
-    this.billingAddress = addressModel ? addressModel.address : null;
-
-    if (paymentModel) {
-        this.paymentOptions = paymentModel.applicablePaymentMethods;
-        this.paymentCardOptions = paymentModel.applicablePaymentCards;
-        this.selectedPaymentOptions = paymentModel.selectedPaymentInstruments;
-    } else {
-        this.paymentOptions = null;
-        this.paymentCardOptions = null;
-        this.selectedPaymentOptions = null;
-    }
+    this.billingAddress = addressModel;
+    this.payment = paymentModel;
 }
 
 module.exports = billing;
