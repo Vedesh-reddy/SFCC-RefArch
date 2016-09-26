@@ -4,11 +4,15 @@ var config = require('../it.config');
 
 
 describe('Add Product variants to cart', function () {
+    this.timeout(5000);
+
     // Currently the Cart-AddProduct service call only returns 'quantityTotal' property
     // and there is no service call to get cart that returns JSON. In the future when
     // Cart-AddProduct is enhanced to return mini-cart, this test will need to be enhanced
     // to accomodate the change.
     it('should add variants of different and same products, returns total quantity of added items', function () {
+        var cookieJar = request.jar();
+
         // The postRequest object will be reused through out this file. The 'jar' property will be set once.
         // The 'url' property will be updated on every request to set the product ID (pid) and quantity.
         // All other properties remained unchanged.
@@ -17,8 +21,10 @@ describe('Add Product variants to cart', function () {
             method: 'POST',
             rejectUnauthorized: false,
             resolveWithFullResponse: true,
-            jar: true
+            jar: cookieJar
         };
+
+        var cookieString;
 
         var totalQty;
 
@@ -38,6 +44,8 @@ describe('Add Product variants to cart', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
                 assert.deepEqual(bodyAsJson, expectedResBody, 'Actual response body from adding product 1 not as expected.');
+
+                cookieString = cookieJar.getCookieString(postRequest.url);
             })
 
             // ----- adding product #2, a different variant of same product 1:
@@ -47,6 +55,9 @@ describe('Add Product variants to cart', function () {
                 totalQty += qty2;
 
                 postRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid2 + '&quantity=' + qty2;
+
+                var cookie = request.cookie(cookieString);
+                cookieJar.setCookie(cookie, postRequest.url);
 
                 return request(postRequest);
             })
