@@ -83,7 +83,7 @@ describe('Remove product variant from line item', function () {
 
         var hostname = config.baseUrl.split('/')[2];
 
-        var expectedRep = {
+        var expectedResponse = {
             'locale': {
                 'countryCode': 'US',
                 'name': 'United States',
@@ -239,21 +239,21 @@ describe('Remove product variant from line item', function () {
         };
 
         // ----- strip out all "src" properties from the expected response
-        var expectedRepStripped = jsonHelpers.deleteProperties(expectedRep, ['src']);
+        var expectedRespStripped = jsonHelpers.deleteProperties(expectedResponse, ['src']);
 
         myRequest.method = 'GET';
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + variantPid2 + '&uuid=' + variantUuid2;
 
         return request(myRequest)
-            .then(function (removeItemRsp) {
-                assert.equal(removeItemRsp.statusCode, 200, 'Expected statusCode to be 200.');
+            .then(function (removedItemResponse) {
+                assert.equal(removedItemResponse.statusCode, 200, 'Expected statusCode to be 200.');
 
-                var bodyAsJson = JSON.parse(removeItemRsp.body);
+                var bodyAsJson = JSON.parse(removedItemResponse.body);
 
                 // ----- strip out all "src" properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src']);
 
-                assert.deepEqual(actualRespBodyStripped, expectedRepStripped, 'Actual response not as expected.');
+                assert.deepEqual(actualRespBodyStripped, expectedRespStripped, 'Actual response not as expected.');
 
                 // Verify path to image source
                 var prodImageSrc1 = bodyAsJson.items[0].image.src;
