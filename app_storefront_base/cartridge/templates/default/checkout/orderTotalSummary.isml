@@ -1,0 +1,40 @@
+<!--- Subtotal --->
+<div class="row">
+    <div class="col-xs-6">
+        <p class="order-receipt-label">${Resource.msg('label.order.subtotal','confirmation', null)}</p>
+    </div>
+    <div class="col-xs-6">
+        <p class="text-xs-right pricing">${pdict.totals.subTotal}</p>
+    </div>
+</div>
+
+<!--- Shipping Cost --->
+<div class="row">
+    <div class="col-xs-6">
+        <p class="order-receipt-label">${Resource.msg('label.order.shipping.cost','confirmation', null)}</p>
+    </div>
+    <div class="col-xs-6">
+        <p class="text-xs-right pricing">${pdict.totals.totalShippingCost}</p>
+    </div>
+</div>
+
+<!--- Sales Tax --->
+<div class="row">
+    <div class="col-xs-6">
+        <p class="order-receipt-label">${Resource.msg('label.order.sales.tax','confirmation', null)}</p>
+    </div>
+    <div class="col-xs-6">
+        <p class="text-xs-right pricing">${pdict.totals.totalTax}</p>
+    </div>
+</div>
+
+<!--- Grand Total --->
+<div class="row grand-total">
+    <div class="col-xs-6">
+        <p class="order-receipt-label">${Resource.msg('label.order.grand.total','confirmation', null)}</p>
+    </div>
+    <div class="col-xs-6">
+        <p class="text-xs-right">${pdict.totals.grandTotal}</p>
+    </div>
+</div>
+

@@ -8,7 +8,10 @@ var createApiBasket = function () {
         billingAddress: true,
         defaultShipment: {
             shippingAddress: true
-        }
+        },
+        orderNo: 'some String',
+        creationDate: 'some Date',
+        customerEmail: 'some Email'
     };
 };
 
@@ -25,6 +28,9 @@ describe('Order', function () {
         assert.equal(result.totals, null);
         assert.equal(result.items, null);
         assert.equal(result.steps, null);
+        assert.equal(result.orderNumber, null);
+        assert.equal(result.creationDate, null);
+        assert.equal(result.orderEmail, null);
     });
 
     it('should handle a basket object ', function () {
@@ -47,6 +53,9 @@ describe('Order', function () {
                 iscompleted: true
             }
         });
+        assert.equal(result.orderNumber, 'some String');
+        assert.equal(result.creationDate, 'some Date');
+        assert.equal(result.orderEmail, 'some Email');
     });
 
     it('should handle a basket that does not have a defaultShipment', function () {

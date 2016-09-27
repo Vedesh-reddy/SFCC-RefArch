@@ -79,7 +79,8 @@ function getSelectedShippingMethod(shippingMethod) {
     return {
         ID: shippingMethod.ID,
         displayName: shippingMethod.displayName,
-        description: shippingMethod.description
+        description: shippingMethod.description,
+        estimatedArrivalTime: shippingMethod.custom.estimatedArrivalTime
     };
 }
 

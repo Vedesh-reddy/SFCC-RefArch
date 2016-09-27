@@ -56,7 +56,10 @@ var defaultShipment = {
     shippingMethod: {
         ID: '001',
         displayName: 'Ground',
-        description: 'Order received within 7-10 business days'
+        description: 'Order received within 7-10 business days',
+        custom: {
+            estimatedArrivalTime: '7-10 Business Days'
+        }
     }
 };
 

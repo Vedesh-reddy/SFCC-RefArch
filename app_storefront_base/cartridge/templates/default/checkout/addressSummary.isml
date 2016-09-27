@@ -1,0 +1,15 @@
+<address>
+    ${address.firstName} ${address.lastName} <br>
+    ${address.address1} <br>
+    <isif condition="${address.address2)}">
+        ${address.address2)} <br>
+    </isif>
+    <isif condition="${address.city}">
+        ${address.city},
+    </isif>
+    <isif condition="${address.stateCode}">
+        ${address.stateCode}
+    </isif>
+    ${address.postalCode} <br>
+    ${pdict.orderEmail}
+</address>

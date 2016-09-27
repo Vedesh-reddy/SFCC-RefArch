@@ -1,0 +1,29 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('~/cartridge/scripts/assets.js');
+        assets.addCss('/css/orderConfirmation.css');
+    </isscript>
+    <!--- Replace image once UX has given images --->
+    <div class="hero" style="background-image: url(http://www.pixelstalk.net/wp-content/uploads/2016/08/Background-HD-Wallpapers.jpg)">
+        <h1 class="page-title">${Resource.msg('title.thank.you.page','confirmation',null)}</h1>
+    </div>
+    <div class="container receipt">
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3 offset-md-0">
+                <h2>${Resource.msg('msg.placed.order.thank.you','confirmation',null)}</h2>
+                <p>${Resource.msgf('info.receive.email.confirmation', 'confirmation', null, pdict.orderEmail)}</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 offset-sm-3 offset-md-0 push-md-6">
+                <isinclude template="checkout/confirmation/confirmationCreateAccount" />
+            </div>
+            <div class="col-sm-6 offset-sm-3 offset-md-0 pull-md-6">
+                <isinclude template="checkout/confirmation/confirmationDetails" />
+                <a href="${URLUtils.url('Home-Show')}" class="btn btn-primary btn-block" role="button" aria-pressed="true">
+                    ${Resource.msg('button.continue.shopping','confirmation',null)}
+                </a> <br>
+            </div>
+        </div>
+    </div>
+</isdecorate>
