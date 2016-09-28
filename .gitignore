@@ -9,3 +9,4 @@ cartridges.zip
 dw.json
 sitegenesisdata/
 .DS_Store
+test/appium/webdriver/config.json

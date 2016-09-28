@@ -1,7 +1,7 @@
 'use strict';
 
 import { assert } from 'chai';
-import * as productDetailPage from '../pageObjects/productDetails';
+import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 
 describe('Product Details - Product Item', () => {
     const variantId = 708141677197;
