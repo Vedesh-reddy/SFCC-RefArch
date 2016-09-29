@@ -45,7 +45,7 @@ to run tests in integration suite:
 `npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/*`
 
 # Running Appium UI tests:
-Thse tests can only be run locally with Appium and Xcode installed; currently we have not configure for Jenkins to run these tests. Ideally we would like to use sourcelabs to run these tests instead of installing Appium on Jenkin machine. However, we are still waiting for a valid sourcelabs id. 
+These tests can only be run locally with Appium and Xcode installed; currently we have not configure for Jenkins to run these tests. Ideally we would like to use sourcelabs to run these tests instead of installing Appium on Jenkin machine. However, we are still waiting for a valid sourcelabs id. 
 Follow this instruction to install Appium and Xcode:
 [How to install Appium](https://intranet.demandware.com/confluence/display/ENG/How+to+Configure+Appium+for+MFSG)
 
