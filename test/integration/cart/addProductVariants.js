@@ -1,7 +1,7 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
-
+var jsonHelpers = require('../helpers/jsonUtils');
 
 describe('Add Product variants to cart', function () {
     this.timeout(5000);
@@ -10,13 +10,14 @@ describe('Add Product variants to cart', function () {
     // and there is no service call to get cart that returns JSON. In the future when
     // Cart-AddProduct is enhanced to return mini-cart, this test will need to be enhanced
     // to accomodate the change.
+    // For now, use Cart-SelectShippingMethod te the cart content back.
     it('should add variants of different and same products, returns total quantity of added items', function () {
         var cookieJar = request.jar();
 
-        // The postRequest object will be reused through out this file. The 'jar' property will be set once.
+        // The myRequest object will be reused through out this file. The 'jar' property will be set once.
         // The 'url' property will be updated on every request to set the product ID (pid) and quantity.
         // All other properties remained unchanged.
-        var postRequest = {
+        var myRequest = {
             url: '',
             method: 'POST',
             rejectUnauthorized: false,
@@ -25,41 +26,46 @@ describe('Add Product variants to cart', function () {
         };
 
         var cookieString;
+        var hostname = config.baseUrl.split('/')[2];
 
         var totalQty;
 
-        // ----- adding product #1:
-        var variantPid = '701643421084';
+        var variantPid1 = '701643421084';
         var qty1 = 2;
+        var variantPid2 = '701642923459';
+        var qty2 = 1;
+        var variantPid3 = '013742000252';
+        var qty3 = 11;
+        var variantPid4 = '029407331258';
+        var qty4 = 3;
+
+        // ----- adding product #1:
         totalQty = qty1;
-        postRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid + '&quantity=' + qty1;
+        myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
 
         var expectedResBody = {
             'quantityTotal': totalQty
         };
 
-        return request(postRequest)
+        return request(myRequest)
             .then(function (response) {
                 assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var bodyAsJson = JSON.parse(response.body);
                 assert.deepEqual(bodyAsJson, expectedResBody, 'Actual response body from adding product 1 not as expected.');
 
-                cookieString = cookieJar.getCookieString(postRequest.url);
+                cookieString = cookieJar.getCookieString(myRequest.url);
             })
 
             // ----- adding product #2, a different variant of same product 1:
             .then(function () {
-                var variantPid2 = '701642923459';
-                var qty2 = 1;
                 totalQty += qty2;
-
-                postRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid2 + '&quantity=' + qty2;
+                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid2 + '&quantity=' + qty2;
 
                 var cookie = request.cookie(cookieString);
-                cookieJar.setCookie(cookie, postRequest.url);
+                cookieJar.setCookie(cookie, myRequest.url);
 
-                return request(postRequest);
+                return request(myRequest);
             })
 
             // Handle response from request #2
@@ -76,12 +82,9 @@ describe('Add Product variants to cart', function () {
 
             // ----- adding product #3:
             .then(function () {
-                var variantPid3 = '013742000252';
-                var qty3 = 11;
                 totalQty += qty3;
-
-                postRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid3 + '&quantity=' + qty3;
-                return request(postRequest);
+                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid3 + '&quantity=' + qty3;
+                return request(myRequest);
             })
 
             // Handle response from request #3
@@ -98,12 +101,9 @@ describe('Add Product variants to cart', function () {
 
             // ----- adding product #4:
             .then(function () {
-                var variantPid4 = '029407331258';
-                var qty4 = 3;
                 totalQty += qty4;
-
-                postRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid4 + '&quantity=' + qty4;
-                return request(postRequest);
+                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid4 + '&quantity=' + qty4;
+                return request(myRequest);
             })
 
             // Handle response from request #4
@@ -116,6 +116,279 @@ describe('Add Product variants to cart', function () {
 
                 var bodyAsJson4 = JSON.parse(response4.body);
                 assert.deepEqual(bodyAsJson4, expectedResBody4, 'Actual response body from adding product 4 not as expected.');
-            });
+            })
+
+            // ----- select a shipping method in order to verify cart content. Currently this is no direct way
+            // ----- to get cart content.
+            .then(function () {
+                var shipMethodId = '001';   // 001 = Ground
+
+                myRequest.method = 'GET';
+                myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
+                return request(myRequest);
+            })
+
+            // ----- Verify cart content
+                .then(function (response5) {
+                    assert.equal(response5.statusCode, 200, 'Expected statusCode to be 200 for getting cart content.');
+
+                    var bodyAsJson = JSON.parse(response5.body);
+
+                    // Leaving the commented out 'src' and 'UUID' properties here for reference because it should
+                    // be includedin the response but the string can not be used for comparison as it because
+                    // the path has radomly generated code.
+                    var expectedResponse = {
+                        'locale': {
+                            'countryCode': 'US',
+                            'name': 'United States',
+                            'continent': 'northamerica',
+                            'availableLocales': [
+                                'en_US'
+                            ],
+                            'currencyCode': 'USD',
+                            'tax': 'net'
+                        },
+                        'actionUrls': {
+                            'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
+                            'updateQuantityUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-UpdateQuantity',
+                            'selectShippingUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-SelectShippingMethod'
+                        },
+                        'numOfShipments': 1,
+                        'totals': {
+                            'subTotal': '$381.97',
+                            'grandTotal': '$527.06',
+                            'totalTax': '$25.10',
+                            'totalShippingCost': '$119.99'
+                        },
+                        'shippingMethods': [
+                            {
+                                'description': 'Order received within 7-10 business days',
+                                'displayName': 'Ground',
+                                'ID': '001',
+                                'shippingCost': '$9.99',
+                                'estimatedArrivalTime': '7-10 Business Days'
+                            },
+                            {
+                                'description': 'Order received in 2 business days',
+                                'displayName': '2-Day Express',
+                                'ID': '002',
+                                'shippingCost': '$15.99',
+                                'estimatedArrivalTime': '2 Business Days'
+                            },
+                            {
+                                'description': 'Order received the next business day',
+                                'displayName': 'Overnight',
+                                'ID': '003',
+                                'shippingCost': '$21.99',
+                                'estimatedArrivalTime': 'Next Day'
+                            },
+                            {
+                                'description': 'Store Pickup',
+                                'displayName': 'Store Pickup',
+                                'ID': '005',
+                                'shippingCost': '$0.00',
+                                'estimatedArrivalTime': null
+                            },
+                            {
+                                'description': 'Orders shipped outside continental US received in 2-3 business days',
+                                'displayName': 'Express',
+                                'ID': '012',
+                                'shippingCost': '$28.99',
+                                'estimatedArrivalTime': '2-3 Business Days'
+                            },
+                            {
+                                'description': 'Order shipped by USPS received within 7-10 business days',
+                                'displayName': 'USPS',
+                                'ID': '021',
+                                'shippingCost': '$9.99',
+                                'estimatedArrivalTime': '7-10 Business Days'
+                            }
+                        ],
+                        'selectedShippingMethod': '001',
+                        'items': [
+                            {
+                                'type': 'Product',
+                                'url': 'http://' + hostname + '/s/SiteGenesis/3/4-sleeve-v-neck-top/' + variantPid1 + '.html?lang=en_US',
+                                'variationAttributes': [
+                                    {
+                                        'displayName': 'Color',
+                                        'displayValue': 'Icy Mint'
+                                    },
+                                    {
+                                        'displayName': 'Size',
+                                        'displayValue': 'XS'
+                                    }
+                                ],
+                                'quantity': qty1,
+                                'quantityOptions': {
+                                    'minOrderQuantity': 1,
+                                    'maxOrderQuantity': 10
+                                },
+                                'priceModelPricing': {
+                                    'value': 24,
+                                    'currency': 'USD',
+                                    'formatted': '$24.00',
+                                    'type': 'standard'
+                                },
+                                'priceTotal': '$48.00',
+                                'name': '3/4 Sleeve V-Neck Top',
+                                'isBundle': false,
+                                'isMaster': false,
+                                'isProductSet': false,
+                                'isVariant': true,
+                                'isBonusProductLineItem': false,
+                                'isGift': false,
+                                'isOrderable': true,
+                                'productID': variantPid1,
+                                // 'UUID': 'some UUID',
+                                'image': {
+                                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dwb2c2588a/images/small/PG.10221714.JJ8UTXX.PZ.jpg',
+                                    'alt': '3/4 Sleeve V-Neck Top, Icy Mint, small',
+                                    'title': '3/4 Sleeve V-Neck Top, Icy Mint'
+                                }
+                            },
+                            {
+                                'type': 'Product',
+                                'url': 'http://' + hostname + '/s/SiteGenesis/3/4-sleeve-v-neck-top/' + variantPid2 + '.html?lang=en_US',
+                                'variationAttributes': [
+                                    {
+                                        'displayName': 'Color',
+                                        'displayValue': 'Butter'
+                                    },
+                                    {
+                                        'displayName': 'Size',
+                                        'displayValue': 'M'
+                                    }
+                                ],
+                                'quantity': qty2,
+                                'quantityOptions': {
+                                    'minOrderQuantity': 1,
+                                    'maxOrderQuantity': 10
+                                },
+                                'priceModelPricing': {
+                                    'value': 24,
+                                    'currency': 'USD',
+                                    'formatted': '$24.00',
+                                    'type': 'standard'
+                                },
+                                'priceTotal': '$24.00',
+                                'name': '3/4 Sleeve V-Neck Top',
+                                'isBundle': false,
+                                'isMaster': false,
+                                'isProductSet': false,
+                                'isVariant': true,
+                                'isBonusProductLineItem': false,
+                                'isGift': false,
+                                'isOrderable': true,
+                                'productID': variantPid2,
+                                // 'UUID': 'some UUID',
+                                'image': {
+                                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dwef3c390f/images/small/PG.10221714.JJ370XX.PZ.jpg',
+                                    'alt': '3/4 Sleeve V-Neck Top, Butter, small',
+                                    'title': '3/4 Sleeve V-Neck Top, Butter'
+                                }
+                            },
+                            {
+                                'type': 'Product',
+                                'url': 'http://' + hostname + '/s/SiteGenesis/bronze-clip-on-button-earring/' + variantPid3 + '.html?lang=en_US',
+                                'variationAttributes': [
+                                    {
+                                        'displayName': 'Color',
+                                        'displayValue': 'Silver Ox'
+                                    }
+                                ],
+                                'quantity': qty3,
+                                'quantityOptions': {
+                                    'minOrderQuantity': 1,
+                                    'maxOrderQuantity': 11
+                                },
+                                'priceModelPricing': {
+                                    'value': 20,
+                                    'currency': 'USD',
+                                    'formatted': '$20.00',
+                                    'type': 'standard'
+                                },
+                                'priceTotal': '$220.00',
+                                'name': 'Bronze Clip On Button Earring',
+                                'isBundle': false,
+                                'isMaster': false,
+                                'isProductSet': false,
+                                'isVariant': true,
+                                'isBonusProductLineItem': false,
+                                'isGift': false,
+                                'isOrderable': true,
+                                'productID': variantPid3,
+                                // 'UUID': 'some UUID',
+                                'image': {
+                                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dw9cbea184/images/small/PG.60108563.JJNY2XX.PZ.jpg',
+                                    'alt': 'Bronze Clip On Button Earring, Silver Ox, small',
+                                    'title': 'Bronze Clip On Button Earring, Silver Ox'
+                                }
+                            },
+                            {
+                                'type': 'Product',
+                                'url': 'http://' + hostname + '/s/SiteGenesis/solid-silk-tie/' + variantPid4 + '.html?lang=en_US',
+                                'variationAttributes': [
+                                    {
+                                        'displayName': 'Color',
+                                        'displayValue': 'Red'
+                                    }
+                                ],
+                                'quantity': qty4,
+                                'quantityOptions': {
+                                    'minOrderQuantity': 1,
+                                    'maxOrderQuantity': 10
+                                },
+                                'priceModelPricing': {
+                                    'value': 29.99,
+                                    'currency': 'USD',
+                                    'formatted': '$29.99',
+                                    'type': 'standard'
+                                },
+                                'priceTotal': '$89.97',
+                                'name': 'Solid Silk Tie',
+                                'isBundle': false,
+                                'isMaster': false,
+                                'isProductSet': false,
+                                'isVariant': true,
+                                'isBonusProductLineItem': false,
+                                'isGift': false,
+                                'isOrderable': true,
+                                'productID': variantPid4,
+                                // 'UUID': 'some UUID',
+                                'image': {
+                                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dw00caafab/images/small/PG.949432114S.REDSI.PZ.jpg',
+                                    'alt': 'Solid Silk Tie, Red, small',
+                                    'title': 'Solid Silk Tie, Red'
+                                }
+                            }
+                        ],
+                        'numItems': 17,
+                        'resources': {
+                            'numberOfItems': '17 Items',
+                            'emptyCartMsg': 'Your Shopping Cart is Empty'
+                        }
+                    };
+
+                    // ----- strip out all "UUID", "src" properties from the actual response
+                    var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'UUID']);
+                    assert.deepEqual(actualRespBodyStripped, expectedResponse, 'Actual response not as expected.');
+
+                    // verify UUID exist
+                    assert.isNotNull(bodyAsJson.items[0].UUID, 'product 1 does not have UUID in response');
+                    assert.isNotNull(bodyAsJson.items[1].UUID, 'product 2 does not have UUID in response');
+                    assert.isNotNull(bodyAsJson.items[2].UUID, 'product 3 does not have UUID in response');
+                    assert.isNotNull(bodyAsJson.items[3].UUID, 'product 4 does not have UUID in response');
+
+                    // Verify path to image source
+                    var prodImageSrc1 = bodyAsJson.items[0].image.src;
+                    var prodImageSrc2 = bodyAsJson.items[1].image.src;
+                    var prodImageSrc3 = bodyAsJson.items[2].image.src;
+                    var prodImageSrc4 = bodyAsJson.items[3].image.src;
+                    assert.isTrue(prodImageSrc1.endsWith('/images/small/PG.10221714.JJ8UTXX.PZ.jpg'), 'product 1 item image: src not end with /images/small/PG.10221714.JJ8UTXX.PZ.jpg.');
+                    assert.isTrue(prodImageSrc2.endsWith('/images/small/PG.10221714.JJ370XX.PZ.jpg'), 'product 2 item image: src not end with /images/small/PG.10221714.JJ370XX.PZ.jpg.');
+                    assert.isTrue(prodImageSrc3.endsWith('/images/small/PG.60108563.JJNY2XX.PZ.jpg'), 'product 3 item image: src not end with /images/small/PG.60108563.JJNY2XX.PZ.jpg.');
+                    assert.isTrue(prodImageSrc4.endsWith('/images/small/PG.949432114S.REDSI.PZ.jpg'), 'product 4 item image: src not end with /images/small/PG.949432114S.REDSI.PZ.jpg.');
+                });
     });
 });
