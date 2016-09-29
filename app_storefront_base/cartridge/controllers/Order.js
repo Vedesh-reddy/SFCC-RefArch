@@ -41,4 +41,17 @@ server.get('Test', locale, function (req, res, next) {
     next();
 });
 
+server.get('Confirm', locale, function (req, res, next) {
+    // =====================================================
+    // Danger after checkout is complete remove testOrder
+    // TODO Remove testOrder and the everything between the ==== signs
+    var testOrder = require('~/cartridge/scripts/OrderTest');
+    // res.json(testOrder.orderTest(req));
+    res.render('checkout/confirmation/confirmation', testOrder.orderTest(req));
+    // res.render('checkout/confirmation/confirmation', testOrder.getOrderTest(req));
+    // =====================================================
+
+    next();
+});
+
 module.exports = server.exports();

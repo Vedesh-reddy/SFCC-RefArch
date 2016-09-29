@@ -1,0 +1,95 @@
+@import "variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+$receipt-font-size: 0.875rem;
+$receipt-spacing: 0.625em;
+
+.card-block {
+    padding: $receipt-spacing;
+}
+
+.grand-total {
+    font-size: 1rem !important;
+    font-weight: bolder;
+}
+
+.item-attributes {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.order-receipt-label {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.line-item-attributes {
+    font-size: 0.813em !important;
+    margin: 0;
+}
+
+.line-item-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: $darker-gray;
+    font-size: $receipt-font-size;
+    font-weight: bold;
+    margin-bottom: $receipt-spacing;
+}
+
+.product-divider {
+    margin-left: -$receipt-spacing;
+    margin-right: -$receipt-spacing;
+
+    hr {
+        border-top: dashed 1px;
+    }
+}
+
+.line-item-info-divider {
+    margin-left: -$receipt-spacing;
+    margin-right: -$receipt-spacing;
+
+    hr {
+        margin-top: $receipt-spacing;
+        margin-bottom: 0;
+    }
+}
+
+.line-item-pricing-info {
+    margin-bottom: 0;
+}
+
+.line-item-total-text {
+    font-size: 0.813em;
+}
+
+.pricing {
+    font-weight: bolder;
+}
+
+.product-image {
+    width: 5.625em;
+}
+
+.receipt {
+    font-size: $receipt-font-size;
+}
+
+.shipping-method {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.section-label {
+    font-size: $receipt-font-size;
+    font-weight: bolder;
+}
+
+.shipping-method-label {
+    font-size: $receipt-font-size;
+}
