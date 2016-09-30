@@ -1,0 +1,12 @@
+node_modules/
+app_storefront_base/cartridge/static/default/css/
+app_storefront_base/cartridge/static/default/js/
+app_storefront_base/cartridge/static/default/fonts/
+coverage/
+npm-debug.log
+cartridges.zip
+.idea/
+dw.json
+sitegenesisdata/
+.DS_Store
+test/appium/webdriver/config.json
