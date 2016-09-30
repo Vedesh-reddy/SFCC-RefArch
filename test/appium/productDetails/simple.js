@@ -6,15 +6,16 @@ import * as testDataMgr from '../../mocks/testDataMgr/main';
 
 
 describe('Product Details - Product Item', () => {
-    const variantId = '708141677197';
-    const expectedPrimaryImage = 'PG.15J0037EJ.SLABLFB.PZ.jpg';
-    const expectedSecondaryImage = 'PG.15J0037EJ.SLABLFB.BZ.jpg';
+    const variantId = '708141676190';
+    const expectedPrimaryImage = 'PG.15J0037EJ.WHITEFB.PZ.jpg';
+    const expectedSecondaryImage = 'PG.15J0037EJ.WHITEFB.BZ.jpg';
     const nextButton = '.right.carousel-control .icon-next';
     const elementPrimaryImage = '.carousel-item.active .img-fluid';
     const elementImage = '.img-fluid';
 
 
     before(() => {
+        // TODO: should empty Cart before test starts
         var variant = testDataMgr.getProductById(variantId);
         return browser.url(variant.getUrlResourcePath());
     });
@@ -28,8 +29,8 @@ describe('Product Details - Product Item', () => {
 
     it('should display its product name', () => {
         return browser.waitUntil(() => browser.element(productDetailPage.PRODUCT_NAME))
-            .then(() => browser.getText(productDetailPage.PRODUCT_NAME))
-            .then(name => assert.equal(name, 'No-Iron Textured Dress Shirt'));
+            .then(() => browser.getHTML(productDetailPage.PRODUCT_NAME))
+            .then(name => assert.include(name, 'No-Iron Textured Dress Shirt'));
     });
 
     it('should display its product image', () => {
@@ -61,6 +62,6 @@ describe('Product Details - Product Item', () => {
         browser.element('.add-to-cart')
             .click()
             .then(() => browser.getText('.minicart-quantity'))
-            .then(quantity => assert.equal(quantity, '1'))
+            .then(quantity => assert.equal(quantity, '2'))
     );
 });

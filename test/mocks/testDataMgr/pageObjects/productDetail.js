@@ -7,7 +7,7 @@ export const BTN_ADD_TO_CART = '.add-to-cart';
 export const BTN_ADD_ALL_TO_CART = '#add-all-to-cart';
 export const BTN_ADD_TO_WISHLIST = 'a[data-action="wishlist"]';
 export const BTN_ADD_TO_GIFT_REGISTRY = 'a[data-action=gift-registry]';
-const MINI_CART='.minicart-icon';
+export const MINI_CART = '.minicart-icon';
 export const PID = '#pid';
 export const PDP_MAIN = '.pdp-main';
 export const PRICE_LIST = '#product-content .product-price .price-standard';
@@ -22,22 +22,22 @@ export const PRODUCT_THUMBNAILS_IMAGES = '.product-thumbnails img';
 export const PROMOTION_CALLOUT = '.callout-message';
 export const SWATCH_COLOR_ANCHORS = '.swatches.color .swatchanchor';
 
-export function navigateTo (path = '/') {
+export function navigateTo(path = '/') {
     return browser.url(path);
 }
 
-function _addProduct (product, btnAdd) {
+function addProduct(product, btnAdd) {
     return common.addProductVariationToBasket(product, btnAdd);
 }
 
-export function addProductVariationToCart (product) {
-    return _addProduct(product, BTN_ADD_TO_CART, MINI_CART)
+export function addProductVariationToCart(product) {
+    return addProduct(product, BTN_ADD_TO_CART, MINI_CART)
         // To ensure that the product has been added to the cart before proceeding,
         // we need to wait for the Mini-cart to display
     .then(() => browser.waitForVisible(MINI_CART));
 }
 
-export function addProductVariationToWishList (product) {
+export function addProductVariationToWishList(product) {
     return common.addProductVariationToBasket(product, BTN_ADD_TO_WISHLIST)
         // To ensure that the product has been added to the wishlist before proceeding,
         // we need to wait for a selector in the resulting page to display
@@ -63,7 +63,7 @@ export function clickAddToWishListButton() {
  *
  * @returns {Array.<String>}
  */
-export function getDisplayedThumbnailPaths () {
+export function getDisplayedThumbnailPaths() {
     return browser.elements(PRODUCT_THUMBNAILS_IMAGES)
         .then(elements => {
             let thumbnailPaths = [];
@@ -84,6 +84,6 @@ export function getDisplayedThumbnailPaths () {
  * @param {String} url - i.e., https://hostname/[...]/dw8f141f96/images/large/PG.15J0037EJ.WHITEFB.PZ.jpg
  * @returns {String} image path of URL (i.e., large/PG.15J0037EJ.WHITEFB.PZ.jpg)
  */
-export function getImagePath (url) {
+export function getImagePath(url) {
     return url.split('/images/')[1];
 }

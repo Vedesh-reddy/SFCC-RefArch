@@ -11,7 +11,7 @@ export const VARIATION_CONTAINER = '.product-variations';
 export const PRODUCT_PRIMARY_IMAGE = '.primary-image';
 export const PRODUCT_ID = '#QuickViewDialog .product-number [itemprop="productID"]';
 
-function getCssSizeByIdx (idx) {
+function getCssSizeByIdx(idx) {
     return [
         CONTAINER,
         VARIATION_CONTAINER,
@@ -20,7 +20,7 @@ function getCssSizeByIdx (idx) {
     ].join(' ');
 }
 
-export function getCssSizeLinkByIdx (idx) {
+export function getCssSizeLinkByIdx(idx) {
     return getCssSizeByIdx(idx) + ' a';
 }
 
@@ -29,7 +29,7 @@ export function getSizeTextByIdx(sizeIndex) {
         .then(text => text.trim());
 }
 
-export function selectAttributesByVariant (variant) {
+export function selectAttributesByVariant(variant) {
     return common.addProductVariationToBasket(variant, common.BTN_ADD_TO_CART)
         .then(() => browser.waitForVisible('.mini-cart-content', 5000, true))
         .then(() => browser.waitForVisible(CONTAINER, 5000, true));
@@ -48,11 +48,11 @@ export function deselectAllAttributes() {
         });
 }
 
-export function getMasterId () {
+export function getMasterId() {
     return browser.getAttribute('[itemprop=productID]', 'data-masterid');
 }
 
-export function isAttrValueSelected (attrType, idx) {
+export function isAttrValueSelected(attrType, idx) {
     return browser.getAttribute('.swatches.' + attrType + ' li:nth-child(' + idx + ')', 'class')
         .then(cls => cls.indexOf('selected') > -1);
 }

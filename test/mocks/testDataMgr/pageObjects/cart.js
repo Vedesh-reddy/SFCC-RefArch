@@ -36,28 +36,29 @@ export const LAST_VISITED_ITEMS = '.last-visited .search-result-items .grid-tile
 export const LAST_VISITED_ITEM_NAMES = `${LAST_VISITED_ITEMS} .product-name`;
 export const LAST_VISITED_ITEM_PRICES = `${LAST_VISITED_ITEMS} .product-sales-price`;
 export const LAST_VISITED_ITEM_IMAGES = `${LAST_VISITED_ITEMS} .product-image .thumb-link [src]`;
-export const AVAILABILITY_MESSAGE_1 ='.item-quantity-details .is-in-stock'
-export const AVAILABILITY_MESSAGE_2 ='.item-delivery-options .is-in-stock'
+export const AVAILABILITY_MESSAGE_1 = '.item-quantity-details .is-in-stock ';
+export const AVAILABILITY_MESSAGE_2 = '.item-delivery-options .is-in-stock ';
 
 const basePath = '/cart';
 
 // Pseudo private methods
-function _createCssNthCartRow (idx) {
+function createCssNthCartRow(idx) {
     return CART_ITEMS + ':nth-child(' + idx + ')';
 }
 
-export function _createCssNthLineItem (item_idx, attr_idx) {
-    var selector= '.card:nth-child(' + item_idx + ')' + ' .line-item-attributes:nth-child(' + attr_idx + ')';
+export function createCssNthLineItem(itemIdx, attrIdx) {
+    var LINE_ITEM = ' .line-item-attributes';
+    var selector = '.card:nth-child(' + itemIdx + ')' + LINE_ITEM + ':nth-child(' + attrIdx + ')';
     return browser.getText(selector);
 }
 
 // Public methods
-export function navigateTo () {
+export function navigateTo() {
     return browser.url(basePath);
 }
 
-export function removeItemByRow (rowNum) {
-    var linkRemoveItem = _createCssNthCartRow(rowNum) + ' .item-user-actions button[value="Remove"]';
+export function removeItemByRow(rowNum) {
+    var linkRemoveItem = createCssNthCartRow(rowNum) + ' .item-user-actions button[value="Remove"]';
     return browser.click(linkRemoveItem)
         // TODO: Find a way to waitForVisible instead of this pause. When there
         // are more than one item in the cart, the page elements will be the same
@@ -66,46 +67,47 @@ export function removeItemByRow (rowNum) {
         .pause(500);
 }
 
-export function verifyCartEmpty () {
+export function verifyCartEmpty() {
     return browser.isExisting(CART_EMPTY);
 }
 
-export function getItemList () {
+export function getItemList() {
     return browser
         .waitForExist(CART_ITEMS, 5000)
         .elements(CART_ITEMS);
 }
 
-export function getItemImageSrcAttrByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + ' ' + ITEM_IMAGE + ' > img';
+export function getItemImageSrcAttrByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + ' ' + ITEM_IMAGE + ' > img';
     return browser.waitForVisible(selector)
         .getAttribute(selector, 'src');
 }
 
-export function getItemNameByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum);
+export function getItemNameByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum);
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
-export function getItemSkuValueByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + ' .sku .value';
+export function getItemSkuValueByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + ' .sku .value';
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
-export function getItemAttrByRow (rowNum, attr) {
-    var itemAttr = _createCssNthCartRow(rowNum) + ' .attribute[data-attribute="' + attr + '"] .value';
+export function getItemAttrByRow(rowNum, attr) {
+    var itemAttr = createCssNthCartRow(rowNum) + ' .attribute[data-attribute="' + attr + '"] .value';
     return browser.getText(itemAttr);
 }
-//get the quantity in Cart for a particular row
+
+// get the quantity in Cart for a particular row
 export function getQuantityByRow(rowNum) {
-    var selector = [_createCssNthCartRow(rowNum), ITEM_QUANTITY, 'input'].join(' ');
+    var selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY, 'input'].join(' ');
     return browser.getValue(selector);
 }
 
-export function updateQuantityByRow (rowNum, value) {
-    let selector = [_createCssNthCartRow(rowNum), ITEM_QUANTITY, 'input'].join(' ');
+export function updateQuantityByRow(rowNum, value) {
+    let selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY, 'input'].join(' ');
     return browser.waitForVisible(selector)
         .setValue(selector, value)
         .click(BTN_UPDATE_CART)
@@ -114,31 +116,31 @@ export function updateQuantityByRow (rowNum, value) {
         .getValue(selector);
 }
 
-export function getQuantityErrorMessageByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + ' ' +  FRM_QUANTITY_ERROR;
+export function getQuantityErrorMessageByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + ' ' + FRM_QUANTITY_ERROR;
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
-export function doesQuantityErrorMessageExistForRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + ' ' +  FRM_QUANTITY_ERROR;
+export function doesQuantityErrorMessageExistForRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + ' ' + FRM_QUANTITY_ERROR;
     return browser.waitForVisible(selector, 500, true)
         .then(() => browser.isVisible(selector));
 }
 
-export function getPriceByRow (rowNum) {
-    return browser.getText(_createCssNthCartRow(rowNum) + ' .item-total .price-total');
+export function getPriceByRow(rowNum) {
+    return browser.getText(createCssNthCartRow(rowNum) + ' .item-total .price-total');
 }
 
-export function getSelectPriceByRow (rowNum, selection) {
-    return browser.getText(_createCssNthCartRow(rowNum) + ' ' + selection);
+export function getSelectPriceByRow(rowNum, selection) {
+    return browser.getText(createCssNthCartRow(rowNum) + ' ' + selection);
 }
 
-export function getItemEditLinkByRow (rowNum) {
-    return [_createCssNthCartRow(rowNum), ITEM_DETAILS, '.item-edit-details a'].join(' ');
+export function getItemEditLinkByRow(rowNum) {
+    return [createCssNthCartRow(rowNum), ITEM_DETAILS, '.item-edit-details a'].join(' ');
 }
 
-export function updateAttributesByRow (rowNum, selection) {
+export function updateAttributesByRow(rowNum, selection) {
     return browser.click(getItemEditLinkByRow(rowNum))
         .waitForVisible(productQuickView.CONTAINER)
         // We must deselect all attributes before selecting the new variant choice as the selectable attributes are
@@ -148,56 +150,56 @@ export function updateAttributesByRow (rowNum, selection) {
         .then(() => productQuickView.selectAttributesByVariant(selection));
 }
 
-export function getBundledItemImageByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_IMAGE;
+export function getBundledItemImageByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_IMAGE;
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
-export function getBundledItemNameByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_DETAILS + ' .name';
+export function getBundledItemNameByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_DETAILS + ' .name';
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
-export function getBundledItemNumberByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_DETAILS + ' .itemnumber .value';
+export function getBundledItemNumberByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_DETAILS + ' .itemnumber .value';
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
-export function getBundledItemDetailsImageSrcAttrByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_DETAILS + ' > a > img';
+export function getBundledItemDetailsImageSrcAttrByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_DETAILS + ' > a > img';
     return browser.waitForVisible(selector)
         .getAttribute(selector, 'src');
 }
 
-export function getBundledItemQuantityByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_QUANTITY + ' .bundleqtyincluded';
+export function getBundledItemQuantityByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_QUANTITY + ' .bundleqtyincluded';
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
-export function getBundledItemQuantityTagNameByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_QUANTITY + ' .bundleqtyincluded';
+export function getBundledItemQuantityTagNameByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' ' + ITEM_QUANTITY + ' .bundleqtyincluded';
     return browser.waitForVisible(selector)
         .getTagName(selector);
 }
 
-export function getBundledItemUnitPriceByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' .item-price';
+export function getBundledItemUnitPriceByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' .item-price';
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
-export function getBundledItemTotalPriceByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' .item-total';
+export function getBundledItemTotalPriceByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + BUNDLED_ITEM + ' .item-total';
     return browser.waitForVisible(selector)
         .getText(selector);
 }
 
 function getAddToWishListSelectorByRow(rowNum) {
-    return `${_createCssNthCartRow(rowNum)} ${ADD_TO_WISHLIST_LINK}`;
+    return `${createCssNthCartRow(rowNum)} ${ADD_TO_WISHLIST_LINK}`;
 }
 
 export function addItemToWishlistByRow(rowNum) {
@@ -213,7 +215,7 @@ export function getAddToWishlistLabelByRow(rowNum) {
 }
 
 export function getInWishlistTextByRow(rowNum) {
-    const inWishlist =  `${_createCssNthCartRow(rowNum)} ${IN_WISHLIST}`;
+    const inWishlist = `${createCssNthCartRow(rowNum)} ${IN_WISHLIST}`;
 
     return browser.getText(inWishlist);
 }
@@ -222,7 +224,7 @@ export function getInWishlistTextByRow(rowNum) {
  * Retrieves the Cart's Sub-total value
  *
  */
-export function getOrderSubTotal () {
+export function getOrderSubTotal() {
     return browser.getText(ORDER_SUBTOTAL);
 }
 
@@ -230,8 +232,8 @@ export function getOrderSubTotal () {
  * Redirects the browser to the Cart page and empties the Cart.
  *
  */
-export function emptyCart () {
-    return navigateTo()
+export function emptyCart() {
+    return browser.navigateTo()
         .then(() => browser.elements('.item-quantity input'))
         .then(items => {
             if (items.value.length) {
@@ -241,6 +243,7 @@ export function emptyCart () {
 
                 return browser.click(BTN_UPDATE_CART);
             }
+            return Promise.resolve();
         })
         // There are some products, like Gift Certificates, whose
         // quantities cannot be changed in the Cart. For these, we

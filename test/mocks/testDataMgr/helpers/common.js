@@ -74,28 +74,27 @@ export function uncheckCheckbox(selector) {
 }
 
 
-export function selectAttributeByIndex(attributeName, index, deselect) {
+export function selectAttributeByIndex(attributeName, index) {
     let selector = '[data-attr = ' + attributeName + '] a:nth-child(' + index + ') span';
     return browser.waitForVisible(selector)
     // TODO:Before clicking on an attribute value, we must check whether it has already been selected.
         .then(() => {
             return browser.click(selector)
                 .waitForVisible('[data-attr = ' + attributeName + ']');
-        })
-    return Promise.resolve();
-};
+        });
+}
 
-export function selectAttributeByDropDown (attributeName, index, deselect) {
-    let selector = '.select-'+ attributeName;
+export function selectAttributeByDropDown(attributeName, index) {
+    let selector = '.select-' + attributeName;
     return browser.waitForVisible(selector)
         .then(() => browser.selectByIndex(selector, index))
-        .then(() => browser.pause(10000))
+        .then(() => browser.pause(10000));
 }
 
-function isAttributeSelected(selector) {
-    return browser.getAttribute(selector, 'data-selected')
-        .then(selected => Promise.resolve(selected));
-}
+// function isAttributeSelected(selector) {
+//     return browser.getAttribute(selector, 'data-selected')
+//         .then(selected => Promise.resolve(selected));
+// }
 
 /**
  * Adds a Product Variation to a Basket
@@ -130,7 +129,7 @@ export function addProductVariationToBasket(product, btnAdd) {
         })
         .then(() => {
             return browser.waitForEnabled(btnAdd, 3000)
-                .click(btnAdd)
+                .click(btnAdd);
         })
         .then(() => Promise.resolve());
 }

@@ -1,6 +1,6 @@
 'use strict';
 
-import {assert} from 'chai';
+import { assert } from 'chai';
 import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
@@ -42,6 +42,7 @@ describe('Cart - Simple', () => {
     };
 
     before(() => {
+        // TODO: should empty Cart before test starts
         return testDataMgr.load()
             .then(() => {
                 productVariationMaster = testDataMgr.getProductVariationMaster();
@@ -76,7 +77,7 @@ describe('Cart - Simple', () => {
     it('should display the correct number of rows', () => {
         cartPage
             .getItemList()
-            .then(rows => assert.equal(1, rows.value.length))
+            .then(rows => assert.equal(1, rows.value.length));
     });
 
     it('should display the correct name', () => {
@@ -89,26 +90,22 @@ describe('Cart - Simple', () => {
     it('should display the correct color', () => {
         const expectedColor = 'Color: Slate';
         return cartPage
-            ._createCssNthLineItem(1, 1)
+            .createCssNthLineItem(1, 1)
             .then(color => assert.equal(color, expectedColor));
     });
 
     it('should display the correct size', () => {
         const expectedSize = 'Size: 14 1/2';
         return cartPage
-            ._createCssNthLineItem(1, 2)
+            .createCssNthLineItem(1, 2)
             .then(size => assert.equal(size, expectedSize));
     });
 
     it('should display the correct width', () => {
         const expectedWidth = 'Width: 32/33';
         return cartPage
-            ._createCssNthLineItem(1, 3)
+            .createCssNthLineItem(1, 3)
             .then(width => assert.equal(width, expectedWidth));
     });
-
-
-
-
-})
+});
 
