@@ -74,30 +74,27 @@ export function uncheckCheckbox(selector) {
 }
 
 
-export function selectAttributeByIndex(attributeName, index, deselect) {
-    let selector = '.swatches.' + attributeName + ' li:nth-child(' + index + ')';
+export function selectAttributeByIndex(attributeName, index) {
+    let selector = '[data-attr = ' + attributeName + '] a:nth-child(' + index + ') span';
     return browser.waitForVisible(selector)
-        // Before clicking on an attribute value, we must check whether it has already been selected.
-        // Clicking on an already selected value will deselect it.
-        .then(() => isAttributeSelected(selector))
-        .then(isAlreadySelected => {
-            if (deselect && isAlreadySelected) {
-                return browser.waitForVisible('.loader', 500, true)
-                    .element(selector + ' a')
-                    .click()
-                    .waitForVisible('.swatches.' + attributeName + ' .selected-value', 5000, true);
-            } else if (!isAlreadySelected) {
-                return browser.click(selector + ' a')
-                    .waitForVisible('.swatches.' + attributeName + ' .selected-value');
-            }
-            return Promise.resolve();
+    // TODO:Before clicking on an attribute value, we must check whether it has already been selected.
+        .then(() => {
+            return browser.click(selector)
+                .waitForVisible('[data-attr = ' + attributeName + ']');
         });
 }
 
-function isAttributeSelected(selector) {
-    return browser.getAttribute(selector, 'class')
-        .then(classes => Promise.resolve(classes.indexOf('selectable') > -1 && classes.indexOf('selected') > -1));
+export function selectAttributeByDropDown(attributeName, index) {
+    let selector = '.select-' + attributeName;
+    return browser.waitForVisible(selector)
+        .then(() => browser.selectByIndex(selector, index))
+        .then(() => browser.pause(10000));
 }
+
+// function isAttributeSelected(selector) {
+//     return browser.getAttribute(selector, 'data-selected')
+//         .then(selected => Promise.resolve(selected));
+// }
 
 /**
  * Adds a Product Variation to a Basket
@@ -120,20 +117,20 @@ export function addProductVariationToBasket(product, btnAdd) {
         })
         .then(() => {
             if (product.has('sizeIndex')) {
-                return selectAttributeByIndex('size', product.get('sizeIndex'));
+                return selectAttributeByDropDown('size', product.get('sizeIndex'));
             }
             return Promise.resolve();
         })
         .then(() => {
             if (product.has('widthIndex')) {
-                return selectAttributeByIndex('width', product.get('widthIndex'));
+                return selectAttributeByDropDown('width', product.get('widthIndex'));
             }
             return Promise.resolve();
         })
-        .then(() => browser.waitForVisible('.loader-bg', 5000, true)
-            .waitForEnabled(btnAdd)
-            .click(btnAdd)
-        )
+        .then(() => {
+            return browser.waitForEnabled(btnAdd, 3000)
+                .click(btnAdd);
+        })
         .then(() => Promise.resolve());
 }
 
