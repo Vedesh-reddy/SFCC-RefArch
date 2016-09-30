@@ -2,18 +2,14 @@
 
 import {assert} from 'chai';
 import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
-import * as common from '../../mocks/testDataMgr/helpers/common';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
-import * as productQuickViewPage from '../../mocks/testDataMgr/pageObjects/productQuickView';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 import * as products from '../../mocks/testDataMgr/products';
-
 
 describe('Cart - Simple', () => {
     let catalog;
     let productVariationMaster;
     let resourcePath;
-    let itemRow = 1;
     let variant1 = {
         instance: undefined,
         color: {
@@ -43,16 +39,6 @@ describe('Cart - Simple', () => {
             index: undefined,
             displayValue: undefined
         }
-    };
-
-    //This price is after updated the product quantity the new total
-    let updatedPrice = {
-        'x_default': '$149.97',
-        'en_GB': '£95.97',
-        'fr_FR': '107,97 €',
-        'it_IT': '€ 107,97',
-        'ja_JP': '¥ 18,084',
-        'zh_CN': '¥960.00'
     };
 
     before(() => {
@@ -87,11 +73,41 @@ describe('Cart - Simple', () => {
             .then(() => cartPage.navigateTo());
     });
 
-    it('should display the correct number of rows', () =>
+    it('should display the correct number of rows', () => {
         cartPage
             .getItemList()
             .then(rows => assert.equal(1, rows.value.length))
-    );
+    });
+
+    it('should display the correct name', () => {
+        const expectedProductName = 'No-Iron Textured Dress Shirt';
+        return cartPage
+            .getItemNameByRow(1)
+            .then(name => assert.equal(name, expectedProductName));
+    });
+
+    it('should display the correct color', () => {
+        const expectedColor = 'Color: Slate';
+        return cartPage
+            ._createCssNthLineItem(1, 1)
+            .then(color => assert.equal(color, expectedColor));
+    });
+
+    it('should display the correct size', () => {
+        const expectedSize = 'Size: 14 1/2';
+        return cartPage
+            ._createCssNthLineItem(1, 2)
+            .then(size => assert.equal(size, expectedSize));
+    });
+
+    it('should display the correct width', () => {
+        const expectedWidth = 'Width: 32/33';
+        return cartPage
+            ._createCssNthLineItem(1, 3)
+            .then(width => assert.equal(width, expectedWidth));
+    });
+
+
 
 
 })

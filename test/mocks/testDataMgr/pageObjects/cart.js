@@ -10,7 +10,7 @@ export const BTN_SEARCH_FOR_STORE = '.ui-dialog-buttonset button[role*=button]';
 export const BTN_SELECT_STORE = '.select-store-button';
 export const BTN_SELECT_STORE_CONTINUE = '.ui-dialog-buttonset button:nth-of-type(2)';
 export const CART_EMPTY = '.cart-empty';
-export const CART_ITEMS = '.item-list tbody tr';
+export const CART_ITEMS = '.line-item-name';
 export const CHANGE_LOCATION = '.ui-dialog-buttonset button:nth-of-type(1)';
 export const COUPON_CODE = '#dwfrm_cart_couponCode';
 export const COUPON_APPLIED_LABEL = '.cartcoupon .label';
@@ -46,6 +46,11 @@ function _createCssNthCartRow (idx) {
     return CART_ITEMS + ':nth-child(' + idx + ')';
 }
 
+export function _createCssNthLineItem (item_idx, attr_idx) {
+    var selector= '.card:nth-child(' + item_idx + ')' + ' .line-item-attributes:nth-child(' + attr_idx + ')';
+    return browser.getText(selector);
+}
+
 // Public methods
 export function navigateTo () {
     return browser.url(basePath);
@@ -78,7 +83,7 @@ export function getItemImageSrcAttrByRow (rowNum) {
 }
 
 export function getItemNameByRow (rowNum) {
-    let selector = _createCssNthCartRow(rowNum) + ' .name';
+    let selector = _createCssNthCartRow(rowNum);
     return browser.waitForVisible(selector)
         .getText(selector);
 }

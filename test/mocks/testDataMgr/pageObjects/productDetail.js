@@ -3,11 +3,11 @@
 import * as common from '../helpers/common';
 import * as wishListPage from './wishList';
 
-export const BTN_ADD_TO_CART = '#add-to-cart';
+export const BTN_ADD_TO_CART = '.add-to-cart';
 export const BTN_ADD_ALL_TO_CART = '#add-all-to-cart';
 export const BTN_ADD_TO_WISHLIST = 'a[data-action="wishlist"]';
 export const BTN_ADD_TO_GIFT_REGISTRY = 'a[data-action=gift-registry]';
-const MINI_CART = '.mini-cart-content';
+const MINI_CART='.minicart-icon';
 export const PID = '#pid';
 export const PDP_MAIN = '.pdp-main';
 export const PRICE_LIST = '#product-content .product-price .price-standard';
@@ -15,8 +15,6 @@ export const PRICE_SALE = '#product-content .product-price .price-sales';
 export const PRODUCT_SET_LIST = '.product-set-list .product-number';
 export const PRODUCT_SET_TOTAL_PRICE = '.product-detail .product-add-to-cart .salesprice';
 export const PRODUCT_SET_ITEM_VARIATIONS = '.product-set-item .product-variations';
-//export const PRIMARY_IMAGE = '.primary-image';
-//export const PRODUCT_NAME = '.product-detail > .product-name';
 export const PRODUCT_NAME = '.product-detail .product-name.hidden-md-up';
 export const PRIMARY_IMAGE = '.carousel-item.active';
 export const PRODUCT_NUMBER_LABEL = '#product-content .product-number';

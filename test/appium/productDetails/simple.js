@@ -2,17 +2,21 @@
 
 import { assert } from 'chai';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
+import * as testDataMgr from '../../mocks/testDataMgr/main';
+
 
 describe('Product Details - Product Item', () => {
-    const variantId = 708141677197;
-    const basePath = '/en_US/Product-Show/?pid=708141677197';
+    const variantId = '708141677197';
     const expectedPrimaryImage = 'PG.15J0037EJ.SLABLFB.PZ.jpg';
     const expectedSecondaryImage = 'PG.15J0037EJ.SLABLFB.BZ.jpg';
     const nextButton = '.right.carousel-control .icon-next';
     const elementPrimaryImage = '.carousel-item.active .img-fluid';
     const elementImage = '.img-fluid';
+
+
     before(() => {
-        return browser.url(basePath);
+        var variant = testDataMgr.getProductById(variantId);
+        return browser.url(variant.getUrlResourcePath());
     });
 
     it('should display its product ID', () => {
