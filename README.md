@@ -51,4 +51,10 @@ Follow this instruction to install Appium and Xcode:
 
 Appium UI Tests are located at ../mfsg/test/Appium
 
-`npm run test:appium -- --url http://dev02-lab03b-dw.demandware.net/on/demandware.store/Sites-SiteGenesis-Site/`
+`npm run test:appium -- --url http://dev02-lab03b-dw.demandware.net/s/SiteGenesis`
+
+Note : always use the pretty storefront url when writing and running UI tests. 
+
+# Running Functional UI tests:
+`npm run test:functional -- --url http://dev02-lab03b-dw.demandware.net/s/SiteGenesis --chrome`
+Note : We have proof that the same tests can be applied to both Appium and Functional tests, the only time we might run into issues is when certain element is hidden on certain size of screen and visible on another size of screeen, then we will need to compile a different selector to accormodate that. 
