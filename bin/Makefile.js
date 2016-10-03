@@ -10,7 +10,7 @@ var fs = require('fs');
 var path = require('path');
 
 target.browserify = function () {
-    var jsSource = 'app_storefront_base/cartridge/js';
+    var jsSource = 'app_storefront_base/cartridge/client/js';
     var jsDest = 'app_storefront_base/cartridge/static/default/js';
 
     var allJsFiles = ls(path.join(process.cwd(), jsSource, '/*.js'));
