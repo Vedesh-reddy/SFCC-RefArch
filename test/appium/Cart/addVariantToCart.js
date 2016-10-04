@@ -5,6 +5,7 @@ import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 import * as products from '../../mocks/testDataMgr/products';
+import * as Resource from '../../mocks/dw/web/Resource';
 
 describe('Cart - Simple', () => {
     let catalog;
@@ -42,7 +43,6 @@ describe('Cart - Simple', () => {
     };
 
     before(() => {
-        // TODO: should empty Cart before test starts
         return testDataMgr.load()
             .then(() => {
                 productVariationMaster = testDataMgr.getProductVariationMaster();
@@ -106,6 +106,14 @@ describe('Cart - Simple', () => {
         return cartPage
             .createCssNthLineItem(1, 3)
             .then(width => assert.equal(width, expectedWidth));
+    });
+
+    it('should remove item in Cart', () => {
+        var cartEmptyMsg = Resource.msgf('info.cart.empty.msg', 'cart', null);
+        return cartPage.emptyCart()
+            .then(() => browser.waitForVisible(cartPage.CART_EMPTY))
+            .then(() => cartPage.verifyCartEmpty())
+            .then((msg => assert.equal(msg, cartEmptyMsg)));
     });
 });
 

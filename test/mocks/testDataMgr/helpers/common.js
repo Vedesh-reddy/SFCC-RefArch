@@ -88,7 +88,7 @@ export function selectAttributeByDropDown(attributeName, index) {
     let selector = '.select-' + attributeName;
     return browser.waitForVisible(selector)
         .then(() => browser.selectByIndex(selector, index))
-        .then(() => browser.pause(10000));
+        .then(() => browser.pause(3000));
 }
 
 // function isAttributeSelected(selector) {
