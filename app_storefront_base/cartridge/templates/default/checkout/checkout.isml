@@ -1,0 +1,75 @@
+<isdecorate template="common/layout/checkout">
+    <isscript>
+        var assets = require('~/cartridge/scripts/assets.js');
+        assets.addJs('/js/checkout.js');
+        assets.addCss('/css/checkout/checkout.css');
+    </isscript>
+    <h1 class="page-title">${Resource.msg('title.checkout','checkout',null)}</h1>
+    <div class="container">
+        <div class="row hidden-xs-down">
+            <div class="col-xs-12 col-sm-5 offset-sm-7 col-md-4 offset-md-8">
+                <div class="text-xs-center">
+                    <span>${Resource.msg('info.need.help','cart',null)}</span>
+                    <span><a href="tel:${Resource.msg('info.phone.number','common',null)}">${Resource.msg('info.phone.number','common',null)}</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="row hidden-sm-up">
+            <div class="col-xs-12">
+                <span class="grand-total-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.items.totalQuantity)}</span>
+                <span class="grand-total-price">${pdict.totals.subTotal}</span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-7">
+                <isinclude template="checkout/shipping/shipping" />
+                <isinclude template="checkout/shipping/shippingSummary" />
+                <isinclude template="checkout/billing/billing" />
+                <isinclude template="checkout/billing/billingSummary" />
+                <div class="row">
+                    <div class="col-xs-12 next-step-button">
+                        <div>
+                            <button class="btn btn-primary btn-block submit-shipping" type="submit" name="submit" value="submit">
+                                ${Resource.msg('button.next.payment', 'checkout', null)}
+                            </button>
+
+                            <button class="btn btn-primary btn-block submit-payment" type="submit" name="submit" value="submit">
+                                ${Resource.msg('button.next.place.order', 'checkout', null)}
+                            </button>
+
+                            <button class="btn btn-primary btn-block place-order" type="submit" name="submit" value="submit">
+                                ${Resource.msg('button.place.order', 'checkout', null)}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-5 col-md-4 offset-md-1">
+                <div class="card">
+                    <div class="card-header">
+                        <span class="checkout-card-header">${Resource.msg('heading.order.summary', 'checkout', null)}</span>
+                    </div>
+                    <div class="checkout-card-block">
+                        <isinclude template="checkout/orderTotalSummary" />
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-block-spacing">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <span class="order-receipt-label grand-total-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.items.totalQuantity)}</span>
+                            </div>
+                            <div class="col-xs-6">
+                                <span class="grand-total-price">${pdict.totals.subTotal}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-block-spacing">
+                        <isinclude template="checkout/orderProductSummary" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</isdecorate>

@@ -1,0 +1,105 @@
+@import "../variables";
+@import "checkoutComponents";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+$checkout-font-weight: 600;
+
+.arrival-time {
+    white-space: pre;
+}
+
+.billing-address {
+    display: none;
+}
+
+.checkout-card-block {
+    padding: 0.625em;
+
+    @include media-breakpoint-up(md) {
+        padding: 1.25em;
+    }
+}
+
+.credit-card-form {
+    display: none;
+}
+
+.checkout-card-header {
+    font-size: 1.25em;
+    font-weight: $checkout-font-weight;
+}
+
+.checkout-checkbox {
+    font-size: 0.875em;
+}
+
+.checkout-summary-header {
+    display: inline;
+}
+
+.edit-button {
+    color: $brand-color;
+    float: right;
+}
+
+.grand-total-label {
+    font-weight: $checkout-font-weight;
+}
+
+.grand-total-price {
+    float: right;
+    font-weight: $checkout-font-weight;
+}
+
+.next-step-button {
+    position: fixed;
+    bottom: 0;
+    z-index: 1;
+    padding-right: 0;
+    padding-left: 0;
+
+    @include media-breakpoint-down(xs) {
+        div {
+            padding: $spacer;
+            background-color: $white;
+        }
+    }
+
+    @include media-breakpoint-up(sm) {
+        position: static;
+        padding-right: 0.938em;
+        padding-left: 0.938em;
+    }
+}
+
+.section-title {
+    font-weight: $checkout-font-weight;
+}
+
+.shipping-methods {
+    font-size: 1.125em;
+    font-weight: $checkout-font-weight;
+}
+
+.shipping-method-option {
+    font-size: 0.938em;
+}
+
+.shipping-method-pricing {
+    font-weight: bolder;
+}
+
+.shipping-nav {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.summary-section-label {
+    font-size: 1em;
+    font-weight: $checkout-font-weight;
+}
+
+.summary-details {
+    font-size: 0.938em;
+}

@@ -1,6 +1,6 @@
 <div class="card">
     <h4 class="card-header">${Resource.msg('title.receipt', 'confirmation', null)}</h4>
-    <div class="card-block">
+    <div class="card-block card-block-spacing">
         <p>
             <span class="section-label">${Resource.msg('label.order.number', 'confirmation', null)}</span><br>
             <span>${pdict.orderNumber}</span>
@@ -61,12 +61,12 @@
     </div>
 
     <!--- Product information --->
-    <div class="card-block">
+    <div class="card-block card-block-spacing">
         <isinclude template="checkout/orderProductSummary" />
-   </div>
+    </div>
 
     <!--- Totals --->
-    <div class="card-block">
+    <div class="card-block card-block-spacing">
        <isinclude template="checkout/orderTotalSummary" />
     </div>
 </div>
