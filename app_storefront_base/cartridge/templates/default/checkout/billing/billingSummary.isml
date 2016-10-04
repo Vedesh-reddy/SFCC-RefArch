@@ -1,0 +1,34 @@
+<div class="card">
+    <div class="card-header">
+        <p class="checkout-summary-header checkout-card-header">${Resource.msg('heading.payment', 'checkout', null)}</p>
+        <span class="edit-button">${Resource.msg('action.edit.step', 'checkout', null)}</span>
+    </div>
+
+    <div class="checkout-card-block">
+        <!--- Billing Address --->
+        <span class="summary-section-label">${Resource.msg('label.order.billing.address', 'confirmation', null)}</span><br>
+        <isset name="address" value="${pdict.billing.billingAddress.address}" scope="page"/>
+        <div class="summary-details">
+            <isinclude template="checkout/addressSummary" />
+        </div>
+
+        <!--- Payment information --->
+        <span class="summary-section-label">${Resource.msg('label.order.payment.info', 'confirmation', null)}</span><br>
+        <isloop items="${pdict.billing.payment.selectedPaymentInstruments}" var="payment">
+            <div class="summary-details">
+                <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
+                    <div>
+                        <span>${Resource.msg('msg.payment.type.credit', 'confirmation', null)}
+                        ${payment.type}</span>
+                    </div>
+                    <div>
+                        ${payment.maskedCreditCardNumber}
+                    </div>
+                    <div>
+                        <span>${Resource.msg('msg.card.type.ending', 'confirmation', null)} ${payment.expirationMonth}/${payment.expirationYear}</span>
+                    </div>
+                </isif>
+            </div>
+        </isloop>
+    </div>
+</div>

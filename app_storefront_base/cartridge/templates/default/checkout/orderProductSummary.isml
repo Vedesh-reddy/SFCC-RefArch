@@ -1,65 +1,49 @@
 <isloop items="${pdict.items.items}" var="lineItem" status="loopSate">
-    <div class="row">
-        <div class="col-lg-12 line-item-name">
-            <span>${lineItem.name}</span>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <img class="product-image" src="${lineItem.image.src}" alt="${lineItem.image.alt}" title="${lineItem.image.title}">
-            <div class="item-attributes">
-                <isloop items="${lineItem.variationAttributes}" var="attribute">
-                    <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
-                </isloop>
+    <div class="product-line-item">
+        <div class="row">
+            <div class="col-lg-12 line-item-name">
+                <span>${lineItem.name}</span>
             </div>
         </div>
-    </div>
-    <div class="line-item-info-divider">
-        <hr>
-    </div>
-    <div class="row text-xs-center">
-        <!--- item price --->
-        <div class="col-xs-4">
-            <div class="row">
-                <div class="col-xs-12">
-                    <p class="line-item-pricing-info">
-                        <span class="line-item-total-text">
-                            ${Resource.msg('label.each.item.price','cart',null)}
-                        </span><br>
-                        <span class="pricing">${lineItem.priceModelPricing.formatted}</span>
-                    </p>
+        <div class="row">
+            <div class="col-lg-12">
+                <img class="product-image" src="${lineItem.image.src}" alt="${lineItem.image.alt}" title="${lineItem.image.title}">
+                <div class="item-attributes">
+                    <isloop items="${lineItem.variationAttributes}" var="attribute">
+                        <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
+                    </isloop>
                 </div>
             </div>
         </div>
-        <!--- quantity --->
-        <div class="col-xs-4">
-            <div class="row">
-                <div class="col-xs-12">
-                    <p class="line-item-pricing-info">
-                        <span class="line-item-total-text">
-                            ${Resource.msg('field.selectquantity','cart',null)}
-                        </span><br>
-                        <span class="pricing"><isprint value="${lineItem.quantity}" formatter="##" /></span>
-                    </p>
-                </div>
-            </div>
-        </div>
-        <!--- line item total price --->
-        <div class="col-xs-4">
-            <div class="row">
-                <div class="col-xs-12">
-                    <p class="line-item-pricing-info">
-                        <span class="line-item-total-text">
-                            ${Resource.msg('label.total.price','cart',null)}
-                        </span><br>
-                        <span class="pricing">${lineItem.priceTotal}</span>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    <div class="row product-divider">
-        <hr>
+        <div class="row text-xs-center line-item-price-quantity-info">
+            <!--- item price --->
+            <div class="col-xs-4">
+                <p class="line-item-pricing-info">
+                    <span class="line-item-total-text">
+                        ${Resource.msg('label.each.item.price','cart',null)}
+                    </span><br>
+                    <span class="pricing">${lineItem.priceModelPricing.formatted}</span>
+                </p>
+            </div>
+            <!--- quantity --->
+            <div class="col-xs-4">
+                <p class="line-item-pricing-info">
+                    <span class="line-item-total-text">
+                        ${Resource.msg('field.selectquantity','cart',null)}
+                    </span><br>
+                    <span class="pricing"><isprint value="${lineItem.quantity}" formatter="##" /></span>
+                </p>
+            </div>
+            <!--- line item total price --->
+            <div class="col-xs-4">
+                <p class="line-item-pricing-info">
+                    <span class="line-item-total-text">
+                        ${Resource.msg('label.total.price','cart',null)}
+                    </span><br>
+                    <span class="pricing">${lineItem.priceTotal}</span>
+                </p>
+            </div>
+        </div>
     </div>
 </isloop>

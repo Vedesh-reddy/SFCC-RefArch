@@ -19,7 +19,7 @@
             <div class="col-sm-5 text-xs-right hidden-xs-down">
                 <div>
                     <span>${Resource.msg('info.need.help','cart',null)}</span>
-                    <span><a class="help-phone-number" href="tel:${Resource.msg('info.phone.number','cart',null)}">${Resource.msg('info.phone.number','cart',null)}</a></span>
+                    <span><a class="help-phone-number" href="tel:${Resource.msg('info.phone.number','common',null)}">${Resource.msg('info.phone.number','common',null)}</a></span>
                 </div>
             </div>
         </div>
@@ -51,9 +51,9 @@
                     <div class="row">
                         <div class="col-xs-12 checkout-continue">
                             <div>
-                                <button class="btn btn-primary btn-block checkout-btn" type="submit" name="submit" value="submit">
+                                <a href="${URLUtils.url('Checkout-Start')}" class="btn btn-primary btn-block checkout-btn" role="button" aria-pressed="true">
                                     ${Resource.msg('button.checkout','cart',null)}
-                                </button>
+                                </a>
                             </div>
                         </div>
                     </div>

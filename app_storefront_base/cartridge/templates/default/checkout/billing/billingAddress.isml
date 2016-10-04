@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="billingFirstName">${Resource.msg('field.shipping.address.first.name','address',null)}</label>
+            <input type="text" class="form-control" id="billingFirstName" name="billingFirstName">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="billingLastName">${Resource.msg('field.shipping.address.last.name','address',null)}</label>
+            <input type="text" class="form-control" id="billingLastName" name="billingLastName">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label for="billingAddressOne">${Resource.msg('field.shipping.address.one','address',null)}</label>
+            <input type="text" class="form-control" id="billingAddressOne" name="billingAddressOne">
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label for="billingAddressTwo">${Resource.msg('field.shipping.address.two','address',null)}</label>
+            <input type="text" class="form-control" id="billingAddressTwo" name="billingAddressTwo">
+        </div>
+    </div>
+</div>
+
+<!--- make drop down--->
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="billingCountry">${Resource.msg('field.shipping.address.country','address',null)}</label>
+            <input type="text" class="form-control" id="billingCountry" name="billingCountry">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="billingState">${Resource.msg('field.shipping.address.state','address',null)}</label>
+            <input type="text" class="form-control" id="billingState" name="billingState">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="billingAddressCity">${Resource.msg('field.shipping.address.city','address',null)}</label>
+            <input type="text" class="form-control" id="billingAddressCity" name="billingAddressCity">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="billingZipCode">${Resource.msg('field.shipping.address.zip.code','address',null)}</label>
+            <input type="text" class="form-control" id="billingZipCode" name="billingZipCode">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label for="billingPhoneNumber">${Resource.msg('field.shipping.address.phone','address',null)}</label>
+            <input type="text" class="form-control" id="billingPhoneNumber" name="billingPhoneNumber">
+        </div>
+    </div>
+</div>
+
