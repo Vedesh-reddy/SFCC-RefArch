@@ -68,6 +68,7 @@ Route.prototype.getRoute = function () {
  * @returns {void}
  */
 Route.prototype.done = function done(req, res) {
+    this.emit('route:BeforeComplete', req, res);
     this.emit('route:Complete', req, res);
 };
 
