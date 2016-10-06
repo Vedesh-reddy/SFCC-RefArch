@@ -1,7 +1,7 @@
 'use strict';
 
-import {assert} from 'chai';
-import {config} from '../webdriver/wdio.conf';
+import { assert } from 'chai';
+import { config } from '../webdriver/wdio.conf';
 import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
@@ -65,22 +65,21 @@ describe('Cart - Update Quantity On Product Variant', () => {
                 return browser.url(productVariant3.getUrlResourcePath());
             })
             .then(() => productDetailPage.clickAddToCartButton())
-            .then(() => cartPage.navigateTo())
-
+            .then(() => cartPage.navigateTo());
     });
 
     it('Should be able to update quantity of variant item.', function () {
         return cartPage.updateQuantityByRow(2, newQty.toString())
             .then(quantity => {
                 assert.equal(quantity, newQty, 'Expected the product quantity updated to ' + newQty);
-            })
+            });
     });
 
     it('Should have updated total line items', function () {
         return browser.getText(cartPage.NUMBER_OF_ITEMS)
             .then(totalItems => {
                 assert.equal(totalItems, '5 Items', 'Expected the total number of items to be 5 Items.');
-            })
+            });
     });
 
     it('Should have correct line item each price', function () {
