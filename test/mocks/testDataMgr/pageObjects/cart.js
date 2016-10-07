@@ -10,7 +10,7 @@ export const BTN_SEARCH_FOR_STORE = '.ui-dialog-buttonset button[role*=button]';
 export const BTN_SELECT_STORE = '.select-store-button';
 export const BTN_SELECT_STORE_CONTINUE = '.ui-dialog-buttonset button:nth-of-type(2)';
 export const CART_EMPTY = '.cart-empty';
-export const CART_ITEMS = '.line-item-name';
+export const CART_ITEMS = '.card';
 export const CHANGE_LOCATION = '.ui-dialog-buttonset button:nth-of-type(1)';
 export const COUPON_CODE = '#dwfrm_cart_couponCode';
 export const COUPON_APPLIED_LABEL = '.cartcoupon .label';
@@ -24,7 +24,8 @@ export const IN_WISHLIST = '.in-wishlist';
 export const ITEM_IMAGE = '.item-image';
 export const ITEM_DETAILS = '.item-details';
 export const ITEM_NAME = '.item-list .item-details .name';
-export const ITEM_QUANTITY = '.item-quantity';
+export const ITEM_QUANTITY = '.quantity';
+export const NUMBER_OF_ITEMS = '.number-of-items';
 export const SELECT_STORE = '.set-preferred-store';
 export const SELECTED_STORE_ADDRESS = '.selected-store-address';
 export const STORE_ADDRESS_TEXT = '.store-list .store-tile:nth-of-type(1) .store-address';
@@ -38,6 +39,9 @@ export const LAST_VISITED_ITEM_PRICES = `${LAST_VISITED_ITEMS} .product-sales-pr
 export const LAST_VISITED_ITEM_IMAGES = `${LAST_VISITED_ITEMS} .product-image .thumb-link [src]`;
 export const AVAILABILITY_MESSAGE_1 = '.item-quantity-details .is-in-stock ';
 export const AVAILABILITY_MESSAGE_2 = '.item-delivery-options .is-in-stock ';
+export const SHIPPING_COST = '.shipping-cost';
+export const TAX_TOTAL = '.tax-total';
+export const SUB_TOTAL = '.sub-total';
 
 const basePath = '/cart';
 
@@ -100,18 +104,16 @@ export function getItemAttrByRow(rowNum, attr) {
     return browser.getText(itemAttr);
 }
 
-// get the quantity in Cart for a particular row
+// get the quantity in Cart for a particular product line item
 export function getQuantityByRow(rowNum) {
-    var selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY, 'input'].join(' ');
+    var selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY].join(' ');
     return browser.getValue(selector);
 }
 
 export function updateQuantityByRow(rowNum, value) {
-    let selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY, 'input'].join(' ');
+    let selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY].join(' ');
     return browser.waitForVisible(selector)
-        .setValue(selector, value)
-        .click(BTN_UPDATE_CART)
-        // TODO: Replace with waitUntil to check for quantity change
+        .selectByVisibleText(selector, value)
         .pause(1000)
         .getValue(selector);
 }
@@ -128,8 +130,22 @@ export function doesQuantityErrorMessageExistForRow(rowNum) {
         .then(() => browser.isVisible(selector));
 }
 
-export function getPriceByRow(rowNum) {
-    return browser.getText(createCssNthCartRow(rowNum) + ' .item-total .price-total');
+export function getEachPriceByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + ' .line-item-price:nth-child(1)';
+
+    return browser.getText(selector)
+        .then(lineItemPrices => {
+            return lineItemPrices[0];
+        });
+}
+
+export function getTotalPriceByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + ' .line-item-price:nth-child(1)';
+
+    return browser.getText(selector)
+        .then(lineItemPrices => {
+            return lineItemPrices[1];
+        });
 }
 
 export function getSelectPriceByRow(rowNum, selection) {
@@ -251,3 +267,4 @@ export function emptyCart() {
         .then(() => common.removeItems(LINK_REMOVE))
         .then(() => browser.waitForExist(CART_EMPTY));
 }
+
