@@ -29,7 +29,7 @@ function categoryToObject(category) {
     };
     var subCategories = category.getOnlineSubCategories();
 
-    if (subCategories.length > 0) {
+    if (subCategories.getLength() > 0) {
         helper.forEach(subCategories, function (subcategory) {
             var converted = categoryToObject(subcategory);
             if (converted) {

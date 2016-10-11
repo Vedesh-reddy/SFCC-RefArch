@@ -4,7 +4,7 @@
  * Process the attribute values for an attribute that has image swatches
  *
  * @param {Object} attr - Attribute
- * @param {String} attr.attributeID - Attribute ID
+ * @param {String} attr.id - Attribute ID
  * @param {Object[]} attr.values - Array of attribute value objects
  * @param {String} attr.values.value - Attribute coded value
  * @param {String} attr.values.url - URL to de/select an attribute value of the product
@@ -14,11 +14,11 @@
  */
 function processSwatchValues(attr) {
     attr.values.forEach(function (attrValue) {
-        var $attrValue = $('[data-attr="' + attr.attributeID + '"] [data-attr-value="' +
+        var $attrValue = $('[data-attr="' + attr.id + '"] [data-attr-value="' +
             attrValue.value + '"]');
         var $swatchAnchor = $attrValue.parent();
 
-        $attrValue.attr('data-selected', attrValue.isSelected);
+        $attrValue.attr('data-selected', attrValue.selected);
 
         if (attrValue.url) {
             $swatchAnchor.attr('href', attrValue.url);
@@ -29,7 +29,7 @@ function processSwatchValues(attr) {
         // Disable if not selectable
         $attrValue.removeClass('selectable unselectable');
 
-        $attrValue.addClass(attrValue.isSelectable ? 'selectable' : 'unselectable');
+        $attrValue.addClass(attrValue.selectable ? 'selectable' : 'unselectable');
     });
 }
 
@@ -37,7 +37,7 @@ function processSwatchValues(attr) {
  * Process attribute values associated with an attribute that does not have image swatches
  *
  * @param {Object} attr - Attribute
- * @param {String} attr.attributeID - Attribute ID
+ * @param {String} attr.id - Attribute ID
  * @param {Object[]} attr.values - Array of attribute value objects
  * @param {String} attr.values.value - Attribute coded value
  * @param {String} attr.values.url - URL to de/select an attribute value of the product
@@ -47,12 +47,12 @@ function processSwatchValues(attr) {
  */
 function processNonSwatchValues(attr) {
     attr.values.forEach(function (attrValue) {
-        var $attr = '[data-attr="' + attr.attributeID + '"]';
+        var $attr = '[data-attr="' + attr.id + '"]';
         var $attrValue = $($attr + ' [data-attr-value="' + attrValue.value + '"]');
         $attrValue.attr('value', attrValue.url)
             .removeAttr('disabled');
 
-        if (!attrValue.isSelectable) {
+        if (!attrValue.selectable) {
             $attrValue.attr('disabled', true);
         }
     });
@@ -63,14 +63,14 @@ function processNonSwatchValues(attr) {
  *     swatches or not
  *
  * @param {Object} attrs - Attribute
- * @param {String} attr.attributeID - Attribute ID
+ * @param {String} attr.id - Attribute ID
  */
 function updateAttrs(attrs) {
     // Currently, the only attribute type that has image swatches is Color.
     var attrsWithSwatches = ['color'];
 
     attrs.forEach(function (attr) {
-        if (attrsWithSwatches.indexOf(attr.attributeID) > -1) {
+        if (attrsWithSwatches.indexOf(attr.id) > -1) {
             processSwatchValues(attr);
         } else {
             processNonSwatchValues(attr);
@@ -89,8 +89,8 @@ function updateAvailability(response) {
         allnotavailable: response.resources.label_allnotavailable,
         selectforstock: response.resources.info_selectforstock
     };
-    var hasRequiredAttrsSelected = response.product.hasRequiredAttrsSelected;
-    var isAvailable = response.product.isAvailable;
+    var hasRequiredAttrsSelected = response.product.readyToOrder;
+    var isAvailable = response.product.available;
     var availabilityValue;
 
     if (hasRequiredAttrsSelected && isAvailable) {
@@ -122,7 +122,7 @@ function parseJsonResponse(response) {
     updateAttrs(response.product.attributes);
 
     // Enable "Add to Cart" button if all required attributes have been selected
-    $('button.add-to-cart').attr('disabled', !response.product.hasRequiredAttrsSelected);
+    $('button.add-to-cart').attr('disabled', !response.product.readyToOrder);
 
     // Update primary images
     var primaryImageUrls = response.product.images;

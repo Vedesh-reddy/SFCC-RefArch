@@ -6,16 +6,18 @@ var ArrayList = require('dw/util/ArrayList');
  * Map method for dw.util.Collection subclass instance
  * @param {dw.util.Collection} collection - Collection subclass instance to map over
  * @param {Function} callback - Callback function for each item
+ * @param {Object} [scope] - Optional execution scope to pass to callback
  * @returns {Array} Array of results of map
  */
-function map(collection, callback) {
+function map(collection, callback, scope) {
     var iterator = collection.iterator();
     var index = 0;
     var item = null;
     var result = [];
     while (iterator.hasNext()) {
         item = iterator.next();
-        result.push(callback(item, index, collection));
+        result.push(scope ? callback.call(scope, item, index, collection)
+            : callback(item, index, collection));
         index++;
     }
     return result;
@@ -25,15 +27,20 @@ function map(collection, callback) {
  * forEach method for dw.util.Collection subclass instances
  * @param {dw.util.Collection} collection - Collection subclass instance to map over
  * @param {Function} callback - Callback function for each item
+ * @param {Object} [scope] - Optional execution scope to pass to callback
  * @returns {void}
  */
-function forEach(collection, callback) {
+function forEach(collection, callback, scope) {
     var iterator = collection.iterator();
     var index = 0;
     var item = null;
     while (iterator.hasNext()) {
         item = iterator.next();
-        callback(item, index, collection);
+        if (scope) {
+            callback.call(scope, item, index, collection);
+        } else {
+            callback(item, index, collection);
+        }
         index++;
     }
 }
@@ -110,21 +117,38 @@ function pluck(collection, property) {
 
 /**
  * Find method for dw.util.Collection subclass instance
- * @param {dw.utilCollection} collection - Collection subclass instance to find value in
+ * @param {dw.util.Collection} collection - Collection subclass instance to find value in
  * @param {Function} match - Match function
+ * @param {Object} [scope] - Optional execution scope to pass to the match function
  * @returns {Object|null} Single item from the collection
  */
-function find(collection, match) {
+function find(collection, match, scope) {
     var result = null;
     var iterator = collection.iterator();
     while (iterator.hasNext()) {
         var item = iterator.next();
-        if (match(item)) {
+        if (scope ? match.call(scope, item) : match(item)) {
             result = item;
             break;
         }
     }
     return result;
+}
+
+/**
+ * Gets the first item from dw.util.Collection subclass instance
+ * @param {dw.util.Colleciton} collection - Collection subclass instance to work with
+ * @param {Function} callback - Callback function for item processing
+ * @param {Object} [scope] - Optional execution scope to pass to callback
+ * @return {Object|null} First element from the collection
+ */
+function first(collection, callback, scope) {
+    var iterator = collection.iterator();
+    while (iterator.hasNext()) {
+        return scope ? callback.call(scope, iterator.next(), 0, collection)
+            : callback(iterator.next(), 0, collection);
+    }
+    return null;
 }
 
 module.exports = {
@@ -133,5 +157,6 @@ module.exports = {
     concat: concat,
     reduce: reduce,
     pluck: pluck,
-    find: find
+    find: find,
+    first: first
 };

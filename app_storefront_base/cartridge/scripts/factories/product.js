@@ -1,8 +1,8 @@
 'use strict';
 
 var ProductMgr = require('dw/catalog/ProductMgr');
-var ProductModel = require('./../../models/product/Product');
-var ProductTileModel = require('./../../models/product/Tile');
+var ProductTile = require('./../../models/product/productBase');
+var Product = require('./../../models/product/product');
 
 /**
  * Factory utility that returns a ProductModel instance that encapsulates a Demandware Product
@@ -11,33 +11,22 @@ var ProductTileModel = require('./../../models/product/Tile');
 function ProductFactory() {}
 
 ProductFactory.get = function (params) {
-    var productModelUsed = params.pview === 'tile'
-        ? ProductTileModel
-        : ProductModel;
-
     var productId = params.pid;
-    var dwProduct = ProductMgr.getProduct(productId);
+    var apiProduct = ProductMgr.getProduct(productId);
 
-    var selectedVariationModel = productModelUsed.updateVariationSelection({
-        dwProduct: dwProduct,
-        attrs: params.variables
-    });
+    var variationModel = Product.getVariationModel(apiProduct, params.variables);
 
-    var selectedVariant = selectedVariationModel.getSelectedVariant();
+    var product = variationModel.getSelectedVariant() || apiProduct;
 
-    if (selectedVariant) {
-        dwProduct = selectedVariant;
-    }
+    var productType = Product.getProductType(product);
 
-    var product = {};
-
-    if (dwProduct.isVariant() || dwProduct.isMaster() || dwProduct.isVariationGroup()) {
-        product = params.pview === 'tile'
-            ? new ProductTileModel({ dwProduct: dwProduct, params: params })
-            : new ProductModel({ dwProduct: dwProduct, params: params });
-    } else if (dwProduct.isProductSet()) {
+    if (productType === 'variant' || productType === 'master' || productType === 'variationGroup') {
+        product = params.pview
+            ? new ProductTile(apiProduct, params.variables)
+            : new Product(apiProduct, params.variables, params.quantity);
+    } else if (productType === 'set') {
         // TODO: Add ProductSet factory
-    } else if (dwProduct.isBundle()) {
+    } else if (productType === 'bundle') {
         // TODO: Add ProductBundle factory
     } else {
         throw new TypeError('Invalid Product Type');

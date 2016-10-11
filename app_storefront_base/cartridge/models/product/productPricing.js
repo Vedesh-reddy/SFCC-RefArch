@@ -2,6 +2,7 @@
 
 var money = require('dw/value/Money');
 var formatMoney = require('dw/util/StringUtils').formatMoney;
+var dwHelpers = require('../../scripts/dwHelpers');
 var PROMOTION_CLASS_PRODUCT = require('dw/campaign/Promotion').PROMOTION_CLASS_PRODUCT;
 /**
  * Convert API price to an object
@@ -41,8 +42,7 @@ function getPriceBook(priceModel) {
  * @param {Object} currentOptionModel - No idea what this is
  */
 function productPricing(product, promotions, currency, currentOptionModel) {
-    var variant = product.variationModel.selectedVariant || product.variationModel.getMaster();
-    var priceModel = variant.getPriceModel();
+    var priceModel = product.getPriceModel();
     var promotionalPrice;
     var rangePrice;
     var standardPrice;
@@ -78,18 +78,18 @@ function productPricing(product, promotions, currency, currentOptionModel) {
      * @private
      */
     function getPromotionalPrice() {
-        var optionModel = currentOptionModel || variant.getOptionModel;
+        var optionModel = currentOptionModel || product.getOptionModel;
 
         if (promotions.length > 0) {
             var promoPrice = null;
-            promotions.toArray().forEach(function (promo) {
+            dwHelpers.forEach(promotions, function (promo) {
                 if (promo.getPromotionClass()
                     && promo.getPromotionClass().equals(PROMOTION_CLASS_PRODUCT)) {
-                    if (variant.optionProduct) {
+                    if (product.optionProduct) {
                         // TODO: remove usage of currentOptionModel
-                        promoPrice = promo.getPromotionalPrice(variant, optionModel);
+                        promoPrice = promo.getPromotionalPrice(product, optionModel);
                     } else {
-                        promoPrice = promo.getPromotionalPrice(variant);
+                        promoPrice = promo.getPromotionalPrice(product);
                     }
                 }
             });
@@ -107,7 +107,7 @@ function productPricing(product, promotions, currency, currentOptionModel) {
      * @private
      */
     function getRangePrice() {
-        if ((variant.master || variant.variationGroup) && priceModel.isPriceRange()) {
+        if ((product.master || product.variationGroup) && priceModel.isPriceRange()) {
             return {
                 min: toPriceModel(priceModel.minPrice),
                 max: toPriceModel(priceModel.maxPrice)
@@ -125,7 +125,7 @@ function productPricing(product, promotions, currency, currentOptionModel) {
         var priceTable = priceModel.getPriceTable();
         var basePriceQuantity = priceModel.getBasePriceQuantity();
         var tieredPricing = null;
-        priceTable.getQuantities().toArray().forEach(function (quantity) {
+        dwHelpers.forEach(priceTable.getQuantities(), function (quantity) {
             if (quantity.compareTo(basePriceQuantity) !== 0) {
                 if (!tieredPricing) {
                     tieredPricing = {};
