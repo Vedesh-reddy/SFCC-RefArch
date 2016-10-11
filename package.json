@@ -58,6 +58,7 @@
     "onchange": "^2.5.0",
     "postcss-cli": "^2.5.1",
     "proxyquire": "1.7.4",
+    "properties-parser": "^0.3.0",
     "q": "^1.4.1",
     "request": "^2.74.0",
     "request-promise": "^4.1.1",

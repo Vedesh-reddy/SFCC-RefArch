@@ -3,6 +3,7 @@
 import { assert } from 'chai';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
+import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
 
 
 describe('Product Details - Product Item', () => {
@@ -18,6 +19,11 @@ describe('Product Details - Product Item', () => {
         // TODO: should empty Cart before test starts
         var variant = testDataMgr.getProductById(variantId);
         return browser.url(variant.getUrlResourcePath());
+    });
+
+    after(() => {
+        return cartPage.navigateTo()
+            .then(() => cartPage.emptyCart());
     });
 
     it('should display its product ID', () => {
@@ -53,15 +59,16 @@ describe('Product Details - Product Item', () => {
             .then(displayedImgSrc => assert.isTrue(displayedImgSrc.value.endsWith(expectedSecondaryImage)));
     });
 
-    it('should enable the "Add to Cart" button', () =>
-        browser.isEnabled('.add-to-cart')
-            .then(enabled => assert.isTrue(enabled))
-    );
+    it('should enable the "Add to Cart" button', () => {
+        return browser.isEnabled('.add-to-cart')
+            .then(enabled => assert.isTrue(enabled));
+    });
 
-    it('should add product to Cart', () =>
-        browser.element('.add-to-cart')
+    it('should add product to Cart', () => {
+        return browser.element('.add-to-cart')
             .click()
+            .waitForVisible(productDetailPage.MINI_CART)
             .then(() => browser.getText('.minicart-quantity'))
-            .then(quantity => assert.equal(quantity, '2'))
-    );
+            .then(quantity => assert.equal(quantity, '1'));
+    });
 });
