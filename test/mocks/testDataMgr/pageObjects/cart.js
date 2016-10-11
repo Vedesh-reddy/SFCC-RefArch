@@ -1,7 +1,6 @@
 'use strict';
 
 import * as productQuickView from './productQuickView';
-import * as common from '../../testDataMgr/helpers/common';
 
 export const ADD_TO_WISHLIST_LINK = 'a.add-to-wishlist';
 export const BTN_ADD_COUPON = '#add-coupon';
@@ -251,7 +250,7 @@ export function getOrderSubTotal() {
  * @param deleteButton
  * @returns {Promise.<TResult>|*}
  */
-function removeItemFromCart (deleteButton) {
+function removeItemFromCart(deleteButton) {
     return browser.isVisible(deleteButton)
         .then(isVisible => {
             if (isVisible[0]) {
@@ -276,6 +275,6 @@ export function emptyCart() {
                 return prev.then(function () {
                     return removeItemFromCart(BTN_DELETE);
                 });
-            }, Promise.resolve())
+            }, Promise.resolve());
         });
 }
