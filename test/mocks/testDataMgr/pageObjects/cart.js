@@ -1,6 +1,7 @@
 'use strict';
 
 import * as productQuickView from './productQuickView';
+import * as common from '../../testDataMgr/helpers/common';
 
 export const ADD_TO_WISHLIST_LINK = 'a.add-to-wishlist';
 export const BTN_ADD_COUPON = '#add-coupon';
@@ -246,21 +247,35 @@ export function getOrderSubTotal() {
 }
 
 /**
+ * remove items from Cart
+ * @param deleteButton
+ * @returns {Promise.<TResult>|*}
+ */
+function removeItemFromCart (deleteButton) {
+    return browser.isVisible(deleteButton)
+        .then(isVisible => {
+            if (isVisible[0]) {
+                return browser.click(deleteButton)
+                    .waitForVisible(DELETE_CONFIRMATION, 1000)
+                    .click(DELETE_CONFIRMATION)
+                    .waitForVisible('.modal', 1000, true);
+            }
+            return Promise.resolve();
+        });
+}
+
+/**
  * Redirects the browser to the Cart page and empties the Cart.
  *
  */
 export function emptyCart() {
     return navigateTo()
         .then(() => browser.elements(BTN_DELETE))
-        .then(items => {
-            if (items.value.length) {
-                items.value.forEach(item => {
-                    return browser.elementIdClick(item.ELEMENT)
-                        .then(() => browser.waitForVisible(DELETE_CONFIRMATION))
-                        .then(() => browser.click(DELETE_CONFIRMATION));
+        .then(removeLinks => {
+            return removeLinks.value.reduce(function (prev) {
+                return prev.then(function () {
+                    return removeItemFromCart(BTN_DELETE);
                 });
-            }
-            return Promise.resolve();
+            }, Promise.resolve())
         });
 }
-
