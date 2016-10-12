@@ -1,0 +1,18 @@
+<div class="card">
+    <div class="card-header">
+        <p class="dashboard-cards-header">${Resource.msg('label.payment','account',null)}</p>
+        <isif condition="${pdict.payment}">
+            <a href="${"#"}" class="dashboard-cards-header-link">${Resource.msg('link.view','account',null)}</a>
+        </isif>
+    </div>
+    <isif condition="${pdict.payment}">
+        <div class="card-block card-info-group">
+            <p>${Resource.msg('label.payment.credit','account',null)} ${pdict.payment.creditCardType}</p>
+            <p>${pdict.payment.maskedCreditCardNumber}</p>
+            <p>${Resource.msg('label.payment.ending','account',null)} ${pdict.payment.creditCardExpirationMonth}/${pdict.payment.creditCardExpirationYear}</p>
+        </div>
+    </isif>
+    <div class="card-footer card-footer-border text-xs-center">
+        <a href="${"#"}" class="card-link dashboard-cards-footer-link">${Resource.msg('link.addnew','account',null)}</a>
+    </div>
+</div>

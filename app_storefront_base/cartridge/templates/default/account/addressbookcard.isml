@@ -1,0 +1,22 @@
+<div class="card">
+    <div class="card-header">
+        <p class="dashboard-cards-header">${Resource.msg('label.addressbook','account',null)}</p>
+        <isif condition="${pdict.payment}">
+            <a href="${"#"}" class="dashboard-cards-header-link">${Resource.msg('link.view','account',null)}</a>
+        </isif>
+    </div>
+    <isif condition="${pdict.preferredAddress}">
+        <div class="card-block card-info-group">
+            <div>
+                <p class="dashboard-cards-block-title">${Resource.msg('label.addressbook.defaultaddress','account',null)}</p>
+                <p class="dashboard-info">${pdict.preferredAddress.address.ID}</p>
+                <p>${pdict.preferredAddress.address.address1}</p>
+                <p>${pdict.preferredAddress.address.city}, ${pdict.preferredAddress.address.stateCode} ${pdict.preferredAddress.address.postalCode}</p>
+                <p>${pdict.preferredAddress.address.countryCode.displayValue}</p>
+            </div>
+        </div>
+    </isif>
+    <div class="card-footer card-footer-border text-xs-center">
+        <a href="${"#"}" class="card-link dashboard-cards-footer-link">${Resource.msg('link.addnew','account',null)}</a>
+    </div>
+</div>
