@@ -17,6 +17,40 @@ function createFakeRequest(overrides) {
             countryCode: 'US',
             latitude: 42.4019,
             longitude: -71.1193
+        },
+        customer: {
+            profile: {
+                firstName: 'John',
+                lastName: 'Snow',
+                email: 'jsnow@starks.com',
+                wallet: {
+                    paymentInstruments: [
+                        {
+                            creditCardExpirationMonth: '3',
+                            creditCardExpirationyear: '2019',
+                            maskedCreditCardNumber: '***********4215',
+                            creditCardType: 'Visa',
+                            paymentMethod: 'CREDIT_CARD'
+                        }
+                    ]
+                }
+            },
+            addressBook: {
+                preferredAddress: {
+                    address1: '15 South Point Drive',
+                    address2: null,
+                    city: 'Boston',
+                    countryCode: {
+                        displayValue: 'United States',
+                        value: 'US'
+                    },
+                    firstName: 'John',
+                    lastName: 'Snow',
+                    ID: 'Home',
+                    postalCode: '02125',
+                    stateCode: 'MA'
+                }
+            }
         }
     };
     Object.keys(overrides).forEach(function (key) {
@@ -27,12 +61,12 @@ function createFakeRequest(overrides) {
 
 describe('request', function () {
     it('should parse empty query string', function () {
-        var req = new Request(createFakeRequest());
+        var req = new Request(createFakeRequest(), createFakeRequest().customer);
         assert.isObject(req.querystring);
         assert.equal(Object.keys(req.querystring).length, 0);
     });
     it('should parse simple query string', function () {
-        var req = new Request(createFakeRequest({ httpQueryString: 'id=22&name=foo' }));
+        var req = new Request(createFakeRequest({ httpQueryString: 'id=22&name=foo' }), createFakeRequest().customer);
         assert.isObject(req.querystring);
         assert.equal(req.querystring.id, 22);
         assert.equal(req.querystring.name, 'foo');
@@ -40,7 +74,7 @@ describe('request', function () {
     it('should parse query string with variables', function () {
         var req = new Request(createFakeRequest({
             httpQueryString: 'dwvar_foo_color=1111&dwvar_bar_size=32'
-        }));
+        }), createFakeRequest().customer);
         assert.equal(req.querystring.variables.color.id, 'foo');
         assert.equal(req.querystring.variables.color.value, '1111');
         assert.equal(req.querystring.variables.size.id, 'bar');
@@ -51,9 +85,72 @@ describe('request', function () {
     it('should parse query string with incorrectly formatted variables', function () {
         var req = new Request(createFakeRequest({
             httpQueryString: 'dwvar_color=1111&dwvar_size=32'
-        }));
+        }), createFakeRequest().customer);
         assert.equal(req.querystring.dwvar_color, '1111');
         assert.equal(req.querystring.dwvar_size, '32');
         assert.notProperty(req.querystring, 'variables');
+    });
+    it('should contain correct geolocation object and properties', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        assert.equal(req.geolocation.countryCode, 'US');
+        assert.equal(req.geolocation.latitude, 42.4019);
+        assert.equal(req.geolocation.longitude, -71.1193);
+    });
+    it('should contain correct current customer profile and properties', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        assert.equal(req.currentCustomer.profile.firstName, 'John');
+        assert.equal(req.currentCustomer.profile.lastName, 'Snow');
+        assert.equal(req.currentCustomer.profile.email, 'jsnow@starks.com');
+    });
+    it('should contain correct current customer address book and properties', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.address1,
+            '15 South Point Drive'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.address2,
+            null
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.city,
+            'Boston'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.countryCode.displayValue,
+            'United States'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.countryCode.value,
+            'US'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.firstName,
+            'John'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.lastName,
+            'Snow'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.ID,
+            'Home'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.postalCode,
+            '02125'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.stateCode,
+            'MA'
+        );
+    });
+    it('should contain correct current customer wallet and properties', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        var expectedResult = createFakeRequest();
+        assert.deepEqual(
+            req.currentCustomer.wallet.paymentInstruments,
+            expectedResult.customer.profile.wallet.paymentInstruments
+        );
     });
 });

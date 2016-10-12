@@ -37,10 +37,14 @@ function order(lineItemContainer, shippingModel, billingModel, orderTotals, line
         this.orderNumber = lineItemContainer.orderNo ? lineItemContainer.orderNo : null;
         this.creationDate = lineItemContainer.creationDate ? lineItemContainer.creationDate : null;
         this.orderEmail = lineItemContainer.customerEmail ? lineItemContainer.customerEmail : null;
+        this.orderStatus = lineItemContainer.status ? lineItemContainer.status : null;
+        this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
+            lineItemContainer.productQuantityTotal : null;
     } else {
         this.orderNumber = null;
         this.creationDate = null;
         this.orderEmail = null;
+        this.orderStatus = null;
     }
 }
 

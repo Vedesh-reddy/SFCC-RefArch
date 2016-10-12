@@ -20,7 +20,13 @@ function request() {
         host: 'localhost',
         path: 'test',
         querystring: '',
-        https: false
+        https: false,
+        currentCustomer: {
+            raw: {},
+            profile: {},
+            addressBook: {},
+            wallet: {}
+        }
     };
 }
 

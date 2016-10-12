@@ -34,11 +34,51 @@ function parseQueryString(querystring) {
 }
 
 /**
- * Translates global request object to local one
+ * Translates global customer object into local object
  * @param {Object} request - Global request object
- * @returns {Object} local instance of request object
+ * @returns {Object} local instance of customer object
  */
-function Request(request) {
+function getCustomerObject(customer) {
+    var result;
+    result = {
+        raw: customer,
+        profile: {
+            lastName: customer.profile.lastName,
+            firstName: customer.profile.firstName,
+            email: customer.profile.email,
+            customerNo: customer.profile.customerNo
+        },
+        addressBook: {
+            preferredAddress: {
+                address1: customer.addressBook.preferredAddress.address1,
+                address2: customer.addressBook.preferredAddress.address2,
+                city: customer.addressBook.preferredAddress.city,
+                countryCode: {
+                    displayValue: customer.addressBook.preferredAddress.countryCode.displayValue,
+                    value: customer.addressBook.preferredAddress.countryCode.value
+                },
+                firstName: customer.addressBook.preferredAddress.firstName,
+                lastName: customer.addressBook.preferredAddress.lastName,
+                ID: customer.addressBook.preferredAddress.ID,
+                phone: customer.addressBook.preferredAddress.phone,
+                postalCode: customer.addressBook.preferredAddress.postalCode,
+                stateCode: customer.addressBook.preferredAddress.stateCode
+            }
+        },
+        wallet: {
+            paymentInstruments: customer.profile.wallet.paymentInstruments
+        }
+    };
+    return result;
+}
+
+/**
+ * Translates global request and customer object to local one
+ * @param {Object} request - Global request object
+ * @param {Object} request - Global customer object
+ * @returns {Object} local instance of request object with customer object in it
+ */
+function Request(request, customer) {
     this.httpMethod = request.httpMethod;
     this.host = request.httpHost;
     this.path = request.httpPath;
@@ -54,6 +94,7 @@ function Request(request) {
             longitude: request.geolocation.longitude
         };
     }
+    this.currentCustomer = getCustomerObject(customer);
 }
 
 module.exports = Request;
