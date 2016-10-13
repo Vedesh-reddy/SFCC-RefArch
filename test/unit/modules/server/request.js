@@ -27,10 +27,9 @@ function createFakeRequest(overrides) {
                     paymentInstruments: [
                         {
                             creditCardExpirationMonth: '3',
-                            creditCardExpirationyear: '2019',
+                            creditCardExpirationYear: '2019',
                             maskedCreditCardNumber: '***********4215',
-                            creditCardType: 'Visa',
-                            paymentMethod: 'CREDIT_CARD'
+                            creditCardType: 'Visa'
                         }
                     ]
                 }
@@ -149,8 +148,8 @@ describe('request', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer);
         var expectedResult = createFakeRequest();
         assert.deepEqual(
-            req.currentCustomer.wallet.paymentInstruments,
-            expectedResult.customer.profile.wallet.paymentInstruments
+            req.currentCustomer.wallet.paymentInstrument,
+            expectedResult.customer.profile.wallet.paymentInstruments[0]
         );
     });
 });

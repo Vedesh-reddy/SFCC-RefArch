@@ -40,6 +40,11 @@ function parseQueryString(querystring) {
  */
 function getCustomerObject(customer) {
     var result;
+    var paymentInstrument = {};
+    if (customer.profile.wallet.paymentInstruments) {
+        paymentInstrument = customer.profile.wallet.paymentInstruments[0];
+    }
+
     result = {
         raw: customer,
         profile: {
@@ -66,7 +71,12 @@ function getCustomerObject(customer) {
             }
         },
         wallet: {
-            paymentInstruments: customer.profile.wallet.paymentInstruments
+            paymentInstrument: {
+                maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
+                creditCardType: paymentInstrument.creditCardType,
+                creditCardExpirationMonth: paymentInstrument.creditCardExpirationMonth,
+                creditCardExpirationYear: paymentInstrument.creditCardExpirationYear
+            }
         }
     };
     return result;

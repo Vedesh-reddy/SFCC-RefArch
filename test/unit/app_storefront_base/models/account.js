@@ -30,15 +30,13 @@ var currentCustomer = {
         email: 'jsnow@starks.com'
     },
     wallet: {
-        paymentInstruments: new ArrayList([
-            {
-                creditCardExpirationMonth: '3',
-                creditCardExpirationYear: '2019',
-                maskedCreditCardNumber: '***********4215',
-                creditCardType: 'Visa',
-                paymentMethod: 'CREDIT_CARD'
-            }
-        ])
+        paymentInstrument: {
+            creditCardExpirationMonth: '3',
+            creditCardExpirationYear: '2019',
+            maskedCreditCardNumber: '***********4215',
+            creditCardType: 'Visa',
+            paymentMethod: 'CREDIT_CARD'
+        }
     }
 };
 
@@ -150,7 +148,7 @@ describe('account', function () {
     });
 
     it('should receive an account with null payment method', function () {
-        currentCustomer.wallet = null;
+        currentCustomer.wallet.paymentInstrument = null;
         var result = new AccountModel(currentCustomer);
         assert.equal(result.payment, null);
     });

@@ -1,7 +1,5 @@
 'use strict';
 
-var helper = require('~/cartridge/scripts/dwHelpers');
-
 /**
  * Creates a plain object that contains profile information
  * @param {Object} profile - current customer's profile
@@ -54,25 +52,13 @@ function getOrderHistory(orderModel) {
  */
 function getPayment(wallet) {
     var result;
-    if (wallet) {
-        var paymentInstruments = wallet.paymentInstruments;
-        var paymentInstrument = null;
-        helper.forEach(paymentInstruments, function (instrument, index) {
-            if (index === 0) {
-                paymentInstrument = instrument;
-            }
-        });
-
-        if (paymentInstrument) {
-            result = {
-                maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
-                creditCardType: paymentInstrument.creditCardType,
-                creditCardExpirationMonth: paymentInstrument.creditCardExpirationMonth,
-                creditCardExpirationYear: paymentInstrument.creditCardExpirationYear
-            };
-        } else {
-            result = null;
-        }
+    if (wallet.paymentInstrument) {
+        result = {
+            maskedCreditCardNumber: wallet.paymentInstrument.maskedCreditCardNumber,
+            creditCardType: wallet.paymentInstrument.creditCardType,
+            creditCardExpirationMonth: wallet.paymentInstrument.creditCardExpirationMonth,
+            creditCardExpirationYear: wallet.paymentInstrument.creditCardExpirationYear
+        };
     } else {
         result = null;
     }
