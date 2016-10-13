@@ -19,7 +19,7 @@
     "lint": "eslint . && stylelint --syntax scss \"app_storefront_base/cartridge/client/scss/**/*.scss\"",
     "upload": "dwupload --file ",
     "watch:static": "onchange 'app_storefront_base/cartridge/client/js/**/*.js' -- npm run compile:js & onchange 'app_storefront_base/cartridge/client/scss/**/*.scss' -- npm run compile:scss & onchange 'app_storefront_base/cartridge/static/**/*' -w -- npm run upload -- {{changed}}",
-    "watch:cartridge": "onchange 'app_storefront_base/cartridge/(controllers|models|scripts|templates)/**/*' -w -- npm run upload -- {{changed}}",
+    "watch:cartridge": "onchange 'app_storefront_base/cartridge/(controllers|models|scripts|templates|forms)/**/*' -w -- npm run upload -- {{changed}}",
     "watch": "npm run watch:static & npm run watch:cartridge",
     "doc": "bin/doc.sh"
   },
