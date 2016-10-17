@@ -1,11 +1,11 @@
 <isdecorate template="common/layout/page">
     <isscript>
         var assets = require('~/cartridge/scripts/assets.js');
+        assets.addJs('/js/productTile.js');
         assets.addCss('/css/homePage.css');
     </isscript>
 
     <!-- +1.888.555.0199 --><!--This phone is a requirement to support existing Gomez monitor of SiteGenesis. Demadware customers can remove this.-->
-
     <div class="container-fluid homepage">
         <div class="row">
             <div class="col-xs-12 home-main-image"> 
@@ -18,7 +18,12 @@
         <div class="row home-main-categories">
             <isslot id="home-categories" description="Categories slots on the home page." context="global" />
         </div>
-
+    </div>
+     
+    <div class="container home-product-tiles homepage">
+        <div class="row hp-product-grid">
+            <isslot id="home-products" description="Product tiles on the home page." context="global" />    
+        </div>
     </div>
      
     <div class="container-fluid homepage">

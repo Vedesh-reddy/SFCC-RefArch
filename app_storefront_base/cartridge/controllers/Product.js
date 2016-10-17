@@ -58,4 +58,30 @@ server.get('Variation', locale, function (req, res, next) {
     next();
 });
 
+server.get('ShowTile', locale, function (req, res, next) {
+    // The req parameter has a property called querystring. In this use case the querystring could
+    // have the following:
+    // pid - the Product ID
+    // compare - boolean to determine if the compare feature should be shown in the tile.
+    // reviews - boolean to determine if the reviews should be shown in the tile.
+    // swatches - boolean to determine if the swatches should be shown in the tile.
+    //
+    // pview - string to determine if the product factory returns a model for
+    //         a tile or a pdp/quickview display
+    var productTileParams = {
+        pid: req.querystring.pid,
+        compare: req.querystring.compare,
+        reviews: req.querystring.reviews,
+        swatches: req.querystring.swatches,
+        pview: 'tile'
+    };
+
+    var product = ProductFactory.get(productTileParams);
+    res.render('product/gridTile.isml', {
+        product: product
+    });
+
+    next();
+});
+
 module.exports = server.exports();

@@ -1,14 +1,8 @@
 @import "../variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-
-@mixin circle($width, $color) { // Source:  https://gist.github.com/kogakure/4769904
-    width: $width;
-    height: $width;
-    background: $color;
-    -moz-border-radius: $width/2;
-    border-radius: $width/2;
-}
+@import "../utilities/responsiveUtils";
+@import "../utilities/swatch";
 
 .container.product-detail {
     margin: 1.25em auto;
@@ -30,22 +24,7 @@ a.add-to-wish-list {
 
 .swatch-circle {
     // $white will be replaced by color image background via Javascript
-    @include circle(2.5em, $white);
-
-    border: 0.063em solid rgba(0, 0, 0, 0.3);
-    display: inline-block;
-    margin-right: 0.313em;
-    position: relative;
-
-    &.color-value[data-selected=true]::after {
-        color: $black;
-        content: '\f058';
-        display: table-caption;
-        font-family: 'FontAwesome';
-        font-size: 1.625em;
-        left: 0.295em;
-        position: absolute;
-    }
+    @include swatch(2.5em, $white);
 }
 
 .swatch-value img {

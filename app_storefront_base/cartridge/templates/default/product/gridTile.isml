@@ -1,0 +1,55 @@
+<div class="card col-xs-6 col-md-4 product-tile">
+    <div class="imageContainer">
+        <a href="${pdict.product.url}">
+            <img class="card-img-top tile-image"
+                src="${pdict.product.image.url}"
+                alt="${pdict.product.name}"
+                title="${pdict.product.image.title}">
+        </a>
+        <a class="quickview hidden-lg-down" href="${pdict.product.quickViewUrl}">
+            <img class=""
+                src="${URLUtils.staticURL('/images/quickview.png')}"
+                alt="${Resource.msg('image.quickview.product.tile', 'common', null)}"
+                title="${Resource.msg('image.quickview.product.tile', 'common', null)}">
+        </a>
+    </div>
+    <div class="card-block">
+        <isif condition="${pdict.product.display.swatches}">
+            <div class="card-text color-swatches">
+                <div class="swatches">
+                    <isloop items="${pdict.product.swatches}" var="swatch" status="loopstate">
+                        <isif condition="${loopstate.count < 4}">
+                            <span class="swatch swatch-circle"
+                                data-index="${loopstate.count-1}"
+                                style="background-image: url(${swatch.url})"
+                                data-attributes="${JSON.stringify(swatch, null, 2)}"></span>
+                        <iselse/>
+                            <span>
+                                <a href="${pdict.product.url}">...</a>
+                            </span>
+                            <isbreak>
+                        </isif>
+                    </isloop>
+                </div>
+            </div>
+        </isif>
+
+        <div class="pdpLink">
+            <a class="card-title link" href="${pdict.product.url}">${pdict.product.name}</a>
+        </div>
+        <p class="card-text pdpPrices">${pdict.product.price}</p>
+        <div class="card-text reviews-compare">
+            <div class="reviews col-xs-6">
+                <isif condition="${pdict.product.display.reviews}">
+                            [reviews]
+                    </isif>
+                </div>
+            <div class="compare col-xs-6 hidden-md-down">
+                <isif condition="${pdict.product.display.compare}">
+                    <input type="checkbox" id="${pdict.product.id}" value="true">
+                    <label for="${pdict.product.id}">${Resource.msg('checkbox.tile.compare', 'product', null)}</label>
+                </isif>
+            </div>
+        </div>
+    </div>
+</div>

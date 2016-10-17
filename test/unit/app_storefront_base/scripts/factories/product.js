@@ -11,6 +11,7 @@ var ProductMgrMock = {
     getProduct: stubProductMgrGetProduct
 };
 
+
 var testValue = 'test 123';
 function ProductModelMock() {
     return {
@@ -20,7 +21,8 @@ function ProductModelMock() {
 
 var ProductFactory = proxyquire(productFactoryPath, {
     'dw/catalog/ProductMgr': ProductMgrMock,
-    './../../models/product/Product': ProductModelMock
+    './../../models/product/Product': ProductModelMock,
+    './../../models/product/Tile': {}
 });
 
 function createGetSelectedVariantStub(introspectors) {
@@ -175,4 +177,3 @@ describe('ProductFactory', function () {
         });
     });
 });
-
