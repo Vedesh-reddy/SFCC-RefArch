@@ -8,7 +8,7 @@ export const BTN_REMOVE_COUPON = '.item-quantity-details .textbutton';
 export const BTN_SEARCH_FOR_STORE = '.ui-dialog-buttonset button[role*=button]';
 export const BTN_SELECT_STORE = '.select-store-button';
 export const BTN_SELECT_STORE_CONTINUE = '.ui-dialog-buttonset button:nth-of-type(2)';
-export const BTN_DELETE = '.card button.remove-product';
+export const BTN_DELETE = '.card button.remove-btn';
 export const DELETE_CONFIRMATION = '.delete-confirmation-btn';
 export const CART_EMPTY = '.text-xs-center h1';
 export const CART_ITEMS = '.card';
@@ -246,21 +246,67 @@ export function getOrderSubTotal() {
 }
 
 /**
- * Redirects the browser to the Cart page and empties the Cart.
- *
+ * click on the deleteButton one more time if the first
+ * click didn't work.
+ * @param {string} deleteButton
+ * @param {string} deleteConfirmation
+ * @returns {Promise.<TResult>|*}
  */
-export function emptyCart() {
-    return navigateTo()
-        .then(() => browser.elements(BTN_DELETE))
-        .then(items => {
-            if (items.value.length) {
-                items.value.forEach(item => {
-                    return browser.elementIdClick(item.ELEMENT)
-                        .then(() => browser.waitForVisible(DELETE_CONFIRMATION))
-                        .then(() => browser.click(DELETE_CONFIRMATION));
-                });
+export function clickDeleteButton(deleteButton, deleteConfirmation) {
+    return browser.click(deleteButton)
+        .waitForVisible(deleteConfirmation, 2000)
+        .isVisible(deleteConfirmation)
+        .then(isVisible => {
+            if (!isVisible) {
+                return browser.click(deleteButton);
             }
             return Promise.resolve();
         });
 }
 
+/**
+ * Find the selector that applicable to the current screen
+ * @param {string} selector
+ * @returns {Promise.<TResult>|*}
+ */
+export function getDeleteItemSelector(selector) {
+    return browser.isVisible(selector)
+        .then(isVisible => {
+            if (isVisible[0] || isVisible) {
+                return selector;
+            }
+            return selector + '-lg';
+        });
+}
+
+/**
+ *
+ * @param {string} deleteButton
+ * @returns {Promise.<*>}
+ */
+function removeItemFromCart(deleteButton) {
+    return clickDeleteButton(deleteButton, DELETE_CONFIRMATION)
+        .then(() => browser.click(DELETE_CONFIRMATION))
+        .then(() => browser.waitForVisible('.modal', 2000, true));
+}
+
+/**
+ * Redirects the browser to the Cart page and empties the Cart.
+ *
+ */
+export function emptyCart() {
+    var mySelector = null;
+    return navigateTo()
+        .then(() => getDeleteItemSelector(BTN_DELETE))
+        .then(selector => {
+            mySelector = selector;
+            return browser.elements(mySelector);
+        })
+        .then(removeLinks => {
+            return removeLinks.value.reduce(function (prev) {
+                return prev.then(function () {
+                    return removeItemFromCart(mySelector);
+                });
+            }, Promise.resolve());
+        });
+}
