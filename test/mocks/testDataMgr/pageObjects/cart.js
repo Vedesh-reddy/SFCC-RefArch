@@ -272,7 +272,7 @@ export function clickDeleteButton(deleteButton, deleteConfirmation) {
 export function getDeleteItemSelector(selector) {
     return browser.isVisible(selector)
         .then(isVisible => {
-            if (isVisible[0]) {
+            if (isVisible[0] || isVisible) {
                 return selector;
             }
             return selector + '-lg';
@@ -295,7 +295,7 @@ function removeItemFromCart(deleteButton) {
  *
  */
 export function emptyCart() {
-    var mySelector;
+    var mySelector = null;
     return navigateTo()
         .then(() => getDeleteItemSelector(BTN_DELETE))
         .then(selector => {
