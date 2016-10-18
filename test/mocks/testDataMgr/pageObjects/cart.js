@@ -1,6 +1,5 @@
 'use strict';
 
-import * as common from '../helpers/common';
 import * as productQuickView from './productQuickView';
 
 export const ADD_TO_WISHLIST_LINK = 'a.add-to-wishlist';
@@ -9,8 +8,10 @@ export const BTN_REMOVE_COUPON = '.item-quantity-details .textbutton';
 export const BTN_SEARCH_FOR_STORE = '.ui-dialog-buttonset button[role*=button]';
 export const BTN_SELECT_STORE = '.select-store-button';
 export const BTN_SELECT_STORE_CONTINUE = '.ui-dialog-buttonset button:nth-of-type(2)';
-export const CART_EMPTY = '.cart-empty';
-export const CART_ITEMS = '.line-item-name';
+export const BTN_DELETE = '.card button.remove-btn';
+export const DELETE_CONFIRMATION = '.delete-confirmation-btn';
+export const CART_EMPTY = '.text-xs-center h1';
+export const CART_ITEMS = '.card';
 export const CHANGE_LOCATION = '.ui-dialog-buttonset button:nth-of-type(1)';
 export const COUPON_CODE = '#dwfrm_cart_couponCode';
 export const COUPON_APPLIED_LABEL = '.cartcoupon .label';
@@ -24,7 +25,8 @@ export const IN_WISHLIST = '.in-wishlist';
 export const ITEM_IMAGE = '.item-image';
 export const ITEM_DETAILS = '.item-details';
 export const ITEM_NAME = '.item-list .item-details .name';
-export const ITEM_QUANTITY = '.item-quantity';
+export const ITEM_QUANTITY = '.quantity';
+export const NUMBER_OF_ITEMS = '.number-of-items';
 export const SELECT_STORE = '.set-preferred-store';
 export const SELECTED_STORE_ADDRESS = '.selected-store-address';
 export const STORE_ADDRESS_TEXT = '.store-list .store-tile:nth-of-type(1) .store-address';
@@ -38,6 +40,9 @@ export const LAST_VISITED_ITEM_PRICES = `${LAST_VISITED_ITEMS} .product-sales-pr
 export const LAST_VISITED_ITEM_IMAGES = `${LAST_VISITED_ITEMS} .product-image .thumb-link [src]`;
 export const AVAILABILITY_MESSAGE_1 = '.item-quantity-details .is-in-stock ';
 export const AVAILABILITY_MESSAGE_2 = '.item-delivery-options .is-in-stock ';
+export const SHIPPING_COST = '.shipping-cost';
+export const TAX_TOTAL = '.tax-total';
+export const SUB_TOTAL = '.sub-total';
 
 const basePath = '/cart';
 
@@ -68,7 +73,7 @@ export function removeItemByRow(rowNum) {
 }
 
 export function verifyCartEmpty() {
-    return browser.isExisting(CART_EMPTY);
+    return browser.getText(CART_EMPTY);
 }
 
 export function getItemList() {
@@ -84,7 +89,7 @@ export function getItemImageSrcAttrByRow(rowNum) {
 }
 
 export function getItemNameByRow(rowNum) {
-    let selector = createCssNthCartRow(rowNum);
+    let selector = createCssNthCartRow(rowNum) + ' .line-item-name';
     return browser.waitForVisible(selector)
         .getText(selector);
 }
@@ -100,18 +105,16 @@ export function getItemAttrByRow(rowNum, attr) {
     return browser.getText(itemAttr);
 }
 
-// get the quantity in Cart for a particular row
+// get the quantity in Cart for a particular product line item
 export function getQuantityByRow(rowNum) {
-    var selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY, 'input'].join(' ');
+    var selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY].join(' ');
     return browser.getValue(selector);
 }
 
 export function updateQuantityByRow(rowNum, value) {
-    let selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY, 'input'].join(' ');
+    let selector = [createCssNthCartRow(rowNum), ITEM_QUANTITY].join(' ');
     return browser.waitForVisible(selector)
-        .setValue(selector, value)
-        .click(BTN_UPDATE_CART)
-        // TODO: Replace with waitUntil to check for quantity change
+        .selectByVisibleText(selector, value)
         .pause(1000)
         .getValue(selector);
 }
@@ -128,8 +131,22 @@ export function doesQuantityErrorMessageExistForRow(rowNum) {
         .then(() => browser.isVisible(selector));
 }
 
-export function getPriceByRow(rowNum) {
-    return browser.getText(createCssNthCartRow(rowNum) + ' .item-total .price-total');
+export function getEachPriceByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + ' .line-item-price:nth-child(1)';
+
+    return browser.getText(selector)
+        .then(lineItemPrices => {
+            return lineItemPrices[0];
+        });
+}
+
+export function getTotalPriceByRow(rowNum) {
+    let selector = createCssNthCartRow(rowNum) + ' .line-item-price:nth-child(1)';
+
+    return browser.getText(selector)
+        .then(lineItemPrices => {
+            return lineItemPrices[1];
+        });
 }
 
 export function getSelectPriceByRow(rowNum, selection) {
@@ -229,25 +246,67 @@ export function getOrderSubTotal() {
 }
 
 /**
+ * click on the deleteButton one more time if the first
+ * click didn't work.
+ * @param {string} deleteButton
+ * @param {string} deleteConfirmation
+ * @returns {Promise.<TResult>|*}
+ */
+export function clickDeleteButton(deleteButton, deleteConfirmation) {
+    return browser.click(deleteButton)
+        .waitForVisible(deleteConfirmation, 2000)
+        .isVisible(deleteConfirmation)
+        .then(isVisible => {
+            if (!isVisible) {
+                return browser.click(deleteButton);
+            }
+            return Promise.resolve();
+        });
+}
+
+/**
+ * Find the selector that applicable to the current screen
+ * @param {string} selector
+ * @returns {Promise.<TResult>|*}
+ */
+export function getDeleteItemSelector(selector) {
+    return browser.isVisible(selector)
+        .then(isVisible => {
+            if (isVisible[0] || isVisible) {
+                return selector;
+            }
+            return selector + '-lg';
+        });
+}
+
+/**
+ *
+ * @param {string} deleteButton
+ * @returns {Promise.<*>}
+ */
+function removeItemFromCart(deleteButton) {
+    return clickDeleteButton(deleteButton, DELETE_CONFIRMATION)
+        .then(() => browser.click(DELETE_CONFIRMATION))
+        .then(() => browser.waitForVisible('.modal', 2000, true));
+}
+
+/**
  * Redirects the browser to the Cart page and empties the Cart.
  *
  */
 export function emptyCart() {
-    return browser.navigateTo()
-        .then(() => browser.elements('.item-quantity input'))
-        .then(items => {
-            if (items.value.length) {
-                items.value.forEach(item =>
-                    browser.elementIdClear(item.ELEMENT)
-                        .elementIdValue(item.ELEMENT, '0'));
-
-                return browser.click(BTN_UPDATE_CART);
-            }
-            return Promise.resolve();
+    var mySelector = null;
+    return navigateTo()
+        .then(() => getDeleteItemSelector(BTN_DELETE))
+        .then(selector => {
+            mySelector = selector;
+            return browser.elements(mySelector);
         })
-        // There are some products, like Gift Certificates, whose
-        // quantities cannot be changed in the Cart. For these, we
-        // must click the Remove link on each.
-        .then(() => common.removeItems(LINK_REMOVE))
-        .then(() => browser.waitForExist(CART_EMPTY));
+        .then(removeLinks => {
+            return removeLinks.value.reduce(function (prev) {
+                return prev.then(function () {
+                    return removeItemFromCart(mySelector);
+                });
+            }, Promise.resolve());
+        });
 }

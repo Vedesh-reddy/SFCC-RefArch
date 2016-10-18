@@ -148,6 +148,53 @@
     }
 }
 
+.hp-product-grid {
+    margin: 0;
+
+    .hp-product-content {
+        text-align: center;
+        border: 0;
+
+        @include media-breakpoint-down(sm) {
+            min-height: 34.2em;
+        }
+
+        @include media-breakpoint-down(xs) {
+            min-height: 27.1em;
+        }
+
+        span {
+            font-size: 1em;
+
+            @include media-breakpoint-down(sm) {
+                font-size: 0.85em;
+            }
+
+            @include media-breakpoint-down(xs) {
+                font-size: 0.65em;
+            }
+        }
+
+        span.largeText {
+            font-size: 5.5em;
+            font-weight: 200;
+
+            @include media-breakpoint-down(lg) { font-size: 4.5em; }
+
+            @include media-breakpoint-down(md) { font-size: 3.4em; }
+
+            @include media-breakpoint-down(sm) { font-size: 4em; }
+
+            @include media-breakpoint-down(xs) { font-size: 2.5em; }
+        }
+
+        a {
+            color: $brand-color;
+            text-decoration: none;
+        }
+    }
+}
+
 .home-main-set-image {
     .set-image {
         min-height: 41.1875em;
@@ -225,4 +272,3 @@
         }
     }
 }
-
