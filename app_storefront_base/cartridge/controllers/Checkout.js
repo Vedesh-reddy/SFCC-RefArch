@@ -31,7 +31,7 @@ server.get('ShippingForm', server.middleware.include, function (req, res, next) 
 server.get('Start', locale, function (req, res, next) {
     var applicablePaymentCards;
     var applicablePaymentMethods;
-    var countryCode = "US"; // req.geolocation.countryCode;
+    var countryCode = req.geolocation.countryCode;
     var currentBasket = BasketMgr.getCurrentBasket();
     var currentCustomer = customer; // eslint-disable-line
     var billingAddress = currentBasket.billingAddress;
