@@ -12,3 +12,9 @@ pipelines:
           - npm install
           - npm run lint
           - npm test
+          - npm run compile:js
+          - npm run compile:scss
+          - npm run compile:fonts
+          - node node_modules/.bin/dwupload --hostname $HOSTNAME --username $USERNAME --password $PASSWORD --cartridge app_storefront_base
+          - node node_modules/.bin/dwupload --hostname $HOSTNAME --username $USERNAME --password $PASSWORD --cartridge modules
+          - npm run test:integration -- --baseUrl https://$HOSTNAME/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/*
