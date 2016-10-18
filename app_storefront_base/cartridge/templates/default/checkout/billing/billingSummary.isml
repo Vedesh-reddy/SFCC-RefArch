@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card payment-summary">
     <div class="card-header">
         <p class="checkout-summary-header checkout-card-header">${Resource.msg('heading.payment', 'checkout', null)}</p>
         <span class="edit-button">${Resource.msg('action.edit.step', 'checkout', null)}</span>
@@ -7,9 +7,9 @@
     <div class="checkout-card-block">
         <!--- Billing Address --->
         <span class="summary-section-label">${Resource.msg('label.order.billing.address', 'confirmation', null)}</span><br>
-        <isset name="address" value="${pdict.billing.billingAddress.address}" scope="page"/>
+        <isset name="billingAddress" value="${pdict.billing.billingAddress.address}" scope="page"/>
         <div class="summary-details">
-            <isinclude template="checkout/addressSummary" />
+            <isinclude template="checkout/billingAddressSummary" />
         </div>
 
         <!--- Payment information --->

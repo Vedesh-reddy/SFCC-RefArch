@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shipping-form">
     <div class="card-header">
         <span class="checkout-card-header">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</span>
     </div>
@@ -17,7 +17,8 @@
     <div class="tab-content">
         <!--- Shipping Address Form--->
         <div class="tab-pane active checkout-card-block" id="shipping-address" role="tabpanel">
-            <form action="${URLUtils.url('Checkout-Shipping')}" class="shipping" method="post" name="shipping">
+            <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
+            <!--<form action="${URLUtils.url('Checkout-Shipping')}" class="shipping" method="post" name="shipping">-->
                 <fieldset>
                     <isinclude template="checkout/shipping/shippingAddress" />
                 </fieldset>

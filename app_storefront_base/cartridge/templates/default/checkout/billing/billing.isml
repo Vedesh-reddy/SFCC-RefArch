@@ -1,17 +1,17 @@
-<div class="card">
+<div class="card payment-form">
     <div class="card-header">
         <span class="checkout-card-header">${Resource.msg('heading.payment', 'checkout', null)}</span>
     </div>
     <div class="checkout-card-block">
         <div class="form-check">
             <label class="form-check-label checkout-checkbox">
-                <input class="form-check-input billing-same-as-shipping" type="checkbox" value="" checked>
+                <input class="form-check-input billing-same-as-shipping" name="billing-same-as-shipping" type="checkbox" value="" checked>
                 ${Resource.msg('check.shipping.billing.same', 'checkout', null)}
             </label>
         </div>
 
         <form>
-            <fieldset class="billing-address">
+            <fieldset class="billing-address same-as-shipping">
                 <isinclude template="checkout/billing/billingAddress" />
             </fieldset>
 

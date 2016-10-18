@@ -1,0 +1,43 @@
+<div class="address-summary">
+
+    <div>
+        <span class=${pdict.forms.shippingForm.firstName.htmlName} >
+            ${shippingAddress.firstName}
+        </span>
+        <span class=${pdict.forms.shippingForm.lastName.htmlName} >
+            ${shippingAddress.lastName}
+        </span>
+    </div>
+
+    <div class=${pdict.forms.shippingForm.address1.htmlName}>
+        ${shippingAddress.address1}
+    </div>
+
+    <div class=${pdict.forms.shippingForm.address2.htmlName}>
+        <isif condition="${shippingAddress.address2}">
+            ${shippingAddress.address2}
+        </isif>
+    </div>
+
+    <span class=${pdict.forms.shippingForm.city.htmlName}>
+        <isif condition="${shippingAddress.city}">
+                ${shippingAddress.city},
+        </isif>
+    </span>
+
+    <span class=${pdict.forms.shippingForm.states.htmlName}>
+        <isif condition="${shippingAddress.stateCode}">
+                ${shippingAddress.stateCode}
+        </isif>
+    </span>
+
+    <span class=${pdict.forms.shippingForm.postal.htmlName}>
+        ${shippingAddress.postalCode}
+    </span>
+
+    <isif condition="${pdict.orderEmail}">
+        <div class="">
+            ${pdict.orderEmail}
+        </div>
+    </isif>
+</div>
