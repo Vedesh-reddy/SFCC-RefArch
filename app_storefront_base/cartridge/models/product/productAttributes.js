@@ -72,6 +72,11 @@ function AttributesModel(variationModel, attrConfig) {
                 swatchable: isSwatchable(attr.attributeID),
                 values: getAllAttrValues(variationModel, selectedValue, attr)
             });
+        } else if (attrConfig === 'selected') {
+            result.push({
+                displayName: attr.displayName,
+                displayValue: selectedValue.displayValue
+            });
         }
     });
     result.forEach(function (item) {

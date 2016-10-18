@@ -2,14 +2,14 @@
     <div class="product-line-item">
         <div class="row">
             <div class="col-lg-12 line-item-name">
-                <span>${lineItem.name}</span>
+                <span>${lineItem.productName}</span>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
-                <img class="product-image" src="${lineItem.image.src}" alt="${lineItem.image.alt}" title="${lineItem.image.title}">
+                <img class="product-image" src="${lineItem.images.small[0].url}" alt="${lineItem.images.small[0].alt}" title="${lineItem.images.small[0].title}">
                 <div class="item-attributes">
-                    <isloop items="${lineItem.variationAttributes}" var="attribute">
+                    <isloop items="${lineItem.attributes}" var="attribute">
                         <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                     </isloop>
                 </div>
@@ -23,7 +23,7 @@
                     <span class="line-item-total-text">
                         ${Resource.msg('label.each.item.price','cart',null)}
                     </span><br>
-                    <span class="pricing">${lineItem.priceModelPricing.formatted}</span>
+                    <span class="pricing">${lineItem.price.formatted}</span>
                 </p>
             </div>
             <!--- quantity --->
