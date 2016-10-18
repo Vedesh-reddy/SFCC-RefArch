@@ -10,9 +10,8 @@
  * progresses through the varying forms such as shipping and payment.
  *
  */
-(function ( $ ) {
-    $.fn.checkout = function() {
-
+(function ($) {
+    $.fn.checkout = function () { // eslint-disable-line
         var plugin = this;
 
         //
@@ -29,7 +28,7 @@
             payment: {},
 
             // Gift Codes
-            giftCode : {}
+            giftCode: {}
         };
 
         //
@@ -51,53 +50,51 @@
              * Set or update the checkout stage (AKA the shipping, billing, payment, etc... steps)
              */
             updateStage: function () {
-                var stage = checkoutStages[ members.currentStage ];
+                var stage = checkoutStages[members.currentStage];
 
-                if ( stage === 'shipping') {
-
-                    console.log('SHIPPING: submit via ajax shipping info and move to payment form')
+                if (stage === 'shipping') {
+                    console.log('SHIPPING: submit via ajax shipping info and move to payment form'); // eslint-disable-line
 
                     return $.ajax({
                         url: $('#dwfrm_shippingaddress').attr('action'),
                         method: 'POST',
                         data: $('#dwfrm_shippingaddress').serialize(),
-                        success: function(data) {
-
+                        success: function (data) {
                             if (data && data.form) {
-                                $.each(data.form, function(attr) {
+                                $.each(data.form, function (attr) {
                                     var val = data.form[attr];
                                     if (val instanceof Object && val.htmlName && val.value) {
-                                        console.log(val.htmlName, val.value);
+                                        console.log(val.htmlName, val.value); // eslint-disable-line
 
-                                        $('.address-summary .' + val.htmlName ).text(val.value)
+                                        $('.address-summary .' + val.htmlName).text(val.value);
                                     }
-                                })
+                                });
                             }
                         },
-                        error: function(xhr,err) {
-                            console.log(err)
+                        error: function (xhr, err) {
+                            console.log(err); // eslint-disable-line
                         }
                     });
-
-                } else if ( stage === 'payment' ) {
-                    console.log('PAYMENT: submit via ajax payment info and move to place order step')
-                    var p = $('<div>').promise();
-                    setTimeout(function() {
-                        p.done()
+                } else if (stage === 'payment') {
+                    console.log('PAYMENT: submit via ajax payment info and move to place order step') // eslint-disable-line
+                    var p = $('<div>').promise(); // eslint-disable-line
+                    setTimeout(function () {
+                        p.done(); // eslint-disable-line
                     }, 500);
-
-                    return p;
-
-                } else if ( stage === 'placeOrder' ) {
-                   console.log('PLACE ORDER: order placed and move to submitted/confirm step')
-                    var p = $('<div>').promise();
-                    setTimeout(function() {
-                        p.done()
+                    return p; // eslint-disable-line
+                } else if (stage === 'placeOrder') {
+                    console.log('PLACE ORDER: order placed and move to submitted/confirm step') // eslint-disable-line
+                    var p = $('<div>').promise(); // eslint-disable-line
+                    setTimeout(function () {
+                        p.done(); // eslint-disable-line
                     }, 500);
-
-                    return p;
+                    return p; // eslint-disable-line
                 }
-
+                var p = $('<div>').promise(); // eslint-disable-line
+                setTimeout(function () {
+                    p.done(); // eslint-disable-line
+                }, 500);
+                return p; // eslint-disable-line
             },
 
             /**
@@ -106,9 +103,8 @@
              * TODO: update this to allow stage to be set from server?
              */
             initialize: function () {
-
                 // set the initial state of checkout
-                $(plugin).attr('data-checkout-stage', checkoutStages[ members.currentStage ] )
+                $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
 
                 /**
                  * Toggle "billing same as shipping"
@@ -118,42 +114,41 @@
                  * in the payment state of checkout.
                  * @param checked
                  */
-                var toggleBillingForm = function(checked) {
-                    $('input[name="shippingAddressUseAsBillingAddress"]').prop('checked',checked)
-                    $('input[name="billing-same-as-shipping"]').prop('checked',checked)
+                var toggleBillingForm = function (checked) {
+                    $('input[name="shippingAddressUseAsBillingAddress"]').prop('checked', checked);
+                    $('input[name="billing-same-as-shipping"]').prop('checked', checked);
                     $('.billing-address').toggleClass('same-as-shipping', checked);
-
-                }
+                };
 
                 //
                 // Handle "Billing Same as Shipping" Checkbox
                 //
                 $('input[name="shippingAddressUseAsBillingAddress"]:checkbox, ' +
                     'input[name="billing-same-as-shipping"]:checkbox').on('change', function () {
-                    var checked = this.checked;
-                    toggleBillingForm(checked);
-                });
+                        var checked = this.checked;
+                        toggleBillingForm(checked);
+                    });
 
                 //
                 // Handle Payment option selection
                 //
                 $('input[name="paymentOption"]', plugin).on('change', function () {
-                    $('.credit-card-form', this).toggle( $(this).val() === 'CREDIT_CARD' );
+                    $('.credit-card-form', this).toggle($(this).val() === 'CREDIT_CARD');
                 });
 
                 //
                 // Handle Next State button click
                 //
-                $(plugin).on('click', '.next-step-button button', function() {
-                    members.nextStage()
+                $(plugin).on('click', '.next-step-button button', function () {
+                    members.nextStage();
                 });
 
                 //
                 // Handle Next State button click
                 //
-                $('.shipping-summary .edit-button', plugin).on('click', function() {
-                    var shippingIdx = checkoutStages.indexOf('shipping')
-                    members.gotoStage( shippingIdx, members.currentStage * -1 )
+                $('.shipping-summary .edit-button', plugin).on('click', function () {
+                    var shippingIdx = checkoutStages.indexOf('shipping');
+                    members.gotoStage(shippingIdx, members.currentStage * -1);
                 });
 
                 //
@@ -165,10 +160,13 @@
                 //
                 // Listen for foward/back button press and move to correct checkout-stage
                 //
-                window.addEventListener('popstate', function(e) {
-
-                    // Back button when event state less than current state in ordered checkoutStages array
-                    if (e.state === null || checkoutStages.indexOf(e.state) < members.currentStage) {
+                window.addEventListener('popstate', function (e) {
+                    //
+                    // Back button when event state less than current state in ordered
+                    // checkoutStages array.
+                    //
+                    if (e.state === null ||
+                         checkoutStages.indexOf(e.state) < members.currentStage) {
                         members.handlePrevStage(false);
                     } else if (checkoutStages.indexOf(e.state) > members.currentStage) {
                         // Forward button  pressed
@@ -186,19 +184,16 @@
              * The next checkout state step updates the css for showing correct buttons etc...
              */
             nextStage: function () {
-
                 var promise = members.updateStage();
 
-                promise.done(function() {
-
+                promise.done(function () {
                     // Update UI with new stage
                     members.handleNextStage(true);
-
                 });
 
-                promise.fail(function() {
-                    alert('error')
-                })
+                promise.fail(function () {
+                    alert('error');
+                });
             },
 
             /**
@@ -206,9 +201,8 @@
              *
              * @param bPushState = boolean when true pushes state using the history api.
              */
-            handleNextStage: function( bPushState ) {
+            handleNextStage: function (bPushState) {
                 if (members.currentStage < checkoutStages.length - 1) {
-
                     // move stage forward
                     members.currentStage++;
 
@@ -216,32 +210,31 @@
                     // show new stage in url (e.g.payment)
                     //
                     if (bPushState) {
-                        history.pushState(checkoutStages[members.currentStage],
-                           document.title, location.pathname + '#' + checkoutStages[members.currentStage]);
+                        history.pushState(checkoutStages[members.currentStage], document.title,
+                            location.pathname + '#' + checkoutStages[members.currentStage]);
                     }
                 }
 
                 // Set the next stage on the DOM
-                $(plugin).attr('data-checkout-stage', checkoutStages[ members.currentStage ] )
+                $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
             },
 
             /**
              * Previous State
              */
-            handlePrevStage: function() {
+            handlePrevStage: function () {
                 if (members.currentStage > 0) {
-
                     // move state back
                     members.currentStage--;
                 }
 
-                $(plugin).attr('data-checkout-stage', checkoutStages[ members.currentStage ] )
+                $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
             },
 
-            gotoStage: function(stage, steps) {
+            gotoStage: function (stage, steps) {
                 members.currentStage = stage;
-                history.go( steps );
-                $(plugin).attr('data-checkout-stage', checkoutStages[ members.currentStage ] )
+                history.go(steps);
+                $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
             }
         };
 
@@ -252,9 +245,9 @@
 
         return this;
     };
-}( jQuery ));
+}(jQuery));
 
 
 module.exports = function () {
-    $("#checkout-main").checkout();
+    $('#checkout-main').checkout();
 };
