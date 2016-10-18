@@ -4,7 +4,7 @@
         <p class="order-receipt-label">${Resource.msg('label.order.subtotal','confirmation', null)}</p>
     </div>
     <div class="col-xs-6">
-        <p class="text-xs-right pricing">${pdict.totals.subTotal}</p>
+        <p class="text-xs-right">${pdict.totals.subTotal}</p>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
         <p class="order-receipt-label">${Resource.msg('label.order.shipping.cost','confirmation', null)}</p>
     </div>
     <div class="col-xs-6">
-        <p class="text-xs-right pricing">${pdict.totals.totalShippingCost}</p>
+        <p class="text-xs-right">${pdict.totals.totalShippingCost}</p>
     </div>
 </div>
 
@@ -24,7 +24,7 @@
         <p class="order-receipt-label">${Resource.msg('label.order.sales.tax','confirmation', null)}</p>
     </div>
     <div class="col-xs-6">
-        <p class="text-xs-right pricing">${pdict.totals.totalTax}</p>
+        <p class="text-xs-right">${pdict.totals.totalTax}</p>
     </div>
 </div>
 

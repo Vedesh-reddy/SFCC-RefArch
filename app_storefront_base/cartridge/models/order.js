@@ -34,8 +34,12 @@ function order(lineItemContainer, shippingModel, billingModel, orderTotals, line
     this.steps = lineItemContainer ? getCheckoutStepInformation(lineItemContainer) : null;
 
     if (lineItemContainer) {
-        this.orderNumber = lineItemContainer.orderNo ? lineItemContainer.orderNo : null;
-        this.creationDate = lineItemContainer.creationDate ? lineItemContainer.creationDate : null;
+        this.orderNumber = Object.hasOwnProperty.call(lineItemContainer, 'orderNo')
+            ? lineItemContainer.orderNo
+            : null;
+        this.creationDate = Object.hasOwnProperty.call(lineItemContainer, 'creationDate')
+            ? lineItemContainer.creationDate
+            : null;
         this.orderEmail = lineItemContainer.customerEmail ? lineItemContainer.customerEmail : null;
     } else {
         this.orderNumber = null;

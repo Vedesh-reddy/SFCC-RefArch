@@ -1,17 +1,13 @@
-@import "variables";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins/breakpoints";
-
 $receipt-font-size: 0.875rem;
 $receipt-spacing: 0.625em;
 
-.card-block {
+.card-block-spacing {
     padding: $receipt-spacing;
 }
 
 .grand-total {
-    font-size: 1rem !important;
-    font-weight: bolder;
+    font-size: 1.125rem !important;
+    font-weight: 600;
 }
 
 .item-attributes {
@@ -45,18 +41,22 @@ $receipt-spacing: 0.625em;
     margin-right: -$receipt-spacing;
 
     hr {
-        border-top: dashed 1px;
+        border-top: dashed 0.063em;
     }
 }
 
-.line-item-info-divider {
-    margin-left: -$receipt-spacing;
-    margin-right: -$receipt-spacing;
+.product-line-item + .product-line-item::before {
+    content: "";
+    display: block;
+    border-bottom: 0.063em dashed $horizontal-rule-grey;
+    margin: $receipt-spacing -0.625em;
+}
 
-    hr {
-        margin-top: $receipt-spacing;
-        margin-bottom: 0;
-    }
+.line-item-price-quantity-info::before {
+    content: "";
+    display: block;
+    border-bottom: 0.063em solid $horizontal-rule-grey;
+    margin: $receipt-spacing 0.313em 0;
 }
 
 .line-item-pricing-info {
@@ -75,21 +75,8 @@ $receipt-spacing: 0.625em;
     width: 5.625em;
 }
 
-.receipt {
-    font-size: $receipt-font-size;
-}
-
 .shipping-method {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-}
-
-.section-label {
-    font-size: $receipt-font-size;
-    font-weight: bolder;
-}
-
-.shipping-method-label {
-    font-size: $receipt-font-size;
 }

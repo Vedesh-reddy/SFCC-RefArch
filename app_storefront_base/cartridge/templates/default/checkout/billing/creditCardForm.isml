@@ -1,0 +1,50 @@
+<div class="row">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label for="cardNumebr">${Resource.msg('field.credit.card.number','creditCard',null)}</label>
+            <input type="text" class="form-control" id="cardNumebr" name="cardNumebr">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
+            <input type="text" class="form-control" id="expirationYear" name="expirationYear">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
+            <input type="text" class="form-control" id="expirationMonth" name="expirationMonth">
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
+            <input type="text" class="form-control" id="securityCode" name="securityCode">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        ${Resource.msg('tooltip.security.code.what.is.this','creditCard',null)}
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
+            <input type="text" class="form-control" id="email" name="email">
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
+            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber">
+        </div>
+    </div>
+</div>
