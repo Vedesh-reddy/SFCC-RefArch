@@ -104,16 +104,14 @@ function getDeleteItemSelector(selector) {
     return browser.isVisible(selector)
         .then(isVisible => {
             if (Array.isArray(isVisible)) {
-                if (isVisible[0] === true)
+                if (isVisible[0] === true) {
                     return selector;
+                }
                 return selector + '-lg';
-            }
-            else if (isVisible) {
+            } else if (isVisible) {
                 return selector;
             }
-            else {
-                return selector + '-lg';
-            }
+            return selector + '-lg';
         });
 }
 
@@ -134,7 +132,7 @@ function removeItemFromCart(deleteButton) {
  *
  */
 export function emptyCart() {
-    var mySelector ;
+    var mySelector;
     return navigateTo()
         .then(() => getDeleteItemSelector(BTN_DELETE))
         .then(selector => {

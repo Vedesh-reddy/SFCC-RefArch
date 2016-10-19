@@ -20,7 +20,7 @@ describe('Product Details - Product Variant', () => {
             .then(() => {
                 var variant = testDataMgr.getProductById(variantId);
                 return browser.url(variant.getUrlResourcePath());
-            })
+            });
     });
 
     it('should display its product ID', () => {
