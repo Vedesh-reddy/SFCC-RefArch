@@ -16,7 +16,7 @@ var opts = _.assign({}, getConfig({
     user: 'testuser1'
 }, './config.json'), argv);
 
-var specs = 'test/appium/' + opts.suite;
+var specs = 'test/functional/' + opts.suite;
 
 var sauce = {};
 
