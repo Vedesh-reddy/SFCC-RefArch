@@ -68,7 +68,9 @@ describe('Cart - Update Quantity On Product Variant', () => {
             .then(() => cartPage.navigateTo());
     });
 
-    after(() => cartPage.emptyCart());
+    after(() => {
+        return cartPage.emptyCart();
+    });
 
     it('Should be able to update quantity of variant item.', function () {
         return cartPage.updateQuantityByRow(2, newQty.toString())

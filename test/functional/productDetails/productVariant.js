@@ -6,7 +6,7 @@ import * as testDataMgr from '../../mocks/testDataMgr/main';
 import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
 
 
-describe('Product Details - Product Item', () => {
+describe('Product Details - Product Variant', () => {
     const variantId = '708141676190';
     const expectedPrimaryImage = 'PG.15J0037EJ.WHITEFB.PZ.jpg';
     const expectedSecondaryImage = 'PG.15J0037EJ.WHITEFB.BZ.jpg';
@@ -14,16 +14,13 @@ describe('Product Details - Product Item', () => {
     const elementPrimaryImage = '.carousel-item.active .img-fluid';
     const elementImage = '.img-fluid';
 
-
     before(() => {
-        // TODO: should empty Cart before test starts
-        var variant = testDataMgr.getProductById(variantId);
-        return browser.url(variant.getUrlResourcePath());
-    });
-
-    after(() => {
-        return cartPage.navigateTo()
-            .then(() => cartPage.emptyCart());
+        return testDataMgr.load()
+            .then(() => cartPage.emptyCart())
+            .then(() => {
+                var variant = testDataMgr.getProductById(variantId);
+                return browser.url(variant.getUrlResourcePath());
+            })
     });
 
     it('should display its product ID', () => {
@@ -62,13 +59,5 @@ describe('Product Details - Product Item', () => {
     it('should enable the "Add to Cart" button', () => {
         return browser.isEnabled('.add-to-cart')
             .then(enabled => assert.isTrue(enabled));
-    });
-
-    it('should add product to Cart', () => {
-        return browser.element('.add-to-cart')
-            .click()
-            .waitForVisible(productDetailPage.MINI_CART)
-            .then(() => browser.getText('.minicart-quantity'))
-            .then(quantity => assert.equal(quantity, '1'));
     });
 });

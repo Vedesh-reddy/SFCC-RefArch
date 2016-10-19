@@ -2,7 +2,7 @@
 
 import path from 'path';
 import properties from 'properties-parser';
-import wdioConfig from '../../../appium/webdriver/wdio.appium';
+import wdioConfig from '../../../functional/webdriver/wdio.appium.js';
 
 const locale = wdioConfig.locale;
 

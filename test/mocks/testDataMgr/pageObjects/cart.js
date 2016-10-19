@@ -83,9 +83,9 @@ export function getTotalPriceByRow(rowNum) {
  * @param {string} deleteConfirmation
  * @returns {Promise.<TResult>|*}
  */
-export function clickDeleteButton(deleteButton, deleteConfirmation) {
+function clickDeleteButton(deleteButton, deleteConfirmation) {
     return browser.click(deleteButton)
-        .waitForVisible(deleteConfirmation, 2000)
+        .waitForVisible(deleteConfirmation, 3000)
         .isVisible(deleteConfirmation)
         .then(isVisible => {
             if (!isVisible) {
@@ -100,13 +100,20 @@ export function clickDeleteButton(deleteButton, deleteConfirmation) {
  * @param {string} selector
  * @returns {Promise.<TResult>|*}
  */
-export function getDeleteItemSelector(selector) {
+function getDeleteItemSelector(selector) {
     return browser.isVisible(selector)
         .then(isVisible => {
-            if (isVisible[0] || isVisible) {
+            if (Array.isArray(isVisible)) {
+                if (isVisible[0] === true)
+                    return selector;
+                return selector + '-lg';
+            }
+            else if (isVisible) {
                 return selector;
             }
-            return selector + '-lg';
+            else {
+                return selector + '-lg';
+            }
         });
 }
 
@@ -118,7 +125,8 @@ export function getDeleteItemSelector(selector) {
 function removeItemFromCart(deleteButton) {
     return clickDeleteButton(deleteButton, DELETE_CONFIRMATION)
         .then(() => browser.click(DELETE_CONFIRMATION))
-        .then(() => browser.waitForVisible('.modal', 2000, true));
+        .then(() => browser.waitForVisible('.modal', 3000, true))
+        .then(() => browser.pause(2000));
 }
 
 /**
@@ -126,7 +134,7 @@ function removeItemFromCart(deleteButton) {
  *
  */
 export function emptyCart() {
-    var mySelector = null;
+    var mySelector ;
     return navigateTo()
         .then(() => getDeleteItemSelector(BTN_DELETE))
         .then(selector => {
