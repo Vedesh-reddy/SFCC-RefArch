@@ -27,4 +27,6 @@
 	<!-- actions provided by the edit billing address dialog -->
 	<action formid="apply" valid-form="true"/>
 	<action formid="remove" valid-form="false"/>
+
 </form>
+

@@ -19,7 +19,7 @@ var TotalsModel = require('~/cartridge/models/totals');
 server.get('Start', locale, function (req, res, next) {
     var applicablePaymentCards;
     var applicablePaymentMethods;
-    var countryCode = req.geolocation.countryCode;
+    var countryCode = 'US'; // req.geolocation.countryCode;
     var currentBasket = BasketMgr.getCurrentBasket();
     var currentCustomer = customer; // eslint-disable-line
     var billingAddress = currentBasket.billingAddress;
@@ -72,6 +72,7 @@ server.get('Start', locale, function (req, res, next) {
     orderTotals = new TotalsModel(currentBasket);
 
     var shippingForm = server.forms.getForm('shippingaddress');
+    var billingForm = server.forms.getForm('billingaddress');
 
     orderModel = new OrderModel(
         currentBasket,
@@ -82,7 +83,8 @@ server.get('Start', locale, function (req, res, next) {
     );
 
     var forms = {
-        shippingForm: shippingForm
+        shippingForm: shippingForm,
+        billingForm: billingForm
     };
     res.render('checkout/checkout', { order: orderModel, forms: forms });
     next();

@@ -1,4 +1,4 @@
-<div class="address-summary">
+<div class="shipping address-summary">
 
     <div>
         <span class=${pdict.forms.shippingForm.firstName.htmlName} >

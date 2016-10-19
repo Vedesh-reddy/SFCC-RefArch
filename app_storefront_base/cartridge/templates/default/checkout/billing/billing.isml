@@ -10,7 +10,7 @@
             </label>
         </div>
 
-        <form>
+        <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitBilling')}" <isprint value=${pdict.forms.billingForm.attributes} encoding="off" /> >
             <fieldset class="billing-address same-as-shipping">
                 <isinclude template="checkout/billing/billingAddress" />
             </fieldset>
