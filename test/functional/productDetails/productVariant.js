@@ -16,7 +16,6 @@ describe('Product Details - Product Variant', () => {
 
     before(() => {
         return testDataMgr.load()
-            .then(() => cartPage.emptyCart())
             .then(() => {
                 var variant = testDataMgr.getProductById(variantId);
                 return browser.url(variant.getUrlResourcePath());
