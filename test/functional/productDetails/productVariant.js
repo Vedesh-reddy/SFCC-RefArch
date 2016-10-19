@@ -3,8 +3,6 @@
 import { assert } from 'chai';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
-import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
-
 
 describe('Product Details - Product Variant', () => {
     const variantId = '708141676190';
