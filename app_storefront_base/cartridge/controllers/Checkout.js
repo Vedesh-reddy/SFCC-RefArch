@@ -12,7 +12,7 @@ var OrderModel = require('~/cartridge/models/order');
 var Payment = require('~/cartridge/models/payment');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
-var ProductLineItemModel = require('~/cartridge/models/productLineItem');
+var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 

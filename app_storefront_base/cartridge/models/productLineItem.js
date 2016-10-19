@@ -23,15 +23,14 @@ function getMinMaxQuantityOptions(product, quantity) {
 
 /**
  * @constructor
- * @classdesc
- * @param {} product -
- * @param {} productVariables -
- * @param {} quantity - quantity of products selected
+ * @param {dw.catalog.Product} product - Product instance from the line item
+ * @param {Array} productVariables - empty array
+ * @param {Number} quantity - The quantity of this product line item currently in the baskets
+ * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
  */
 function ProductLineItem(product, productVariables, quantity, lineItem) {
-    this.variationModel = this.prototype.getVariationModel(product, productVariables);
-    this.product = this.variationModel.selectedVariant
-        || this.variationModel.defaultVariant;
+    this.variationModel = this.getVariationModel(product, productVariables);
+    this.product = this.variationModel.selectedVariant || product;
     this.imageConfig = {
         types: ['small'],
         quantity: 'single'
@@ -41,10 +40,10 @@ function ProductLineItem(product, productVariables, quantity, lineItem) {
     this.initialize(lineItem);
 }
 
-ProductLineItem.prototype = ProductBase;
+ProductLineItem.prototype = Object.create(ProductBase.prototype);
 
 ProductLineItem.prototype.initialize = function (lineItem) {
-    this.prototype.initialize.call(this);
+    ProductBase.prototype.initialize.call(this);
     this.quantityOptions = getMinMaxQuantityOptions(this.product, this.quantity);
     this.priceTotal = formatMoney(money(
         lineItem.adjustedPrice.value,
@@ -58,13 +57,14 @@ ProductLineItem.prototype.initialize = function (lineItem) {
 
 /**
  * @constructor
- * @class
- * @param {dw.catalog.Product} product -
- * @param {Object} productVariables - empty array or object? not sure yet
+ * @param {dw.catalog.Product} product - The Product instance from the line item
+ * @param {Array} productVariables - Empty array
+ * @param {Number} quantity - The quantity of this product line item currently in the baskets
+ * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
  */
-function ProductWrapper(lineItem, productVariables, quantity) {
+function ProductWrapper(product, productVariables, quantity, lineItem) {
     var productLineItem = new ProductLineItem(
-        lineItem.product,
+        product,
         productVariables,
         quantity,
         lineItem

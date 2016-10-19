@@ -41,7 +41,9 @@ function order(lineItemContainer, shippingModel, billingModel, orderTotals, line
             ? lineItemContainer.creationDate
             : null;
         this.orderEmail = lineItemContainer.customerEmail ? lineItemContainer.customerEmail : null;
-        this.orderStatus = lineItemContainer.status ? lineItemContainer.status : null;
+        this.orderStatus = Object.hasOwnProperty.call(lineItemContainer, 'status')
+            ? lineItemContainer.status
+            : null;
         this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
             lineItemContainer.productQuantityTotal : null;
     } else {

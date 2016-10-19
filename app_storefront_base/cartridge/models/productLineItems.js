@@ -4,14 +4,14 @@ var helper = require('~/cartridge/scripts/dwHelpers');
 var ProductLineItemModel = require('./productLineItem');
 
 /**
- * Creates an array of objects containing Product line item information
+ * Creates an array of product line items
  * @param {dw.util.Collection <dw.order.ProductLineItem>} allLineItems - All product
  * line items of the basket
- * @returns {Array} an array of objects that contain information about each product line item.
+ * @returns {Array} an array of product line items.
  */
 function createProductLineItemsObject(allLineItems) {
     var lineItems = helper.map(allLineItems, function (item) {
-        return new ProductLineItemModel(item, [], item.quantity.value);
+        return new ProductLineItemModel(item.product, null, item.quantity.value, item);
     });
 
     return lineItems;
