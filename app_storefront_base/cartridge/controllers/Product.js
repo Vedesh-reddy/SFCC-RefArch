@@ -48,7 +48,7 @@ server.get('Show', locale, function (req, res, next) {
     next();
 });
 
-server.get('Variation', locale, function (req, res, next) {
+server.get('Variation', function (req, res, next) {
     var params = req.querystring;
     res.json({
         product: ProductFactory.get(params),
@@ -77,8 +77,20 @@ server.get('ShowTile', locale, function (req, res, next) {
     };
 
     var product = ProductFactory.get(productTileParams);
+    var productUrl = URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
+    var quickViewUrl = URLUtils.url('Product-ShowTile', 'pid', product.id, 'pview', 'quickview')
+        .relative().toString();
     res.render('product/gridTile.isml', {
-        product: product
+        product: product,
+        urls: {
+            product: productUrl,
+            quickView: quickViewUrl
+        },
+        display: {
+            swatches: req.querystring.swatches,
+            reviews: req.querystring.reviews,
+            compare: req.querystring.compare
+        }
     });
 
     next();

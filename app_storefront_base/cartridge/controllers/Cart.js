@@ -82,6 +82,38 @@ server.get('Show', locale, function (req, res, next) {
     next();
 });
 
+server.get('Test', function (req, res, next) {
+    var cartTotals;
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var productLineItemModel;
+    var shippingModel;
+    var shipmentShippingModel;
+
+    Transaction.wrap(function () {
+        if (currentBasket && !currentBasket.defaultShipment.shippingMethod) {
+            ShippingModel.selectShippingMethod(currentBasket.defaultShipment);
+        }
+        if (currentBasket) {
+            calculateCart(currentBasket);
+        }
+    });
+
+    if (currentBasket) {
+        shipmentShippingModel = ShippingMgr.getShipmentShippingModel(
+            currentBasket.defaultShipment
+        );
+        shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
+    }
+
+    productLineItemModel = new ProductLineItemModel(currentBasket);
+    cartTotals = new Totals(currentBasket);
+
+    var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
+
+    res.json(basket);
+    next();
+});
+
 server.get('RemoveProductLineItem', locale, function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();

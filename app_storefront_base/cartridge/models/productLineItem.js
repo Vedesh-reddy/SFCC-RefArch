@@ -1,7 +1,7 @@
 'use strict';
 
 var helper = require('~/cartridge/scripts/dwHelpers');
-var PricingModel = require('./product/productPricingModel');
+var PricingModel = require('./product/productPricing');
 
 var URLUtils = require('dw/web/URLUtils');
 var formatMoney = require('dw/util/StringUtils').formatMoney;

@@ -4,12 +4,7 @@ var assert = require('chai').assert;
 var ArrayList = require('../../../mocks/dw.util.Collection');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-var commonHelpers = require('../../../mocks/helpers/common');
 var getMockMoney = require('../../../mocks/dw.value.Money');
-var getMockProduct = require('../../../mocks/dw.catalog.Product');
-var getMockProductPriceModel = require('../../../mocks/dw.catalog.ProductPriceModel');
-var getMockProductPriceTable = require('../../../mocks/dw.catalog.ProductPriceTable');
-
 var urlUtilsMock = require('../../../mocks/dw.web.URLUtils');
 
 var createApiProductLineItem = function (product) {
@@ -19,11 +14,6 @@ var createApiProductLineItem = function (product) {
             master: product.isMaster,
             productSet: product.isProductSet,
             variant: product.isVariant,
-            priceModel: {
-                price: {
-                    value: product.unitPrice
-                }
-            },
             variationModel: {
                 productVariationAttributes: new ArrayList([
                     {
@@ -45,38 +35,6 @@ var createApiProductLineItem = function (product) {
                         };
                     }
                     return result;
-                },
-                getMaster: function () {
-                    return getMockProduct({
-                        master: true,
-                        getPriceModel: function () {
-                            return getMockProductPriceModel({
-                                getPriceTable: function () {
-                                    return getMockProductPriceTable({
-                                        getQuantities: function () {
-                                            return {
-                                                toArray: function () {
-                                                    return [];
-                                                }
-                                            };
-                                        }
-                                    });
-                                },
-                                minPrice: getMockMoney({
-                                    getDecimalValue: function () {
-                                        return {
-                                            get: function () {
-                                                return product.unitPrice;
-                                            }
-                                        };
-                                    },
-                                    getCurrencyCode: function () {
-                                        return 'USD';
-                                    }
-                                })
-                            });
-                        }
-                    });
                 }
             },
             availabilityModel: {
@@ -185,21 +143,17 @@ describe('cart', function () {
     var helper = proxyquire('../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
         'dw/util/ArrayList': ArrayList
     });
-    var mockProductPricingModel = proxyquire('../../../../app_storefront_base/cartridge/models/product/productPricingModel', {
-        'dw/value/Money': commonHelpers.returnObject,
-        'dw/util/StringUtils': {
-            formatMoney: function () {
-                return 'formattedMoney';
-            }
-        },
-        'dw/campaign/Promotion': {
-            PROMOTION_CLASS_PRODUCT: 'someClass'
-        }
-    });
     ProductLineItems = proxyquire('../../../../app_storefront_base/cartridge/models/productLineItem', {
         '~/cartridge/scripts/dwHelpers': helper,
         'dw/web/URLUtils': urlUtilsMock,
-        './product/productPricingModel': mockProductPricingModel,
+        './product/productPricing': function () {
+            return {
+                type: 'standard',
+                value: '28.99',
+                currency: 'USD',
+                formattted: '$28.99'
+            };
+        },
         'dw/util/StringUtils': {
             formatMoney: function () {
                 return 'formattedMoney';

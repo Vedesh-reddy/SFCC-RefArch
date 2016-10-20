@@ -3,7 +3,6 @@
 var assert = require('chai').assert;
 var ArrayList = require('../../../mocks/dw.util.Collection');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-var util = require('../../../util');
 
 var urlUtilsMock = {
     http: function (a, b, id) {
@@ -20,7 +19,7 @@ var createApiCategory = function (name, id) {
             return name;
         },
         getOnlineSubCategories: function () {
-            return [];
+            return new ArrayList([]);
         },
         getID: function () {
             return id;
@@ -50,7 +49,7 @@ describe('categories', function () {
     it('should convert API response to nested object', function () {
         var category = createApiCategory('foo', 1);
         category.getOnlineSubCategories = function () {
-            return util.toArrayList([createApiCategory('bar', 2), createApiCategory('baz', 3)]);
+            return new ArrayList([createApiCategory('bar', 2), createApiCategory('baz', 3)]);
         };
 
         var result = new Categories([category]);
@@ -67,9 +66,9 @@ describe('categories', function () {
         category.getOnlineSubCategories = function () {
             var child = createApiCategory('bar', 2);
             child.getOnlineSubCategories = function () {
-                return util.toArrayList([createApiCategory('baz', 3)]);
+                return new ArrayList([createApiCategory('baz', 3)]);
             };
-            return util.toArrayList([child]);
+            return new ArrayList([child]);
         };
 
         var result = new Categories([category]);
@@ -86,9 +85,9 @@ describe('categories', function () {
             child.getOnlineSubCategories = function () {
                 var subChild = createApiCategory('baz', 3);
                 subChild.custom.showInMenu = false;
-                return util.toArrayList([subChild]);
+                return new ArrayList([subChild]);
             };
-            return util.toArrayList([child]);
+            return new ArrayList([child]);
         };
 
         var result = new Categories([category]);
