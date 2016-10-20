@@ -57,4 +57,13 @@ describe('server', function () {
         var route = new Route('test', [tempFunc], {}, res);
         assert.throws(function () { route.getRoute()(); });
     });
+    it('should correct append a step to the route', function () {
+        function tempFunc(req, res, next) {
+            next();
+        }
+        var route = new Route('test', [tempFunc, tempFunc], {}, {});
+        assert.equal(route.chain.length, 2);
+        route.append(tempFunc);
+        assert.equal(route.chain.length, 3);
+    });
 });
