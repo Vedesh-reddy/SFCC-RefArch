@@ -39,6 +39,12 @@ function parseQueryString(querystring) {
  * @returns {Object} local instance of customer object
  */
 function getCustomerObject(customer) {
+    if (!customer || !customer.profile) {
+        return {
+            raw: customer
+        };
+    }
+
     var result;
     var paymentInstrument = {};
     if (customer.profile.wallet.paymentInstruments) {
