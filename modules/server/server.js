@@ -1,4 +1,4 @@
-/* globals request:false, response:false */
+/* globals request:false, response:false, customer:false */
 
 'use strict';
 
@@ -53,7 +53,10 @@ Server.prototype = {
         var args = Array.isArray(arguments) ? arguments : Array.prototype.slice.call(arguments);
         var middlewareChain = args.slice(1);
         // freeze request object to prevent mutations
-        var rq = Object.freeze(new Request(typeof request !== 'undefined' ? request : {}));
+        var rq = Object.freeze(
+            new Request(typeof request !== 'undefined' ? request : {},
+            typeof customer !== 'undefined' ? customer : {})
+        );
         var rs = new Response(typeof response !== 'undefined' ? response : {});
 
         checkParams(args);

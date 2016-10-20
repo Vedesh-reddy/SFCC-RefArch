@@ -1,0 +1,58 @@
+<isdecorate template="common/layout/page">
+    <div class="hero" style="background-image: url(http://www.pixelstalk.net/wp-content/uploads/2016/08/Background-HD-Wallpapers.jpg)">
+        <h1 class="page-title">${Resource.msg('page.title.myaccount','account',null)}</h1>
+    </div>
+    <div class="container">
+        <div>Breadcrumbs here</div>
+        <div>
+            <h1>${Resource.msg('page.heading.dashboard','account',null)}</h1>
+            <!---Profile--->
+            <div class="row">
+            	<div class="col-sm-6">
+	                <h2>${Resource.msg('label.profile','account',null)}</h2>
+	                <div>
+	                	<p>${Resource.msg('label.profile.firstname','account',null)}<br>${pdict.profile.firstName}</p>
+	                	<p>${Resource.msg('label.profile.lastname','account',null)}<br>${pdict.profile.lastName}</p>
+	                	<p>${Resource.msg('label.profile.email','account',null)}<br>${pdict.profile.email}</p>
+	                	<p>${Resource.msg('label.profile.password','account',null)}<br>${pdict.profile.password}</p>
+	                </div>
+                </div>
+                 <!---Order History--->
+                <div class="col-sm-6">
+	                <h2>${Resource.msg('label.orderhistory','account',null)}</h2>
+	                <div>
+	                	${Resource.msg('label.orderhistory.mostrecentorder','account',null)} <br>
+                        ${Resource.msg('label.orderhistory.ordernumber','account',null)} ${pdict.orderHistory.orderNumber} <br>
+                        ${Resource.msg('label.orderhistory.dateordered','account',null)} ${pdict.orderHistory.creationDate} <br>
+                        ${Resource.msg('label.orderhistory.orderstatus','account',null)} ${pdict.orderHistory.orderStatus} <br>
+                        ${Resource.msg('label.orderhistory.shippedto','account',null)} ${pdict.orderHistory.orderShippedTo.firstName} ${pdict.orderHistory.orderShippedTo.lastName} <br>
+                        ${Resource.msg('label.orderhistory.ordertotal','account',null)} ${pdict.orderHistory.orderTotal} <br>
+                        ${Resource.msg('label.orderhistory.totalitems','account',null)} ${pdict.orderHistory.totalOrderItems} <br>
+	                </div>
+                </div>
+            </div>
+             <!---Address Book--->
+            <div class="row">
+            	<div class="col-sm-6">
+	                <h2>${Resource.msg('label.addressbook','account',null)}</h2>
+	                <div>
+	                	${Resource.msg('label.addressbook.defaultaddress','account',null)} <br>
+	                	${pdict.preferredAddress.address.ID} <br>
+						${pdict.preferredAddress.address.address1} <br>
+						${pdict.preferredAddress.address.city}, ${pdict.preferredAddress.address.stateCode} ${pdict.preferredAddress.address.postalCode} <br>
+						${pdict.preferredAddress.address.countryCode.displayValue}
+	                </div>
+                </div>
+                 <!---Payment--->
+                <div class="col-sm-6">
+	                <h2>${Resource.msg('label.payment','account',null)}</h2>
+	                <div>
+						${Resource.msg('label.payment.credit','account',null)} ${pdict.payment.creditCardType} <br>
+						${pdict.payment.maskedCreditCardNumber} <br>
+						${Resource.msg('label.payment.ending','account',null)} ${pdict.payment.creditCardExpirationMonth}/${pdict.payment.creditCardExpirationYear}
+	                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</isdecorate>
