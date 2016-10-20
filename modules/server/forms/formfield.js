@@ -46,7 +46,7 @@ function formField(field) {
                 value: field.options[i].value
             });
         }
-        result.selectedOption = field.selectedOption.optionId;
+        result.selectedOption = field.selectedOption ? field.selectedOption.optionId : '';
     }
 
     result.attributes = 'name = "' + result.htmlName + '"';
