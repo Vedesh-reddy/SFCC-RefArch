@@ -1,15 +1,24 @@
 'use strict';
 
 var server = require('server');
+var locale = require('~/cartridge/scripts/middleware/locale');
+
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
-var locale = require('~/cartridge/scripts/middleware/locale');
-var Order = require('~/cartridge/models/order');
+
+var OrderMgr = require('dw/order/OrderMgr');
+var PaymentMgr = require('dw/order/PaymentMgr');
+var PaymentInstrument = require('dw/order/PaymentInstrument');
+var ShippingMgr = require('dw/order/ShippingMgr');
+var Transaction = require('dw/system/Transaction');
+
+var AddressModel = require('~/cartridge/models/address');
+var BillingModel = require('~/cartridge/models/billing');
+var OrderModel = require('~/cartridge/models/order');
+var Payment = require('~/cartridge/models/payment');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
-var ShippingMgr = require('dw/order/ShippingMgr');
-var Totals = require('~/cartridge/models/totals');
-var Transaction = require('dw/system/Transaction');
+var TotalsModel = require('~/cartridge/models/totals');
 
 server.get('Test', locale, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
@@ -32,12 +41,13 @@ server.get('Test', locale, function (req, res, next) {
         shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
         shippingModel = new ShippingModel(currentBasket.defaultShipment, shipmentShippingModel);
         productLineItemModel = new ProductLineItemModel(currentBasket);
-        orderTotals = new Totals(currentBasket);
+        orderTotals = new TotalsModel(currentBasket);
     }
 
-    var order = new Order(currentBasket, shippingModel, billing, orderTotals, productLineItemModel);
+    var orderModel =
+        new OrderModel(currentBasket, shippingModel, billing, orderTotals, productLineItemModel);
 
-    res.json(order);
+    res.json(orderModel);
     next();
 });
 
@@ -52,6 +62,116 @@ server.get('Confirm', locale, function (req, res, next) {
     // =====================================================
 
     next();
+});
+
+server.post('Track', locale, server.middleware.https, function (req, res, next) {
+    var applicablePaymentCards;
+    var applicablePaymentMethods;
+
+    var countryCode = req.geolocation.countryCode
+        ? req.geolocation.countryCode
+        : 'US';
+
+    var currentCustomer = req.currentCustomer.raw;
+    var billingAddress;
+    var paymentAmount;
+    var paymentInstruments;
+    var shipment;
+    var shippingAddress;
+    var shipmentShippingModel;
+    var order;
+    var validForm = true;
+
+    // models
+    var billingAddressModel;
+    var billingModel;
+    var orderModel;
+    var orderTotals;
+    var paymentModel;
+    var productLineItemModel;
+    var shippingAddressModel;
+    var shippingModel;
+
+    if (req.form.trackOrderEmail && req.form.trackOrderPostal && req.form.trackOrderNumber) {
+        order = OrderMgr.getOrder(req.form.trackOrderNumber);
+    } else {
+        validForm = false;
+    }
+
+    if (!order) {
+        res.render('/account/login', {
+            navTabValue: 'login',
+            orderTrackFormError: !validForm
+        });
+        next();
+    } else {
+        billingAddress = order.billingAddress;
+        paymentAmount = order.totalGrossPrice;
+        shipment = order.defaultShipment;
+        shippingAddress = shipment.shippingAddress;
+
+        shipmentShippingModel = ShippingMgr.getShipmentShippingModel(order.defaultShipment);
+
+        shippingAddressModel = new AddressModel(shippingAddress);
+
+        shippingModel = new ShippingModel(
+            order.defaultShipment,
+            shipmentShippingModel,
+            shippingAddressModel
+        );
+
+        applicablePaymentMethods = PaymentMgr.getApplicablePaymentMethods(
+            currentCustomer,
+            countryCode,
+            paymentAmount.value
+        );
+
+        applicablePaymentCards = PaymentMgr
+            .getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD)
+            .getApplicablePaymentCards(currentCustomer, countryCode, paymentAmount.value);
+
+        paymentInstruments = order.paymentInstruments;
+
+        paymentModel = new Payment(applicablePaymentMethods,
+            applicablePaymentCards,
+            paymentInstruments
+        );
+
+        billingAddressModel = new AddressModel(billingAddress);
+        billingModel = new BillingModel(billingAddressModel, paymentModel);
+
+        productLineItemModel = new ProductLineItemModel(order);
+        orderTotals = new TotalsModel(order);
+
+        orderModel = new OrderModel(
+            order,
+            shippingModel,
+            billingModel,
+            orderTotals,
+            productLineItemModel
+        );
+
+        // check the email and postal code of the form
+        if (req.form.trackOrderEmail !== orderModel.orderEmail) {
+            validForm = false;
+        }
+
+        if (req.form.trackOrderPostal
+            !== orderModel.billing.billingAddress.address.postalCode) {
+            validForm = false;
+        }
+
+        if (validForm) {
+            res.render('account/orderdetails', orderModel);
+        } else {
+            res.render('/account/login', {
+                navTabValue: 'login',
+                orderTrackFormError: !validForm
+            });
+        }
+
+        next();
+    }
 });
 
 module.exports = server.exports();

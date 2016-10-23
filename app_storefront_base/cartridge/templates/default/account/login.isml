@@ -23,7 +23,7 @@
                 <isinclude template="components/login/oauth" />
             </div>
             <div class="row">
-                <isinclude template="components/login/checkorderform" />
+                <isinclude template="components/login/trackorderform" />
             </div>
         </div>
     </div>
