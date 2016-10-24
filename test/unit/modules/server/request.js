@@ -7,8 +7,8 @@ function createFakeRequest(overrides) {
     overrides = overrides || {}; // eslint-disable-line no-param-reassign
     var globalRequest = {
         httpMethod: 'GET',
-        host: 'localhost',
-        path: '/Product-Show',
+        httpHost: 'localhost',
+        httpPath: '/Product-Show',
         httpQueryString: '',
         isHttpSecure: function () {
             return false;
@@ -151,5 +151,50 @@ describe('request', function () {
             req.currentCustomer.wallet.paymentInstrument,
             expectedResult.customer.profile.wallet.paymentInstruments[0]
         );
+    });
+    it('should not fail if customer doesn not exist', function () {
+        var req = new Request(createFakeRequest({ customer: null }), null);
+        assert.equal(req.host, 'localhost');
+    });
+    it('should not fail if customer does not have a profile', function () {
+        var req = new Request(createFakeRequest({ customer: { profile: null } }), { profile: null });
+        assert.equal(req.currentCustomer.raw.profile, null);
+    });
+    it('should retrieve form properties', function () {
+        var items = {
+            one: { rawValue: 1 },
+            two: { rawValue: 2 },
+            three: { rawValue: 3 },
+            submitted: { },
+            id: { rawValue: 22 },
+            name: { rawValue: 'foo' }
+        };
+        var httpParamMap = {
+            parameterNames: {
+                iterator: function () {
+                    var index = 0;
+                    return {
+                        hasNext: function () {
+                            return index < Object.keys(items).length - 1;
+                        },
+                        next: function () {
+                            var value = Object.keys(items)[index];
+                            index++;
+                            return value;
+                        }
+                    };
+                },
+                length: Object.keys(items).length
+            },
+            get: function (name) {
+                return items[name];
+            }
+        };
+        var req = new Request(createFakeRequest({ httpParameterMap: httpParamMap, httpQueryString: 'id=22&name=foo' }));
+        assert.equal(req.form.one, 1);
+        assert.equal(req.form.two, 2);
+        assert.equal(req.form.three, 3);
+        assert.isUndefined(req.form.submitted);
+        assert.isUndefined(req.form.id);
     });
 });

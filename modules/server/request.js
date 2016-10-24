@@ -34,6 +34,34 @@ function parseQueryString(querystring) {
 }
 
 /**
+ *
+ * Retrieves and normalizes form data from httpParameterMap
+ * @param {dw.web.httpParameterMap} items - original parameters
+ * @param {Object} qs - Object containing querystring
+ * @return {Object} Object containing key value pairs submitted from the form
+ */
+function getFormData(items, qs) {
+    if (!items) {
+        return {};
+    }
+    var allKeys = items.parameterNames;
+    var result = {};
+    if (allKeys.length > 0) {
+        var iterator = allKeys.iterator();
+        while (iterator.hasNext()) {
+            var key = iterator.next();
+            var value = items.get(key);
+
+            if (value.rawValue && !qs[key]) {
+                result[key] = value.rawValue;
+            }
+        }
+    }
+
+    return result;
+}
+
+/**
  * Translates global customer object into local object
  * @param {Object} request - Global request object
  * @returns {Object} local instance of customer object
@@ -100,6 +128,7 @@ function Request(request, customer) {
     this.path = request.httpPath;
     this.httpHeaders = request.httpHeaders;
     this.querystring = parseQueryString(request.httpQueryString);
+    this.form = getFormData(request.httpParameterMap, this.querystring);
     this.https = request.isHttpSecure();
     this.locale = request.locale;
     this.includeRequest = request.includeRequest;

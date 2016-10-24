@@ -62,6 +62,16 @@ Route.prototype.getRoute = function () {
 };
 
 /**
+ * Append a middleware step into current chain
+ *
+ * @param {Function} step - New middleware step
+ * @return {void}
+ */
+Route.prototype.append = function append(step) {
+    this.chain.push(step);
+};
+
+/**
  * Last step in the chain, this will render a template or output a json string
  * @param {Object} req - Request object
  * @param {Object} res - Response object
