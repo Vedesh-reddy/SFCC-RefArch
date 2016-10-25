@@ -21,9 +21,8 @@ describe('Cart: Selecting Shipping Methods', function () {
     };
 
     var cookieString;
-    var hostname = config.baseUrl.split('/')[2];
 
-    // This is not a complete expected response as properties "totals", "selectedShippingMethod" have different
+    // This is not a complete expected response as properties 'totals', 'selectedShippingMethod' have different
     // values depending on on the selected shipping method and thus they are not included here.
     // Leaving the commented out 'src' property here for reference because it should be included in the
     // 'image' property in the response but the string can not be used for comparison as it because
@@ -91,86 +90,91 @@ describe('Cart: Selecting Shipping Methods', function () {
         ],
         'items': [
             {
-                'type': 'Product',
-                'url': 'http://' + hostname + '/s/SiteGenesis/prancer/' + variantPid1 + '.html?lang=en_US',
-                'variationAttributes': [
-                    {
-                        'displayName': 'Color',
-                        'displayValue': 'Pink'
-                    },
-                    {
-                        'displayName': 'Size',
-                        'displayValue': '7.5'
-                    },
-                    {
-                        'displayName': 'Width',
-                        'displayValue': 'M'
-                    }
-                ],
-                'quantity': 1,
-                'quantityOptions': {
-                    'minOrderQuantity': 1,
-                    'maxOrderQuantity': 10
-                },
-                'priceModelPricing': {
+                'id': '740357440196',
+                'productName': 'Prancer',
+                'price': {
                     'value': 99,
                     'currency': 'USD',
                     'formatted': '$99.00',
                     'type': 'standard'
                 },
-                'priceTotal': '$99.00',
-                'name': 'Prancer',
-                'isBundle': false,
-                'isMaster': false,
-                'isProductSet': false,
-                'isVariant': true,
-                'isBonusProductLineItem': false,
-                'isGift': false,
-                'isOrderable': true,
-                'productID': '740357440196',
-                'UUID': '',
-                'image': {
-                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dwd56b7098/images/small/PG.CJPRANCER.LPNKMPA.PZ.jpg',
-                    'alt': 'Prancer, Pink, small',
-                    'title': 'Prancer, Pink'
-                }
-            },
-            {
-                'type': 'Product',
-                'url': 'http://' + hostname + '/s/SiteGenesis/light-hematite-bracelet/' + variantPid2 + '.html?lang=en_US',
-                'variationAttributes': [
+                'productType': 'variant',
+                'images': {
+                    'small': [{
+                        'alt': 'Prancer, Pink, small',
+                        'title': 'Prancer, Pink',
+                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwd56b7098/images/small/PG.CJPRANCER.LPNKMPA.PZ.jpg'
+                    }]
+                },
+                'rating': 1,
+                'attributes': [
                     {
+                        'attributeId': 'color',
                         'displayName': 'Color',
-                        'displayValue': 'Hematite'
+                        'displayValue': 'Pink',
+                        'id': 'color'
+                    },
+                    {
+                        'attributeId': 'size',
+                        'displayName': 'Size',
+                        'displayValue': '7.5',
+                        'id': 'size'
+                    },
+                    {
+                        'attributeId': 'width',
+                        'displayName': 'Width',
+                        'displayValue': 'M',
+                        'id': 'width'
                     }
                 ],
-                'quantity': 1,
                 'quantityOptions': {
                     'minOrderQuantity': 1,
                     'maxOrderQuantity': 10
                 },
-                'priceModelPricing': {
+
+                'priceTotal': '$99.00',
+                'isBonusProductLineItem': false,
+                'isGift': false,
+                'UUID': '',
+                'quantity': 1,
+                'isOrderable': true
+            },
+            {
+                'id': '013742335538',
+                'productName': 'Light Hematite Bracelet',
+                'price': {
                     'value': 40,
                     'currency': 'USD',
                     'formatted': '$40.00',
                     'type': 'standard'
                 },
+                'productType': 'variant',
+                'images': {
+                    'small': [{
+                        'alt': 'Light Hematite Bracelet, Hematite, small',
+                        'title': 'Light Hematite Bracelet, Hematite',
+                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw2351fe8c/images/small/PG.54055310VC.HEMATML.PZ.jpg'
+                    }]
+                },
+                'rating': 0,
+                'attributes': [
+                    {
+                        'attributeId': 'color',
+                        'displayName': 'Color',
+                        'displayValue': 'Hematite',
+                        'id': 'color'
+                    }
+                ],
+                'quantityOptions': {
+                    'minOrderQuantity': 1,
+                    'maxOrderQuantity': 10
+                },
                 'priceTotal': '$40.00',
-                'name': 'Light Hematite Bracelet',
-                'isBundle': false,
-                'isMaster': false,
-                'isProductSet': false,
-                'isVariant': true,
                 'isBonusProductLineItem': false,
                 'isGift': false,
-                'isOrderable': true,
-                'productID': '013742335538',
                 'UUID': '',
-                'image': {
-                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dw2351fe8c/images/small/PG.54055310VC.HEMATML.PZ.jpg',
-                    'alt': 'Light Hematite Bracelet, Hematite, small',
-                    'title': 'Light Hematite Bracelet, Hematite'
-                }
+                'quantity': 1,
+                'isOrderable': true
             }
         ],
         'numItems': 2,
@@ -236,7 +240,7 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all "totals", "selectedShippingMethod" properties from the actual response
+                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
@@ -264,7 +268,7 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all "totals", "selectedShippingMethod" properties from the actual response
+                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
@@ -317,7 +321,7 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all "totals", "selectedShippingMethod" properties from the actual response
+                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
@@ -345,7 +349,7 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all "totals", "selectedShippingMethod" properties from the actual response
+                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
@@ -373,7 +377,7 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all "totals", "selectedShippingMethod" properties from the actual response
+                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
@@ -402,7 +406,7 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all "totals", "selectedShippingMethod" properties from the actual response
+                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
@@ -431,7 +435,7 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all "totals", "selectedShippingMethod" properties from the actual response
+                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');

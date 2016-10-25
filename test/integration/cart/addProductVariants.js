@@ -26,7 +26,6 @@ describe('Add Product variants to cart', function () {
         };
 
         var cookieString;
-        var hostname = config.baseUrl.split('/')[2];
 
         var totalQty;
 
@@ -207,160 +206,164 @@ describe('Add Product variants to cart', function () {
                         'selectedShippingMethod': '001',
                         'items': [
                             {
-                                'type': 'Product',
-                                'url': 'http://' + hostname + '/s/SiteGenesis/3/4-sleeve-v-neck-top/' + variantPid1 + '.html?lang=en_US',
-                                'variationAttributes': [
-                                    {
-                                        'displayName': 'Color',
-                                        'displayValue': 'Icy Mint'
-                                    },
-                                    {
-                                        'displayName': 'Size',
-                                        'displayValue': 'XS'
-                                    }
-                                ],
-                                'quantity': qty1,
-                                'quantityOptions': {
-                                    'minOrderQuantity': 1,
-                                    'maxOrderQuantity': 10
-                                },
-                                'priceModelPricing': {
+                                'id': variantPid1,
+                                'productName': '3/4 Sleeve V-Neck Top',
+                                'price': {
                                     'value': 24,
                                     'currency': 'USD',
                                     'formatted': '$24.00',
                                     'type': 'standard'
+                                },
+                                'productType': 'variant',
+                                'images': {
+                                    'small': [{
+                                        'alt': '3/4 Sleeve V-Neck Top, Icy Mint, small',
+                                        'title': '3/4 Sleeve V-Neck Top, Icy Mint',
+                                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwb2c2588a/images/small/PG.10221714.JJ8UTXX.PZ.jpg'
+                                    }]
+                                },
+                                'rating': 1,
+                                'attributes': [
+                                    {
+                                        'attributeId': 'color',
+                                        'displayName': 'Color',
+                                        'displayValue': 'Icy Mint',
+                                        'id': 'color'
+                                    },
+                                    {
+                                        'attributeId': 'size',
+                                        'displayName': 'Size',
+                                        'displayValue': 'XS',
+                                        'id': 'size'
+                                    }
+                                ],
+                                'quantityOptions': {
+                                    'minOrderQuantity': 1,
+                                    'maxOrderQuantity': 10
                                 },
                                 'priceTotal': '$48.00',
-                                'name': '3/4 Sleeve V-Neck Top',
-                                'isBundle': false,
-                                'isMaster': false,
-                                'isProductSet': false,
-                                'isVariant': true,
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
-                                'isOrderable': true,
-                                'productID': variantPid1,
                                 // 'UUID': 'some UUID',
-                                'image': {
-                                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dwb2c2588a/images/small/PG.10221714.JJ8UTXX.PZ.jpg',
-                                    'alt': '3/4 Sleeve V-Neck Top, Icy Mint, small',
-                                    'title': '3/4 Sleeve V-Neck Top, Icy Mint'
-                                }
+                                'quantity': qty1,
+                                'isOrderable': true
                             },
                             {
-                                'type': 'Product',
-                                'url': 'http://' + hostname + '/s/SiteGenesis/3/4-sleeve-v-neck-top/' + variantPid2 + '.html?lang=en_US',
-                                'variationAttributes': [
-                                    {
-                                        'displayName': 'Color',
-                                        'displayValue': 'Butter'
-                                    },
-                                    {
-                                        'displayName': 'Size',
-                                        'displayValue': 'M'
-                                    }
-                                ],
-                                'quantity': qty2,
-                                'quantityOptions': {
-                                    'minOrderQuantity': 1,
-                                    'maxOrderQuantity': 10
-                                },
-                                'priceModelPricing': {
+                                'id': variantPid2,
+                                'productName': '3/4 Sleeve V-Neck Top',
+                                'price': {
                                     'value': 24,
                                     'currency': 'USD',
                                     'formatted': '$24.00',
                                     'type': 'standard'
                                 },
-                                'priceTotal': '$24.00',
-                                'name': '3/4 Sleeve V-Neck Top',
-                                'isBundle': false,
-                                'isMaster': false,
-                                'isProductSet': false,
-                                'isVariant': true,
-                                'isBonusProductLineItem': false,
-                                'isGift': false,
-                                'isOrderable': true,
-                                'productID': variantPid2,
-                                // 'UUID': 'some UUID',
-                                'image': {
-                                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dwef3c390f/images/small/PG.10221714.JJ370XX.PZ.jpg',
-                                    'alt': '3/4 Sleeve V-Neck Top, Butter, small',
-                                    'title': '3/4 Sleeve V-Neck Top, Butter'
-                                }
-                            },
-                            {
-                                'type': 'Product',
-                                'url': 'http://' + hostname + '/s/SiteGenesis/bronze-clip-on-button-earring/' + variantPid3 + '.html?lang=en_US',
-                                'variationAttributes': [
+                                'productType': 'variant',
+                                'images': {
+                                    'small': [{
+                                        'alt': '3/4 Sleeve V-Neck Top, Butter, small',
+                                        'title': '3/4 Sleeve V-Neck Top, Butter',
+                                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwef3c390f/images/small/PG.10221714.JJ370XX.PZ.jpg'
+                                    }]
+                                },
+                                'rating': 3,
+                                'attributes': [
                                     {
+                                        'attributeId': 'color',
                                         'displayName': 'Color',
-                                        'displayValue': 'Silver Ox'
+                                        'displayValue': 'Butter',
+                                        'id': 'color'
+                                    },
+                                    {
+                                        'attributeId': 'size',
+                                        'displayName': 'Size',
+                                        'displayValue': 'M',
+                                        'id': 'size'
                                     }
                                 ],
-                                'quantity': qty3,
                                 'quantityOptions': {
                                     'minOrderQuantity': 1,
-                                    'maxOrderQuantity': 11
+                                    'maxOrderQuantity': 10
                                 },
-                                'priceModelPricing': {
+                                'priceTotal': '$24.00',
+                                'isBonusProductLineItem': false,
+                                'isGift': false,
+                                // 'UUID': 'some UUID',
+                                'quantity': qty2,
+                                'isOrderable': true
+                            },
+                            {
+                                'id': variantPid3,
+                                'productName': 'Bronze Clip On Button Earring',
+                                'price': {
                                     'value': 20,
                                     'currency': 'USD',
                                     'formatted': '$20.00',
                                     'type': 'standard'
                                 },
-                                'priceTotal': '$220.00',
-                                'name': 'Bronze Clip On Button Earring',
-                                'isBundle': false,
-                                'isMaster': false,
-                                'isProductSet': false,
-                                'isVariant': true,
-                                'isBonusProductLineItem': false,
-                                'isGift': false,
-                                'isOrderable': true,
-                                'productID': variantPid3,
-                                // 'UUID': 'some UUID',
-                                'image': {
-                                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dw9cbea184/images/small/PG.60108563.JJNY2XX.PZ.jpg',
-                                    'alt': 'Bronze Clip On Button Earring, Silver Ox, small',
-                                    'title': 'Bronze Clip On Button Earring, Silver Ox'
-                                }
-                            },
-                            {
-                                'type': 'Product',
-                                'url': 'http://' + hostname + '/s/SiteGenesis/solid-silk-tie/' + variantPid4 + '.html?lang=en_US',
-                                'variationAttributes': [
+                                'productType': 'variant',
+                                'images': {
+                                    'small': [{
+                                        'alt': 'Bronze Clip On Button Earring, Silver Ox, small',
+                                        'title': 'Bronze Clip On Button Earring, Silver Ox',
+                                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw9cbea184/images/small/PG.60108563.JJNY2XX.PZ.jpg'
+                                    }]
+                                },
+                                'rating': 2,
+                                'attributes': [
                                     {
+                                        'attributeId': 'color',
                                         'displayName': 'Color',
-                                        'displayValue': 'Red'
+                                        'displayValue': 'Silver Ox',
+                                        'id': 'color'
                                     }
                                 ],
-                                'quantity': qty4,
                                 'quantityOptions': {
                                     'minOrderQuantity': 1,
-                                    'maxOrderQuantity': 10
+                                    'maxOrderQuantity': 11
                                 },
-                                'priceModelPricing': {
+                                'priceTotal': '$220.00',
+                                'isBonusProductLineItem': false,
+                                'isGift': false,
+                                // 'UUID': 'some UUID',
+                                'quantity': qty3,
+                                'isOrderable': true
+                            },
+                            {
+                                'id': variantPid4,
+                                'productName': 'Solid Silk Tie',
+                                'price': {
                                     'value': 29.99,
                                     'currency': 'USD',
                                     'formatted': '$29.99',
                                     'type': 'standard'
                                 },
+                                'productType': 'variant',
+                                'images': {
+                                    'small': [{
+                                        'alt': 'Solid Silk Tie, Red, small',
+                                        'title': 'Solid Silk Tie, Red',
+                                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw00caafab/images/small/PG.949432114S.REDSI.PZ.jpg'
+                                    }]
+                                },
+                                'rating': 0,
+                                'attributes': [
+                                    {
+                                        'attributeId': 'color',
+                                        'displayName': 'Color',
+                                        'displayValue': 'Red',
+                                        'id': 'color'
+                                    }
+                                ],
+                                'quantityOptions': {
+                                    'minOrderQuantity': 1,
+                                    'maxOrderQuantity': 10
+                                },
                                 'priceTotal': '$89.97',
-                                'name': 'Solid Silk Tie',
-                                'isBundle': false,
-                                'isMaster': false,
-                                'isProductSet': false,
-                                'isVariant': true,
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
-                                'isOrderable': true,
-                                'productID': variantPid4,
                                 // 'UUID': 'some UUID',
-                                'image': {
-                                    // 'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dw00caafab/images/small/PG.949432114S.REDSI.PZ.jpg',
-                                    'alt': 'Solid Silk Tie, Red, small',
-                                    'title': 'Solid Silk Tie, Red'
-                                }
+                                'quantity': qty4,
+                                'isOrderable': true
                             }
                         ],
                         'numItems': 17,
@@ -370,7 +373,7 @@ describe('Add Product variants to cart', function () {
                         }
                     };
 
-                    // ----- strip out all "UUID", "src" properties from the actual response
+                    // ----- strip out all 'UUID', 'src' properties from the actual response
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'UUID']);
                     assert.deepEqual(actualRespBodyStripped, expectedResponse, 'Actual response not as expected.');
 
@@ -381,10 +384,10 @@ describe('Add Product variants to cart', function () {
                     assert.isNotNull(bodyAsJson.items[3].UUID, 'product 4 does not have UUID in response');
 
                     // Verify path to image source
-                    var prodImageSrc1 = bodyAsJson.items[0].image.src;
-                    var prodImageSrc2 = bodyAsJson.items[1].image.src;
-                    var prodImageSrc3 = bodyAsJson.items[2].image.src;
-                    var prodImageSrc4 = bodyAsJson.items[3].image.src;
+                    var prodImageSrc1 = bodyAsJson.items[0].images.small[0].url;
+                    var prodImageSrc2 = bodyAsJson.items[1].images.small[0].url;
+                    var prodImageSrc3 = bodyAsJson.items[2].images.small[0].url;
+                    var prodImageSrc4 = bodyAsJson.items[3].images.small[0].url;
                     assert.isTrue(prodImageSrc1.endsWith('/images/small/PG.10221714.JJ8UTXX.PZ.jpg'), 'product 1 item image: src not end with /images/small/PG.10221714.JJ8UTXX.PZ.jpg.');
                     assert.isTrue(prodImageSrc2.endsWith('/images/small/PG.10221714.JJ370XX.PZ.jpg'), 'product 2 item image: src not end with /images/small/PG.10221714.JJ370XX.PZ.jpg.');
                     assert.isTrue(prodImageSrc3.endsWith('/images/small/PG.60108563.JJNY2XX.PZ.jpg'), 'product 3 item image: src not end with /images/small/PG.60108563.JJNY2XX.PZ.jpg.');

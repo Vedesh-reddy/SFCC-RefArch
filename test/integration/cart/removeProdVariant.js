@@ -64,9 +64,9 @@ describe('Remove product variant from line item', function () {
             .then(function (response4) {
                 var bodyAsJson = JSON.parse(response4.body);
 
-                prodIdUuidMap[bodyAsJson.items[0].productID] = bodyAsJson.items[0].UUID;
-                prodIdUuidMap[bodyAsJson.items[1].productID] = bodyAsJson.items[1].UUID;
-                prodIdUuidMap[bodyAsJson.items[2].productID] = bodyAsJson.items[2].UUID;
+                prodIdUuidMap[bodyAsJson.items[0].id] = bodyAsJson.items[0].UUID;
+                prodIdUuidMap[bodyAsJson.items[1].id] = bodyAsJson.items[1].UUID;
+                prodIdUuidMap[bodyAsJson.items[2].id] = bodyAsJson.items[2].UUID;
             });
     });
 
@@ -80,8 +80,6 @@ describe('Remove product variant from line item', function () {
         var variantUuid1 = prodIdUuidMap[variantPid1];
         var variantUuid2 = prodIdUuidMap[variantPid2];
         var variantUuid3 = prodIdUuidMap[variantPid3];
-
-        var hostname = config.baseUrl.split('/')[2];
 
         var expectedResponse = {
             'locale': {
@@ -153,82 +151,84 @@ describe('Remove product variant from line item', function () {
             'selectedShippingMethod': '001',
             'items': [
                 {
-                    'type': 'Product',
-                    'url': 'http://' + hostname + '/s/SiteGenesis/3/4-sleeve-v-neck-top/' + variantPid1 + '.html?lang=en_US',
-                    'variationAttributes': [
-                        {
-                            'displayName': 'Color',
-                            'displayValue': 'Icy Mint'
-                        },
-                        {
-                            'displayName': 'Size',
-                            'displayValue': 'XS'
-                        }
-                    ],
-                    'quantity': expectQty1,
-                    'quantityOptions': {
-                        'minOrderQuantity': 1,
-                        'maxOrderQuantity': 10
-                    },
-                    'priceModelPricing': {
+                    'id': variantPid1,
+                    'productName': '3/4 Sleeve V-Neck Top',
+                    'price': {
                         'value': 24,
                         'currency': 'USD',
                         'formatted': '$24.00',
                         'type': 'standard'
                     },
-                    'priceTotal': '$48.00',
-                    'name': '3/4 Sleeve V-Neck Top',
-                    'isBundle': false,
-                    'isMaster': false,
-                    'isProductSet': false,
-                    'isVariant': true,
-                    'isBonusProductLineItem': false,
-                    'isGift': false,
-                    'isOrderable': true,
-                    'productID': variantPid1,
-                    'UUID': variantUuid1,
-                    'image': {
-                        'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dwb2c2588a/images/small/PG.10221714.JJ8UTXX.PZ.jpg',
-                        'alt': '3/4 Sleeve V-Neck Top, Icy Mint, small',
-                        'title': '3/4 Sleeve V-Neck Top, Icy Mint'
-                    }
-                },
-                {
-                    'type': 'Product',
-                    'url': 'http://' + hostname + '/s/SiteGenesis/solid-silk-tie/' + variantPid3 + '.html?lang=en_US',
-                    'variationAttributes': [
+                    'productType': 'variant',
+                    'images': {
+                        'small': [{
+                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwb2c2588a/images/small/PG.10221714.JJ8UTXX.PZ.jpg',
+                            'alt': '3/4 Sleeve V-Neck Top, Icy Mint, small',
+                            'title': '3/4 Sleeve V-Neck Top, Icy Mint'
+                        }]
+                    },
+                    'rating': 1,
+                    'attributes': [
                         {
+                            'attributeId': 'color',
                             'displayName': 'Color',
-                            'displayValue': 'Red'
+                            'displayValue': 'Icy Mint',
+                            'id': 'color'
+                        },
+                        {
+                            'attributeId': 'size',
+                            'displayName': 'Size',
+                            'displayValue': 'XS',
+                            'id': 'size'
                         }
                     ],
-                    'quantity': expectQty3,
                     'quantityOptions': {
                         'minOrderQuantity': 1,
                         'maxOrderQuantity': 10
                     },
-                    'priceModelPricing': {
+                    'priceTotal': '$48.00',
+                    'isBonusProductLineItem': false,
+                    'isGift': false,
+                    'UUID': variantUuid1,
+                    'quantity': expectQty1,
+                    'isOrderable': true
+                },
+                {
+                    'id': variantPid3,
+                    'productName': 'Solid Silk Tie',
+                    'price': {
                         'value': 29.99,
                         'currency': 'USD',
                         'formatted': '$29.99',
                         'type': 'standard'
                     },
+                    'productType': 'variant',
+                    'images': {
+                        'small': [{
+                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw00caafab/images/small/PG.949432114S.REDSI.PZ.jpg',
+                            'alt': 'Solid Silk Tie, Red, small',
+                            'title': 'Solid Silk Tie, Red'
+                        }]
+                    },
+                    'rating': 0,
+                    'attributes': [
+                        {
+                            'attributeId': 'color',
+                            'displayName': 'Color',
+                            'displayValue': 'Red',
+                            'id': 'color'
+                        }
+                    ],
+                    'quantityOptions': {
+                        'minOrderQuantity': 1,
+                        'maxOrderQuantity': 10
+                    },
                     'priceTotal': '$89.97',
-                    'name': 'Solid Silk Tie',
-                    'isBundle': false,
-                    'isMaster': false,
-                    'isProductSet': false,
-                    'isVariant': true,
                     'isBonusProductLineItem': false,
                     'isGift': false,
-                    'isOrderable': true,
-                    'productID': variantPid3,
                     'UUID': variantUuid3,
-                    'image': {
-                        'src': '/on/demandware.static/-/Sites-apparel-catalog/default/dw00caafab/images/small/PG.949432114S.REDSI.PZ.jpg',
-                        'alt': 'Solid Silk Tie, Red, small',
-                        'title': 'Solid Silk Tie, Red'
-                    }
+                    'quantity': expectQty3,
+                    'isOrderable': true
                 }
             ],
             'numItems': newTotal,
@@ -238,7 +238,7 @@ describe('Remove product variant from line item', function () {
             }
         };
 
-        // ----- strip out all "src" properties from the expected response
+        // ----- strip out all 'src' properties from the expected response
         var expectedRespStripped = jsonHelpers.deleteProperties(expectedResponse, ['src']);
 
         myRequest.method = 'GET';
@@ -250,14 +250,14 @@ describe('Remove product variant from line item', function () {
 
                 var bodyAsJson = JSON.parse(removedItemResponse.body);
 
-                // ----- strip out all "src" properties from the actual response
+                // ----- strip out all 'src' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedRespStripped, 'Actual response not as expected.');
 
                 // Verify path to image source
-                var prodImageSrc1 = bodyAsJson.items[0].image.src;
-                var prodImageSrc2 = bodyAsJson.items[1].image.src;
+                var prodImageSrc1 = bodyAsJson.items[0].images.small[0].url;
+                var prodImageSrc2 = bodyAsJson.items[1].images.small[0].url;
                 assert.isTrue(prodImageSrc1.endsWith('/images/small/PG.10221714.JJ8UTXX.PZ.jpg'), 'product 1 item image: src not end with /images/small/PG.10221714.JJ8UTXX.PZ.jpg.');
                 assert.isTrue(prodImageSrc2.endsWith('/images/small/PG.949432114S.REDSI.PZ.jpg'), 'product 2 item image: src not end with /images/small/PG.949432114S.REDSI.PZ.jpg.');
             });

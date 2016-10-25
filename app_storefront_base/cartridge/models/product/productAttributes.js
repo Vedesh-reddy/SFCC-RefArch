@@ -72,6 +72,13 @@ function AttributesModel(variationModel, attrConfig) {
                 swatchable: isSwatchable(attr.attributeID),
                 values: getAllAttrValues(variationModel, selectedValue, attr)
             });
+        } else if (attrConfig === 'selected') {
+            result.push({
+                displayName: attr.displayName,
+                displayValue: selectedValue.displayValue,
+                attributeId: attr.attributeID,
+                id: attr.ID
+            });
         }
     });
     result.forEach(function (item) {
