@@ -156,7 +156,7 @@
                 // Handle Payment option selection
                 //
                 $('input[name="paymentOption"]', plugin).on('change', function () {
-                    $('.credit-card-form', this).toggle($(this).val() === 'CREDIT_CARD');
+                    $('.credit-card-form').toggle($(this).val() === 'CREDIT_CARD');
                 });
 
                 //
@@ -259,6 +259,11 @@
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
             },
 
+            /**
+             * Use window history to go to a checkout stage
+             * @param stage
+             * @param steps
+             */
             gotoStage: function (stage, steps) {
                 members.currentStage = stage;
                 history.go(steps);

@@ -1,40 +1,40 @@
 <!--- Subtotal --->
-<div class="row">
-    <div class="col-xs-6">
-        <p class="order-receipt-label">${Resource.msg('label.order.subtotal','confirmation', null)}</p>
+<div class="row leading-lines">
+    <div class="col-xs-6 start-lines">
+        <p class="order-receipt-label"><span>${Resource.msg('label.order.subtotal','confirmation', null)}</span></p>
     </div>
-    <div class="col-xs-6">
-        <p class="text-xs-right">${pdict.totals.subTotal}</p>
+    <div class="col-xs-6 end-lines">
+        <p class="text-xs-right"><span>${pdict.order.totals.subTotal}</span></p>
     </div>
 </div>
 
 <!--- Shipping Cost --->
-<div class="row">
-    <div class="col-xs-6">
-        <p class="order-receipt-label">${Resource.msg('label.order.shipping.cost','confirmation', null)}</p>
+<div class="row leading-lines">
+    <div class="col-xs-6 start-lines">
+        <p class="order-receipt-label"><span>${Resource.msg('label.order.shipping.cost','confirmation', null)}</span></p>
     </div>
-    <div class="col-xs-6">
-        <p class="text-xs-right">${pdict.totals.totalShippingCost}</p>
+    <div class="col-xs-6 end-lines">
+        <p class="text-xs-right"><span>${pdict.order.totals.totalShippingCost}</span></p>
     </div>
 </div>
 
 <!--- Sales Tax --->
-<div class="row">
-    <div class="col-xs-6">
-        <p class="order-receipt-label">${Resource.msg('label.order.sales.tax','confirmation', null)}</p>
+<div class="row leading-lines">
+    <div class="col-xs-6 start-lines">
+        <p class="order-receipt-label"><span>${Resource.msg('label.order.sales.tax','confirmation', null)}</span></p>
     </div>
-    <div class="col-xs-6">
-        <p class="text-xs-right">${pdict.totals.totalTax}</p>
+    <div class="col-xs-6 end-lines">
+        <p class="text-xs-right"><span>${pdict.order.totals.totalTax}</span></p>
     </div>
 </div>
 
 <!--- Grand Total --->
-<div class="row grand-total">
-    <div class="col-xs-6">
-        <p class="order-receipt-label">${Resource.msg('label.order.grand.total','confirmation', null)}</p>
+<div class="row grand-total leading-lines">
+    <div class="col-xs-6 start-lines">
+        <p class="order-receipt-label"><span>${Resource.msg('label.order.grand.total','confirmation', null)}</span></p>
     </div>
-    <div class="col-xs-6">
-        <p class="text-xs-right">${pdict.totals.grandTotal}</p>
+    <div class="col-xs-6 end-lines">
+        <p class="text-xs-right"><span>${pdict.order.totals.grandTotal}</span></p>
     </div>
 </div>
 
