@@ -30,7 +30,7 @@
 h1.page-title {
     position: relative;
     color: white;
-    padding: 5px 10px 5px $grid-gutter-width / 2;
+    padding: 0.3125em 0.625em 0.3125em $grid-gutter-width-base / 2;
     background-color: $brand-color;
     display: inline-block;
     margin: 0.9375em 0;
@@ -45,31 +45,31 @@ h1.page-title {
         top: 0;
 
         @include media-breakpoint-only(xl) {
-            width: calc((100vw - #{map-get($container-max-widths, xl)}) / 2); /* stylelint-disable-line function-calc-no-unspaced-operator */
-            left: calc((100vw - #{map-get($container-max-widths, xl)}) / 2 * -1); /* stylelint-disable-line function-calc-no-unspaced-operator */
+            width: calc((100vw - #{map-get($container-max-widths, xl)}) / 2);
+            left: calc((100vw - #{map-get($container-max-widths, xl)}) / 2 * -1);
         }
 
         @include media-breakpoint-only(lg) {
-            width: calc((100vw - #{map-get($container-max-widths, lg)}) / 2); /* stylelint-disable-line function-calc-no-unspaced-operator */
-            left: calc((100vw - #{map-get($container-max-widths, lg)}) / 2 * -1); /* stylelint-disable-line function-calc-no-unspaced-operator */
+            width: calc((100vw - #{map-get($container-max-widths, lg)}) / 2);
+            left: calc((100vw - #{map-get($container-max-widths, lg)}) / 2 * -1);
         }
 
         @include media-breakpoint-only(md) {
-            width: calc((100vw - #{map-get($container-max-widths, md)}) / 2); /* stylelint-disable-line function-calc-no-unspaced-operator */
-            left: calc((100vw - #{map-get($container-max-widths, md)}) / 2 * -1); /* stylelint-disable-line function-calc-no-unspaced-operator */
+            width: calc((100vw - #{map-get($container-max-widths, md)}) / 2);
+            left: calc((100vw - #{map-get($container-max-widths, md)}) / 2 * -1);
         }
     }
 
     @include media-breakpoint-only(xl) {
-        left: calc((100% - #{map-get($container-max-widths, xl)}) / 2); /* stylelint-disable-line function-calc-no-unspaced-operator */
+        left: calc((100% - #{map-get($container-max-widths, xl)}) / 2);
     }
 
     @include media-breakpoint-only(lg) {
-        left: calc((100% - #{map-get($container-max-widths, lg)}) / 2); /* stylelint-disable-line function-calc-no-unspaced-operator */
+        left: calc((100% - #{map-get($container-max-widths, lg)}) / 2);
     }
 
     @include media-breakpoint-only(md) {
-        left: calc((100% - #{map-get($container-max-widths, md)}) / 2); /* stylelint-disable-line function-calc-no-unspaced-operator */
+        left: calc((100% - #{map-get($container-max-widths, md)}) / 2);
     }
 
     @include media-breakpoint-down(sm) {
