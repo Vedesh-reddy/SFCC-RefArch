@@ -1,33 +1,41 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label for="billingFirstName">${Resource.msg('field.shipping.address.first.name','address',null)}</label>
-            <input type="text" class="form-control" id="billingFirstName" name="billingFirstName">
+            <label for="billingFirstName">${Resource.msg('field.billing.address.first.name','address',null)}</label>
+            <input autofocus type="text" class="form-control billingFirstName" id="billingFirstName"
+                <isprint value=${pdict.forms.billingForm.firstName.attributes} encoding="off"/>
+                autocomplete="given-name" >
         </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label for="billingLastName">${Resource.msg('field.shipping.address.last.name','address',null)}</label>
-            <input type="text" class="form-control" id="billingLastName" name="billingLastName">
+            <label for="billingLastName">${Resource.msg('field.billing.address.last.name','address',null)}</label>
+            <input type="text" class="form-control billingLastName" id="billingLastName"
+                <isprint value=${pdict.forms.billingForm.lastName.attributes} encoding="off"/>
+                autocomplete="family-name">
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
         <div class="form-group">
-            <label for="billingAddressOne">${Resource.msg('field.shipping.address.one','address',null)}</label>
-            <input type="text" class="form-control" id="billingAddressOne" name="billingAddressOne">
+            <label for="billingAddressOne">${Resource.msg('field.billing.address.one','address',null)}</label>
+            <input type="text" class="form-control billingAddressOne" id="billingAddressOne"
+                <isprint value=${pdict.forms.billingForm.address1.attributes} encoding="off"/>
+                autocomplete="billing address-line1">
         </div>
     </div>
 </div>
 
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
         <div class="form-group">
-            <label for="billingAddressTwo">${Resource.msg('field.shipping.address.two','address',null)}</label>
-            <input type="text" class="form-control" id="billingAddressTwo" name="billingAddressTwo">
+            <label for="billingAddressTwo">${Resource.msg('field.billing.address.two','address',null)}</label>
+            <input type="text" class="form-control billingAddressTwo" id="billingAddressTwo"
+                <isprint value=${pdict.forms.billingForm.address2.attributes} encoding="off"/>
+                autocomplete="billing address-line2">
         </div>
     </div>
 </div>
@@ -36,14 +44,28 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label for="billingCountry">${Resource.msg('field.shipping.address.country','address',null)}</label>
-            <input type="text" class="form-control" id="billingCountry" name="billingCountry">
+            <label for="billingCountry">${Resource.msg('field.billing.address.country','address',null)}</label>
+            <select class="form-control billingCountry" id="billingCountry"
+                <isprint value=${pdict.forms.billingForm.country.attributes} encoding="off"/>
+                autocomplete="billing country">
+                    <isloop items=${pdict.forms.billingForm.country.options} var="country">
+                        <option id="${country.id}">${country.htmlValue}</option>
+                    </isloop>
+            </select>
+
         </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label for="billingState">${Resource.msg('field.shipping.address.state','address',null)}</label>
-            <input type="text" class="form-control" id="billingState" name="billingState">
+            <label for="billingState">${Resource.msg('field.billing.address.state','address',null)}</label>
+            <select class="form-control billingState" id="billingState"
+                <isprint value=${pdict.forms.billingForm.states.attributes} encoding="off"/>
+                autocomplete="billing state">
+                    <isloop items=${pdict.forms.billingForm.states.state.options} var="state">
+                        <option id="${state.id}">${state.htmlValue}</option>
+                    </isloop>
+            </select>
+
         </div>
     </div>
 </div>
@@ -51,23 +73,27 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group">
-            <label for="billingAddressCity">${Resource.msg('field.shipping.address.city','address',null)}</label>
-            <input type="text" class="form-control" id="billingAddressCity" name="billingAddressCity">
+            <label for="billingAddressCity">${Resource.msg('field.billing.address.city','address',null)}</label>
+            <input type="text" class="form-control billingAddressCity" id="billingAddressCity"
+                <isprint value=${pdict.forms.billingForm.city.attributes} encoding="off"/>
+                autocomplete="billing locality">
         </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group">
-            <label for="billingZipCode">${Resource.msg('field.shipping.address.zip.code','address',null)}</label>
-            <input type="text" class="form-control" id="billingZipCode" name="billingZipCode">
+            <label for="billingZipCode">${Resource.msg('field.billing.address.zip.code','address',null)}</label>
+            <input type="text" class="form-control billingZipCode" id="billingZipCode"
+                <isprint value=${pdict.forms.billingForm.postal.attributes} encoding="off"/>
+                autocomplete="billing postal-code">
         </div>
     </div>
 </div>
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-sm-12">
         <div class="form-group">
-            <label for="billingPhoneNumber">${Resource.msg('field.shipping.address.phone','address',null)}</label>
-            <input type="text" class="form-control" id="billingPhoneNumber" name="billingPhoneNumber">
+            <label for="billingPhoneNumber">${Resource.msg('field.billing.address.phone','address',null)}</label>
+            <input type="text" class="form-control billingPhoneNumber" id="billingPhoneNumber" name="billingPhoneNumber">
         </div>
     </div>
 </div>

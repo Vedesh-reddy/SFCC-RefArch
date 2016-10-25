@@ -1,15 +1,43 @@
-<address>
-    ${address.firstName} ${address.lastName} <br>
-    ${address.address1} <br>
-    <isif condition="${address.address2)}">
-        ${address.address2)} <br>
+<div class="billing address-summary">
+
+    <div>
+        <span class=${pdict.forms.billingForm.firstName.htmlName} >
+            ${billingAddress.firstName}
+        </span>
+        <span class=${pdict.forms.billingForm.lastName.htmlName} >
+            ${billingAddress.lastName}
+        </span>
+    </div>
+
+    <div class=${pdict.forms.billingForm.address1.htmlName}>
+        ${billingAddress.address1}
+    </div>
+
+    <div class=${pdict.forms.billingForm.address2.htmlName}>
+        <isif condition="${billingAddress.address2}">
+            ${billingAddress.address2}
+        </isif>
+    </div>
+
+    <span class=${pdict.forms.billingForm.city.htmlName}>
+        <isif condition="${billingAddress.city}">
+                ${billingAddress.city},
+        </isif>
+    </span>
+
+    <span class=${pdict.forms.billingForm.states.htmlName}>
+        <isif condition="${billingAddress.stateCode}">
+                ${billingAddress.stateCode}
+        </isif>
+    </span>
+
+    <span class=${pdict.forms.billingForm.postal.htmlName}>
+        ${billingAddress.postalCode}
+    </span>
+
+    <isif condition="${pdict.orderEmail}">
+        <div class="">
+            ${pdict.orderEmail}
+        </div>
     </isif>
-    <isif condition="${address.city}">
-        ${address.city},
-    </isif>
-    <isif condition="${address.stateCode}">
-        ${address.stateCode}
-    </isif>
-    ${address.postalCode} <br>
-    ${pdict.orderEmail}
-</address>
+</div>

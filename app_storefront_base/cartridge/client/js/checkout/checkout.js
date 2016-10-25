@@ -9,6 +9,8 @@
  * The checkout plugin will handle the different state the user interface is in as the user
  * progresses through the varying forms such as shipping and payment.
  *
+ * Billing info and payment info are used a bit synonymously in this code.
+ *
  */
 (function ($) {
     $.fn.checkout = function () { // eslint-disable-line
@@ -41,6 +43,9 @@
             'submitted'
         ];
 
+        //
+        // Local member methods of the Checkout plugin
+        //
         var members = {
 
             // initialize the currentStage variable for the first time
@@ -66,7 +71,8 @@
                                     if (val instanceof Object && val.htmlName && val.value) {
                                         console.log(val.htmlName, val.value); // eslint-disable-line
 
-                                        $('.address-summary .' + val.htmlName).text(val.value);
+                                        $('.shipping.address-summary .'
+                                            + val.htmlName).text(val.value);
                                     }
                                 });
                             }
@@ -77,11 +83,28 @@
                     });
                 } else if (stage === 'payment') {
                     console.log('PAYMENT: submit via ajax payment info and move to place order step') // eslint-disable-line
-                    var p = $('<div>').promise(); // eslint-disable-line
-                    setTimeout(function () {
-                        p.done(); // eslint-disable-line
-                    }, 500);
-                    return p; // eslint-disable-line
+
+                    return $.ajax({
+                        url: $('#dwfrm_billingaddress').attr('action'),
+                        method: 'POST',
+                        data: $('#dwfrm_billingaddress').serialize(),
+                        success: function (data) {
+                            if (data && data.form) {
+                                $.each(data.form, function (attr) {
+                                    var val = data.form[attr];
+                                    if (val instanceof Object && val.htmlName && val.value) {
+                                        console.log(val.htmlName, val.value); // eslint-disable-line
+
+                                        $('.billing.address-summary .'
+                                            + val.htmlName).text(val.value);
+                                    }
+                                });
+                            }
+                        },
+                        error: function (xhr, err) {
+                            console.log(err); // eslint-disable-line
+                        }
+                    });
                 } else if (stage === 'placeOrder') {
                     console.log('PLACE ORDER: order placed and move to submitted/confirm step') // eslint-disable-line
                     var p = $('<div>').promise(); // eslint-disable-line
@@ -144,11 +167,16 @@
                 });
 
                 //
-                // Handle Next State button click
+                // Handle Edit buttons on shipping and payment summary cards
                 //
                 $('.shipping-summary .edit-button', plugin).on('click', function () {
                     var shippingIdx = checkoutStages.indexOf('shipping');
                     members.gotoStage(shippingIdx, members.currentStage * -1);
+                });
+
+                $('.payment-summary .edit-button', plugin).on('click', function () {
+                    var paymentIdx = checkoutStages.indexOf('payment');
+                    members.gotoStage(paymentIdx, -1);
                 });
 
                 //
