@@ -14,13 +14,15 @@
 
         <!--- Shipping information --->
         <span class="summary-section-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</span><br>
-        <div class="row summary-details">
-            <div class="col-xs-8">
-                <p class="shipping-method">${pdict.shipping.selectedShippingMethod.displayName} (${pdict.shipping.selectedShippingMethod.estimatedArrivalTime})</p>
+        <div class="row summary-details leading-lines">
+            <div class="col-xs-8 start-lines">
+                <p class="shipping-method">
+                    <span>${pdict.order.shipping.selectedShippingMethod.displayName} (${pdict.order.shipping.selectedShippingMethod.estimatedArrivalTime})</span>
+                </p>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-4 end-lines">
                 <p class="text-xs-right pricing">
-                    ${pdict.totals.totalShippingCost}
+                    ${pdict.order.totals.totalShippingCost}
                 </p>
             </div>
         </div>

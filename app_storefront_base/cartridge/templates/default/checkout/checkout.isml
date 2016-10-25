@@ -97,6 +97,7 @@
                         </div>
                     </div>
                     <div class="card-block-spacing">
+
                         <isinclude template="checkout/orderProductSummary" />
                     </div>
                 </div>

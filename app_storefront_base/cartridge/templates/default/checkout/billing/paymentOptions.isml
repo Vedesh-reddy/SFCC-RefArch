@@ -1,5 +1,5 @@
 <div class="row">
-    <isloop items="${pdict.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
+    <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
         <div class="form-check col-xs-12">
             <label for="paymentOption-${paymentOption.ID}" class="form-check-label">
                 <input id="paymentOption-${paymentOption.ID}" name="paymentOption" type="radio" class="form-check-input" value="${paymentOption.ID}">
