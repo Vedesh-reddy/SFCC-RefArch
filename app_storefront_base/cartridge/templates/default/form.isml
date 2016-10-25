@@ -14,7 +14,10 @@
                     }
                 });
                 e.preventDefault();
+                return false;
+
             });
+
             // var form = document.getElementById('dwfrm_shippingaddress');
             // form.addEventListener('submit', function(event) {
             //     ajaxPost(form, function(data) {
@@ -25,7 +28,7 @@
         });
     </script>
     <div class="container">
-        <form autocomplete="on" method="POST" action="Test-Submit" ${pdict.form.attributes}>
+        <form autocomplete="on" method="POST" action="Test-Submit" <isprint value=${pdict.form.attributes} encoding="off" /> >
             <div class="form-group">
                 <label for="firstName">First name</label>
                 <input type="text" class="form-control" id="firstName" <isprint value=${pdict.form.firstName.attributes} encoding="off" /> autocomplete="given-name" value="${pdict.form.firstName.htmlValue}" >

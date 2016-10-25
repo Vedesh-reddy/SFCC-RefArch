@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shipping-summary">
     <div class="card-header">
         <p class="checkout-summary-header checkout-card-header">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</p>
         <span class="edit-button">Edit</span>
@@ -7,9 +7,9 @@
     <div class="checkout-card-block">
         <!--- Shipping Address --->
         <span class="summary-section-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</span><br>
-        <isset name="address" value="${pdict.shipping.shippingAddress}" scope="page"/>
+        <isset name="shippingAddress" value="${pdict.shipping.shippingAddress}" scope="page"/>
         <div class="summary-details">
-            <isinclude template="checkout/addressSummary" />
+            <isinclude template="checkout/shippingAddressSummary" />
         </div>
 
         <!--- Shipping information --->

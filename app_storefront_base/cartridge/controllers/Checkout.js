@@ -16,7 +16,6 @@ var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 
-
 server.get('Start', locale, function (req, res, next) {
     var applicablePaymentCards;
     var applicablePaymentMethods;
@@ -72,6 +71,8 @@ server.get('Start', locale, function (req, res, next) {
     productLineItemModel = new ProductLineItemModel(currentBasket);
     orderTotals = new TotalsModel(currentBasket);
 
+    var shippingForm = server.forms.getForm('shippingaddress');
+
     orderModel = new OrderModel(
         currentBasket,
         shippingModel,
@@ -80,7 +81,43 @@ server.get('Start', locale, function (req, res, next) {
         productLineItemModel
     );
 
-    res.render('checkout/checkout', orderModel);
+    var forms = {
+        shippingForm: shippingForm
+    };
+    res.render('checkout/checkout', { order: orderModel, forms: forms });
+    next();
+});
+
+server.post('SubmitShipping', function (req, res, next) {
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var form = server.forms.getForm('shippingaddress');
+        if (!form.valid) {
+            res.setStatusCode(500);
+        }
+        res.json({ form: server.forms.getForm('shippingaddress') });
+    });
+    next();
+});
+
+server.post('SubmitPayment', function (req, res, next) {
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var form = server.forms.getForm('payment');
+        if (!form.valid) {
+            res.setStatusCode(500);
+        }
+        res.json({ form: server.forms.getForm('payment') });
+    });
+    next();
+});
+
+server.post('SubmitBilling', function (req, res, next) {
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var form = server.forms.getForm('billingaddress');
+        if (!form.valid) {
+            res.setStatusCode(500);
+        }
+        res.json({ form: server.forms.getForm('billingaddress') });
+    });
     next();
 });
 
