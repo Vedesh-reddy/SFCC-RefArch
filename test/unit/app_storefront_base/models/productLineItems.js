@@ -57,14 +57,7 @@ describe('cart', function () {
     });
     var ProductLineItems = proxyquire('../../../../app_storefront_base/cartridge/models/productLineItems', {
         '~/cartridge/scripts/dwHelpers': helper,
-        './productLineItem': proxyquire('../../../../app_storefront_base/cartridge/models/product/productBase', {
-            './productPricing': function () {},
-            './productImages': function () {},
-            './productAttributes': function () { return []; },
-            '../../scripts/dwHelpers': proxyquire('../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
-                'dw/util/ArrayList': ArrayList
-            })
-        })
+        './productLineItem': function () {}
     });
 
     it('should accept/process a null Basket object', function () {

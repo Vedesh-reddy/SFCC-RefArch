@@ -4,7 +4,6 @@ var formatMoney = require('dw/util/StringUtils').formatMoney;
 var money = require('dw/value/Money');
 
 var ProductBase = require('./product/productBase').productBase;
-var productBase = require('./product/productBase');
 
 /**
  * get the min and max numbers to display in the quantity drop down.
@@ -78,5 +77,3 @@ function ProductWrapper(product, productVariables, quantity, lineItem) {
 }
 
 module.exports = ProductWrapper;
-module.exports.getProductType = productBase.getProductType;
-module.exports.getVariationModel = productBase.getVariationModel;

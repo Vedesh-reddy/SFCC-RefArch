@@ -75,7 +75,9 @@ function AttributesModel(variationModel, attrConfig) {
         } else if (attrConfig === 'selected') {
             result.push({
                 displayName: attr.displayName,
-                displayValue: selectedValue.displayValue
+                displayValue: selectedValue.displayValue,
+                attributeId: attr.attributeID,
+                id: attr.ID
             });
         }
     });
