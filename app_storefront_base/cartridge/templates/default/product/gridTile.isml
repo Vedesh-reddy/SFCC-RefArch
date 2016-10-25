@@ -6,7 +6,7 @@
                 alt="${pdict.product.productName}"
                 title="${pdict.product.images.medium[0].title}">
         </a>
-        <a class="quickview hidden-lg-down" href="${pdict.urls.quickView}">
+        <a class="quickview hidden-md-down" href="${pdict.urls.quickView}">
             <img class=""
                 src="${URLUtils.staticURL('/images/quickview.png')}"
                 alt="${Resource.msg('image.quickview.product.tile', 'common', null)}"

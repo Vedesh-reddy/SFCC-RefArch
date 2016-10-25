@@ -1,0 +1,56 @@
+<div class="container product-quickview" data-pid="${pdict.product.id}">
+
+    <div class="row">
+        <!-- Product Images Carousel -->
+        <isinclude template="/components/product/image_carousel" />
+
+        <!-- Product Name and Number -->
+        <div class="col-sm-6">
+            <section>
+                <h1 class="product-name">${pdict.product.productName}</h1>
+            </section>
+        </div>
+
+        <div class="detail-panel col-xs-12 col-sm-6">
+            <!-- Left blank column -->
+            <section class="col-md-1"></section>
+
+            <!-- Attributes -->
+            <section class="attributes">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <isloop items="${pdict.product.attributes}" var="attr" status="attributeStatus">
+                            <isinclude template="/components/product/attributes" />
+                        </isloop>
+                    </div>
+                </div>
+
+                <!-- Size Chart -->
+                <div class="row">
+                    <div class="size-chart col-sm-4">
+                        <a href="${pdict.product.id}" class="size-chart">${Resource.msg('link.size_chart', 'product', null)}</a>
+                    </div>
+
+                    <div class="availability availablity-container col-sm-8">
+                        <isinclude template="/components/product/availability" />
+                    </div>
+                </div>
+
+                <hr>
+
+                <!-- Prices -->
+                <div class="prices row">
+                    <div class="col-sm-12">
+                        <isinclude template="/components/product/pricing" />
+                    </div>
+                </div>
+
+                <!-- Cart and [Optionally] Apple Pay -->
+                <isinclude template="/components/product/addtocart" />
+            </section>
+
+            <!-- Right blank column -->
+            <section class="col-md-1"></section>
+        </div>
+    </div>
+</div>

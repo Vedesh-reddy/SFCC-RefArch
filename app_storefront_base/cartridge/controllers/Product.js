@@ -58,7 +58,7 @@ server.get('Variation', function (req, res, next) {
     next();
 });
 
-server.get('ShowTile', locale, function (req, res, next) {
+server.get('ShowTile', function (req, res, next) {
     // The req parameter has a property called querystring. In this use case the querystring could
     // have the following:
     // pid - the Product ID
@@ -78,7 +78,7 @@ server.get('ShowTile', locale, function (req, res, next) {
 
     var product = ProductFactory.get(productTileParams);
     var productUrl = URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
-    var quickViewUrl = URLUtils.url('Product-ShowTile', 'pid', product.id, 'pview', 'quickview')
+    var quickViewUrl = URLUtils.url('Product-ShowQuickView', 'pid', product.id)
         .relative().toString();
     res.render('product/gridTile.isml', {
         product: product,
@@ -91,6 +91,20 @@ server.get('ShowTile', locale, function (req, res, next) {
             reviews: req.querystring.reviews,
             compare: req.querystring.compare
         }
+    });
+
+    next();
+});
+
+server.get('ShowQuickView', function (req, res, next) {
+    var params = req.querystring;
+    var product = ProductFactory.get(params);
+    var addToCartUrl = URLUtils.url('Cart-AddProduct');
+
+    res.render('product/quickview.isml', {
+        product: product,
+        addToCartUrl: addToCartUrl,
+        resources: getResources()
     });
 
     next();

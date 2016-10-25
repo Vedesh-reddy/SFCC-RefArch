@@ -1,4 +1,5 @@
 'use strict';
+var base = require('./base');
 
 /**
  * Process the attribute values for an attribute that has image swatches
@@ -134,55 +135,23 @@ function parseJsonResponse(response) {
     updateAvailability(response);
 }
 
-/**
- * Updates the Mini-Cart quantity value after the customer has pressed the "Add to Cart" button
- *
- * @param {string} response - Response from AJAX service
- */
-function handlePostCartAdd(response) {
-    $('.mini-cart').trigger('count:update', response);
-}
-
-/**
- * Retrieves the value associated with the Quantity pull-down menu
- *
- * @returns {number} selected quantity
- */
-function getQuantitySelected() {
-    return $('select.quantity').val();
-}
-
-/**
- * Appends the quantity selected to the Ajax URL.  Used to determine product availability, which is
- * one criteria used to enable the "Add to Cart" button
- *
- * @param {string} url - Attribute value onClick URL used to [de]select an attribute value
- * @return {string} - The provided URL appended with the quantity selected in the query params or
- *     the original provided URL if no quantity selected
- */
-function appendQuantityToUrl(url) {
-    var quantitySelected = getQuantitySelected();
-
-    return !quantitySelected ? url : url + '&quantity=' + quantitySelected;
-}
-
 module.exports = function () {
     $('select[class^="select-"]').on('change', function (e) {
-        var selectedValueUrl = e.currentTarget.value;
-        selectedValueUrl = appendQuantityToUrl(selectedValueUrl);
+        e.preventDefault();
+        var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
 
-        $.ajax({
-            url: selectedValueUrl,
-            method: 'GET',
-            success: parseJsonResponse
-        });
+        if (selectedValueUrl) {
+            $.ajax({
+                url: selectedValueUrl,
+                method: 'GET',
+                success: parseJsonResponse
+            });
+        }
     });
 
     $('[data-attr="color"] a').on('click', function (e) {
-        var selectedValueUrl;
         e.preventDefault();
-        selectedValueUrl = e.currentTarget.href;
-        selectedValueUrl = appendQuantityToUrl(selectedValueUrl);
+        var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
 
         $.ajax({
             url: selectedValueUrl,
@@ -193,15 +162,13 @@ module.exports = function () {
 
     $('button.add-to-cart').on('click', function () {
         var pid = $('.product-id').text();
-        var quantity = getQuantitySelected();
-        var queryParams = ['pid=' + pid, 'quantity=' + quantity].join('&');
-        var addToCartUrl = $('input[name="addToCartUrl"]').val() + '?' + queryParams;
+        var addToCartUrl = base.getAddToCartUrl(pid);
 
         if (addToCartUrl) {
             $.ajax({
                 url: addToCartUrl,
                 method: 'POST',
-                success: handlePostCartAdd
+                success: base.handlePostCartAdd
             });
         }
     });
