@@ -7,9 +7,9 @@
     <div class="checkout-card-block">
         <!--- Billing Address --->
         <span class="summary-section-label">${Resource.msg('label.order.billing.address', 'confirmation', null)}</span><br>
-        <isset name="billingAddress" value="${pdict.billing.billingAddress.address}" scope="page"/>
-        <div class="summary-details">
-            <isinclude template="checkout/billingAddressSummary" />
+        <isset name="address" value="${pdict.billing.billingAddress.address}" scope="page"/>
+        <div class="summary-details billing">
+            <isinclude template="checkout/addressSummary" />
         </div>
 
         <!--- Payment information --->
