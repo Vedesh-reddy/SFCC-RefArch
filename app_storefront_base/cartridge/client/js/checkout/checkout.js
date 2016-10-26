@@ -43,6 +43,20 @@
             'submitted'
         ];
 
+        /**
+         * Populate the Address Summary View
+         * @param parentSelector    the top level DOM selector for a unique address summary
+         * @param address   the address data
+         */
+        function populateSummary(parentSelector, address) {
+            $.each(address, function (attr) {
+                var val = address[attr];
+                if (val) {
+                    $('.' + attr, parentSelector).text(val);
+                }
+            });
+        }
+
         //
         // Local member methods of the Checkout plugin
         //
@@ -60,22 +74,19 @@
                 if (stage === 'shipping') {
                     console.log('SHIPPING: submit via ajax shipping info and move to payment form'); // eslint-disable-line
 
+                    //
+                    // Submit the Shipiing Address Form
+                    //
                     return $.ajax({
                         url: $('#dwfrm_shippingaddress').attr('action'),
                         method: 'POST',
                         data: $('#dwfrm_shippingaddress').serialize(),
                         success: function (data) {
-                            if (data && data.form) {
-                                $.each(data.form, function (attr) {
-                                    var val = data.form[attr];
-                                    if (val instanceof Object && val.htmlName && val.value) {
-                                        console.log(val.htmlName, val.value); // eslint-disable-line
-
-                                        $('.shipping.address-summary .'
-                                            + val.htmlName).text(val.value);
-                                    }
-                                });
-                            }
+                            //
+                            // Populate the Address Summary
+                            //
+                            var address = data.shippingData.shippingAddress;
+                            populateSummary('.shipping .address-summary', address);
                         },
                         error: function (xhr, err) {
                             console.log(err); // eslint-disable-line
@@ -84,22 +95,19 @@
                 } else if (stage === 'payment') {
                     console.log('PAYMENT: submit via ajax payment info and move to place order step') // eslint-disable-line
 
+                    //
+                    // Submit the Billing Address Form
+                    //
                     return $.ajax({
                         url: $('#dwfrm_billingaddress').attr('action'),
                         method: 'POST',
                         data: $('#dwfrm_billingaddress').serialize(),
                         success: function (data) {
-                            if (data && data.form) {
-                                $.each(data.form, function (attr) {
-                                    var val = data.form[attr];
-                                    if (val instanceof Object && val.htmlName && val.value) {
-                                        console.log(val.htmlName, val.value); // eslint-disable-line
-
-                                        $('.billing.address-summary .'
-                                            + val.htmlName).text(val.value);
-                                    }
-                                });
-                            }
+                            //
+                            // Populate the Address Summary
+                            //
+                            var address = data.billingData.billingAddress;
+                            populateSummary('.billing .address-summary', address);
                         },
                         error: function (xhr, err) {
                             console.log(err); // eslint-disable-line
