@@ -53,8 +53,10 @@ function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods
  * @param {dw.order.ShipmentShippingModel} shipmentModel - Instance of the shipping model
  * @returns {Array} an array of objects containing the information of applicable shipping methods
  */
-function getApplicableShippingMethods(shipmentModel) {
-    var shippingMethods = shipmentModel.applicableShippingMethods;
+function getApplicableShippingMethods(shipmentModel, address) {
+    var shippingMethods = address ? shipmentModel.getApplicableShippingMethods(address) :
+        shipmentModel.applicableShippingMethods;
+
     return helper.map(shippingMethods, function (shippingMethod) {
         var shippingCost = shipmentModel.getShippingCost(shippingMethod);
         return {
@@ -101,5 +103,6 @@ function shipping(defaultShipment, shipmentModel, addressModel) {
 }
 
 shipping.selectShippingMethod = selectShippingMethod;
+shipping.getApplicableShippingMethods = getApplicableShippingMethods;
 
 module.exports = shipping;

@@ -123,4 +123,24 @@ server.post('SubmitBilling', function (req, res, next) {
     next();
 });
 
+server.get('UpdateShippingMethodsList', function (req, res, next) {
+    var address = {
+        postalCode: req.querystring.postal,
+        stateCode: req.querystring.state
+    };
+
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var shipmentShippingModel;
+
+    shipmentShippingModel = ShippingMgr.getShipmentShippingModel(
+        currentBasket.defaultShipment
+    );
+
+    res.json({ shippingMethods: ShippingModel.getApplicableShippingMethods(
+        shipmentShippingModel,
+        address)
+    });
+    next();
+});
+
 module.exports = server.exports();
