@@ -197,33 +197,38 @@ $checkout-font-weight: 600;
 
 .leading-lines {
     overflow: hidden;
-    margin:0;
+    margin: 0;
+
     label {
         background-color: white;
     }
+
     .start-lines {
         padding: 1px;
+
         span {
             position: relative;
             background-color: white;
             z-index: 2;
         }
-        &:before {
+
+        &::before {
             float: left;
             width: 0;
             white-space: nowrap;
             content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
             z-index: 1;
-            color: #ADADAD;
+            color: #adadad;
         }
     }
+
     .end-lines {
         padding: 1px;
+
         span {
             position: relative;
             background-color: white;
             z-index: 2;
         }
     }
-
 }
