@@ -1,18 +1,17 @@
 The caching of responses can be controlled by setting the expiration time at the response object.
-Alternatively, the caching behavior can be set using the <iscache> tag in ISML templates. Both ways are legit.
+Alternatively, the caching behavior can be set using the <iscache> tag in ISML templates. Both ways are legitimate. However, if you intend to use other templating languages besides ISML, such as velocity, it makes more sense to set the caching in the controller.
 
-By default, responses will not be cached. Caching is only supported for buffered responses for HTTP GET requests. Streamed responses cannot be cached.
+By default, responses are not cached. Caching is only supported for buffered responses for HTTP GET requests. Streamed responses cannot be cached.
 
-If the expiration time is set multiple times at the response, the minimum value will be used.
-
+If the expiration time is set multiple times at the response, the minimum value is used.
 
 ### Absolute expiration time
 
-For setting an absolute expiration time, a new date object for the wished time can be created and set at the response.
+For setting an absolute expiration time, a new date object for the time can be created and set at the response.
 
 ```
 /**
- * The function which will handle the request
+ * The function that handles the request.
  */
 function world(){
     // new Date(year, month, day, hours, minutes, seconds, milliseconds)
@@ -26,7 +25,7 @@ exports.World = require('~/cartridge/scripts/guard').ensure(['get'], world);
 ```
 
 
-Cache daily until 3am in the morning (would be today if executed before 3am, or tomorrow):
+Cache daily until 3 am in the morning. This is today if executed before 3am, or tomorrow if executed after 3 am.
 
 ```
     var Calendar = require('dw/util/Calendar');
@@ -45,7 +44,7 @@ Cache daily until 3am in the morning (would be today if executed before 3am, or 
 
 ### Relative expiration time
 
-For relative expiration, the time can be calculated by adding the wished caching period to the current time. Using a calendar objects can make the calculations easier.
+For relative expiration, the time can be calculated by adding the caching period to the current time. Using a calendar object can make the calculations easier.
 
 Caching for 30 minutes from now on, using a calendar:
 

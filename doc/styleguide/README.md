@@ -1,18 +1,18 @@
 # Style Guide
-## What are style guides
-A Style Guide is a living, breathing documentation of the visual language used in the web application. You can read about some [things people have written about style guides](http://styleguides.io/), as well as [examples of style guides](http://styleguides.io/examples.html).
+## What is the style guide
+The style guide documents the visual elements used in the web application. You can read about [style guides](http://styleguides.io/) and see [examples of style guides](http://styleguides.io/examples.html).
 
 ## SiteGenesis Style Guide
-The SiteGenesis Style Guide (SSG) is created with the goal of helping designers and developers in defining and understanding a common visual language used for their ecommerce application. It includes design elements such as colors, typography and icons as well as more complex UI components such as the product tile or navigation menu.
+The SiteGenesis Style Guide (SSG) helps designers and developers to define a common visual language used for their e-commerce application. It includes design elements such as colors, typography, and icons, as well as more complex UI components, such as the product tile or navigation menu.
 
-By documenting only what is essential to the design of the application, SSG frees up the constraints that are traditionally imposed on designers by old-school wireframes, allowing them to be creative and experiment with new and user-friendly interface centered around the users.
+By documenting only what is essential to the design of the application, the style guide frees up the constraints that are traditionally imposed on designers by old-school wireframes, allowing them to be creative and experiment with new and user-friendly interface design that is centered around the user experience.
 
 _**Disclaimer**: this is still a work in progress and is not complete. The example style guide provided here is meant as a proof of concept. Further development on top of is strongly encouranged._
 
 ## What it does
-This style guide imports the Sass styles in `app_storefront_base`. This way, any update to the application's style will be reflected in the style guide.
+This style guide imports the SASS styles in `app_storefront_base`. This way, any update to the application's style is reflected in the style guide.
 
-The guide is broken down into 4 major sections: Foundation, Elements, Components and Pages.
+The guide is broken down into four major sections: Foundation, Elements, Components and Pages.
 
 - Foundation include things such as colors, typography and icons.
 - Elements represent small UI elements that are used repeatedly throughout the application, such as buttons, color swatches etc.
