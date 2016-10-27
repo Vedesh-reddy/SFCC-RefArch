@@ -73,7 +73,7 @@ server.get('Start', locale, function (req, res, next) {
     productLineItemModel = new ProductLineItemModel(currentBasket);
     orderTotals = new TotalsModel(currentBasket);
 
-    var shippingForm = server.forms.getForm('shippingaddress');
+    var shippingForm = server.forms.getForm('singleShipping');
     var billingForm = server.forms.getForm('billingaddress');
 
     orderModel = new OrderModel(
@@ -94,48 +94,55 @@ server.get('Start', locale, function (req, res, next) {
 
 server.post('SubmitShipping', function (req, res, next) {
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-        var form = server.forms.getForm('shippingaddress');
+        var form = server.forms.getForm('singleShipping');
+
+        if (!form.valid) {
+            res.setStatusCode(500);
+        }
 
         var currentBasket = BasketMgr.getCurrentOrNewBasket();
+        var orderTotals;
         var shipment = currentBasket.defaultShipment;
         var shippingAddress = shipment.shippingAddress;
         var shippingAddressModel;
         var shippingModel;
         var shipmentShippingModel;
+        var shippingMethodID = form.shippingAddress.shippingMethodID.value.toString();
 
         Transaction.wrap(function () {
             if (shippingAddress === null) {
                 shippingAddress = shipment.createShippingAddress();
             }
 
-            shippingAddress.setFirstName(form.firstName.value);
-            shippingAddress.setLastName(form.lastName.value);
-            shippingAddress.setAddress1(form.address1.value);
-            shippingAddress.setAddress2(form.address2.value);
-            shippingAddress.setCity(form.city.value);
-            shippingAddress.setPostalCode(form.postal.value);
-            shippingAddress.setStateCode(form.states.value); // Not getting selected state value
-            shippingAddress.setCountryCode(form.country.value);
-            shippingAddress.setPhone(form.phone.value);
+            shippingAddress.setFirstName(form.shippingAddress.addressFields.firstName.value);
+            shippingAddress.setLastName(form.shippingAddress.addressFields.lastName.value);
+            shippingAddress.setAddress1(form.shippingAddress.addressFields.address1.value);
+            shippingAddress.setAddress2(form.shippingAddress.addressFields.address2.value);
+            shippingAddress.setCity(form.shippingAddress.addressFields.city.value);
+            shippingAddress.setPostalCode(form.shippingAddress.addressFields.postal.value);
+            // Not getting selected state value
+            shippingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
+            shippingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
+            shippingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
         });
 
-        shipmentShippingModel = ShippingMgr.getShipmentShippingModel(
-            currentBasket.defaultShipment
-        );
-        shippingAddressModel = new AddressModel(shipment.shippingAddress);
-        shippingModel = new ShippingModel(
-            currentBasket.defaultShipment,
-            shipmentShippingModel,
-            shippingAddressModel
-        );
-
-        if (!form.valid) {
-            res.setStatusCode(500);
+        if (shippingMethodID !== shipment.shippingMethod.ID) {
+            Transaction.wrap(function () {
+                ShippingModel.selectShippingMethod(shipment, shippingMethodID);
+                Cart.calculateCart(currentBasket);
+            });
         }
 
+        shippingAddressModel = new AddressModel(shippingAddress);
+        shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
+        shippingModel = new ShippingModel(shipment, shipmentShippingModel, shippingAddressModel);
+
+        orderTotals = new TotalsModel(currentBasket);
+
         res.json({
+            totals: orderTotals,
             shippingData: shippingModel,
-            form: server.forms.getForm('shippingaddress')
+            form: server.forms.getForm('singleShipping')
         });
     });
 
@@ -178,8 +185,8 @@ server.get('UpdateShippingMethodsList', function (req, res, next) {
     var shippingModel;
 
     shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
-
     applicableShippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
+
     Transaction.wrap(function () {
         ShippingModel.selectShippingMethod(shipment, null, applicableShippingMethods, address);
         Cart.calculateCart(currentBasket);
@@ -190,7 +197,11 @@ server.get('UpdateShippingMethodsList', function (req, res, next) {
     shippingAddressModel = new AddressModel(address);
     shippingModel = new ShippingModel(shipment, shipmentShippingModel, shippingAddressModel);
 
-    res.json({ shipping: shippingModel, totals: orderTotals });
+    res.json({
+        totals: orderTotals,
+        shipping: shippingModel,
+        shippingForm: server.forms.getForm('singleShipping')
+    });
     next();
 });
 
