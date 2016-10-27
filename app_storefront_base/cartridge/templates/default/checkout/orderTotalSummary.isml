@@ -4,7 +4,7 @@
         <p class="order-receipt-label"><span>${Resource.msg('label.order.subtotal','confirmation', null)}</span></p>
     </div>
     <div class="col-xs-6 end-lines">
-        <p class="text-xs-right"><span>${pdict.order.totals.subTotal}</span></p>
+        <p class="text-xs-right"><span class="sub-total">${pdict.order.totals.subTotal}</span></p>
     </div>
 </div>
 
@@ -14,7 +14,7 @@
         <p class="order-receipt-label"><span>${Resource.msg('label.order.shipping.cost','confirmation', null)}</span></p>
     </div>
     <div class="col-xs-6 end-lines">
-        <p class="text-xs-right"><span>${pdict.order.totals.totalShippingCost}</span></p>
+        <p class="text-xs-right"><span class="shipping-cost">${pdict.order.totals.totalShippingCost}</span></p>
     </div>
 </div>
 
@@ -24,7 +24,7 @@
         <p class="order-receipt-label"><span>${Resource.msg('label.order.sales.tax','confirmation', null)}</span></p>
     </div>
     <div class="col-xs-6 end-lines">
-        <p class="text-xs-right"><span>${pdict.order.totals.totalTax}</span></p>
+        <p class="text-xs-right"><span class="tax-total">${pdict.order.totals.totalTax}</span></p>
     </div>
 </div>
 
@@ -34,7 +34,7 @@
         <p class="order-receipt-label"><span>${Resource.msg('label.order.grand.total','confirmation', null)}</span></p>
     </div>
     <div class="col-xs-6 end-lines">
-        <p class="text-xs-right"><span>${pdict.order.totals.grandTotal}</span></p>
+        <p class="text-xs-right"><span class="grand-total-sum">${pdict.order.totals.grandTotal}</span></p>
     </div>
 </div>
 

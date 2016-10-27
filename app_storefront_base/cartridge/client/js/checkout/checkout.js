@@ -43,6 +43,20 @@
             'submitted'
         ];
 
+        /**
+         * Populate the Address Summary View
+         * @param parentSelector    the top level DOM selector for a unique address summary
+         * @param address   the address data
+         */
+        function populateSummary(parentSelector, address) {
+            $.each(address, function (attr) {
+                var val = address[attr];
+                if (val) {
+                    $('.' + attr, parentSelector).text(val);
+                }
+            });
+        }
+
         //
         // Local member methods of the Checkout plugin
         //
@@ -60,22 +74,19 @@
                 if (stage === 'shipping') {
                     console.log('SHIPPING: submit via ajax shipping info and move to payment form'); // eslint-disable-line
 
+                    //
+                    // Submit the Shipiing Address Form
+                    //
                     return $.ajax({
                         url: $('#dwfrm_shippingaddress').attr('action'),
                         method: 'POST',
                         data: $('#dwfrm_shippingaddress').serialize(),
                         success: function (data) {
-                            if (data && data.form) {
-                                $.each(data.form, function (attr) {
-                                    var val = data.form[attr];
-                                    if (val instanceof Object && val.htmlName && val.value) {
-                                        console.log(val.htmlName, val.value); // eslint-disable-line
-
-                                        $('.shipping.address-summary .'
-                                            + val.htmlName).text(val.value);
-                                    }
-                                });
-                            }
+                            //
+                            // Populate the Address Summary
+                            //
+                            var address = data.shippingData.shippingAddress;
+                            populateSummary('.shipping .address-summary', address);
                         },
                         error: function (xhr, err) {
                             console.log(err); // eslint-disable-line
@@ -84,22 +95,19 @@
                 } else if (stage === 'payment') {
                     console.log('PAYMENT: submit via ajax payment info and move to place order step') // eslint-disable-line
 
+                    //
+                    // Submit the Billing Address Form
+                    //
                     return $.ajax({
                         url: $('#dwfrm_billingaddress').attr('action'),
                         method: 'POST',
                         data: $('#dwfrm_billingaddress').serialize(),
                         success: function (data) {
-                            if (data && data.form) {
-                                $.each(data.form, function (attr) {
-                                    var val = data.form[attr];
-                                    if (val instanceof Object && val.htmlName && val.value) {
-                                        console.log(val.htmlName, val.value); // eslint-disable-line
-
-                                        $('.billing.address-summary .'
-                                            + val.htmlName).text(val.value);
-                                    }
-                                });
-                            }
+                            //
+                            // Populate the Address Summary
+                            //
+                            var address = data.billingData.billingAddress;
+                            populateSummary('.billing .address-summary', address);
                         },
                         error: function (xhr, err) {
                             console.log(err); // eslint-disable-line
@@ -118,6 +126,80 @@
                     p.done(); // eslint-disable-line
                 }, 500);
                 return p; // eslint-disable-line
+            },
+
+            updateShippingMethodList: function () {
+                var $shippingMethodList = $('.shipping-method-list');
+                var state = $('.shippingState').val();
+                var postal = $('.shippingZipCode').val();
+                var url = $shippingMethodList.data('action');
+                var urlParams = {
+                    state: state,
+                    postal: postal
+
+                };
+
+                url += (url.indexOf('?') !== -1 ? '&' : '?') +
+                    Object.keys(urlParams).map(function (key) {
+                        return key + '=' + encodeURIComponent(urlParams[key]);
+                    }).join('&');
+
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        $shippingMethodList.empty();
+                        var beginHtml;
+                        var inputHtml;
+                        var arrivalTimeHtml;
+                        var htmlToAppend;
+                        var shippingMethods = data.shipping.applicableShippingMethods;
+
+                        for (var i = 0; i < shippingMethods.length; i++) {
+                            beginHtml = '<div class="form-check col-xs-8 start-lines">' +
+                                '<label class="form-check-label shipping-method-option">';
+
+                            if (shippingMethods[i].ID === data.shipping.selectedShippingMethod.ID) {
+                                inputHtml = '<input id="shippingMethod-' +
+                                    shippingMethods[i].ID + '"' +
+                                    'name="shippingMethod" type="radio"' +
+                                    'class="form-check-input" ' +
+                                    'value="' + shippingMethods[i].ID + '" checked>' +
+                                    '<span>' + shippingMethods[i].displayName + '</span>';
+                            } else {
+                                inputHtml = '<input id="shippingMethod-' +
+                                    shippingMethods[i].ID + '"' +
+                                    'name="shippingMethod" type="radio"' +
+                                    'class="form-check-input" value="' +
+                                    shippingMethods[i].ID + '"> ' +
+                                    '<span>' + shippingMethods[i].displayName + '</span>';
+                            }
+
+                            var endingHtml = ' </label> ' +
+                                '</div> ' +
+                                '<div class="col-xs-4 text-xs-right ' +
+                                'shipping-method-pricing end-lines"> ' +
+                                '<span>' + shippingMethods[i].shippingCost + '</span> ' +
+                                '</div>';
+
+                            if (shippingMethods[i].estimatedArrivalTime) {
+                                arrivalTimeHtml = '<span class="text-muted arrival-time">' +
+                                    '(' + shippingMethods[i].estimatedArrivalTime + ')</span>';
+                                htmlToAppend = beginHtml + inputHtml + arrivalTimeHtml + endingHtml;
+                            } else {
+                                htmlToAppend = beginHtml + inputHtml + endingHtml;
+                            }
+
+                            $shippingMethodList.append(htmlToAppend);
+                        }
+
+                        $('.shipping-cost').empty().append(data.totals.totalShippingCost);
+                        $('.tax-total').empty().append(data.totals.totalTax);
+                        $('.sub-total').empty().append(data.totals.subTotal);
+                        $('.grand-total-sum').empty().append(data.totals.grandTotal);
+                    }
+                });
             },
 
             /**
@@ -201,6 +283,12 @@
                         members.handleNextStage(false);
                     }
                 });
+
+                $('#shipping-address .address').on('change',
+                    'select[name="dwfrm_shippingaddress_states"],' +
+                    'input[name="dwfrm_shippingaddress_postal"]',
+                    members.updateShippingMethodList
+                );
 
                 //
                 // Set the form data

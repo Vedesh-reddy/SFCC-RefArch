@@ -13,7 +13,7 @@
         <!--- Shipping Address --->
         <span class="section-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</span><br>
         <isset name="address" value="${pdict.shipping.shippingAddress}" scope="page"/>
-        <isinclude template="checkout/shippingAddressSummary" />
+        <isinclude template="checkout/addressSummary" />
 
         <!--- Shipping information --->
         <span class="section-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</span><br>
@@ -31,7 +31,7 @@
         <!--- Billing Address --->
         <span class="section-label">${Resource.msg('label.order.billing.address', 'confirmation', null)}</span><br>
         <isset name="address" value="${pdict.billing.billingAddress.address}" scope="page"/>
-        <isinclude template="checkout/billingAddressSummary" />
+        <isinclude template="checkout/addressSummary" />
 
         <!--- Payment information --->
         <span class="section-label">${Resource.msg('label.order.payment.info', 'confirmation', null)}</span><br>
