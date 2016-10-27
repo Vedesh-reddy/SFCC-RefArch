@@ -17,7 +17,6 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
-var Transaction = require('dw/system/Transaction');
 
 server.get('Start', locale, function (req, res, next) {
     var applicablePaymentCards;
