@@ -72,7 +72,7 @@ server.get('Start', locale, function (req, res, next) {
     orderTotals = new TotalsModel(currentBasket);
 
     var shippingForm = server.forms.getForm('shippingaddress');
-    var billingForm = server.forms.getForm('billingaddress');
+    var billingForm = server.forms.getForm('payment');
 
     orderModel = new OrderModel(
         currentBasket,
