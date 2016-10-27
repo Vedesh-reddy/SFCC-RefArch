@@ -9,6 +9,7 @@ var Transaction = require('dw/system/Transaction');
 
 var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
+var Cart = require('~/cartridge/models/cart');
 var OrderModel = require('~/cartridge/models/order');
 var Payment = require('~/cartridge/models/payment');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
@@ -16,6 +17,7 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
+var Transaction = require('dw/system/Transaction');
 
 server.get('Start', locale, function (req, res, next) {
     var applicablePaymentCards;
@@ -160,6 +162,36 @@ server.post('SubmitBilling', function (req, res, next) {
         }
         res.json({ form: server.forms.getForm('billingaddress') });
     });
+    next();
+});
+
+server.get('UpdateShippingMethodsList', function (req, res, next) {
+    var address = {
+        postalCode: req.querystring.postal,
+        stateCode: req.querystring.state
+    };
+    var applicableShippingMethods;
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var orderTotals;
+    var shipment = currentBasket.defaultShipment;
+    var shipmentShippingModel;
+    var shippingAddressModel;
+    var shippingModel;
+
+    shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
+
+    applicableShippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
+    Transaction.wrap(function () {
+        ShippingModel.selectShippingMethod(shipment, null, applicableShippingMethods, address);
+        Cart.calculateCart(currentBasket);
+    });
+
+    orderTotals = new TotalsModel(currentBasket);
+
+    shippingAddressModel = new AddressModel(address);
+    shippingModel = new ShippingModel(shipment, shipmentShippingModel, shippingAddressModel);
+
+    res.json({ shipping: shippingModel, totals: orderTotals });
     next();
 });
 

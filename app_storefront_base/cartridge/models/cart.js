@@ -2,6 +2,16 @@
 
 var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
+var HookMgr = require('dw/system/HookMgr');
+
+/**
+ * performs cart calculation
+ * @param {dw.order.Basket} basket - Current users's basket
+ * @return {void}
+ */
+function calculateCart(basket) {
+    HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', basket);
+}
 
 /**
  * Generates an object of URLs
@@ -40,5 +50,7 @@ function cart(basket, shippingModel, productLineItemModel, totalsModel) {
         emptyCartMsg: Resource.msg('info.cart.empty.msg', 'cart', null)
     };
 }
+
+cart.calculateCart = calculateCart;
 
 module.exports = cart;
