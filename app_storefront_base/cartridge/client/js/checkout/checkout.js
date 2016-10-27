@@ -146,20 +146,26 @@
                         var inputHtml;
                         var arrivalTimeHtml;
                         var htmlToAppend;
-                        var shippingMethods = data.shippingMethods;
+                        var shippingMethods = data.shipping.applicableShippingMethods;
 
                         for (var i = 0; i < shippingMethods.length; i++) {
                             beginHtml = '<div class="form-check col-xs-8 start-lines">' +
                                 '<label class="form-check-label shipping-method-option">';
 
-                            inputHtml = '<input id="shippingMethod-' + shippingMethods[i].ID + '"' +
-                                'name="shippingMethod" type="radio"' +
-                                'class="form-check-input" value="' + shippingMethods[i].ID + '"> ' +
-                                '<span>' + shippingMethods[i].displayName + '</span>';
-
-                            if (shippingMethods[i].estimatedArrivalTime) {
-                                arrivalTimeHtml = '<span class="text-muted arrival-time">' +
-                                    '(' + shippingMethods[i].estimatedArrivalTime + ')</span>';
+                            if (shippingMethods[i].ID === data.shipping.selectedShippingMethod.ID) {
+                                inputHtml = '<input id="shippingMethod-' +
+                                    shippingMethods[i].ID + '"' +
+                                    'name="shippingMethod" type="radio"' +
+                                    'class="form-check-input" ' +
+                                    'value="' + shippingMethods[i].ID + '" checked>' +
+                                    '<span>' + shippingMethods[i].displayName + '</span>';
+                            } else {
+                                inputHtml = '<input id="shippingMethod-' +
+                                    shippingMethods[i].ID + '"' +
+                                    'name="shippingMethod" type="radio"' +
+                                    'class="form-check-input" value="' +
+                                    shippingMethods[i].ID + '"> ' +
+                                    '<span>' + shippingMethods[i].displayName + '</span>';
                             }
 
                             var endingHtml = ' </label> ' +
@@ -169,9 +175,21 @@
                                 '<span>' + shippingMethods[i].shippingCost + '</span> ' +
                                 '</div>';
 
-                            htmlToAppend = beginHtml + inputHtml + arrivalTimeHtml + endingHtml;
+                            if (shippingMethods[i].estimatedArrivalTime) {
+                                arrivalTimeHtml = '<span class="text-muted arrival-time">' +
+                                    '(' + shippingMethods[i].estimatedArrivalTime + ')</span>';
+                                htmlToAppend = beginHtml + inputHtml + arrivalTimeHtml + endingHtml;
+                            } else {
+                                htmlToAppend = beginHtml + inputHtml + endingHtml;
+                            }
+
                             $shippingMethodList.append(htmlToAppend);
                         }
+
+                        $('.shipping-cost').empty().append(data.totals.totalShippingCost);
+                        $('.tax-total').empty().append(data.totals.totalTax);
+                        $('.sub-total').empty().append(data.totals.subTotal);
+                        $('.grand-total-sum').empty().append(data.totals.grandTotal);
                     }
                 });
             },
@@ -258,7 +276,7 @@
                     }
                 });
 
-                $('.address').on('change',
+                $('#shipping-address .address').on('change',
                     'select[name="dwfrm_shippingaddress_states"],' +
                     'input[name="dwfrm_shippingaddress_postal"]',
                     members.updateShippingMethodList

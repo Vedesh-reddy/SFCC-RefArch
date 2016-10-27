@@ -14,7 +14,7 @@ var ShippingMgr = require('dw/order/ShippingMgr');
  * @param {String} shippingMethods - List of applicable shipping methods of the current basket
  * @return {void}
  */
-function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods) {
+function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods, address) {
     var applicableShippingMethods;
     var defaultShippingMethod = ShippingMgr.getDefaultShippingMethod();
     var isShipmentSet = false;
@@ -23,7 +23,8 @@ function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods
         applicableShippingMethods = shippingMethods;
     } else {
         var shipmentModel = ShippingMgr.getShipmentShippingModel(defaultShipment);
-        applicableShippingMethods = shipmentModel.applicableShippingMethods;
+        applicableShippingMethods = address ? shipmentModel.getApplicableShippingMethods(address) :
+            shipmentModel.applicableShippingMethods;
     }
 
     if (shippingMethodID) {
@@ -42,6 +43,8 @@ function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods
     if (!isShipmentSet) {
         if (applicableShippingMethods.contains(defaultShippingMethod)) {
             defaultShipment.setShippingMethod(defaultShippingMethod);
+        } else if (applicableShippingMethods.length > 0) {
+            defaultShipment.setShippingMethod(shippingMethods.iterator().next());
         } else {
             defaultShipment.setShippingMethod(null);
         }
@@ -93,10 +96,17 @@ function getSelectedShippingMethod(shippingMethod) {
  * @constructor
  */
 function shipping(defaultShipment, shipmentModel, addressModel) {
-    this.applicableShippingMethods = shipmentModel ?
-        getApplicableShippingMethods(shipmentModel) :
-        null;
-    this.shippingAddress = addressModel ? addressModel.address : null;
+    if (addressModel) {
+        this.applicableShippingMethods = shipmentModel ?
+            getApplicableShippingMethods(shipmentModel, addressModel.address) :
+            null;
+        this.shippingAddress = addressModel.address;
+    } else {
+        this.applicableShippingMethods = shipmentModel ?
+            getApplicableShippingMethods(shipmentModel) :
+            null;
+        this.shippingAddress = null;
+    }
     this.selectedShippingMethod = defaultShipment && defaultShipment.shippingMethod ?
         getSelectedShippingMethod(defaultShipment.shippingMethod) :
         null;
