@@ -17,7 +17,7 @@ body {
 a,
 a:visited,
 a:active {
-	color: #84bd00;
+	color: #0095dd;
 }
 
 header {
@@ -35,7 +35,7 @@ section {
 
 label[for="nav-trigger"] {
 	cursor: pointer;
-	fill: #84bd00;
+	fill: #0095dd;
 	left: 1rem;
 	padding-top: .3rem;
 	position: absolute;
@@ -68,7 +68,7 @@ label[for="nav-trigger"] {
 }
 @media (min-width: 43.75em) {
 	.navigation {
-		border-left: 1px solid #84bd00;
+		border-left: 1px solid #0095dd;
 		left: auto;
 		padding: 1.75rem 0 1.75rem 1rem;
 		position: relative;
@@ -130,7 +130,7 @@ label[for="nav-trigger"] {
 }
 
 footer {
-	background-color: #84bd00;
+	background-color: #0095dd;
 	color: #fff;
 	font-style: normal;
 	padding: 6px 2%;
@@ -186,7 +186,7 @@ h5,
 
 .homeleft {
 	border-radius: 5px;
-	background-color: #84bd00;
+	background-color: #0095dd;
 	padding: .3rem;
 	text-align: center;
 	text-transform: uppercase;
@@ -212,7 +212,7 @@ h5,
 }
 
 .expand {
-	color: #84bd00;
+	color: #0095dd;
 	cursor: pointer;
 	display: inline-block;
 	margin-right: 4px;
