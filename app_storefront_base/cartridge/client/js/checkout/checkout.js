@@ -131,8 +131,8 @@
                             //
                             // Populate the Address Summary
                             //
-                            //var address = data.billingData.billingAddress;
-                            //populateSummary('.billing .address-summary', address);
+                            var address = data.billingData.billingAddress;
+                            populateSummary('.billing .address-summary', address);
                         },
                         error: function (xhr, err) {
                             console.log(err); // eslint-disable-line
@@ -161,7 +161,6 @@
                 var urlParams = {
                     state: state,
                     postal: postal
-
                 };
 
                 url += (url.indexOf('?') !== -1 ? '&' : '?') +

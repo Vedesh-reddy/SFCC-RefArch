@@ -162,9 +162,9 @@ server.post('SubmitShipping', function (req, res, next) {
 server.post('SubmitPayment', function (req, res, next) {
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
         var form = server.forms.getForm('payment');
-        //if (!form.valid) {
-        //    res.setStatusCode(500);
-        //}
+        if (!form.valid) {
+            res.setStatusCode(500);
+        }
         res.json({ form: server.forms.getForm('payment'), req: req });
     });
     next();
