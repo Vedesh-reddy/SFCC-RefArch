@@ -2,7 +2,7 @@
 
 /**
  * Creates an array of objects containing store information
- * @param {dw.util.Set} storesObject - returns a set of <dw.catalog.Store> objects
+ * @param {dw.util.Set} storesObject - a set of <dw.catalog.Store> objects
  * @returns {Array} an array of objects that contains store information
  */
 function createStoresObject(storesObject) {
@@ -29,7 +29,7 @@ function createStoresObject(storesObject) {
 
 /**
  * Creates an array of objects containing the coordinates of the store's returned by the search
- * @param {dw.util.Set} storesObject - returns a set of <dw.catalog.Store> objects
+ * @param {dw.util.Set} storesObject - a set of <dw.catalog.Store> objects
  * @returns {Array} an array of coordinates  objects
  */
 function createGeoLocationObject(storesObject) {
@@ -62,7 +62,7 @@ function getGoogleMapsApi(apiKey) {
 
 /**
  * The stores model
- * @param {dw.util.Set} storesObject - returns a set of <dw.catalog.Store> objects
+ * @param {dw.util.Set} storesObject - a set of <dw.catalog.Store> objects
  * @param {Object} searchKey - what the user searched by (location or postal code)
  * @param {Number} searchRadius - the radius used in the search
  * @param {dw.web.URL} actionUrl - a relative url
