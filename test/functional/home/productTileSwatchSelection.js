@@ -5,19 +5,19 @@ import { config } from '../webdriver/wdio.conf';
 import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 
-
 /*
  - Verify product tile swatch selection.
    Selecting a swatch will cause the image to be displayed in the selected color.
  */
 
-describe('Home - Product Tiles Swatch Selection', () => {
+// Due to issue reported in RAP-5271, disabling swatch selection tests for now.
+
+describe.skip('Home - Product Tiles Swatch Selection', () => {
     const locale = config.locale;
     const localeStr = locale === 'x_default' ? 'en_US' : locale;
 
     const productMasterId2 = '25697682';
     const productMasterId4 = '25519318';
-
 
     before(() => {
         return testDataMgr.load()
