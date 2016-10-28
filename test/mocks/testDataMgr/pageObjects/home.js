@@ -61,11 +61,11 @@ export function getNthProductTileColorSwatchUrls(tileIdx) {
             if (Array.isArray(swatchList)) {
                 for (let i = 0; i < swatchList.length; i++) {
                     let dataAttrAsJson = JSON.parse(swatchList[i]);
-                    swatchUrlArray[i] = dataAttrAsJson.url;
+                    swatchUrlArray[i] = dataAttrAsJson.images.swatch[0].url;
                 }
             } else {
                 let dataAttrAsJson = JSON.parse(swatchList);
-                swatchUrlArray[0] = dataAttrAsJson.url;
+                swatchUrlArray[0] = dataAttrAsJson.images.swatch[0].url;
             }
 
             return swatchUrlArray;
