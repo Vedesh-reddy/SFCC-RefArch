@@ -1,0 +1,255 @@
+@import 'variables';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+@import 'bootstrap/scss/mixins/breakpoints';
+@import 'utilities/swatch';
+
+.refinement-bar {
+    overflow: auto;
+
+    ul {
+        padding-left: 0;
+    }
+
+    @include media-breakpoint-down(sm) {
+        background-color: $white;
+        box-shadow: 0 0.313em 0.938em rgba(0, 0, 0, 0.5);
+        display: none;
+        left: 0;
+        position: absolute;
+        top: 0;
+        width: 100%;
+        z-index: 500;
+    }
+
+    @include media-breakpoint-down(xs) {
+        position: fixed;
+        height: 100%;
+    }
+
+    @include media-breakpoint-up(md) {
+        display: block !important;
+    }
+}
+
+.header-bar {
+    background-color: $grey2;
+    border-bottom: 0.063em solid $grey2;
+    height: 60px;
+    left: 0;
+    position: fixed;
+    top: 0;
+    width: 100%;
+
+    button.close {
+        font-size: 1rem;
+        font-weight: normal;
+        opacity: 1;
+    }
+
+    .fa.fa-close::before {
+        font-size: 1.25em;
+    }
+
+    @include media-breakpoint-only(sm) {
+        padding: 0.938em 2.813em;
+    }
+
+    @include media-breakpoint-only(xs) {
+        padding: 0.938em;
+    }
+}
+
+.refinements {
+    .header,
+    .values {
+        padding: 0.313em 0;
+
+        @include media-breakpoint-only(sm) {
+            li {
+                display: inline-block;
+            }
+        }
+    }
+
+    .header {
+        font-size: 1.125em;
+        color: $dark-gray;
+    }
+
+    ul {
+        overflow: auto;
+    }
+
+    li {
+        list-style-type: none;
+        padding-left: 0;
+
+        &.color-attribute {
+            display: inline-block;
+        }
+
+        span {
+            color: $dark-gray;
+
+            &.disabled {
+                color: $slightly-darker-gray;
+            }
+        }
+    }
+
+    @include media-breakpoint-down(xs) {
+        padding: 0;
+    }
+}
+
+.secondary-bar {
+    padding: 0.938em 1.563em;
+    overflow: auto;
+    margin-top: 3.75em;
+
+    a.reset {
+        color: $green;
+
+        @include media-breakpoint-down(sm) {
+            float: right;
+        }
+    }
+
+    @include media-breakpoint-only(sm) {
+        padding: 0.938em 2.813em;
+    }
+
+    @include media-breakpoint-only(xs) {
+        padding: 0.938em;
+    }
+}
+
+.refinement-header {
+    overflow: auto;
+}
+
+.disabled {
+    pointer-events: none;
+}
+
+.grid-header {
+    text-align: center;
+    padding: 0.938em;
+
+    @include media-breakpoint-only(xs) {
+        .result-count {
+            padding-bottom: 0.938em;
+        }
+    }
+}
+
+.search-results {
+
+    @include media-breakpoint-down(xs) {
+        padding: 0;
+    }
+}
+
+.result-count {
+    vertical-align: middle;
+    text-align: center;
+    padding: 0;
+    font-size: 0.875rem;
+}
+
+.refinement {
+    a {
+        text-decoration: none;
+    }
+
+    &.category {
+        li {
+            margin-left: 0.938em;
+            display: block;
+        }
+
+        > ul > li {
+            margin-left: 0;
+        }
+    }
+
+    .title {
+        font-size: 1.125rem;
+
+        @include media-breakpoint-down(sm) {
+            height: 3.125rem;
+        }
+    }
+
+    @include clearfix;
+
+    @include media-breakpoint-down(sm) {
+        border-top: 0.063em solid $grey2;
+    }
+
+    @include media-breakpoint-only(sm) {
+        margin: 0 auto;
+        width: 90%;
+    }
+
+    @include media-breakpoint-down(xs) {
+        padding: 0 0.938em;
+    }
+}
+
+.search-banner {
+    background-image: url('http://www.pixelstalk.net/wp-content/uploads/2016/06/Desktop-Download-Fashion-Wallpaper-HD.jpg');
+    background-position-y: -0.75em;
+}
+
+.search-keywords {
+    font-weight: bold;
+}
+
+.filter-bar {
+    label {
+        line-height: 2.188em;
+    }
+
+    a.filter-value {
+        border: 0.063em solid $black;
+        margin-bottom: 0.938em;
+        margin-left: 0.938em;
+        padding: 0.313em;
+
+        &.swatch-filter {
+            font-size: 1.563em;
+            line-height: 1.38em;
+            margin-left: 0.6em;
+            padding: 0;
+            text-align: center;
+            width: 1.38em;
+        }
+
+        &:not(.swatch-filter) {
+            border-radius: 0.188em;
+        }
+
+        @include media-breakpoint-down(xs) {
+            &:first-child {
+                margin-left: 0;
+            }
+        }
+
+        li {
+            list-style-type: none;
+        }
+    }
+
+    ul {
+        padding-left: 0;
+    }
+}
+
+.product-grid {
+
+    @include media-breakpoint-down(xs) {
+        padding-top: 0.938em;
+    }
+}

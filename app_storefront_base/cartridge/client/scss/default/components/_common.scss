@@ -1,0 +1,9 @@
+.modal-background {
+    background-color: $black;
+    display: none;
+    height: 100%;
+    position: fixed;
+    opacity: 0.5;
+    width: 100%;
+    z-index: 200;
+}

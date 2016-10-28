@@ -19,7 +19,11 @@ function processSwatchValues(attr) {
             attrValue.value + '"]');
         var $swatchAnchor = $attrValue.parent();
 
-        $attrValue.attr('data-selected', attrValue.selected);
+        if (attrValue.selected) {
+            $attrValue.addClass('selected');
+        } else {
+            $attrValue.removeClass('selected');
+        }
 
         if (attrValue.url) {
             $swatchAnchor.attr('href', attrValue.url);

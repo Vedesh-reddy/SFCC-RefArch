@@ -23,8 +23,7 @@ function getResetLink(search, httpParams) {
 }
 
 /**
- * @constructor
- * @classdesc ProductSearch view model
+ * Retrieves search refinements
  *
  * @param {dw.catalog.ProductSearchModel} productSearch - Product search object
  * @param {dw.catalog.ProductSearchRefinements} refinements - Search refinements
@@ -74,7 +73,7 @@ function getSelectedFilters(productSearch, refinements) {
  * @classdesc ProductSearch class
  *
  * @param {dw.catalog.ProductSearchModel} productSearch - Product search object
- * @param {Object} httpParams - Query params
+ * @param {Object} httpParams - HTTP query parameters
  */
 function ProductSearch(productSearch, httpParams) {
     this.isCategorySearch = productSearch.categorySearch;
