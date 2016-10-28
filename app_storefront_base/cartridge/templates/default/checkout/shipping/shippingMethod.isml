@@ -3,9 +3,9 @@
         <div class="form-check col-xs-8 start-lines">
             <label class="form-check-label shipping-method-option">
                 <isif condition="${shippingMethod.ID === pdict.order.shipping.selectedShippingMethod.ID}">
-                    <input id="shippingMethod-${shippingMethod.ID}" name="shippingMethod" type="radio" class="form-check-input" value="${shippingMethod.ID}" checked>
+                    <input id="shippingMethod-${shippingMethod.ID}" name="${pdict.forms.shippingForm.shippingAddress.shippingMethodID.htmlName}" type="radio" class="form-check-input" value="${shippingMethod.ID}" checked>
                     <iselse/>
-                    <input id="shippingMethod-${shippingMethod.ID}" name="shippingMethod" type="radio" value="${shippingMethod.ID}" class="form-check-input">
+                    <input id="shippingMethod-${shippingMethod.ID}" name="${pdict.forms.shippingForm.shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input">
                 </isif>
                 <span>${shippingMethod.displayName}</span>
                 <isif condition="${shippingMethod.estimatedArrivalTime}">
