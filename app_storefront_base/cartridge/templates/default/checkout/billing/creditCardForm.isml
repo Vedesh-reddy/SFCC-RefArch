@@ -2,7 +2,8 @@
     <div class="col-xs-12">
         <div class="form-group">
             <label for="cardNumebr">${Resource.msg('field.credit.card.number','creditCard',null)}</label>
-            <input type="text" class="form-control" id="cardNumebr" name="cardNumebr">
+            <input type="text" class="form-control cardNumber" id="cardNumber" name="cardNumber"
+                <isprint value=${pdict.forms.billingForm.cardNumber.attributes} encoding="off"/> >
         </div>
     </div>
 </div>
@@ -11,13 +12,15 @@
     <div class="col-sm-6">
         <div class="form-group">
             <label for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
-            <input type="text" class="form-control" id="expirationYear" name="expirationYear">
+            <input type="text" class="form-control expirationYear" id="expirationYear" name="expirationYear"
+                <isprint value=${pdict.forms.billingForm.expirationYear.attributes} encoding="off"/> >
         </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group">
             <label for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
-            <input type="text" class="form-control" id="expirationMonth" name="expirationMonth">
+            <input type="text" class="form-control expirationMonth" id="expirationMonth" name="expirationMonth"
+                <isprint value=${pdict.forms.billingForm.expirationMonth.attributes} encoding="off"/> >
         </div>
     </div>
 </div>
@@ -26,7 +29,8 @@
     <div class="col-sm-6">
         <div class="form-group">
             <label for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
-            <input type="text" class="form-control" id="securityCode" name="securityCode">
+            <input type="text" class="form-control securityCode" id="securityCode" name="securityCode"
+                <isprint value=${pdict.forms.billingForm.securityCode.attributes} encoding="off"/> >
         </div>
     </div>
     <div class="col-sm-6">
@@ -38,13 +42,15 @@
     <div class="col-sm-6">
         <div class="form-group">
             <label for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
-            <input type="text" class="form-control" id="email" name="email">
+            <input type="text" class="form-control email" id="email" name="email"
+                <isprint value=${pdict.forms.billingForm.email.attributes} encoding="off"/> >
         </div>
     </div>
     <div class="col-sm-6">
         <div class="form-group">
             <label for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
-            <input type="text" class="form-control" id="phoneNumber" name="phoneNumber">
+            <input type="text" class="form-control phone" id="phoneNumber" name="phoneNumber"
+                <isprint value=${pdict.forms.billingForm.phone.attributes} encoding="off"/> >
         </div>
     </div>
 </div>

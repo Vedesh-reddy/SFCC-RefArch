@@ -31,7 +31,7 @@
                 <span class="grand-total-price">${pdict.order.totals.subTotal}</span>
             </div>
         </div>
-        <!--${pdict.forms.billingForm.address.lastName.attributes}-->
+        ${pdict.forms.billingForm.address.lastName.attributes}
 
         <div class="row">
             <div class="col-sm-7">

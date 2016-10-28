@@ -99,15 +99,15 @@
                     // Submit the Billing Address Form
                     //
                     return $.ajax({
-                        url: $('#dwfrm_billingaddress').attr('action'),
+                        url: $('#dwfrm_payment').attr('action'),
                         method: 'POST',
-                        data: $('#dwfrm_billingaddress').serialize(),
+                        data: $('#dwfrm_payment').serialize(),
                         success: function (data) {
                             //
                             // Populate the Address Summary
                             //
-                            var address = data.billingData.billingAddress;
-                            populateSummary('.billing .address-summary', address);
+                            //var address = data.billingData.billingAddress;
+                            //populateSummary('.billing .address-summary', address);
                         },
                         error: function (xhr, err) {
                             console.log(err); // eslint-disable-line
@@ -221,7 +221,7 @@
                  */
                 var toggleBillingForm = function (checked) {
                     $('input[name="shippingAddressUseAsBillingAddress"]').prop('checked', checked);
-                    $('input[name="billing-same-as-shipping"]').prop('checked', checked);
+                    $('input[name="billingSameAsShipping"]').prop('checked', checked);
                     $('.billing-address').toggleClass('same-as-shipping', checked);
                 };
 
@@ -229,7 +229,7 @@
                 // Handle "Billing Same as Shipping" Checkbox
                 //
                 $('input[name="shippingAddressUseAsBillingAddress"]:checkbox, ' +
-                    'input[name="billing-same-as-shipping"]:checkbox').on('change', function () {
+                    'input[name="billingSameAsShipping"]:checkbox').on('change', function () {
                         var checked = this.checked;
                         toggleBillingForm(checked);
                     });

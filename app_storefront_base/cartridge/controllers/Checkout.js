@@ -18,6 +18,9 @@ var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 
+/**
+ * Main entry point for Checkout
+ */
 server.get('Start', locale, function (req, res, next) {
     var applicablePaymentCards;
     var applicablePaymentMethods;
@@ -92,6 +95,9 @@ server.get('Start', locale, function (req, res, next) {
     next();
 });
 
+/**
+ * Handle Ajax shipping form submit
+ */
 server.post('SubmitShipping', function (req, res, next) {
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
         var form = server.forms.getForm('shippingaddress');
@@ -130,7 +136,7 @@ server.post('SubmitShipping', function (req, res, next) {
         );
 
         if (!form.valid) {
-            res.setStatusCode(500);
+            //res.setStatusCode(500);
         }
 
         res.json({
@@ -142,24 +148,17 @@ server.post('SubmitShipping', function (req, res, next) {
     next();
 });
 
+/**
+ *  Handle Ajax payment (and billing) form submit
+ */
+
 server.post('SubmitPayment', function (req, res, next) {
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
         var form = server.forms.getForm('payment');
-        if (!form.valid) {
-            res.setStatusCode(500);
-        }
-        res.json({ form: server.forms.getForm('payment') });
-    });
-    next();
-});
-
-server.post('SubmitBilling', function (req, res, next) {
-    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-        var form = server.forms.getForm('billingaddress');
-        if (!form.valid) {
-            res.setStatusCode(500);
-        }
-        res.json({ form: server.forms.getForm('billingaddress') });
+        //if (!form.valid) {
+        //    res.setStatusCode(500);
+        //}
+        res.json({ form: server.forms.getForm('payment'), req: req });
     });
     next();
 });
