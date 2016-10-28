@@ -57,6 +57,28 @@
             });
         }
 
+        /**
+         * updates the totals summary
+         * @param totals    the totals data
+         */
+        function updateTotals(totals) {
+            $('.shipping-cost').empty().append(totals.totalShippingCost);
+            $('.tax-total').empty().append(totals.totalTax);
+            $('.sub-total').empty().append(totals.subTotal);
+            $('.grand-total-sum').empty().append(totals.grandTotal);
+        }
+
+        /**
+         * Updates the shipping method in the shipping summary
+         * @param shippingMethod    the selected shipping medthod data
+         * @param totals   the totals data
+         */
+        function updateShippingSummary(shippingMethod, totals) {
+            $('.shipping-method-title').text(shippingMethod.displayName);
+            $('.shipping-method-arrival-time').text(shippingMethod.estimatedArrivalTime);
+            $('.shipping-method-price').text(totals.totalShippingCost);
+        }
+
         //
         // Local member methods of the Checkout plugin
         //
@@ -78,15 +100,18 @@
                     // Submit the Shipiing Address Form
                     //
                     return $.ajax({
-                        url: $('#dwfrm_shippingaddress').attr('action'),
+                        url: $('#dwfrm_singleShipping').attr('action'),
                         method: 'POST',
-                        data: $('#dwfrm_shippingaddress').serialize(),
+                        data: $('#dwfrm_singleShipping').serialize(),
                         success: function (data) {
                             //
                             // Populate the Address Summary
                             //
                             var address = data.shippingData.shippingAddress;
+                            var selectedShippingMethod = data.shippingData.selectedShippingMethod;
                             populateSummary('.shipping .address-summary', address);
+                            updateShippingSummary(selectedShippingMethod, data.totals);
+                            updateTotals(data.totals);
                         },
                         error: function (xhr, err) {
                             console.log(err); // eslint-disable-line
@@ -163,14 +188,17 @@
                             if (shippingMethods[i].ID === data.shipping.selectedShippingMethod.ID) {
                                 inputHtml = '<input id="shippingMethod-' +
                                     shippingMethods[i].ID + '"' +
-                                    'name="shippingMethod" type="radio"' +
-                                    'class="form-check-input" ' +
+                                    'name="' +
+                                    data.shippingForm.shippingAddress.shippingMethodID.htmlName +
+                                    '" type="radio" class="form-check-input" ' +
                                     'value="' + shippingMethods[i].ID + '" checked>' +
                                     '<span>' + shippingMethods[i].displayName + '</span>';
                             } else {
                                 inputHtml = '<input id="shippingMethod-' +
                                     shippingMethods[i].ID + '"' +
-                                    'name="shippingMethod" type="radio"' +
+                                    'name="' +
+                                    data.shippingForm.shippingAddress.shippingMethodID.htmlName +
+                                    '" type="radio"' +
                                     'class="form-check-input" value="' +
                                     shippingMethods[i].ID + '"> ' +
                                     '<span>' + shippingMethods[i].displayName + '</span>';
@@ -285,8 +313,7 @@
                 });
 
                 $('#shipping-address .address').on('change',
-                    'select[name="dwfrm_shippingaddress_states"],' +
-                    'input[name="dwfrm_shippingaddress_postal"]',
+                    'select[name$="_addressFields_states"]',
                     members.updateShippingMethodList
                 );
 

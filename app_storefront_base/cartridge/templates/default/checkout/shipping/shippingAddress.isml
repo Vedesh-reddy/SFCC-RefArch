@@ -3,7 +3,7 @@
         <div class="form-group">
             <label for="shippingFirstName">${Resource.msg('field.shipping.address.first.name','address',null)}</label>
             <input autofocus type="text" class="form-control shippingFirstName" id="shippingFirstName"
-                <isprint value=${pdict.forms.shippingForm.firstName.attributes} encoding="off"/>
+                <isprint value=${pdict.forms.shippingForm.shippingAddress.addressFields.firstName.attributes} encoding="off"/>
                 autocomplete="given-name" >
         </div>
     </div>
@@ -11,7 +11,7 @@
         <div class="form-group">
             <label for="shippingLastName">${Resource.msg('field.shipping.address.last.name','address',null)}</label>
             <input type="text" class="form-control shippingLastName" id="shippingLastName"
-                <isprint value=${pdict.forms.shippingForm.lastName.attributes} encoding="off"/>
+                <isprint value=${pdict.forms.shippingForm.shippingAddress.addressFields.lastName.attributes} encoding="off"/>
                 autocomplete="family-name">
         </div>
     </div>
@@ -22,7 +22,7 @@
         <div class="form-group">
             <label for="shippingAddressOne">${Resource.msg('field.shipping.address.one','address',null)}</label>
             <input type="text" class="form-control shippingAddressOne" id="shippingAddressOne"
-                <isprint value=${pdict.forms.shippingForm.address1.attributes} encoding="off"/>
+                <isprint value=${pdict.forms.shippingForm.shippingAddress.addressFields.address1.attributes} encoding="off"/>
                 autocomplete="shipping address-line1">
         </div>
     </div>
@@ -34,7 +34,7 @@
         <div class="form-group">
             <label for="shippingAddressTwo">${Resource.msg('field.shipping.address.two','address',null)}</label>
             <input type="text" class="form-control shippingAddressTwo" id="shippingAddressTwo"
-                <isprint value=${pdict.forms.shippingForm.address2.attributes} encoding="off"/>
+                <isprint value=${pdict.forms.shippingForm.shippingAddress.addressFields.address2.attributes} encoding="off"/>
                 autocomplete="shipping address-line2">
         </div>
     </div>
@@ -46,9 +46,9 @@
         <div class="form-group">
             <label for="shippingCountry">${Resource.msg('field.shipping.address.country','address',null)}</label>
             <select class="form-control shippingCountry" id="shippingCountry"
-                <isprint value=${pdict.forms.shippingForm.country.attributes} encoding="off"/>
+                <isprint value=${pdict.forms.shippingForm.shippingAddress.addressFields.country.attributes} encoding="off"/>
                 autocomplete="shipping country">
-                    <isloop items=${pdict.forms.shippingForm.country.options} var="country">
+                    <isloop items=${pdict.forms.shippingForm.shippingAddress.addressFields.country.options} var="country">
                         <option id="${country.id}">${country.htmlValue}</option>
                     </isloop>
             </select>
@@ -59,9 +59,9 @@
         <div class="form-group">
             <label for="shippingState">${Resource.msg('field.shipping.address.state','address',null)}</label>
             <select class="form-control shippingState" id="shippingState"
-                <isprint value=${pdict.forms.shippingForm.states.attributes} encoding="off"/>
+                <isprint value=${pdict.forms.shippingForm.shippingAddress.addressFields.states.attributes} encoding="off"/>
                 autocomplete="shipping state">
-                    <isloop items=${pdict.forms.shippingForm.states.state.options} var="state">
+                    <isloop items=${pdict.forms.shippingForm.shippingAddress.addressFields.states.state.options} var="state">
                         <option id="${state.id}">${state.htmlValue}</option>
                     </isloop>
             </select>
@@ -75,7 +75,7 @@
         <div class="form-group">
             <label for="shippingAddressCity">${Resource.msg('field.shipping.address.city','address',null)}</label>
             <input type="text" class="form-control shippingAddressCity" id="shippingAddressCity"
-                <isprint value=${pdict.forms.shippingForm.city.attributes} encoding="off"/>
+                <isprint value=${pdict.forms.shippingForm.shippingAddress.addressFields.city.attributes} encoding="off"/>
                 autocomplete="shipping locality">
         </div>
     </div>

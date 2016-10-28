@@ -17,11 +17,12 @@
         <div class="row summary-details leading-lines">
             <div class="col-xs-8 start-lines">
                 <p class="shipping-method">
-                    <span>${pdict.order.shipping.selectedShippingMethod.displayName} (${pdict.order.shipping.selectedShippingMethod.estimatedArrivalTime})</span>
+                    <span class="shipping-method-title">${pdict.order.shipping.selectedShippingMethod.displayName}</span>
+                    (<span class="shipping-method-arrival-time">${pdict.order.shipping.selectedShippingMethod.estimatedArrivalTime}</span>)
                 </p>
             </div>
             <div class="col-xs-4 end-lines">
-                <p class="text-xs-right pricing">
+                <p class="text-xs-right pricing shipping-method-price">
                     ${pdict.order.totals.totalShippingCost}
                 </p>
             </div>
