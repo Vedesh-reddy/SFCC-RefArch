@@ -63,7 +63,7 @@ function getFormData(items, qs) {
 
 /**
  * Translates global customer object into local object
- * @param {Object} request - Global request object
+ * @param {dw.customer.Customer} customer - Global customer object
  * @returns {Object} local instance of customer object
  */
 function getCustomerObject(customer) {
@@ -117,10 +117,12 @@ function getCustomerObject(customer) {
 }
 
 /**
+ * @constructor
+ * @classdesc Local instance of request object with customer object in it
+ *
  * Translates global request and customer object to local one
  * @param {Object} request - Global request object
- * @param {Object} request - Global customer object
- * @returns {Object} local instance of request object with customer object in it
+ * @param {dw.customer.Customer} customer - Global customer object
  */
 function Request(request, customer) {
     this.httpMethod = request.httpMethod;

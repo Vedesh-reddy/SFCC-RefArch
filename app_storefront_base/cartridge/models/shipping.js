@@ -10,8 +10,8 @@ var ShippingMgr = require('dw/order/ShippingMgr');
 /**
  * Sets the shipping method of the basket's default shipment
  * @param {dw.order.Shipment} defaultShipment - The default shipment for the current basket
- * @param {String} shippingMethodID - The shipping method ID of the desired shipping method
- * @param {String} shippingMethods - List of applicable shipping methods of the current basket
+ * @param {string} shippingMethodID - The shipping method ID of the desired shipping method
+ * @param {string} shippingMethods - List of applicable shipping methods of the current basket
  * @return {void}
  */
 function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods) {
@@ -72,7 +72,7 @@ function getApplicableShippingMethods(shipmentModel) {
 
 /**
  * Converts API shipment into plain object
- * @param {dw.order.shipment} defaultShipment -the default shipment of the current basket
+ * @param {dw.order.shipment} shippingMethod - the default shipment of the current basket
  * @returns {Object} object containing information about the selected shipping method
  */
 function getSelectedShippingMethod(shippingMethod) {
@@ -85,10 +85,13 @@ function getSelectedShippingMethod(shippingMethod) {
 }
 
 /**
- * Shipping Model
- * @param {dw.order.ShipmentShippingModel} shipmentShippingModel - Instance a demandware shipping
- *      model which shipment-level shipping information
  * @constructor
+ * @classdesc Model that represents shipping information
+ *
+ * @param {dw.order.shipment} defaultShipment - the default shipment of the current basket
+ * @param {dw.order.ShipmentShippingModel} shipmentModel - Instance of demandware shipping
+ *      model which shipment-level shipping information
+ * @param {Object} addressModel - Shipping address model
  */
 function shipping(defaultShipment, shipmentModel, addressModel) {
     this.applicableShippingMethods = shipmentModel ?

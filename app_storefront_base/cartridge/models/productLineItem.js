@@ -7,7 +7,8 @@ var ProductBase = require('./product/productBase').productBase;
 
 /**
  * get the min and max numbers to display in the quantity drop down.
- * @param {dw.order.ProductLineItem} productLineItem - a line item of the basket.
+ * @param {Object} product - a line item of the basket.
+ * @param {number} quantity - number of items for this product
  * @returns {Object} The minOrderQuantity and maxOrderQuantity to display in the quantity drop down.
  */
 function getMinMaxQuantityOptions(product, quantity) {
@@ -22,9 +23,11 @@ function getMinMaxQuantityOptions(product, quantity) {
 
 /**
  * @constructor
+ * @classdesc A product model that represents a single product in the cart.
+ *
  * @param {dw.catalog.Product} product - Product instance from the line item
  * @param {Array} productVariables - empty array
- * @param {Number} quantity - The quantity of this product line item currently in the baskets
+ * @param {number} quantity - The quantity of this product line item currently in the baskets
  * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
  */
 function ProductLineItem(product, productVariables, quantity, lineItem) {
@@ -56,9 +59,11 @@ ProductLineItem.prototype.initialize = function (lineItem) {
 
 /**
  * @constructor
+ * @classdesc Wrapper around productLineItem model
+ *
  * @param {dw.catalog.Product} product - The Product instance from the line item
  * @param {Array} productVariables - Empty array
- * @param {Number} quantity - The quantity of this product line item currently in the baskets
+ * @param {number} quantity - The quantity of this product line item currently in the baskets
  * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
  */
 function ProductWrapper(product, productVariables, quantity, lineItem) {

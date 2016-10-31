@@ -100,7 +100,7 @@ function reduce(collection, callback) {
 /**
  * Pluck method for dw.util.Collection subclass instance
  * @param {dw.util.Collection} collection - Collection subclass instance to pluck from
- * @param {String} property - Object property to pluck
+ * @param {string} property - Object property to pluck
  * @returns {Array} Array of results of plucked properties
  */
 function pluck(collection, property) {

@@ -9,9 +9,8 @@ var DEFAULT_MAX_ORDER_QUANTITY = 9;
 /**
  * Determines whether a product is available
  *
- * @param {Object} params
- * @param {String} quantity - Quantity value to check against product availability
- * @param {dw.catalog.Product} product - Product to check for availability
+ * @param {string} quantity - Quantity value to check against product availability
+ * @param {dw.catalog.Product} product - Product instance returned from the API
  * @returns {boolean} - True if available, False if not
  */
 function isAvailable(quantity, product) {
@@ -25,7 +24,7 @@ function isAvailable(quantity, product) {
  * Determine whether all required attributes have been selected.  Value is used as one criteria as
  *     to whether the product can be added to the customer's cart
  * @param {dw.catalog.ProductVariationModel} variationModel - The product's variation model
- * @returns {boolean}
+ * @returns {boolean} Flag that specifies if the product is ready to order
  */
 function hasRequiredAttrsSelected(variationModel) {
     return !!variationModel.selectedVariant;
@@ -76,8 +75,8 @@ FullProduct.prototype.initialize = function () {
 function ProductWrapper(product, productVariables) {
     var fullProduct = new FullProduct(product, productVariables);
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes',
-                'available', 'shortDescription', 'longDescription', 'online', 'searchable',
-                'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder'];
+        'available', 'shortDescription', 'longDescription', 'online', 'searchable',
+        'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

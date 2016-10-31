@@ -5,6 +5,7 @@ var assign = require('./assign');
 /**
  * @constructor
  * @classdesc Creates writtable response object
+ *
  * @param {Object} response - Global response object
  */
 function Response(response) {
