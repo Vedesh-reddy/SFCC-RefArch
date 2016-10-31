@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse">
+<nav class="navbar bg-inverse">
 	<div class="close-menu clearfix">
 		<div class="back pull-left" role="button">
 			<a href="#">
@@ -13,19 +13,19 @@
 			</a>
 		</div>
 	</div>
-	<div class="navbar navbar-collapse" id="sg-navbar-collapse" aria-label="Main menu" role="navigation">
+	<div aria-label="Main menu" role="navigation">
         <ul class="nav navbar-nav">
 			<isif condition="${pdict.categories}">
 	            <isloop items="${pdict.categories}" var="category">
 	                <isif condition="${category.subCategories}">
 	                    <li class="nav-item dropdown" role="button">
-	                        <a href="${category.url}" class="dropdown-toggle" role="button" aria-haspopup="true" aria-expanded="false">${category.name}<span class="caret"></span></a>
+	                        <a href="${category.url}" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${category.name}</a>
 	                        <isset name="menuItem" value="${category}" scope="page" />
 	                        <isinclude template="components/header/menuitem" />
 	                    </li>
 	                <iselse/>
 	                    <li class="nav-item" role="button">
-	                        <a href="${category.url}" role="button">${category.name}</a>
+	                        <a href="${category.url}" role="button" class="nav-link">${category.name}</a>
 	                    </li>
 	                </isif>
 	            </isloop>

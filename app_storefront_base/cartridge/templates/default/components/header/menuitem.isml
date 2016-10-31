@@ -1,44 +1,15 @@
 <ul class="dropdown-menu" role="menu" aria-hidden="true">
-    <isif condition="${menuItem.complexSubCategories}">
-        <li class="master-category visible-xs-block visible-sm-block">
-            <a href="${menuItem.url}">
-                ${menuItem.name}
-            </a>
-        </li>
-        <isloop items="${menuItem.subCategories}" var="item">
-            <li class="header col-md-${dw.util.StringUtils.formatInteger(12 / menuItem.subCategories.length)}">
-                <a href="${item.url}" class="dropdown-toggle header" role="button" aria-haspopup="true" aria-expanded="false">${item.name}<span class="caret"></span></a>
-                <ul class="submenu">
-                    <li class="master-category visible-xs-block visible-sm-block">
-                        <a href="${item.url}">
-                            ${item.name}
-                        </a>
-                    </li>
-                    <isloop items="${item.subCategories}" var="subcategory">
-                        <li class='dropdown'>
-                            <isif condition="${subcategory.subCategories}">
-                                <a href="${subcategory.url}" role="button" aria-haspopup="true" aria-expanded="false">${subcategory.name}<span class="caret"></span></a>
-                                <isset name="tempMenu" value="${item}" scope="page" />
-                                <isset name="menuItem" value="${subcategory}" scope="page" />
-                                <isinclude template="components/header/menuitem" />
-                                <isset name="menuItem" value="${tempMenu}" scope="page" />
-                            <iselse/>
-                                <a href="${subcategory.url}" role="button">${subcategory.name}</a>
-                            </isif>
-                    </isloop>
-                </ul>
+    <isloop items="${menuItem.subCategories}" var="category">
+        <isif condition="${category.subCategories}">
+            <li class="dropdown-item dropdown" role="button">
+                <a href="${category.url}" class="dropdown-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${category.name}</a>
+                <isset name="menuItem" value="${category}" scope="page" />
+                <isinclude template="components/header/menuitem" />
             </li>
-        </isloop>
-    <iselse/>
-        <li class="master-category visible-xs-block visible-sm-block">
-            <a href="${menuItem.url}">
-                ${menuItem.name}
-            </a>
-        </li>
-        <isloop items="${menuItem.subCategories}" var="item">
-            <li class='dropdown'>
-                <a href="${item.url}">${item.name}</a>
+        <iselse/>
+            <li class="dropdown-item" role="button">
+                <a href="${category.url}" role="button" class="dropdown-link">${category.name}</a>
             </li>
-        </isloop>
-    </isif>
+        </isif>
+    </isloop>
 </ul>

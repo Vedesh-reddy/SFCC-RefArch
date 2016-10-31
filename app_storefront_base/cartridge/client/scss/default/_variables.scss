@@ -17,6 +17,8 @@ $black: #000;
 $blue: #00f;
 $green: #008000;
 $grey2: #eee;
+$menu-link: #54575a;
+$close-menu-bg: #f0f0f0;
 
 $link-color: $dark-gray;
 
@@ -34,7 +36,7 @@ $container-max-widths: (
     xl: 1140px
 );
 
-$brand-primary: #59ba00;
+$brand-primary: $brand-color;
 
 $border-radius: 0.1875rem;
 $border-radius-lg: $border-radius;
