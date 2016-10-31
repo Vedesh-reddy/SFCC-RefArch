@@ -2,7 +2,7 @@
 
 /**
  * Creates an object of information that contains information about the steps
- * @param {dw.order.Basket} basket Current users's basket
+ * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket
  * @returns {Object} Creates an object that contains information about the checkout steps
  */
 function getCheckoutStepInformation(lineItemContainer) {
@@ -19,7 +19,7 @@ function getCheckoutStepInformation(lineItemContainer) {
 
 /**
  * Order class that represents the current order
- * @param {dw.order.Basket} basket Current users's basket
+ * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket
  * @param {Object} shippingModel - The current order's shipping information
  * @param {Object} billingModel - The current order's billing information
  * @param {Object} orderTotals - The current order's total information

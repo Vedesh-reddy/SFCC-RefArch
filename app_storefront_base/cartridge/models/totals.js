@@ -6,17 +6,18 @@ var money = require('dw/value/Money');
 
 /**
  * Accepts a total object and formats the value
- * @param {dw.value.Money} total
- * @returns {String} the formatted money value
+ * @param {dw.value.Money} total - Total price of the cart
+ * @returns {string} the formatted money value
  */
 function getTotals(total) {
     return !total.available ? '-' : formatMoney(money(total.value, total.currencyCode));
 }
 
 /**
- * totals class that represents the order totals of the current basket
- * @param {dw.order.Basket} basket Current users's basket
  * @constructor
+ * @classdesc totals class that represents the order totals of the current basket
+ *
+ * @param {dw.order.Basket} basket - Current users's basket
  */
 function totals(basket) {
     if (basket) {
