@@ -1,21 +1,11 @@
 <isdecorate template="common/layout/page">
     <div class="container-fluid">
-    
-        <!--- to display relevant Refinement Definition Names ---> 
-        <div class="col-md-2">   
-            <isloop items="${pdict.rawRefinements.getRefinementDefinitions()}" var="definition">
-        	    <br><ul>${definition.displayName}</ul>
-        	    <isloop items="${pdict.rawRefinements.getRefinementValues(definition)}" var="value">
-        	        <li>${value.displayValue}</li>
-        	    </isloop>
-            </isloop>
-        </div>
-        
+
         <!--- to display Product IDs --->
         <div class="col-md-10">
             <isloop items="${pdict.productIds}" var="productId">
-        	    ${productId}
+                ${productId}
             </isloop>
         </div>
-    </div>      
+    </div>
 </isdecorate>
