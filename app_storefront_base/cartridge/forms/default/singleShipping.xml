@@ -9,7 +9,7 @@
         <field formid="shippingMethodID" type="string" mandatory="true" />
 
         <!-- optional flags -->
-        <field formid="useAsBillingAddress" label="checkout.useasbillingaddress" type="boolean" mandatory="false" />
+        <field formid="shippingAddressUseAsBillingAddress" label="checkout.shippingAddressUseAsBillingAddress" type="boolean" mandatory="false" />
 
         <!-- action for actually saving the address -->
         <action formid="save" valid-form="true"/>

@@ -34,8 +34,8 @@
                     <div class="form-check">
                         <label for="shippingAddressUseAsBillingAddress" class="form-check-label checkout-checkbox">
                             <input class="form-check-input" type="checkbox"
-                                   value="" id="shippingAddressUseAsBillingAddress"
-                                   name="shippingAddressUseAsBillingAddress" checked>
+                                   value="true" id="shippingAddressUseAsBillingAddress"
+                                   name="${pdict.forms.shippingForm.shippingAddress.shippingAddressUseAsBillingAddress.htmlName}" checked>
                             ${Resource.msg('check.shipping.billing.same', 'checkout', null)}
                         </label>
                     </div>
