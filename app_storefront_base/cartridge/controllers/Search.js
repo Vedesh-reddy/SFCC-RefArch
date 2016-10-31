@@ -7,10 +7,12 @@ var CatalogMgr = require('dw/catalog/CatalogMgr');
 var search = require('~/cartridge/scripts/search/search');
 var ProductSearchModel = require('dw/catalog/ProductSearchModel');
 var ProductSearch = require('~/cartridge/models/search/productSearch');
+var ProductSortOptions = require('~/cartridge/models/search/productSortOptions');
 
 
 server.get('Show', locale, function (req, res, next) {
     var productSearch;
+    var productSort;
     var dwProductSearch = new ProductSearchModel();
 
     var params = search.parseParams(req.querystring);
@@ -25,9 +27,16 @@ server.get('Show', locale, function (req, res, next) {
     dwProductSearch.search();
 
     productSearch = new ProductSearch(dwProductSearch, params);
+    productSort = new ProductSortOptions(
+        dwProductSearch,
+        req.querystring.srule,
+        CatalogMgr.getSortingOptions(),
+        CatalogMgr.getSiteCatalog().getRoot()
+    );
 
     res.render('search/searchresults', {
-        productSearch: productSearch
+        productSearch: productSearch,
+        productSort: productSort
     });
 
     next();

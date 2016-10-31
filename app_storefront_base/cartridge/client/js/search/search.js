@@ -18,4 +18,9 @@ module.exports = function () {
     $('.collapsable-sm .title').on('click', function () {
         $(this).parents('.collapsable-sm').toggleClass('active');
     });
+
+    // Handle sort order menu selection
+    $('[name=sort-order]').on('change', function () {
+        window.location.replace(this.value);
+    });
 };

@@ -22,7 +22,7 @@
             </div>
 
             <div class="pull-left col-xs-6 col-sm-3">
-                <!--- Placeholder for sort-options-menu --->
+                <isinclude template="/search/sort-order-menu" />
             </div>
 
             <div class="pull-left result-count col-md-9 col-sm-6 hidden-xs-down">
