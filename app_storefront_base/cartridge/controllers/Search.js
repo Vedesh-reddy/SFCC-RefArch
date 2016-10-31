@@ -24,10 +24,10 @@ server.get('Show', locale, function (req, res, next) {
 
     dwProductSearch.search();
 
-    productSearch = new ProductSearch(dwProductSearch);
+    productSearch = new ProductSearch(dwProductSearch, params);
 
     res.render('search/searchresult', {
-        productIds: productSearch.productIds
+        productSearch: productSearch
     });
 
     next();
