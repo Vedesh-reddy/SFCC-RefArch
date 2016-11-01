@@ -96,60 +96,149 @@ server.get('Start', locale, function (req, res, next) {
 });
 
 /**
+ * Validate billing form
+ * @param form
+ */
+function validateFields(form, formKeys) {
+    var result = {};
+
+    //
+    // Look for invalid form fields
+    //
+    formKeys.forEach(function (key) {
+        if (form[key] instanceof Object) {
+            if (form[key].valid === false) {
+                result[key] = form[key].valid;
+            }
+        }
+    });
+
+    return result;
+}
+
+/**
+ * Validate billing form fields
+ * @param form
+ * @param fields
+ */
+function validateBillingForm(form) {
+    var formKeys = [
+        'firstName',
+        'lastName',
+        'address1',
+        'address2',
+        'city',
+        'postal',
+        'country',
+        'states'
+    ];
+
+    return validateFields(form, formKeys);
+}
+
+/**
+ * Validate credit card form fields
+ * @param form
+ */
+function validateCreditCard(form) {
+    var formKeys = [
+        'cardNumber',
+        'expirationYear',
+        'expirationMonth',
+        'securityCode',
+        'email',
+        'phone'
+    ];
+
+    return validateFields(form, formKeys);
+}
+
+/**
+ * Validate billing form fields
+ * @param form
+ * @param fields
+ */
+function validateShippingForm(form) {
+    var formKeys = [
+        'firstName',
+        'lastName',
+        'address1',
+        'address2',
+        'city',
+        'postal',
+        'country',
+        'states'
+    ];
+
+    return validateFields(form, formKeys);
+}
+
+/**
  * Handle Ajax shipping form submit
  */
 server.post('SubmitShipping', function (req, res, next) {
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
         var form = server.forms.getForm('singleShipping');
+        var shippingFormErrors;
+        var result;
 
-        if (!form.valid) {
-            // res.setStatusCode(500);
-        }
+        // verify shipping form data
+        shippingFormErrors = validateShippingForm(form);
 
-        var currentBasket = BasketMgr.getCurrentOrNewBasket();
-        var orderTotals;
-        var shipment = currentBasket.defaultShipment;
-        var shippingAddress = shipment.shippingAddress;
-        var shippingAddressModel;
-        var shippingModel;
-        var shipmentShippingModel;
-        var shippingMethodID = form.shippingAddress.shippingMethodID.value.toString();
+        if (Object.keys(shippingFormErrors).length === 0) {
+            var currentBasket = BasketMgr.getCurrentOrNewBasket();
+            var orderTotals;
+            var shipment = currentBasket.defaultShipment;
+            var shippingAddress = shipment.shippingAddress;
+            var shippingAddressModel;
+            var shippingModel;
+            var shipmentShippingModel;
+            var shippingMethodID = form.shippingAddress.shippingMethodID.value.toString();
 
-        Transaction.wrap(function () {
-            if (shippingAddress === null) {
-                shippingAddress = shipment.createShippingAddress();
+            Transaction.wrap(function () {
+                if (shippingAddress === null) {
+                    shippingAddress = shipment.createShippingAddress();
+                }
+
+                shippingAddress.setFirstName(form.shippingAddress.addressFields.firstName.value);
+                shippingAddress.setLastName(form.shippingAddress.addressFields.lastName.value);
+                shippingAddress.setAddress1(form.shippingAddress.addressFields.address1.value);
+                shippingAddress.setAddress2(form.shippingAddress.addressFields.address2.value);
+                shippingAddress.setCity(form.shippingAddress.addressFields.city.value);
+                shippingAddress.setPostalCode(form.shippingAddress.addressFields.postal.value);
+                // Not getting selected state value
+                shippingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
+                shippingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
+                shippingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
+            });
+
+            if (shippingMethodID !== shipment.shippingMethod.ID) {
+                Transaction.wrap(function () {
+                    ShippingModel.selectShippingMethod(shipment, shippingMethodID);
+                    Cart.calculateCart(currentBasket);
+                });
             }
 
-            shippingAddress.setFirstName(form.shippingAddress.addressFields.firstName.value);
-            shippingAddress.setLastName(form.shippingAddress.addressFields.lastName.value);
-            shippingAddress.setAddress1(form.shippingAddress.addressFields.address1.value);
-            shippingAddress.setAddress2(form.shippingAddress.addressFields.address2.value);
-            shippingAddress.setCity(form.shippingAddress.addressFields.city.value);
-            shippingAddress.setPostalCode(form.shippingAddress.addressFields.postal.value);
-            // Not getting selected state value
-            shippingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
-            shippingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
-            shippingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
-        });
+            shippingAddressModel = new AddressModel(shippingAddress);
+            shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
+            shippingModel = new ShippingModel(shipment, shipmentShippingModel,
+                shippingAddressModel);
 
-        if (shippingMethodID !== shipment.shippingMethod.ID) {
-            Transaction.wrap(function () {
-                ShippingModel.selectShippingMethod(shipment, shippingMethodID);
-                Cart.calculateCart(currentBasket);
-            });
+            orderTotals = new TotalsModel(currentBasket);
+
+            result = {
+                totals: orderTotals,
+                shippingData: shippingModel,
+                form: server.forms.getForm('singleShipping')
+            };
+        } else {
+            result = {
+                form: server.forms.getForm('singleShipping'),
+                shippingFormErrors: shippingFormErrors
+            };
         }
 
-        shippingAddressModel = new AddressModel(shippingAddress);
-        shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
-        shippingModel = new ShippingModel(shipment, shipmentShippingModel, shippingAddressModel);
-
-        orderTotals = new TotalsModel(currentBasket);
-
-        res.json({
-            totals: orderTotals,
-            shippingData: shippingModel,
-            form: server.forms.getForm('singleShipping')
-        });
+        res.json(result);
     });
 
     next();
@@ -162,10 +251,26 @@ server.post('SubmitShipping', function (req, res, next) {
 server.post('SubmitPayment', function (req, res, next) {
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
         var form = server.forms.getForm('payment');
-        if (!form.valid) {
-            res.setStatusCode(500);
+        var billingFormErrors = {};
+        var creditCardErrors;
+
+        // verify billing form data
+        // TODO: read from form object above (seems like boolean bug for checkbox)
+        if (!req.form.billingSameAsShipping && req.form.billingSameAsShipping !== 'on') {
+            billingFormErrors = validateBillingForm(form);
         }
-        res.json({ form: server.forms.getForm('payment'), req: req });
+
+        // verify credit card form data
+        creditCardErrors = validateCreditCard(form);
+
+        //
+        // respond with form data and errors
+        //
+        res.json({
+            form: server.forms.getForm('payment'),
+            billingFormErrors: billingFormErrors,
+            creditCardErrors: creditCardErrors
+        });
     });
     next();
 });
