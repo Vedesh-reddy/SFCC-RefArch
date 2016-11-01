@@ -101,6 +101,7 @@ server.post('SubmitShipping', function (req, res, next) {
         }
 
         var currentBasket = BasketMgr.getCurrentOrNewBasket();
+        var billingAddress = currentBasket.billingAddress;
         var orderTotals;
         var shipment = currentBasket.defaultShipment;
         var shippingAddress = shipment.shippingAddress;
@@ -124,6 +125,24 @@ server.post('SubmitShipping', function (req, res, next) {
             shippingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
             shippingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
             shippingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
+
+
+            if (form.shippingAddress.shippingAddressUseAsBillingAddress.value === true) {
+                if (!billingAddress) {
+                    billingAddress = currentBasket.createBillingAddress();
+                }
+
+                billingAddress.setFirstName(form.shippingAddress.addressFields.firstName.value);
+                billingAddress.setLastName(form.shippingAddress.addressFields.lastName.value);
+                billingAddress.setAddress1(form.shippingAddress.addressFields.address1.value);
+                billingAddress.setAddress2(form.shippingAddress.addressFields.address2.value);
+                billingAddress.setCity(form.shippingAddress.addressFields.city.value);
+                billingAddress.setPostalCode(form.shippingAddress.addressFields.postal.value);
+                // Not getting selected state value
+                billingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
+                billingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
+                billingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
+            }
         });
 
         if (shippingMethodID !== shipment.shippingMethod.ID) {
