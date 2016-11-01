@@ -13,7 +13,7 @@
 
         <div class="row">
             <!-- Product Images Carousel -->
-            <isinclude template="/product/image_carousel" />
+            <isinclude template="/components/product/image_carousel" />
 
             <!-- Product Name and Number -->
             <div class="col-sm-6">
@@ -35,7 +35,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <isloop items="${pdict.product.attributes}" var="attr" status="attributeStatus">
-                                <isinclude template="/product/attributes" />
+                                <isinclude template="/components/product/attributes" />
                             </isloop>
                         </div>
                     </div>
@@ -78,20 +78,7 @@
                     </div>
 
                     <!-- Cart and [Optionally] Apple Pay -->
-                    <div class="row cart-and-ipay">
-                        <div class="col-sm-12">
-                            <input type="hidden" name="addToCartUrl" value="${pdict.addToCartUrl}">
-                            <button class="add-to-cart btn btn-success button button-primary"
-                                <isif condition="${!pdict.product.readyToOrder || !pdict.product.available}">
-                                    disabled
-                                </isif>
-                            >
-                                <i class="fa fa-shopping-bag"></i>
-                                ${Resource.msg('button.addtocart', 'common', null)}
-                            </button>
-                            <isapplepay></isapplepay>
-                        </div>
-                    </div>
+                    <isinclude template="/components/product/addtocart" />
 
                     <!-- Add to Wishlist and Social Sharing Icons -->
                     <div class="row wishlist-social hidden-sm-down">

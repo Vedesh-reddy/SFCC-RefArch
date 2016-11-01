@@ -119,3 +119,79 @@
     // $white will be replaced by color image background via Javascript
     @include swatch(1.8em, $white);
 }
+
+.quickViewDialog {
+    max-width: 56.25em;
+
+    .attributes {
+        .attribute select {
+            background-color: $white;
+            width: 70%;
+        }
+
+        .swatch {
+            a {
+                text-decoration: none;
+            }
+        }
+    }
+
+    .modal-header {
+        .fullPdpLink {
+            color: $brand-color;
+        }
+    }
+
+    .modal-title {
+        font-size: 1em;
+    }
+
+    .product-name {
+        font-size: 1.875em;
+    }
+
+    .attribute label {
+        display: block;
+        margin-bottom: 0;
+        margin-top: 0;
+        padding-left: 0;
+    }
+
+    div.quantity {
+        bottom: 0;
+        padding: 0;
+        position: absolute;
+        right: 0;
+        width: 25%;
+    }
+
+    .size-chart {
+        color: $brand-color;
+    }
+
+    .prices {
+        color: $darker-gray;
+        font-size: 1.875em;
+        font-weight: bold;
+        padding-bottom: 0.5em;
+        text-align: center;
+    }
+
+    .swatch-circle {
+        // $white will be replaced by color image background via Javascript
+        @include swatch(2.5em, $white);
+    }
+
+    .availablity-container {
+        text-align: right;
+    }
+
+    .availablity-container,
+    .size-chart {
+        margin-top: 0.938em;
+    }
+
+    hr {
+        margin-top: 0;
+    }
+}
