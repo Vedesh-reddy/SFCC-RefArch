@@ -23,7 +23,7 @@ server.get('Start', locale, function (req, res, next) {
     var applicablePaymentMethods;
     var countryCode = 'US'; // req.geolocation.countryCode;
     var currentBasket = BasketMgr.getCurrentBasket();
-    var currentCustomer = customer; // eslint-disable-line
+    var currentCustomer = req.currentCustomer.raw;
     var billingAddress = currentBasket.billingAddress;
     var paymentAmount = currentBasket.totalGrossPrice;
     var paymentInstruments;
@@ -88,6 +88,7 @@ server.get('Start', locale, function (req, res, next) {
         shippingForm: shippingForm,
         billingForm: billingForm
     };
+
     res.render('checkout/checkout', { order: orderModel, forms: forms });
     next();
 });
