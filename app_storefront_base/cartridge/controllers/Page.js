@@ -23,7 +23,8 @@ server.get('Include', server.middleware.include, function (req, res, next) {
 });
 
 server.get('IncludeHeaderCustomerInfo', server.middleware.include, function (req, res, next) {
-    res.render('/components/header/myaccount', {});
+    var loggedIn = req.currentCustomer.raw.authenticated;
+    res.render('/components/header/myaccount', { loggedIn: loggedIn });
     next();
 });
 

@@ -74,11 +74,6 @@ function getCustomerObject(customer) {
     }
 
     var result;
-    var paymentInstrument = {};
-    if (customer.profile.wallet.paymentInstruments) {
-        paymentInstrument = customer.profile.wallet.paymentInstruments[0];
-    }
-
     result = {
         raw: customer,
         profile: {
@@ -88,31 +83,29 @@ function getCustomerObject(customer) {
             customerNo: customer.profile.customerNo
         },
         addressBook: {
-            preferredAddress: {
-                address1: customer.addressBook.preferredAddress.address1,
-                address2: customer.addressBook.preferredAddress.address2,
-                city: customer.addressBook.preferredAddress.city,
-                countryCode: {
-                    displayValue: customer.addressBook.preferredAddress.countryCode.displayValue,
-                    value: customer.addressBook.preferredAddress.countryCode.value
-                },
-                firstName: customer.addressBook.preferredAddress.firstName,
-                lastName: customer.addressBook.preferredAddress.lastName,
-                ID: customer.addressBook.preferredAddress.ID,
-                phone: customer.addressBook.preferredAddress.phone,
-                postalCode: customer.addressBook.preferredAddress.postalCode,
-                stateCode: customer.addressBook.preferredAddress.stateCode
-            }
+            preferredAddress: null
         },
         wallet: {
-            paymentInstrument: {
-                maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
-                creditCardType: paymentInstrument.creditCardType,
-                creditCardExpirationMonth: paymentInstrument.creditCardExpirationMonth,
-                creditCardExpirationYear: paymentInstrument.creditCardExpirationYear
-            }
+            paymentInstruments: customer.profile.wallet.paymentInstruments
         }
     };
+    if (customer.addressBook.preferredAddress) {
+        result.addressBook.preferredAddress = {
+            address1: customer.addressBook.preferredAddress.address1,
+            address2: customer.addressBook.preferredAddress.address2,
+            city: customer.addressBook.preferredAddress.city,
+            countryCode: {
+                displayValue: customer.addressBook.preferredAddress.countryCode.displayValue,
+                value: customer.addressBook.preferredAddress.countryCode.value
+            },
+            firstName: customer.addressBook.preferredAddress.firstName,
+            lastName: customer.addressBook.preferredAddress.lastName,
+            ID: customer.addressBook.preferredAddress.ID,
+            phone: customer.addressBook.preferredAddress.phone,
+            postalCode: customer.addressBook.preferredAddress.postalCode,
+            stateCode: customer.addressBook.preferredAddress.stateCode
+        };
+    }
     return result;
 }
 
