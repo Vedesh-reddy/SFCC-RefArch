@@ -13,7 +13,6 @@
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>
     <div id="checkout-main" class="container data-checkout-stage" data-checkout-stage>
-
         <!- -------------------------------------------------------------------------------- -->
         <!- Help and Phone -->
         <!- -------------------------------------------------------------------------------- -->
@@ -32,6 +31,7 @@
                 <span class="grand-total-price">${pdict.order.totals.subTotal}</span>
             </div>
         </div>
+        ${pdict.forms.billingForm.address.lastName.attributes}
 
         <div class="row">
             <div class="col-sm-7">

@@ -94,8 +94,6 @@
                 var stage = checkoutStages[members.currentStage];
 
                 if (stage === 'shipping') {
-                    console.log('SHIPPING: submit via ajax shipping info and move to payment form'); // eslint-disable-line
-
                     //
                     // Submit the Shipiing Address Form
                     //
@@ -113,20 +111,17 @@
                             updateShippingSummary(selectedShippingMethod, data.totals);
                             updateTotals(data.totals);
                         },
-                        error: function (xhr, err) {
-                            console.log(err); // eslint-disable-line
+                        error: function () {
                         }
                     });
                 } else if (stage === 'payment') {
-                    console.log('PAYMENT: submit via ajax payment info and move to place order step') // eslint-disable-line
-
                     //
                     // Submit the Billing Address Form
                     //
                     return $.ajax({
-                        url: $('#dwfrm_billingaddress').attr('action'),
+                        url: $('#dwfrm_payment').attr('action'),
                         method: 'POST',
-                        data: $('#dwfrm_billingaddress').serialize(),
+                        data: $('#dwfrm_payment').serialize(),
                         success: function (data) {
                             //
                             // Populate the Address Summary
@@ -134,12 +129,10 @@
                             var address = data.billingData.billingAddress;
                             populateSummary('.billing .address-summary', address);
                         },
-                        error: function (xhr, err) {
-                            console.log(err); // eslint-disable-line
+                        error: function () {
                         }
                     });
                 } else if (stage === 'placeOrder') {
-                    console.log('PLACE ORDER: order placed and move to submitted/confirm step') // eslint-disable-line
                     var p = $('<div>').promise(); // eslint-disable-line
                     setTimeout(function () {
                         p.done(); // eslint-disable-line
@@ -161,7 +154,6 @@
                 var urlParams = {
                     state: state,
                     postal: postal
-
                 };
 
                 url += (url.indexOf('?') !== -1 ? '&' : '?') +
@@ -299,7 +291,7 @@
                 //
                 // Listen for foward/back button press and move to correct checkout-stage
                 //
-                window.addEventListener('popstate', function (e) {
+                $(window).on('popstate', function (e) {
                     //
                     // Back button when event state less than current state in ordered
                     // checkoutStages array.
@@ -336,7 +328,6 @@
                 });
 
                 promise.fail(function () {
-                    alert('error');
                 });
             },
 
