@@ -31,6 +31,19 @@ describe('dwHelpers', function () {
 
             assert.deepEqual(result, []);
         });
+
+        it('should execute callback with the right scope', function () {
+            var collection = new ArrayList([1, 2, 3]);
+            var scope = {};
+
+            var result = helpers.map(collection, function (item) {
+                this[item] = 'test';
+                return item + 10;
+            }, scope);
+
+            assert.deepEqual(scope, { '1': 'test', '2': 'test', '3': 'test' });
+            assert.deepEqual(result, [11, 12, 13]);
+        });
     });
 
     describe('forEach', function () {
@@ -54,6 +67,17 @@ describe('dwHelpers', function () {
             });
 
             assert.isFalse(called);
+        });
+
+        it('should execute callback with the right scope', function () {
+            var scope = { result: [] };
+            var collection = new ArrayList([1, 2, 3]);
+
+            helpers.forEach(collection, function (item) {
+                this.result.push(item);
+            }, scope);
+
+            assert.deepEqual(scope.result, [1, 2, 3]);
         });
     });
 
@@ -180,6 +204,33 @@ describe('dwHelpers', function () {
                 return item === 3;
             });
             assert.equal(result, 3);
+        });
+        it('should properly call match function with the right scope', function () {
+            var collection = new ArrayList([1, 2, 3, 4, 5, 6]);
+            var scope = {};
+            var result = helpers.find(collection, function (item) {
+                this[item] = 'test';
+                return item === 3;
+            }, scope);
+            assert.equal(scope[1], 'test');
+            assert.equal(scope[2], 'test');
+            assert.equal(scope[3], 'test');
+            assert.equal(result, 3);
+        });
+    });
+
+    describe('first', function () {
+        it('should return first item form the collection', function () {
+            var collection = new ArrayList([1, 2, 3, 4, 5]);
+            var result = helpers.first(collection);
+
+            assert.equal(result, 1);
+        });
+        it('should return null if collection is empty', function () {
+            var collection = new ArrayList([]);
+            var result = helpers.first(collection);
+
+            assert.isNull(result);
         });
     });
 });

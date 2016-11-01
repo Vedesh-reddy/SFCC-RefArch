@@ -4,10 +4,11 @@ var helper = require('~/cartridge/scripts/dwHelpers');
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 
 /**
- * Search class that represents product search
- * @param {dw.catalog.ProductSearchModel} productSearchModel - Current product search
- * @param {Object} req - local instance of request object
  * @constructor
+ * @classdesc Search class that represents product search
+ *
+ * @param {dw.catalog.ProductSearchModel} productSearchModel - Current product search
+ * @param {Object} dataForSearch - request object
  */
 function search(productSearchModel, dataForSearch) {
     if (dataForSearch.querystring.srule) {

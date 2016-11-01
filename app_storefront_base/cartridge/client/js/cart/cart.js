@@ -2,9 +2,9 @@
 
 /**
  * appends params to a url
- * @param {string} url
- * @param {object} params
- * @returns {string} a url
+ * @param {string} url - Original url
+ * @param {Object} params - Parameters to append
+ * @returns {string} result url with appended parameters
  */
 function appendToUrl(url, params) {
     var newUrl = url;
@@ -17,7 +17,7 @@ function appendToUrl(url, params) {
 
 /**
  * re-renders the order totals and the number of items in the cart
- * @param {object} data
+ * @param {Object} data - AJAX response from the server
  */
 function updateCartTotals(data) {
     $('.number-of-items').empty().append(data.resources.numberOfItems);
@@ -29,7 +29,7 @@ function updateCartTotals(data) {
 
 /**
  * re-renders the order totals and the number of items in the cart
- * @param {object} data
+ * @param {Object} message - Error message to display
  */
 function createErrorNotification(message) {
     $('<div class="alert alert-danger alert-dismissible fade in col-xs-12 ' +

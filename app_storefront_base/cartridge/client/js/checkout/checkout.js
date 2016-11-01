@@ -45,8 +45,8 @@
 
         /**
          * Populate the Address Summary View
-         * @param parentSelector    the top level DOM selector for a unique address summary
-         * @param address   the address data
+         * @param {string} parentSelector - the top level DOM selector for a unique address summary
+         * @param {Object} address - the address data
          */
         function populateSummary(parentSelector, address) {
             $.each(address, function (attr) {
@@ -59,7 +59,7 @@
 
         /**
          * updates the totals summary
-         * @param totals    the totals data
+         * @param {Array} totals - the totals data
          */
         function updateTotals(totals) {
             $('.shipping-cost').empty().append(totals.totalShippingCost);
@@ -70,8 +70,8 @@
 
         /**
          * Updates the shipping method in the shipping summary
-         * @param shippingMethod    the selected shipping medthod data
-         * @param totals   the totals data
+         * @param {Object} shippingMethod - the selected shipping medthod data
+         * @param {Array} totals - the totals data
          */
         function updateShippingSummary(shippingMethod, totals) {
             $('.shipping-method-title').text(shippingMethod.displayName);
@@ -89,6 +89,7 @@
 
             /**
              * Set or update the checkout stage (AKA the shipping, billing, payment, etc... steps)
+             * @returns {Object} a promise
              */
             updateStage: function () {
                 var stage = checkoutStages[members.currentStage];
@@ -237,7 +238,7 @@
                  *
                  * If the the billing isn't the same as shipping the billing form should be visible
                  * in the payment state of checkout.
-                 * @param checked
+                 * @param {boolean} checked - is the checkbox checked
                  */
                 var toggleBillingForm = function (checked) {
                     $('input[name$="_shippingAddressUseAsBillingAddress"]').prop(
@@ -334,7 +335,7 @@
             /**
              * The next checkout state step updates the css for showing correct buttons etc...
              *
-             * @param bPushState = boolean when true pushes state using the history api.
+             * @param {boolean} bPushState - boolean when true pushes state using the history api.
              */
             handleNextStage: function (bPushState) {
                 if (members.currentStage < checkoutStages.length - 1) {
@@ -368,8 +369,8 @@
 
             /**
              * Use window history to go to a checkout stage
-             * @param stage
-             * @param steps
+             * @param {number }stage - the current checkout state
+             * @param {Array} steps - the steps to goto in browser history
              */
             gotoStage: function (stage, steps) {
                 members.currentStage = stage;

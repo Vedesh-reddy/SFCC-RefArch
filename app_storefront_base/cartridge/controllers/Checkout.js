@@ -98,7 +98,9 @@ server.get('Start', locale, function (req, res, next) {
 
 /**
  * Validate billing form
- * @param form
+ * @param {Object} form - the form object with pre-validated form fields
+ * @param {Array} formKeys - the name of the form fields to validate in form
+ * @returns {Object} the names of the invalid form fields
  */
 function validateFields(form, formKeys) {
     var result = {};
@@ -119,8 +121,9 @@ function validateFields(form, formKeys) {
 
 /**
  * Validate billing form fields
- * @param form
- * @param fields
+ * @param {Object} form - the form object with pre-validated form fields
+ * @param {Array} fields - the fields to validate
+ * @returns {Object} the names of the invalid form fields
  */
 function validateBillingForm(form) {
     var formKeys = [
@@ -139,7 +142,8 @@ function validateBillingForm(form) {
 
 /**
  * Validate credit card form fields
- * @param form
+ * @param {Object} form - the form object with pre-validated form fields
+ * @returns {Object} the names of the invalid form fields
  */
 function validateCreditCard(form) {
     var formKeys = [
@@ -156,8 +160,9 @@ function validateCreditCard(form) {
 
 /**
  * Validate billing form fields
- * @param form
- * @param fields
+ * @param {Object} form - the form object with pre-validated form fields
+ * @param {Array} fields - the fields to validate
+ * @returns {Object} the names of the invalid form fields
  */
 function validateShippingForm(form) {
     var formKeys = [

@@ -3,9 +3,9 @@
 
 /**
  * appends params to a url
- * @param {string} url
- * @param {object} params
- * @returns {string} a url
+ * @param {string} url - Original url
+ * @param {Object} params - Parameters to append
+ * @returns {string} result url with appended parameters
  */
 function appendToUrl(url, params) {
     var newUrl = url;
@@ -48,7 +48,7 @@ function maps() {
 
 /**
  * Renders the results of the search and updates the map
- * @param {object} data
+ * @param {Object} data - Response from the server
  */
 function updateStoresResults(data) {
     var $resultsDiv = $('.results');

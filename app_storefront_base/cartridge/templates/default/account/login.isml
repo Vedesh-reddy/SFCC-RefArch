@@ -1,0 +1,30 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('~/cartridge/scripts/assets.js');
+        assets.addCss('/css/login.css');
+    </isscript>
+    <div class="container-fluid">
+        <div class="row">
+            <!--- TODO:Replace image once UX has given images --->
+            <div class="hero" style="background-image: url(http://www.pixelstalk.net/wp-content/uploads/2016/08/Background-HD-Wallpapers.jpg)">
+                <h1 class="page-title">${Resource.msg('header.hero.image.login', 'login', null)}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container login-page">
+        <div class="row">
+            <isinclude template="components/login/navtabs" />   
+        </div>
+        <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+            <div class="row">
+                <isinclude template="components/login/loginform" />
+            </div>
+            <div class="row">
+                <isinclude template="components/login/oauth" />
+            </div>
+            <div class="row">
+                <isinclude template="components/login/checkorderform" />
+            </div>
+        </div>
+    </div>
+</isdecorate>

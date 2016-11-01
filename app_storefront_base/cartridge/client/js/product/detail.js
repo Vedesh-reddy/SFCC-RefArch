@@ -1,13 +1,14 @@
 'use strict';
+var base = require('./base');
 
 /**
  * Process the attribute values for an attribute that has image swatches
  *
  * @param {Object} attr - Attribute
- * @param {String} attr.id - Attribute ID
+ * @param {string} attr.id - Attribute ID
  * @param {Object[]} attr.values - Array of attribute value objects
- * @param {String} attr.values.value - Attribute coded value
- * @param {String} attr.values.url - URL to de/select an attribute value of the product
+ * @param {string} attr.values.value - Attribute coded value
+ * @param {string} attr.values.url - URL to de/select an attribute value of the product
  * @param {boolean} attr.values.isSelectable - Flag as to whether an attribute value can be
  *     selected.  If there is no variant that corresponds to a specific combination of attribute
  *     values, an attribute may be disabled in the Product Detail Page
@@ -37,10 +38,10 @@ function processSwatchValues(attr) {
  * Process attribute values associated with an attribute that does not have image swatches
  *
  * @param {Object} attr - Attribute
- * @param {String} attr.id - Attribute ID
+ * @param {string} attr.id - Attribute ID
  * @param {Object[]} attr.values - Array of attribute value objects
- * @param {String} attr.values.value - Attribute coded value
- * @param {String} attr.values.url - URL to de/select an attribute value of the product
+ * @param {string} attr.values.value - Attribute coded value
+ * @param {string} attr.values.url - URL to de/select an attribute value of the product
  * @param {boolean} attr.values.isSelectable - Flag as to whether an attribute value can be
  *     selected.  If there is no variant that corresponds to a specific combination of attribute
  *     values, an attribute may be disabled in the Product Detail Page
@@ -63,7 +64,7 @@ function processNonSwatchValues(attr) {
  *     swatches or not
  *
  * @param {Object} attrs - Attribute
- * @param {String} attr.id - Attribute ID
+ * @param {string} attr.id - Attribute ID
  */
 function updateAttrs(attrs) {
     // Currently, the only attribute type that has image swatches is Color.
@@ -108,7 +109,7 @@ function updateAvailability(response) {
  * Parses JSON from Ajax call made whenever an attribute value is [de]selected
  * @param {Object} response - response from Ajax call
  * @param {Object} response.product - Product object
- * @param {String} response.product.id - Product ID
+ * @param {string} response.product.id - Product ID
  * @param {Object[]} response.product.attributes - Product attributes
  * @param {Object[]} response.product.images - Product images
  * @param {boolean} response.product.hasRequiredAttrsSelected - Flag as to whether all required
@@ -134,53 +135,23 @@ function parseJsonResponse(response) {
     updateAvailability(response);
 }
 
-/**
- * Updates the Mini-Cart quantity value after the customer has pressed the "Add to Cart" button
- *
- * @param {String} response
- */
-function handlePostCartAdd(response) {
-    $('.mini-cart').trigger('count:update', response);
-}
-
-/**
- * Retrieves the value associated with the Quantity pull-down menu
- */
-function getQuantitySelected() {
-    return $('select.quantity').val();
-}
-
-/**
- * Appends the quantity selected to the Ajax URL.  Used to determine product availability, which is
- * one criteria used to enable the "Add to Cart" button
- *
- * @param {String} url - Attribute value onClick URL used to [de]select an attribute value
- * @return {String} - The provided URL appended with the quantity selected in the query params or
- *     the original provided URL if no quantity selected
- */
-function appendQuantityToUrl(url) {
-    var quantitySelected = getQuantitySelected();
-
-    return !quantitySelected ? url : url + '&quantity=' + quantitySelected;
-}
-
 module.exports = function () {
     $('select[class^="select-"]').on('change', function (e) {
-        var selectedValueUrl = e.currentTarget.value;
-        selectedValueUrl = appendQuantityToUrl(selectedValueUrl);
+        e.preventDefault();
+        var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
 
-        $.ajax({
-            url: selectedValueUrl,
-            method: 'GET',
-            success: parseJsonResponse
-        });
+        if (selectedValueUrl) {
+            $.ajax({
+                url: selectedValueUrl,
+                method: 'GET',
+                success: parseJsonResponse
+            });
+        }
     });
 
     $('[data-attr="color"] a').on('click', function (e) {
-        var selectedValueUrl;
         e.preventDefault();
-        selectedValueUrl = e.currentTarget.href;
-        selectedValueUrl = appendQuantityToUrl(selectedValueUrl);
+        var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
 
         $.ajax({
             url: selectedValueUrl,
@@ -191,15 +162,13 @@ module.exports = function () {
 
     $('button.add-to-cart').on('click', function () {
         var pid = $('.product-id').text();
-        var quantity = getQuantitySelected();
-        var queryParams = ['pid=' + pid, 'quantity=' + quantity].join('&');
-        var addToCartUrl = $('input[name="addToCartUrl"]').val() + '?' + queryParams;
+        var addToCartUrl = base.getAddToCartUrl(pid);
 
         if (addToCartUrl) {
             $.ajax({
                 url: addToCartUrl,
                 method: 'POST',
-                success: handlePostCartAdd
+                success: base.handlePostCartAdd
             });
         }
     });

@@ -19,9 +19,9 @@ function createProductLineItemsObject(allLineItems) {
 
 /**
  * Loops through all of the product line items and adds the quantities together.
- * @param {dw.util.Collection <dw.order.ProductLineItem>} productLineItems - All product
+ * @param {dw.util.Collection <dw.order.ProductLineItem>} items - All product
  * line items of the basket
- * @returns {Number} a number representing all product line items in the lineItem container.
+ * @returns {number} a number representing all product line items in the lineItem container.
  */
 function getTotalQuantity(items) {
     // TODO add giftCertificateLineItems quantity
@@ -34,9 +34,11 @@ function getTotalQuantity(items) {
 }
 
 /**
- * class that represents a collection of line items and total quantity of items in current basket
- * @param {dw.order.Basket} basket Current users's basket
  * @constructor
+ * @classdesc class that represents a collection of line items and total quantity of
+ * items in current basket
+ *
+ * @param {dw.order.Basket} basket Current users's basket
  */
 function productLineItems(basket) {
     if (basket) {

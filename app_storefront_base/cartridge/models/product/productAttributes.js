@@ -6,8 +6,8 @@ var ImageModel = require('./productImages');
 /**
  * Determines whether a product attribute has image swatches.  Currently, the only attribute that
  *     does is Color.
- * @param {String} dwAttributeId
- * @returns {boolean}
+ * @param {string} dwAttributeId - Id of the attribute to check
+ * @returns {boolean} flag that specifies if the current attribute should be displayed as a swatch
  */
 function isSwatchable(dwAttributeId) {
     var imageableAttrs = ['color'];
@@ -55,6 +55,7 @@ function getAllAttrValues(variationModel, selectedValue, attr) {
 /**
  * @constructor
  * @classdesc Get a list of available attributes that matches provided config
+ *
  * @param  {dw.catalog.ProductVariationModel} variationModel - current product variation
  * @param  {string[]} attrConfig - attributes to select
  */

@@ -100,7 +100,7 @@ function reduce(collection, callback) {
 /**
  * Pluck method for dw.util.Collection subclass instance
  * @param {dw.util.Collection} collection - Collection subclass instance to pluck from
- * @param {String} property - Object property to pluck
+ * @param {string} property - Object property to pluck
  * @returns {Array} Array of results of plucked properties
  */
 function pluck(collection, property) {
@@ -138,17 +138,11 @@ function find(collection, match, scope) {
 /**
  * Gets the first item from dw.util.Collection subclass instance
  * @param {dw.util.Colleciton} collection - Collection subclass instance to work with
- * @param {Function} callback - Callback function for item processing
- * @param {Object} [scope] - Optional execution scope to pass to callback
  * @return {Object|null} First element from the collection
  */
-function first(collection, callback, scope) {
+function first(collection) {
     var iterator = collection.iterator();
-    while (iterator.hasNext()) {
-        return scope ? callback.call(scope, iterator.next(), 0, collection)
-            : callback(iterator.next(), 0, collection);
-    }
-    return null;
+    return iterator.hasNext() ? iterator.next() : null;
 }
 
 module.exports = {

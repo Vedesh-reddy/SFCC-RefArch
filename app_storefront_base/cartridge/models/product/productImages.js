@@ -11,20 +11,25 @@ var dwHelpers = require('../../scripts/dwHelpers');
 function Images(product, imageConfig) {
     imageConfig.types.forEach(function (type) {
         var images = product.getImages(type);
+        var result = {};
 
-        var func = imageConfig.quantity === 'single' ? dwHelpers.first : dwHelpers.map;
-
-        this[type] = func(images, function (image) {
-            var result = {
-                alt: image.alt,
-                url: image.URL.relative().toString(),
-                title: image.title
-            };
-            if (imageConfig.quantity === 'single') {
-                return [result];
-            }
-            return result;
-        });
+        if (imageConfig.quantity === 'single') {
+            var firstImage = dwHelpers.first(images);
+            result = [{
+                alt: firstImage.alt,
+                url: firstImage.URL.relative().toString(),
+                title: firstImage.title
+            }];
+        } else {
+            result = dwHelpers.map(images, function (image) {
+                return {
+                    alt: image.alt,
+                    url: image.URL.relative().toString(),
+                    title: image.title
+                };
+            });
+        }
+        this[type] = result;
     }, this);
 }
 

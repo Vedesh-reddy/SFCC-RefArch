@@ -26,10 +26,13 @@ function getCartActionUrls() {
 }
 
 /**
- * Cart class that represents the current basket
- * @param {dw.order.Basket} basket Current users's basket
- * @param {Object} shippingModel - Instance of the shipping model
  * @constructor
+ * @classdesc Cart class that represents the current basket
+ *
+ * @param {dw.order.Basket} basket - Current users's basket
+ * @param {Object} shippingModel - Instance of the shipping model
+ * @param {Object} productLineItemModel - Model for a given product line items
+ * @param {Object} totalsModel - Model with total costs for the cart
  */
 function cart(basket, shippingModel, productLineItemModel, totalsModel) {
     if (basket !== null) {

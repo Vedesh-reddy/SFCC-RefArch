@@ -3,6 +3,8 @@
 var Request = require('../../../../modules/server/request');
 var assert = require('chai').assert;
 
+var ArrayList = require('../../../mocks/dw.util.Collection');
+
 function createFakeRequest(overrides) {
     overrides = overrides || {}; // eslint-disable-line no-param-reassign
     var globalRequest = {
@@ -24,14 +26,14 @@ function createFakeRequest(overrides) {
                 lastName: 'Snow',
                 email: 'jsnow@starks.com',
                 wallet: {
-                    paymentInstruments: [
+                    paymentInstruments: new ArrayList([
                         {
                             creditCardExpirationMonth: '3',
                             creditCardExpirationYear: '2019',
                             maskedCreditCardNumber: '***********4215',
                             creditCardType: 'Visa'
                         }
-                    ]
+                    ])
                 }
             },
             addressBook: {
