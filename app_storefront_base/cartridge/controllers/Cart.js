@@ -1,17 +1,19 @@
 'use strict';
 
 var server = require('server');
+var locale = require('~/cartridge/scripts/middleware/locale');
 
 var BasketMgr = require('dw/order/BasketMgr');
-var Cart = require('~/cartridge/models/cart');
-var locale = require('~/cartridge/scripts/middleware/locale');
-var ProductLineItemModel = require('~/cartridge/models/productLineItems');
+var HookMgr = require('dw/system/HookMgr');
 var ProductMgr = require('dw/catalog/ProductMgr');
 var Resource = require('dw/web/Resource');
-var ShippingModel = require('~/cartridge/models/shipping');
 var ShippingMgr = require('dw/order/ShippingMgr');
-var Totals = require('~/cartridge/models/totals');
 var Transaction = require('dw/system/Transaction');
+
+var Cart = require('~/cartridge/models/cart');
+var ProductLineItemModel = require('~/cartridge/models/productLineItems');
+var ShippingModel = require('~/cartridge/models/shipping');
+var Totals = require('~/cartridge/models/totals');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
@@ -52,7 +54,7 @@ server.get('Show', locale, function (req, res, next) {
             ShippingModel.selectShippingMethod(currentBasket.defaultShipment);
         }
         if (currentBasket) {
-            Cart.calculateCart(currentBasket);
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         }
     });
 
@@ -84,7 +86,7 @@ server.get('Test', function (req, res, next) {
             ShippingModel.selectShippingMethod(currentBasket.defaultShipment);
         }
         if (currentBasket) {
-            Cart.calculateCart(currentBasket);
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         }
     });
 
@@ -123,7 +125,7 @@ server.get('RemoveProductLineItem', locale, function (req, res, next) {
                     break;
                 }
             }
-            Cart.calculateCart(currentBasket);
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         }
     });
 
@@ -175,7 +177,7 @@ server.get('UpdateQuantity', locale, function (req, res, next) {
                     }
                 }
             }
-            Cart.calculateCart(currentBasket);
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         }
     });
 
@@ -220,7 +222,7 @@ server.get('SelectShippingMethod', locale, function (req, res, next) {
                 return;
             }
 
-            Cart.calculateCart(currentBasket);
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
 

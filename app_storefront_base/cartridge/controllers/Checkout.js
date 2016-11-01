@@ -4,6 +4,9 @@ var server = require('server');
 var locale = require('~/cartridge/scripts/middleware/locale');
 
 var BasketMgr = require('dw/order/BasketMgr');
+var HookMgr = require('dw/system/HookMgr');
+var PaymentInstrument = require('dw/order/PaymentInstrument');
+var PaymentMgr = require('dw/order/PaymentMgr');
 var ShippingMgr = require('dw/order/ShippingMgr');
 var Transaction = require('dw/system/Transaction');
 
@@ -12,8 +15,6 @@ var BillingModel = require('~/cartridge/models/billing');
 var Cart = require('~/cartridge/models/cart');
 var OrderModel = require('~/cartridge/models/order');
 var Payment = require('~/cartridge/models/payment');
-var PaymentInstrument = require('dw/order/PaymentInstrument');
-var PaymentMgr = require('dw/order/PaymentMgr');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
@@ -241,7 +242,7 @@ server.post('SubmitShipping', function (req, res, next) {
             if (shippingMethodID !== shipment.shippingMethod.ID) {
                 Transaction.wrap(function () {
                     ShippingModel.selectShippingMethod(shipment, shippingMethodID);
-                    Cart.calculateCart(currentBasket);
+                    HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
                 });
             }
 
@@ -319,7 +320,7 @@ server.get('UpdateShippingMethodsList', function (req, res, next) {
 
     Transaction.wrap(function () {
         ShippingModel.selectShippingMethod(shipment, null, applicableShippingMethods, address);
-        Cart.calculateCart(currentBasket);
+        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
     });
 
     orderTotals = new TotalsModel(currentBasket);
