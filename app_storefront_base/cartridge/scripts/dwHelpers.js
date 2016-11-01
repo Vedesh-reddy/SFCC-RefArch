@@ -138,17 +138,11 @@ function find(collection, match, scope) {
 /**
  * Gets the first item from dw.util.Collection subclass instance
  * @param {dw.util.Colleciton} collection - Collection subclass instance to work with
- * @param {Function} callback - Callback function for item processing
- * @param {Object} [scope] - Optional execution scope to pass to callback
  * @return {Object|null} First element from the collection
  */
-function first(collection, callback, scope) {
+function first(collection) {
     var iterator = collection.iterator();
-    while (iterator.hasNext()) {
-        return scope ? callback.call(scope, iterator.next(), 0, collection)
-            : callback(iterator.next(), 0, collection);
-    }
-    return null;
+    return iterator.hasNext() ? iterator.next() : null;
 }
 
 module.exports = {
