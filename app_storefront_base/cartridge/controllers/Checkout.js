@@ -226,7 +226,8 @@ server.post('SubmitShipping', function (req, res, next) {
                     billingAddress.setCity(form.shippingAddress.addressFields.city.value);
                     billingAddress.setPostalCode(form.shippingAddress.addressFields.postal.value);
                     // Not getting selected state value
-                    billingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
+                    billingAddress.setStateCode(
+                        form.shippingAddress.addressFields.states.state.value);
                     billingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
                     billingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
                 }
@@ -241,7 +242,8 @@ server.post('SubmitShipping', function (req, res, next) {
 
             shippingAddressModel = new AddressModel(shippingAddress);
             shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
-            shippingModel = new ShippingModel(shipment, shipmentShippingModel, shippingAddressModel);
+            shippingModel = new ShippingModel(shipment, shipmentShippingModel,
+                shippingAddressModel);
 
             orderTotals = new TotalsModel(currentBasket);
 
