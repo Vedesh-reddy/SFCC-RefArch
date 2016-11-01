@@ -12,7 +12,6 @@ var Transaction = require('dw/system/Transaction');
 
 var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
-var Cart = require('~/cartridge/models/cart');
 var OrderModel = require('~/cartridge/models/order');
 var Payment = require('~/cartridge/models/payment');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
