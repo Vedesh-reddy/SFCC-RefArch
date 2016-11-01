@@ -10,14 +10,14 @@
             <!-- ---------------------------------------------------------------------- -->
             <div class="form-check">
                 <label class="form-check-label checkout-checkbox">
-                    <input class="form-check-input billing-same-as-shipping" name="billingSameAsShipping" type="checkbox"
+                    <input class="form-check-input billing-same-as-shipping" name="dwfrm_shippingAddressUseAsBillingAddress" type="checkbox"
                         <isprint value=${pdict.forms.billingForm.billingSameAsShipping.attributes} encoding="off"/>
                         checked >
                     <span>${Resource.msg('check.shipping.billing.same', 'checkout', null)}</span>
                 </label>
             </div>
 
-            <!-- ---------------------------------------------------------------------- -->
+        <!-- ---------------------------------------------------------------------- -->
             <!-- Billing Address                                                        -->
             <!-- ---------------------------------------------------------------------- -->
             <fieldset class="billing-address same-as-shipping">

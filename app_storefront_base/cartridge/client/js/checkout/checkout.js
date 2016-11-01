@@ -240,19 +240,20 @@
                  * @param checked
                  */
                 var toggleBillingForm = function (checked) {
-                    $('input[name="shippingAddressUseAsBillingAddress"]').prop('checked', checked);
-                    $('input[name="billingSameAsShipping"]').prop('checked', checked);
+                    $('input[name$="_shippingAddressUseAsBillingAddress"]').prop(
+                        'checked',
+                        checked
+                    );
                     $('.billing-address').toggleClass('same-as-shipping', checked);
                 };
 
                 //
                 // Handle "Billing Same as Shipping" Checkbox
                 //
-                $('input[name="shippingAddressUseAsBillingAddress"]:checkbox, ' +
-                    'input[name="billingSameAsShipping"]:checkbox').on('change', function () {
-                        var checked = this.checked;
-                        toggleBillingForm(checked);
-                    });
+                $('input[name$="_shippingAddressUseAsBillingAddress"]').on('change', function () {
+                    var checked = this.checked;
+                    toggleBillingForm(checked);
+                });
 
                 //
                 // Handle Payment option selection

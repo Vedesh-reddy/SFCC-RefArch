@@ -26,7 +26,7 @@ server.get('Start', locale, function (req, res, next) {
     var applicablePaymentMethods;
     var countryCode = 'US'; // req.geolocation.countryCode;
     var currentBasket = BasketMgr.getCurrentBasket();
-    var currentCustomer = customer; // eslint-disable-line
+    var currentCustomer = req.currentCustomer.raw;
     var billingAddress = currentBasket.billingAddress;
     var paymentAmount = currentBasket.totalGrossPrice;
     var paymentInstruments;
@@ -91,6 +91,7 @@ server.get('Start', locale, function (req, res, next) {
         shippingForm: shippingForm,
         billingForm: billingForm
     };
+
     res.render('checkout/checkout', { order: orderModel, forms: forms });
     next();
 });
@@ -187,6 +188,7 @@ server.post('SubmitShipping', function (req, res, next) {
 
         if (Object.keys(shippingFormErrors).length === 0) {
             var currentBasket = BasketMgr.getCurrentOrNewBasket();
+            var billingAddress = currentBasket.billingAddress;
             var orderTotals;
             var shipment = currentBasket.defaultShipment;
             var shippingAddress = shipment.shippingAddress;
@@ -210,6 +212,24 @@ server.post('SubmitShipping', function (req, res, next) {
                 shippingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
                 shippingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
                 shippingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
+
+
+                if (form.shippingAddress.shippingAddressUseAsBillingAddress.value === true) {
+                    if (!billingAddress) {
+                        billingAddress = currentBasket.createBillingAddress();
+                    }
+
+                    billingAddress.setFirstName(form.shippingAddress.addressFields.firstName.value);
+                    billingAddress.setLastName(form.shippingAddress.addressFields.lastName.value);
+                    billingAddress.setAddress1(form.shippingAddress.addressFields.address1.value);
+                    billingAddress.setAddress2(form.shippingAddress.addressFields.address2.value);
+                    billingAddress.setCity(form.shippingAddress.addressFields.city.value);
+                    billingAddress.setPostalCode(form.shippingAddress.addressFields.postal.value);
+                    // Not getting selected state value
+                    billingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
+                    billingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
+                    billingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
+                }
             });
 
             if (shippingMethodID !== shipment.shippingMethod.ID) {
@@ -221,8 +241,7 @@ server.post('SubmitShipping', function (req, res, next) {
 
             shippingAddressModel = new AddressModel(shippingAddress);
             shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
-            shippingModel = new ShippingModel(shipment, shipmentShippingModel,
-                shippingAddressModel);
+            shippingModel = new ShippingModel(shipment, shipmentShippingModel, shippingAddressModel);
 
             orderTotals = new TotalsModel(currentBasket);
 
