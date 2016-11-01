@@ -8,14 +8,12 @@ Query Search on General Product :
 - click on reset button
  */
 
-import {assert} from 'chai';
+import { assert } from 'chai';
 import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
 import * as search from '../../mocks/testDataMgr/pageObjects/search';
 
-describe.only('Search - general product', () => {
-    let productGeneral = 'pants';
-    let selector1 = '.header-search .search-field';
-    let selector2 ='.search-row .search-field';
+describe('Search - general product', () => {
+    const productGeneral = 'pants';
     let myQuerySelector;
     let myWindowWidth;
 
@@ -23,24 +21,22 @@ describe.only('Search - general product', () => {
         .then(() => browser.waitForExist(search.SEARCH_FORM))
         .then(() => browser.windowHandleSize())
         .then(windowWidth => {
-            return myWindowWidth = windowWidth.value.width;
+            myWindowWidth = windowWidth.value.width;
+            return myWindowWidth;
         })
     );
 
     it('should return 79 Results for pants when query search for pants', () =>
-       search.getQuerySearchSelector(selector1, selector2)
+       search.getQuerySearchSelector(search.SearchQuerySelector1, search.SearchQuerySelector2)
             .then(mySelector => {
                 myQuerySelector = mySelector;
-                return browser.setValue(myQuerySelector, productGeneral)
+                return browser.setValue(myQuerySelector, productGeneral);
             })
             .then(() => browser.submitForm(myQuerySelector))
             .then(() => browser.waitForExist(search.PDP_MAIN))
-            .then(() => search.getSearchResultSelector(search.SEARCH_RESULT_Large,
-                search.SEARCH_RESULT_Small, myWindowWidth))
-            .then(mySearchSelector => {
-                return browser.getText(mySearchSelector)
-            })
+            .then(() => search.getSearchResultSelector(search.SearchResultLarge,
+                search.SearchResultSmall, myWindowWidth))
+            .then(mySearchSelector => browser.getText(mySearchSelector))
             .then(displayText => assert.equal(displayText, '79 Results for pants'))
-    )
-
+    );
 });
