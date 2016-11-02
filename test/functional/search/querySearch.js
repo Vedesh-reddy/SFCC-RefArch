@@ -11,32 +11,27 @@ Query Search on General Product :
 import { assert } from 'chai';
 import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
 import * as search from '../../mocks/testDataMgr/pageObjects/search';
+import * as common from '../../mocks/testDataMgr/helpers/common';
 
 describe('Search - general product', () => {
     const productGeneral = 'pants';
-    let myQuerySelector;
-    let myWindowWidth;
 
     before(() => homePage.navigateTo()
         .then(() => browser.waitForExist(search.SEARCH_FORM))
-        .then(() => browser.windowHandleSize())
-        .then(windowWidth => {
-            myWindowWidth = windowWidth.value.width;
-            return myWindowWidth;
-        })
     );
 
-    it('should return 79 Results for pants when query search for pants', () =>
-       search.getQuerySearchSelector(search.SearchQuerySelector1, search.SearchQuerySelector2)
+    it('should return 79 Results for pants when query search for pants', () => {
+        let myQuerySelector;
+        return common.getVisibleSelector(search.SearchQuerySelector1, search.SearchQuerySelector2)
             .then(mySelector => {
                 myQuerySelector = mySelector;
                 return browser.setValue(myQuerySelector, productGeneral);
             })
             .then(() => browser.submitForm(myQuerySelector))
             .then(() => browser.waitForExist(search.PDP_MAIN))
-            .then(() => search.getSearchResultSelector(search.SearchResultLarge,
-                search.SearchResultSmall, myWindowWidth))
+            .then(() => common.getVisibleSelector(search.SearchResultLarge,
+                search.SearchResultSmall))
             .then(mySearchSelector => browser.getText(mySearchSelector))
-            .then(displayText => assert.equal(displayText, '79 Results for pants'))
-    );
+            .then(displayText => assert.equal(displayText, '79 Results for pants'));
+    });
 });

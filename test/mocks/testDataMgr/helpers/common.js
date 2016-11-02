@@ -1,8 +1,5 @@
 'use strict';
 
-import _ from 'lodash';
-import nodeUrl from 'url';
-
 export const defaultLocale = 'x_default';
 export const supportedLocales = [
     'en_US',
@@ -13,66 +10,24 @@ export const supportedLocales = [
     'zh_CN'
 ];
 
-// commonly used selectors
-export const PRIMARY_H1 = '#primary h1';
-export const BREADCRUMB_A = '.breadcrumb a';
-export const LAST_BREADCRUMB = '.breadcrumb-element:last-of-type';
-export const BTN_ADD_TO_CART = '#add-to-cart';
-export const PRIMARY_CONTENT = '.primary-content';
-
-export function getPageTitle() {
-    return new Promise(resolve => {
-        browser.getTitle()
-            .then(title => resolve(title.split('|')[0].trim()));
-    });
-}
-
-export function checkElementEquals(selector, value) {
-    return browser.getText(selector)
-        .then(text => text === value);
-}
-
-export function removeItems(removeLink) {
-    let promises = [];
-
-    return browser.elements(removeLink)
-        .then(removeLinks => {
-            // Because each Remove link results in a page reload,
-            // it is necessary to wait for one remove operation
-            // to complete before clicking on the next Remove
-            // link
-            if (!removeLinks.value.length) {
-                return Promise.resolve();
+/**
+ *
+ * @param selector1: the largeScreen selector
+ * @param selector2: the smallScreen selector
+ * @returns {*|Promise.<TResult>}
+ */
+export function getVisibleSelector(selector1, selector2) {
+    let mySelector;
+    return browser.isVisible(selector1)
+        .then(visible => {
+            if (visible) {
+                mySelector = selector1;
+                return mySelector;
             }
-            removeLinks.value.forEach(() => promises.push(clickFirstRemoveLink(removeLink)));
-
-            return Promise.resolve();
-        })
-        .then(() => Promise.all(promises));
-}
-
-export function clickCheckbox(selector) {
-    return browser.click(selector)
-        .isSelected(selector)
-        .then(selected => {
-            if (!selected) {
-                return browser.click(selector);
-            }
-            return Promise.resolve();
+            mySelector = selector2;
+            return mySelector;
         });
 }
-
-export function uncheckCheckbox(selector) {
-    return browser.click(selector)
-        .isSelected(selector)
-        .then(selected => {
-            if (selected) {
-                return browser.click(selector);
-            }
-            return Promise.resolve();
-        });
-}
-
 
 export function selectAttributeByIndex(attributeName, index) {
     let selector = '[data-attr = ' + attributeName + '] a:nth-child(' + index + ') span';
@@ -132,66 +87,4 @@ export function addProductVariationToBasket(product, btnAdd) {
                 .click(btnAdd);
         })
         .then(() => Promise.resolve());
-}
-
-/**
- * Clicks the first Remove link in a Cart or WishList
- *
- */
-function clickFirstRemoveLink(removeLink) {
-    return browser.elements(removeLink)
-        .then(removeLinks => {
-            if (removeLinks.value.length) {
-                return browser.elementIdClick(removeLinks.value[0].ELEMENT);
-            }
-            return Promise.resolve();
-        });
-}
-
-/**
- * Clicks on an selector and wait for the page to reload
- * @param selectorToClick
- * @param selectorToWait
- * @returns {*|Promise.<T>}
- */
-export function clickAndWait(selectorToClick, selectorToWait) {
-    return browser.click(selectorToClick)
-        .waitForVisible(selectorToWait);
-}
-
-export function getSearchParams() {
-    return browser.url()
-        .then(url => {
-            let parsedUrl = nodeUrl.parse(url.value);
-            let search = parsedUrl.search ? parsedUrl.search.replace('?', '') : '';
-            let params = _.fromPairs(
-                _.map(search.split('&'), param => param.split('='))
-            );
-            return Promise.resolve(params);
-        });
-}
-
-export function getLocale() {
-    return getSearchParams()
-        .then(params =>
-            Promise.resolve(params && params.lang && supportedLocales.indexOf(params.lang) > -1 ? params.lang : defaultLocale)
-        );
-}
-
-/**
- * Returns the current Site name
- *
- * Assumptions:
- *   - In BM > Merchant Tools > Storefront URLs, "Enable new rule-based storefront URLs to replaced
- *     legacy SEO URLs" is checked
- *   - When this function is called, a Webdriver.IO client has already been instantiated and has a URL with the
- *     following format, http[s]://<server>/s/<Site name>[/<path>]
- *
- *     i.e., https://myserver.com/s/SiteGenesis/mens/clothing/dress%20shirts/?lang=en_US
- *
- * @returns {String} - Site name (i.e., SiteGenesis or SiteGenesisGlobal)
- */
-export function getCurrentSiteName() {
-    return browser.url()
-        .then(url => url.value.split('/s/')[1].split('/')[0]);
 }
