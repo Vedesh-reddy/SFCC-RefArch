@@ -62,7 +62,7 @@ function setProductProperties(productSearch, httpParams, selectedCategory, sorti
     if (httpParams.q) {
         productSearch.setSearchPhrase(httpParams.q);
     }
-    if (httpParams.cgid) {
+    if (selectedCategory) {
         productSearch.setCategoryID(selectedCategory.ID);
     }
     if (httpParams.pid) {
