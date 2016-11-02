@@ -45,7 +45,7 @@ function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods
         if (applicableShippingMethods.contains(defaultShippingMethod)) {
             defaultShipment.setShippingMethod(defaultShippingMethod);
         } else if (applicableShippingMethods.length > 0) {
-            defaultShipment.setShippingMethod(shippingMethods.iterator().next());
+            defaultShipment.setShippingMethod(helper.first(shippingMethods));
         } else {
             defaultShipment.setShippingMethod(null);
         }
