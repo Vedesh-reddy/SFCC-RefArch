@@ -183,15 +183,35 @@ function validateShippingForm(form) {
  * Handle Ajax shipping form submit
  */
 server.post('SubmitShipping', function (req, res, next) {
-    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-        var form = server.forms.getForm('singleShipping');
-        var shippingFormErrors;
-        var result;
+    var form = server.forms.getForm('singleShipping');
+    var shippingFormErrors;
+    var result = {};
 
-        // verify shipping form data
-        shippingFormErrors = validateShippingForm(form);
+    // verify shipping form data
+    shippingFormErrors = validateShippingForm(form);
 
-        if (Object.keys(shippingFormErrors).length === 0) {
+    if (Object.keys(shippingFormErrors).length > 0) {
+        res.json({ form: form, shippingFormErrors: shippingFormErrors });
+    } else {
+        result.address = {
+            firstName: form.shippingAddress.addressFields.firstName.value,
+            lastName: form.shippingAddress.addressFields.lastName.value,
+            address1: form.shippingAddress.addressFields.address1.value,
+            address2: form.shippingAddress.addressFields.address2.value,
+            city: form.shippingAddress.addressFields.city.value,
+            stateCode: form.shippingAddress.addressFields.states.state.value,
+            countryCode: form.shippingAddress.addressFields.country.value,
+            phone: form.shippingAddress.addressFields.phone.value
+        };
+
+        result.shippingBillingSame = form.shippingAddress.shippingAddressUseAsBillingAddress.value;
+        result.shippingMethod = form.shippingAddress.shippingMethodID.value.toString();
+
+        res.setViewData(result);
+
+        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var shippingData = res.getViewData();
+
             var currentBasket = BasketMgr.getCurrentOrNewBasket();
             var billingAddress = currentBasket.billingAddress;
             var orderTotals;
@@ -200,41 +220,38 @@ server.post('SubmitShipping', function (req, res, next) {
             var shippingAddressModel;
             var shippingModel;
             var shipmentShippingModel;
-            var shippingMethodID = form.shippingAddress.shippingMethodID.value.toString();
+            var shippingMethodID = shippingData.shippingMethod;
 
             Transaction.wrap(function () {
                 if (shippingAddress === null) {
                     shippingAddress = shipment.createShippingAddress();
                 }
 
-                shippingAddress.setFirstName(form.shippingAddress.addressFields.firstName.value);
-                shippingAddress.setLastName(form.shippingAddress.addressFields.lastName.value);
-                shippingAddress.setAddress1(form.shippingAddress.addressFields.address1.value);
-                shippingAddress.setAddress2(form.shippingAddress.addressFields.address2.value);
-                shippingAddress.setCity(form.shippingAddress.addressFields.city.value);
-                shippingAddress.setPostalCode(form.shippingAddress.addressFields.postal.value);
-                // Not getting selected state value
-                shippingAddress.setStateCode(form.shippingAddress.addressFields.states.state.value);
-                shippingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
-                shippingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
+                shippingAddress.setFirstName(shippingData.address.firstName);
+                shippingAddress.setLastName(shippingData.address.lastName);
+                shippingAddress.setAddress1(shippingData.address.address1);
+                shippingAddress.setAddress2(shippingData.address.address2);
+                shippingAddress.setCity(shippingData.address.city);
+                shippingAddress.setPostalCode(shippingData.address.postal);
+                shippingAddress.setStateCode(shippingData.address.stateCode);
+                shippingAddress.setCountryCode(shippingData.address.countryCode);
+                shippingAddress.setPhone(shippingData.address.phone);
 
 
-                if (form.shippingAddress.shippingAddressUseAsBillingAddress.value === true) {
+                if (shippingData.shippingBillingSame === true) {
                     if (!billingAddress) {
                         billingAddress = currentBasket.createBillingAddress();
                     }
 
-                    billingAddress.setFirstName(form.shippingAddress.addressFields.firstName.value);
-                    billingAddress.setLastName(form.shippingAddress.addressFields.lastName.value);
-                    billingAddress.setAddress1(form.shippingAddress.addressFields.address1.value);
-                    billingAddress.setAddress2(form.shippingAddress.addressFields.address2.value);
-                    billingAddress.setCity(form.shippingAddress.addressFields.city.value);
-                    billingAddress.setPostalCode(form.shippingAddress.addressFields.postal.value);
-                    // Not getting selected state value
-                    billingAddress.setStateCode(
-                        form.shippingAddress.addressFields.states.state.value);
-                    billingAddress.setCountryCode(form.shippingAddress.addressFields.country.value);
-                    billingAddress.setPhone(form.shippingAddress.addressFields.phone.value);
+                    billingAddress.setFirstName(shippingData.address.firstName);
+                    billingAddress.setLastName(shippingData.address.lastName);
+                    billingAddress.setAddress1(shippingData.address.address1);
+                    billingAddress.setAddress2(shippingData.address.address2);
+                    billingAddress.setCity(shippingData.address.city);
+                    billingAddress.setPostalCode(shippingData.address.postal);
+                    billingAddress.setStateCode(shippingData.address.stateCode);
+                    billingAddress.setCountryCode(shippingData.address.countryCode);
+                    billingAddress.setPhone(shippingData.address.phone);
                 }
             });
 
@@ -247,25 +264,21 @@ server.post('SubmitShipping', function (req, res, next) {
 
             shippingAddressModel = new AddressModel(shippingAddress);
             shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
-            shippingModel = new ShippingModel(shipment, shipmentShippingModel,
-                shippingAddressModel);
+            shippingModel = new ShippingModel(
+                shipment,
+                shipmentShippingModel,
+                shippingAddressModel
+            );
 
             orderTotals = new TotalsModel(currentBasket);
 
-            result = {
+            res.json({
                 totals: orderTotals,
                 shippingData: shippingModel,
                 form: server.forms.getForm('singleShipping')
-            };
-        } else {
-            result = {
-                form: server.forms.getForm('singleShipping'),
-                shippingFormErrors: shippingFormErrors
-            };
-        }
-
-        res.json(result);
-    });
+            });
+        });
+    }
 
     next();
 });
