@@ -17,7 +17,7 @@ server.get('Show', locale, function (req, res, next) {
     var selectedCategory = CatalogMgr.getCategory(params.cgid);
     var sortingRule = params.srule ? CatalogMgr.getSortingRule(params.srule) : null;
 
-    selectedCategory = selectedCategory.online ? selectedCategory : null;
+    selectedCategory = selectedCategory && selectedCategory.online ? selectedCategory : null;
 
     search.setProductProperties(dwProductSearch, params, selectedCategory, sortingRule);
     search.addRefinementValues(dwProductSearch, params.preferences);
