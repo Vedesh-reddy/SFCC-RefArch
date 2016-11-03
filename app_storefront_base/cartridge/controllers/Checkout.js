@@ -188,7 +188,9 @@ server.post('SubmitShipping', function (req, res, next) {
     var result = {};
 
     // verify shipping form data
-    shippingFormErrors = validateShippingForm(form);
+    shippingFormErrors = validateShippingForm(form.shippingAddress.addressFields);
+
+    res.json({ form: form, shippingFormErrors: shippingFormErrors });
 
     if (Object.keys(shippingFormErrors).length > 0) {
         res.json({ form: form, shippingFormErrors: shippingFormErrors });
@@ -295,7 +297,8 @@ server.post('SubmitPayment', function (req, res, next) {
 
         // verify billing form data
         // TODO: read from form object above (seems like boolean bug for checkbox)
-        if (!req.form.billingSameAsShipping && req.form.billingSameAsShipping !== 'on') {
+        if (!form.dwfrm_shippingAddressUseAsBillingAddress
+            && form.dwfrm_shippingAddressUseAsBillingAddress !== 'on') {
             billingFormErrors = validateBillingForm(form);
         }
 

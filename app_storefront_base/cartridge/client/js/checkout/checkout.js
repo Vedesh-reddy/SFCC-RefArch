@@ -103,14 +103,20 @@
                         method: 'POST',
                         data: $('#dwfrm_singleShipping').serialize(),
                         success: function (data) {
-                            //
-                            // Populate the Address Summary
-                            //
-                            var address = data.shippingData.shippingAddress;
-                            var selectedShippingMethod = data.shippingData.selectedShippingMethod;
-                            populateSummary('.shipping .address-summary', address);
-                            updateShippingSummary(selectedShippingMethod, data.totals);
-                            updateTotals(data.totals);
+                            // look for field validation errors
+                            if (data.shippingFormErrors) {
+                                // TODO: placeholder to highlight fields with errors
+                            } else {
+                                //
+                                // Populate the Address Summary
+                                //
+                                var address = data.shippingData.shippingAddress;
+                                var selectedShippingMethod =
+                                    data.shippingData.selectedShippingMethod;
+                                populateSummary('.shipping .address-summary', address);
+                                updateShippingSummary(selectedShippingMethod, data.totals);
+                                updateTotals(data.totals);
+                            }
                         },
                         error: function () {
                         }
@@ -124,11 +130,16 @@
                         method: 'POST',
                         data: $('#dwfrm_payment').serialize(),
                         success: function (data) {
-                            //
-                            // Populate the Address Summary
-                            //
-                            var address = data.billingData.billingAddress;
-                            populateSummary('.billing .address-summary', address);
+                            // look for field validation errors
+                            if (data.billingFormErrors) {
+                                // TODO: placeholder to highlight fields with errors
+                            } else {
+                                //
+                                // Populate the Address Summary
+                                //
+                                var address = data.billingData.billingAddress;
+                                populateSummary('.billing .address-summary', address);
+                            }
                         },
                         error: function () {
                         }
