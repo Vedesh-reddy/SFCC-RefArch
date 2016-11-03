@@ -12,10 +12,6 @@ function createAddressObject(addressObject) {
             address1: addressObject.address1,
             address2: addressObject.address2,
             city: addressObject.city,
-            countryCode: {
-                displayValue: addressObject.countryCode.displayValue,
-                value: addressObject.countryCode.value
-            },
             firstName: addressObject.firstName,
             lastName: addressObject.lastName,
             ID: Object.hasOwnProperty.call(addressObject, 'ID') ? addressObject.ID : null,
@@ -23,6 +19,12 @@ function createAddressObject(addressObject) {
             postalCode: addressObject.postalCode,
             stateCode: addressObject.stateCode
         };
+        if (Object.hasOwnProperty.call(addressObject, 'countryCode')) {
+            result.countryCode = {
+                displayValue: addressObject.countryCode.displayValue,
+                value: addressObject.countryCode.value
+            };
+        }
     } else {
         result = null;
     }

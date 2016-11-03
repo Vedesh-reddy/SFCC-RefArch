@@ -60,7 +60,8 @@ describe('cart', function () {
             msgf: function () {
                 return 'someString';
             }
-        }
+        },
+        'dw/system/HookMgr': function () {}
     });
 
     it('should accept/process a null Basket object', function () {

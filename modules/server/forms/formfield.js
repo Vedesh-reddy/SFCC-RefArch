@@ -46,6 +46,7 @@ function formField(field) {
                 value: field.options[i].value
             });
         }
+
         result.selectedOption = field.selectedOption ? field.selectedOption.optionId : '';
     }
 

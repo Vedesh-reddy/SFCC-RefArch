@@ -1,25 +1,39 @@
-<div class="card">
+<div class="card payment-form">
     <div class="card-header">
         <span class="checkout-card-header">${Resource.msg('heading.payment', 'checkout', null)}</span>
     </div>
     <div class="checkout-card-block">
-        <div class="form-check">
-            <label class="form-check-label checkout-checkbox">
-                <input class="form-check-input billing-same-as-shipping" type="checkbox" value="" checked>
-                ${Resource.msg('check.shipping.billing.same', 'checkout', null)}
-            </label>
-        </div>
+        <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitPayment')}" <isprint value=${pdict.forms.billingForm.attributes} encoding="off" /> >
 
-        <form>
-            <fieldset class="billing-address">
+            <!-- ---------------------------------------------------------------------- -->
+            <!-- Is Billing Address Same as Shipping Address                            -->
+            <!-- ---------------------------------------------------------------------- -->
+            <div class="form-check">
+                <label class="form-check-label checkout-checkbox">
+                    <input class="form-check-input billing-same-as-shipping" name="dwfrm_shippingAddressUseAsBillingAddress" type="checkbox"
+                        <isprint value=${pdict.forms.billingForm.billingSameAsShipping.attributes} encoding="off"/>
+                        checked >
+                    <span>${Resource.msg('check.shipping.billing.same', 'checkout', null)}</span>
+                </label>
+            </div>
+
+        <!-- ---------------------------------------------------------------------- -->
+            <!-- Billing Address                                                        -->
+            <!-- ---------------------------------------------------------------------- -->
+            <fieldset class="billing-address same-as-shipping">
                 <isinclude template="checkout/billing/billingAddress" />
             </fieldset>
 
+            <!-- ---------------------------------------------------------------------- -->
+            <!-- Payment Options                                                        -->
+            <!-- ---------------------------------------------------------------------- -->
             <fieldset>
                 <isinclude template="checkout/billing/paymentOptions" />
             </fieldset>
 
-            <!--- credit Card Form--->
+            <!-- ---------------------------------------------------------------------- -->
+            <!-- credit Card Form                                                       -->
+            <!-- ---------------------------------------------------------------------- -->
             <fieldset class="credit-card-form">
                 <isinclude template="checkout/billing/creditCardForm" />
             </fieldset>

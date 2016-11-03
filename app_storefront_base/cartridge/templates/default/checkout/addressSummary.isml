@@ -1,15 +1,43 @@
-<address>
-    ${address.firstName} ${address.lastName} <br>
-    ${address.address1} <br>
-    <isif condition="${address.address2)}">
-        ${address.address2)} <br>
+<div class="address-summary">
+
+    <div>
+        <span class="firstName" >
+            ${address.firstName}
+        </span>
+        <span class="lastName" >
+            ${address.lastName}
+        </span>
+    </div>
+
+    <div class="address1">
+        ${address.address1}
+    </div>
+
+    <div class="address2">
+        <isif condition="${address.address2}">
+            ${address.address2}
+        </isif>
+    </div>
+
+    <span class="city">
+        <isif condition="${address.city}">
+                ${address.city},
+        </isif>
+    </span>
+
+    <span class="states">
+        <isif condition="${address.stateCode}">
+                ${address.stateCode}
+        </isif>
+    </span>
+
+    <span class="postalCode">
+        ${address.postalCode}
+    </span>
+
+    <isif condition="${pdict.orderEmail}">
+        <div class="orderEmail">
+            ${pdict.orderEmail}
+        </div>
     </isif>
-    <isif condition="${address.city}">
-        ${address.city},
-    </isif>
-    <isif condition="${address.stateCode}">
-        ${address.stateCode}
-    </isif>
-    ${address.postalCode} <br>
-    ${pdict.orderEmail}
-</address>
+</div>

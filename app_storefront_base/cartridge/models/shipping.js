@@ -12,9 +12,10 @@ var ShippingMgr = require('dw/order/ShippingMgr');
  * @param {dw.order.Shipment} defaultShipment - The default shipment for the current basket
  * @param {string} shippingMethodID - The shipping method ID of the desired shipping method
  * @param {string} shippingMethods - List of applicable shipping methods of the current basket
+ * @param {Object} address - the address
  * @return {void}
  */
-function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods) {
+function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods, address) {
     var applicableShippingMethods;
     var defaultShippingMethod = ShippingMgr.getDefaultShippingMethod();
     var isShipmentSet = false;
@@ -23,7 +24,8 @@ function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods
         applicableShippingMethods = shippingMethods;
     } else {
         var shipmentModel = ShippingMgr.getShipmentShippingModel(defaultShipment);
-        applicableShippingMethods = shipmentModel.applicableShippingMethods;
+        applicableShippingMethods = address ? shipmentModel.getApplicableShippingMethods(address) :
+            shipmentModel.applicableShippingMethods;
     }
 
     if (shippingMethodID) {
@@ -42,6 +44,8 @@ function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods
     if (!isShipmentSet) {
         if (applicableShippingMethods.contains(defaultShippingMethod)) {
             defaultShipment.setShippingMethod(defaultShippingMethod);
+        } else if (applicableShippingMethods.length > 0) {
+            defaultShipment.setShippingMethod(helper.first(shippingMethods));
         } else {
             defaultShipment.setShippingMethod(null);
         }
@@ -51,10 +55,13 @@ function selectShippingMethod(defaultShipment, shippingMethodID, shippingMethods
 /**
  * Creates an array of objects containing the information of applicable shipping methods
  * @param {dw.order.ShipmentShippingModel} shipmentModel - Instance of the shipping model
+ * @param {Object} address - the address
  * @returns {Array} an array of objects containing the information of applicable shipping methods
  */
-function getApplicableShippingMethods(shipmentModel) {
-    var shippingMethods = shipmentModel.applicableShippingMethods;
+function getApplicableShippingMethods(shipmentModel, address) {
+    var shippingMethods = address ? shipmentModel.getApplicableShippingMethods(address) :
+        shipmentModel.applicableShippingMethods;
+
     return helper.map(shippingMethods, function (shippingMethod) {
         var shippingCost = shipmentModel.getShippingCost(shippingMethod);
         return {
@@ -94,15 +101,23 @@ function getSelectedShippingMethod(shippingMethod) {
  * @param {Object} addressModel - Shipping address model
  */
 function shipping(defaultShipment, shipmentModel, addressModel) {
-    this.applicableShippingMethods = shipmentModel ?
-        getApplicableShippingMethods(shipmentModel) :
-        null;
-    this.shippingAddress = addressModel ? addressModel.address : null;
+    if (addressModel) {
+        this.applicableShippingMethods = shipmentModel ?
+            getApplicableShippingMethods(shipmentModel, addressModel.address) :
+            null;
+        this.shippingAddress = addressModel.address;
+    } else {
+        this.applicableShippingMethods = shipmentModel ?
+            getApplicableShippingMethods(shipmentModel) :
+            null;
+        this.shippingAddress = null;
+    }
     this.selectedShippingMethod = defaultShipment && defaultShipment.shippingMethod ?
         getSelectedShippingMethod(defaultShipment.shippingMethod) :
         null;
 }
 
 shipping.selectShippingMethod = selectShippingMethod;
+shipping.getApplicableShippingMethods = getApplicableShippingMethods;
 
 module.exports = shipping;

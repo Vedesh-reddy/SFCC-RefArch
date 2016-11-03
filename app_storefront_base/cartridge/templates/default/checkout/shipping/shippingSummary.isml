@@ -1,4 +1,4 @@
-<div class="card">
+<div class="card shipping-summary">
     <div class="card-header">
         <p class="checkout-summary-header checkout-card-header">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</p>
         <span class="edit-button">Edit</span>
@@ -8,19 +8,22 @@
         <!--- Shipping Address --->
         <span class="summary-section-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</span><br>
         <isset name="address" value="${pdict.shipping.shippingAddress}" scope="page"/>
-        <div class="summary-details">
+        <div class="summary-details shipping">
             <isinclude template="checkout/addressSummary" />
         </div>
 
         <!--- Shipping information --->
         <span class="summary-section-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</span><br>
-        <div class="row summary-details">
-            <div class="col-xs-8">
-                <p class="shipping-method">${pdict.shipping.selectedShippingMethod.displayName} (${pdict.shipping.selectedShippingMethod.estimatedArrivalTime})</p>
+        <div class="row summary-details leading-lines">
+            <div class="col-xs-8 start-lines">
+                <p class="shipping-method">
+                    <span class="shipping-method-title">${pdict.order.shipping.selectedShippingMethod.displayName}</span>
+                    (<span class="shipping-method-arrival-time">${pdict.order.shipping.selectedShippingMethod.estimatedArrivalTime}</span>)
+                </p>
             </div>
-            <div class="col-xs-4">
-                <p class="text-xs-right pricing">
-                    ${pdict.totals.totalShippingCost}
+            <div class="col-xs-4 end-lines">
+                <p class="text-xs-right pricing shipping-method-price">
+                    ${pdict.order.totals.totalShippingCost}
                 </p>
             </div>
         </div>

@@ -10,6 +10,10 @@ $checkout-font-weight: 600;
 }
 
 .billing-address {
+    display: block;
+}
+
+.billing-address.same-as-shipping {
     display: none;
 }
 
@@ -41,6 +45,11 @@ $checkout-font-weight: 600;
 .edit-button {
     color: $brand-color;
     float: right;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }
 
 .grand-total-label {
@@ -102,4 +111,124 @@ $checkout-font-weight: 600;
 
 .summary-details {
     font-size: 0.938em;
+}
+
+.data-checkout-stage {
+    // Initial states ------------------------
+    &[data-checkout-stage] {
+        .card.payment-summary,
+        .shipping-summary {
+            display: none;
+        }
+
+        button {
+            display: none;
+        }
+    }
+
+    // Shipping ------------------------------
+    &[data-checkout-stage=shipping] {
+        .card.payment-form {
+            display: none;
+        }
+
+        button.submit-shipping {
+            display: block;
+        }
+    }
+
+    // Payment -------------------------------
+    &[data-checkout-stage=payment] {
+        .card.shipping-form {
+            display: none;
+        }
+
+        .card.payment-form,
+        .shipping-summary {
+            display: block;
+        }
+
+        button.submit-payment {
+            display: block;
+        }
+    }
+
+    // Place Order -----------------------------
+    &[data-checkout-stage=placeOrder] {
+        .card.shipping-form,
+        .card.payment-form {
+            display: none;
+        }
+
+        .card.payment-summary,
+        .shipping-summary {
+            display: block;
+        }
+
+        .card.shipping-form {
+            display: none;
+        }
+
+        button.place-order {
+            display: block;
+        }
+    }
+
+    &[data-checkout-stage=submitted] {
+        .card.shipping-form,
+        .card.payment-form {
+            display: none;
+        }
+
+        .card.payment-summary,
+        .shipping-summary {
+            display: block;
+        }
+
+        .card.shipping-form {
+            display: none;
+        }
+
+        button.place-order {
+            display: none;
+        }
+    }
+}
+
+.leading-lines {
+    overflow: hidden;
+    margin: 0;
+
+    label {
+        background-color: white;
+    }
+
+    .start-lines {
+        padding: 1px;
+
+        span {
+            position: relative;
+            background-color: white;
+            z-index: 2;
+        }
+
+        &::before {
+            float: left;
+            width: 0;
+            white-space: nowrap;
+            content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
+            z-index: 1;
+            color: #adadad;
+        }
+    }
+
+    .end-lines {
+        padding: 1px;
+
+        span {
+            position: relative;
+            background-color: white;
+            z-index: 2;
+        }
+    }
 }
