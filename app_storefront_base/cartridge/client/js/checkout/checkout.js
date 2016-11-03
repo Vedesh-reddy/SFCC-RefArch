@@ -103,7 +103,6 @@
                         method: 'POST',
                         data: $('#dwfrm_singleShipping').serialize(),
                         success: function (data) {
-
                             // look for field validation errors
                             if (data.shippingFormErrors) {
                                 // TODO: placeholder to highlight fields with errors
@@ -118,7 +117,6 @@
                                 updateShippingSummary(selectedShippingMethod, data.totals);
                                 updateTotals(data.totals);
                             }
-
                         },
                         error: function () {
                         }
