@@ -84,8 +84,8 @@
          * Display error messages and highlight form fields with errors.
          * @param {Object} fieldErrors - the fields with errors
          */
-        function shippingFormError(fieldErrors) {
-            console.log(fieldErrors);
+        function shippingFormError(fieldErrors) { // eslint-disable-line
+            // Display error messages and highlight form fields with errors.
         }
 
         /**
@@ -128,7 +128,7 @@
              */
             updateStage: function () {
                 var stage = checkoutStages[members.currentStage];
-                var defer = $.Deferred();
+                var defer = $.Deferred(); // eslint-disable-line
 
                 if (stage === 'shipping') {
                     //
@@ -138,7 +138,7 @@
                         url: $('#dwfrm_singleShipping').attr('action'),
                         method: 'POST',
                         data: $('#dwfrm_singleShipping').serialize(),
-                        success: function(data){
+                        success: function (data) {
                             shippingFormResponse(defer, data);
                         },
                         error: function () {
