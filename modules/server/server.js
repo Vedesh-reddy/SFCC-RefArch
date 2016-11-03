@@ -68,6 +68,13 @@ Server.prototype = {
         var route = new Route(name, middlewareChain, rq, rs);
         // Add event handler for rendering out view on completion of the request chain
         route.on('route:Complete', function onRouteCompleteHandler(req, res) {
+            if (res.redirectUrl) {
+                // if there's a pending redirect, break the chain
+                route.emit('route:Redirect', req, res);
+                res.base.redirect(res.redirectUrl);
+                return;
+            }
+
             if (res.view && res.viewData) {
                 render.template(res.view, res.viewData, res);
             } else if (res.isJson) {
