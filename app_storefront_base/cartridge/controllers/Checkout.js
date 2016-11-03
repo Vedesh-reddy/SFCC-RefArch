@@ -190,8 +190,6 @@ server.post('SubmitShipping', function (req, res, next) {
     // verify shipping form data
     shippingFormErrors = validateShippingForm(form.shippingAddress.addressFields);
 
-    res.json({ form: form, shippingFormErrors: shippingFormErrors });
-
     if (Object.keys(shippingFormErrors).length > 0) {
         res.json({ form: form, shippingFormErrors: shippingFormErrors });
     } else {
@@ -202,6 +200,7 @@ server.post('SubmitShipping', function (req, res, next) {
             address2: form.shippingAddress.addressFields.address2.value,
             city: form.shippingAddress.addressFields.city.value,
             stateCode: form.shippingAddress.addressFields.states.state.value,
+            postalCode: form.shippingAddress.addressFields.postalCode.value,
             countryCode: form.shippingAddress.addressFields.country.value,
             phone: form.shippingAddress.addressFields.phone.value
         };
@@ -234,7 +233,7 @@ server.post('SubmitShipping', function (req, res, next) {
                 shippingAddress.setAddress1(shippingData.address.address1);
                 shippingAddress.setAddress2(shippingData.address.address2);
                 shippingAddress.setCity(shippingData.address.city);
-                shippingAddress.setPostalCode(shippingData.address.postal);
+                shippingAddress.setPostalCode(shippingData.address.postalCode);
                 shippingAddress.setStateCode(shippingData.address.stateCode);
                 shippingAddress.setCountryCode(shippingData.address.countryCode);
                 shippingAddress.setPhone(shippingData.address.phone);
@@ -288,7 +287,6 @@ server.post('SubmitShipping', function (req, res, next) {
 /**
  *  Handle Ajax payment (and billing) form submit
  */
-
 server.post('SubmitPayment', function (req, res, next) {
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
         var form = server.forms.getForm('payment');

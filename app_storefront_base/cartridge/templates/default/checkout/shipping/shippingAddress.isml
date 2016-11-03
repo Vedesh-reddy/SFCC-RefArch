@@ -83,7 +83,7 @@
         <div class="form-group">
             <label for="shippingZipCode">${Resource.msg('field.shipping.address.zip.code','address',null)}</label>
             <input type="text" class="form-control shippingZipCode" id="shippingZipCode"
-                <isprint value=${pdict.forms.shippingForm.postal.attributes} encoding="off"/>
+                <isprint value=${pdict.forms.shippingForm.shippingAddress.addressFields.postalCode.attributes} encoding="off"/>
                 autocomplete="shipping postal-code">
         </div>
     </div>
@@ -94,6 +94,7 @@
         <div class="form-group">
             <label for="shippingPhoneNumber">${Resource.msg('field.shipping.address.phone','address',null)}</label>
             <input type="text" class="form-control shippingPhoneNumber" id="shippingPhoneNumber"
+                <isprint value=${pdict.forms.shippingForm.addressFields.phone.attributes} encoding="off"/>
                    name="shippingPhoneNumber">
         </div>
     </div>

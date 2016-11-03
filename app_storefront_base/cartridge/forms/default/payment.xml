@@ -35,22 +35,22 @@
 
     <!-- TODO: Add Payment information here -->
     <field formid="cardNumber" label="profile.cardnumber" type="string" mandatory="true" binding="cardNumber"
-           max-length="16" missing-error="address.cardnumber.missing" range-error="address.field.invalid"/>
+           max-length="16" missing-error="address.cardnumber.missing" />
 
     <field formid="expirationYear" label="profile.expirationyear" type="string" mandatory="true"
            binding="expirationYear"
-           max-length="4" missing-error="address.expirationyear.missing" range-error="address.field.invalid"/>
+           max-length="4" missing-error="address.expirationyear.missing" />
 
     <field formid="expirationMonth" label="profile.expirationmonth" type="string" mandatory="true"
            binding="expirationMonth"
-           max-length="2" missing-error="address.expirationmonth.missing" range-error="address.field.invalid"/>
+           max-length="2" missing-error="address.expirationmonth.missing" />
 
     <field formid="securityCode" label="profile.securitycode" type="string" mandatory="true" binding="securityCode"
-           max-length="3" missing-error="address.securitycode.missing" range-error="address.field.invalid"/>
+           max-length="3" missing-error="address.securitycode.missing" />
 
     <field formid="email" label="profile.email" type="string" mandatory="true" binding="email"
-           max-length="4" missing-error="address.email.missing" range-error="address.field.invalid"/>
+           max-length="254" missing-error="address.email.missing" />
 
     <field formid="phone" label="profile.phone" description="address.phone.example" type="string" mandatory="true"
-           binding="phone" max-length="20" missing-error="address.phone.missing" range-error="address.field.invalid"/>
+           binding="phone" max-length="20" missing-error="address.phone.missing" />
 </form>
