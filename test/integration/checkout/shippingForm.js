@@ -1,9 +1,13 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
-//1. Jewelery to cart with MA should show sur charge
-//2. AK state, ground shipping is not available.
 
+/**
+ * Test cases :
+ * 1. Jewelery to cart with MA should show sur charge
+ * 2. AK state, ground shipping is not available.
+ * 3. add multiple products to Cart
+ */
 
 describe('Shipping Form', function () {
     this.timeout(5000);
@@ -83,14 +87,12 @@ describe('Shipping Form', function () {
                 // Handle response from request #2
                 .then(function (response2) {
                     assert.equal(response2.statusCode, 200, 'Expected statusCode to be 200.');
-                    //console.log('response2 body = ' + response2.body);
                     var bodyAsJson = JSON.parse(response2.body);
 
                     assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(bodyAsJson.shipping, ExpectedResBody.shipping, 'Actual response.shipping not as expected.');
                     done();
-                })
-
+                });
         });
-    })
-})
+    });
+});
