@@ -79,6 +79,41 @@
             $('.shipping-method-price').text(totals.totalShippingCost);
         }
 
+
+        /**
+         * Display error messages and highlight form fields with errors.
+         * @param {Object} fieldErrors - the fields with errors
+         */
+        function shippingFormError(fieldErrors) { // eslint-disable-line
+            // Display error messages and highlight form fields with errors.
+        }
+
+        /**
+         * Handle response from the server for valid or invalid form fields.
+         * @param {Object} defer - the deferred object which will resolve on success or reject.
+         * @param {Object} data - the response data with the invalid form fields or
+         *  valid model data.
+         */
+        function shippingFormResponse(defer, data) {
+            // look for field validation errors
+            if (data.shippingFormErrors) {
+                // TODO: placeholder to highlight fields with errors
+                shippingFormError(data.shippingFormErrors);
+                defer.reject(data);
+            } else {
+                //
+                // Populate the Address Summary
+                //
+                var address = data.shippingData.shippingAddress;
+                var selectedShippingMethod =
+                    data.shippingData.selectedShippingMethod;
+                populateSummary('.shipping .address-summary', address);
+                updateShippingSummary(selectedShippingMethod, data.totals);
+                updateTotals(data.totals);
+                defer.resolve(data);
+            }
+        }
+
         //
         // Local member methods of the Checkout plugin
         //
@@ -93,34 +128,26 @@
              */
             updateStage: function () {
                 var stage = checkoutStages[members.currentStage];
+                var defer = $.Deferred(); // eslint-disable-line
 
                 if (stage === 'shipping') {
                     //
                     // Submit the Shipiing Address Form
                     //
-                    return $.ajax({
+                    $.ajax({
                         url: $('#dwfrm_singleShipping').attr('action'),
                         method: 'POST',
                         data: $('#dwfrm_singleShipping').serialize(),
                         success: function (data) {
-                            // look for field validation errors
-                            if (data.shippingFormErrors) {
-                                // TODO: placeholder to highlight fields with errors
-                            } else {
-                                //
-                                // Populate the Address Summary
-                                //
-                                var address = data.shippingData.shippingAddress;
-                                var selectedShippingMethod =
-                                    data.shippingData.selectedShippingMethod;
-                                populateSummary('.shipping .address-summary', address);
-                                updateShippingSummary(selectedShippingMethod, data.totals);
-                                updateTotals(data.totals);
-                            }
+                            shippingFormResponse(defer, data);
                         },
                         error: function () {
+                            // Server error submitting form
+                            defer.reject();
                         }
                     });
+
+                    return defer;
                 } else if (stage === 'payment') {
                     //
                     // Submit the Billing Address Form
@@ -340,6 +367,7 @@
                 });
 
                 promise.fail(function () {
+                    // show errors
                 });
             },
 
