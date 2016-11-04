@@ -9,6 +9,8 @@ export const NUMBER_OF_ITEMS = '.number-of-items';
 export const SHIPPING_COST = '.shipping-cost';
 export const TAX_TOTAL = '.tax-total';
 export const SUB_TOTAL = '.sub-total';
+export const SHIPPING_METHODS = '.shippingMethods';
+export const SHIPPING_METHOD_OPTIONS = '.shippingMethods  > option';
 
 const basePath = '/cart';
 
@@ -74,6 +76,26 @@ export function getTotalPriceByRow(rowNum) {
         .then(lineItemPrices => {
             return lineItemPrices[1];
         });
+}
+
+/**
+ * return a boolean indicating whether the option at the specified index is selected.
+ * @param {number} index, list index start with 1
+ * @returns {boolean} true if the option at the specified index is selected, false otherwise
+ */
+export function isShippingMethodSelectedAtIndex(index) {
+    let selector = SHIPPING_METHOD_OPTIONS + ':nth-child(' + index + ')';
+    return browser.isSelected(selector);
+}
+
+/**
+ * return the shipping method.
+ * @param {number} index, list index start with 1
+ * @returns {string} the shipping method at the specified index
+ */
+export function getShippingMethodAtIndex(index) {
+    let selector = SHIPPING_METHOD_OPTIONS + ':nth-child(' + index + ')';
+    return browser.getText(selector);
 }
 
 /**
