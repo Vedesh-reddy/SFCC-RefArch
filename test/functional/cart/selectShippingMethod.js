@@ -52,7 +52,8 @@ describe('Cart - Selecting Shipping Methods', () => {
         before(() => {
             return browser.url(productVariant1.getUrlResourcePath())
                 .then(() => productDetailPage.clickAddToCartButton())
-                .then(() => cartPage.navigateTo());
+                .then(() => cartPage.navigateTo())
+                .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 0));
         });
 
         after(() => cartPage.emptyCart());
@@ -157,8 +158,73 @@ describe('Cart - Selecting Shipping Methods', () => {
                 });
         });
 
+        it('Should be able to select different shipping method - Overnight.', function () {
+            const shipCostMap = {
+                'x_default': '$19.99',
+                'en_GB': '£14.99',
+                'fr_FR': '14,99 €',
+                'it_IT': '€ 14,99',
+                'ja_JP': '¥ 38',
+                'zh_CN': '¥37.99'
+            };
+
+            const totalTaxMap = {
+                'x_default': '$10.45',
+                'en_GB': '£9.00',
+                'fr_FR': '9,00 €',
+                'it_IT': '€ 9,00',
+                'ja_JP': '¥ 17',
+                'zh_CN': '¥18.50'
+            };
+
+            const expectShipCost = shipCostMap[locale];
+            const expectTotalTax = totalTaxMap[locale];
+
+            let prevShipCost;
+
+            return browser.getText(cartPage.SHIPPING_COST)
+                .then(shippingCost => {
+                    prevShipCost = shippingCost;
+                })
+                .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 2))
+                .then(() => cartPage.isShippingMethodSelectedAtIndex(3))
+                .then(selected => {
+                    assert.isTrue(selected, 'Expected Overnight method to be selected but it is not.');
+                })
+                .then(() => {
+                    return browser.waitUntil(() => {
+                        return browser.getText(cartPage.SHIPPING_COST)
+                            .then(text => {
+                                return text !== prevShipCost;
+                            });
+                    }, 1000, 'expected text to be different after 1s');
+                })
+                .then(() => browser.getText(cartPage.SHIPPING_COST))
+                .then(shippingCost => {
+                    assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                })
+                .then(() => browser.getText(cartPage.TAX_TOTAL))
+                .then(taxTotal => {
+                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                })
+                .then(() => browser.getText(cartPage.SUB_TOTAL))
+                .then(subTotal => {
+                    const expectedUnitPrice1 = prodIdUnitPricesMap[productVariantId1].list;
+                    const listPriceValue1 = pricingHelpers.getCurrencyValue(expectedUnitPrice1, locale);
+
+                    const shipCostValue = pricingHelpers.getCurrencyValue(expectShipCost, locale);
+
+                    const totalTaxValue = pricingHelpers.getCurrencyValue(expectTotalTax, locale);
+
+                    const expectedEstimatedTotal = listPriceValue1 + shipCostValue + totalTaxValue;
+                    const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedEstimatedTotal.toString(), locale);
+
+                    assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
+                });
+        });
+
         it('Should be able to select different shipping method - Store Pickup.', function () {
-            const shipCostStorePickup = {
+            const shipCostMap = {
                 'x_default': '$0.00',
                 'en_GB': '£0.00',
                 'fr_FR': '0,00 €',
@@ -176,7 +242,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 'zh_CN': '¥20.00'
             };
 
-            const expectShipCost = shipCostStorePickup[locale];
+            const expectShipCost = shipCostMap[locale];
             const expectTotalTax = totalTaxMap[locale];
 
             let prevShipCost;
@@ -189,6 +255,136 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(() => cartPage.isShippingMethodSelectedAtIndex(4))
                 .then(selected => {
                     assert.isTrue(selected, 'Expected Store Pickup method to be selected but it is not.');
+                })
+                .then(() => {
+                    return browser.waitUntil(() => {
+                        return browser.getText(cartPage.SHIPPING_COST)
+                            .then(text => {
+                                return text !== prevShipCost;
+                            });
+                    }, 1000, 'expected text to be different after 1s');
+                })
+                .then(() => browser.getText(cartPage.SHIPPING_COST))
+                .then(shippingCost => {
+                    assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                })
+                .then(() => browser.getText(cartPage.TAX_TOTAL))
+                .then(taxTotal => {
+                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                })
+                .then(() => browser.getText(cartPage.SUB_TOTAL))
+                .then(subTotal => {
+                    const expectedUnitPrice1 = prodIdUnitPricesMap[productVariantId1].list;
+                    const listPriceValue1 = pricingHelpers.getCurrencyValue(expectedUnitPrice1, locale);
+
+                    const shipCostValue = pricingHelpers.getCurrencyValue(expectShipCost, locale);
+
+                    const totalTaxValue = pricingHelpers.getCurrencyValue(expectTotalTax, locale);
+
+                    const expectedEstimatedTotal = listPriceValue1 + shipCostValue + totalTaxValue;
+                    const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedEstimatedTotal.toString(), locale);
+
+                    assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
+                });
+        });
+
+        it('Should be able to select different shipping method - Express.', function () {
+            const shipCostMap = {
+                'x_default': '$22.99',
+                'en_GB': '£17.24',
+                'fr_FR': '17,24 €',
+                'it_IT': '€ 17,24',
+                'ja_JP': '¥ 41',
+                'zh_CN': '¥40.50'
+            };
+
+            const totalTaxMap = {
+                'x_default': '$10.60',
+                'en_GB': '£9.11',
+                'fr_FR': '9,11 €',
+                'it_IT': '€ 9,11',
+                'ja_JP': '¥ 18',
+                'zh_CN': '¥19.50'
+            };
+
+            const expectShipCost = shipCostMap[locale];
+            const expectTotalTax = totalTaxMap[locale];
+
+            let prevShipCost;
+
+            return browser.getText(cartPage.SHIPPING_COST)
+                .then(shippingCost => {
+                    prevShipCost = shippingCost;
+                })
+                .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 4))
+                .then(() => cartPage.isShippingMethodSelectedAtIndex(5))
+                .then(selected => {
+                    assert.isTrue(selected, 'Expected Express method to be selected but it is not.');
+                })
+                .then(() => {
+                    return browser.waitUntil(() => {
+                        return browser.getText(cartPage.SHIPPING_COST)
+                            .then(text => {
+                                return text !== prevShipCost;
+                            });
+                    }, 1000, 'expected text to be different after 1s');
+                })
+                .then(() => browser.getText(cartPage.SHIPPING_COST))
+                .then(shippingCost => {
+                    assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                })
+                .then(() => browser.getText(cartPage.TAX_TOTAL))
+                .then(taxTotal => {
+                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                })
+                .then(() => browser.getText(cartPage.SUB_TOTAL))
+                .then(subTotal => {
+                    const expectedUnitPrice1 = prodIdUnitPricesMap[productVariantId1].list;
+                    const listPriceValue1 = pricingHelpers.getCurrencyValue(expectedUnitPrice1, locale);
+
+                    const shipCostValue = pricingHelpers.getCurrencyValue(expectShipCost, locale);
+
+                    const totalTaxValue = pricingHelpers.getCurrencyValue(expectTotalTax, locale);
+
+                    const expectedEstimatedTotal = listPriceValue1 + shipCostValue + totalTaxValue;
+                    const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedEstimatedTotal.toString(), locale);
+
+                    assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
+                });
+        });
+
+        it('Should be able to select different shipping method - USPS.', function () {
+            const shipCostMap = {
+                'x_default': '$7.99',
+                'en_GB': '£5.99',
+                'fr_FR': '5,99 €',
+                'it_IT': '€ 5,99',
+                'ja_JP': '¥ 14',
+                'zh_CN': '¥13.99'
+            };
+
+            const totalTaxMap = {
+                'x_default': '$9.85',
+                'en_GB': '£8.49',
+                'fr_FR': '8,49 €',
+                'it_IT': '€ 8,49',
+                'ja_JP': '¥ 16',
+                'zh_CN': '¥22.00'
+            };
+
+            const expectShipCost = shipCostMap[locale];
+            const expectTotalTax = totalTaxMap[locale];
+
+            let prevShipCost;
+
+            return browser.getText(cartPage.SHIPPING_COST)
+                .then(shippingCost => {
+                    prevShipCost = shippingCost;
+                })
+                .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 5))
+                .then(() => cartPage.isShippingMethodSelectedAtIndex(6))
+                .then(selected => {
+                    assert.isTrue(selected, 'Expected USPS method to be selected but it is not.');
                 })
                 .then(() => {
                     return browser.waitUntil(() => {
@@ -272,7 +468,7 @@ describe('Cart - Selecting Shipping Methods', () => {
         });
 
         it('Should not have surcharge included in shipping cost for shipping method - 2 Day Express.', function () {
-            let shipCostStorePickup = {
+            let shipCostMap = {
                 'x_default': '$15.99',
                 'en_GB': '£11.99',
                 'fr_FR': '11,99 €',
@@ -290,7 +486,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 'zh_CN': '¥25.00'
             };
 
-            const expectShipCost = shipCostStorePickup[locale];
+            const expectShipCost = shipCostMap[locale];
             const expectTotalTax = totalTaxMap[locale];
 
             let prevShipCost;
