@@ -111,7 +111,7 @@ function validateFields(form, formKeys) {
     formKeys.forEach(function (key) {
         if (form[key] instanceof Object) {
             if (form[key].valid === false) {
-                result[key] = form[key].valid;
+                result[form[key].htmlName] = form[key].valid;
             }
         }
     });
@@ -171,7 +171,7 @@ function validateShippingForm(form) {
         'address1',
         'address2',
         'city',
-        'postal',
+        'postalCode',
         'country',
         'states'
     ];
@@ -249,7 +249,7 @@ server.post('SubmitShipping', function (req, res, next) {
                     billingAddress.setAddress1(shippingData.address.address1);
                     billingAddress.setAddress2(shippingData.address.address2);
                     billingAddress.setCity(shippingData.address.city);
-                    billingAddress.setPostalCode(shippingData.address.postal);
+                    billingAddress.setPostalCode(shippingData.address.postalCode);
                     billingAddress.setStateCode(shippingData.address.stateCode);
                     billingAddress.setCountryCode(shippingData.address.countryCode);
                     billingAddress.setPhone(shippingData.address.phone);

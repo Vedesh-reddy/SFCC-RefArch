@@ -86,6 +86,19 @@
          */
         function shippingFormError(fieldErrors) { // eslint-disable-line
             // Display error messages and highlight form fields with errors.
+            $.each(fieldErrors, function (attr) {
+                $('.shipping-form *[name=' + attr + ']')
+                    .parents('.form-group').first().toggleClass('has-danger');
+            });
+        }
+
+        /**
+         * Clear the form errors.
+         * @param {string} parentSelector - the parent form selector.
+         */
+        function clearPreviousErrors(parentSelector) {
+            $('*[name]', parentSelector)
+                .parents('.form-group').first().toggleClass('has-danger');
         }
 
         /**
@@ -131,6 +144,11 @@
                 var defer = $.Deferred(); // eslint-disable-line
 
                 if (stage === 'shipping') {
+                    //
+                    // Clear Previous Errors
+                    //
+                    clearPreviousErrors('.shipping-form');
+
                     //
                     // Submit the Shipiing Address Form
                     //
