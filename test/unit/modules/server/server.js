@@ -146,4 +146,18 @@ describe('server', function () {
         var route = server.get('test', function () {});
         assert.isTrue(route instanceof Route);
     });
+    it('should redirect if requested in BeforeComplete', function (done) {
+        server.get('test', function (req, res, next) {
+            this.on('route:BeforeComplete', function (r, response) {
+                response.base.redirect = function (text) { // eslint-disable-line no-param-reassign
+                    assert.equal(text, 'test');
+                    done();
+                };
+                response.redirect('test');
+            });
+            next();
+        });
+        var exports = server.exports();
+        exports.test();
+    });
 });
