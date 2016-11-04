@@ -98,7 +98,7 @@
          */
         function clearPreviousErrors(parentSelector) {
             $('*[name]', parentSelector)
-                .parents('.form-group').first().toggleClass('has-danger');
+                .parents('.form-group').removeClass('has-danger');
         }
 
         /**
