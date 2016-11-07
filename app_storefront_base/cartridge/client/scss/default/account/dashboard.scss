@@ -1,9 +1,14 @@
 @import "../variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
+@import "account";
 
 .card-footer-border {
     border-top: 1px dashed $horizontal-border-grey;
+}
+
+.card-make-default-link {
+    margin-top: 1rem;
 }
 
 .dashboard-page-header-divider {
@@ -20,23 +25,6 @@
         margin-top: 1.25rem;
         margin-bottom: 1.25rem;
     }
-}
-
-.dashboard-cards-header-link {
-    color: $brand-color;
-    float: right;
-    text-decoration: underline;
-}
-
-.dashboard-cards-footer-link {
-    color: $brand-color;
-    text-decoration: underline;
-}
-
-.dashboard-cards-header {
-    display: inline;
-    font-size: 1.125rem;
-    font-weight: bold;
 }
 
 .dashboard-cards-block-title {
@@ -70,18 +58,4 @@
 .dashboard-order-card-image {
     width: 7rem;
     padding-right: 1rem;
-}
-
-.card-info-group {
-    p {
-        margin-bottom: 0;
-    }
-
-    div {
-        margin-bottom: 1rem;
-    }
-
-    div:last-child {
-        margin-bottom: 0;
-    }
 }

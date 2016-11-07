@@ -1,0 +1,10 @@
+@mixin delete-card-button() {
+    background-color: $light-gray;
+    border: none;
+    color: $slightly-darker-gray;
+    font-size: 1.625em;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+}

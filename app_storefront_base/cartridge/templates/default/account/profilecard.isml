@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header">
-        <p class="dashboard-cards-header">${Resource.msg('label.profile','account',null)}</p>
-        <a href="${URLUtils.url('Account-EditProfile')}" class="dashboard-cards-header-link">${Resource.msg('link.edit','account',null)}</a>
+        <h4 class="float-xs-left">${Resource.msg('label.profile','account',null)}</h4>
+        <a href="${URLUtils.url('Account-EditProfile')}" class="float-xs-right">${Resource.msg('link.edit','account',null)}</a>
     </div>
     <div class="card-block card-info-group">
         <div>

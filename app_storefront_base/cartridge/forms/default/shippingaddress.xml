@@ -1,29 +1,31 @@
 <?xml version="1.0"?>
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19">
 
-    <field formid="firstName" label="profile.firstname" type="string" mandatory="true" binding="firstName"
-           max-length="50" missing-error="error.address.firstname.missing" range-error="error.address.firstname.range.invalid"/>
-    <field formid="lastName" label="profile.lastname" type="string" mandatory="true" binding="lastName" max-length="50"
-           missing-error="error.address.lastname.missing" range-error="error.address.lastname.range.invalid"/>
-    <field formid="address1" label="resource.address1" type="string" mandatory="true" binding="address1" max-length="50"
-           missing-error="error.address.address1.missing" range-error="error.address.address1.range.invalid"/>
-    <field formid="address2" label="resource.address2" type="string" mandatory="false" binding="address2"
-           max-length="50" range-error="error.address.address2.range.invalid"/>
-    <field formid="city" label="resource.city" type="string" mandatory="true" binding="city" min-length="2"
-           max-length="50" missing-error="error.address.city.missing" range-error="error.address.city.range.invalid"/>
+    <field formid="addressId" label="label.input.addressid" type="string" mandatory="true" 
+    	   max-length="20" missing-error="error.message.required" range-error="error.message.lessthan20"/>
+    <field formid="firstName" label="label.input.firstname.profile" type="string" mandatory="true" binding="firstName"
+           max-length="50" missing-error="error.message.required" range-error="error.message.lessthan50"/>
+    <field formid="lastName" label="label.input.lastname.profile" type="string" mandatory="true" binding="lastName" max-length="50"
+           missing-error="error.message.required" range-error="error.message.lessthan50"/>
+    <field formid="address1" label="label.input.address1" type="string" mandatory="true" binding="address1" max-length="50"
+           missing-error="error.message.required" range-error="error.message.lessthan50"/>
+    <field formid="address2" label="label.input.address2" type="string" mandatory="false" binding="address2"
+           max-length="50" range-error="error.message.lessthan50"/>
+    <field formid="city" label="label.input.city" type="string" mandatory="true" binding="city" min-length="2"
+           max-length="50" missing-error="error.message.required" range-error="error.message.lessthan50"/>
 
     <!--  postal code -->
-    <field formid="postalCode" label="resource.zipcode" type="string" mandatory="true" min-length="5" max-length="10"
+    <field formid="postalCode" label="label.input.zipcode" type="string" mandatory="true" min-length="5" max-length="10"
            regexp="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)"
            binding="postalCode"
-           range-error="error.address.postalCode.range.invalid"
-           missing-error="error.address.postalCode.missing"/>
+           range-error="error.message.between5and10"
+           missing-error="error.message.required"/>
 
     <!-- use set of supported shipping countries -->
-    <field formid="country" label="resource.country" type="string" mandatory="true" binding="countryCode"
-           missing-error="error.address.country.missing" value-error="error.address.field.invalid">
+    <field formid="country" label="label.input.country" type="string" mandatory="true" binding="countryCode"
+           missing-error="error.message.required">
         <options>
-            <option optionid="us" label="country.unitedstates" value="us"/>
+            <option optionid="us" label="select.option.country.unitedstates" value="us"/>
         </options>
     </field>
 
@@ -31,9 +33,9 @@
     <include formid="states" name="states"/>
 
     <!-- phone is mandatory for shipping addresses -->
-    <field formid="phone" label="profile.phone" description="address.phone.example" type="string" mandatory="true"
-           binding="phone" min-length="10" max-length="20" missing-error="error.address.phone.missing"
-           range-error="error.address.phone.range.invalid"/>
+    <field formid="phone" label="label.input.phonenumber" description="address.phone.example" type="string" mandatory="true"
+           binding="phone" min-length="10" max-length="20" missing-error="error.message.required"
+           range-error="error.message.between10and20"/>
 
     <!-- actions provided by the edit shipping address dialog -->
     <action formid="apply" valid-form="true"/>
