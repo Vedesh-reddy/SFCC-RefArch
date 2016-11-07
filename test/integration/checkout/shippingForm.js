@@ -102,16 +102,14 @@ describe('Shipping Form', function () {
             var variantPid1 = '708141677371';
             var cookieString;
             var myRequestAddProduct = {
-                url: '',
+                url: config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1,
                 method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequestAddProduct.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
-            var url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876';
             var myRequestCheckout = {
-                url: url,
+                url: config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876',
                 method: 'GET',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
