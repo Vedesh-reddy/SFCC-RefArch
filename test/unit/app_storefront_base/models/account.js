@@ -30,13 +30,15 @@ var currentCustomer = {
         email: 'jsnow@starks.com'
     },
     wallet: {
-        paymentInstrument: {
-            creditCardExpirationMonth: '3',
-            creditCardExpirationYear: '2019',
-            maskedCreditCardNumber: '***********4215',
-            creditCardType: 'Visa',
-            paymentMethod: 'CREDIT_CARD'
-        }
+        paymentInstruments: new ArrayList([
+            {
+                creditCardExpirationMonth: '3',
+                creditCardExpirationYear: '2019',
+                maskedCreditCardNumber: '***********4215',
+                creditCardType: 'Visa',
+                paymentMethod: 'CREDIT_CARD'
+            }
+        ])
     }
 };
 
@@ -80,6 +82,21 @@ var orderModel = {
             stateCode: 'MA'
         }
     },
+    items: new ArrayList([
+        {
+            product: {
+                getImage: function () {
+                    return {
+                        URL: {
+                            relative: function () {
+                                return 'Some String';
+                            }
+                        }
+                    };
+                }
+            }
+        }
+    ]),
     totals: {
         grandTotal: 125.99
     },
@@ -130,7 +147,7 @@ describe('account', function () {
 
         assert.equal(result.orderHistory.orderNumber, '00000204');
         assert.equal(result.orderHistory.creationDate, 'some Date');
-        assert.equal(result.orderHistory.orderStatus, 'NEW');
+        assert.equal(result.orderHistory.orderStatus, 'new');
         assert.equal(result.orderHistory.orderShippedTo.firstName, 'John');
         assert.equal(result.orderHistory.orderShippedTo.lastName, 'Snow');
         assert.equal(result.orderHistory.orderTotal, 125.99);
@@ -148,7 +165,7 @@ describe('account', function () {
     });
 
     it('should receive an account with null payment method', function () {
-        currentCustomer.wallet.paymentInstrument = null;
+        currentCustomer.wallet = null;
         var result = new AccountModel(currentCustomer);
         assert.equal(result.payment, null);
     });

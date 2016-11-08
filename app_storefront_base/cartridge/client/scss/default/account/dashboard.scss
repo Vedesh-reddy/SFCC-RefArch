@@ -1,0 +1,87 @@
+@import "../variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+.card-footer-border {
+    border-top: 1px dashed $horizontal-border-grey;
+}
+
+.dashboard-page-header-divider {
+    hr {
+        border-top: 1px solid #ccc;
+    }
+}
+
+.dashboard-page-heading {
+    margin-top: 0.625rem;
+    margin-bottom: 0.625rem;
+
+    @include media-breakpoint-up(md) {
+        margin-top: 1.25rem;
+        margin-bottom: 1.25rem;
+    }
+}
+
+.dashboard-cards-header-link {
+    color: $brand-color;
+    float: right;
+    text-decoration: underline;
+}
+
+.dashboard-cards-footer-link {
+    color: $brand-color;
+    text-decoration: underline;
+}
+
+.dashboard-cards-header {
+    display: inline;
+    font-size: 1.125rem;
+    font-weight: bold;
+}
+
+.dashboard-cards-block-title {
+    font-weight: bold;
+}
+
+.dashboard-info {
+    color: $gray-light;
+}
+
+.dashboard-order-card-details {
+
+    @include media-breakpoint-down(sm) {
+        padding-left: 0;
+    }
+}
+
+.dashboard-order-card-status {
+    text-transform: capitalize;
+}
+
+.dashboard-order-card-footer-columns {
+    padding: 0;
+}
+
+.dashboard-order-card-footer-value {
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.dashboard-order-card-image {
+    width: 7rem;
+    padding-right: 1rem;
+}
+
+.card-info-group {
+    p {
+        margin-bottom: 0;
+    }
+
+    div {
+        margin-bottom: 1rem;
+    }
+
+    div:last-child {
+        margin-bottom: 0;
+    }
+}

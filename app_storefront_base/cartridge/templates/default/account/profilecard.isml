@@ -1,0 +1,24 @@
+<div class="card">
+    <div class="card-header">
+        <p class="dashboard-cards-header">${Resource.msg('label.profile','account',null)}</p>
+        <a href="${URLUtils.url('Account-EditProfile')}" class="dashboard-cards-header-link">${Resource.msg('link.edit','account',null)}</a>
+    </div>
+    <div class="card-block card-info-group">
+        <div>
+            <p class="dashboard-info">${Resource.msg('label.profile.firstname','account',null)}</p>
+            <p>${pdict.profile.firstName}</p>
+        </div>
+        <div>
+            <p class="dashboard-info">${Resource.msg('label.profile.lastname','account',null)}</p>
+            <p>${pdict.profile.lastName}</p>
+        </div>
+        <div>
+            <p class="dashboard-info">${Resource.msg('label.profile.email','account',null)}</p>
+            <p>${pdict.profile.email}</p>
+        </div>
+        <div>
+            <p class="dashboard-info">${Resource.msg('label.profile.password','account',null)}</p>
+            <p>${pdict.profile.password}</p>
+        </div>
+    </div>
+</div>

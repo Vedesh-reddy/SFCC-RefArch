@@ -33,7 +33,7 @@ function getModel(req) {
         'creationDate desc',
         customerNo,
         Order.ORDER_STATUS_REPLACED
-		);
+	);
 
     var order = customerOrders.first();
 
@@ -47,14 +47,14 @@ function getModel(req) {
             shipmentShippingModel,
             shippingAddressModel
         );
-
+        var allProducts = order.allProductLineItems;
         var orderTotals = new Totals(order);
-        orderModel = new OrderModel(order, shippingModel, null, orderTotals, null);
+        orderModel = new OrderModel(order, shippingModel, null, orderTotals, allProducts);
     } else {
         orderModel = null;
     }
 
-    if (req.currentCustomer.addressBook) {
+    if (req.currentCustomer.addressBook.preferredAddress) {
         preferredAddressModel = new AddressModel(req.currentCustomer.addressBook.preferredAddress);
     } else {
         preferredAddressModel = null;
@@ -94,7 +94,6 @@ server.post('Login', locale, server.middleware.https, function (req, res, next) 
             loginFormError: true
         });
     }
-
     next();
 });
 

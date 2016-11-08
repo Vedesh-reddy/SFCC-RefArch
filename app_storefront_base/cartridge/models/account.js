@@ -1,5 +1,7 @@
 'use strict';
 
+var helper = require('~/cartridge/scripts/dwHelpers');
+
 /**
  * Creates a plain object that contains profile information
  * @param {Object} profile - current customer's profile
@@ -28,16 +30,24 @@ function getProfile(profile) {
 function getOrderHistory(orderModel) {
     var result;
     if (orderModel) {
+        var items = orderModel.items;
+        var firstItem = helper.first(items);
+        var firstItemImage = firstItem.product.getImage('small', 0);
         result = {
             orderNumber: orderModel.orderNumber,
             creationDate: orderModel.creationDate,
-            orderStatus: orderModel.orderStatus.displayValue,
+            orderStatus: orderModel.orderStatus.displayValue.toLowerCase(),
             orderShippedTo: {
                 firstName: orderModel.shipping.shippingAddress.firstName,
                 lastName: orderModel.shipping.shippingAddress.lastName
             },
             orderTotal: orderModel.totals.grandTotal,
-            totalOrderItems: orderModel.productQuantityTotal
+            totalOrderItems: orderModel.productQuantityTotal,
+            firstItem: {
+                src: firstItemImage.URL.relative().toString(),
+                alt: firstItemImage.alt,
+                title: firstItemImage.title
+            }
         };
     } else {
         result = null;
@@ -51,18 +61,20 @@ function getOrderHistory(orderModel) {
  * @returns {Object} object that contains info about the current customer's payment instrument
  */
 function getPayment(wallet) {
-    var result;
-    if (wallet.paymentInstrument) {
-        result = {
-            maskedCreditCardNumber: wallet.paymentInstrument.maskedCreditCardNumber,
-            creditCardType: wallet.paymentInstrument.creditCardType,
-            creditCardExpirationMonth: wallet.paymentInstrument.creditCardExpirationMonth,
-            creditCardExpirationYear: wallet.paymentInstrument.creditCardExpirationYear
-        };
-    } else {
-        result = null;
+    if (wallet) {
+        var paymentInstruments = wallet.paymentInstruments;
+        var paymentInstrument = helper.first(paymentInstruments);
+
+        if (paymentInstrument) {
+            return {
+                maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
+                creditCardType: paymentInstrument.creditCardType,
+                creditCardExpirationMonth: paymentInstrument.creditCardExpirationMonth,
+                creditCardExpirationYear: paymentInstrument.creditCardExpirationYear
+            };
+        }
     }
-    return result;
+    return null;
 }
 
 /**
