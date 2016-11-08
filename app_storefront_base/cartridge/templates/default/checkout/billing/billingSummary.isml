@@ -13,22 +13,24 @@
         </div>
 
         <!--- Payment information --->
-        <span class="summary-section-label">${Resource.msg('label.order.payment.info', 'confirmation', null)}</span><br>
-        <isloop items="${pdict.billing.payment.selectedPaymentInstruments}" var="payment">
-            <div class="summary-details">
-                <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
-                    <div>
+        <div class="summary-details">
+            <span class="summary-section-label">${Resource.msg('label.order.payment.info', 'confirmation', null)}</span><br>
+            <div class="payment-details">
+                <isloop items="${pdict.billing.payment.selectedPaymentInstruments}" var="payment">
+                    <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
+                        <div>
                         <span>${Resource.msg('msg.payment.type.credit', 'confirmation', null)}
                         ${payment.type}</span>
-                    </div>
-                    <div>
-                        ${payment.maskedCreditCardNumber}
-                    </div>
-                    <div>
-                        <span>${Resource.msg('msg.card.type.ending', 'confirmation', null)} ${payment.expirationMonth}/${payment.expirationYear}</span>
-                    </div>
-                </isif>
+                        </div>
+                        <div>
+                            ${payment.maskedCreditCardNumber}
+                        </div>
+                        <div>
+                            <span>${Resource.msg('msg.card.type.ending', 'confirmation', null)} ${payment.expirationMonth}/${payment.expirationYear}</span>
+                        </div>
+                    </isif>
+                </isloop>
             </div>
-        </isloop>
+        </div>
     </div>
 </div>

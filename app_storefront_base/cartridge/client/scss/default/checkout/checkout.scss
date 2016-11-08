@@ -52,6 +52,10 @@ $checkout-font-weight: 600;
     }
 }
 
+.error-message {
+    display: none;
+}
+
 .grand-total-label {
     font-weight: $checkout-font-weight;
 }

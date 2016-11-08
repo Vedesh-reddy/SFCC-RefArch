@@ -1,36 +1,44 @@
+<input type="hidden" class="form-control cardNumber" id="cardType"
+       name="${pdict.forms.billingForm.cardType.htmlName}"
+       value="Visa">
+
 <div class="row">
     <div class="col-xs-12">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.cardNumber.htmlName}">
             <label for="cardNumber">${Resource.msg('field.credit.card.number','creditCard',null)}</label>
             <input type="text" class="form-control cardNumber" id="cardNumber"
                 <isprint value=${pdict.forms.billingForm.cardNumber.attributes} encoding="off"/> >
+            <div class="form-control-feedback"></div>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.expirationYear.htmlName}">
             <label for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
             <input type="text" class="form-control expirationYear" id="expirationYear"
                 <isprint value=${pdict.forms.billingForm.expirationYear.attributes} encoding="off"/> >
+            <div class="form-control-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.expirationMonth.htmlName}">
             <label for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
             <input type="text" class="form-control expirationMonth" id="expirationMonth"
                 <isprint value=${pdict.forms.billingForm.expirationMonth.attributes} encoding="off"/> >
+            <div class="form-control-feedback"></div>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.securityCode.htmlName}">
             <label for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
             <input type="text" class="form-control securityCode" id="securityCode"
                 <isprint value=${pdict.forms.billingForm.securityCode.attributes} encoding="off"/> >
+            <div class="form-control-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
@@ -40,17 +48,19 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.email.htmlName}">
             <label for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
             <input type="text" class="form-control email" id="email"
                 <isprint value=${pdict.forms.billingForm.email.attributes} encoding="off"/> >
+            <div class="form-control-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.phone.htmlName}">
             <label for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
             <input type="text" class="form-control phone" id="phoneNumber"
                 <isprint value=${pdict.forms.billingForm.phone.attributes} encoding="off"/> >
+            <div class="form-control-feedback"></div>
         </div>
     </div>
 </div>

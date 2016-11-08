@@ -2,25 +2,26 @@
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19">
 
     <!-- TODO: Add billing-same-as-shipping information here -->
-    <field formid="billingSameAsShipping" label="profile.billingSameAsShipping" type="boolean"
-           binding="billingSameAsShipping" checked="true" />
+    <field formid="shippingAddressUseAsBillingAddress" label="profile.billingSameAsShipping" type="boolean"
+           binding="shippingAddressUseAsBillingAddress" checked="true" />
 
     <field formid="firstName" label="profile.firstname" type="string" mandatory="true" binding="firstName"
-           max-length="50" missing-error="address.firstname.missing" range-error="address.field.invalid"/>
+           max-length="50" missing-error="error.address.firstname.missing" range-error="error.address.firstname.range.invalid"/>
     <field formid="lastName" label="profile.lastname" type="string" mandatory="true" binding="lastName" max-length="50"
-           missing-error="address.lastname.missing" range-error="address.field.invalid"/>
+           missing-error="error.address.lastname.missing" range-error="error.address.lastname.range.invalid"/>
     <field formid="address1" label="resource.address1" type="string" mandatory="true" binding="address1" max-length="50"
-           missing-error="resource.addresserror" range-error="address.field.invalid"/>
+           missing-error="error.address.address1.missing" range-error="error.address.address1.range.invalid"/>
     <field formid="address2" label="resource.address2" type="string" mandatory="false" binding="address2"
-           max-length="50" range-error="address.field.invalid"/>
+           max-length="50" range-error="error.address.address2.range.invalid"/>
     <field formid="city" label="resource.city" type="string" mandatory="true" binding="city" min-length="2"
-           max-length="50" missing-error="address.city.missing" range-error="address.field.invalid"/>
+           max-length="50" missing-error="error.address.city.missing" range-error="error.address.city.range.invalid"/>
 
     <!--  postal code -->
     <field formid="postal" label="resource.zipcode" type="string" mandatory="true" min-length="5" max-length="10"
            regexp="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)"
            binding="postalCode"
-           missing-error="resource.errorzip"/>
+           range-error="error.address.postalCode.range.invalid"
+           missing-error="error.address.postalCode.missing"/>
 
     <!-- use set of supported shipping countries -->
     <field formid="country" label="resource.country" type="string" mandatory="true" binding="countryCode"
@@ -33,24 +34,30 @@
     <!-- use global state list -->
     <include formid="states" name="states"/>
 
+    <!-- shipping method selection -->
+    <field formid="paymentMethod" type="string" mandatory="true" />
+
     <!-- TODO: Add Payment information here -->
+    <field formid="cardType" label="profile.cardtype" type="string" mandatory="true" binding="cardType"
+           max-length="16" missing-error="error.card.info.missing" />
+
     <field formid="cardNumber" label="profile.cardnumber" type="string" mandatory="true" binding="cardNumber"
-           max-length="16" missing-error="address.cardnumber.missing" />
+           max-length="16" missing-error="error.card.info.missing" />
 
     <field formid="expirationYear" label="profile.expirationyear" type="string" mandatory="true"
            binding="expirationYear"
-           max-length="4" missing-error="address.expirationyear.missing" />
+           max-length="4" missing-error="error.card.info.missing" />
 
     <field formid="expirationMonth" label="profile.expirationmonth" type="string" mandatory="true"
            binding="expirationMonth"
-           max-length="2" missing-error="address.expirationmonth.missing" />
+           max-length="2" missing-error="error.card.info.missing" />
 
     <field formid="securityCode" label="profile.securitycode" type="string" mandatory="true" binding="securityCode"
-           max-length="3" missing-error="address.securitycode.missing" />
+           max-length="3" missing-error="error.card.info.missing" />
 
     <field formid="email" label="profile.email" type="string" mandatory="true" binding="email"
-           max-length="254" missing-error="address.email.missing" />
+           max-length="254" missing-error="error.card.info.missing" />
 
     <field formid="phone" label="profile.phone" description="address.phone.example" type="string" mandatory="true"
-           binding="phone" max-length="20" missing-error="address.phone.missing" />
+           binding="phone" max-length="20" missing-error="error.card.info.missing" />
 </form>

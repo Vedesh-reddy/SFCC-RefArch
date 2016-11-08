@@ -39,6 +39,13 @@
                 <!- Checkout Forms: Shipping, Payment, Coupons, Billing, etc -->
                 <!- -------------------------------------------------------------------------------- -->
 
+                <div class="alert alert-danger alert-dismissible fade in error-message" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <p class="error-message-text"></p>
+                </div>
+
                 <!-- Step 1: Shipping -->
                 <isinclude template="checkout/shipping/shipping" />
                 <isinclude template="checkout/shipping/shippingSummary" />
