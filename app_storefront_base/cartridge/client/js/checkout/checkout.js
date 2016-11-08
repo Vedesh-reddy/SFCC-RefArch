@@ -79,16 +79,19 @@
             $('.shipping-method-price').text(totals.totalShippingCost);
         }
 
-
         /**
          * Display error messages and highlight form fields with errors.
+         * @param {string} parentSelector - the form which contains the fields
          * @param {Object} fieldErrors - the fields with errors
          */
-        function shippingFormError(fieldErrors) { // eslint-disable-line
+        function loadFormErrors(parentSelector, fieldErrors) { // eslint-disable-line
             // Display error messages and highlight form fields with errors.
             $.each(fieldErrors, function (attr) {
-                $('.shipping-form *[name=' + attr + ']')
-                    .parents('.form-group').first().toggleClass('has-danger');
+                $('*[name=' + attr + ']', parentSelector)
+                    .parents('.form-group').first()
+                    .toggleClass('has-danger')
+                    .find('.form-control-feedback')
+                    .html(fieldErrors[attr].message);
             });
         }
 
@@ -110,8 +113,8 @@
         function shippingFormResponse(defer, data) {
             // look for field validation errors
             if (data.shippingFormErrors) {
-                // TODO: placeholder to highlight fields with errors
-                shippingFormError(data.shippingFormErrors);
+                // highlight fields with errors
+                loadFormErrors('.shipping-form', data.shippingFormErrors);
                 defer.reject(data);
             } else {
                 //

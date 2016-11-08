@@ -2,8 +2,8 @@
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19">
 
     <!-- TODO: Add billing-same-as-shipping information here -->
-    <field formid="billingSameAsShipping" label="profile.billingSameAsShipping" type="boolean" mandatory="true"
-           binding="billingSameAsShipping" missing-error="address.billingSameAsShipping.missing" checked="true" />
+    <field formid="billingSameAsShipping" label="profile.billingSameAsShipping" type="boolean"
+           binding="billingSameAsShipping" checked="true" />
 
     <field formid="firstName" label="profile.firstname" type="string" mandatory="true" binding="firstName"
            max-length="50" missing-error="address.firstname.missing" range-error="address.field.invalid"/>
