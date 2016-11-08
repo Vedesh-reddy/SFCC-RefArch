@@ -232,3 +232,16 @@ $checkout-font-weight: 600;
         }
     }
 }
+
+.form-group {
+    .form-control-feedback {
+        display: none;
+    }
+
+    &.has-danger {
+        .form-control-feedback {
+            display: block;
+        }
+    }
+}
+

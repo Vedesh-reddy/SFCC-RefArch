@@ -2,6 +2,7 @@
 
 var server = require('server');
 var locale = require('~/cartridge/scripts/middleware/locale');
+var Resource = require('dw/web/Resource');
 
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
@@ -111,7 +112,10 @@ function validateFields(form, formKeys) {
     formKeys.forEach(function (key) {
         if (form[key] instanceof Object) {
             if (form[key].valid === false) {
-                result[form[key].htmlName] = form[key].valid;
+                result[form[key].htmlName] = {
+                    valid: false,
+                    message: Resource.msg(form[key].error, 'address', null)
+                };
             }
         }
     });
