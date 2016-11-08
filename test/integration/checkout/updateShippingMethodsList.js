@@ -10,29 +10,37 @@ var config = require('../it.config');
  * 3. When Cart has over $100 product, shipping cost should be more for the same shipping method as #3 case
  */
 
-describe('Shipping Form', function () {
+describe('Select different State in Shipping Form', function () {
     this.timeout(5000);
 
-    describe('UpdateShippingMethodList', function () {
-        it('should return 2 applicableShippingMethods for AK state', function (done) {
-            var cookieJar = request.jar();
+    describe('select state=AK in Shipping Form', function () {
+        var cookieJar = request.jar();
+        var cookie;
+        before(function () {
             var qty1 = 1;
             var variantPid1 = '708141677371';
             var cookieString;
-            var myRequestAddProduct = {
-                url: config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1,
+
+            var myRequest = {
+                url: '',
                 method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            var myRequestCheckout = {
-                url: config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=AK&postal=09876',
-                method: 'GET',
-                rejectUnauthorized: false,
-                resolveWithFullResponse: true,
-                jar: cookieJar
-            };
+            myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
+
+            return request(myRequest)
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    cookieString = cookieJar.getCookieString(myRequest.url);
+                })
+                .then(function () {
+                    cookie = request.cookie(cookieString);
+                    cookieJar.setCookie(cookie, myRequest.url);
+                });
+        });
+        it('should return 2 applicableShippingMethods for AK state', function (done) {
             var ExpectedResBody = {
                 'totals': {
                     'subTotal': '$49.99',
@@ -70,23 +78,19 @@ describe('Shipping Form', function () {
                     }
                 }
             };
-
-            return request(myRequestAddProduct)
+            var myRequest = {
+                url: '',
+                method: 'GET',
+                rejectUnauthorized: false,
+                resolveWithFullResponse: true,
+                jar: cookieJar
+            };
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=AK&postal=09876';
+            return request(myRequest)
+                // Handle response from request
                 .then(function (response) {
                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                    cookieString = cookieJar.getCookieString(myRequestAddProduct.url);
-                })
-                .then(function () {
-                    var cookie = request.cookie(cookieString);
-                    cookieJar.setCookie(cookie, myRequestCheckout.url);
-
-                    return request(myRequestCheckout);
-                })
-
-                // Handle response from request #2
-                .then(function (response2) {
-                    assert.equal(response2.statusCode, 200, 'Expected statusCode to be 200.');
-                    var bodyAsJson = JSON.parse(response2.body);
+                    var bodyAsJson = JSON.parse(response.body);
 
                     assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(bodyAsJson.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
@@ -95,26 +99,37 @@ describe('Shipping Form', function () {
                     done();
                 });
         });
+    });
 
-        it('should return 4 applicableShippingMethods for MA state', function (done) {
-            var cookieJar = request.jar();
+    describe('select state=MA in Shipping Form', function () {
+        var cookieJar = request.jar();
+        var cookie;
+        before(function () {
             var qty1 = 1;
             var variantPid1 = '708141677371';
             var cookieString;
-            var myRequestAddProduct = {
-                url: config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1,
+
+            var myRequest = {
+                url: '',
                 method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            var myRequestCheckout = {
-                url: config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876',
-                method: 'GET',
-                rejectUnauthorized: false,
-                resolveWithFullResponse: true,
-                jar: cookieJar
-            };
+            myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
+
+            return request(myRequest)
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    cookieString = cookieJar.getCookieString(myRequest.url);
+                })
+                .then(function () {
+                    cookie = request.cookie(cookieString);
+                    cookieJar.setCookie(cookie, myRequest.url);
+                });
+        });
+
+        it('should return 4 applicableShippingMethods for MA state', function (done) {
             var ExpectedResBody = {
                 'totals': {
                     'subTotal': '$49.99',
@@ -166,22 +181,19 @@ describe('Shipping Form', function () {
                     }
                 }
             };
-            return request(myRequestAddProduct)
+            var myRequest = {
+                url: '',
+                method: 'GET',
+                rejectUnauthorized: false,
+                resolveWithFullResponse: true,
+                jar: cookieJar
+            };
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876';
+            return request(myRequest)
+            // Handle response from request
                 .then(function (response) {
                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                    cookieString = cookieJar.getCookieString(myRequestAddProduct.url);
-                })
-                .then(function () {
-                    var cookie = request.cookie(cookieString);
-                    cookieJar.setCookie(cookie, myRequestCheckout.url);
-
-                    return request(myRequestCheckout);
-                })
-
-                // Handle response from request #2
-                .then(function (response2) {
-                    assert.equal(response2.statusCode, 200, 'Expected statusCode to be 200.');
-                    var bodyAsJson = JSON.parse(response2.body);
+                    var bodyAsJson = JSON.parse(response.body);
                     assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(bodyAsJson.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
                     assert.deepEqual(bodyAsJson.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
@@ -189,27 +201,33 @@ describe('Shipping Form', function () {
                     done();
                 });
         });
-        it('bigger order should cost more shipping for the same shipping method', function (done) {
-            var cookieJar = request.jar();
+    });
+    describe('select State=MA with more than $100 order in Shipping Form', function () {
+        var cookieJar = request.jar();
+        var cookie;
+        before(function () {
             var qty1 = 3;
             var variantPid1 = '708141677371';
             var cookieString;
-            var myRequestAddProduct = {
+            var myRequest = {
                 url: '',
                 method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequestAddProduct.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
-            var url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876';
-            var myRequestCheckout = {
-                url: url,
-                method: 'GET',
-                rejectUnauthorized: false,
-                resolveWithFullResponse: true,
-                jar: cookieJar
-            };
+            myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
+            return request(myRequest)
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    cookieString = cookieJar.getCookieString(myRequest.url);
+                })
+                .then(function () {
+                    cookie = request.cookie(cookieString);
+                    cookieJar.setCookie(cookie, myRequest.url);
+                });
+        });
+        it('shipping cost should be increased for State=MA', function (done) {
             var ExpectedResBody = {
                 'totals': {
                     'subTotal': '$149.97',
@@ -261,22 +279,19 @@ describe('Shipping Form', function () {
                     }
                 }
             };
-            return request(myRequestAddProduct)
+            var myRequest = {
+                url: '',
+                method: 'GET',
+                rejectUnauthorized: false,
+                resolveWithFullResponse: true,
+                jar: cookieJar
+            };
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876';
+            return request(myRequest)
+            // Handle response from request
                 .then(function (response) {
                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                    cookieString = cookieJar.getCookieString(myRequestAddProduct.url);
-                })
-                .then(function () {
-                    var cookie = request.cookie(cookieString);
-                    cookieJar.setCookie(cookie, myRequestCheckout.url);
-
-                    return request(myRequestCheckout);
-                })
-
-                // Handle response from request #2
-                .then(function (response2) {
-                    assert.equal(response2.statusCode, 200, 'Expected statusCode to be 200.');
-                    var bodyAsJson = JSON.parse(response2.body);
+                    var bodyAsJson = JSON.parse(response.body);
                     assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(bodyAsJson.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
                     assert.deepEqual(bodyAsJson.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
