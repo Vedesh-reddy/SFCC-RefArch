@@ -79,7 +79,7 @@
                     <div class="card-header">
                         <span class="checkout-card-header">${Resource.msg('heading.order.summary', 'checkout', null)}</span>
                     </div>
-                    <div class="checkout-card-block">
+                    <div class="checkout-card-block order-total-summary">
                         <isinclude template="checkout/orderTotalSummary" />
                     </div>
                 </div>
