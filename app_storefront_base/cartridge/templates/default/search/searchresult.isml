@@ -3,7 +3,7 @@
 
         <!--- to display Product IDs --->
         <div class="col-md-10">
-            <isloop items="${pdict.productIds}" var="productId">
+            <isloop items="${pdict.productSearch.productIds}" var="productId">
                 ${productId}
             </isloop>
         </div>
