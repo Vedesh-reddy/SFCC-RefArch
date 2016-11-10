@@ -241,7 +241,7 @@
                                 .prop('id', 'shippingMethod-' + shippingMethod.ID)
                                 .prop('name', address.shippingMethodID.htmlName)
                                 .prop('value', shippingMethod.ID)
-                                .prop('checked', shippingMethod.ID === selected.ID);
+                                .attr('checked', shippingMethod.ID === selected.ID);
 
                             // set shipping method name
                             $('.display-name', tmpl).text(shippingMethod.displayName);
@@ -260,14 +260,10 @@
                         });
 
                         $('.order-total-summary')
-                            .find(' .shipping-cost')
-                            .text(data.totals.totalShippingCost)
-                            .find(' .tax-total')
-                            .text(data.totals.totalTax)
-                            .find(' .sub-total')
-                            .text(data.totals.subTotal)
-                            .find(' .grand-total-sum')
-                            .text(data.totals.grandTotal);
+                            .find('.shipping-cost').text(data.totals.totalShippingCost) // eslint-disable-line
+                            .find('.tax-total').text(data.totals.totalTax) // eslint-disable-line
+                            .find('.sub-total').text(data.totals.subTotal) // eslint-disable-line
+                            .find('.grand-total-sum').text(data.totals.grandTotal); // eslint-disable-line
                     }
                 });
             },
