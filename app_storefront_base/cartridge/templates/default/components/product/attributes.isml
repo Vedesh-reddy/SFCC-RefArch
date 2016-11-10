@@ -21,14 +21,18 @@ Template Notes:
             <isloop items="${attr.values}" var="attrValue">
                 <a href="${attrValue.url}">
                     <span data-attr-value="${attrValue.value}"
-                              data-selected="${attrValue.selected}"
-                              class="${attr.id}-value swatch-circle swatch-value"
-                              style="background-image: url(${attrValue.images['swatch'][0].url})"
-                              <isif condition="${attrValue.selectable}">
-                                  selectable
-                              <iselse>
-                                  unselectable
-                              </isif>
+                          class="
+                              ${attr.id}-value
+                              swatch-circle
+                              swatch-value
+                              <isif condition="${attrValue.selected}">selected</isif>
+                          "
+                          style="background-image: url(${attrValue.images['swatch'][0].url})"
+                          <isif condition="${attrValue.isSelectable}">
+                              selectable
+                          <iselse>
+                              unselectable
+                          </isif>
                     >
                     </span>
                 </a>

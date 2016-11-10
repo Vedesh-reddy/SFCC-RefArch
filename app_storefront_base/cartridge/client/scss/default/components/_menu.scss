@@ -83,6 +83,8 @@ $desktop-menu-breakpoint: md;
     .dropdown-menu {
         min-width: 150px;
         padding: 10px 20px;
+        // Temporary override of dropdown-menu until permanent value set
+        top: 65%;
 
         ul > li {
             list-style: none;

@@ -1,4 +1,4 @@
-<div class="card col-xs-6 col-md-4 product-tile">
+<div class="card col-xs-6 col-sm-4 product-tile">
     <div class="imageContainer">
         <a href="${pdict.urls.product}">
             <img class="card-img-top tile-image"

@@ -1,50 +1,52 @@
-<!--- Close button --->
-<div class="row">
-    <div class="refinements-close hidden-md-up">
-        <button class="pull-right close">
-            <span>${Resource.msg('button.close', 'search', null)}</span>
-            <i class="fa fa-close"></i>
-        </button>
-    </div>
-</div>
-
 <!--- Results count and Reset button --->
 <div class="row">
-    <div class="results-and-reset">
-        <span class="pull-left hidden-md-up result-count">
-            <isinclude template="search/results-count" />
-        </span>
+    <div class="secondary-bar">
         <a class="reset" href="${pdict.productSearch.resetLink}">
             ${Resource.msg('link.reset', 'search', null)}
         </a>
     </div>
 </div>
 
-<div class="row col-sm-12 refinements">
-    <isloop items="${pdict.productSearch.refinements}" var="refinement">
-        <!--- TODO:  This is a temporary condition until category refinements are finalized --->
-        <isif condition="${!refinement.isCategoryRefinement}">
-            <div class="collapsable-sm refinement ${refinement.displayName.toLowerCase()}">
-                <div class="title">
-                    <span>${refinement.displayName}</span>
+<div class="row">
+    <div class=" col-sm-12 refinements">
+        <isloop items="${pdict.productSearch.refinements}" var="refinement">
+            <!--- TODO:  This is a temporary condition until category refinements are finalized --->
+            <isif condition="${!refinement.isCategoryRefinement}">
+                <div class="collapsable-sm refinement ${refinement.displayName.toLowerCase()}">
+                    <div class="title">
+                        <span>${refinement.displayName}</span>
+                    </div>
+
+                    <!--- CATEGORY REFINEMENTS --->
+                    <isif condition="${refinement.isCategoryRefinement}">
+                        <isset name="categories" value="${refinement.values}" scope="page" />
+                        <isinclude template="search/refinements/categories" />
+                    </isif>
+
+                    <!--- ATTRIBUTE REFINEMENTS --->
+                    <isif condition="${refinement.isAttributeRefinement}">
+                        <isinclude template="search/refinements/attributes" />
+                    </isif>
+
+                    <!--- PRICE REFINEMENTS --->
+                    <isif condition="${refinement.isPriceRefinement}">
+                        <isinclude template="search/refinements/prices" />
+                    </isif>
                 </div>
+            </isif>
+        </isloop>
+    </div>
+</div>
 
-                <!--- CATEGORY REFINEMENTS --->
-                <isif condition="${refinement.isCategoryRefinement}">
-                    <isset name="categories" value="${refinement.values}" scope="page" />
-                    <isinclude template="search/refinements/categories" />
-                </isif>
-
-                <!--- ATTRIBUTE REFINEMENTS --->
-                <isif condition="${refinement.isAttributeRefinement}">
-                    <isinclude template="search/refinements/attributes" />
-                </isif>
-
-                <!--- PRICE REFINEMENTS --->
-                <isif condition="${refinement.isPriceRefinement}">
-                    <isinclude template="search/refinements/prices" />
-                </isif>
-            </div>
-        </isif>
-    </isloop>
+<!--- Close button --->
+<div class="row">
+    <div class="col-sm-12 header-bar hidden-md-up">
+        <div class="pull-left hidden-md-up result-count">
+            <isinclude template="search/results-count" />
+        </div>
+        <button class="pull-right close">
+            <span>${Resource.msg('button.close', 'search', null)}</span>
+            <i class="fa fa-close"></i>
+        </button>
+    </div>
 </div>

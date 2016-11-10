@@ -64,6 +64,7 @@
 
             a {
                 font-size: 1em;
+                text-decoration: none;
 
                 @include media-breakpoint-down(md) {
                     font-size: 0.9375em;
@@ -88,6 +89,7 @@
 
     .imageContainer {
         position: relative;
+        overflow: auto;
 
         .quickview {
             position: absolute;

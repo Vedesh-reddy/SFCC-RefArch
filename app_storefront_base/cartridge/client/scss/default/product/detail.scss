@@ -1,6 +1,7 @@
-@import "../variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
+@import "../variables";
+@import "../utilities/shapes";
 @import "../utilities/responsiveUtils";
 @import "../utilities/swatch";
 
@@ -23,7 +24,7 @@ a.add-to-wish-list {
 }
 
 .swatch-circle {
-    // $white will be replaced by color image background via Javascript
+    // $white will be replaced by color image background in ISML
     @include swatch(2.5em, $white);
 }
 

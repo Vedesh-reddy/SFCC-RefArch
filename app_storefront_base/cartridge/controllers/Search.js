@@ -26,7 +26,7 @@ server.get('Show', locale, function (req, res, next) {
 
     productSearch = new ProductSearch(dwProductSearch, params);
 
-    res.render('search/searchresult', {
+    res.render('search/searchresults', {
         productSearch: productSearch
     });
 
