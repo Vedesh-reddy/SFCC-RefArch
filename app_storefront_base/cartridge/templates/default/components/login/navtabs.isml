@@ -19,7 +19,7 @@
                     <iselse>
                         class="nav-link"
                     </isif>
-                    href="${URLUtils.url('Home-Show')}">    
+                    href="${URLUtils.url('Account-Registration')}">
                     ${Resource.msg('link.header.register.module', 'login', null)}
                  </a>
             </li>
