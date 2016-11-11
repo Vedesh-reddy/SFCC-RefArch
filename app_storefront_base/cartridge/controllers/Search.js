@@ -11,6 +11,7 @@ var ProductSortOptions = require('~/cartridge/models/search/productSortOptions')
 
 
 server.get('Show', locale, function (req, res, next) {
+    var categoryTemplate = '';
     var productSearch;
     var productSort;
     var dwProductSearch = new ProductSearchModel();
@@ -26,6 +27,7 @@ server.get('Show', locale, function (req, res, next) {
 
     dwProductSearch.search();
 
+    categoryTemplate = dwProductSearch.category ? dwProductSearch.category.template : '';
     productSearch = new ProductSearch(dwProductSearch, params);
     productSort = new ProductSortOptions(
         dwProductSearch,
@@ -34,10 +36,23 @@ server.get('Show', locale, function (req, res, next) {
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
-    res.render('search/searchresults', {
-        productSearch: productSearch,
-        productSort: productSort
-    });
+    if (
+        productSearch.isCategorySearch
+        && !productSearch.isRefinedCategorySearch
+        && categoryTemplate
+        && dwProductSearch.category.parent.ID === 'root'
+    ) {
+        res.render(categoryTemplate, {
+            productSearch: productSearch,
+            category: dwProductSearch.category
+        });
+    } else {
+        res.render('search/searchresults', {
+            productSearch: productSearch,
+            productSort: productSort,
+            category: dwProductSearch.category
+        });
+    }
 
     next();
 });
