@@ -227,57 +227,43 @@
                     dataType: 'json',
                     success: function (data) {
                         $shippingMethodList.empty();
-                        var beginHtml;
-                        var inputHtml;
-                        var arrivalTimeHtml;
-                        var htmlToAppend;
                         var shippingMethods = data.shipping.applicableShippingMethods;
+                        var address = data.shippingForm.shippingAddress;
+                        var selected = data.shipping.selectedShippingMethod;
 
-                        for (var i = 0; i < shippingMethods.length; i++) {
-                            beginHtml = '<div class="form-check col-xs-8 start-lines">' +
-                                '<label class="form-check-label shipping-method-option">';
+                        //
+                        // Create the new rows for each shipping method
+                        //
+                        $.each(shippingMethods, function (key, shippingMethod) {
+                            var tmpl = $('#shipping-method-template').clone();
+                            // set input
+                            $('input', tmpl)
+                                .prop('id', 'shippingMethod-' + shippingMethod.ID)
+                                .prop('name', address.shippingMethodID.htmlName)
+                                .prop('value', shippingMethod.ID)
+                                .attr('checked', shippingMethod.ID === selected.ID);
 
-                            if (shippingMethods[i].ID === data.shipping.selectedShippingMethod.ID) {
-                                inputHtml = '<input id="shippingMethod-' +
-                                    shippingMethods[i].ID + '"' +
-                                    'name="' +
-                                    data.shippingForm.shippingAddress.shippingMethodID.htmlName +
-                                    '" type="radio" class="form-check-input" ' +
-                                    'value="' + shippingMethods[i].ID + '" checked>' +
-                                    '<span>' + shippingMethods[i].displayName + '</span>';
-                            } else {
-                                inputHtml = '<input id="shippingMethod-' +
-                                    shippingMethods[i].ID + '"' +
-                                    'name="' +
-                                    data.shippingForm.shippingAddress.shippingMethodID.htmlName +
-                                    '" type="radio"' +
-                                    'class="form-check-input" value="' +
-                                    shippingMethods[i].ID + '"> ' +
-                                    '<span>' + shippingMethods[i].displayName + '</span>';
+                            // set shipping method name
+                            $('.display-name', tmpl).text(shippingMethod.displayName);
+
+                            // set or hide arrival time
+                            if (shippingMethod.estimatedArrivalTime) {
+                                $('.arrival-time', tmpl)
+                                    .text(shippingMethod.estimatedArrivalTime)
+                                    .show();
                             }
 
-                            var endingHtml = ' </label> ' +
-                                '</div> ' +
-                                '<div class="col-xs-4 text-xs-right ' +
-                                'shipping-method-pricing end-lines"> ' +
-                                '<span>' + shippingMethods[i].shippingCost + '</span> ' +
-                                '</div>';
+                            // set shipping cost
+                            $('.shipping-cost-name', tmpl).text(shippingMethods.shippingCost);
 
-                            if (shippingMethods[i].estimatedArrivalTime) {
-                                arrivalTimeHtml = '<span class="text-muted arrival-time">' +
-                                    '(' + shippingMethods[i].estimatedArrivalTime + ')</span>';
-                                htmlToAppend = beginHtml + inputHtml + arrivalTimeHtml + endingHtml;
-                            } else {
-                                htmlToAppend = beginHtml + inputHtml + endingHtml;
-                            }
+                            $shippingMethodList.append(tmpl.html());
+                        });
 
-                            $shippingMethodList.append(htmlToAppend);
-                        }
-
-                        $('.shipping-cost').empty().append(data.totals.totalShippingCost);
-                        $('.tax-total').empty().append(data.totals.totalTax);
-                        $('.sub-total').empty().append(data.totals.subTotal);
-                        $('.grand-total-sum').empty().append(data.totals.grandTotal);
+                        $('.order-total-summary')
+                            .find('.shipping-cost').text(data.totals.totalShippingCost) // eslint-disable-line
+                            .find('.tax-total').text(data.totals.totalTax) // eslint-disable-line
+                            .find('.sub-total').text(data.totals.subTotal) // eslint-disable-line
+                            .find('.grand-total-sum').text(data.totals.grandTotal); // eslint-disable-line
                     }
                 });
             },
