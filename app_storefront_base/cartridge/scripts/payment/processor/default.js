@@ -3,8 +3,8 @@ var Resource = require('dw/web/Resource');
 
 
 /**
- * default hook if no payment processor is not supported
- * @return {Object} not supported
+ * default hook if no payment processor is supported
+ * @return {Object} an object that contains error information
  */
 function Handle() {
     var errors = [];

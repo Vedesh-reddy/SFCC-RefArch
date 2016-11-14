@@ -12,18 +12,19 @@ var Transaction = require('dw/system/Transaction');
  * Verifies that entered credit card information is a valid card. If the information is valid a
  * credit card payment instrument is created
  * @param {dw.order.Basket} basket Current users's basket
- * @param {Object} form - the payment form
+ * @param {Object} paymentInformation - the payment information
  * @return {Object} returns an error object
  */
-function Handle(basket, form) {
+function Handle(basket, paymentInformation) {
     var currentBasket = basket;
     var cardErrors = {};
-    var cardNumber = form.cardNumber.value;
-    var cardSecurityCode = form.securityCode.value;
-    var expirationMonth = form.expirationMonth.value;
-    var expirationYear = form.expirationYear.value;
+    var cardNumber = paymentInformation.cardNumber.value;
+    var cardSecurityCode = paymentInformation.securityCode.value;
+    var expirationMonth = paymentInformation.expirationMonth.value;
+    var expirationYear = paymentInformation.expirationYear.value;
+    var serverErrors = [];
 
-    var cardType = form.cardType.value;
+    var cardType = paymentInformation.cardType.value;
     var paymentCard = PaymentMgr.getPaymentCard(cardType);
 
     var creditCardStatus = paymentCard.verify(
@@ -34,27 +35,32 @@ function Handle(basket, form) {
     );
 
     if (creditCardStatus.error) {
-        for (var i = 0; i < creditCardStatus.items.length; i++) {
-            if (creditCardStatus.items[i].code ===
-                PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER
-            ) {
-                cardErrors[form.cardNumber.htmlName] =
-                    Resource.msg('error.invalid.card.number', 'creditCard', null);
-            } else if (creditCardStatus.items[i].code ===
-                PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE
-            ) {
-                cardErrors[form.expirationMonth.htmlName] =
-                    Resource.msg('error.expired.credit.card', 'creditCard', null);
-                cardErrors[form.expirationYear.htmlName] =
-                    Resource.msg('error.expired.credit.card', 'creditCard', null);
-            } else if (creditCardStatus.items[i].code ===
-                PaymentStatusCodes.CREDITCARD_INVALID_SECURITY_CODE
-            ) {
-                cardErrors[form.securityCode.htmlName] =
-                    Resource.msg('error.invalid.security.code', 'creditCard', null);
+        helper.forEach(creditCardStatus.items, function (item) {
+            switch (item.code) {
+                case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
+                    cardErrors[paymentInformation.cardNumber.htmlName] =
+                        Resource.msg('error.invalid.card.number', 'creditCard', null);
+                    break;
+
+                case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
+                    cardErrors[paymentInformation.expirationMonth.htmlName] =
+                        Resource.msg('error.expired.credit.card', 'creditCard', null);
+                    cardErrors[paymentInformation.expirationYear.htmlName] =
+                        Resource.msg('error.expired.credit.card', 'creditCard', null);
+                    break;
+
+                case PaymentStatusCodes.CREDITCARD_INVALID_SECURITY_CODE:
+                    cardErrors[paymentInformation.securityCode.htmlName] =
+                        Resource.msg('error.invalid.security.code', 'creditCard', null);
+                    break;
+                default:
+                    serverErrors.push(
+                        Resource.msg('error.card.information.error', 'creditCard', null)
+                    );
             }
-        }
-        return { fieldErrors: [cardErrors], serverErrors: [], error: true };
+        });
+
+        return { fieldErrors: [cardErrors], serverErrors: serverErrors, error: true };
     }
 
     Transaction.wrap(function () {
@@ -77,7 +83,7 @@ function Handle(basket, form) {
         paymentInstrument.creditCardExpirationYear = expirationYear;
     });
 
-    return { fieldErrors: cardErrors, serverErrors: [], error: false };
+    return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
 }
 
 exports.Handle = Handle;

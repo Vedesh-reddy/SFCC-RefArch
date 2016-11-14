@@ -112,14 +112,12 @@
          */
         function shippingFormResponse(defer, data) {
             // highlight fields with errors
-            if (data.error === true) {
-                if (data.fieldErrors.length > 0) {
-                    data.fieldErrors.forEach(function (error) {
-                        if (Object.keys(error).length > 0) {
-                            loadFormErrors('.shipping-form', error);
-                        }
-                    });
-                }
+            if (data.error && data.fieldErrors.length) {
+                data.fieldErrors.forEach(function (error) {
+                    if (Object.keys(error).length) {
+                        loadFormErrors('.shipping-form', error);
+                    }
+                });
                 defer.reject(data);
             } else {
                 //
@@ -186,18 +184,18 @@
                         data: $('#dwfrm_payment').serialize(),
                         success: function (data) {
                             // look for field validation errors
-                            if (data.error === true) {
-                                if (data.fieldErrors.length > 0) {
+                            if (data.error) {
+                                if (data.fieldErrors.length) {
                                     data.fieldErrors.forEach(function (error) {
-                                        if (Object.keys(error).length > 0) {
+                                        if (Object.keys(error).length) {
                                             loadFormErrors('.payment-form', error);
                                         }
                                     });
                                 }
 
-                                if (data.serverErrors.length > 0) {
+                                if (data.serverErrors.length) {
                                     data.serverErrors.forEach(function (error) {
-                                        $('.error-message').toggle();
+                                        $('.error-message').show();
                                         $('.error-message-text').text(error);
                                     });
                                 }

@@ -150,7 +150,7 @@ function validateCreditCard(form) {
     var result = {};
     var currentBasket = BasketMgr.getCurrentBasket();
 
-    if (form.paymentMethod.value === '') {
+    if (!form.paymentMethod.value) {
         if (currentBasket.totalGrossPrice.value > 0) {
             result[form.paymentMethod.htmlName] =
                 Resource.msg('error.no.selected.payment.method', 'creditCard', null);
@@ -308,16 +308,17 @@ server.post('SubmitPayment', function (req, res, next) {
     var paymentForm = server.forms.getForm('payment');
     var billingFormErrors = {};
     var creditCardErrors;
+    var viewData = {};
 
     // verify billing form data
-    if (paymentForm.shippingAddressUseAsBillingAddress.value !== true) {
+    if (!paymentForm.shippingAddressUseAsBillingAddress.value) {
         billingFormErrors = validateBillingForm(paymentForm);
     }
 
     // verify credit card form data
     creditCardErrors = validateCreditCard(paymentForm);
 
-    if (Object.keys(creditCardErrors).length > 0 || Object.keys(billingFormErrors).length > 0) {
+    if (Object.keys(creditCardErrors).length || Object.keys(billingFormErrors).length) {
         // respond with form data and errors
         res.json({
             form: paymentForm,
@@ -326,12 +327,61 @@ server.post('SubmitPayment', function (req, res, next) {
             error: true
         });
     } else {
+        viewData.address = {
+            firstName: { value: paymentForm.firstName.value },
+            lastName: { value: paymentForm.lastName.value },
+            address1: { value: paymentForm.address1.value },
+            address2: { value: paymentForm.address2.value },
+            city: { value: paymentForm.city.value },
+            stateCode: { value: paymentForm.states.state.value },
+            postalCode: { value: paymentForm.postal.value },
+            countryCode: { value: paymentForm.country.value }
+        };
+
+        viewData.shippingAddressUseAsBillingAddress = {
+            value: paymentForm.shippingAddressUseAsBillingAddress.value
+        };
+
+        viewData.paymentMethod = {
+            value: paymentForm.paymentMethod.value,
+            htmlName: paymentForm.paymentMethod.value
+        };
+
+        viewData.paymentInformation = {
+            cardType: {
+                value: paymentForm.cardType.value,
+                htmlName: paymentForm.cardType.htmlName
+            },
+            cardNumber: {
+                value: paymentForm.cardNumber.value,
+                htmlName: paymentForm.cardNumber.htmlName
+            },
+            securityCode: {
+                value: paymentForm.securityCode.value,
+                htmlName: paymentForm.securityCode.htmlName
+            },
+            expirationMonth: {
+                value: paymentForm.expirationMonth.value,
+                htmlName: paymentForm.expirationMonth.htmlName
+            },
+            expirationYear: {
+                value: paymentForm.expirationYear.value,
+                htmlName: paymentForm.expirationYear.htmlName
+            }
+        };
+
+        viewData.email = {
+            value: paymentForm.email.value
+        };
+
+        res.setViewData(viewData);
+
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var currentBasket = BasketMgr.getCurrentBasket();
             var billingAddress = currentBasket.billingAddress;
-            var form = server.forms.getForm('payment');
+            var billingData = res.getViewData();
             var paymentInstruments;
-            var paymentMethodID = form.paymentMethod.value;
+            var paymentMethodID = billingData.paymentMethod.value;
             var result;
             var shippingAddress;
 
@@ -341,23 +391,23 @@ server.post('SubmitPayment', function (req, res, next) {
 
             Transaction.wrap(function () {
                 // If checkbox isn't checked set billing address from form
-                if (form.shippingAddressUseAsBillingAddress.value !== true) {
+                if (billingData.shippingAddressUseAsBillingAddress.value !== true) {
                     if (!billingAddress) {
                         billingAddress = currentBasket.createBillingAddress();
                     }
 
-                    billingAddress.setFirstName(form.firstName.value);
-                    billingAddress.setLastName(form.lastName.value);
-                    billingAddress.setAddress1(form.address1.value);
-                    billingAddress.setAddress2(form.address2.value);
-                    billingAddress.setCity(form.city.value);
-                    billingAddress.setPostalCode(form.postal.value);
-                    billingAddress.setStateCode(form.states.state.value);
-                    billingAddress.setCountryCode(form.country.value);
+                    billingAddress.setFirstName(billingData.address.firstName.value);
+                    billingAddress.setLastName(billingData.address.lastName.value);
+                    billingAddress.setAddress1(billingData.address.address1.value);
+                    billingAddress.setAddress2(billingData.address.address2.value);
+                    billingAddress.setCity(billingData.address.city.value);
+                    billingAddress.setPostalCode(billingData.address.postalCode.value);
+                    billingAddress.setStateCode(billingData.address.stateCode.value);
+                    billingAddress.setCountryCode(billingData.address.countryCode.value);
                 }
 
                 // if checkbox is not checked on shipping but checked on billing
-                if (form.shippingAddressUseAsBillingAddress.value === true &&
+                if (billingData.shippingAddressUseAsBillingAddress.value === true &&
                     (!billingAddress || !billingAddress.isEquivalentAddress(
                         currentBasket.defaultShipment.shippingAddress
                     ))) {
@@ -374,18 +424,17 @@ server.post('SubmitPayment', function (req, res, next) {
                     billingAddress.setCountryCode(shippingAddress.countryCode);
                 }
 
-                currentBasket.setCustomerEmail(form.email.value);
+                currentBasket.setCustomerEmail(billingData.email.value);
             });
 
             // if there is no selected payment option and balance is greater than zero
-            if ((!paymentMethodID || paymentMethodID === '') &&
-                currentBasket.totalGrossPrice.value > 0) {
+            if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
                 var noPaymentMethod = {};
-                noPaymentMethod[form.paymentMethod.htmlName] =
+                noPaymentMethod[billingData.paymentMethod.htmlName] =
                     Resource.msg('error.no.selected.payment.method', 'creditCard', null);
 
                 res.json({
-                    form: form,
+                    form: server.forms.getForm('payment'),
                     fieldErrors: [noPaymentMethod],
                     serverErrors: [],
                     error: true
@@ -395,25 +444,25 @@ server.post('SubmitPayment', function (req, res, next) {
 
             // check to make sure there is a payment processor
             if (!PaymentMgr.getPaymentMethod(paymentMethodID).paymentProcessor) {
-                throw new Error('Missing payment processor');
+                throw new Error(Resource.msg('error.payment.processor.missing', 'checkout', null));
             }
 
             var processor = PaymentMgr.getPaymentMethod(paymentMethodID).getPaymentProcessor();
 
-            if (HookMgr.hasHook('app.payment.processor.' + processor.ID)) {
-                result = HookMgr.callHook('app.payment.processor.' + processor.ID,
+            if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
+                result = HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
                     'Handle',
                     currentBasket,
-                    form
+                    billingData.paymentInformation
                 );
             } else {
                 result = HookMgr.callHook('app.payment.processor.default', 'Handle');
             }
 
             // need to invalidate credit card fields
-            if (result.error === true) {
+            if (result.error) {
                 res.json({
-                    form: form,
+                    form: server.forms.getForm('payment'),
                     fieldErrors: result.fieldErrors,
                     serverErrors: result.serverErrors,
                     error: true
@@ -432,7 +481,12 @@ server.post('SubmitPayment', function (req, res, next) {
                 cardEnding: Resource.msg('msg.card.type.ending', 'confirmation', null)
             };
 
-            res.json({ billingData: billingModel, form: form, resource: resource, error: false });
+            res.json({
+                billingData: billingModel,
+                form: server.forms.getForm('payment'),
+                resource: resource,
+                error: false
+            });
         });
     }
     next();

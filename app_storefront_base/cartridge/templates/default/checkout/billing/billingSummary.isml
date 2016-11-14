@@ -19,8 +19,8 @@
                 <isloop items="${pdict.billing.payment.selectedPaymentInstruments}" var="payment">
                     <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
                         <div>
-                        <span>${Resource.msg('msg.payment.type.credit', 'confirmation', null)}
-                        ${payment.type}</span>
+                            <span>${Resource.msg('msg.payment.type.credit', 'confirmation', null)}
+                            ${payment.type}</span>
                         </div>
                         <div>
                             ${payment.maskedCreditCardNumber}
