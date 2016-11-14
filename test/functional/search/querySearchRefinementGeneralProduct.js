@@ -131,9 +131,16 @@ describe('Query Search and Refinement - general product', () => {
     })
 
     it('should return the correct image when refined by Color, Price and New Arrival', () => {
-        
+
     })
 
+    it('should return the correct price when refined by Color, Price and New Arrival', () => {
+
+    })
+
+    it('should return the correct color swatch when refined by Color, Price and New Arrival', ()=> {
+
+    })
 
     it('should return 79 results for pants when reset button is clicked', () => {
         return browser.click(search.resetButton)
