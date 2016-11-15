@@ -1,0 +1,76 @@
+<form action="${URLUtils.url('Account-SaveProfile')}" class="" method="POST" name="edit-profile-form" ${pdict.profileForm.attributes}>
+
+    <div class="form-group <isif condition="${!pdict.profileForm.customer.firstname.valid}">has-danger</isif>">
+        <label for="firstName">
+            <isif condition="${!!pdict.profileForm.customer.firstname.mandatory}">
+                <span class="required">*</span>
+            </isif>
+            <isprint value="${pdict.profileForm.customer.firstname.label}" encoding="off" />
+        </label> <br/>
+        <input type="text" class="form-control" id="firstName" value="${pdict.profileForm.customer.firstname.value}" <isprint value=${pdict.profileForm.customer.firstname.attributes} encoding="off" />>
+        <div class="form-control-feedback">
+            <isprint value="${pdict.profileForm.customer.firstname.error}" encoding="off" />
+        </div>
+    </div>
+    
+    <div class="form-group <isif condition="${!pdict.profileForm.customer.lastname.valid}">has-danger</isif>">
+        <label for="lastName">
+            <isif condition="${!!pdict.profileForm.customer.lastname.mandatory}">
+                <span class="required">*</span>
+            </isif>
+            <isprint value="${pdict.profileForm.customer.lastname.label}" encoding="off" />
+        </label> <br/>
+        <input type="text" class="form-control" id="lastName" value="${pdict.profileForm.customer.lastname.value}" <isprint value=${pdict.profileForm.customer.lastname.attributes} encoding="off" />>
+        <div class="form-control-feedback">
+            <isprint value="${pdict.profileForm.customer.lastname.error}" encoding="off" />
+        </div>
+    </div>
+    
+    <div class="form-group <isif condition="${!pdict.profileForm.customer.email.valid}">has-danger</isif>">
+        <label for="email">
+            <isif condition="${!!pdict.profileForm.customer.email.mandatory}">
+                <span class="required">*</span>
+            </isif>
+            <isprint value="${pdict.profileForm.customer.email.label}" encoding="off" />
+        </label> <br/>
+        <input type="email" class="form-control" id="email" value="${pdict.profileForm.customer.email.value}" <isprint value=${pdict.profileForm.customer.email.attributes} encoding="off" />>
+        <div class="form-control-feedback">
+            <isprint value="${pdict.profileForm.customer.email.error}" encoding="off" />
+        </div>
+    </div>
+    
+    <div class="form-group <isif condition="${!pdict.profileForm.customer.emailconfirm.valid}">has-danger</isif>">
+        <label for="confirmEmail">
+            <isif condition="${!!pdict.profileForm.customer.emailconfirm.mandatory}">
+                <span class="required">*</span>
+            </isif>
+            <isprint value="${pdict.profileForm.customer.emailconfirm.label}" encoding="off" />
+        </label> <br/>
+        <input type="email" class="form-control" id="confirmEmail" <isprint value=${pdict.profileForm.customer.emailconfirm.attributes} encoding="off" />>
+        <div class="form-control-feedback">
+            <isprint value="${pdict.profileForm.customer.emailconfirm.error}" encoding="off" />
+        </div>
+    </div>
+    
+    <div class="form-group <isif condition="${!pdict.profileForm.login.password.valid}">has-danger</isif>">
+        <label for="password">
+            <isif condition="${!!pdict.profileForm.login.password.mandatory}">
+                <span class="required">*</span>
+            </isif>
+            <isprint value="${pdict.profileForm.login.password.label}" encoding="off" />
+        </label>
+        <input type="password" class="form-control" id="password" <isprint value=${pdict.profileForm.login.password.attributes} encoding="off" />>
+        <div class="form-control-feedback">
+            <isprint value="${pdict.profileForm.login.password.error}" encoding="off" />
+        </div>
+    </div>
+    
+    <div class=col-xs-6>
+        <button type="reset" name="cancel" class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel','account',null)}</button>
+    </div>
+    
+    <div class=col-xs-6>
+        <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save','account',null)}</button>
+    </div>
+    
+</form>
