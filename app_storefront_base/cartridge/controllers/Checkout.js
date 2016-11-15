@@ -202,6 +202,64 @@ function validateShippingForm(form) {
     return validateFields(form, formKeys);
 }
 
+function validatePayment(req, currentBasket) {
+    var applicablePaymentCards;
+    var applicablePaymentMethods;
+    var creditCardPaymentMethod = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD);
+    var paymentAmount = currentBasket.totalGrossPrice;
+    var countryCode = req.geolocation.countryCode;
+    var currentCustomer = req.currentCustomer.raw;
+    var paymentInstruments = currentBasket.paymentInstruments;
+    var result;
+
+    applicablePaymentMethods = PaymentMgr.getApplicablePaymentMethods(
+        currentCustomer,
+        countryCode,
+        paymentAmount
+    );
+    applicablePaymentCards = creditCardPaymentMethod.getApplicablePaymentCards(
+        currentCustomer,
+        countryCode,
+        paymentAmount
+    );
+
+    var invalid = true;
+
+    for (var i = 0; i < paymentInstruments.length; i++) {
+        var paymentInstrument = paymentInstruments[i];
+
+        if (PaymentInstrument.METHOD_GIFT_CERTIFICATE.equals(paymentInstrument.paymentMethod)) {
+            invalid = false;
+        }
+
+        var paymentMethod = PaymentMgr.getPaymentMethod(paymentInstrument.getPaymentMethod());
+
+        if (paymentMethod && applicablePaymentMethods.contains(paymentMethod)) {
+            if (PaymentInstrument.METHOD_CREDIT_CARD.equals(paymentInstrument.paymentMethod)) {
+                var card = PaymentMgr.getPaymentCard(paymentInstrument.creditCardType);
+
+                // Checks whether payment card is still applicable.
+                if (card && applicablePaymentCards.contains(card)) {
+                    invalid = false;
+                }
+            } else {
+                invalid = false;
+            }
+        }
+
+        if (invalid) {
+            break; // there is an invalid payment instrument
+        }
+    }
+
+    result.error = invalid;
+    return result;
+}
+
+function calculatePaymentTransactionTotal() {
+
+}
+
 /**
  * Handle Ajax shipping form submit
  */
@@ -533,6 +591,45 @@ server.get('UpdateShippingMethodsList', function (req, res, next) {
         shipping: shippingModel,
         shippingForm: server.forms.getForm('singleShipping')
     });
+    next();
+});
+
+server.get('PlaceOrder', function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var calculatedPayment;
+    var validPayment;
+    var result;
+
+    // check to make sure there is a shipping address
+    if (currentBasket.defaultShipment.shippingAddress === null) {
+        // Report error and bring user to shipping page
+    }
+
+    // check to make sure billing address and payment information
+    if (!currentBasket.billingAddress) {
+        // Report error and bring user to billing page
+    }
+
+    // calculate the basket
+    Transaction.wrap(function () {
+        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+    });
+
+    // Re-validates existing payment instruments
+    validPayment = validatePayment(req, currentBasket);
+
+    if (validPayment.error) {
+        // Report Error and bring user to billing page
+    }
+
+    calculatedPayment = Transaction.wrap(function () {
+        return calculatePaymentTransactionTotal();
+    });
+
+    if (!calculatedPayment) {
+        // Report Error and bring user to billing page
+    }
+
     next();
 });
 
