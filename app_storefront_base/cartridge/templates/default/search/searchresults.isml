@@ -5,7 +5,12 @@
         assets.addCss('/css/search.css');
     </isscript>
 
-    <div class="hero search-banner">
+    <div class="hero search-banner"
+        <!--- If no image, default is specified in search.scss > .search-banner --->
+        <isif condition="${pdict.productSearch.bannerImageUrl}">
+            style="background-image: url(${pdict.productSearch.bannerImageUrl})"
+        </isif>
+    >
         <h1 class="header page-title">
             <isif condition="${pdict.productSearch.isCategorySearch}">
                 ${pdict.productSearch.categoryName}

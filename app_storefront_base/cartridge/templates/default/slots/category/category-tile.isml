@@ -1,0 +1,24 @@
+<isif condition="${slotcontent}">
+
+    <iscomment> Render a tile of the category Name and the Category Landing Slot Image field </iscomment>
+
+    <div class="category-slot">
+        <h2>
+            <isprint value="${slotcontent.calloutMsg}" encoding="off"/>
+        </h2>
+
+        <isloop items="${slotcontent.content}" var="category">
+            <div class="category-tile col-sm-6 col-md-4">
+                <a href="${URLUtils.http('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
+                    <isif condition="${'slotBannerImage' in category.custom && category.custom.slotBannerImage}">
+                        <img class="img-fluid" src="${category.custom.slotBannerImage.getURL()}" alt="${category.displayName}"/>
+                        <h3>
+                            <isprint value="${category.displayName}" encoding="off"/>
+                        </h3>
+                    </isif>
+                </a>
+            </div>
+        </isloop>
+    </div>
+
+</isif>
