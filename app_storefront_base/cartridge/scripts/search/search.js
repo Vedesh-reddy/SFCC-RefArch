@@ -59,8 +59,11 @@ function parseParams(httpParams) {
  * @param {dw.catalog.SortingRule} sortingRule - Product grid sort rule
  */
 function setProductProperties(productSearch, httpParams, selectedCategory, sortingRule) {
+    var searchPhrase;
+
     if (httpParams.q) {
-        productSearch.setSearchPhrase(httpParams.q);
+        searchPhrase = decodeURIComponent(httpParams.q.replace(/\+/g, '%20'));
+        productSearch.setSearchPhrase(searchPhrase);
     }
     if (selectedCategory) {
         productSearch.setCategoryID(selectedCategory.ID);
