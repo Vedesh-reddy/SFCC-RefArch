@@ -62,6 +62,17 @@
             <div class="row product-grid">
                 <isinclude template="/search/productgrid" />
             </div>
+
+            <!--- More button --->
+            <div class="row show-more">
+                <div class="col-sm-4"></div>
+                <div class="col-xs-12 col-sm-4">
+                    <button class="btn btn-outline-primary btn-block" data-url="${pdict.productSearch.showMoreUrl}">
+                        ${Resource.msg('button.more', 'search', null)}
+                    </button>
+                </div>
+                <div class="col-sm-4"></div>
+            </div>
         </div>
     </div>
 </isdecorate>
