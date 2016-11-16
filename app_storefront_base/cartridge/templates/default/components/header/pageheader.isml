@@ -20,7 +20,7 @@
             <div class="navbar-header row">
                 <div class="header-menu col-xs-12">
                     <div class="pull-left">
-                        <button class="navbar-toggler hidden-md-up" type="button" data-toggle="collapse" data-target="#sg-navbar-collapse" aria-controls="sg-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
+                        <button class="navbar-toggler hidden-md-up" type="button" aria-controls="sg-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
                           &#9776; <span class="hidden-xs-down">Menu</span>
                         </button>
                         <div class="account hidden-sm-down">
@@ -50,7 +50,7 @@
         		</div>
         	</div>
         </div>
-        <div class="main-menu row navbar-toggleable-sm collapse">
+        <div class="main-menu row navbar-toggleable-sm collapse menu-toggleable-left multilevel-dropdown" id="sg-navbar-collapse">
     		<div class="container">
                 <div class="row">
 		            <isinclude url="${URLUtils.url('Page-IncludeHeaderMenu')}"/>

@@ -6,4 +6,4 @@ $(document).ready(function () {
     require('./components/minicart')();
 });
 
-require('../../../../node_modules/bootstrap/dist/js/bootstrap');
+require('./thirdparty/bootstrap');
