@@ -1,3 +1,9 @@
+<div class="card ghost payment">
+    <div class="card-header">
+        <span class="checkout-card-header">${Resource.msg('heading.payment', 'checkout', null)}</span>
+    </div>
+</div>
+
 <div class="card payment-form">
     <div class="card-header">
         <span class="checkout-card-header">${Resource.msg('heading.payment', 'checkout', null)}</span>

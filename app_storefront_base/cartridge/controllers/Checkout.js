@@ -25,7 +25,7 @@ var TotalsModel = require('~/cartridge/models/totals');
 server.get('Start', locale, function (req, res, next) {
     var applicablePaymentCards;
     var applicablePaymentMethods;
-    var countryCode = req.geolocation.countryCode;
+    var countryCode = 'US'; // req.geolocation.countryCode;
     var currentBasket = BasketMgr.getCurrentBasket();
     var currentCustomer = req.currentCustomer.raw;
     var billingAddress = currentBasket.billingAddress;

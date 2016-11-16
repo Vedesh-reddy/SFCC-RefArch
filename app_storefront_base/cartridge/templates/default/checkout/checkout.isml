@@ -47,6 +47,8 @@
                 <isinclude template="checkout/billing/billing" />
                 <isinclude template="checkout/billing/billingSummary" />
 
+
+
                 <!- -------------------------------------------------------------------------------- -->
                 <!- Checkout Workflow Buttons -->
                 <!- -------------------------------------------------------------------------------- -->

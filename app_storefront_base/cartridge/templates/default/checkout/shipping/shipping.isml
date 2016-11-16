@@ -3,12 +3,12 @@
         <span class="checkout-card-header">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</span>
     </div>
 
-    <div class="checkout-card-block shipping-nav">
-        <ul class="nav nav-tabs" role="tablist">
-            <li class="nav-item">
+    <div class="container checkout-card-block shipping-nav">
+        <ul class="row nav nav-tabs" role="tablist">
+            <li class="col-sm-6 nav-item">
                 <a class="nav-link active" data-toggle="tab" href="#shipping-address" role="tab">${Resource.msg('action.shipping.form', 'checkout', null)}</a>
             </li>
-            <li class="nav-item">
+            <li class="col-sm-6 nav-item disable">
                 <a class="nav-link" data-toggle="tab" href="#pick-up-in-store" role="tab">${Resource.msg('action.in.store.pick.up', 'checkout', null)}</a>
             </li>
         </ul>
