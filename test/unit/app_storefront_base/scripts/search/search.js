@@ -61,7 +61,7 @@ describe('search script', function () {
             setRecursiveCategorySearch: function () {}
         };
         var mockParams = {
-            q: 'toasters',
+            q: 'toasters+galore',
             cgid: { ID: 'abc' },
             pid: 'Product123',
             pmin: '15',
@@ -92,8 +92,8 @@ describe('search script', function () {
             return parseInt(str, 10);
         }
 
-        it('should set the search phrase', function () {
-            assert.isTrue(spySetSearchPhrase.calledWith(mockParams.q));
+        it('should set the search phrase with spaces decoded', function () {
+            assert.isTrue(spySetSearchPhrase.calledWith('toasters galore'));
         });
 
         it('should set the category ID', function () {

@@ -69,6 +69,24 @@ function getSelectedFilters(productSearch, refinements) {
 }
 
 /**
+ * Retrieves banner image URL
+ *
+ * @param {dw.catalog.Category} category - Subject category
+ * @return {string} - Banner's image URL
+ */
+function getBannerImageUrl(category) {
+    var url = null;
+
+    if (category.custom && category.custom.slotBannerImage) {
+        url = category.custom.slotBannerImage.getURL();
+    } else if (category.image) {
+        url = category.image.getURL();
+    }
+
+    return url;
+}
+
+/**
  * @constructor
  * @classdesc ProductSearch class
  *
@@ -77,6 +95,7 @@ function getSelectedFilters(productSearch, refinements) {
  */
 function ProductSearch(productSearch, httpParams) {
     this.isCategorySearch = productSearch.categorySearch;
+    this.isRefinedCategorySearch = productSearch.refinedCategorySearch;
     this.searchKeywords = productSearch.searchPhrase;
     this.refinements = getRefinements(
         productSearch,
@@ -86,6 +105,7 @@ function ProductSearch(productSearch, httpParams) {
     this.selectedFilters = getSelectedFilters(productSearch, this.refinements);
     this.resetLink = getResetLink(productSearch, httpParams);
     this.productIds = dwHelper.pluck(productSearch.productSearchHits.asList(), 'productID');
+    this.bannerImageUrl = productSearch.category ? getBannerImageUrl(productSearch.category) : null;
 
     if (productSearch.category) {
         this.categoryName = productSearch.category.displayName;

@@ -1,0 +1,14 @@
+@import "../variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+.required {
+    color: $alert-danger-bg;
+}
+
+.profile-footer-link {
+    color: $brand-color;
+    text-decoration: underline;
+    display: block;
+    text-align: center;
+}

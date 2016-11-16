@@ -34,6 +34,11 @@
             }
         }
 
+        .nav-link:hover,
+        .nav-link {
+            border: 0 none;
+        }
+
         .nav-link-active,
         .nav-link-active:hover {
             border-bottom: 0.188em solid $brand-primary;
@@ -88,12 +93,22 @@
         }
     }
 
-    .check-order-header {
+    .track-order-header {
         font-size: 1.563em;
     }
 
-    .checkorder {
+    .trackorder {
         margin-top: 1.625em;
         margin-bottom: 2.75em;
+    }
+}
+
+.registration-page {
+    .privacy-policy {
+        margin-top: 1rem;
+
+        a {
+            color: $brand-primary;
+        }
     }
 }

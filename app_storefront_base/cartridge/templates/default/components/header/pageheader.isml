@@ -13,7 +13,7 @@
             <div class="navbar-header brand row">
                 <div class="navbar-brand col-xs-12">
                     <a href="${URLUtils.url('Home-Show')}" title="${ Resource.msgf('global.homepage.tooltip', 'common', null, Resource.msg('global.storename', 'common', null), Resource.msg('global.home', 'common', null)) }">
-                        <img src="${URLUtils.staticURL('/images/logo.svg')}" alt="${Resource.msg('global.storename', 'common', null)}" />
+                        <img src="${URLUtils.staticURL('/images/logo.png')}" alt="${Resource.msg('global.storename', 'common', null)}" />
                     </a>
                 </div>
             </div>
