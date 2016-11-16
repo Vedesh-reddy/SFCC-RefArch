@@ -91,7 +91,7 @@
                     .parents('.form-group').first()
                     .toggleClass('has-danger')
                     .find('.form-control-feedback')
-                    .html(fieldErrors[attr].message);
+                    .html(fieldErrors[attr]);
             });
         }
 
@@ -111,18 +111,20 @@
          *  valid model data.
          */
         function shippingFormResponse(defer, data) {
-            // look for field validation errors
-            if (data.shippingFormErrors) {
-                // highlight fields with errors
-                loadFormErrors('.shipping-form', data.shippingFormErrors);
+            // highlight fields with errors
+            if (data.error && data.fieldErrors.length) {
+                data.fieldErrors.forEach(function (error) {
+                    if (Object.keys(error).length) {
+                        loadFormErrors('.shipping-form', error);
+                    }
+                });
                 defer.reject(data);
             } else {
                 //
                 // Populate the Address Summary
                 //
                 var address = data.shippingData.shippingAddress;
-                var selectedShippingMethod =
-                    data.shippingData.selectedShippingMethod;
+                var selectedShippingMethod = data.shippingData.selectedShippingMethod;
                 populateSummary('.shipping .address-summary', address);
                 updateShippingSummary(selectedShippingMethod, data.totals);
                 updateTotals(data.totals);
@@ -173,25 +175,59 @@
                     //
                     // Submit the Billing Address Form
                     //
-                    return $.ajax({
+
+                    clearPreviousErrors('.payment-form');
+
+                    $.ajax({
                         url: $('#dwfrm_payment').attr('action'),
                         method: 'POST',
                         data: $('#dwfrm_payment').serialize(),
                         success: function (data) {
                             // look for field validation errors
-                            if (data.billingFormErrors) {
-                                // TODO: placeholder to highlight fields with errors
+                            if (data.error) {
+                                if (data.fieldErrors.length) {
+                                    data.fieldErrors.forEach(function (error) {
+                                        if (Object.keys(error).length) {
+                                            loadFormErrors('.payment-form', error);
+                                        }
+                                    });
+                                }
+
+                                if (data.serverErrors.length) {
+                                    data.serverErrors.forEach(function (error) {
+                                        $('.error-message').show();
+                                        $('.error-message-text').text(error);
+                                    });
+                                }
+
+                                defer.reject();
                             } else {
                                 //
                                 // Populate the Address Summary
                                 //
-                                var address = data.billingData.billingAddress;
+                                var address = data.billingData.billingAddress.address;
                                 populateSummary('.billing .address-summary', address);
+                                var $paymentSummary = $('.payment-details');
+                                var htmlToAppend = '<span> ' + data.resource.cardType + ' ' +
+                                    data.billingData.payment.selectedPaymentInstruments[0].type +
+                                    '</span> <div>' +
+                                    data.billingData.payment.selectedPaymentInstruments[0]
+                                        .maskedCreditCardNumber +
+                                    '</div> <div>' +
+                                    '<span>' + data.resource.cardEnding + ' ' +
+                                    data.billingData.payment
+                                        .selectedPaymentInstruments[0].expirationMonth +
+                                    '/' + data.billingData.payment.selectedPaymentInstruments[0]
+                                        .expirationYear + '</span>';
+                                $paymentSummary.empty().append(htmlToAppend);
+                                defer.resolve(data);
                             }
                         },
                         error: function () {
                         }
                     });
+
+                    return defer;
                 } else if (stage === 'placeOrder') {
                     var p = $('<div>').promise(); // eslint-disable-line
                     setTimeout(function () {
@@ -304,7 +340,7 @@
                 //
                 // Handle Payment option selection
                 //
-                $('input[name="paymentOption"]', plugin).on('change', function () {
+                $('input[name$="paymentMethod"]', plugin).on('change', function () {
                     $('.credit-card-form').toggle($(this).val() === 'CREDIT_CARD');
                 });
 

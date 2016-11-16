@@ -8,12 +8,12 @@
         <isinclude template="/common/htmlhead" />
     </head>
     <body>
-        <div class="modal-background"></div>
         <div class="page">
             <isinclude template="/components/header/pageheader" />
             <isreplace/>
             <isinclude template="/components/footer/pagefooter" />
         </div>
         <isinclude template="/common/scripts" />
+        <div class="modal-background"></div>
     </body>
 </html>

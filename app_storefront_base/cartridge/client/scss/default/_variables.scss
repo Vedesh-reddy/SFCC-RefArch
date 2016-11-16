@@ -37,7 +37,7 @@ $container-max-widths: (
     xl: 1140px
 );
 
-$brand-primary: #59ba00;
+$brand-primary: $brand-color;
 
 $border-radius: 0.1875rem;
 $border-radius-lg: $border-radius;

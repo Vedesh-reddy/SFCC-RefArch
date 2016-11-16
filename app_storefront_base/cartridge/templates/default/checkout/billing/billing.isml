@@ -16,9 +16,8 @@
             <!-- ---------------------------------------------------------------------- -->
             <div class="form-check">
                 <label class="form-check-label checkout-checkbox">
-                    <input class="form-check-input billing-same-as-shipping" name="dwfrm_shippingAddressUseAsBillingAddress" type="checkbox"
-                        <isprint value=${pdict.forms.billingForm.billingSameAsShipping.attributes} encoding="off"/>
-                        checked >
+                    <input class="form-check-input billing-same-as-shipping" name="${pdict.forms.billingForm.shippingAddressUseAsBillingAddress.htmlName}" type="checkbox"
+                        value="true" checked >
                     <span>${Resource.msg('check.shipping.billing.same', 'checkout', null)}</span>
                 </label>
             </div>
