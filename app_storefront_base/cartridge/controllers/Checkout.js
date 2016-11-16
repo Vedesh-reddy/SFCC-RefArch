@@ -2,12 +2,12 @@
 
 var server = require('server');
 var locale = require('~/cartridge/scripts/middleware/locale');
-var Resource = require('dw/web/Resource');
 
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
+var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
 var Transaction = require('dw/system/Transaction');
 
@@ -112,10 +112,7 @@ function validateFields(form, formKeys) {
     formKeys.forEach(function (key) {
         if (form[key] instanceof Object) {
             if (form[key].valid === false) {
-                result[form[key].htmlName] = {
-                    valid: false,
-                    message: Resource.msg(form[key].error, 'address', null)
-                };
+                result[form[key].htmlName] = Resource.msg(form[key].error, 'address', null);
             }
         }
     });
@@ -150,6 +147,18 @@ function validateBillingForm(form) {
  * @returns {Object} the names of the invalid form fields
  */
 function validateCreditCard(form) {
+    var result = {};
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!form.paymentMethod.value) {
+        if (currentBasket.totalGrossPrice.value > 0) {
+            result[form.paymentMethod.htmlName] =
+                Resource.msg('error.no.selected.payment.method', 'creditCard', null);
+        }
+
+        return result;
+    }
+
     var formKeys = [
         'cardNumber',
         'expirationYear',
@@ -195,7 +204,12 @@ server.post('SubmitShipping', function (req, res, next) {
     shippingFormErrors = validateShippingForm(form.shippingAddress.addressFields);
 
     if (Object.keys(shippingFormErrors).length > 0) {
-        res.json({ form: form, shippingFormErrors: shippingFormErrors });
+        res.json({
+            form: form,
+            fieldErrors: [shippingFormErrors],
+            serverErrors: [],
+            error: true
+        });
     } else {
         result.address = {
             firstName: form.shippingAddress.addressFields.firstName.value,
@@ -217,7 +231,7 @@ server.post('SubmitShipping', function (req, res, next) {
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var shippingData = res.getViewData();
 
-            var currentBasket = BasketMgr.getCurrentOrNewBasket();
+            var currentBasket = BasketMgr.getCurrentBasket();
             var billingAddress = currentBasket.billingAddress;
             var orderTotals;
             var shipment = currentBasket.defaultShipment;
@@ -241,7 +255,6 @@ server.post('SubmitShipping', function (req, res, next) {
                 shippingAddress.setStateCode(shippingData.address.stateCode);
                 shippingAddress.setCountryCode(shippingData.address.countryCode);
                 shippingAddress.setPhone(shippingData.address.phone);
-
 
                 if (shippingData.shippingBillingSame === true) {
                     if (!billingAddress) {
@@ -292,30 +305,190 @@ server.post('SubmitShipping', function (req, res, next) {
  *  Handle Ajax payment (and billing) form submit
  */
 server.post('SubmitPayment', function (req, res, next) {
-    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-        var form = server.forms.getForm('payment');
-        var billingFormErrors = {};
-        var creditCardErrors;
+    var paymentForm = server.forms.getForm('payment');
+    var billingFormErrors = {};
+    var creditCardErrors;
+    var viewData = {};
 
-        // verify billing form data
-        // TODO: read from form object above (seems like boolean bug for checkbox)
-        if (!form.dwfrm_shippingAddressUseAsBillingAddress
-            && form.dwfrm_shippingAddressUseAsBillingAddress !== 'on') {
-            billingFormErrors = validateBillingForm(form);
-        }
+    // verify billing form data
+    if (!paymentForm.shippingAddressUseAsBillingAddress.value) {
+        billingFormErrors = validateBillingForm(paymentForm);
+    }
 
-        // verify credit card form data
-        creditCardErrors = validateCreditCard(form);
+    // verify credit card form data
+    creditCardErrors = validateCreditCard(paymentForm);
 
-        //
+    if (Object.keys(creditCardErrors).length || Object.keys(billingFormErrors).length) {
         // respond with form data and errors
-        //
         res.json({
-            form: server.forms.getForm('payment'),
-            billingFormErrors: billingFormErrors,
-            creditCardErrors: creditCardErrors
+            form: paymentForm,
+            fieldErrors: [billingFormErrors, creditCardErrors],
+            serverErrors: [],
+            error: true
         });
-    });
+    } else {
+        viewData.address = {
+            firstName: { value: paymentForm.firstName.value },
+            lastName: { value: paymentForm.lastName.value },
+            address1: { value: paymentForm.address1.value },
+            address2: { value: paymentForm.address2.value },
+            city: { value: paymentForm.city.value },
+            stateCode: { value: paymentForm.states.state.value },
+            postalCode: { value: paymentForm.postal.value },
+            countryCode: { value: paymentForm.country.value }
+        };
+
+        viewData.shippingAddressUseAsBillingAddress = {
+            value: paymentForm.shippingAddressUseAsBillingAddress.value
+        };
+
+        viewData.paymentMethod = {
+            value: paymentForm.paymentMethod.value,
+            htmlName: paymentForm.paymentMethod.value
+        };
+
+        viewData.paymentInformation = {
+            cardType: {
+                value: paymentForm.cardType.value,
+                htmlName: paymentForm.cardType.htmlName
+            },
+            cardNumber: {
+                value: paymentForm.cardNumber.value,
+                htmlName: paymentForm.cardNumber.htmlName
+            },
+            securityCode: {
+                value: paymentForm.securityCode.value,
+                htmlName: paymentForm.securityCode.htmlName
+            },
+            expirationMonth: {
+                value: paymentForm.expirationMonth.value,
+                htmlName: paymentForm.expirationMonth.htmlName
+            },
+            expirationYear: {
+                value: paymentForm.expirationYear.value,
+                htmlName: paymentForm.expirationYear.htmlName
+            }
+        };
+
+        viewData.email = {
+            value: paymentForm.email.value
+        };
+
+        res.setViewData(viewData);
+
+        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var currentBasket = BasketMgr.getCurrentBasket();
+            var billingAddress = currentBasket.billingAddress;
+            var billingData = res.getViewData();
+            var paymentInstruments;
+            var paymentMethodID = billingData.paymentMethod.value;
+            var result;
+            var shippingAddress;
+
+            var billingAddressModel;
+            var billingModel;
+            var paymentModel;
+
+            Transaction.wrap(function () {
+                // If checkbox isn't checked set billing address from form
+                if (billingData.shippingAddressUseAsBillingAddress.value !== true) {
+                    if (!billingAddress) {
+                        billingAddress = currentBasket.createBillingAddress();
+                    }
+
+                    billingAddress.setFirstName(billingData.address.firstName.value);
+                    billingAddress.setLastName(billingData.address.lastName.value);
+                    billingAddress.setAddress1(billingData.address.address1.value);
+                    billingAddress.setAddress2(billingData.address.address2.value);
+                    billingAddress.setCity(billingData.address.city.value);
+                    billingAddress.setPostalCode(billingData.address.postalCode.value);
+                    billingAddress.setStateCode(billingData.address.stateCode.value);
+                    billingAddress.setCountryCode(billingData.address.countryCode.value);
+                }
+
+                // if checkbox is not checked on shipping but checked on billing
+                if (billingData.shippingAddressUseAsBillingAddress.value === true &&
+                    (!billingAddress || !billingAddress.isEquivalentAddress(
+                        currentBasket.defaultShipment.shippingAddress
+                    ))) {
+                    shippingAddress = currentBasket.defaultShipment.shippingAddress;
+                    billingAddress = currentBasket.createBillingAddress();
+
+                    billingAddress.setFirstName(shippingAddress.firstName);
+                    billingAddress.setLastName(shippingAddress.lastName);
+                    billingAddress.setAddress1(shippingAddress.address1);
+                    billingAddress.setAddress2(shippingAddress.address2);
+                    billingAddress.setCity(shippingAddress.city);
+                    billingAddress.setPostalCode(shippingAddress.postalCode);
+                    billingAddress.setStateCode(shippingAddress.stateCode);
+                    billingAddress.setCountryCode(shippingAddress.countryCode);
+                }
+
+                currentBasket.setCustomerEmail(billingData.email.value);
+            });
+
+            // if there is no selected payment option and balance is greater than zero
+            if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
+                var noPaymentMethod = {};
+                noPaymentMethod[billingData.paymentMethod.htmlName] =
+                    Resource.msg('error.no.selected.payment.method', 'creditCard', null);
+
+                res.json({
+                    form: server.forms.getForm('payment'),
+                    fieldErrors: [noPaymentMethod],
+                    serverErrors: [],
+                    error: true
+                });
+                return;
+            }
+
+            // check to make sure there is a payment processor
+            if (!PaymentMgr.getPaymentMethod(paymentMethodID).paymentProcessor) {
+                throw new Error(Resource.msg('error.payment.processor.missing', 'checkout', null));
+            }
+
+            var processor = PaymentMgr.getPaymentMethod(paymentMethodID).getPaymentProcessor();
+
+            if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
+                result = HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
+                    'Handle',
+                    currentBasket,
+                    billingData.paymentInformation
+                );
+            } else {
+                result = HookMgr.callHook('app.payment.processor.default', 'Handle');
+            }
+
+            // need to invalidate credit card fields
+            if (result.error) {
+                res.json({
+                    form: server.forms.getForm('payment'),
+                    fieldErrors: result.fieldErrors,
+                    serverErrors: result.serverErrors,
+                    error: true
+                });
+                return;
+            }
+
+            paymentInstruments = currentBasket.paymentInstruments;
+            paymentModel = new Payment(null, null, paymentInstruments);
+
+            billingAddressModel = new AddressModel(billingAddress);
+            billingModel = new BillingModel(billingAddressModel, paymentModel);
+
+            var resource = {
+                cardType: Resource.msg('msg.payment.type.credit', 'confirmation', null),
+                cardEnding: Resource.msg('msg.card.type.ending', 'confirmation', null)
+            };
+
+            res.json({
+                billingData: billingModel,
+                form: server.forms.getForm('payment'),
+                resource: resource,
+                error: false
+            });
+        });
+    }
     next();
 });
 

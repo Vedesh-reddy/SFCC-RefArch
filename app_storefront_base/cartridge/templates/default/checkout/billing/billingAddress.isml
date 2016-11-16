@@ -1,29 +1,32 @@
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.firstName.htmlName}">
             <label for="billingFirstName">${Resource.msg('field.billing.address.first.name','address',null)}</label>
             <input autofocus type="text" class="form-control billingFirstName" id="billingFirstName"
                 <isprint value=${pdict.forms.billingForm.firstName.attributes} encoding="off"/>
                 autocomplete="given-name" >
+            <div class="form-control-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.lastName.htmlName}">
             <label for="billingLastName">${Resource.msg('field.billing.address.last.name','address',null)}</label>
             <input type="text" class="form-control billingLastName" id="billingLastName"
                 <isprint value=${pdict.forms.billingForm.lastName.attributes} encoding="off"/>
                 autocomplete="family-name">
+            <div class="form-control-feedback"></div>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.address1.htmlName}">
             <label for="billingAddressOne">${Resource.msg('field.billing.address.one','address',null)}</label>
             <input type="text" class="form-control billingAddressOne" id="billingAddressOne"
                 <isprint value=${pdict.forms.billingForm.address1.attributes} encoding="off"/>
                 autocomplete="billing address-line1">
+            <div class="form-control-feedback"></div>
         </div>
     </div>
 </div>
@@ -31,11 +34,12 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.address2.htmlName}">
             <label for="billingAddressTwo">${Resource.msg('field.billing.address.two','address',null)}</label>
             <input type="text" class="form-control billingAddressTwo" id="billingAddressTwo"
                 <isprint value=${pdict.forms.billingForm.address2.attributes} encoding="off"/>
                 autocomplete="billing address-line2">
+            <div class="form-control-feedback"></div>
         </div>
     </div>
 </div>
@@ -43,7 +47,7 @@
 <!--- make drop down--->
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.country.htmlName}">
             <label for="billingCountry">${Resource.msg('field.billing.address.country','address',null)}</label>
             <select class="form-control billingCountry" id="billingCountry"
                 <isprint value=${pdict.forms.billingForm.country.attributes} encoding="off"/>
@@ -52,11 +56,12 @@
                         <option id="${country.id}">${country.htmlValue}</option>
                     </isloop>
             </select>
+            <div class="form-control-feedback"></div>
 
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.states.htmlName}">
             <label for="billingState">${Resource.msg('field.billing.address.state','address',null)}</label>
             <select class="form-control billingState" id="billingState"
                 <isprint value=${pdict.forms.billingForm.states.attributes} encoding="off"/>
@@ -65,36 +70,28 @@
                         <option id="${state.id}">${state.htmlValue}</option>
                     </isloop>
             </select>
-
+            <div class="form-control-feedback"></div>
         </div>
     </div>
 </div>
 
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.city.htmlName}">
             <label for="billingAddressCity">${Resource.msg('field.billing.address.city','address',null)}</label>
             <input type="text" class="form-control billingAddressCity" id="billingAddressCity"
                 <isprint value=${pdict.forms.billingForm.city.attributes} encoding="off"/>
                 autocomplete="billing locality">
+            <div class="form-control-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="form-group">
+        <div class="form-group ${pdict.forms.billingForm.postal.htmlName}">
             <label for="billingZipCode">${Resource.msg('field.billing.address.zip.code','address',null)}</label>
             <input type="text" class="form-control billingZipCode" id="billingZipCode"
                 <isprint value=${pdict.forms.billingForm.postal.attributes} encoding="off"/>
                 autocomplete="billing postal-code">
+            <div class="form-control-feedback"></div>
         </div>
     </div>
 </div>
-
-<div class="row">
-    <div class="col-sm-12">
-        <div class="form-group">
-            <label for="billingPhoneNumber">${Resource.msg('field.billing.address.phone','address',null)}</label>
-            <input type="text" class="form-control billingPhoneNumber" id="billingPhoneNumber" name="billingPhoneNumber">
-        </div>
-    </div>
-</div>
-

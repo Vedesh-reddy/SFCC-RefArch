@@ -3,6 +3,14 @@
         {
             "name": "dw.ocapi.shop.basket.calculate",
             "script": "./cart/calculate.js"
+        },
+        {
+            "name": "app.payment.processor.default",
+            "script": "./payment/processor/default"
+        },
+        {
+            "name": "app.payment.processor.basic_credit",
+            "script": "./payment/processor/basic_credit"
         }
     ]
 }
