@@ -13,11 +13,9 @@ describe('forms', function () {
     var FormAction = function (obj) { this.init.call(this, obj); }; FormAction.prototype.init = buildObj;
     var FormField = function (obj) { this.init.call(this, obj); }; FormField.prototype.init = buildObj;
     var formsRequire = proxyquire('../../../../modules/server/forms/forms', {
-        'dw/web': {
-            FormField: FormField,
-            FormAction: FormAction,
-            FormGroup: FormGroup
-        },
+        'dw/web/FormField': FormField,
+        'dw/web/FormAction': FormAction,
+        'dw/web/FormGroup': FormGroup,
         './formfield': proxyquire('../../../../modules/server/forms/formfield', {
             'dw/web/Resource': { msg: function (value) { return value; } }
         })

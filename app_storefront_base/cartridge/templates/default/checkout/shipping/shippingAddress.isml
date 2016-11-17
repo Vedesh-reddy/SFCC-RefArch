@@ -23,7 +23,7 @@
             </label>
             <input type="text" class="form-control shippingLastName" id="shippingLastName"
                 <isprint value=${addressFields.lastName.attributes} encoding="off"/>
-                autocomplete="family-name" >
+                autocomplete="family-name">
             <div class="form-control-feedback"><isprint value="${addressFields.lastName.error}" ></div>
         </div>
     </div>
@@ -39,7 +39,7 @@
             </label>
             <input type="text" class="form-control shippingAddressOne" id="shippingAddressOne"
                 <isprint value=${addressFields.address1.attributes} encoding="off"/>
-                autocomplete="shipping address-line1" >
+                autocomplete="shipping address-line1">
             <div class="form-control-feedback"><isprint value="${addressFields.address1.error}" ></div>
         </div>
     </div>
@@ -56,7 +56,7 @@
             </label>
             <input type="text" class="form-control shippingAddressTwo" id="shippingAddressTwo"
                 <isprint value=${addressFields.address2.attributes} encoding="off"/>
-                autocomplete="shipping address-line2" >
+                autocomplete="shipping address-line2">
             <div class="form-control-feedback"><isprint value="${addressFields.address2.error}" ></div>
         </div>
     </div>
@@ -73,9 +73,9 @@
             </label>
             <select class="form-control shippingCountry" id="shippingCountry"
                 <isprint value=${addressFields.country.attributes} encoding="off"/>
-                autocomplete="shipping country" >
+                autocomplete="shipping country">
                     <isloop items=${addressFields.country.options} var="country">
-                        <option id="${country.id}">${country.htmlValue}</option>
+                        <option id="${country.id}" <isif condition="${country.selected}">selected</isif>>${country.htmlValue}</option>
                     </isloop>
             </select>
             <div class="form-control-feedback"><isprint value="${addressFields.country.error}" ></div>
@@ -84,18 +84,18 @@
     <div class="col-sm-6">
         <div class="form-group
             <isif condition=${addressFields.states.state.mandatory === true}>required</isif>
-            ${addressFields.states.htmlName}">
+            ${addressFields.states.state.htmlName}">
             <label class="form-control-label" for="shippingState">
                 ${Resource.msg('field.shipping.address.state','address',null)}
             </label>
             <select class="form-control shippingState" id="shippingState"
-                <isprint value=${addressFields.states.attributes} encoding="off"/>
-                autocomplete="shipping state" >
+                <isprint value=${addressFields.states.state.attributes} encoding="off"/>
+                autocomplete="shipping region">
                     <isloop items=${addressFields.states.state.options} var="state">
-                        <option id="${state.id}">${state.htmlValue}</option>
+                        <option id="${state.id}" <isif condition="${state.selected}">selected</isif> >${state.htmlValue}</option>
                     </isloop>
             </select>
-            <div class="form-control-feedback"><isprint value="${addressFields.states.error}" ></div>
+            <div class="form-control-feedback"><isprint value="${addressFields.states.state.error}" ></div>
         </div>
     </div>
 </div>
@@ -110,7 +110,7 @@
             </label>
             <input type="text" class="form-control shippingAddressCity" id="shippingAddressCity"
                 <isprint value=${addressFields.city.attributes} encoding="off"/>
-                autocomplete="shipping locality" >
+                autocomplete="shipping locality">
             <div class="form-control-feedback"><isprint value="${addressFields.city.error}" ></div>
         </div>
     </div>
@@ -123,7 +123,7 @@
             </label>
             <input type="text" class="form-control shippingZipCode" id="shippingZipCode"
                 <isprint value=${addressFields.postalCode.attributes} encoding="off"/>
-                autocomplete="shipping postal-code" >
+                autocomplete="shipping postal-code">
             <div class="form-control-feedback"><isprint value="${addressFields.postalCode.error}" ></div>
         </div>
     </div>
@@ -137,9 +137,9 @@
             <label class="form-control-label" for="shippingPhoneNumber">
                 ${Resource.msg('field.shipping.address.phone','address',null)}
             </label>
-            <input type="text" class="form-control shippingPhoneNumber" id="shippingPhoneNumber"
+            <input type="tel" class="form-control shippingPhoneNumber" id="shippingPhoneNumber"
                 <isprint value=${pdict.forms.shippingForm.addressFields.phone.attributes} encoding="off"/>
-                   name="shippingPhoneNumber" >
+                   autocomplete="tel">
             <div class="form-control-feedback"><isprint value="${addressFields.phone.error}" ></div>
         </div>
     </div>
