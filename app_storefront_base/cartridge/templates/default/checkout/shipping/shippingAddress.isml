@@ -2,8 +2,8 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group
-                    <isif condition=${addressFields.firstName.mandatory === true}>required</isif>
-                    ${addressFields.firstName.htmlName}">
+            <isif condition=${addressFields.firstName.mandatory === true}>required</isif>
+            ${addressFields.firstName.htmlName}">
             <label class="form-control-label" for="shippingFirstName"  >
                 ${Resource.msg('field.shipping.address.first.name','address',null)}
 
