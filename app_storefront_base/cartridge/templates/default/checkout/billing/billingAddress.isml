@@ -53,7 +53,7 @@
                 <isprint value=${pdict.forms.billingForm.country.attributes} encoding="off"/>
                 autocomplete="billing country">
                     <isloop items=${pdict.forms.billingForm.country.options} var="country">
-                        <option id="${country.id}">${country.htmlValue}</option>
+                        <option id="${country.id}" <isif condition="${country.selected}">selected</isif> >${country.htmlValue}</option>
                     </isloop>
             </select>
             <div class="form-control-feedback"></div>
@@ -61,13 +61,13 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="form-group ${pdict.forms.billingForm.states.htmlName}">
+        <div class="form-group ${pdict.forms.billingForm.states.state.htmlName}">
             <label for="billingState">${Resource.msg('field.billing.address.state','address',null)}</label>
             <select class="form-control billingState" id="billingState"
-                <isprint value=${pdict.forms.billingForm.states.attributes} encoding="off"/>
-                autocomplete="billing state">
+                <isprint value=${pdict.forms.billingForm.states.state.attributes} encoding="off"/>
+                autocomplete="billing region">
                     <isloop items=${pdict.forms.billingForm.states.state.options} var="state">
-                        <option id="${state.id}">${state.htmlValue}</option>
+                        <option id="${state.id}" <isif condition="${state.selected}">selected</isif> >${state.htmlValue}</option>
                     </isloop>
             </select>
             <div class="form-control-feedback"></div>

@@ -10,7 +10,9 @@ var action = require('./formaction');
  * @return {Object} Plain JS form object
  */
 function parseForm(form) {
-    var dwweb = require('dw/web');
+    var formField = require('dw/web/FormField');
+    var formAction = require('dw/web/FormAction');
+    var formGroup = require('dw/web/FormGroup');
     var result = {
         valid: form.valid,
         htmlName: form.htmlName,
@@ -19,11 +21,11 @@ function parseForm(form) {
         attributes: 'name = "' + form.htmlName + '" id = "' + form.htmlName + '"'
     };
     Object.keys(form).forEach(function (key) {
-        if (form[key] instanceof dwweb.FormField) {
+        if (form[key] instanceof formField) {
             result[key] = field(form[key]);
-        } else if (form[key] instanceof dwweb.FormAction) {
+        } else if (form[key] instanceof formAction) {
             result[key] = action(form[key]);
-        } else if (form[key] instanceof dwweb.FormGroup) {
+        } else if (form[key] instanceof formGroup) {
             result[key] = parseForm(form[key]);
         }
     });
@@ -37,6 +39,9 @@ module.exports = function (session) {
             var currentForm = session.forms[name];
             var result = parseForm(currentForm);
             result.base = currentForm;
+            result.clear = function () {
+                currentForm.clear();
+            };
             return result;
         }
     };
