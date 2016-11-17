@@ -34,11 +34,13 @@
                 <isinclude template="search/results-count" />
             </div>
 
-            <div class="pull-left col-xs-6 col-sm-3 hidden-md-up">
-                <button type="button" class="btn btn-success filter-results col-xs-12">
-                    ${Resource.msg('button.filter', 'search', null)}
-                </button>
-            </div>
+            <isif condition="${pdict.productSearch.productIds.length > 0}">
+                <div class="pull-left col-xs-6 col-sm-3 hidden-md-up">
+                    <button type="button" class="btn btn-success filter-results col-xs-12">
+                        ${Resource.msg('button.filter', 'search', null)}
+                    </button>
+                </div>
+            </isif>
         </div>
 
         <!--- Refinement bar --->

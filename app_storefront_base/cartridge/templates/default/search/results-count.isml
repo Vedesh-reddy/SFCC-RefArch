@@ -4,9 +4,18 @@
     </span>
 <iselse>
     <span>
-        ${Resource.msgf('label.resultsfor', 'search', null, pdict.productSearch.productIds.length)}
+        <isif condition="${pdict.productSearch.productIds.length > 0}">
+            ${Resource.msgf('label.resultsfor', 'search', null, pdict.productSearch.productIds.length)}
+        <iselse>
+            ${Resource.msg('label.noresultsfor', 'search', null)}
+        </isif>
+
     </span>
     <span class="search-keywords">
         ${pdict.productSearch.searchKeywords}
     </span>
+</isif>
+
+<isif condition="${!pdict.productSearch.productIds.length}">
+    <isinclude template="search/noresults" />
 </isif>

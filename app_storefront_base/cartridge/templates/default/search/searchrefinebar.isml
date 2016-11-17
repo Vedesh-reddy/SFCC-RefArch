@@ -1,11 +1,13 @@
 <!--- Results count and Reset button --->
-<div class="row">
-    <div class="secondary-bar">
-        <a class="reset" href="${pdict.productSearch.resetLink}">
-            ${Resource.msg('link.reset', 'search', null)}
-        </a>
+<isif condition="${pdict.productSearch.productIds.length > 0}">
+    <div class="row">
+        <div class="secondary-bar">
+            <a class="reset" href="${pdict.productSearch.resetLink}">
+                ${Resource.msg('link.reset', 'search', null)}
+            </a>
+        </div>
     </div>
-</div>
+</isif>
 
 <div class="row">
     <div class=" col-sm-12 refinements">
