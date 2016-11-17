@@ -88,3 +88,12 @@ export function addProductVariationToBasket(product, btnAdd) {
         })
         .then(() => Promise.resolve());
 }
+
+export function convertToUrlFormat(inString) {
+    let dotRemovedStr = inString;
+    if (inString.endsWith('.')) {
+        dotRemovedStr = inString.substr(0, inString.length - 1);
+    }
+
+    return dotRemovedStr.toLowerCase().replace(/ /g, '-');
+}
