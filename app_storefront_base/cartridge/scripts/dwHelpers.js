@@ -99,13 +99,14 @@ function reduce(collection, callback) {
 
 /**
  * Pluck method for dw.util.Collection subclass instance
- * @param {dw.util.Collection} collection - Collection subclass instance to pluck from
+ * @param {dw.util.Collection|dw.util.Iterator} list - Collection subclass or Iterator instance to
+ *     pluck from
  * @param {string} property - Object property to pluck
  * @returns {Array} Array of results of plucked properties
  */
-function pluck(collection, property) {
+function pluck(list, property) {
     var result = [];
-    var iterator = collection.iterator();
+    var iterator = Object.hasOwnProperty.call(list, 'iterator') ? list.iterator() : list;
     while (iterator.hasNext()) {
         var temp = iterator.next();
         if (temp[property]) {

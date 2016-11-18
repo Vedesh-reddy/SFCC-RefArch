@@ -23,4 +23,8 @@ module.exports = function () {
     $('[name=sort-order]').on('change', function () {
         window.location.replace(this.value);
     });
+
+    $('.show-more button').on('click', function () {
+        window.location.replace($(this).data('url'));
+    });
 };
