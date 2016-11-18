@@ -258,3 +258,24 @@
     text-align: left;
     margin-top: 1.875rem;
 }
+
+.category-tile {
+    padding-bottom: 0.938rem;
+
+    h3 {
+        position: absolute;
+        bottom: 1.875rem;
+        left: 1.875rem;
+        color: $white;
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0.938rem;
+        bottom: 0.938rem;
+        left: 0.938rem;
+        background-image: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.5) 100%);
+    }
+}
