@@ -1,7 +1,6 @@
 'use strict';
 
 var server = require('server');
-var locale = require('~/cartridge/scripts/middleware/locale');
 
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
@@ -22,7 +21,7 @@ var TotalsModel = require('~/cartridge/models/totals');
 /**
  * Main entry point for Checkout
  */
-server.get('Start', locale, function (req, res, next) {
+server.get('Start', function (req, res, next) {
     var applicablePaymentCards;
     var applicablePaymentMethods;
     var countryCode = req.geolocation.countryCode;

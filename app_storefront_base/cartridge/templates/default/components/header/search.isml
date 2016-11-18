@@ -1,7 +1,7 @@
 <div class="site-search">
     <form role="search" action="${URLUtils.url('Search-Show')}" method="get" name="simpleSearch">
         <span class="fa fa-search"></span>
-        <input class="form-control search-field" type="text" id="q" name="q" value="" placeholder="${Resource.msg('simplesearch.searchtext', 'common', null)}" />
+        <input class="form-control search-field" type="text" id="q" name="q" value="" placeholder="${Resource.msg('label.header.searchwatermark', 'common', null)}" />
     </form>
 </div>
 <div class="search-button">

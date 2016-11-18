@@ -1,7 +1,6 @@
 'use strict';
 
 var server = require('server');
-var locale = require('~/cartridge/scripts/middleware/locale');
 
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
@@ -42,7 +41,7 @@ server.post('AddProduct', function (req, res, next) {
     next();
 });
 
-server.get('Show', locale, function (req, res, next) {
+server.get('Show', function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
@@ -106,7 +105,7 @@ server.get('Test', function (req, res, next) {
     next();
 });
 
-server.get('RemoveProductLineItem', locale, function (req, res, next) {
+server.get('RemoveProductLineItem', function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
@@ -148,7 +147,7 @@ server.get('RemoveProductLineItem', locale, function (req, res, next) {
     }
 });
 
-server.get('UpdateQuantity', locale, function (req, res, next) {
+server.get('UpdateQuantity', function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
@@ -202,7 +201,7 @@ server.get('UpdateQuantity', locale, function (req, res, next) {
     }
 });
 
-server.get('SelectShippingMethod', locale, function (req, res, next) {
+server.get('SelectShippingMethod', function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var error = false;

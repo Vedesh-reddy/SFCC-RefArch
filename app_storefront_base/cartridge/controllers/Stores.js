@@ -1,7 +1,6 @@
 'use strict';
 
 var server = require('server');
-var locale = require('~/cartridge/scripts/middleware/locale');
 
 /**
  * Searches for stores and creates a plain object of the stores returned by the search
@@ -55,7 +54,7 @@ function getModel(req) {
     return new StoresModel(storesMgrResult.keySet(), searchKey, radius, actionUrl, apiKey);
 }
 
-server.get('Find', locale, server.middleware.https, function (req, res, next) {
+server.get('Find', server.middleware.https, function (req, res, next) {
     res.render('storelocator/storelocator', getModel(req));
     next();
 });

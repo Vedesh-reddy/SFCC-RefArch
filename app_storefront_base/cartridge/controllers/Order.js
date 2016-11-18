@@ -1,7 +1,6 @@
 'use strict';
 
 var server = require('server');
-var locale = require('~/cartridge/scripts/middleware/locale');
 
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
@@ -20,7 +19,7 @@ var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 
-server.get('Test', locale, function (req, res, next) {
+server.get('Test', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
     var billing;
     var orderTotals;
@@ -51,7 +50,7 @@ server.get('Test', locale, function (req, res, next) {
     next();
 });
 
-server.get('Confirm', locale, function (req, res, next) {
+server.get('Confirm', function (req, res, next) {
     // =====================================================
     // Danger after checkout is complete remove testOrder
     // TODO Remove testOrder and the everything between the ==== signs
@@ -64,7 +63,7 @@ server.get('Confirm', locale, function (req, res, next) {
     next();
 });
 
-server.post('Track', locale, server.middleware.https, function (req, res, next) {
+server.post('Track', server.middleware.https, function (req, res, next) {
     var applicablePaymentCards;
     var applicablePaymentMethods;
 

@@ -2,8 +2,8 @@
     <isscript>
         var assets = require('~/cartridge/scripts/assets.js');
         assets.addCss('/css/account/profile.css');
-    </isscript> 
-    <div class="hero" style="background-image: url(http://www.pixelstalk.net/wp-content/uploads/2016/08/Background-HD-Wallpapers.jpg)">
+    </isscript>
+    <div class="hero slant-down" style="background-image: url(http://www.pixelstalk.net/wp-content/uploads/2016/08/Background-HD-Wallpapers.jpg)">
         <h1 class="page-title">${Resource.msg('page.title.myaccount','account',null)}</h1>
     </div>
     <div class="container">

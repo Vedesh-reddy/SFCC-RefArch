@@ -84,16 +84,6 @@ describe('Update quantity for product variant', function () {
         var variantUuid3 = prodIdUuidMap[variantPid3];
 
         var expectedUpdateRep = {
-            'locale': {
-                'countryCode': 'US',
-                'name': 'United States',
-                'continent': 'northamerica',
-                'availableLocales': [
-                    'en_US'
-                ],
-                'currencyCode': 'USD',
-                'tax': 'net'
-            },
             'actionUrls': {
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
                 'updateQuantityUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-UpdateQuantity',

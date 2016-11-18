@@ -1,7 +1,6 @@
 'use strict';
 
 var server = require('server');
-var locale = require('~/cartridge/scripts/middleware/locale');
 var OrderMgr = require('dw/order/OrderMgr');
 var Order = require('dw/order/Order');
 var ShippingMgr = require('dw/order/ShippingMgr');
@@ -64,7 +63,7 @@ function getModel(req) {
     return new AccountModel(req.currentCustomer, preferredAddressModel, orderModel);
 }
 
-server.get('Show', locale, function (req, res, next) {
+server.get('Show', function (req, res, next) {
     var accountModel = getModel(req);
 
     if (accountModel) {
@@ -75,7 +74,7 @@ server.get('Show', locale, function (req, res, next) {
     next();
 });
 
-server.post('Login', locale, server.middleware.https, function (req, res, next) {
+server.post('Login', server.middleware.https, function (req, res, next) {
     var email = req.form.loginEmail;
     var password = req.form.loginPassword;
     var rememberMe = req.form.loginRememberMe
@@ -98,7 +97,7 @@ server.post('Login', locale, server.middleware.https, function (req, res, next) 
     next();
 });
 
-server.get('Registration', locale, server.middleware.https, function (req, res, next) {
+server.get('Registration', server.middleware.https, function (req, res, next) {
     var profileForm = server.forms.getForm('profile');
 
     // TODO clear form
@@ -109,7 +108,7 @@ server.get('Registration', locale, server.middleware.https, function (req, res, 
     next();
 });
 
-server.post('SubmitRegistration', locale, server.middleware.https, function (req, res, next) {
+server.post('SubmitRegistration', server.middleware.https, function (req, res, next) {
     var registrationForm = server.forms.getForm('profile');
 
     // form validation
@@ -203,7 +202,7 @@ server.post('SubmitRegistration', locale, server.middleware.https, function (req
     next();
 });
 
-server.get('EditProfile', locale, function (req, res, next) {
+server.get('EditProfile', function (req, res, next) {
     var accountModel = getModel(req);
     if (accountModel) {
         var profileForm = server.forms.getForm('profile');
@@ -217,7 +216,7 @@ server.get('EditProfile', locale, function (req, res, next) {
     next();
 });
 
-server.post('SaveProfile', locale, function (req, res, next) {
+server.post('SaveProfile', function (req, res, next) {
     var profileForm = server.forms.getForm('profile');
 
     // form validation
@@ -282,7 +281,7 @@ server.post('SaveProfile', locale, function (req, res, next) {
     next();
 });
 
-server.post('SavePassword', locale, function (req, res, next) {
+server.post('SavePassword', function (req, res, next) {
     var profileForm = server.forms.getForm('profile');
 
     // form validation
@@ -330,6 +329,15 @@ server.post('SavePassword', locale, function (req, res, next) {
         });
     } else {
         res.render('account/profile', { profileForm: profileForm });
+    }
+    next();
+});
+
+server.get('Header', server.middleware.include, function (req, res, next) {
+    if (!req.currentCustomer.profile) {
+        res.render('account/header-anon', {});
+    } else {
+        res.render('account/header-logged', { name: req.currentCustomer.profile.firstName });
     }
     next();
 });

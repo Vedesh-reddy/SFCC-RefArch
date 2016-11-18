@@ -1,14 +1,13 @@
 'use strict';
 
 var server = require('server');
-var locale = require('~/cartridge/scripts/middleware/locale');
 
-server.get('Test', locale, function (req, res, next) {
+server.get('Test', function (req, res, next) {
     res.render('test.isml', { CurrentPageMetaData: { title: 'Hello World!' } });
     next();
 });
 
-server.get('Form', locale, function (req, res, next) {
+server.get('Form', function (req, res, next) {
     var form = server.forms.getForm('shippingaddress');
     res.render('form.isml', { form: form });
     next();

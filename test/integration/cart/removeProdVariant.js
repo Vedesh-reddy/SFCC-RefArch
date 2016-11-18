@@ -82,16 +82,6 @@ describe('Remove product variant from line item', function () {
         var variantUuid3 = prodIdUuidMap[variantPid3];
 
         var expectedResponse = {
-            'locale': {
-                'countryCode': 'US',
-                'name': 'United States',
-                'continent': 'northamerica',
-                'availableLocales': [
-                    'en_US'
-                ],
-                'currencyCode': 'USD',
-                'tax': 'net'
-            },
             'actionUrls': {
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
                 'updateQuantityUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-UpdateQuantity',
@@ -286,16 +276,6 @@ describe('Remove product variant from line item', function () {
 
     it('should remove all line items', function () {
         var expectedRemoveAllResp = {
-            'locale': {
-                'countryCode': 'US',
-                'name': 'United States',
-                'continent': 'northamerica',
-                'availableLocales': [
-                    'en_US'
-                ],
-                'currencyCode': 'USD',
-                'tax': 'net'
-            },
             'actionUrls': {
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
                 'updateQuantityUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-UpdateQuantity',

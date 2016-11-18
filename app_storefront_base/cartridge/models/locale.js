@@ -1,15 +1,13 @@
 'use strict';
 
 var countries = require('~/cartridge/models/countries');
-var locale = require('dw/util/Locale');
 
 /**
  * Represents current locale information in plain object
- * @param {string} requestLocale locale of current request (i.e. en_US)
+ * @param {dw.util.Locale} currentLocale - current locale of the request
  * @constructor
  */
-function Locale(requestLocale) {
-    var currentLocale = locale.getLocale(requestLocale);
+function Locale(currentLocale) {
     var currentCountry = !currentLocale ? countries[0]
         : countries.filter(function (country) {
             return country.countryCode === currentLocale.country;

@@ -7,11 +7,7 @@
 
     <!-- +1.888.555.0199 --><!--This phone is a requirement to support existing Gomez monitor of SiteGenesis. Demadware customers can remove this.-->
     <div class="container-fluid homepage">
-        <div class="row">
-            <div class="col-xs-12 home-main-image"> 
-                <isslot id="home-main" description="Main home page slot." context="global" />
-            </div>
-        </div>
+        <isslot id="home-main" description="Main home page slot." context="global" />
     </div>
 
     <div class="container home-categories homepage">
@@ -19,22 +15,18 @@
             <isslot id="home-categories" description="Categories slots on the home page." context="global" />
         </div>
     </div>
-     
+
     <div class="container home-product-tiles homepage">
         <div class="row hp-product-grid">
-            <isslot id="home-products" description="Product tiles on the home page." context="global" />    
+            <isslot id="home-products" description="Product tiles on the home page." context="global" />
         </div>
     </div>
-     
+
     <div class="container-fluid homepage">
-        <div class="row">
-            <div class="home-main-set-image col-xs-12"> 
-                <isslot id="home-product-set" description="Link to a Product Set." context="global" />
-            </div>
-        </div>
+        <isslot id="home-product-set" description="Link to a Product Set." context="global" />
         <div class="home-email-signup row">
             <div class="col-xl-2 hidden-lg-down home-email-signup-padding-top"></div>
-            <div class="col-xs-12 col-xl-8 home-email-signup-padding-top">    
+            <div class="col-xs-12 col-xl-8 home-email-signup-padding-top">
                 <form role="form">
                     <div class="form-group col-xs-12 col-md-6">
                         <input type="text" class="col-xs-8 col-md-6 col-xl-8" name="hpEmailSignUp" placeholder="${Resource.msg('placeholdertext.form.emailsignup', 'homepage', null)}">

@@ -1,0 +1,8 @@
+<div class="user">
+    <i class="fa fa-sign-in" aria-hidden="true"></i>
+    <span class="user-message">${pdict.name}</span>
+    <div class="popover popover-bottom">
+        <a href="${URLUtils.url('Account-Show')}">${Resource.msg('link.header.myaccount', 'account', null)}</a>
+        <a href="${URLUtils.url('Account-Logout')}">${Resource.msg('link.header.logout', 'account', null)}</a>
+    </div>
+</div>

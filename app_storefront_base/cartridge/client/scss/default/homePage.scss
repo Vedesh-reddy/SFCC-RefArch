@@ -2,70 +2,11 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 
-@mixin banner-message-padding() {
-    padding: 0.6em 1em 0.6em 10em;
-}
-
-@mixin banner-message-padding-md() {
-    padding: 0.5em 0.9375em 0.5em 2.5em;
-}
-
-@mixin banner-message-padding-sm() {
-    padding: 0.3125em 0.625em 0.3125em 1.875em;
-}
-
 .page {
     .homepage,
     .home-email-signup {
         padding-left: 0;
         padding-right: 0;
-    }
-}
-
-.home-main-image .main-image,
-.home-main-set-image .set-image {
-    background-repeat: no-repeat;
-
-    .banner-message {
-        background-color: $brand-color;
-        position: absolute;
-        color: $light-gray;
-
-        @include banner-message-padding();
-
-        @include media-breakpoint-down(md) {
-            @include banner-message-padding-md();
-        }
-
-        @include media-breakpoint-down(sm) {
-            @include banner-message-padding-sm();
-        }
-    }
-}
-
-.home-main-image {
-    .main-image {
-        min-height: 21.75em;
-
-        @include media-breakpoint-down(md) {
-            min-height: 19.0625em;
-        }
-
-        @include media-breakpoint-down(xs) {
-            min-height: 11.25em;
-        }
-
-        .banner-message {
-            top: 30%;
-
-            @include media-breakpoint-down(md) {
-                top: 35%;
-            }
-
-            @include media-breakpoint-down(sm) {
-                top: 30%;
-            }
-        }
     }
 }
 
@@ -192,39 +133,6 @@
             color: $brand-color;
             text-decoration: none;
         }
-    }
-}
-
-.home-main-set-image {
-    .set-image {
-        min-height: 41.1875em;
-        background-position: right;
-
-        .banner-message {
-            top: 70%;
-        }
-
-        @include media-breakpoint-down(md) {
-            min-height: 30.3125em;
-        }
-
-        @include media-breakpoint-down(sm) {
-            min-height: 26.3125em;
-        }
-    }
-}
-
-.set-image::after {
-    content: "";
-    position: absolute;
-    border-top: 5.25em solid $white;
-    border-right: 100vw solid transparent;
-    top: -0.0625em;
-
-    @include media-breakpoint-down(sm) {
-        border-top: 0 none;
-        border-right: 0 none;
-        top: 0;
     }
 }
 
