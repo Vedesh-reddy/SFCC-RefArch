@@ -2,7 +2,7 @@
     <iscomment> Render a tile of the category Name and the Category Landing Slot Image field </iscomment>
 
     <isloop items="${slotcontent.content}" var="category">
-        <div class="hero"
+        <div class="hero slant-down"
             <isif condition="${category.custom.slotBannerImage.getURL()}">
                 style="background-image: url(${category.custom.slotBannerImage.getURL()})"
             </isif>

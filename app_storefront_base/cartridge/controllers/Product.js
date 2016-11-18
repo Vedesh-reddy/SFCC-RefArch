@@ -1,7 +1,6 @@
 'use strict';
 
 var server = require('server');
-var locale = require('~/cartridge/scripts/middleware/locale');
 var URLUtils = require('dw/web/URLUtils');
 var ProductFactory = require('../scripts/factories/product');
 var Resource = require('dw/web/Resource');
@@ -31,7 +30,7 @@ function getResources() {
     };
 }
 
-server.get('Show', locale, function (req, res, next) {
+server.get('Show', function (req, res, next) {
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');

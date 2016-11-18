@@ -1,15 +1,12 @@
 'use strict';
 
-var logger = require('dw/system/Logger');
 var server = require('server');
-var ContentMgr = require('dw/content/ContentMgr');
-var Content = require('~/cartridge/models/content');
-var catalogMgr = require('dw/catalog/CatalogMgr');
-var Categories = require('~/cartridge/models/categories');
-var ProductSearch = require('dw/catalog/ProductSearchModel');
-var helper = require('~/cartridge/scripts/dwHelpers');
 
 server.get('Include', server.middleware.include, function (req, res, next) {
+    var ContentMgr = require('dw/content/ContentMgr');
+    var Content = require('~/cartridge/models/content');
+    var logger = require('dw/system/Logger');
+
     var contentMgr = ContentMgr.getContent(req.querystring.cid);
 
     if (contentMgr) {
@@ -22,13 +19,12 @@ server.get('Include', server.middleware.include, function (req, res, next) {
     next();
 });
 
-server.get('IncludeHeaderCustomerInfo', server.middleware.include, function (req, res, next) {
-    var loggedIn = req.currentCustomer.raw.authenticated;
-    res.render('/components/header/myaccount', { loggedIn: loggedIn });
-    next();
-});
-
 server.get('IncludeHeaderMenu', server.middleware.include, function (req, res, next) {
+    var catalogMgr = require('dw/catalog/CatalogMgr');
+    var Categories = require('~/cartridge/models/categories');
+    var ProductSearch = require('dw/catalog/ProductSearchModel');
+    var helper = require('~/cartridge/scripts/dwHelpers');
+
     var siteRootCategory = catalogMgr.getSiteCatalog().getRoot();
     var ps = new ProductSearch();
     var topLevelCategories = null;
@@ -40,6 +36,15 @@ server.get('IncludeHeaderMenu', server.middleware.include, function (req, res, n
         return catalogMgr.getCategory(item.value);
     });
     res.render('/components/header/menu', new Categories(categories));
+    next();
+});
+
+server.get('Locale', function (req, res, next) {
+    var LocaleModel = require('~/cartridge/models/locale');
+    var locale = require('dw/util/Locale');
+    var localeModel = new LocaleModel(locale.getLocale(req.locale));
+
+    res.render('/components/header/countryselector', localeModel);
     next();
 });
 

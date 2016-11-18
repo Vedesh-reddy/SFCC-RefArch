@@ -137,16 +137,6 @@ describe('Add Product variants to cart', function () {
                     // be includedin the response but the string can not be used for comparison as it because
                     // the path has radomly generated code.
                     var expectedResponse = {
-                        'locale': {
-                            'countryCode': 'US',
-                            'name': 'United States',
-                            'continent': 'northamerica',
-                            'availableLocales': [
-                                'en_US'
-                            ],
-                            'currencyCode': 'USD',
-                            'tax': 'net'
-                        },
                         'actionUrls': {
                             'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
                             'updateQuantityUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-UpdateQuantity',

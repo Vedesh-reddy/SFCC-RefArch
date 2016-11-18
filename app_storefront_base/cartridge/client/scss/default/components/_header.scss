@@ -9,40 +9,75 @@ $menu-item-margin: 10px;
     position: relative;
 }
 
-.account {
-    margin-right: 1.25em; /* 20/16 */
-}
+.navbar-header {
+    height: 4.375em; /* 70/16 */
 
-.navbar-header.brand {
-    position: absolute;
-    width: 100%;
-    min-width: 18.75em; /* 300/16 */
-    height: 100%;
-
-    .navbar-brand {
-        float: none;
-        display: block;
-        text-align: center;
-    }
-}
-
-.header-menu {
-    @include clearfix;
-
-    margin-top: 0.625em; /* 10/16 */
-    margin-bottom: 0.625em; /* 10/16 */
-
-    .account,
+    .user,
     .country-selector,
-    .header-search,
+    .search,
     .mini-cart {
-        float: left;
+        display: inline-block;
+        margin: 0.9375em 0 0 0.5em;
     }
 
-    @include media-breakpoint-up(md) {
-        .pull-left {
-            margin-top: 0.5em; /* 8/16 */
+    .user,
+    .country-selector,
+    .mini-cart,
+    .navbar-toggler {
+        line-height: 2.25em; /* 36/16 */
+    }
+
+    .navbar-toggler {
+        font-size: 1em;
+        width: auto;
+        margin: 0.5em;
+    }
+
+    .user {
+        position: relative;
+
+        .popover {
+            position: absolute;
+            display: none;
+            padding: 1em;
+            top: 85%;
+            left: 0;
+            margin-left: -50%;
+
+            a {
+                white-space: nowrap;
+                margin-bottom: 0.5em;
+            }
         }
+
+        &:hover {
+            .popover {
+                display: block;
+            }
+        }
+    }
+}
+
+.brand {
+    position: absolute;
+    left: 50%;
+    display: block;
+    text-align: center;
+
+    img {
+        width: 100%;
+    }
+
+    @include media-breakpoint-up(lg) {
+        width: 14.125em; /* 226/16 */
+        margin-left: -7.0625em; /* 113/16 */
+        padding-top: 0.5em;
+    }
+
+    @include media-breakpoint-down(md) {
+        width: 4em; /* 64/16 */
+        margin-left: -2em;
+        padding-top: 0.8em;
     }
 }
 
@@ -55,7 +90,7 @@ $menu-item-margin: 10px;
     padding-top: $banner-padding;
     padding-bottom: $banner-padding;
     text-align: center;
-    color: white;
+    color: $white;
 }
 
 .mini-cart {
@@ -68,13 +103,15 @@ $menu-item-margin: 10px;
     .minicart-quantity {
         background-color: $brand-color;
         border-radius: 50%;
-        width: 12px;
+        width: 1.0625em; /* 17/16 */
+        height: 1.0625em; /* 17/16 */
+        line-height: normal;
         display: inline-block;
         text-align: center;
-        font-size: 9px;
+        font-size: 0.8125em; /* 13/16 */
         position: relative;
-        top: -5px;
-        left: -8px;
-        color: white;
+        top: -0.4375em; /* 7/16 */
+        left: -0.6875em; /* 11/16 */
+        color: $white;
     }
 }

@@ -84,6 +84,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         border-bottom: 1px solid $gray-dark;
         padding: 0.5rem;
         margin-right: -1rem;
+        margin-left: -1rem;
 
         @include media-breakpoint-up($next-breakpoint) {
             display: none;
@@ -93,7 +94,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     li > .close-menu {
         margin-right: 0;
         margin-top: -0.6rem;
-        margin-left: 1rem;
+        margin-left: 0;
     }
 
     @include media-breakpoint-down($breakpoint-name) {

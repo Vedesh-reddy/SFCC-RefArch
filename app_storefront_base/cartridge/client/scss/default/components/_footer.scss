@@ -114,5 +114,12 @@ footer {
 }
 
 .footer-item {
-    border-bottom: 1px solid $dark-gray;
+
+    @include media-breakpoint-down(xs) {
+        border-bottom: 1px solid $dark-gray;
+    }
+
+    h3 {
+        cursor: pointer;
+    }
 }

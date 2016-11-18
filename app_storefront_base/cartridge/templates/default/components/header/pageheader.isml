@@ -10,29 +10,26 @@
 <header>
     <nav role="navigation">
         <div class="header container">
-            <div class="navbar-header brand row">
-                <div class="navbar-brand col-xs-12">
+            <div class="col-xs-12">
+                <div class="navbar-header brand row">
                     <a href="${URLUtils.url('Home-Show')}" title="${ Resource.msgf('global.homepage.tooltip', 'common', null, Resource.msg('global.storename', 'common', null), Resource.msg('global.home', 'common', null)) }">
-                        <img src="${URLUtils.staticURL('/images/logo.png')}" alt="${Resource.msg('global.storename', 'common', null)}" />
+                        <img class="hidden-md-down" src="${URLUtils.staticURL('/images/logo.svg')}" alt="${Resource.msg('global.storename', 'common', null)}" />
+                        <img class="hidden-lg-up" src="${URLUtils.staticURL('/images/logo-small.svg')}" alt="${Resource.msg('global.storename', 'common', null)}" />
                     </a>
                 </div>
-            </div>
-            <div class="navbar-header row">
-                <div class="header-menu col-xs-12">
+                <div class="navbar-header row">
                     <div class="pull-left">
+                        <div class="hidden-sm-down">
+                            <isinclude url="${URLUtils.url('Account-Header')}" />
+                            <isinclude url="${URLUtils.url('Page-Locale')}" />
+                        </div>
                         <button class="navbar-toggler hidden-md-up" type="button" aria-controls="sg-navbar-collapse" aria-expanded="false" aria-label="Toggle navigation">
-                          &#9776; <span class="hidden-xs-down">Menu</span>
+                            &#9776; <span class="hidden-xs-down">Menu</span>
                         </button>
-                        <div class="account hidden-sm-down">
-                            <isinclude url="${URLUtils.url('Page-IncludeHeaderCustomerInfo')}"/>
-                        </div>
-                        <div class="country-selector hidden-sm-down">
-                            <isinclude template="components/header/countryselector"/>
-                        </div>
                     </div>
                     <div class="pull-right">
-                        <div class="header-search">
-                            <isinclude template="components/header/search"/>
+                        <div class="search hidden-xs-down">
+                            <isinclude template="components/header/search" />
                         </div>
                         <div class="mini-cart">
                             <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
@@ -40,17 +37,8 @@
                     </div>
                 </div>
             </div>
-            <div class="row hidden-sm-up search-row">
-        		<div class="container">
-        			<div class="row">
-        				<div class="col-xs-12">
-        					<isinclude template="components/header/search"/>
-        				</div>
-        			</div>
-        		</div>
-        	</div>
         </div>
-        <div class="main-menu row navbar-toggleable-sm collapse menu-toggleable-left multilevel-dropdown" id="sg-navbar-collapse">
+        <div class="main-menu navbar-toggleable-sm collapse menu-toggleable-left multilevel-dropdown" id="sg-navbar-collapse">
     		<div class="container">
                 <div class="row">
 		            <isinclude url="${URLUtils.url('Page-IncludeHeaderMenu')}"/>

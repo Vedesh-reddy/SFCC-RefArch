@@ -1,7 +1,6 @@
 'use strict';
 
 var server = require('server');
-var locale = require('~/cartridge/scripts/middleware/locale');
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var search = require('~/cartridge/scripts/search/search');
@@ -10,7 +9,7 @@ var ProductSearch = require('~/cartridge/models/search/productSearch');
 var ProductSortOptions = require('~/cartridge/models/search/productSortOptions');
 
 
-server.get('Show', locale, function (req, res, next) {
+server.get('Show', function (req, res, next) {
     var categoryTemplate = '';
     var productSearch;
     var productSort;

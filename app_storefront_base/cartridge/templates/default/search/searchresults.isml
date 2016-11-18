@@ -5,7 +5,7 @@
         assets.addCss('/css/search.css');
     </isscript>
 
-    <div class="hero search-banner"
+    <div class="hero slant-down search-banner"
         <!--- If no image, default is specified in search.scss > .search-banner --->
         <isif condition="${pdict.productSearch.bannerImageUrl}">
             style="background-image: url(${pdict.productSearch.bannerImageUrl})"
