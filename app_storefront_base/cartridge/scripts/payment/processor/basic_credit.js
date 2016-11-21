@@ -86,4 +86,34 @@ function Handle(basket, paymentInformation) {
     return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
 }
 
+/**
+ * Authorizes a payment using a credit card. Customizations may use other processors and custom
+ *      logic to authorize credit card payment.
+ * @param {number} orderNumber - The current order's number
+ * @param {dw.order.PaymentInstrument} paymentInstrument -  The payment instrument to authorize
+ * @param {dw.order.PaymentProcessor} paymentProcessor -  The payment processor of the current
+ *      payment method
+ * @return {Object} returns an error object
+ */
+function Authorize(orderNumber, paymentInstrument, paymentProcessor) {
+    var serverErrors = [];
+    var fieldErrors = {};
+    var error = false;
+
+    try {
+        Transaction.wrap(function () {
+            paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
+            paymentInstrument.paymentTransaction.setPaymentProcessor(paymentProcessor);
+        });
+    } catch (e) {
+        error = true;
+        serverErrors.push(
+            Resource.msg('error.technical', 'checkout', null)
+        );
+    }
+
+    return { fieldErrors: fieldErrors, serverErrors: serverErrors, error: error };
+}
+
 exports.Handle = Handle;
+exports.Authorize = Authorize;

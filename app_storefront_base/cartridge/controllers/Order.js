@@ -51,14 +51,48 @@ server.get('Test', function (req, res, next) {
 });
 
 server.get('Confirm', function (req, res, next) {
-    // =====================================================
-    // Danger after checkout is complete remove testOrder
-    // TODO Remove testOrder and the everything between the ==== signs
-    var testOrder = require('~/cartridge/scripts/OrderTest');
-    // res.json(testOrder.orderTest(req));
-    res.render('checkout/confirmation/confirmation', testOrder.orderTest(req));
-    // res.render('checkout/confirmation/confirmation', testOrder.getOrderTest(req));
-    // =====================================================
+    var order = OrderMgr.getOrder(req.querystring.ID);
+    var billingAddress = order.billingAddress;
+    var paymentInstruments;
+    var shipment = order.defaultShipment;
+    var shippingAddress = shipment.shippingAddress;
+    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(order.defaultShipment);
+
+    // models
+    var billingAddressModel;
+    var billingModel;
+    var orderModel;
+    var orderTotals;
+    var paymentModel;
+    var productLineItemModel;
+    var shippingAddressModel = new AddressModel(shippingAddress);
+    var shippingModel;
+
+    shippingModel = new ShippingModel(
+        order.defaultShipment,
+        shipmentShippingModel,
+        shippingAddressModel
+    );
+
+    paymentInstruments = order.paymentInstruments;
+
+    paymentModel = new Payment(null, null, paymentInstruments);
+
+    billingAddressModel = new AddressModel(billingAddress);
+    billingModel = new BillingModel(billingAddressModel, paymentModel);
+
+    productLineItemModel = new ProductLineItemModel(order);
+    orderTotals = new TotalsModel(order);
+
+    orderModel = new OrderModel(
+        order,
+        shippingModel,
+        billingModel,
+        orderTotals,
+        productLineItemModel
+    );
+
+    res.render('checkout/confirmation/confirmation', { order: orderModel });
 
     next();
 });
