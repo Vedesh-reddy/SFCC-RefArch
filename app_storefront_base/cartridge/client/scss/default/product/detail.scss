@@ -151,9 +151,32 @@ div.quantity {
     right: 0;
 }
 
+@include media-breakpoint-up(sm) {
+    .product-number-rating {
+        border-bottom: 1px solid $hr-border-color;
+        border-top: 1px solid $hr-border-color;
+    }
+}
+
+.ratings {
+
+    @include media-breakpoint-up(sm) {
+        margin-top: 0.625em;
+    }
+
+    @include media-breakpoint-only(xs) {
+        background-color: $white;
+        margin-top: -1.875em; /* 30/16 */
+        margin-right: -0.9375em; /* 15/16 */
+        padding: 0.1875em; /* 3/16 */
+    }
+}
+
+.carousel-control {
+    z-index: 1;
+}
+
 .product-number {
-    border-bottom: 0.071em solid $hr-border-color;
-    border-top: 0.071em solid $hr-border-color;
     color: $product-number-grey;
     font-size: 0.875em;
     padding-bottom: 0.938em;

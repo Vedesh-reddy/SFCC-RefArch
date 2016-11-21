@@ -19,9 +19,26 @@
             <div class="col-sm-6">
                 <section>
                     <h1 class="product-name hidden-sm-down">${pdict.product.productName}</h1>
-                    <div class="product-number hidden-xs-down">
-                        ${Resource.msg('label.item', 'product', null)}
-                        <span class="product-id">${pdict.product.id}</span>
+                    <div class="product-number-rating clearfix">
+                        <div class="product-number hidden-xs-down pull-left">
+                            ${Resource.msg('label.item', 'product', null)}
+                            <span class="product-id">${pdict.product.id}</span>
+                        </div>
+                        <div class="ratings pull-right">
+                            <isloop items="${[1, 2, 3, 4, 5]}" var="star">
+                                <i class="fa
+                                    <isif condition="${pdict.product.rating >= star}">
+                                        fa-star
+                                    <iselse/>
+                                        <isif condition="${parseInt(pdict.product.rating) < star}">
+                                            fa-star-o
+                                        <iselse/>
+                                            fa-star-half-o
+                                        </isif>
+                                    </isif>
+                                    " aria-hidden="true"></i>
+                            </isloop>
+                        </div>
                     </div>
                 </section>
             </div>
