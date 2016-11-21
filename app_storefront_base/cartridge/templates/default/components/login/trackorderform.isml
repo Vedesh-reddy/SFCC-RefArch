@@ -20,7 +20,7 @@
             required 
             class="form-control" 
             id="trackorder-form-number" 
-            name="trackordernumber" 
+            name="trackOrderNumber" 
             placeholder="${Resource.msg('label.input.trackorder.ordernumber', 'login', null)}">
     </div>
 
@@ -50,7 +50,7 @@
             required 
             class="form-control" 
             id="trackorder-form-zip" 
-            name="trackorderpostal" 
+            name="trackOrderPostal" 
             regexp="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)"
             placeholder="${Resource.msg('label.input.trackorder.postalcode', 'login', null)}">
     </div>
