@@ -109,9 +109,20 @@ function validateFields(form, formKeys) {
     // Look for invalid form fields
     //
     formKeys.forEach(function (key) {
-        if (form[key] instanceof Object) {
-            if (form[key].valid === false) {
-                result[form[key].htmlName] = Resource.msg(form[key].error, 'address', null);
+        var item;
+        if (key.indexOf('.')) {
+            // nested property
+            item = form;
+            var properties = key.split('.');
+            properties.forEach(function (property) {
+                item = item[property];
+            });
+        } else {
+            item = form[key];
+        }
+        if (item instanceof Object) {
+            if (item.valid === false) {
+                result[item.htmlName] = Resource.msg(item.error, 'address', null);
             }
         }
     });
@@ -134,7 +145,7 @@ function validateBillingForm(form) {
         'city',
         'postal',
         'country',
-        'states'
+        'states.state'
     ];
 
     return validateFields(form, formKeys);
@@ -185,7 +196,7 @@ function validateShippingForm(form) {
         'city',
         'postalCode',
         'country',
-        'states'
+        'states.state'
     ];
 
     return validateFields(form, formKeys);
