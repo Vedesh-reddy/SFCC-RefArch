@@ -1,5 +1,5 @@
 <isloop items="${pdict.productSearch.productIds}" var="productId">
     <div>
-        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true')}" />
+        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true', 'reviews', 'true')}" />
     </div>
 </isloop>

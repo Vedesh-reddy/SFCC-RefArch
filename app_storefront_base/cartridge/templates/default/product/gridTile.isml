@@ -41,9 +41,21 @@
         <div class="card-text reviews-compare">
             <div class="reviews col-xs-6">
                 <isif condition="${pdict.display.reviews}">
-                            [reviews]
-                    </isif>
-                </div>
+                    <isloop items="${[1, 2, 3, 4, 5]}" var="star">
+                        <i class="fa
+                            <isif condition="${pdict.product.rating >= star}">
+                                fa-star
+                            <iselse/>
+                                <isif condition="${parseInt(pdict.product.rating) < star}">
+                                    fa-star-o
+                                <iselse/>
+                                    fa-star-half-o
+                                </isif>
+                            </isif>
+                            " aria-hidden="true"></i>
+                    </isloop>
+                </isif>
+            </div>
             <div class="compare col-xs-6 hidden-md-down">
                 <isif condition="${pdict.display.compare}">
                     <input type="checkbox" id="${pdict.product.id}" value="true">
