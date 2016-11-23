@@ -61,8 +61,7 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
-                    return browser.pause(2000)
-                        .then(() => browser.click(search.filterButton))
+                    return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarColor))
                         .then(() => browser.click(search.refinementBarColor))
                         .then(() => browser.waitForExist(search.refinementBarColorActive))
@@ -115,8 +114,7 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
-                    return browser.pause(2000)
-                        .then(() => browser.click(search.filterButton))
+                    return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarPrice))
                         .then(() => browser.click(search.refinementBarPrice))
                         .then(() => browser.waitForExist(search.refinementBarPriceActive))
@@ -165,8 +163,7 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
-                    return browser.pause(2000)
-                        .then(() => browser.click(search.filterButton))
+                    return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarNewArrival))
                         .then(() => browser.click(search.refinementBarNewArrival))
                         .then(() => browser.waitForExist(search.refinementBarNewArrivalActive))
@@ -303,12 +300,18 @@ describe('Query Search and Refinement - general product', () => {
             });
     });
 
-    // it('should return 79 results for pants when reset button is clicked', () => {
-    //     return browser.click(search.resetButton)
-    //         .then(() => browser.waitForExist(search.pdpMain))
-    //         .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-    //             search.colorRefinementSmall))
-    //         .then(mySearchSelector => browser.getText(mySearchSelector))
-    //         .then(displayText => assert.equal(displayText, '79 Results for pants'));
-    // });
+    it('should return 79 results for pants when reset button is clicked', () => {
+        return browser.isVisible(search.filterButton)
+            .then((isTrue) => {
+                if (!isTrue) {
+                    return browser.click(search.resetButton)
+                        .then(() => browser.waitForExist(search.pdpMain))
+                        .then(() => common.getVisibleSelector(search.colorRefinementLarge,
+                            search.colorRefinementSmall))
+                        .then(mySearchSelector => browser.getText(mySearchSelector))
+                        .then(displayText => assert.equal(displayText, '79 Results for pants'));
+                }
+                return null;
+            });
+    });
 });
