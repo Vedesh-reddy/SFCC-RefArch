@@ -13,14 +13,26 @@ export const blueColorRefinementSelectorChecked = '.swatch-circle-blue.selected'
 export const blackColorRefinementSelector = '.swatch-circle-black';
 export const blackColorRefinementSelectorChecked = '.swatch-circle-black.selected';
 export const priceRefinementSelector = '.price .values li:nth-child(2)';
+export const priceRefinementMobileSelector = priceRefinementSelector + ' .fa-circle-o';
 export const newArrivalRefinementUnchecked = '.refinement-bar .fa-square-o';
 export const newArrivalRefinementChecked = '.fa-check-square';
+export const newArrivalRefinementMobileSelector = '.refinement-bar .fa-close';
 export const resetButton = '.reset';
 export const productTile = '.product-tile';
 export const productGrid = '.product-grid';
 export const IMAGE_CONTAINER = '.imageContainer';
 export const CARD_TITLE = '.card-title';
 export const SWATCH_CIRCLE = '.swatches .swatch-circle';
+export const filterButton = '.filter-results';
+export const refinementBar = '.refinement-bar';
+export const refinementBarColor = '.refinement.color .title';
+export const refinementBarPrice = '.refinement.price .title';
+export const refinementBarNewArrival = '.refinement.new.arrival .title';
+export const refinementBarColorActive = '.refinement.color.active';
+export const refinementBarPriceActive = '.refinement.price.active';
+export const refinementBarNewArrivalActive = '.refinement.new.arrival.active';
+export const refinementCircle = '.fa-times-circle';
+export const refinementPriceClose = '.filter-bar .fa-close';
 
 function createCssNthProductTile(idx) {
     return productGrid + ' > div:nth-child(' + idx + ') ' + productTile;
