@@ -127,6 +127,7 @@ $checkout-font-weight: 600;
 
 .summary-details {
     font-size: 0.938em;
+    margin-bottom: 1em;
 }
 
 .data-checkout-stage {
@@ -159,6 +160,10 @@ $checkout-font-weight: 600;
             display: none;
         }
 
+        .card.ghost {
+            display: none;
+        }
+
         .card.payment-form,
         .shipping-summary {
             display: block;
@@ -173,6 +178,10 @@ $checkout-font-weight: 600;
     &[data-checkout-stage=placeOrder] {
         .card.shipping-form,
         .card.payment-form {
+            display: none;
+        }
+
+        .card.ghost {
             display: none;
         }
 
@@ -193,6 +202,10 @@ $checkout-font-weight: 600;
     &[data-checkout-stage=submitted] {
         .card.shipping-form,
         .card.payment-form {
+            display: none;
+        }
+
+        .card.ghost {
             display: none;
         }
 
