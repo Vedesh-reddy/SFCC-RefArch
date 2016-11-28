@@ -75,7 +75,12 @@
          */
         function updateShippingSummary(shippingMethod, totals) {
             $('.shipping-method-title').text(shippingMethod.displayName);
-            $('.shipping-method-arrival-time').text(shippingMethod.estimatedArrivalTime);
+            if (shippingMethod.estimatedArrivalTime) {
+                $('.shipping-method-arrival-time')
+                    .text('( ' + shippingMethod.estimatedArrivalTime + ' )');
+            } else {
+                $('.shipping-method-arrival-time').empty();
+            }
             $('.shipping-method-price').text(totals.totalShippingCost);
         }
 
