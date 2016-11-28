@@ -6,6 +6,14 @@ export const SWATCHES = '.swatches';
 export const SWATCH_CIRCLE = '.swatches .swatch-circle';
 export const CARD_TITLE = '.card-title';
 export const PDP_PRICES = '.pdpPrices';
+export const NEW_ARRIVALS = 'a[href*="new%20arrivals"]';
+export const WOMEN = '.navbar .nav-item:nth-child(2)';
+export const MEN = '.navbar .nav-item:nth-child(3)';
+export const ELECTRONICS = '.navbar .nav-item:nth-child(4)';
+export const TOP_SELLERS = '.navbar .nav-item:nth-child(5)';
+export const NAVBAR = '.navbar-toggler';
+export const LeftNavBar = '#sg-navbar-collapse';
+
 
 
 const basePath = '/home';
