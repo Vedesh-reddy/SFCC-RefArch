@@ -3,39 +3,39 @@
     <div class="card-block card-block-spacing">
         <p>
             <span class="section-label">${Resource.msg('label.order.number', 'confirmation', null)}</span><br>
-            <span>${pdict.orderNumber}</span>
+            <span>${pdict.order.orderNumber}</span>
         </p>
         <p>
             <span class="section-label">${Resource.msg('label.order.date', 'confirmation', null)}</span><br>
-            <span><isprint value="${pdict.creationDate}" style="DATE_LONG"/></span>
+            <span><isprint value="${pdict.order.creationDate}" style="DATE_LONG"/></span>
         </p>
 
         <!--- Shipping Address --->
         <span class="section-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</span><br>
-        <isset name="address" value="${pdict.shipping.shippingAddress}" scope="page"/>
+        <isset name="address" value="${pdict.order.shipping.shippingAddress}" scope="page"/>
         <isinclude template="checkout/addressSummary" />
 
         <!--- Shipping information --->
         <span class="section-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</span><br>
         <div class="row">
             <div class="col-xs-8">
-                <p class="shipping-method">${pdict.shipping.selectedShippingMethod.displayName} (${pdict.shipping.selectedShippingMethod.estimatedArrivalTime})</p>
+                <p class="shipping-method">${pdict.order.shipping.selectedShippingMethod.displayName} (${pdict.order.shipping.selectedShippingMethod.estimatedArrivalTime})</p>
             </div>
             <div class="col-xs-4">
                 <p class="text-xs-right pricing">
-                    ${pdict.totals.totalShippingCost}
+                    ${pdict.order.totals.totalShippingCost}
                 </p>
             </div>
         </div>
 
         <!--- Billing Address --->
         <span class="section-label">${Resource.msg('label.order.billing.address', 'confirmation', null)}</span><br>
-        <isset name="address" value="${pdict.billing.billingAddress.address}" scope="page"/>
+        <isset name="address" value="${pdict.order.billing.billingAddress.address}" scope="page"/>
         <isinclude template="checkout/addressSummary" />
 
         <!--- Payment information --->
         <span class="section-label">${Resource.msg('label.order.payment.info', 'confirmation', null)}</span><br>
-        <isloop items="${pdict.billing.payment.selectedPaymentInstruments}" var="payment">
+        <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
             <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
                 <p>
                     ${payment.type}
@@ -52,10 +52,10 @@
         <!--- Number of items --->
         <div class="row">
             <div class="col-xs-6">
-                <p class="section-label order-receipt-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.items.totalQuantity)}</p>
+                <p class="section-label order-receipt-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.order.items.totalQuantity)}</p>
             </div>
             <div class="col-xs-6">
-                <p class="text-xs-right pricing">${pdict.totals.subTotal}</p>
+                <p class="text-xs-right pricing">${pdict.order.totals.subTotal}</p>
             </div>
         </div>
     </div>

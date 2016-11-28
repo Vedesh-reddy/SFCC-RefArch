@@ -68,8 +68,8 @@
                                 ${Resource.msg('button.next.place.order', 'checkout', null)}
                             </button>
 
-                            <button class="btn btn-primary btn-block place-order" type="submit" name="submit" value="place-order">
-                                ${Resource.msg('button.place.order', 'checkout', null)}
+                            <button class="btn btn-primary btn-block place-order" data-action="${URLUtils.url('Checkout-PlaceOrder')}"
+                                    type="submit" name="submit" value="place-order">${Resource.msg('button.place.order', 'checkout', null)}
                             </button>
                         </div>
                     </div>

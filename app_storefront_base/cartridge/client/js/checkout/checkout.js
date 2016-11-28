@@ -234,11 +234,29 @@
 
                     return defer;
                 } else if (stage === 'placeOrder') {
-                    var p = $('<div>').promise(); // eslint-disable-line
-                    setTimeout(function () {
-                        p.done(); // eslint-disable-line
-                    }, 500);
-                    return p; // eslint-disable-line
+                    return $.ajax({
+                        url: $('.place-order').data('action'),
+                        method: 'POST',
+                        success: function (data) {
+                            if (data.error) {
+                                // go to apporiate stage and display error message
+                                // var checkoutStage = checkoutStages.indexOf(data.gotoStage);
+                                // members.gotoStage(checkoutStage, -1);
+                            } else {
+                                var url = data.continueUrl;
+                                var urlParams = { ID: data.orderID };
+
+                                url += (url.indexOf('?') !== -1 ? '&' : '?') +
+                                    Object.keys(urlParams).map(function (key) {
+                                        return key + '=' + encodeURIComponent(urlParams[key]);
+                                    }).join('&');
+
+                                window.location.href = url;
+                            }
+                        },
+                        error: function () {
+                        }
+                    });
                 }
                 var p = $('<div>').promise(); // eslint-disable-line
                 setTimeout(function () {
@@ -295,7 +313,7 @@
                             }
 
                             // set shipping cost
-                            $('.shipping-cost-name', tmpl).text(shippingMethods.shippingCost);
+                            $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
 
                             $shippingMethodList.append(tmpl.html());
                         });
@@ -360,13 +378,11 @@
                 // Handle Edit buttons on shipping and payment summary cards
                 //
                 $('.shipping-summary .edit-button', plugin).on('click', function () {
-                    var shippingIdx = checkoutStages.indexOf('shipping');
-                    members.gotoStage(shippingIdx, members.currentStage * -1);
+                    members.gotoStage('shipping');
                 });
 
                 $('.payment-summary .edit-button', plugin).on('click', function () {
-                    var paymentIdx = checkoutStages.indexOf('payment');
-                    members.gotoStage(paymentIdx, -1);
+                    members.gotoStage('payment');
                 });
 
                 //
@@ -393,7 +409,7 @@
                 });
 
                 $('#shipping-address .address').on('change',
-                    'select[name$="_addressFields_states"]',
+                    'select[name$="shippingAddress_addressFields_states_state"]',
                     members.updateShippingMethodList
                 );
 
@@ -456,12 +472,10 @@
 
             /**
              * Use window history to go to a checkout stage
-             * @param {number }stage - the current checkout state
-             * @param {Array} steps - the steps to goto in browser history
+             * @param {string} stageName - the checkout state to goto
              */
-            gotoStage: function (stage, steps) {
-                members.currentStage = stage;
-                history.go(steps);
+            gotoStage: function (stageName) {
+                members.currentStage = checkoutStages.indexOf(stageName);
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
             }
         };
