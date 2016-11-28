@@ -1,11 +1,11 @@
 <isif condition="${pdict.productSearch.isCategorySearch}">
     <span>
-        ${Resource.msgf('label.results', 'search', null, pdict.productSearch.productIds.length)}
+        ${Resource.msgf('label.results', 'search', null, pdict.productSearch.count)}
     </span>
 <iselse>
     <span>
         <isif condition="${pdict.productSearch.productIds.length > 0}">
-            ${Resource.msgf('label.resultsfor', 'search', null, pdict.productSearch.productIds.length)}
+            ${Resource.msgf('label.resultsfor', 'search', null, pdict.productSearch.count)}
         <iselse>
             ${Resource.msg('label.noresultsfor', 'search', null)}
         </isif>

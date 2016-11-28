@@ -136,6 +136,7 @@ function ProductSearch(productSearch, httpParams) {
         httpParams.sz || DEFAULT_PAGE_SIZE
     );
 
+    this.count = productSearch.count;
     this.isCategorySearch = productSearch.categorySearch;
     this.isRefinedCategorySearch = productSearch.refinedCategorySearch;
     this.searchKeywords = productSearch.searchPhrase;
