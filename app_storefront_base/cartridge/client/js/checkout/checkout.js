@@ -373,13 +373,11 @@
                 // Handle Edit buttons on shipping and payment summary cards
                 //
                 $('.shipping-summary .edit-button', plugin).on('click', function () {
-                    var shippingIdx = checkoutStages.indexOf('shipping');
-                    members.gotoStage(shippingIdx, members.currentStage * -1);
+                    members.gotoStage('shipping');
                 });
 
                 $('.payment-summary .edit-button', plugin).on('click', function () {
-                    var paymentIdx = checkoutStages.indexOf('payment');
-                    members.gotoStage(paymentIdx, -1);
+                    members.gotoStage('payment');
                 });
 
                 //
@@ -469,12 +467,10 @@
 
             /**
              * Use window history to go to a checkout stage
-             * @param {number }stage - the current checkout state
-             * @param {Array} steps - the steps to goto in browser history
+             * @param {string} stageName - the checkout state to goto
              */
-            gotoStage: function (stage, steps) {
-                members.currentStage = stage;
-                history.go(steps);
+            gotoStage: function (stageName) {
+                members.currentStage = checkoutStages.indexOf(stageName);
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
             }
         };
