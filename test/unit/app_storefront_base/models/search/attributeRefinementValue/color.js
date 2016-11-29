@@ -23,7 +23,15 @@ describe('ColorAttributeValue model', function () {
     it('should instantiate a Color Attribute Value model', function () {
         productSearch = {
             isRefinedByAttributeValue: function () { return true; },
-            urlRelaxAttributeValue: function () { return 'relax url'; }
+            urlRelaxAttributeValue: function () {
+                return {
+                    relative: function () {
+                        return {
+                            toString: function () { return 'relax url'; }
+                        };
+                    }
+                };
+            }
         };
         refinementValue = {
             ID: 'product 1',

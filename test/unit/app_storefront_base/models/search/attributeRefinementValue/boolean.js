@@ -5,9 +5,7 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 
 describe('BooleanAttributeValue model', function () {
-    var productSearch = {};
     var refinementDefinition = {};
-    var refinementValue = {};
     var booleanAttributeValue = {};
 
     var BooleanAttributeValue = proxyquire('../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/boolean', {
@@ -23,18 +21,36 @@ describe('BooleanAttributeValue model', function () {
         }
     });
 
+    var productSearch = {
+        isRefinedByAttributeValue: function () { return true; },
+        urlRelaxAttributeValue: function () {
+            return {
+                relative: function () {
+                    return {
+                        toString: function () { return 'relax url'; }
+                    };
+                }
+            };
+        },
+        urlRefineAttributeValue: function () {
+            return {
+                relative: function () {
+                    return {
+                        toString: function () { return 'select url'; }
+                    };
+                }
+            };
+        }
+    };
+    var refinementValue = {
+        ID: 'product 1',
+        presentationID: 'prez',
+        value: 'some value',
+        displayValue: 'some display value',
+        hitCount: 10
+    };
+
     it('should instantiate a Boolean Attribute Value model', function () {
-        productSearch = {
-            isRefinedByAttributeValue: function () { return true; },
-            urlRelaxAttributeValue: function () { return 'relax url'; }
-        };
-        refinementValue = {
-            ID: 'product 1',
-            presentationID: 'prez',
-            value: 'some value',
-            displayValue: 'some display value',
-            hitCount: 10
-        };
         booleanAttributeValue = new BooleanAttributeValue(productSearch, refinementDefinition, refinementValue);
 
         assert.deepEqual(booleanAttributeValue, {
@@ -45,6 +61,37 @@ describe('BooleanAttributeValue model', function () {
             selectable: true,
             title: 'some product title',
             url: 'relax url'
+        });
+    });
+
+    it('should instantiate a unselected Boolean Attribute Value model', function () {
+        productSearch.isRefinedByAttributeValue = function () { return false; };
+        booleanAttributeValue = new BooleanAttributeValue(productSearch, refinementDefinition, refinementValue);
+
+        assert.deepEqual(booleanAttributeValue, {
+            id: 'product 1',
+            type: 'boolean',
+            displayValue: 'some display value',
+            selected: false,
+            selectable: true,
+            title: 'some product title',
+            url: 'select url'
+        });
+    });
+
+    it('should instantiate a unselectable Boolean Attribute Value model', function () {
+        productSearch.isRefinedByAttributeValue = function () { return false; };
+        refinementValue.hitCount = 0;
+        booleanAttributeValue = new BooleanAttributeValue(productSearch, refinementDefinition, refinementValue);
+
+        assert.deepEqual(booleanAttributeValue, {
+            id: 'product 1',
+            type: 'boolean',
+            displayValue: 'some display value',
+            selected: false,
+            selectable: false,
+            title: 'some product title',
+            url: '"#"'
         });
     });
 });

@@ -9,13 +9,15 @@ var mockPriceRefinementValue = sinon.spy();
 var mockColorRefinementValue = sinon.spy();
 var mockSizeRefinementValue = sinon.spy();
 var mockBooleanRefinementValue = sinon.spy();
+var mockCategoryRefinementValue = sinon.spy();
 
 var main = proxyquire('../../../../../../app_storefront_base/cartridge/scripts/factories/searchRefinements/main', {
     '~/cartridge/scripts/dwHelpers': mockDwHelpers,
     '~/cartridge/models/search/attributeRefinementValue/price': mockPriceRefinementValue,
     '~/cartridge/models/search/attributeRefinementValue/color': mockColorRefinementValue,
     '~/cartridge/models/search/attributeRefinementValue/size': mockSizeRefinementValue,
-    '~/cartridge/models/search/attributeRefinementValue/boolean': mockBooleanRefinementValue
+    '~/cartridge/models/search/attributeRefinementValue/boolean': mockBooleanRefinementValue,
+    '~/cartridge/models/search/attributeRefinementValue/category': mockCategoryRefinementValue
 });
 
 
