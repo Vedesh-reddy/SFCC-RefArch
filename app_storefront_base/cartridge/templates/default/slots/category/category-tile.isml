@@ -8,16 +8,16 @@
         </h2>
 
         <isloop items="${slotcontent.content}" var="category">
-            <div class="category-tile col-sm-6 col-md-4">
+            <isif condition="${'slotBannerImage' in category.custom && category.custom.slotBannerImage}">
                 <a href="${URLUtils.http('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
-                    <isif condition="${'slotBannerImage' in category.custom && category.custom.slotBannerImage}">
+                    <div class="category-tile col-sm-6 col-md-4">
                         <img class="img-fluid" src="${category.custom.slotBannerImage.getURL()}" alt="${category.displayName}"/>
                         <h3>
                             <isprint value="${category.displayName}" encoding="off"/>
                         </h3>
-                    </isif>
+                    </div>
                 </a>
-            </div>
+            </isif>
         </isloop>
     </div>
 
