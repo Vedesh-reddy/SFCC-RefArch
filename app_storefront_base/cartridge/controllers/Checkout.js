@@ -2,15 +2,19 @@
 
 var server = require('server');
 
+var helper = require('~/cartridge/scripts/dwHelpers');
+
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
 var Order = require('dw/order/Order');
 var OrderMgr = require('dw/order/OrderMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
+var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
 var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
 var Status = require('dw/system/Status');
+var StoreMgr = require('dw/catalog/StoreMgr');
 var Transaction = require('dw/system/Transaction');
 
 var AddressModel = require('~/cartridge/models/address');
@@ -723,17 +727,86 @@ function placeOrder(order) {
     return result;
 }
 
+/**
+ * validates that the product line items are exist, are online, and have available inventory.
+ * @param {dw.order.Basket} basket - The current user's basket
+ * @returns {Object} an error object
+ */
+function validateProducts(basket) {
+    var result = {
+        error: false,
+        hasInventory: true
+    };
+    var productLineItems = basket.productLineItems;
+
+    helper.forEach(productLineItems, function (item) {
+        if (item.product === null || !item.product.online) {
+            result.error = true;
+            return;
+        }
+
+        if (Object.hasOwnProperty.call(item.custom, 'fromStoreId')
+            && item.custom.fromStoreId.length) {
+            var store = StoreMgr.getStore(item.custom.fromStoreId);
+            var storeInventory = ProductInventoryMgr.getInventoryList(store.custom.inventoryListId);
+
+            result.hasInventory = result.hasInventory
+                && (!storeInventory.getRecord(item.productID).length
+                && storeInventory.getRecord(item.productID).ATS.value >= item.quantityValue);
+        } else {
+            var availabilityLevels = item.product.availabilityModel
+                .getAvailabilityLevels(item.quantityValue);
+            result.hasInventory = result.hasInventory
+                && (availabilityLevels.notAvailable.value === 0);
+        }
+    });
+
+    return result;
+}
+
+/**
+ * validates the current users basket
+ * @param {dw.order.Basket} basket - The current user's basket
+ * @returns {Object} an error object
+ */
+function validateBasket(basket) {
+    var result = { error: false };
+
+    var productExistence = validateProducts(basket);
+    if (productExistence.error || !productExistence.hasInventory) {
+        result.error = true;
+    } else if (!basket.productLineItems.length) {
+        result.error = true;
+    } else if (!basket.merchandizeTotalPrice.available) {
+        result.error = true;
+    }
+
+    return result;
+}
+
 server.post('PlaceOrder', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var order;
     var validPayment;
     var orderNumber;
 
+    var isValidBasket = validateBasket(currentBasket);
+    if (isValidBasket.error) {
+        res.json({
+            error: true,
+            errorMessage: Resource.msg('error.technical', 'checkout', null)
+        });
+        return next();
+    }
+
     // Check to make sure there is a shipping address
     if (currentBasket.defaultShipment.shippingAddress === null) {
         res.json({
             error: true,
-            gotoStage: 'shipping',
+            errorStage: {
+                stage: 'shipping',
+                step: 'address'
+            },
             errorMessage: Resource.msg('error.no.shipping.address', 'checkout', null)
         });
         return next();
@@ -743,7 +816,10 @@ server.post('PlaceOrder', function (req, res, next) {
     if (!currentBasket.billingAddress) {
         res.json({
             error: true,
-            gotoStage: 'payment',
+            errorStage: {
+                stage: 'payment',
+                step: 'billingAddress'
+            },
             errorMessage: Resource.msg('error.no.billing.address', 'checkout', null)
         });
         return next();
@@ -759,7 +835,10 @@ server.post('PlaceOrder', function (req, res, next) {
     if (validPayment.error) {
         res.json({
             error: true,
-            gotoStage: 'payment',
+            errorStage: {
+                stage: 'payment',
+                step: 'paymentInstrument'
+            },
             errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
         });
         return next();
@@ -768,7 +847,10 @@ server.post('PlaceOrder', function (req, res, next) {
     // Re-calculate the payments.
     var calculatedPaymentTransactionTotal = calculatePaymentTransaction(currentBasket);
     if (calculatedPaymentTransactionTotal.error) {
-        res.json({ error: true });
+        res.json({
+            error: true,
+            errorMessage: Resource.msg('error.technical', 'checkout', null)
+        });
         return next();
     }
 
