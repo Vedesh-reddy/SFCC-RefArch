@@ -92,14 +92,14 @@ function getBannerImageUrl(category) {
  * @param {dw.util.Iterator} productHits - Iterator for product search results
  * @param {number} count - Number of products in search results
  * @param {number} pageSize - Number of products to display
- * @param {number} startPage - Start page number
+ * @param {number} startIndex - Beginning index value
  * @return {dw.web.PagingModel} - PagingModel instance
  */
-function getPagingModel(productHits, count, pageSize, startPage) {
+function getPagingModel(productHits, count, pageSize, startIndex) {
     var PagingModel = require('dw/web/PagingModel');
     var paging = new PagingModel(productHits, count);
 
-    paging.setStart(startPage || 1);
+    paging.setStart(startIndex || 0);
     paging.setPageSize(pageSize);
 
     return paging;
