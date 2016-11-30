@@ -107,6 +107,7 @@
         function clearPreviousErrors(parentSelector) {
             $('*[name]', parentSelector)
                 .parents('.form-group').removeClass('has-danger');
+            $('.error-message').hide();
         }
 
         /**
@@ -234,14 +235,13 @@
 
                     return defer;
                 } else if (stage === 'placeOrder') {
-                    return $.ajax({
+                    $.ajax({
                         url: $('.place-order').data('action'),
                         method: 'POST',
                         success: function (data) {
                             if (data.error) {
-                                // go to apporiate stage and display error message
-                                // var checkoutStage = checkoutStages.indexOf(data.gotoStage);
-                                // members.gotoStage(checkoutStage, -1);
+                                // go to appropriate stage and display error message
+                                defer.reject(data);
                             } else {
                                 var url = data.continueUrl;
                                 var urlParams = { ID: data.orderID };
@@ -252,11 +252,14 @@
                                     }).join('&');
 
                                 window.location.href = url;
+                                defer.resolve(data);
                             }
                         },
                         error: function () {
                         }
                     });
+
+                    return defer;
                 }
                 var p = $('<div>').promise(); // eslint-disable-line
                 setTimeout(function () {
@@ -430,8 +433,28 @@
                     members.handleNextStage(true);
                 });
 
-                promise.fail(function () {
+                promise.fail(function (data) {
                     // show errors
+                    if (data) {
+                        if (data.errorStage) {
+                            members.gotoStage(data.errorStage.stage);
+
+                            if (data.errorStage.step === 'billingAddress') {
+                                var $billingAddressSameAsShipping = $(
+                                    'input[name$="_shippingAddressUseAsBillingAddress"]'
+                                );
+                                if ($billingAddressSameAsShipping.is(':checked')) {
+                                    $billingAddressSameAsShipping.prop('checked', false);
+                                    $('.billing-address').toggleClass('same-as-shipping', false);
+                                }
+                            }
+                        }
+
+                        if (data.errorMessage) {
+                            $('.error-message').show();
+                            $('.error-message-text').text(data.errorMessage);
+                        }
+                    }
                 });
             },
 

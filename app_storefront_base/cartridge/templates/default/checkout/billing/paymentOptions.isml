@@ -2,8 +2,13 @@
     <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
         <div class="form-check form-group col-xs-12 ${pdict.forms.billingForm.paymentMethod.htmlName}">
             <label for="paymentOption-${paymentOption.ID}" class="form-check-label">
-                <input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-                       type="radio" class="form-check-input" value="${paymentOption.ID}">
+                <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
+                    <input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+                           type="radio" class="form-check-input" value="${paymentOption.ID}" checked>
+                    <iselse/>
+                    <input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"
+                           type="radio" class="form-check-input" value="${paymentOption.ID}">
+                </isif>
                 <span>${paymentOption.name}</span>
             </label>
             <div class="form-control-feedback"></div>
