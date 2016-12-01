@@ -4,24 +4,36 @@ $fa-font-path: "../fonts";
 // flag icons location in relation to target location of the css file.
 $flag-icon-css-path: "../fonts/flags/";
 
-$light-gray: #f9f9f9;
-$slightly-darker-gray: #aaa;
-$dark-gray: #545758;
-$darker-gray: #333;
-$brand-color: #59ba00;
-$horizontal-rule-grey: #cbcbcb;
-$product-number-grey: #ccc;
-$horizontal-border-grey: #999;
 $white: #fff;
 $black: #000;
-$blue: #00f;
-$green: #008000;
-$grey2: #eee;
-$menu-link: #54575a;
-$close-menu-bg: #f0f0f0;
-$red: #f00;
+$blue: #0070d2;
+$green: #008827;
+$red: #c00;
+$brand-primary: #00a1e0;
 
+// Consolidated values
+$grey1: #f9f9f9;
+$grey2: #eee;
+$grey3: #ccc;
+$grey4: #999;
+$grey5: #666;
+$grey6: #444;
+$grey7: #222;
+$grey-transparent-1: rgba(0, 0, 0, 0.65);
+$grey-transparent-2: rgba(0, 0, 0, 0.25);
+
+$light-gray: $grey1;
+$slightly-darker-gray: $grey4;
+$dark-gray: $grey6;
+$darker-gray: $grey7;
+$brand-color: $brand-primary;
+$horizontal-rule-grey: $grey3;
+$product-number-grey: $grey3;
+$horizontal-border-grey: $grey4;
+$menu-link: $grey6;
+$close-menu-bg: $grey2;
 $link-color: $dark-gray;
+$hr-border-color: $grey3;
 
 $grid-breakpoints: (
     xs: 0,
@@ -37,19 +49,17 @@ $container-max-widths: (
     xl: 1140px
 );
 
-$brand-primary: $brand-color;
-
 $border-radius: 0.1875rem;
 $border-radius-lg: $border-radius;
 $border-radius-sm: $border-radius;
 
-$hr-border-color: #cbcbcb;
-
 $state-danger-text: #fff;
-$alert-danger-bg: #c00;
-
+$alert-danger-bg: $red;
 $alert-success-text: #fff;
-$alert-success-bg: #59ba00;
+$alert-success-bg: $green;
 
 // Font sizes
 $base16-14px: 0.875em;
+
+// Bootstrap overrides
+$body-bg: $grey1;
