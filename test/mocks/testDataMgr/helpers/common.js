@@ -94,6 +94,12 @@ export function convertToUrlFormat(inString) {
     if (inString.endsWith('.')) {
         dotRemovedStr = inString.substr(0, inString.length - 1);
     }
-
     return dotRemovedStr.toLowerCase().replace(/ /g, '-');
+}
+
+export function waitUntilPageLoaded() {
+    return browser.waitUntil(() => {
+        return browser.execute(() => document.readyState)
+            .then(loaded => loaded.value === 'complete');
+    }, 5000);
 }
