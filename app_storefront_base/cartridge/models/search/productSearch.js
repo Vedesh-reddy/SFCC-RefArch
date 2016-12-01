@@ -113,11 +113,12 @@ function getPagingModel(productHits, count, pageSize, startIndex) {
  * @return {string} - More button URL
  */
 function getShowMoreUrl(paging, productSearch) {
+    var showMoreEndpoint = 'Search-UpdateGrid';
     var currentPageSize = paging.getPageSize();
     var morePageSize = currentPageSize < productSearch.count
         ? currentPageSize + DEFAULT_PAGE_SIZE
         : currentPageSize;
-    var baseUrl = productSearch.url(ACTION_ENDPOINT);
+    var baseUrl = productSearch.url(showMoreEndpoint);
 
     return paging.appendPageSize(baseUrl, morePageSize);
 }
