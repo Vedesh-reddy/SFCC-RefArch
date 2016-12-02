@@ -222,6 +222,9 @@ describe('Query Search and Refinement - general product', () => {
                             search.colorRefinementSmall))
                         .then(mySearchSelector => browser.getText(mySearchSelector))
                         .then(displayText => assert.equal(displayText, '2 Results for pants'))
+                        .then(() => common.waitUntilPageLoaded())
+                        .then(() => browser.click(search.customSelect))
+                        .then(() => browser.click(search.sortOrderProductAtoZ))
                         .then(() => common.waitUntilPageLoaded());
                 }
                 return null;
@@ -234,11 +237,11 @@ describe('Query Search and Refinement - general product', () => {
                 if (!isTrue) {
                     return search.getNthProductTileProductName(1)
                         .then(productName => {
-                            assert.equal(productName, expectedDisplayName1, 'Expected: displayed product name = ' + expectedDisplayName1);
+                            assert.equal(productName, expectedDisplayName2, 'Expected: displayed product name = ' + expectedDisplayName2);
                         })
                         .then(() => search.getNthProductTileProductName(2)
                             .then(productName2 => {
-                                assert.equal(productName2, expectedDisplayName2, 'Expected: displayed product name = ' + expectedDisplayName2);
+                                assert.equal(productName2, expectedDisplayName1, 'Expected: displayed product name = ' + expectedDisplayName1);
                             }))
                         .then(() => common.waitUntilPageLoaded());
                 }
@@ -250,12 +253,12 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (!isTrue) {
-                    return search.getNthProductTileImageSrc(1)
+                    return search.getNthProductTileImageSrc(2)
                         .then(imageSrc => {
                             assert.isTrue(imageSrc.endsWith('images/medium/PG.10208949.JJ0NLA0.PZ.jpg'),
                                 'product image: url not end with images/medium/PG.10208949.JJ0NLA0.PZ.jpg.');
                         })
-                        .then(() => search.getNthProductTileImageSrc(2)
+                        .then(() => search.getNthProductTileImageSrc(1)
                             .then(imageSrc2 => {
                                 assert.isTrue(imageSrc2.endsWith('images/medium/PG.10208897.JJ0QRXX.PZ.jpg'),
                                     'product image :url not end with images/medium/PG.10208897.JJ0QRXX.PZ.jpg.');
@@ -272,11 +275,11 @@ describe('Query Search and Refinement - general product', () => {
                 if (!isTrue) {
                     const expectedLink1 = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName1) + '/' + product1ID + '.html?lang=' + localeStr;
                     const expectedLink2 = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName2) + '/' + product2ID + '.html?lang=' + localeStr;
-                    return search.getNthProductTileImageHref(1)
+                    return search.getNthProductTileImageHref(2)
                         .then(imageLink1 => {
                             assert.equal(imageLink1, expectedLink1, 'Expected image link not equal to ' + expectedLink1);
                         })
-                        .then(() => search.getNthProductTileImageHref(2)
+                        .then(() => search.getNthProductTileImageHref(1)
                             .then(imageLink2 => {
                                 assert.equal(imageLink2, expectedLink2, 'Expected image link not equal to ' + expectedLink2);
                             }))
