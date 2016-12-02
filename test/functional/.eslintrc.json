@@ -9,6 +9,6 @@
         "browser": true
     },
     "rules": {
-        "prefer-const": 2
+        "prefer-const": ["error"]
     }
 }
