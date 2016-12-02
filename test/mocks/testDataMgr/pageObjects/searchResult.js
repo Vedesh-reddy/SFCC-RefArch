@@ -36,6 +36,8 @@ export const refinementBarPriceActive = '.refinement.price.active';
 export const refinementBarNewArrivalActive = '.refinement.new.arrival.active';
 export const refinementCircle = '.fa-times-circle';
 export const refinementPriceClose = '.filter-bar .fa-close';
+export const customSelect = '.custom-select';
+export const sortOrderProductAtoZ = '.custom-select option:nth-child(3)';
 
 function createCssNthProductTile(idx) {
     return productGrid + ' > div:nth-child(' + idx + ') ' + productTile;
