@@ -67,8 +67,7 @@ describe('Query Search and Refinement - general product', () => {
                         .then(() => browser.click(search.refinementBarColor))
                         .then(() => browser.waitForExist(search.refinementBarColorActive))
                         .then(() => browser.click(search.blueColorRefinementSelector))
-                        .then(() => common.waitUntilPageLoaded())
-                        .then(() => browser.waitForExist(search.pdpMain))
+                        .then(() => browser.pause(2000))
                         .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                             search.colorRefinementSmall))
                         .then(mySearchSelector => browser.getText(mySearchSelector))
@@ -118,9 +117,8 @@ describe('Query Search and Refinement - general product', () => {
                         .then(() => browser.waitForExist(search.refinementBarPrice))
                         .then(() => browser.click(search.refinementBarPrice))
                         .then(() => browser.waitForExist(search.refinementBarPriceActive))
-                        .then(() => browser.click(search.priceRefinementMobileSelector))
+                        .then(() => browser.click(search.priceRefinementSelector))
                         .then(() => browser.pause(2000))
-                        .then(() => browser.waitForExist(search.pdpMain))
                         .then(() => browser.getText('.result-count.hidden-xs-down'))
                         .then(displayText => assert.equal(displayText, '8 Results for pants'));
                 }

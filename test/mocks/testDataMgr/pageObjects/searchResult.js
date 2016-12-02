@@ -17,8 +17,6 @@ export const buttonFaCheck = ' .fa-check-circle';
 export const priceRefinementTitle = '.price .values li:nth-child(2)';
 export const priceRefinementSelector = priceRefinementTitle + buttonfaCircleO;
 export const priceRefinementCheckSelector = priceRefinementTitle + buttonFaCheck;
-export const priceRefinementMobileSelector = priceRefinementSelector + buttonfaCircleO;
-
 export const newArrivalRefinementUnchecked = '.refinement-bar .fa-square-o';
 export const newArrivalRefinementChecked = '.fa-check-square';
 export const newArrivalRefinementMobileSelector = '.refinement-bar .fa-close';
