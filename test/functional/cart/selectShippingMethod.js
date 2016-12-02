@@ -23,7 +23,7 @@ describe('Cart - Selecting Shipping Methods', () => {
     const productVariantId2 = '013742003208';
     let productVariant2;
 
-    let prodIdUnitPricesMap = {};
+    const prodIdUnitPricesMap = {};
 
     const expectedShipMethodList = [
         'Ground ( 7-10 Business Days )',
@@ -37,10 +37,10 @@ describe('Cart - Selecting Shipping Methods', () => {
     before(() => {
         return testDataMgr.load()
             .then(() => {
-                let unitPrices = testDataMgr.getPricesByProductId(productVariantId1, locale);
+                const unitPrices = testDataMgr.getPricesByProductId(productVariantId1, locale);
                 prodIdUnitPricesMap[productVariantId1] = unitPrices;
 
-                let unitPrices2 = testDataMgr.getPricesByProductId(productVariantId2, locale);
+                const unitPrices2 = testDataMgr.getPricesByProductId(productVariantId2, locale);
                 prodIdUnitPricesMap[productVariantId2] = unitPrices2;
 
                 productVariant1 = testDataMgr.getProductById(productVariantId1);
@@ -468,7 +468,7 @@ describe('Cart - Selecting Shipping Methods', () => {
         });
 
         it('Should not have surcharge included in shipping cost for shipping method - 2 Day Express.', function () {
-            let shipCostMap = {
+            const shipCostMap = {
                 'x_default': '$15.99',
                 'en_GB': '£11.99',
                 'fr_FR': '11,99 €',
@@ -477,7 +477,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 'zh_CN': '¥23.99'
             };
 
-            let totalTaxMap = {
+            const totalTaxMap = {
                 'x_default': '$11.75',
                 'en_GB': '£9.59',
                 'fr_FR': '9,59 €',

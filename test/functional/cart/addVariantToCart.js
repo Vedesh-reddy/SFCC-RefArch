@@ -11,7 +11,7 @@ describe('Cart - Add Variant To Cart', () => {
     let catalog;
     let productVariationMaster;
     let resourcePath;
-    let variant1 = {
+    const variant1 = {
         instance: undefined,
         color: {
             index: undefined,
@@ -26,7 +26,7 @@ describe('Cart - Add Variant To Cart', () => {
             displayValue: undefined
         }
     };
-    let variant2 = {
+    const variant2 = {
         instance: undefined,
         color: {
             index: undefined,
@@ -49,10 +49,9 @@ describe('Cart - Add Variant To Cart', () => {
                 return browser.url(productVariationMaster.getUrlResourcePath());
             })
             .then(() => {
-                let variantIds;
-                let variant1Selection = new Map();
+                const variant1Selection = new Map();
                 catalog = testDataMgr.parsedData.catalog;
-                variantIds = productVariationMaster.getVariantProductIds();
+                const variantIds = productVariationMaster.getVariantProductIds();
 
                 // No-Iron Textured Dress Shirt (Color: White, Size: 14 1/2, Width: 32/33)
                 variant1.instance = products.getProduct(catalog, variantIds[0]);

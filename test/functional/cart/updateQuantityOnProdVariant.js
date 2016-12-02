@@ -19,9 +19,9 @@ describe('Cart - Update Quantity On Product Variant', () => {
     let productVariant3;
 
     const newQty = 3;
-    let prodIdUnitPricesMap = {};
+    const prodIdUnitPricesMap = {};
 
-    let shippingCostMap = {
+    const shippingCostMap = {
         'x_default': '$9.99',
         'en_GB': '£7.99',
         'fr_FR': '7,99 €',
@@ -30,7 +30,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
         'zh_CN': '¥15.99'
     };
 
-    let totalTaxMap = {
+    const totalTaxMap = {
         'x_default': '$13.55',
         'en_GB': '£8.99',
         'fr_FR': '8,99 €',
@@ -42,7 +42,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
     before(() => {
         return testDataMgr.load()
             .then(() => {
-                let unitPrices = testDataMgr.getPricesByProductId(productVariantId1, locale);
+                const unitPrices = testDataMgr.getPricesByProductId(productVariantId1, locale);
                 prodIdUnitPricesMap[productVariantId1] = unitPrices;
 
                 productVariant1 = testDataMgr.getProductById(productVariantId1);
@@ -50,7 +50,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
             })
             .then(() => productDetailPage.clickAddToCartButton())
             .then(() => {
-                let unitPrices = testDataMgr.getPricesByProductId(productVariantId2, locale);
+                const unitPrices = testDataMgr.getPricesByProductId(productVariantId2, locale);
                 prodIdUnitPricesMap[productVariantId2] = unitPrices;
 
                 productVariant2 = testDataMgr.getProductById(productVariantId2);
@@ -58,7 +58,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
             })
             .then(() => productDetailPage.clickAddToCartButton())
             .then(() => {
-                let unitPrices = testDataMgr.getPricesByProductId(productVariantId3, locale);
+                const unitPrices = testDataMgr.getPricesByProductId(productVariantId3, locale);
                 prodIdUnitPricesMap[productVariantId3] = unitPrices;
 
                 productVariant3 = testDataMgr.getProductById(productVariantId3);
@@ -87,7 +87,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
     it('Should have correct line item each price', function () {
         return cartPage.getEachPriceByRow(2)
             .then(price => {
-                let expectedUnitPrice = prodIdUnitPricesMap[productVariantId2].list;
+                const expectedUnitPrice = prodIdUnitPricesMap[productVariantId2].list;
                 assert.equal(price, expectedUnitPrice, 'Expected the line item 2 have total price of ' + expectedUnitPrice);
             });
     });
