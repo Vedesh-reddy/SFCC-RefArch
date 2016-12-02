@@ -52,6 +52,11 @@ server.get('Start', function (req, res, next) {
     var shippingAddressModel;
     var shippingModel;
 
+    // Calculate the basket
+    Transaction.wrap(function () {
+        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+    });
+
     shipmentShippingModel = ShippingMgr.getShipmentShippingModel(
         currentBasket.defaultShipment
     );
@@ -294,9 +299,13 @@ server.post('SubmitShipping', function (req, res, next) {
             if (shippingMethodID !== shipment.shippingMethod.ID) {
                 Transaction.wrap(function () {
                     ShippingModel.selectShippingMethod(shipment, shippingMethodID);
-                    HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
                 });
             }
+
+            // Calculate the basket
+            Transaction.wrap(function () {
+                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            });
 
             shippingAddressModel = new AddressModel(shippingAddress);
             shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
@@ -318,6 +327,28 @@ server.post('SubmitShipping', function (req, res, next) {
 
     next();
 });
+
+/**
+ * Sets the payment transaction amount
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @returns {Object} an error object
+ */
+function calculatePaymentTransaction(currentBasket) {
+    var result = { error: false };
+
+    try {
+        Transaction.wrap(function () {
+            // TODO: This function will need to account for gift certificates at a later date
+            var orderTotal = currentBasket.totalGrossPrice;
+            var paymentInstrument = currentBasket.paymentInstrument;
+            paymentInstrument.paymentTransaction.setAmount(orderTotal);
+        });
+    } catch (e) {
+        result.error = true;
+    }
+
+    return result;
+}
 
 /**
  *  Handle Ajax payment (and billing) form submit
@@ -488,6 +519,25 @@ server.post('SubmitPayment', function (req, res, next) {
                 return;
             }
 
+            // Calculate the basket
+            Transaction.wrap(function () {
+                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            });
+
+            // Re-calculate the payments.
+            var calculatedPaymentTransactionTotal = calculatePaymentTransaction(currentBasket);
+            if (calculatedPaymentTransactionTotal.error) {
+                res.json({
+                    form: paymentForm,
+                    fieldErrors: [],
+                    serverErrors: [Resource.msg('error.technical', 'checkout', null)],
+                    error: true
+                });
+                return;
+            }
+
+            var orderTotals = new TotalsModel(currentBasket);
+
             paymentInstruments = currentBasket.paymentInstruments;
             paymentModel = new Payment(null, null, paymentInstruments);
 
@@ -501,6 +551,7 @@ server.post('SubmitPayment', function (req, res, next) {
 
             res.json({
                 billingData: billingModel,
+                totals: orderTotals,
                 form: server.forms.getForm('payment'),
                 resource: resource,
                 error: false
@@ -601,28 +652,6 @@ function validatePayment(req, currentBasket) {
     }
 
     result.error = invalid;
-    return result;
-}
-
-/**
- * Sets the payment transaction amount
- * @param {dw.order.Basket} currentBasket - The current basket
- * @returns {Object} an error object
- */
-function calculatePaymentTransaction(currentBasket) {
-    var result = { error: false };
-
-    try {
-        Transaction.wrap(function () {
-            // TODO: This function will need to account for gift certificates at a later date
-            var orderTotal = currentBasket.totalGrossPrice;
-            var paymentInstrument = currentBasket.paymentInstrument;
-            paymentInstrument.paymentTransaction.setAmount(orderTotal);
-        });
-    } catch (e) {
-        result.error = true;
-    }
-
     return result;
 }
 
