@@ -1,4 +1,7 @@
 'use strict';
+import _ from 'lodash';
+import nodeUrl from 'url';
+
 
 export const defaultLocale = 'x_default';
 export const supportedLocales = [
@@ -11,6 +14,7 @@ export const supportedLocales = [
 ];
 
 export const PRIMARY_CONTENT = '.container';
+export const CategorySlot = '.category-slot .category-tile';
 
 /**
  *
@@ -117,7 +121,3 @@ export function getSearchParams() {
             return Promise.resolve(params);
         });
 }
-
-
-
-
