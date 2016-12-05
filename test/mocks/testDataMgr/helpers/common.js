@@ -14,7 +14,7 @@ export const supportedLocales = [
 ];
 
 export const PRIMARY_CONTENT = '.container';
-export const CategorySlot = '.category-slot .category-tile';
+export const CATEGORYSLOT = '.category-slot .category-tile';
 
 /**
  *
