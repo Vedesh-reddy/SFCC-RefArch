@@ -50,11 +50,7 @@
                     <isinclude template="cart/cartTotals" />
                     <div class="row">
                         <div class="col-xs-12 checkout-continue">
-                            <div>
-                                <a href="${URLUtils.url('Checkout-Start')}" class="btn btn-primary btn-block checkout-btn" role="button" aria-pressed="true">
-                                    ${Resource.msg('button.checkout','cart',null)}
-                                </a>
-                            </div>
+                            <isinclude template="cart/checkoutButtons" />
                         </div>
                     </div>
                     <br>
