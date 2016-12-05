@@ -47,8 +47,9 @@ Use the provided NPM scripts to compile and upload changes to your Sandbox.
 ## Running unit tests
 
 You can run `npm test` to execute all unit tests in the project. Run `npm test --coverage` to get coverage information. Coverage will be available in `coverage` folder under root directory.
-UNIT test code coverage : 
-1. From the mfsg repository issue command "npm run cover"
+
+* UNIT test code coverage : 
+1.  From the mfsg repository issue command "npm run cover"
 2. A report will be generated ex. Writing coverage reports at [/Users/zsardoone/Demandware/mfsg/coverage]
 3. navigate to this directory on your local machien, open up the index.html file, a detailes report will be available. 
 
