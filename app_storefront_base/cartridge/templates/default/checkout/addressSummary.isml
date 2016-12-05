@@ -25,7 +25,7 @@
         </isif>
     </span>
 
-    <span class="states">
+    <span class="stateCode">
         <isif condition="${address.stateCode}">
                 ${address.stateCode}
         </isif>
