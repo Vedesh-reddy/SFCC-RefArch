@@ -8,3 +8,11 @@
     top: 0;
     left: 0;
 }
+
+input[placeholder] {
+    text-overflow: ellipsis;
+}
+
+header ~ .container a:not(.card-title) {
+    color: $blue;
+}
