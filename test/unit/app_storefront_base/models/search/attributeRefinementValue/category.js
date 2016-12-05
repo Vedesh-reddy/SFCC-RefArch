@@ -4,11 +4,11 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 
-describe('PriceAttributeValue model', function () {
+describe('CategoryAttributeValue model', function () {
     var refinementDefinition = {};
-    var priceAttributeValue = {};
+    var booleanAttributeValue = {};
 
-    var PriceAttributeValue = proxyquire('../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/price', {
+    var CategoryAttributeValue = proxyquire('../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/category', {
         '~/cartridge/models/search/attributeRefinementValue/base': proxyquire(
             '../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
                 'dw/web/Resource': {
@@ -22,8 +22,8 @@ describe('PriceAttributeValue model', function () {
     });
 
     var productSearch = {
-        isRefinedByPriceRange: function () { return true; },
-        urlRelaxPrice: function () {
+        isRefinedByAttributeValue: function () { return true; },
+        urlRelaxCategory: function () {
             return {
                 relative: function () {
                     return {
@@ -32,11 +32,11 @@ describe('PriceAttributeValue model', function () {
                 }
             };
         },
-        urlRefinePrice: function () {
+        urlRefineCategory: function () {
             return {
                 relative: function () {
                     return {
-                        toString: function () { return 'select url'; }
+                        toString: function () { return 'category url'; }
                     };
                 }
             };
@@ -46,32 +46,37 @@ describe('PriceAttributeValue model', function () {
         ID: 'product 1',
         presentationID: 'prez',
         value: 'some value',
-        displayValue: 'some display value',
+        displayName: 'some display value',
         hitCount: 10
     };
 
-    it('should instantiate a Price Attribute Value model', function () {
-        priceAttributeValue = new PriceAttributeValue(productSearch, refinementDefinition, refinementValue);
+    it('should instantiate a selected Category Attribute Value model', function () {
+        booleanAttributeValue = new CategoryAttributeValue(productSearch, refinementDefinition, refinementValue, true);
 
-        assert.deepEqual(priceAttributeValue, {
+        assert.deepEqual(booleanAttributeValue, {
+            id: 'product 1',
+            type: 'category',
             displayValue: 'some display value',
             selected: true,
+            selectable: true,
             title: 'some product title',
-            url: 'relax url'
+            url: 'relax url',
+            subCategories: []
         });
     });
 
-    it('should instantiate an unselected Price Attribute Value model', function () {
-        productSearch.isRefinedByPriceRange = function () {
-            return false;
-        };
-        priceAttributeValue = new PriceAttributeValue(productSearch, refinementDefinition, refinementValue);
+    it('should instantiate a unselected Category Attribute Value model', function () {
+        booleanAttributeValue = new CategoryAttributeValue(productSearch, refinementDefinition, refinementValue, false);
 
-        assert.deepEqual(priceAttributeValue, {
+        assert.deepEqual(booleanAttributeValue, {
+            id: 'product 1',
+            type: 'category',
             displayValue: 'some display value',
             selected: false,
+            selectable: true,
             title: 'some product title',
-            url: 'select url'
+            url: 'category url',
+            subCategories: []
         });
     });
 });

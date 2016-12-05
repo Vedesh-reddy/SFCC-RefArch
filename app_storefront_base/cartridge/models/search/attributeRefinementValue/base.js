@@ -39,11 +39,13 @@ BaseAttributeValue.prototype = {
         var url = '';
 
         if (selected) {
-            url = productSearch.urlRelaxAttributeValue(actionEndpoint, id, value);
+            url = productSearch.urlRelaxAttributeValue(actionEndpoint, id, value)
+                .relative().toString();
         } else if (!selectable) {
             url = '"#"';
         } else {
-            url = productSearch.urlRefineAttributeValue(actionEndpoint, id, value);
+            url = productSearch.urlRefineAttributeValue(actionEndpoint, id, value)
+                .relative().toString();
         }
 
         return url;
