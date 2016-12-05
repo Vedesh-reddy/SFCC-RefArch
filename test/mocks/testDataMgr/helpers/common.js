@@ -1,4 +1,7 @@
 'use strict';
+import _ from 'lodash';
+import nodeUrl from 'url';
+
 
 export const defaultLocale = 'x_default';
 export const supportedLocales = [
@@ -9,6 +12,9 @@ export const supportedLocales = [
     'ja_JP',
     'zh_CN'
 ];
+
+export const PRIMARY_CONTENT = '.container';
+export const CATEGORYSLOT = '.category-slot .category-tile';
 
 /**
  *
@@ -102,4 +108,16 @@ export function waitUntilPageLoaded() {
         return browser.execute(() => document.readyState)
             .then(loaded => loaded.value === 'complete');
     }, 5000);
+}
+
+export function getSearchParams() {
+    return browser.url()
+        .then(url => {
+            let parsedUrl = nodeUrl.parse(url.value);
+            let search = parsedUrl.search ? parsedUrl.search.replace('?', '') : '';
+            let params = _.fromPairs(
+                _.map(search.split('&amp;'), param => param.split('='))
+            );
+            return Promise.resolve(params);
+        });
 }
