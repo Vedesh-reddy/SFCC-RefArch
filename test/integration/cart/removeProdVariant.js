@@ -92,7 +92,15 @@ describe('Remove product variant from line item', function () {
                 'subTotal': '$137.97',
                 'grandTotal': '$153.26',
                 'totalTax': '$7.30',
-                'totalShippingCost': '$7.99'
+                'totalShippingCost': '$7.99',
+                'orderLevelDiscountTotal': {
+                    'formatted': '$0.00',
+                    'value': 0
+                },
+                'shippingLevelDiscountTotal': {
+                    'formatted': '$0.00',
+                    'value': 0
+                }
             },
             'shippingMethods': [
                 {
@@ -286,7 +294,15 @@ describe('Remove product variant from line item', function () {
                 'subTotal': '$0.00',
                 'grandTotal': '$0.00',
                 'totalTax': '$0.00',
-                'totalShippingCost': '$0.00'
+                'totalShippingCost': '$0.00',
+                'orderLevelDiscountTotal': {
+                    'formatted': '$0.00',
+                    'value': 0
+                },
+                'shippingLevelDiscountTotal': {
+                    'formatted': '$0.00',
+                    'value': 0
+                }
             },
             'shippingMethods': [
                 {

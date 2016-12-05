@@ -48,7 +48,15 @@ describe('Select different State in Shipping Form', function () {
                     'subTotal': '$38.00',
                     'grandTotal': '$56.69',
                     'totalTax': '$2.70',
-                    'totalShippingCost': '$15.99'
+                    'totalShippingCost': '$15.99',
+                    'orderLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    },
+                    'shippingLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -150,7 +158,15 @@ describe('Select different State in Shipping Form', function () {
                     'subTotal': '$114.00',
                     'grandTotal': '$159.59',
                     'totalTax': '$7.60',
-                    'totalShippingCost': '$37.99'
+                    'totalShippingCost': '$37.99',
+                    'orderLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    },
+                    'shippingLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -252,7 +268,15 @@ describe('Select different State in Shipping Form', function () {
                     'subTotal': '$49.99',
                     'grandTotal': '$52.49',
                     'totalTax': '$2.50',
-                    'totalShippingCost': '$0.00'
+                    'totalShippingCost': '$0.00',
+                    'orderLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    },
+                    'shippingLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -341,7 +365,15 @@ describe('Select different State in Shipping Form', function () {
                     'subTotal': '$49.99',
                     'grandTotal': '$58.78',
                     'totalTax': '$2.80',
-                    'totalShippingCost': '$5.99'
+                    'totalShippingCost': '$5.99',
+                    'orderLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    },
+                    'shippingLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -439,7 +471,15 @@ describe('Select different State in Shipping Form', function () {
                     'subTotal': '$149.97',
                     'grandTotal': '$165.86',
                     'totalTax': '$7.90',
-                    'totalShippingCost': '$7.99'
+                    'totalShippingCost': '$7.99',
+                    'orderLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    },
+                    'shippingLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -540,7 +580,15 @@ describe('Select different State in Shipping Form', function () {
                     'subTotal': '$49.99',
                     'grandTotal': '$52.49',
                     'totalTax': '$2.50',
-                    'totalShippingCost': '$0.00'
+                    'totalShippingCost': '$0.00',
+                    'orderLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    },
+                    'shippingLevelDiscountTotal': {
+                        'formatted': '$0.00',
+                        'value': 0
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [

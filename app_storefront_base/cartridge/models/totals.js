@@ -1,10 +1,7 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var helper = require('~/cartridge/scripts/dwHelpers');
-
 var money = require('dw/value/Money');
-var Resource = require('dw/web/Resource');
 
 /**
  * Accepts a total object and formats the value
@@ -15,6 +12,12 @@ function getTotals(total) {
     return !total.available ? '-' : formatMoney(money(total.value, total.currencyCode));
 }
 
+/**
+ * Gets the order discount amount by subtracting the basket's total including the discount from
+ *      the basket's total excluding the order discount.
+ * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket
+ * @returns {Object} an object that contains the value and formatted value of the order discount
+ */
 function getOrderLevelDiscountTotal(lineItemContainer) {
     var totalExcludingOrderDiscount = lineItemContainer.getAdjustedMerchandizeTotalPrice(false);
     var totalIncludingOrderDiscount = lineItemContainer.getAdjustedMerchandizeTotalPrice(true);
@@ -26,6 +29,12 @@ function getOrderLevelDiscountTotal(lineItemContainer) {
     };
 }
 
+/**
+ * Gets the shipping discount total by subtracting the adjusted shipping total from the
+ *      shipping total price
+ * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket
+ * @returns {Object} an object that contains the value and formatted value of the shipping discount
+ */
 function getShippingLevelDiscountTotal(lineItemContainer) {
     var totalExcludingShippingDiscount = lineItemContainer.shippingTotalPrice;
     var totalIncludingShippingDiscount = lineItemContainer.adjustedShippingTotalPrice;

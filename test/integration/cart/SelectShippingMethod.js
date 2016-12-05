@@ -216,7 +216,15 @@ describe('Cart: Selecting Shipping Methods', function () {
             'subTotal': '$139.00',
             'grandTotal': '$166.94',
             'totalTax': '$7.95',
-            'totalShippingCost': '$19.99'
+            'totalShippingCost': '$19.99',
+            'orderLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            },
+            'shippingLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            }
         };
 
         var shipMethodId = '003';   // 003 = Overnight
@@ -244,7 +252,15 @@ describe('Cart: Selecting Shipping Methods', function () {
             'subTotal': '$139.00',
             'grandTotal': '$164.84',
             'totalTax': '$7.85',
-            'totalShippingCost': '$17.99'
+            'totalShippingCost': '$17.99',
+            'orderLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            },
+            'shippingLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            }
         };
 
         var shipMethodId = '001';   // 001 = Ground
@@ -272,7 +288,15 @@ describe('Cart: Selecting Shipping Methods', function () {
             'subTotal': '$139.00',
             'grandTotal': '$158.54',
             'totalTax': '$7.55',
-            'totalShippingCost': '$11.99'
+            'totalShippingCost': '$11.99',
+            'orderLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            },
+            'shippingLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            }
         };
 
         var shipMethodId = '002';   // 002 = 2-Day Express
@@ -297,7 +321,15 @@ describe('Cart: Selecting Shipping Methods', function () {
             'subTotal': '$139.00',
             'grandTotal': '$145.95',
             'totalTax': '$6.95',
-            'totalShippingCost': '$0.00'
+            'totalShippingCost': '$0.00',
+            'orderLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            },
+            'shippingLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            }
         };
 
         var shipMethodId = '005';   // 001 = Store Pickup
@@ -325,7 +357,15 @@ describe('Cart: Selecting Shipping Methods', function () {
             'subTotal': '$139.00',
             'grandTotal': '$170.09',
             'totalTax': '$8.10',
-            'totalShippingCost': '$22.99'
+            'totalShippingCost': '$22.99',
+            'orderLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            },
+            'shippingLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            }
         };
 
         var shipMethodId = '012';   // 012 = Express
@@ -353,7 +393,15 @@ describe('Cart: Selecting Shipping Methods', function () {
             'subTotal': '$139.00',
             'grandTotal': '$154.34',
             'totalTax': '$7.35',
-            'totalShippingCost': '$7.99'
+            'totalShippingCost': '$7.99',
+            'orderLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            },
+            'shippingLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            }
         };
 
         var shipMethodId = '021';   // 021 = USPS
@@ -381,7 +429,15 @@ describe('Cart: Selecting Shipping Methods', function () {
             'subTotal': '$139.00',
             'grandTotal': '$164.84',
             'totalTax': '$7.85',
-            'totalShippingCost': '$17.99'
+            'totalShippingCost': '$17.99',
+            'orderLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            },
+            'shippingLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            }
         };
 
         var shipMethodId = '004';   // 004 = Super Saver, has excluded Products
@@ -410,7 +466,15 @@ describe('Cart: Selecting Shipping Methods', function () {
             'subTotal': '$139.00',
             'grandTotal': '$164.84',
             'totalTax': '$7.85',
-            'totalShippingCost': '$17.99'
+            'totalShippingCost': '$17.99',
+            'orderLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            },
+            'shippingLevelDiscountTotal': {
+                'formatted': '$0.00',
+                'value': 0
+            }
         };
 
         var shipMethodId = '9999';

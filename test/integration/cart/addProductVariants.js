@@ -147,7 +147,15 @@ describe('Add Product variants to cart', function () {
                             'subTotal': '$381.97',
                             'grandTotal': '$527.06',
                             'totalTax': '$25.10',
-                            'totalShippingCost': '$119.99'
+                            'totalShippingCost': '$119.99',
+                            'orderLevelDiscountTotal': {
+                                'formatted': '$0.00',
+                                'value': 0
+                            },
+                            'shippingLevelDiscountTotal': {
+                                'formatted': '$0.00',
+                                'value': 0
+                            }
                         },
                         'shippingMethods': [
                             {

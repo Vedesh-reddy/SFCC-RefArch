@@ -25,6 +25,21 @@ function updateCartTotals(data) {
     $('.tax-total').empty().append(data.totals.totalTax);
     $('.sub-total').empty().append(data.totals.grandTotal);
     $('.minicart-quantity').empty().append(data.numItems);
+
+    if (data.totals.orderLevelDiscountTotal.value > 0) {
+        $('.order-discount').show();
+        $('.order-discount-total').text('- ' + data.totals.orderLevelDiscountTotal.formatted);
+    } else {
+        $('.order-discount').hide();
+    }
+
+    if (data.totals.shippingLevelDiscountTotal.value > 0) {
+        $('.shipping-discount').show();
+        $('.shipping-discount-total').text('- ' +
+            data.totals.shippingLevelDiscountTotal.formatted);
+    } else {
+        $('.shipping-discount').hide();
+    }
 }
 
 /**

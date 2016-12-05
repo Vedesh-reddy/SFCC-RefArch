@@ -80,21 +80,3 @@ $receipt-spacing: 0.625em;
     white-space: nowrap;
     overflow: hidden;
 }
-
-
-.hide-order-discount {
-    display: none;
-}
-
-.hide-shipping-discount {
-    display: none;
-}
-
-
-.order-discount {
-    color: $red;
-}
-
-.shipping-discount {
-    color: $red;
-}
