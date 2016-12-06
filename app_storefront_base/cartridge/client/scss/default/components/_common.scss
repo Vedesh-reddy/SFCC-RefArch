@@ -16,3 +16,19 @@ input[placeholder] {
 header ~ .container a:not(.card-title) {
     color: $blue;
 }
+
+.hide-order-discount {
+    display: none;
+}
+
+.hide-shipping-discount {
+    display: none;
+}
+
+.order-discount {
+    color: $red;
+}
+
+.shipping-discount {
+    color: $red;
+}

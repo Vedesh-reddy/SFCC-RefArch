@@ -3,30 +3,18 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-var getMockMoney = require('../../../mocks/dw.value.Money');
+var Money = require('../../../mocks/dw.value.Money');
 
 var createApiBasket = function (isAvailable) {
     return {
-        totalGrossPrice: {
-            value: 302.32,
-            currencyCode: 'USD',
-            available: isAvailable
+        totalGrossPrice: new Money(isAvailable),
+        totalTax: new Money(isAvailable),
+        shippingTotalPrice: new Money(isAvailable),
+        getAdjustedMerchandizeTotalPrice: function () {
+            return new Money(isAvailable);
         },
-        totalTax: {
-            value: 14.40,
-            currencyCode: 'USD',
-            available: isAvailable
-        },
-        shippingTotalPrice: {
-            value: 9.99,
-            currencyCode: 'USD',
-            available: isAvailable
-        },
-        adjustedMerchandizeTotalPrice: {
-            value: 9.99,
-            currencyCode: 'USD',
-            available: isAvailable
-        }
+        adjustedShippingTotalPrice: new Money(isAvailable)
+
     };
 };
 
@@ -38,7 +26,7 @@ describe('Totals', function () {
                 return 'formatted money';
             }
         },
-        'dw/value/Money': getMockMoney
+        'dw/value/Money': Money
     });
 
     it('should accept/process a null Basket object', function () {
