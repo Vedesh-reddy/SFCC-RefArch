@@ -4,6 +4,8 @@ export const searchForm = 'form[role*=search]';
 export const pdpMain = '.search-results';
 export const searchResultLarge = '.search-results .hidden-xs-down';
 export const searchResultSmall = '.search-results .hidden-sm-up';
+export const searchNoResultLarge = '.grid-header .hidden-xs-down';
+export const searchNoResultSmall = '.grid-header .hidden-sm-up';
 export const colorRefinementLarge = '.grid-header .hidden-xs-down';
 export const colorRefinementSmall = '.grid-header .hidden-sm-up';
 export const searchQuerySelector1 = '.header-search .search-field';
