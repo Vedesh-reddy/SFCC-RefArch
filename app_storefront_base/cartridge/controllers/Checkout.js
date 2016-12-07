@@ -410,12 +410,12 @@ server.post('SubmitPayment', function (req, res, next) {
                 htmlName: paymentForm.securityCode.htmlName
             },
             expirationMonth: {
-                value: paymentForm.expirationMonth.value,
-                htmlName: paymentForm.expirationMonth.htmlName
+                value: paymentForm.expiration.expirationMonth.selectedOption,
+                htmlName: paymentForm.expiration.expirationMonth.htmlName
             },
             expirationYear: {
-                value: paymentForm.expirationYear.value,
-                htmlName: paymentForm.expirationYear.htmlName
+                value: paymentForm.expiration.expirationYear.selectedOption,
+                htmlName: paymentForm.expiration.expirationYear.htmlName
             }
         };
 

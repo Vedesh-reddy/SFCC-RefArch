@@ -44,13 +44,39 @@
     <field formid="cardNumber" label="profile.cardnumber" type="string" mandatory="true" binding="cardNumber"
            max-length="16" missing-error="error.card.info.missing" />
 
-    <field formid="expirationYear" label="profile.expirationyear" type="string" mandatory="true"
-           binding="expirationYear"
-           max-length="4" missing-error="error.card.info.missing" />
+    <group formid="expiration">
+        <field formid="expirationMonth" label="profile.expirationmonth" type="integer" mandatory="true"
+            missing-error="error.card.info.missing">
+            <options>
+                <option label="month.january" value="01"/>
+                <option label="month.february" value="02"/>
+                <option label="month.march" value="03"/>
+                <option label="month.april" value="04"/>
+                <option label="month.may" value="05"/>
+                <option label="month.june" value="06"/>
+                <option label="month.july" value="07"/>
+                <option label="month.august" value="08"/>
+                <option label="month.september" value="09"/>
+                <option label="month.october" value="10"/>
+                <option label="month.november" value="11"/>
+                <option label="month.december" value="12"/>
+            </options>
+        </field>
 
-    <field formid="expirationMonth" label="profile.expirationmonth" type="string" mandatory="true"
-           binding="expirationMonth"
-           max-length="2" missing-error="error.card.info.missing" />
+        <field formid="expirationYear" label="profile.expiration.year" type="integer" mandatory="true"
+            missing-error="error.card.info.missing">
+            <options>
+                <option optionid="2016" label="year.2016" value="2016"/>
+                <option optionid="2017" label="year.2017" value="2017"/>
+                <option optionid="2018" label="year.2018" value="2018"/>
+                <option optionid="2019" label="year.2019" value="2019"/>
+                <option optionid="2020" label="year.2020" value="2020"/>
+                <option optionid="2021" label="year.2021" value="2021"/>
+                <option optionid="2022" label="year.2022" value="2022"/>
+                <option optionid="2023" label="year.2023" value="2023"/>
+            </options>
+        </field>
+    </group>
 
     <field formid="securityCode" label="profile.securitycode" type="string" mandatory="true" binding="securityCode"
            max-length="3" missing-error="error.card.info.missing" />
