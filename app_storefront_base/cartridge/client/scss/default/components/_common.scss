@@ -48,7 +48,9 @@ header ~ .container a:not(.card-title) {
 }
 
 @mixin tooltip-centered-arrow($top) {
+
     &:hover {
+
         &::after,
         &::before {
             top: $top;
@@ -59,6 +61,7 @@ header ~ .container a:not(.card-title) {
             position: absolute;
             pointer-events: none;
         }
+
         &::after {
             border-color: rgba(68, 68, 68, 0);
             border-top-color: #444;
@@ -78,6 +81,7 @@ header ~ .container a:not(.card-title) {
 .form-group .info-icon {
     margin-left: 20px;
     padding: 0;
+
     &:hover {
         cursor: pointer;
         .form-tooltip {
