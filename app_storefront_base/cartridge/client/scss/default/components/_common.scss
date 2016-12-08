@@ -47,18 +47,6 @@ header ~ .container a:not(.card-title) {
     line-height: 1.5em;
 }
 
-.form-group .info-icon {
-    &:hover {
-        cursor: pointer;
-        .form-tooltip {
-            display: block;
-            &:hover {
-                display: none;
-            }
-        }
-    }
-}
-
 @mixin tooltip-centered-arrow($top) {
     &:hover {
         &::after,
@@ -88,9 +76,20 @@ header ~ .container a:not(.card-title) {
 }
 
 .form-group .info-icon {
+    margin-left: 20px;
+    padding: 0;
+    &:hover {
+        cursor: pointer;
+        .form-tooltip {
+            display: block;
+            &:hover {
+                display: none;
+            }
+        }
+    }
+
     .icon {
-        margin-left: 10px;
-        padding: 0 7px;
+        padding: 0;
         border-radius: 20px;
         background-color: #00a1e0;
         width: 25px;
