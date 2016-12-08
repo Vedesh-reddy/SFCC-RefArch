@@ -213,6 +213,7 @@ function validateShippingForm(form) {
         'city',
         'postalCode',
         'country',
+        'phone',
         'states.state'
     ];
 

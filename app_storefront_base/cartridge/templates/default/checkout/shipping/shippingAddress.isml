@@ -138,7 +138,7 @@
                 ${Resource.msg('field.shipping.address.phone','address',null)}
             </label>
             <input type="tel" class="form-control shippingPhoneNumber" id="shippingPhoneNumber"
-                <isprint value=${pdict.forms.shippingForm.addressFields.phone.attributes} encoding="off"/>
+                <isprint value=${addressFields.phone.attributes} encoding="off"/>
                    autocomplete="tel">
             <div class="form-control-feedback"><isprint value="${addressFields.phone.error}" ></div>
         </div>
