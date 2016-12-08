@@ -106,13 +106,13 @@
 .secondary-bar {
     padding: 0.938em 1.563em;
     overflow: auto;
-    margin-top: 3.75em;
 
     a.reset {
         color: $green;
 
         @include media-breakpoint-down(sm) {
             float: right;
+            margin-top: 3.75em;
         }
     }
 
@@ -282,4 +282,5 @@
 
 .show-more {
     padding: 0.938em;
+    clear: both;
 }

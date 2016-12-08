@@ -2,15 +2,23 @@
 
 var server = require('server');
 
+var helper = require('~/cartridge/scripts/dwHelpers');
+
 var BasketMgr = require('dw/order/BasketMgr');
+var HashMap = require('dw/util/HashMap');
 var HookMgr = require('dw/system/HookMgr');
+var Mail = require('dw/net/Mail');
 var Order = require('dw/order/Order');
 var OrderMgr = require('dw/order/OrderMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
+var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
 var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
+var Site = require('dw/system/Site');
 var Status = require('dw/system/Status');
+var StoreMgr = require('dw/catalog/StoreMgr');
+var Template = require('dw/util/Template');
 var Transaction = require('dw/system/Transaction');
 
 var AddressModel = require('~/cartridge/models/address');
@@ -47,6 +55,11 @@ server.get('Start', function (req, res, next) {
     var productLineItemModel;
     var shippingAddressModel;
     var shippingModel;
+
+    // Calculate the basket
+    Transaction.wrap(function () {
+        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+    });
 
     shipmentShippingModel = ShippingMgr.getShipmentShippingModel(
         currentBasket.defaultShipment
@@ -200,6 +213,7 @@ function validateShippingForm(form) {
         'city',
         'postalCode',
         'country',
+        'phone',
         'states.state'
     ];
 
@@ -290,9 +304,13 @@ server.post('SubmitShipping', function (req, res, next) {
             if (shippingMethodID !== shipment.shippingMethod.ID) {
                 Transaction.wrap(function () {
                     ShippingModel.selectShippingMethod(shipment, shippingMethodID);
-                    HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
                 });
             }
+
+            // Calculate the basket
+            Transaction.wrap(function () {
+                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            });
 
             shippingAddressModel = new AddressModel(shippingAddress);
             shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
@@ -314,6 +332,28 @@ server.post('SubmitShipping', function (req, res, next) {
 
     next();
 });
+
+/**
+ * Sets the payment transaction amount
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @returns {Object} an error object
+ */
+function calculatePaymentTransaction(currentBasket) {
+    var result = { error: false };
+
+    try {
+        Transaction.wrap(function () {
+            // TODO: This function will need to account for gift certificates at a later date
+            var orderTotal = currentBasket.totalGrossPrice;
+            var paymentInstrument = currentBasket.paymentInstrument;
+            paymentInstrument.paymentTransaction.setAmount(orderTotal);
+        });
+    } catch (e) {
+        result.error = true;
+    }
+
+    return result;
+}
 
 /**
  *  Handle Ajax payment (and billing) form submit
@@ -375,12 +415,12 @@ server.post('SubmitPayment', function (req, res, next) {
                 htmlName: paymentForm.securityCode.htmlName
             },
             expirationMonth: {
-                value: paymentForm.expirationMonth.value,
-                htmlName: paymentForm.expirationMonth.htmlName
+                value: paymentForm.expiration.expirationMonth.selectedOption,
+                htmlName: paymentForm.expiration.expirationMonth.htmlName
             },
             expirationYear: {
-                value: paymentForm.expirationYear.value,
-                htmlName: paymentForm.expirationYear.htmlName
+                value: paymentForm.expiration.expirationYear.selectedOption,
+                htmlName: paymentForm.expiration.expirationYear.htmlName
             }
         };
 
@@ -484,6 +524,25 @@ server.post('SubmitPayment', function (req, res, next) {
                 return;
             }
 
+            // Calculate the basket
+            Transaction.wrap(function () {
+                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            });
+
+            // Re-calculate the payments.
+            var calculatedPaymentTransactionTotal = calculatePaymentTransaction(currentBasket);
+            if (calculatedPaymentTransactionTotal.error) {
+                res.json({
+                    form: paymentForm,
+                    fieldErrors: [],
+                    serverErrors: [Resource.msg('error.technical', 'checkout', null)],
+                    error: true
+                });
+                return;
+            }
+
+            var orderTotals = new TotalsModel(currentBasket);
+
             paymentInstruments = currentBasket.paymentInstruments;
             paymentModel = new Payment(null, null, paymentInstruments);
 
@@ -497,6 +556,7 @@ server.post('SubmitPayment', function (req, res, next) {
 
             res.json({
                 billingData: billingModel,
+                totals: orderTotals,
                 form: server.forms.getForm('payment'),
                 resource: resource,
                 error: false
@@ -601,28 +661,6 @@ function validatePayment(req, currentBasket) {
 }
 
 /**
- * Sets the payment transaction amount
- * @param {dw.order.Basket} currentBasket - The current basket
- * @returns {Object} an error object
- */
-function calculatePaymentTransaction(currentBasket) {
-    var result = { error: false };
-
-    try {
-        Transaction.wrap(function () {
-            // TODO: This function will need to account for gift certificates at a later date
-            var orderTotal = currentBasket.totalGrossPrice;
-            var paymentInstrument = currentBasket.paymentInstrument;
-            paymentInstrument.paymentTransaction.setAmount(orderTotal);
-        });
-    } catch (e) {
-        result.error = true;
-    }
-
-    return result;
-}
-
-/**
  * Attempts to create an order from the current basket
  * @param {dw.order.Basket} currentBasket - The current basket
  * @returns {dw.order.Order} The order object created from the current basket
@@ -723,17 +761,152 @@ function placeOrder(order) {
     return result;
 }
 
+/**
+ * validates that the product line items are exist, are online, and have available inventory.
+ * @param {dw.order.Basket} basket - The current user's basket
+ * @returns {Object} an error object
+ */
+function validateProducts(basket) {
+    var result = {
+        error: false,
+        hasInventory: true
+    };
+    var productLineItems = basket.productLineItems;
+
+    helper.forEach(productLineItems, function (item) {
+        if (item.product === null || !item.product.online) {
+            result.error = true;
+            return;
+        }
+
+        if (Object.hasOwnProperty.call(item.custom, 'fromStoreId')
+            && item.custom.fromStoreId.length) {
+            var store = StoreMgr.getStore(item.custom.fromStoreId);
+            var storeInventory = ProductInventoryMgr.getInventoryList(store.custom.inventoryListId);
+
+            result.hasInventory = result.hasInventory
+                && (!storeInventory.getRecord(item.productID).length
+                && storeInventory.getRecord(item.productID).ATS.value >= item.quantityValue);
+        } else {
+            var availabilityLevels = item.product.availabilityModel
+                .getAvailabilityLevels(item.quantityValue);
+            result.hasInventory = result.hasInventory
+                && (availabilityLevels.notAvailable.value === 0);
+        }
+    });
+
+    return result;
+}
+
+/**
+ * validates the current users basket
+ * @param {dw.order.Basket} basket - The current user's basket
+ * @returns {Object} an error object
+ */
+function validateBasket(basket) {
+    var result = { error: false };
+
+    var productExistence = validateProducts(basket);
+    if (productExistence.error || !productExistence.hasInventory) {
+        result.error = true;
+    } else if (!basket.productLineItems.length) {
+        result.error = true;
+    } else if (!basket.merchandizeTotalPrice.available) {
+        result.error = true;
+    }
+
+    return result;
+}
+
+/**
+ * Sends a confirmation to the current user
+ * @param {dw.order.Order} order - The current user's order
+ * @returns {void}
+ */
+function sendConfirmationEmail(order) {
+    var confirmationEmail = new Mail();
+    var context = new HashMap();
+
+    var billingAddress = order.billingAddress;
+    var paymentInstruments;
+    var shipment = order.defaultShipment;
+    var shippingAddress = shipment.shippingAddress;
+    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(order.defaultShipment);
+
+    // models
+    var billingAddressModel;
+    var billingModel;
+    var orderModel;
+    var orderTotals;
+    var paymentModel;
+    var productLineItemModel;
+    var shippingAddressModel = new AddressModel(shippingAddress);
+    var shippingModel;
+
+    shippingModel = new ShippingModel(
+        order.defaultShipment,
+        shipmentShippingModel,
+        shippingAddressModel
+    );
+
+    paymentInstruments = order.paymentInstruments;
+
+    paymentModel = new Payment(null, null, paymentInstruments);
+
+    billingAddressModel = new AddressModel(billingAddress);
+    billingModel = new BillingModel(billingAddressModel, paymentModel);
+
+    productLineItemModel = new ProductLineItemModel(order);
+    orderTotals = new TotalsModel(order);
+
+    orderModel = new OrderModel(
+        order,
+        shippingModel,
+        billingModel,
+        orderTotals,
+        productLineItemModel
+    );
+
+    var orderObject = { order: orderModel };
+
+    confirmationEmail.addTo(order.customerEmail);
+    confirmationEmail.setSubject(Resource.msg('subject.order.confirmation.email', 'order', null));
+    confirmationEmail.setFrom(Site.current.getCustomPreferenceValue('customerServiceEmail')
+        || 'no-reply@salesforce.com');
+
+    Object.keys(orderObject).forEach(function (key) {
+        context.put(key, orderObject[key]);
+    });
+
+    var template = new Template('checkout/confirmation/confirmationEmail');
+    var content = template.render(context).text;
+    confirmationEmail.setContent(content, 'text/html', 'UTF-8');
+    confirmationEmail.send();
+}
+
 server.post('PlaceOrder', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var order;
     var validPayment;
     var orderNumber;
 
+    var isValidBasket = validateBasket(currentBasket);
+    if (isValidBasket.error) {
+        res.json({
+            error: true,
+            errorMessage: Resource.msg('error.technical', 'checkout', null)
+        });
+        return next();
+    }
+
     // Check to make sure there is a shipping address
     if (currentBasket.defaultShipment.shippingAddress === null) {
         res.json({
             error: true,
-            gotoStage: 'shipping',
+            errorStage: {
+                stage: 'shipping',
+                step: 'address'
+            },
             errorMessage: Resource.msg('error.no.shipping.address', 'checkout', null)
         });
         return next();
@@ -743,7 +916,10 @@ server.post('PlaceOrder', function (req, res, next) {
     if (!currentBasket.billingAddress) {
         res.json({
             error: true,
-            gotoStage: 'payment',
+            errorStage: {
+                stage: 'payment',
+                step: 'billingAddress'
+            },
             errorMessage: Resource.msg('error.no.billing.address', 'checkout', null)
         });
         return next();
@@ -759,7 +935,10 @@ server.post('PlaceOrder', function (req, res, next) {
     if (validPayment.error) {
         res.json({
             error: true,
-            gotoStage: 'payment',
+            errorStage: {
+                stage: 'payment',
+                step: 'paymentInstrument'
+            },
             errorMessage: Resource.msg('error.payment.not.valid', 'checkout', null)
         });
         return next();
@@ -768,7 +947,10 @@ server.post('PlaceOrder', function (req, res, next) {
     // Re-calculate the payments.
     var calculatedPaymentTransactionTotal = calculatePaymentTransaction(currentBasket);
     if (calculatedPaymentTransactionTotal.error) {
-        res.json({ error: true });
+        res.json({
+            error: true,
+            errorMessage: Resource.msg('error.technical', 'checkout', null)
+        });
         return next();
     }
 
@@ -803,6 +985,8 @@ server.post('PlaceOrder', function (req, res, next) {
         });
         return next();
     }
+
+    sendConfirmationEmail(order);
 
     var confirmationUrl = URLUtils.url('Order-Confirm').toString();
 

@@ -5,9 +5,7 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 
 describe('PriceAttributeValue model', function () {
-    var productSearch = {};
     var refinementDefinition = {};
-    var refinementValue = {};
     var priceAttributeValue = {};
 
     var PriceAttributeValue = proxyquire('../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/price', {
@@ -23,18 +21,36 @@ describe('PriceAttributeValue model', function () {
         }
     });
 
+    var productSearch = {
+        isRefinedByPriceRange: function () { return true; },
+        urlRelaxPrice: function () {
+            return {
+                relative: function () {
+                    return {
+                        toString: function () { return 'relax url'; }
+                    };
+                }
+            };
+        },
+        urlRefinePrice: function () {
+            return {
+                relative: function () {
+                    return {
+                        toString: function () { return 'select url'; }
+                    };
+                }
+            };
+        }
+    };
+    var refinementValue = {
+        ID: 'product 1',
+        presentationID: 'prez',
+        value: 'some value',
+        displayValue: 'some display value',
+        hitCount: 10
+    };
+
     it('should instantiate a Price Attribute Value model', function () {
-        productSearch = {
-            isRefinedByPriceRange: function () { return true; },
-            urlRelaxPrice: function () { return 'relax url'; }
-        };
-        refinementValue = {
-            ID: 'product 1',
-            presentationID: 'prez',
-            value: 'some value',
-            displayValue: 'some display value',
-            hitCount: 10
-        };
         priceAttributeValue = new PriceAttributeValue(productSearch, refinementDefinition, refinementValue);
 
         assert.deepEqual(priceAttributeValue, {
@@ -42,6 +58,20 @@ describe('PriceAttributeValue model', function () {
             selected: true,
             title: 'some product title',
             url: 'relax url'
+        });
+    });
+
+    it('should instantiate an unselected Price Attribute Value model', function () {
+        productSearch.isRefinedByPriceRange = function () {
+            return false;
+        };
+        priceAttributeValue = new PriceAttributeValue(productSearch, refinementDefinition, refinementValue);
+
+        assert.deepEqual(priceAttributeValue, {
+            displayValue: 'some display value',
+            selected: false,
+            title: 'some product title',
+            url: 'select url'
         });
     });
 });

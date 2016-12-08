@@ -46,25 +46,20 @@ function applicablePaymentCards(paymentCards) {
  */
 function getSelectedPaymentInstruments(selectedPaymentInstruments) {
     return helper.map(selectedPaymentInstruments, function (paymentInstrument) {
-        var results;
+        var results = {
+            paymentMethod: paymentInstrument.paymentMethod,
+            amount: paymentInstrument.paymentTransaction.amount.value
+        };
         if (paymentInstrument.paymentMethod === 'CREDIT_CARD') {
-            results = {
-                lastFour: paymentInstrument.creditCardNumberLastDigits,
-                owner: paymentInstrument.creditCardHolder,
-                expirationYear: paymentInstrument.creditCardExpirationYear,
-                type: paymentInstrument.creditCardType,
-                maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
-                paymentMethod: paymentInstrument.paymentMethod,
-                expirationMonth: paymentInstrument.creditCardExpirationMonth,
-                amount: paymentInstrument.paymentTransaction.amount.value
-            };
+            results.lastFour = paymentInstrument.creditCardNumberLastDigits;
+            results.owner = paymentInstrument.creditCardHolder;
+            results.expirationYear = paymentInstrument.creditCardExpirationYear;
+            results.type = paymentInstrument.creditCardType;
+            results.maskedCreditCardNumber = paymentInstrument.maskedCreditCardNumber;
+            results.expirationMonth = paymentInstrument.creditCardExpirationMonth;
         } else if (paymentInstrument.paymentMethod === 'GIFT_CERTIFICATE') {
-            results = {
-                giftCertificateCode: paymentInstrument.giftCertificateCode,
-                maskedGiftCertificateCode: paymentInstrument.maskedGiftCertificateCode,
-                paymentMethod: paymentInstrument.paymentMethod,
-                amount: paymentInstrument.paymentTransaction.amount.value
-            };
+            results.giftCertificateCode = paymentInstrument.giftCertificateCode;
+            results.maskedGiftCertificateCode = paymentInstrument.maskedGiftCertificateCode;
         }
 
         return results;

@@ -9,24 +9,62 @@ var ProductSearch = require('~/cartridge/models/search/productSearch');
 var ProductSortOptions = require('~/cartridge/models/search/productSortOptions');
 
 
-server.get('Show', function (req, res, next) {
-    var categoryTemplate = '';
-    var productSearch;
-    var productSort;
-    var dwProductSearch = new ProductSearchModel();
-
-    var params = search.parseParams(req.querystring);
-    var selectedCategory = CatalogMgr.getCategory(params.cgid);
+/**
+ * Set search configuration values
+ *
+ * @param {dw.catalog.ProductSearchModel} dwProductSearch - API search instance
+ * @param {Object} params - Provided HTTP query parameters
+ * @return {dw.catalog.ProductSearchModel} - API search instance
+ */
+function setupSearch(dwProductSearch, params) {
     var sortingRule = params.srule ? CatalogMgr.getSortingRule(params.srule) : null;
-
+    var selectedCategory = CatalogMgr.getCategory(params.cgid);
     selectedCategory = selectedCategory && selectedCategory.online ? selectedCategory : null;
 
     search.setProductProperties(dwProductSearch, params, selectedCategory, sortingRule);
     search.addRefinementValues(dwProductSearch, params.preferences);
 
+    return dwProductSearch;
+}
+
+/**
+ * Retrieve a category's template filepath if available
+ *
+ * @param {dw.catalog.ProductSearchModel} dwProductSearch - API search instance
+ * @return {string} - Category's template filepath
+ */
+function getCategoryTemplate(dwProductSearch) {
+    return dwProductSearch.category ? dwProductSearch.category.template : '';
+}
+
+server.get('UpdateGrid', function (req, res, next) {
+    var params = search.parseParams(req.querystring);
+    var dwProductSearch = new ProductSearchModel();
+    var productSearch = {};
+
+    dwProductSearch = setupSearch(dwProductSearch, params);
+    dwProductSearch.search();
+    productSearch = new ProductSearch(dwProductSearch, params);
+
+    res.render('/search/productgrid', { productSearch: productSearch });
+
+    next();
+});
+
+server.get('Show', function (req, res, next) {
+    var categoryTemplate = '';
+    var productSearch;
+    var productSort;
+    var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')
+        && req.httpHeaders['x-requested-with'] === 'XMLHttpRequest';
+    var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
+    var params = search.parseParams(req.querystring);
+    var dwProductSearch = new ProductSearchModel();
+
+    dwProductSearch = setupSearch(dwProductSearch, params);
     dwProductSearch.search();
 
-    categoryTemplate = dwProductSearch.category ? dwProductSearch.category.template : '';
+    categoryTemplate = getCategoryTemplate(dwProductSearch);
     productSearch = new ProductSearch(dwProductSearch, params);
     productSort = new ProductSortOptions(
         dwProductSearch,
@@ -46,7 +84,7 @@ server.get('Show', function (req, res, next) {
             category: dwProductSearch.category
         });
     } else {
-        res.render('search/searchresults', {
+        res.render(resultsTemplate, {
             productSearch: productSearch,
             productSort: productSort,
             category: dwProductSearch.category

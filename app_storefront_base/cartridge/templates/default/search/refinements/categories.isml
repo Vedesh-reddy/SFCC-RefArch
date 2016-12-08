@@ -11,9 +11,9 @@
 
                 <!--- Label --->
                 <span title="${category.title}" class="
-                    <isif condition="${refinement.category.selected}">selected</isif>
+                    <isif condition="${category.selected}">selected</isif>
                 ">
-                    ${category.name}
+                    ${category.displayValue}
                 </span>
 
                 <!--- Process subcategories --->

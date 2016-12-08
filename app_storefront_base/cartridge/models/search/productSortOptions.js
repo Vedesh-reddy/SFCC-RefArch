@@ -2,7 +2,7 @@
 
 var dwHelper = require('~/cartridge/scripts/dwHelpers');
 
-var ACTION_ENDPOINT = 'Search-Show';
+var ACTION_ENDPOINT = 'Search-UpdateGrid';
 
 
 /**

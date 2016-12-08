@@ -94,7 +94,15 @@ describe('Update quantity for product variant', function () {
                 'subTotal': '$257.97',
                 'grandTotal': '$281.36',
                 'totalTax': '$13.40',
-                'totalShippingCost': '$9.99'
+                'totalShippingCost': '$9.99',
+                'orderLevelDiscountTotal': {
+                    'formatted': '$0.00',
+                    'value': 0
+                },
+                'shippingLevelDiscountTotal': {
+                    'formatted': '$0.00',
+                    'value': 0
+                }
             },
             'shippingMethods': [
                 {

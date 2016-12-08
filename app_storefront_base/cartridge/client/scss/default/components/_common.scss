@@ -1,6 +1,3 @@
-/** ------------------------------------------------------- **/
-/** Modal background shade                                  **/
-/** ------------------------------------------------------- **/
 .modal-background {
     background-color: $black;
     display: none;
@@ -10,6 +7,30 @@
     width: 100%;
     top: 0;
     left: 0;
+}
+
+input[placeholder] {
+    text-overflow: ellipsis;
+}
+
+header ~ .container a:not(.card-title) {
+    color: $blue;
+}
+
+.hide-order-discount {
+    display: none;
+}
+
+.hide-shipping-discount {
+    display: none;
+}
+
+.order-discount {
+    color: $red;
+}
+
+.shipping-discount {
+    color: $red;
 }
 
 /** ------------------------------------------------------- **/

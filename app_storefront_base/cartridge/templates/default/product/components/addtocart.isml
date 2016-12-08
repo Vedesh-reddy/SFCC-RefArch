@@ -9,6 +9,5 @@
             <i class="fa fa-shopping-bag"></i>
             ${Resource.msg('button.addtocart', 'common', null)}
         </button>
-        <isapplepay></isapplepay>
     </div>
 </div>

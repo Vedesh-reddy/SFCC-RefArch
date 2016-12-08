@@ -62,10 +62,25 @@
          * @param {Array} totals - the totals data
          */
         function updateTotals(totals) {
-            $('.shipping-cost').empty().append(totals.totalShippingCost);
-            $('.tax-total').empty().append(totals.totalTax);
-            $('.sub-total').empty().append(totals.subTotal);
-            $('.grand-total-sum').empty().append(totals.grandTotal);
+            $('.shipping-total-cost').text(totals.totalShippingCost);
+            $('.tax-total').text(totals.totalTax);
+            $('.sub-total').text(totals.subTotal);
+            $('.grand-total-sum').text(totals.grandTotal);
+
+            if (totals.orderLevelDiscountTotal.value > 0) {
+                $('.order-discount').show();
+                $('.order-discount-total').text('- ' + totals.orderLevelDiscountTotal.formatted);
+            } else {
+                $('.order-discount').hide();
+            }
+
+            if (totals.shippingLevelDiscountTotal.value > 0) {
+                $('.shipping-discount').show();
+                $('.shipping-discount-total').text('- ' +
+                    totals.shippingLevelDiscountTotal.formatted);
+            } else {
+                $('.shipping-discount').hide();
+            }
         }
 
         /**
@@ -107,6 +122,7 @@
         function clearPreviousErrors(parentSelector) {
             $('*[name]', parentSelector)
                 .parents('.form-group').removeClass('has-danger');
+            $('.error-message').hide();
         }
 
         /**
@@ -212,6 +228,7 @@
                                 //
                                 var address = data.billingData.billingAddress.address;
                                 populateSummary('.billing .address-summary', address);
+                                updateTotals(data.totals);
                                 var $paymentSummary = $('.payment-details');
                                 var htmlToAppend = '<span> ' + data.resource.cardType + ' ' +
                                     data.billingData.payment.selectedPaymentInstruments[0].type +
@@ -234,14 +251,13 @@
 
                     return defer;
                 } else if (stage === 'placeOrder') {
-                    return $.ajax({
+                    $.ajax({
                         url: $('.place-order').data('action'),
                         method: 'POST',
                         success: function (data) {
                             if (data.error) {
-                                // go to apporiate stage and display error message
-                                // var checkoutStage = checkoutStages.indexOf(data.gotoStage);
-                                // members.gotoStage(checkoutStage, -1);
+                                // go to appropriate stage and display error message
+                                defer.reject(data);
                             } else {
                                 var url = data.continueUrl;
                                 var urlParams = { ID: data.orderID };
@@ -252,11 +268,14 @@
                                     }).join('&');
 
                                 window.location.href = url;
+                                defer.resolve(data);
                             }
                         },
                         error: function () {
                         }
                     });
+
+                    return defer;
                 }
                 var p = $('<div>').promise(); // eslint-disable-line
                 setTimeout(function () {
@@ -318,11 +337,7 @@
                             $shippingMethodList.append(tmpl.html());
                         });
 
-                        $('.order-total-summary')
-                            .find('.shipping-cost').text(data.totals.totalShippingCost) // eslint-disable-line
-                            .find('.tax-total').text(data.totals.totalTax) // eslint-disable-line
-                            .find('.sub-total').text(data.totals.subTotal) // eslint-disable-line
-                            .find('.grand-total-sum').text(data.totals.grandTotal); // eslint-disable-line
+                        updateTotals(data.totals);
                     }
                 });
             },
@@ -430,8 +445,28 @@
                     members.handleNextStage(true);
                 });
 
-                promise.fail(function () {
+                promise.fail(function (data) {
                     // show errors
+                    if (data) {
+                        if (data.errorStage) {
+                            members.gotoStage(data.errorStage.stage);
+
+                            if (data.errorStage.step === 'billingAddress') {
+                                var $billingAddressSameAsShipping = $(
+                                    'input[name$="_shippingAddressUseAsBillingAddress"]'
+                                );
+                                if ($billingAddressSameAsShipping.is(':checked')) {
+                                    $billingAddressSameAsShipping.prop('checked', false);
+                                    $('.billing-address').toggleClass('same-as-shipping', false);
+                                }
+                            }
+                        }
+
+                        if (data.errorMessage) {
+                            $('.error-message').show();
+                            $('.error-message-text').text(data.errorMessage);
+                        }
+                    }
                 });
             },
 

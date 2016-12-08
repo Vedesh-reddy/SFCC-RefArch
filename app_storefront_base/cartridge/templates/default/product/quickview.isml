@@ -2,7 +2,7 @@
 
     <div class="row">
         <!-- Product Images Carousel -->
-        <isinclude template="/components/product/image_carousel" />
+        <isinclude template="/product/components/image_carousel" />
 
         <!-- Product Name and Number -->
         <div class="col-sm-6">
@@ -20,7 +20,7 @@
                 <div class="row">
                     <div class="col-sm-12">
                         <isloop items="${pdict.product.attributes}" var="attr" status="attributeStatus">
-                            <isinclude template="/components/product/attributes" />
+                            <isinclude template="/product/components/attributes" />
                         </isloop>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
                     </div>
 
                     <div class="availability availablity-container col-sm-8">
-                        <isinclude template="/components/product/availability" />
+                        <isinclude template="/product/components/availability" />
                     </div>
                 </div>
 
@@ -41,12 +41,12 @@
                 <!-- Prices -->
                 <div class="prices row">
                     <div class="col-sm-12">
-                        <isinclude template="/components/product/pricing" />
+                        <isinclude template="/product/components/pricing" />
                     </div>
                 </div>
 
                 <!-- Cart and [Optionally] Apple Pay -->
-                <isinclude template="/components/product/addtocart" />
+                <isinclude template="/product/components/addtocart" />
             </section>
 
             <!-- Right blank column -->

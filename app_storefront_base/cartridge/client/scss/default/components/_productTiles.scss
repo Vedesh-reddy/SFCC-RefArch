@@ -1,7 +1,7 @@
 @import "../utilities/swatch";
 
 .product-tile {
-    min-height: 32.1875em;
+    background-color: transparent; // remove if no longer using Bootstrap .card styles
 
     @include media-breakpoint-down(md) {
         min-height: 23.4375em;
@@ -56,6 +56,10 @@
             @include media-breakpoint-down(sm) {
                 font-size: 1em;
             }
+        }
+
+        .coming-soon-tile {
+            text-align: center;
         }
 
         .pdpLink {

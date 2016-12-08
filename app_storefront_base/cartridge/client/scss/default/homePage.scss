@@ -112,6 +112,7 @@
     margin: 0;
 
     .hp-product-content {
+        background-color: transparent; // remove if no longer using Bootstrap .card styles
         text-align: center;
         border: 0;
 
@@ -152,7 +153,7 @@
 }
 
 .home-email-signup {
-    background-color: $darker-gray;
+    background-color: $grey6;
     margin: 0;
 
     @include media-breakpoint-down(xs) {

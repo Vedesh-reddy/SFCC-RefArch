@@ -6,10 +6,22 @@ export const SWATCHES = '.swatches';
 export const SWATCH_CIRCLE = '.swatches .swatch-circle';
 export const CARD_TITLE = '.card-title';
 export const PDP_PRICES = '.pdpPrices';
-
+export const NEW_ARRIVALS = 'a[href*="new%20arrivals"]';
+export const WOMEN = '.navbar .nav-item:nth-child(2)';
+export const MEN = '.navbar .nav-item:nth-child(3)';
+export const ELECTRONICS = '.navbar .nav-item:nth-child(4)';
+export const TOP_SELLERS = '.navbar .nav-item:nth-child(5)';
+export const navBarButton = '.navbar-toggler';
+export const navNewArrivalButton = '.navbar-nav .nav-item[role=button]:nth-child(1) .nav-link';
+export const navWomenButton = '.navbar-nav .nav-item[role=button]:nth-child(2) .nav-link';
+export const navMenButton = '.navbar-nav .nav-item[role=button]:nth-child(3) .nav-link';
+export const navElectronics = '.navbar-nav .nav-item[role=button]:nth-child(4) .nav-link';
+export const navTopSellers = '.navbar-nav .nav-item[role=button]:nth-child(5) .nav-link';
+export const closeButton = '.close-button';
+export const backButton = '.dropdown-menu .back .caret-left';
+export const navTopCategory = '.dropdown-item.top-category .nav-link';
 
 const basePath = '/home';
-
 
 function createCssNthProductTile(idx) {
     return PRODUCT_TILE + ':nth-child(' + idx + ')';

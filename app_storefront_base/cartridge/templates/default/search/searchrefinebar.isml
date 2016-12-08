@@ -12,30 +12,27 @@
 <div class="row">
     <div class=" col-sm-12 refinements">
         <isloop items="${pdict.productSearch.refinements}" var="refinement">
-            <!--- TODO:  This is a temporary condition until category refinements are finalized --->
-            <isif condition="${!refinement.isCategoryRefinement}">
-                <div class="collapsable-sm refinement ${refinement.displayName.toLowerCase()}">
-                    <div class="title">
-                        <span>${refinement.displayName}</span>
-                    </div>
-
-                    <!--- CATEGORY REFINEMENTS --->
-                    <isif condition="${refinement.isCategoryRefinement}">
-                        <isset name="categories" value="${refinement.values}" scope="page" />
-                        <isinclude template="search/refinements/categories" />
-                    </isif>
-
-                    <!--- ATTRIBUTE REFINEMENTS --->
-                    <isif condition="${refinement.isAttributeRefinement}">
-                        <isinclude template="search/refinements/attributes" />
-                    </isif>
-
-                    <!--- PRICE REFINEMENTS --->
-                    <isif condition="${refinement.isPriceRefinement}">
-                        <isinclude template="search/refinements/prices" />
-                    </isif>
+            <div class="collapsable-sm refinement ${refinement.displayName.toLowerCase().replace(/ /g, '-')}">
+                <div class="title">
+                    <span>${refinement.displayName}</span>
                 </div>
-            </isif>
+
+                <!--- CATEGORY REFINEMENTS --->
+                <isif condition="${refinement.isCategoryRefinement}">
+                    <isset name="categories" value="${refinement.values}" scope="page" />
+                    <isinclude template="search/refinements/categories" />
+                </isif>
+
+                <!--- ATTRIBUTE REFINEMENTS --->
+                <isif condition="${refinement.isAttributeRefinement}">
+                    <isinclude template="search/refinements/attributes" />
+                </isif>
+
+                <!--- PRICE REFINEMENTS --->
+                <isif condition="${refinement.isPriceRefinement}">
+                    <isinclude template="search/refinements/prices" />
+                </isif>
+            </div>
         </isloop>
     </div>
 </div>

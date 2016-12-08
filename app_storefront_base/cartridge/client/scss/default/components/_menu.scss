@@ -38,6 +38,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
             display: block;
 
             &.in {
+                min-width: 50%;
                 left: 0;
             }
         }
@@ -80,11 +81,12 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
 .menu-toggleable-left {
     .close-menu {
-        background-color: $close-menu-bg;
-        border-bottom: 1px solid $gray-dark;
-        padding: 0.5rem;
+        height: 60px;
         margin-right: -1rem;
         margin-left: -1rem;
+        padding: 15px;
+        background-color: $close-menu-bg;
+        border-bottom: 1px solid $grey3;
 
         @include media-breakpoint-up($next-breakpoint) {
             display: none;
@@ -100,7 +102,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     @include media-breakpoint-down($breakpoint-name) {
         .bg-inverse {
             background-color: white !important;
-            color: $gray-dark;
+            color: $grey7;
         }
     }
 
@@ -113,16 +115,16 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
         @include media-breakpoint-down($breakpoint-name) {
             .nav-item {
+                margin: 0 -1em;
                 padding-left: 1em;
 
                 + .nav-item {
-                    border-top: 1px solid $close-menu-bg;
+                    border-top: 1px solid $grey2;
                 }
             }
 
             .dropdown {
                 display: block;
-                margin-right: -1em;
                 position: static;
             }
 
@@ -155,6 +157,12 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 .multilevel-dropdown {
     .dropdown-menu {
         top: 90%;
+        border: 0;
+        border-radius: 0;
+
+        @include media-breakpoint-up($next-breakpoint) {
+            box-shadow: 0 3px 5px rgba(43, 36, 25, 0.4);
+        }
     }
 
     .dropdown-item.dropdown > .dropdown-toggle::after {
@@ -180,7 +188,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     }
 
     .dropdown-item {
-        padding: 0 0 0 2em;
+        padding: 0 0 0 1em;
 
         .dropdown-link {
             display: block;

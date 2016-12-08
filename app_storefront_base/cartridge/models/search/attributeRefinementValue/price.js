@@ -46,18 +46,6 @@ PriceAttributeValue.prototype.initialize = function () {
 };
 
 /**
- * Determines whether this price refinement value has been selected
- *
- * @param {dw.catalog.ProductSearchModel} productSearch - ProductSearchModel instance
- * @param {number} valueFrom - Start of price refinement range
- * @param {number} valueTo - End of price refinement range
- * @return {boolean} - Indicates whether this price refinement value is selected
- */
-PriceAttributeValue.prototype.isSelected = function (productSearch, valueFrom, valueTo) {
-    return productSearch.isRefinedByPriceRange(valueFrom, valueTo);
-};
-
-/**
  * Forms URL for this price refinement value
  *
  * @param {dw.catalog.ProductSearchModel} productSearch - ProductSearchModel instance
@@ -75,8 +63,8 @@ PriceAttributeValue.prototype.getUrl = function (
     valueTo
 ) {
     return selected
-        ? productSearch.urlRelaxPrice(actionEndpoint)
-        : productSearch.urlRefinePrice(actionEndpoint, valueFrom, valueTo);
+        ? productSearch.urlRelaxPrice(actionEndpoint).relative().toString()
+        : productSearch.urlRefinePrice(actionEndpoint, valueFrom, valueTo).relative().toString();
 };
 
 /**

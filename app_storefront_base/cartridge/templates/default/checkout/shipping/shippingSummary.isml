@@ -7,7 +7,7 @@
     <div class="checkout-card-block">
         <!--- Shipping Address --->
         <span class="summary-section-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</span><br>
-        <isset name="address" value="${pdict.shipping.shippingAddress}" scope="page"/>
+        <isset name="address" value="${pdict.shipping.shippingAddress} || {}" scope="page"/>
         <div class="summary-details shipping">
             <isinclude template="checkout/addressSummary" />
         </div>
