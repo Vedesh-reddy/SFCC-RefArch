@@ -5,11 +5,15 @@
                 <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
                     <input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"
                            type="radio" class="form-check-input" value="${paymentOption.ID}" checked>
-                    <iselse/>
+                    <img src="${URLUtils.staticURL('/images/credit.png')}"
+                         height="30"
+                         alt="${paymentOption.name}"
+                         title="${paymentOption.name}">
+                <iselse/>
                     <input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"
                            type="radio" class="form-check-input" value="${paymentOption.ID}">
+                    <span>${paymentOption.name}</span>
                 </isif>
-                <span>${paymentOption.name}</span>
             </label>
             <div class="form-control-feedback"></div>
         </div>
