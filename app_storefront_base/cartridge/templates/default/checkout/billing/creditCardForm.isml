@@ -37,13 +37,17 @@
     <div class="col-sm-6">
         <div class="form-group ${pdict.forms.billingForm.securityCode.htmlName}">
             <label for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
+            <span class="info-icon">
+                <span class="icon">i</span>
+                <div class="form-tooltip">
+                    ${Resource.msg('tooltip.security.code','creditCard',null)}
+                </div>
+            </span>
+
             <input type="text" class="form-control securityCode" id="securityCode"
                 <isprint value=${pdict.forms.billingForm.securityCode.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
         </div>
-    </div>
-    <div class="col-sm-6">
-        ${Resource.msg('tooltip.security.code.what.is.this','creditCard',null)}
     </div>
 </div>
 
@@ -51,6 +55,12 @@
     <div class="col-sm-6">
         <div class="form-group ${pdict.forms.billingForm.email.htmlName}">
             <label for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
+            <span class="info-icon">
+                <span class="icon">i</span>
+                <div class="form-tooltip">
+                    ${Resource.msg('tooltip.security.code','creditCard',null)}
+                </div>
+            </span>
             <input type="text" class="form-control email" id="email"
                 <isprint value=${pdict.forms.billingForm.email.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
@@ -59,6 +69,12 @@
     <div class="col-sm-6">
         <div class="form-group ${pdict.forms.billingForm.phone.htmlName}">
             <label for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
+            <span class="info-icon">
+                <span class="icon">i</span>
+                <div class="form-tooltip">
+                    ${Resource.msg('tooltip.phone.number','creditCard',null)}
+                </div>
+            </span>
             <input type="text" class="form-control phone" id="phoneNumber"
                 <isprint value=${pdict.forms.billingForm.phone.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
