@@ -12,7 +12,7 @@
 <div class="row">
     <div class=" col-sm-12 refinements">
         <isloop items="${pdict.productSearch.refinements}" var="refinement">
-            <div class="collapsable-sm refinement ${refinement.displayName.toLowerCase()}">
+            <div class="collapsable-sm refinement ${refinement.displayName.toLowerCase().replace(/ /g, '-')}">
                 <div class="title">
                     <span>${refinement.displayName}</span>
                 </div>
