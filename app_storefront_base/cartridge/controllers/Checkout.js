@@ -5,7 +5,9 @@ var server = require('server');
 var helper = require('~/cartridge/scripts/dwHelpers');
 
 var BasketMgr = require('dw/order/BasketMgr');
+var HashMap = require('dw/util/HashMap');
 var HookMgr = require('dw/system/HookMgr');
+var Mail = require('dw/net/Mail');
 var Order = require('dw/order/Order');
 var OrderMgr = require('dw/order/OrderMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
@@ -13,8 +15,10 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
 var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
+var Site = require('dw/system/Site');
 var Status = require('dw/system/Status');
 var StoreMgr = require('dw/catalog/StoreMgr');
+var Template = require('dw/util/Template');
 var Transaction = require('dw/system/Transaction');
 
 var AddressModel = require('~/cartridge/models/address');
@@ -813,6 +817,72 @@ function validateBasket(basket) {
     return result;
 }
 
+/**
+ * Sends a confirmation to the current user
+ * @param {dw.order.Order} order - The current user's order
+ * @returns {void}
+ */
+function sendConfirmationEmail(order) {
+    var confirmationEmail = new Mail();
+    var context = new HashMap();
+
+    var billingAddress = order.billingAddress;
+    var paymentInstruments;
+    var shipment = order.defaultShipment;
+    var shippingAddress = shipment.shippingAddress;
+    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(order.defaultShipment);
+
+    // models
+    var billingAddressModel;
+    var billingModel;
+    var orderModel;
+    var orderTotals;
+    var paymentModel;
+    var productLineItemModel;
+    var shippingAddressModel = new AddressModel(shippingAddress);
+    var shippingModel;
+
+    shippingModel = new ShippingModel(
+        order.defaultShipment,
+        shipmentShippingModel,
+        shippingAddressModel
+    );
+
+    paymentInstruments = order.paymentInstruments;
+
+    paymentModel = new Payment(null, null, paymentInstruments);
+
+    billingAddressModel = new AddressModel(billingAddress);
+    billingModel = new BillingModel(billingAddressModel, paymentModel);
+
+    productLineItemModel = new ProductLineItemModel(order);
+    orderTotals = new TotalsModel(order);
+
+    orderModel = new OrderModel(
+        order,
+        shippingModel,
+        billingModel,
+        orderTotals,
+        productLineItemModel
+    );
+
+    var orderObject = { order: orderModel };
+
+    confirmationEmail.addTo(order.customerEmail);
+    confirmationEmail.setSubject(Resource.msg('subject.order.confirmation.email', 'order', null));
+    confirmationEmail.setFrom(Site.current.getCustomPreferenceValue('customerServiceEmail')
+        || 'no-reply@salesforce.com');
+
+    Object.keys(orderObject).forEach(function (key) {
+        context.put(key, orderObject[key]);
+    });
+
+    var template = new Template('checkout/confirmation/confirmationEmail');
+    var content = template.render(context).text;
+    confirmationEmail.setContent(content, 'text/html', 'UTF-8');
+    confirmationEmail.send();
+}
+
 server.post('PlaceOrder', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var order;
@@ -914,6 +984,8 @@ server.post('PlaceOrder', function (req, res, next) {
         });
         return next();
     }
+
+    sendConfirmationEmail(order);
 
     var confirmationUrl = URLUtils.url('Order-Confirm').toString();
 
