@@ -48,9 +48,7 @@ header ~ .container a:not(.card-title) {
 }
 
 @mixin tooltip-centered-arrow($top) {
-
     &:hover {
-
         &::after,
         &::before {
             top: $top;
@@ -84,8 +82,10 @@ header ~ .container a:not(.card-title) {
 
     &:hover {
         cursor: pointer;
+
         .form-tooltip {
             display: block;
+
             &:hover {
                 display: none;
             }
