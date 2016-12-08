@@ -33,9 +33,6 @@ header ~ .container a:not(.card-title) {
     color: $red;
 }
 
-/** ------------------------------------------------------- **/
-/** Tooltips                                                **/
-/** ------------------------------------------------------- **/
 .form-tooltip {
     display: none;
     position: absolute;
@@ -50,9 +47,6 @@ header ~ .container a:not(.card-title) {
     line-height: 1.5em;
 }
 
-/** ------------------------------------------------------- **/
-/** Show the tooltip on hover                               **/
-/** ------------------------------------------------------- **/
 .form-group .info-icon {
     &:hover {
         cursor: pointer;
@@ -65,13 +59,10 @@ header ~ .container a:not(.card-title) {
     }
 }
 
-/** ------------------------------------------------------- **/
-/** A Round Info Icon "i" style tooltip                     **/
-/** ------------------------------------------------------- **/
 @mixin tooltip-centered-arrow($top) {
     &:hover {
-        &:after,
-        &:before {
+        &::after,
+        &::before {
             top: $top;
             border: solid transparent;
             content: " ";
@@ -80,14 +71,14 @@ header ~ .container a:not(.card-title) {
             position: absolute;
             pointer-events: none;
         }
-        &:after {
+        &::after {
             border-color: rgba(68, 68, 68, 0);
             border-top-color: #444;
             border-width: 10px;
             margin-left: -10px;
         }
 
-        &:before {
+        &::before {
             border-color: rgba(0, 0, 0, 0);
             border-top-color: transparent;
             border-width: 11px;
@@ -96,9 +87,6 @@ header ~ .container a:not(.card-title) {
     }
 }
 
-/** ------------------------------------------------------- **/
-/** A Round Info Icon "i" style tooltip                     **/
-/** ------------------------------------------------------- **/
 .form-group .info-icon {
     .icon {
         margin-left: 10px;
@@ -115,6 +103,6 @@ header ~ .container a:not(.card-title) {
     }
 
     .form-tooltip {
-        top: -50px;
+        bottom: 90px;
     }
 }
