@@ -75,10 +75,23 @@ server.get('ShowTile', function (req, res, next) {
         pview: 'tile'
     };
 
-    var product = ProductFactory.get(productTileParams);
-    var productUrl = URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
-    var quickViewUrl = URLUtils.url('Product-ShowQuickView', 'pid', product.id)
-        .relative().toString();
+    var product;
+    var productUrl;
+    var quickViewUrl;
+
+    // TODO: remove this logic once the Product factory is
+    // able to handle the different product types
+    try {
+        product = ProductFactory.get(productTileParams);
+        productUrl = URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
+        quickViewUrl = URLUtils.url('Product-ShowQuickView', 'pid', product.id)
+            .relative().toString();
+    } catch (e) {
+        product = false;
+        productUrl = URLUtils.url('Home-Show');// TODO: change to coming soon page
+        quickViewUrl = URLUtils.url('Home-Show');
+    }
+
     res.render('product/gridTile.isml', {
         product: product,
         urls: {
