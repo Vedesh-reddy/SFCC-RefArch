@@ -403,7 +403,7 @@
                 //
                 // Handle Credit Card Number
                 //
-                $('#checkout-main').on('keyup','#cardNumber', function () {
+                $('#checkout-main').on('keyup', '#cardNumber', function () {
                     var firstDigit = $(this).val()[0];
 
                     var cardMap = {
@@ -414,7 +414,7 @@
                     };
 
                     if (cardMap[firstDigit]) {
-                        $('.credit-card-selection').attr('data-card-type',cardMap[firstDigit]);
+                        $('.credit-card-selection').attr('data-card-type', cardMap[firstDigit]);
                         $('.credit-option').hide();
                         $('#cardType').val(cardMap[firstDigit]);
                     } else {
