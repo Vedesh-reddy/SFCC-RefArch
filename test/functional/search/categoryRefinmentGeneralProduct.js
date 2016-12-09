@@ -87,8 +87,8 @@ describe('Category Refinements - General Product', () => {
 
     it('#3 should return 275 results when un-check the color refinements=red', () => {
         return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
+            .then((isVisible) => {
+                if (isVisible) {
                     return browser.click(search.refinementCircle)
                         .then(() => common.waitUntilPageLoaded())
                         .then(() => browser.pause(2000))
