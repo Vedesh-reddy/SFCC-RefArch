@@ -195,7 +195,9 @@ server.post('Track', server.middleware.https, function (req, res, next) {
         }
 
         if (validForm) {
-            res.render('account/orderdetails', orderModel);
+            res.render('account/orderdetails', {
+                order: orderModel
+            });
         } else {
             res.render('/account/login', {
                 navTabValue: 'login',
