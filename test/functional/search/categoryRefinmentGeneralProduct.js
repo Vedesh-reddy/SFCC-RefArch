@@ -135,8 +135,8 @@ describe('Category Refinements - General Product', () => {
     });
     it('#5 should return 275 results when un-check price refinement', () => {
         return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
+            .then((isVisible) => {
+                if (isVisible) {
                     return browser.click(search.refinementPriceClose)
                         .then(() => browser.waitUntil(() => {
                             return browser.execute(() => document.readyState)
