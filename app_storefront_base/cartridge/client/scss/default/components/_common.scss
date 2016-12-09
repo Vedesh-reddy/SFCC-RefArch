@@ -109,8 +109,9 @@ header ~ .container a:not(.card-title) {
     }
 }
 
-// Small devices (landscape phones, 544px and up)
-@media (max-width: 544px) {
+$small_544px: 544px;
+
+@media (max-width: $small_544px) {
     .form-group .info-icon {
         .icon {
         }
