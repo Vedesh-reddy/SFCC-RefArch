@@ -22,7 +22,7 @@ import * as search from '../../mocks/testDataMgr/pageObjects/searchResult';
 import { config } from '../webdriver/wdio.conf';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 
-describe.only('Category Refinements - General Product', () => {
+describe('Category Refinements - General Product', () => {
     const locale = config.locale;
     const baseUrl = config.baseUrl;
     const localeStr = locale === 'x_default' ? 'en_US' : locale;
