@@ -108,3 +108,15 @@ header ~ .container a:not(.card-title) {
         bottom: 90px;
     }
 }
+
+// Small devices (landscape phones, 544px and up)
+@media (max-width: 544px) {
+    .form-group .info-icon {
+        .icon {
+        }
+
+        .form-tooltip {
+            bottom: 75px;
+        }
+    }
+}
