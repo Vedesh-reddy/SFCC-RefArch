@@ -109,8 +109,8 @@ describe('Category Refinements - General Product', () => {
 
     it('#4 should return 172 results when select price refinements $50-$99.00', () => {
         return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
+            .then((isVisible) => {
+                if (isVisible) {
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarPrice))
                         .then(() => browser.click(search.refinementBarPrice))
