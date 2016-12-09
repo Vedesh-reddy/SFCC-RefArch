@@ -64,6 +64,9 @@ function parseResults(response) {
     var specialHandlers = {
         '.refinements': handleRefinements
     };
+    var resultsCount = 0;
+    var displayedCount = 0;
+    var $btnShowMore = {};
 
     // Update DOM elements that do not require special handling
     [
@@ -79,6 +82,21 @@ function parseResults(response) {
     Object.keys(specialHandlers).forEach(function (selector) {
         specialHandlers[selector]($results);
     });
+
+    // Hide/show "More" button depending on how many products were returned
+    resultsCount = parseInt($('.result-count')
+        .eq(0)
+        .text()
+        .trim()
+        .match(/^(\d+)/)[0], 10);
+    displayedCount = $('.product-tile').length;
+    $btnShowMore = $('.show-more button');
+
+    if (resultsCount > displayedCount) {
+        $btnShowMore.show();
+    } else {
+        $btnShowMore.hide();
+    }
 }
 
 module.exports = function () {

@@ -5,7 +5,7 @@
 </isloop>
 
 <!--- More button --->
-<isif condition="${pdict.productSearch.count > 0}">
+<isif condition="${(pdict.productSearch.count > 0) && (pdict.productSearch.count > pdict.productSearch.productIds.length)}">
     <div class="row show-more">
         <div class="col-xs-12 col-sm-4 offset-sm-4">
             <button class="btn btn-outline-primary btn-block" data-url="${pdict.productSearch.showMoreUrl}">
