@@ -61,8 +61,8 @@ describe('Category Refinements - General Product', () => {
 
     it('#2 should return 12 results for color refinements=red', () => {
         return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
+            .then((isVisible) => {
+                if (isVisible) {
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarColor))
                         .then(() => browser.click(search.refinementBarColor))
