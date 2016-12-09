@@ -72,7 +72,7 @@ module.exports = function () {
         handleSwatchHover($(this));
     });
 
-    $('.quickview').on('click', function (e) {
+    $('body').on('click', '.quickview', function (e) {
         e.preventDefault();
         var selectedValueUrl = $(this).closest('a.quickview').attr('href');
         var productUrl = selectedValueUrl.replace('Product-ShowQuickView', 'Product-Show');
