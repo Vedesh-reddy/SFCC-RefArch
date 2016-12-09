@@ -41,7 +41,7 @@ Template Notes:
             <isif condition="${attributeStatus.last}">
                 <!-- Quantity Drop Down Menu -->
                 <div class="quantity col-sm-6">
-                    <isinclude template="/components/product/quantity" />
+                    <isinclude template="/product/components/quantity" />
                 </div>
             </isif>
 
@@ -64,7 +64,7 @@ Template Notes:
             <isif condition="${attributeStatus.last}">
                 <!-- Quantity Drop Down Menu -->
                 <div class="quantity col-sm-6">
-                    <isinclude template="/components/product/quantity" />
+                    <isinclude template="/product/components/quantity" />
                 </div>
             </isif>
 
