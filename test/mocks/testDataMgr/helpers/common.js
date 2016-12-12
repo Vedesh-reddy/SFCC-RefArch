@@ -112,6 +112,14 @@ export function waitUntilPageLoaded() {
     }, 5000);
 }
 
+export function waitUntilAjaxCallEnded() {
+    return browser.waitUntil(() => {
+        return browser.execute(() => jQuery.active)
+            .then(loaded => loaded.value == 0);
+    }, 5000);
+
+}
+
 export function getSearchParams() {
     return browser.url()
         .then(url => {

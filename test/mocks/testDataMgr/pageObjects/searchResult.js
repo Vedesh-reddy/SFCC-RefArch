@@ -4,6 +4,8 @@ export const searchForm = 'form[role*=search]';
 export const pdpMain = '.search-results';
 export const searchResultLarge = '.search-results .hidden-xs-down';
 export const searchResultSmall = '.search-results .hidden-sm-up';
+export const searchResultMobile = '.search-results .grid-header .hidden-xs-down';
+export const searchResultCount = '.result-count.hidden-xs-down';
 export const searchNoResultLarge = '.grid-header .hidden-xs-down';
 export const searchNoResultSmall = '.grid-header .hidden-sm-up';
 export const colorRefinementLarge = '.grid-header .hidden-xs-down';
@@ -40,6 +42,7 @@ export const refinementCircle = '.fa-times-circle';
 export const refinementPriceClose = '.filter-bar .fa-close';
 export const customSelect = '.custom-select';
 export const sortOrderProductAtoZ = '.custom-select option:nth-child(3)';
+export const buttonClose = '.close';
 
 function createCssNthProductTile(idx) {
     return productGrid + ' > div:nth-child(' + idx + ') ' + productTile;
