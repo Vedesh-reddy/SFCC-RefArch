@@ -16,6 +16,7 @@ var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
 var Payment = require('~/cartridge/models/payment');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
+var Resource = require('dw/web/Resource');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 
@@ -195,8 +196,15 @@ server.post('Track', server.middleware.https, function (req, res, next) {
         }
 
         if (validForm) {
+            var exitLinkText;
+
+            exitLinkText = !req.currentCustomer.profile
+                ? Resource.msg('link.continue.shop', 'order', null)
+                : Resource.msg('link.orderdetails.myaccount', 'account', null);
+
             res.render('account/orderdetails', {
-                order: orderModel
+                order: orderModel,
+                exitLinkText: exitLinkText
             });
         } else {
             res.render('/account/login', {
