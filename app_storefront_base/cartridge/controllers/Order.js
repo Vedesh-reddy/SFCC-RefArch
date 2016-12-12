@@ -134,7 +134,7 @@ server.post('Track', server.middleware.https, function (req, res, next) {
     if (!order) {
         res.render('/account/login', {
             navTabValue: 'login',
-            orderTrackFormError: !validForm
+            orderTrackFormError: validForm
         });
         next();
     } else {
