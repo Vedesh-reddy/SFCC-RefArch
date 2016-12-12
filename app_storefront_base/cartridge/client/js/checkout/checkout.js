@@ -85,7 +85,7 @@
 
         /**
          * Updates the shipping method in the shipping summary
-         * @param {Object} shippingMethod - the selected shipping medthod data
+         * @param {Object} shippingMethod - the selected shipping method data
          * @param {Array} totals - the totals data
          */
         function updateShippingSummary(shippingMethod, totals) {
@@ -147,6 +147,7 @@
                 var address = data.shippingData.shippingAddress;
                 var selectedShippingMethod = data.shippingData.selectedShippingMethod;
                 populateSummary('.shipping .address-summary', address);
+                $('.shipping-phone').text(address.phone);
                 updateShippingSummary(selectedShippingMethod, data.totals);
                 updateTotals(data.totals);
                 defer.resolve(data);
@@ -228,6 +229,8 @@
                                 //
                                 var address = data.billingData.billingAddress.address;
                                 populateSummary('.billing .address-summary', address);
+                                $('.order-summary-email').text(data.orderEmail);
+                                $('.order-summary-phone').text(address.phone);
                                 updateTotals(data.totals);
                                 var $paymentSummary = $('.payment-details');
                                 var htmlToAppend = '<span> ' + data.resource.cardType + ' ' +

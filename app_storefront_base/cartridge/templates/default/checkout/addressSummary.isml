@@ -34,10 +34,4 @@
     <span class="postalCode">
         ${address.postalCode}
     </span>
-
-    <isif condition="${pdict.orderEmail}">
-        <div class="orderEmail">
-            ${pdict.orderEmail}
-        </div>
-    </isif>
 </div>

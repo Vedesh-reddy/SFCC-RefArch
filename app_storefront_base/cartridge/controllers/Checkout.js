@@ -439,6 +439,8 @@ server.post('SubmitPayment', function (req, res, next) {
             value: paymentForm.email.value
         };
 
+        viewData.phone = { value: paymentForm.phone.value };
+
         res.setViewData(viewData);
 
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
@@ -489,6 +491,7 @@ server.post('SubmitPayment', function (req, res, next) {
                     billingAddress.setCountryCode(shippingAddress.countryCode);
                 }
 
+                billingAddress.setPhone(billingData.phone.value);
                 currentBasket.setCustomerEmail(billingData.email.value);
             });
 
@@ -567,6 +570,7 @@ server.post('SubmitPayment', function (req, res, next) {
 
             res.json({
                 billingData: billingModel,
+                orderEmail: currentBasket.customerEmail,
                 totals: orderTotals,
                 form: server.forms.getForm('payment'),
                 resource: resource,
