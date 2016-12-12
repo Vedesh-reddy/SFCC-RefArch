@@ -103,12 +103,12 @@ module.exports = function () {
     /* SET LISTENERS */
 
     // Display refinements bar when Menu icon clicked
-    $('body').on('click', 'button.filter-results', function () {
+    $('.container').on('click', 'button.filter-results', function () {
         $('.refinement-bar, .modal-background').show();
     });
 
     // Refinements close button
-    $('body').on('click', '.refinement-bar button.close, .modal-background', function () {
+    $('.container').on('click', '.refinement-bar button.close, .modal-background', function () {
         $('.refinement-bar, .modal-background').hide();
     });
 
@@ -118,12 +118,12 @@ module.exports = function () {
     });
 
     // Expand/collapse refinement sections when clicked
-    $('body').on('click', '.collapsable-sm .title', function () {
+    $('.container').on('click', '.collapsable-sm .title', function () {
         $(this).parents('.collapsable-sm').toggleClass('active');
     });
 
     // Handle sort order menu selection
-    $('body').on('change', '[name=sort-order]', function (e) {
+    $('.container').on('change', '[name=sort-order]', function (e) {
         e.preventDefault();
 
         $.ajax({
@@ -134,7 +134,7 @@ module.exports = function () {
     });
 
     // Show more products
-    $('body').on('click', '.show-more button', function (e) {
+    $('.container').on('click', '.show-more button', function (e) {
         var showMoreUrl = $(this).data('url');
         currentPageSize = showMoreUrl.match(/sz=(\d+)/)[1];
 
@@ -148,7 +148,7 @@ module.exports = function () {
     });
 
     // Handle refinement value selection
-    $('body').on('click', '.refinements li a', function (e) {
+    $('.container').on('click', '.refinements li a', function (e) {
         e.preventDefault();
 
         $.ajax({
