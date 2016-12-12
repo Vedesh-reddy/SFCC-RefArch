@@ -1,0 +1,9 @@
+<span class="range">
+    <isset name="origPrice" value="${price}" scope="page" />
+
+    <isset name="price" value="${origPrice.min}" scope="page" />
+    <isinclude template="/product/components/pricing/formatted" />
+    -
+    <isset name="price" value="${origPrice.max}" scope="page" />
+    <isinclude template="/product/components/pricing/formatted" />
+</span>

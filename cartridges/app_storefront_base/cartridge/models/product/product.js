@@ -48,6 +48,7 @@ function FullProduct(product, productVariables, quantity) {
     this.selectedQuantity = quantity;
     this.productVariables = productVariables;
     this.attributeConfig = '*';
+    this.isProductTile = false;
     this.initialize();
 }
 

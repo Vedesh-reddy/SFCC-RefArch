@@ -200,6 +200,9 @@ module.exports = {
                 .attr('src', imageUrl.url);
         });
 
+        // Update pricing
+        $('.price-wrapper .price').replaceWith(response.product.price.html);
+
         updateAvailability(response);
     }
 

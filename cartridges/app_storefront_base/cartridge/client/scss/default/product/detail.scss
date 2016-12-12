@@ -4,6 +4,7 @@
 @import "../utilities/shapes";
 @import "../utilities/responsiveUtils";
 @import "../utilities/swatch";
+@import "../components/pricing";
 
 .container.product-detail {
     margin: 1.25em auto;
@@ -175,12 +176,13 @@ label.availability {
     padding-right: 0.3125em;
 }
 
-.prices {
-    color: $darker-gray;
-    font-size: 1.875em;
-    font-weight: bold;
+.price-wrapper {
     padding-bottom: 0.5em;
     text-align: center;
+}
+
+.price {
+    font-size: 1.5rem;
 }
 
 div.quantity {

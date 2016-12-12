@@ -1,9 +1,9 @@
 'use strict';
 
 var dwHelpers = require('../../scripts/dwHelpers');
-var PricingModel = require('./productPricing');
-var ImageModel = require('./productImages');
 var AttributesModel = require('./productAttributes');
+var ImageModel = require('./productImages');
+var priceFactory = require('../../scripts/factories/price');
 
 /**
  * Return type of the current product
@@ -77,14 +77,14 @@ function getVariationModel(product, productVariables) {
  */
 function ProductBase(product, productVariables, quantity) {
     this.variationModel = this.getVariationModel(product, productVariables);
-    this.product = this.variationModel.selectedVariant
-        || product;
+    this.product = this.variationModel.selectedVariant || product;
     this.imageConfig = {
         types: ['medium'],
         quantity: 'single'
     };
     this.quantity = quantity;
     this.attributeConfig = ['color'];
+    this.isProductTile = true;
     this.initialize();
 }
 
@@ -92,7 +92,7 @@ ProductBase.prototype = {
     initialize: function () {
         this.id = this.product.ID;
         this.productName = this.product.name;
-        this.price = new PricingModel(this.product, []);
+        this.price = priceFactory.getPrice(this.product, null, this.isProductTile);
         this.productType = getProductType(this.product);
         this.images = new ImageModel(this.variationModel, this.imageConfig);
         this.rating = getRating(this.id);
