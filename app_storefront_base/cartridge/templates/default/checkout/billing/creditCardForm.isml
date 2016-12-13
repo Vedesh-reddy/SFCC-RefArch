@@ -22,11 +22,12 @@
     <div class="col-xs-6">
         <div class="form-group
             <isif condition=${creditFields.expiration.expirationMonth.mandatory === true}>required</isif>
-            <isif condition="${!creditFields.expiration.expirationMonth.valid}">has-danger</isif>">
-            <label class="form-control-label"for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
-            <select class="form-control" id="expirationMonth" <isprint value=${creditFields.expiration.expirationMonth.attributes} encoding="off" />>
-                <isloop items=${creditFields.expiration.expirationMonth.options} var="month">
-                    <option id="${month.id}" <isif condition="${month.selected}">selected</isif>>${month.htmlValue}</option>
+            ${creditFields.expirationMonth.htmlName}">
+            <label for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
+            <select class="form-control expirationMonth" id="expirationMonth"
+            <isprint value=${creditFields.expirationMonth.attributes} encoding="off"/>>
+                <isloop items=${creditFields.expirationMonth.options} var="month">
+                    <option id="${month.id}" <isif condition="${month.selected}">selected</isif> >${month.htmlValue}</option>
                 </isloop>
             </select>
             <div class="form-control-feedback"></div>
@@ -35,11 +36,13 @@
     <div class="col-xs-6">
         <div class="form-group
             <isif condition=${creditFields.expiration.expirationYear.mandatory === true}>required</isif>
-            <isif condition="${!creditFields.expiration.expirationYear.valid}">has-danger</isif>">
-            <label class="form-control-label"for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
-            <select class="form-control" id="expirationYear" <isprint value=${creditFields.expiration.expirationYear.attributes} encoding="off" />>
-                <isloop items=${creditFields.expiration.expirationYear.options} var="year">
-                    <option id="${year.id}" <isif condition="${year.selected}">selected</isif>>${year.value}</option>
+            ${creditFields.expirationYear.htmlName}">
+            <label for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
+            <select class="form-control expirationYear" id="expirationYear"
+            <isprint value=${creditFields.expirationYear.attributes} encoding="off"/>>
+                <option>${creditFields.expirationYear.options[0].htmlValue}</option>
+                <isloop items=${pdict.expirationYears} var="year">
+                    <option id="${year}"><isprint value=${year}></option>
                 </isloop>
             </select>
             <div class="form-control-feedback"></div>

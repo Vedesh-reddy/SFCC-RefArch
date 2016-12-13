@@ -37,12 +37,12 @@ header ~ .container a:not(.card-title) {
     display: none;
     position: absolute;
     left: 0;
-    padding: 5px;
-    border-radius: 2px;
-    background-color: #444;
-    color: #fff;
-    font-size: 13px;
-    max-width: 250px;
+    padding: .312rem;
+    border-radius: $border-radius;
+    background-color: $grey6;
+    color: $white;
+    font-size: 0.928rem;
+    max-width: 17.857rem;
     line-height: 1.5em;
 }
 
@@ -60,23 +60,23 @@ header ~ .container a:not(.card-title) {
         }
 
         &::after {
-            border-color: rgba(68, 68, 68, 0);
-            border-top-color: #444;
-            border-width: 10px;
-            margin-left: -10px;
+            border-color: transparent;
+            border-top-color: $grey6;
+            border-width: .625rem;
+            margin-left: -.625rem;
         }
 
         &::before {
-            border-color: rgba(0, 0, 0, 0);
+            border-color: transparent;
             border-top-color: transparent;
-            border-width: 11px;
-            margin-left: -11px;
+            border-width: 0.785rem;
+            margin-left: -0.785rem;
         }
     }
 }
 
 .form-group .info-icon {
-    margin-left: 20px;
+    margin-left: .71rem;
     padding: 0;
 
     &:hover {
@@ -93,28 +93,24 @@ header ~ .container a:not(.card-title) {
 
     .icon {
         padding: 0;
-        border-radius: 20px;
+        border-radius: 1.25rem;
         background-color: #00a1e0;
-        width: 25px;
+        width: 1.5625rem;
         display: inline-block;
         text-align: center;
-        color: #fff;
+        color: $white;
         font-weight: 600;
 
-        @include tooltip-centered-arrow(-5px);
+        @include tooltip-centered-arrow(-.312rem);
     }
 
     .form-tooltip {
-        bottom: 90px;
+        bottom: 5.528rem;
     }
-}
 
-$small_544px: 544px;
-
-@media (max-width: $small_544px) {
-    .form-group .info-icon {
+    @include media-breakpoint-down(xs) {
         .form-tooltip {
-            bottom: 75px;
+            bottom: 4.671rem;
         }
-    }
+    };
 }
