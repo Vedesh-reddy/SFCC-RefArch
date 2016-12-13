@@ -1,14 +1,18 @@
+<isset name="creditFields" value="${pdict.forms.billingForm}" scope="page"/>
+
 <!--- Visa is currently hard coded as the payment card type this will change when card type autofill is complete --->
 <input type="hidden" class="form-control cardNumber" id="cardType"
-       name="${pdict.forms.billingForm.cardType.htmlName}"
+       name="${creditFields.cardType.htmlName}"
        value="Visa">
 
 <div class="row">
     <div class="col-xs-12">
-        <div class="form-group ${pdict.forms.billingForm.cardNumber.htmlName}">
-            <label for="cardNumber">${Resource.msg('field.credit.card.number','creditCard',null)}</label>
+        <div class="form-group
+            <isif condition=${creditFields.cardNumber.mandatory === true}>required</isif>
+            ${creditFields.cardNumber.htmlName}">
+            <label class="form-control-label" for="cardNumber">${Resource.msg('field.credit.card.number','creditCard',null)}</label>
             <input type="text" class="form-control cardNumber" id="cardNumber"
-                <isprint value=${pdict.forms.billingForm.cardNumber.attributes} encoding="off"/> >
+                <isprint value=${creditFields.cardNumber.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
         </div>
     </div>
@@ -16,11 +20,13 @@
 
 <div class="row">
     <div class="col-xs-6">
-        <div class="form-group ${pdict.forms.billingForm.expirationMonth.htmlName}">
+        <div class="form-group
+            <isif condition=${creditFields.expiration.expirationMonth.mandatory === true}>required</isif>
+            ${creditFields.expirationMonth.htmlName}">
             <label for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
             <select class="form-control expirationMonth" id="expirationMonth"
-            <isprint value=${pdict.forms.billingForm.expirationMonth.attributes} encoding="off"/>>
-                <isloop items=${pdict.forms.billingForm.expirationMonth.options} var="month">
+            <isprint value=${creditFields.expirationMonth.attributes} encoding="off"/>>
+                <isloop items=${creditFields.expirationMonth.options} var="month">
                     <option id="${month.id}" <isif condition="${month.selected}">selected</isif> >${month.htmlValue}</option>
                 </isloop>
             </select>
@@ -28,11 +34,13 @@
         </div>
     </div>
     <div class="col-xs-6">
-        <div class="form-group ${pdict.forms.billingForm.expirationYear.htmlName}">
+        <div class="form-group
+            <isif condition=${creditFields.expiration.expirationYear.mandatory === true}>required</isif>
+            ${creditFields.expirationYear.htmlName}">
             <label for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
             <select class="form-control expirationYear" id="expirationYear"
-            <isprint value=${pdict.forms.billingForm.expirationYear.attributes} encoding="off"/>>
-                <option>${pdict.forms.billingForm.expirationYear.options[0].htmlValue}</option>
+            <isprint value=${creditFields.expirationYear.attributes} encoding="off"/>>
+                <option>${creditFields.expirationYear.options[0].htmlValue}</option>
                 <isloop items=${pdict.expirationYears} var="year">
                     <option id="${year}"><isprint value=${year}></option>
                 </isloop>
@@ -44,32 +52,55 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group ${pdict.forms.billingForm.securityCode.htmlName}">
-            <label for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
+        <div class="form-group
+            <isif condition=${creditFields.securityCode.mandatory === true}>required</isif>
+            ${creditFields.securityCode.htmlName}">
+            <label class="form-control-label"for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
+            <span class="info-icon">
+                <span class="icon">i</span>
+                <div class="form-tooltip">
+                    ${Resource.msg('tooltip.security.code','creditCard',null)}
+                </div>
+            </span>
+
             <input type="text" class="form-control securityCode" id="securityCode"
-                <isprint value=${pdict.forms.billingForm.securityCode.attributes} encoding="off"/> >
+                <isprint value=${creditFields.securityCode.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
         </div>
     </div>
-    <div class="col-sm-6">
-        ${Resource.msg('tooltip.security.code.what.is.this','creditCard',null)}
-    </div>
+
 </div>
 
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group ${pdict.forms.billingForm.email.htmlName}">
-            <label for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
+        <div class="form-group
+            <isif condition=${creditFields.email.mandatory === true}>required</isif>
+            ${creditFields.email.htmlName}">
+            <label class="form-control-label"for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
+            <span class="info-icon">
+                <span class="icon">i</span>
+                <div class="form-tooltip">
+                    ${Resource.msg('tooltip.security.code','creditCard',null)}
+                </div>
+            </span>
             <input type="text" class="form-control email" id="email"
-                <isprint value=${pdict.forms.billingForm.email.attributes} encoding="off"/> >
+                <isprint value=${creditFields.email.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
-        <div class="form-group ${pdict.forms.billingForm.phone.htmlName}">
-            <label for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
+        <div class="form-group
+            <isif condition=${creditFields.phone.mandatory === true}>required</isif>
+            ${creditFields.phone.htmlName}">
+            <label class="form-control-label"for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
+            <span class="info-icon">
+                <span class="icon">i</span>
+                <div class="form-tooltip">
+                    ${Resource.msg('tooltip.phone.number','creditCard',null)}
+                </div>
+            </span>
             <input type="tel" class="form-control phone" id="phoneNumber"
-                <isprint value=${pdict.forms.billingForm.phone.attributes} encoding="off"/> >
+                <isprint value=${creditFields.phone.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
         </div>
     </div>
