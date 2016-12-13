@@ -305,6 +305,7 @@ $checkout-font-weight: 600;
 
 .credit-card-selection {
     display: none;
+
     &[data-card-type] {
         display: inline-block;
     }
