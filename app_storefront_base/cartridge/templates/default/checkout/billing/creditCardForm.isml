@@ -16,22 +16,25 @@
 
 <div class="row">
     <div class="col-xs-6">
-        <div class="form-group <isif condition="${!pdict.forms.billingForm.expiration.expirationMonth.valid}">has-danger</isif>">
+        <div class="form-group ${pdict.forms.billingForm.expirationMonth.htmlName}">
             <label for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
-            <select class="form-control" id="expirationMonth" <isprint value=${pdict.forms.billingForm.expiration.expirationMonth.attributes} encoding="off" />>
-                <isloop items=${pdict.forms.billingForm.expiration.expirationMonth.options} var="month">
-                    <option id="${month.id}" <isif condition="${month.selected}">selected</isif>>${month.htmlValue}</option>
+            <select class="form-control expirationMonth" id="expirationMonth"
+            <isprint value=${pdict.forms.billingForm.expirationMonth.attributes} encoding="off"/>>
+                <isloop items=${pdict.forms.billingForm.expirationMonth.options} var="month">
+                    <option id="${month.id}" <isif condition="${month.selected}">selected</isif> >${month.htmlValue}</option>
                 </isloop>
             </select>
             <div class="form-control-feedback"></div>
         </div>
     </div>
     <div class="col-xs-6">
-        <div class="form-group <isif condition="${!pdict.forms.billingForm.expiration.expirationYear.valid}">has-danger</isif>">
+        <div class="form-group ${pdict.forms.billingForm.expirationYear.htmlName}">
             <label for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
-            <select class="form-control" id="expirationYear" <isprint value=${pdict.forms.billingForm.expiration.expirationYear.attributes} encoding="off" />>
-                <isloop items=${pdict.forms.billingForm.expiration.expirationYear.options} var="year">
-                    <option id="${year.id}" <isif condition="${year.selected}">selected</isif>>${year.value}</option>
+            <select class="form-control expirationYear" id="expirationYear"
+            <isprint value=${pdict.forms.billingForm.expirationYear.attributes} encoding="off"/>>
+                <option>${pdict.forms.billingForm.expirationYear.options[0].htmlValue}</option>
+                <isloop items=${pdict.expirationYears} var="year">
+                    <option id="${year}"><isprint value=${year}></option>
                 </isloop>
             </select>
             <div class="form-control-feedback"></div>

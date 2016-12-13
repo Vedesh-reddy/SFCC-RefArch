@@ -104,12 +104,23 @@ server.get('Start', function (req, res, next) {
         productLineItemModel
     );
 
+    var creditCardExpirationYears = [];
+    var year = new Date().getFullYear();
+
+    for (var i = 0; i < 10; i++) {
+        creditCardExpirationYears.push((year + i).toString());
+    }
+
     var forms = {
         shippingForm: shippingForm,
         billingForm: billingForm
     };
 
-    res.render('checkout/checkout', { order: orderModel, forms: forms });
+    res.render('checkout/checkout', {
+        order: orderModel,
+        forms: forms,
+        expirationYears: creditCardExpirationYears
+    });
     next();
 });
 
@@ -415,12 +426,12 @@ server.post('SubmitPayment', function (req, res, next) {
                 htmlName: paymentForm.securityCode.htmlName
             },
             expirationMonth: {
-                value: paymentForm.expiration.expirationMonth.selectedOption,
-                htmlName: paymentForm.expiration.expirationMonth.htmlName
+                value: paymentForm.expirationMonth.selectedOption,
+                htmlName: paymentForm.expirationMonth.htmlName
             },
             expirationYear: {
-                value: paymentForm.expiration.expirationYear.selectedOption,
-                htmlName: paymentForm.expiration.expirationYear.htmlName
+                value: paymentForm.expirationYear.value,
+                htmlName: paymentForm.expirationYear.htmlName
             }
         };
 
