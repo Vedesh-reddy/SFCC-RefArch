@@ -104,11 +104,11 @@ server.get('Start', function (req, res, next) {
         productLineItemModel
     );
 
+    var currentYear = new Date().getFullYear();
     var creditCardExpirationYears = [];
-    var year = new Date().getFullYear();
 
     for (var i = 0; i < 10; i++) {
-        creditCardExpirationYears.push((year + i).toString());
+        creditCardExpirationYears.push((currentYear + i).toString());
     }
 
     var forms = {
