@@ -18,7 +18,7 @@
                 <isinclude template="checkout/confirmation/confirmationDetails" />
                 <div class="my-account">
                     <a href="${URLUtils.https('Account-Show')}" title="${Resource.msg('link.orderdetails.myaccount','account',null)}">
-                        ${Resource.msg('link.orderdetails.myaccount','account',null)}
+                        ${pdict.exitLinkText}
                     </a>
                 </div>
             </div>
