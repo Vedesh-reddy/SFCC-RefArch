@@ -37,7 +37,7 @@ header ~ .container a:not(.card-title) {
     display: none;
     position: absolute;
     left: 0;
-    padding: .312rem;
+    padding: 0.312rem;
     border-radius: $border-radius;
     background-color: $grey6;
     color: $white;
@@ -62,8 +62,8 @@ header ~ .container a:not(.card-title) {
         &::after {
             border-color: transparent;
             border-top-color: $grey6;
-            border-width: .625rem;
-            margin-left: -.625rem;
+            border-width: 0.625rem;
+            margin-left: -0.625rem;
         }
 
         &::before {
@@ -76,7 +76,7 @@ header ~ .container a:not(.card-title) {
 }
 
 .form-group .info-icon {
-    margin-left: .71rem;
+    margin-left: 0.71rem;
     padding: 0;
 
     &:hover {
@@ -101,7 +101,7 @@ header ~ .container a:not(.card-title) {
         color: $white;
         font-weight: 600;
 
-        @include tooltip-centered-arrow(-.312rem);
+        @include tooltip-centered-arrow(-0.312rem);
     }
 
     .form-tooltip {
@@ -112,5 +112,5 @@ header ~ .container a:not(.card-title) {
         .form-tooltip {
             bottom: 4.671rem;
         }
-    };
+    }
 }
