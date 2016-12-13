@@ -17,7 +17,7 @@
             <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
                 <isinclude template="checkout/confirmation/confirmationDetails" />
                 <div class="my-account">
-                    <a href="${URLUtils.https('Account-Show')}" title="${Resource.msg('link.orderdetails.myaccount','account',null)}">
+                    <a href="${pdict.exitLinkUrl}" title="${Resource.msg('link.orderdetails.myaccount','account',null)}">
                         ${pdict.exitLinkText}
                     </a>
                 </div>
