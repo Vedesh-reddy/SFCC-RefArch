@@ -8,7 +8,6 @@ var BasketMgr = require('dw/order/BasketMgr');
 var HashMap = require('dw/util/HashMap');
 var HookMgr = require('dw/system/HookMgr');
 var Mail = require('dw/net/Mail');
-var Order = require('dw/order/Order');
 var OrderMgr = require('dw/order/OrderMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
@@ -16,7 +15,6 @@ var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
 var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
 var Site = require('dw/system/Site');
-var Status = require('dw/system/Status');
 var StoreMgr = require('dw/catalog/StoreMgr');
 var Template = require('dw/util/Template');
 var Transaction = require('dw/system/Transaction');
@@ -29,6 +27,8 @@ var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 var URLUtils = require('dw/web/URLUtils');
+
+var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
 
 /**
  * Main entry point for Checkout
@@ -748,31 +748,6 @@ function handlePayments(order, orderNumber) {
 }
 
 /**
- * Attempts to place the order
- * @param {dw.order.Order} order - The order object to be placed
- * @returns {Object} an error object
- */
-function placeOrder(order) {
-    var result = { error: false };
-
-    try {
-        Transaction.wrap(function () {
-            var placeOrderStatus = OrderMgr.placeOrder(order);
-            if (placeOrderStatus === Status.ERROR) {
-                throw new Error();
-            }
-            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
-            order.setExportStatus(Order.EXPORT_STATUS_READY);
-        });
-    } catch (e) {
-        Transaction.wrap(function () { OrderMgr.failOrder(order); });
-        result.error = true;
-    }
-
-    return result;
-}
-
-/**
  * validates that the product line items are exist, are online, and have available inventory.
  * @param {dw.order.Basket} basket - The current user's basket
  * @returns {Object} an error object
@@ -838,45 +813,7 @@ function sendConfirmationEmail(order) {
     var confirmationEmail = new Mail();
     var context = new HashMap();
 
-    var billingAddress = order.billingAddress;
-    var paymentInstruments;
-    var shipment = order.defaultShipment;
-    var shippingAddress = shipment.shippingAddress;
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(order.defaultShipment);
-
-    // models
-    var billingAddressModel;
-    var billingModel;
-    var orderModel;
-    var orderTotals;
-    var paymentModel;
-    var productLineItemModel;
-    var shippingAddressModel = new AddressModel(shippingAddress);
-    var shippingModel;
-
-    shippingModel = new ShippingModel(
-        order.defaultShipment,
-        shipmentShippingModel,
-        shippingAddressModel
-    );
-
-    paymentInstruments = order.paymentInstruments;
-
-    paymentModel = new Payment(null, null, paymentInstruments);
-
-    billingAddressModel = new AddressModel(billingAddress);
-    billingModel = new BillingModel(billingAddressModel, paymentModel);
-
-    productLineItemModel = new ProductLineItemModel(order);
-    orderTotals = new TotalsModel(order);
-
-    orderModel = new OrderModel(
-        order,
-        shippingModel,
-        billingModel,
-        orderTotals,
-        productLineItemModel
-    );
+    var orderModel = orderHelpers.buildOrderModel(order);
 
     var orderObject = { order: orderModel };
 
@@ -988,7 +925,7 @@ server.post('PlaceOrder', function (req, res, next) {
     }
 
     // Places the order
-    var placeOrderResult = placeOrder(order);
+    var placeOrderResult = orderHelpers.placeOrder(order);
     if (placeOrderResult.error) {
         res.json({
             error: true,

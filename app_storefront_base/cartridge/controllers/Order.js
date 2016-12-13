@@ -20,6 +20,8 @@ var Resource = require('dw/web/Resource');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 
+var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
+
 server.get('Test', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
     var billing;
@@ -53,45 +55,7 @@ server.get('Test', function (req, res, next) {
 
 server.get('Confirm', function (req, res, next) {
     var order = OrderMgr.getOrder(req.querystring.ID);
-    var billingAddress = order.billingAddress;
-    var paymentInstruments;
-    var shipment = order.defaultShipment;
-    var shippingAddress = shipment.shippingAddress;
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(order.defaultShipment);
-
-    // models
-    var billingAddressModel;
-    var billingModel;
-    var orderModel;
-    var orderTotals;
-    var paymentModel;
-    var productLineItemModel;
-    var shippingAddressModel = new AddressModel(shippingAddress);
-    var shippingModel;
-
-    shippingModel = new ShippingModel(
-        order.defaultShipment,
-        shipmentShippingModel,
-        shippingAddressModel
-    );
-
-    paymentInstruments = order.paymentInstruments;
-
-    paymentModel = new Payment(null, null, paymentInstruments);
-
-    billingAddressModel = new AddressModel(billingAddress);
-    billingModel = new BillingModel(billingAddressModel, paymentModel);
-
-    productLineItemModel = new ProductLineItemModel(order);
-    orderTotals = new TotalsModel(order);
-
-    orderModel = new OrderModel(
-        order,
-        shippingModel,
-        billingModel,
-        orderTotals,
-        productLineItemModel
-    );
+    var orderModel = orderHelpers.buildOrderModel(order);
 
     res.render('checkout/confirmation/confirmation', { order: orderModel });
 
