@@ -119,6 +119,10 @@ $checkout-font-weight: 600;
 .summary-section-label {
     font-size: 1em;
     font-weight: $checkout-font-weight;
+
+    @include media-breakpoint-up(lg) {
+        font-weight: 500;
+    }
 }
 
 .summary-details {
@@ -332,4 +336,13 @@ $checkout-font-weight: 600;
     background-repeat: no-repeat;
     width: 48px;
     height: 33px;
+}
+
+.product-summary-block {
+    margin: 1em 0;
+}
+
+.hero-confirmation {
+    background-image: url('../../images/thankyou.jpg');
+    background-position-y: -8.125em;
 }
