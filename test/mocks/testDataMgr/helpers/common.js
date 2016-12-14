@@ -2,6 +2,8 @@
 import _ from 'lodash';
 import nodeUrl from 'url';
 
+import * as header from '../pageObjects/header';
+
 
 export const defaultLocale = 'x_default';
 export const supportedLocales = [
@@ -119,5 +121,22 @@ export function getSearchParams() {
                 _.map(search.split('&amp;'), param => param.split('='))
             );
             return Promise.resolve(params);
+        });
+}
+
+// Since Quick View is only support on desktop and iPad-landscape mode,
+// this function determines if Quick View should be expected base
+// on whether the existing of the mobile menu.
+// (Note: We have decided that this is the best approach for now.)
+//
+// return true - Quick View is expected to be present
+// return false - Quick View is NOT expected to be present
+export function isQuickViewExpected() {
+    return browser.isVisible(header.NAV_BAR_TOGGLER)
+        .then(navBarVisible => {
+            if (navBarVisible) {
+                return false;
+            }
+            return true;
         });
 }

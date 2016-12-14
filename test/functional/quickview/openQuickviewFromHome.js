@@ -1,0 +1,145 @@
+'use strict';
+
+import { assert } from 'chai';
+import { config } from '../webdriver/wdio.conf';
+import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
+import * as quickView from '../../mocks/testDataMgr/pageObjects/quickView';
+import * as testDataMgr from '../../mocks/testDataMgr/main';
+import * as common from '../../mocks/testDataMgr/helpers/common';
+
+
+/*
+Verify Quickview can be opened and closed from Home Page.
+ */
+
+describe('Home product tile - Open Quickview', () => {
+    const locale = config.locale;
+
+    const productMasterId2 = '25697682';
+    const productVariantId2 = '701644391737';
+
+    const productMasterId4 = '25519318';
+
+    let quickViewExpected = false;
+
+
+    before(() => {
+        return homePage.navigateTo()
+            .then(() => common.isQuickViewExpected())
+            .then(expectedFlag => {
+                quickViewExpected = expectedFlag;
+            })
+            .then(() => {
+                if (quickViewExpected) {
+                    return testDataMgr.load();
+                }
+                return Promise.resolve();
+            });
+    });
+
+    it('Open Quickview - variant', () => {
+        if (!quickViewExpected) {
+            return Promise.resolve();
+        }
+
+        const productMaster = testDataMgr.getProductById(productMasterId2);
+        const expectedDisplayName = productMaster.getLocalizedProperty('displayName', locale);
+
+        const productVariant = testDataMgr.getProductById(productVariantId2);
+        const expectedColor = productVariant.customAttributes.color;
+        const expectedSize = productVariant.customAttributes.size;
+
+        const expectedListedPrice = testDataMgr.getPricesByProductId(productVariantId2, locale).list;
+        const expectedActiveImgSrc1 = 'images/large/PG.10256582.JJI15XX.PZ.jpg';
+        const expectedActiveImgSrc2 = 'images/large/PG.10256582.JJI15XX.BZ.jpg';
+
+        return homePage.clickOnNthProductTileQuickView(3)
+            .then(() => quickView.getProductName())
+            .then(prodName => {
+                assert.equal(prodName, expectedDisplayName, 'Expected: product name = ' + expectedDisplayName);
+            })
+            .then(() => quickView.getSelectedSwatchColor())
+            .then(selectedColor => {
+                assert.equal(selectedColor, expectedColor, 'Expected: selected color = ' + expectedColor);
+            })
+            .then(() => quickView.getSelectedSizeDataAttrValue())
+            .then(selectedSize => {
+                assert.equal(selectedSize, expectedSize, 'Expected: selected size = ' + expectedSize);
+            })
+            .then(() => quickView.getSelectedQuantity())
+            .then(quantity => {
+                assert.equal(quantity, 1, 'Expected: selected size = 1');
+            })
+            .then(() => quickView.getPrice())
+            .then(price => {
+                assert.equal(price, expectedListedPrice, 'Expected: selected size = ' + expectedListedPrice);
+            })
+            .then(() => quickView.getActiveImageSrc())
+            .then(activeImgSrc => {
+                assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc1), 'product active image src: url not end with ' + expectedActiveImgSrc1);
+            })
+            .then(() => quickView.clickOnNextImgageIcon())
+            .then(() => quickView.getActiveImageSrc())
+            .then(activeImgSrc2 => {
+                assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc2), 'product active image src: url not end with ' + expectedActiveImgSrc2);
+            })
+            .then(() => browser.isEnabled(quickView.ADD_TO_CART))
+            .then(enabled => {
+                assert.equal(enabled, true, 'Expected: Add-to-cart button to be enabled.');
+            })
+            .then(() => quickView.closeQuickview())
+            .then(() => browser.isVisible(quickView.QUICK_VIEW_DIALOG))
+            .then(qwVisible => {
+                assert.isFalse(qwVisible, 'Expected: Quickview dialog to be NOT visible.');
+            });
+    });
+
+    it('Open Quickview - master', () => {
+        if (!quickViewExpected) {
+            return Promise.resolve();
+        }
+
+        const productMaster = testDataMgr.getProductById(productMasterId4);
+        const expectedDisplayName = productMaster.getLocalizedProperty('displayName', locale);
+
+        const expectedListedPrice = testDataMgr.getPricesByProductId(productMasterId4, locale).list;
+        const expectedActiveImgSrc1 = '/images/large/PG.10221714.JJ169XX.PZ.jpg';
+        const expectedActiveImgSrc2 = '/images/large/PG.10221714.JJ169XX.BZ.jpg';
+
+        return homePage.clickOnNthProductTileQuickView(5)
+            .then(() => quickView.getProductName())
+            .then(prodName => {
+                assert.equal(prodName, expectedDisplayName, 'Expected: product name = ' + expectedDisplayName);
+            })
+            .then(() => browser.isVisible(quickView.SELECTED_SWATCH_COLOR))
+            .then(colorSelected => {
+                assert.isFalse(colorSelected, 'Expected: no color selected for master product.');
+            })
+            .then(() => browser.isExisting(quickView.SELECTED_SIZE))
+            .then(sizeSelected => {
+                assert.isFalse(sizeSelected, 'Expected: Size not selected.');
+            })
+            .then(() => quickView.getSelectedQuantity())
+            .then(quantity => {
+                assert.equal(quantity, 1, 'Expected: selected size = 1');
+            })
+            .then(() => quickView.getPrice())
+            .then(price => {
+                assert.equal(price, expectedListedPrice, 'Expected: selected size = ' + expectedListedPrice);
+            })
+            .then(() => quickView.getActiveImageSrc())
+            .then(activeImgSrc => {
+                assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc1), 'product active image src: url not end with ' + expectedActiveImgSrc1);
+            })
+            .then(() => quickView.clickOnNextImgageIcon())
+            .then(() => quickView.getActiveImageSrc())
+            .then(activeImgSrc2 => {
+                assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc2), 'product active image src: url not end with ' + expectedActiveImgSrc2);
+            })
+            .then(() => browser.isEnabled(quickView.ADD_TO_CART))
+            .then(enabled => {
+                assert.equal(enabled, false, 'Expected: Add-to-cart button to be disabled.');
+            })
+            .then(() => quickView.closeQuickview());
+    });
+});

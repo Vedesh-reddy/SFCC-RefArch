@@ -46,11 +46,33 @@ describe('Home - Product Tiles Display', () => {
     const productMasterId5 = '25720054';
     const productVariantId5 = '013742003154';
 
+    let quickViewExpected = false;
+
 
     before(() => {
         return testDataMgr.load()
-            .then(() => homePage.navigateTo());
+            .then(() => homePage.navigateTo())
+            .then(() => common.isQuickViewExpected())
+            .then(expectedFlag => {
+                quickViewExpected = expectedFlag;
+            });
     });
+
+    function verifyQuickView(tileIndex, productId) {
+        if (!quickViewExpected) {
+            return Promise.resolve();
+        }
+        // verify QuickView image url and link
+        return homePage.getNthProductTileQuickViewImageSrc(tileIndex)
+            .then(qViewImageSrc => {
+                assert.isTrue(qViewImageSrc.endsWith('/images/quickview.png'), 'Quick View image: url not end with /images/quickview.png.');
+            })
+            .then(() => homePage.getNthProductTileQuickViewImageHref(tileIndex))
+            .then(quickViewLink => {
+                const expLinkEnding = '/Product-ShowQuickView?pid=' + productId;
+                assert.isTrue(quickViewLink.endsWith(expLinkEnding), 'Quick View link: url not end with ' + expLinkEnding);
+            });
+    }
 
     it('Should display 5 product tiles.', function () {
         return homePage.getProductTileCount()
@@ -71,8 +93,10 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileImageHref(1))
             .then(imageLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productVariantId1 + '.html?lang=' + localeStr;
-                assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
+                assert.equal(imageLink, expectedLink, 'Expected: image link = ' + expectedLink);
             })
+
+            .then(() => verifyQuickView(1, productVariantId1))
 
             .then(() => homePage.getNthProductTileColorSwatchCount(1))
             .then(count => {
@@ -92,7 +116,7 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileProductNameHref(1))
             .then(nameLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productVariantId1 + '.html?lang=' + localeStr;
-                assert.equal(nameLink, expectedLink, 'Expected product name link not equal to ' + expectedLink);
+                assert.equal(nameLink, expectedLink, 'Expected: product name link = ' + expectedLink);
             })
 
             .then(() => homePage.getNthProductTileProductPrice(1))
@@ -114,8 +138,10 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileImageHref(3))
             .then(imageLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productVariantId2 + '.html?lang=' + localeStr;
-                assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
+                assert.equal(imageLink, expectedLink, 'Expected: image link = ' + expectedLink);
             })
+
+            .then(() => verifyQuickView(3, productVariantId2))
 
             .then(() => homePage.getNthProductTileColorSwatchCount(3))
             .then(count => {
@@ -136,7 +162,7 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileProductNameHref(3))
             .then(nameLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productVariantId2 + '.html?lang=' + localeStr;
-                assert.equal(nameLink, expectedLink, 'Expected product name link not equal to ' + expectedLink);
+                assert.equal(nameLink, expectedLink, 'Expected: product name link = ' + expectedLink);
             })
 
             .then(() => homePage.getNthProductTileProductPrice(3))
@@ -158,8 +184,10 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileImageHref(4))
             .then(imageLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productVariantId3 + '.html?lang=' + localeStr;
-                assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
+                assert.equal(imageLink, expectedLink, 'Expected: image link = ' + expectedLink);
             })
+
+            .then(() => verifyQuickView(4, productVariantId3))
 
             .then(() => homePage.getNthProductTileColorSwatchCount(4))
             .then(count => {
@@ -179,7 +207,7 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileProductNameHref(4))
             .then(nameLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productVariantId3 + '.html?lang=' + localeStr;
-                assert.equal(nameLink, expectedLink, 'Expected product name link not equal to ' + expectedLink);
+                assert.equal(nameLink, expectedLink, 'Expected: product name link = ' + expectedLink);
             })
 
             .then(() => homePage.getNthProductTileProductPrice(4))
@@ -203,8 +231,10 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileImageHref(5))
             .then(imageLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productMasterId4 + '.html?lang=' + localeStr;
-                assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
+                assert.equal(imageLink, expectedLink, 'Expected: image link = ' + expectedLink);
             })
+
+            .then(() => verifyQuickView(5, productMasterId4))
 
             .then(() => homePage.getNthProductTileColorSwatchCount(5))
             .then(count => {
@@ -226,18 +256,18 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileMoreColorSwatchHref(5))
             .then(moreSwatchLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productMasterId4 + '.html?lang=' + localeStr;
-                assert.equal(moreSwatchLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
+                assert.equal(moreSwatchLink, expectedLink, 'Expected: image link = ' + expectedLink);
             })
 
             .then(() => homePage.getNthProductTileProductName(5))
             .then(productName => {
-                assert.equal(productName, expectedDisplayName, 'Expected displayed product name = ' + expectedDisplayName);
+                assert.equal(productName, expectedDisplayName, 'Expected: displayed product name = ' + expectedDisplayName);
             })
 
             .then(() => homePage.getNthProductTileProductNameHref(5))
             .then(nameLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productMasterId4 + '.html?lang=' + localeStr;
-                assert.equal(nameLink, expectedLink, 'Expected product name link not equal to ' + expectedLink);
+                assert.equal(nameLink, expectedLink, 'Expected: product name link = ' + expectedLink);
             })
 
             .then(() => homePage.getNthProductTileProductPrice(5))
@@ -259,8 +289,10 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.getNthProductTileImageHref(6))
             .then(imageLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productVariantId5 + '.html?lang=' + localeStr;
-                assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
+                assert.equal(imageLink, expectedLink, 'Expected: image link = ' + expectedLink);
             })
+
+            .then(() => verifyQuickView(6, productVariantId5))
 
             .then(() => homePage.getNthProductTileColorSwatchCount(6))
             .then(count => {
@@ -274,13 +306,13 @@ describe('Home - Product Tiles Display', () => {
 
             .then(() => homePage.getNthProductTileProductName(6))
             .then(productName => {
-                assert.equal(productName, expectedDisplayName, 'Expected displayed product name = ' + expectedDisplayName);
+                assert.equal(productName, expectedDisplayName, 'Expected: displayed product name = ' + expectedDisplayName);
             })
 
             .then(() => homePage.getNthProductTileProductNameHref(6))
             .then(nameLink => {
                 const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productVariantId5 + '.html?lang=' + localeStr;
-                assert.equal(nameLink, expectedLink, 'Expected product name link not equal to ' + expectedLink);
+                assert.equal(nameLink, expectedLink, 'Expected: product name link = ' + expectedLink);
             })
 
             .then(() => homePage.getNthProductTileProductPrice(6))

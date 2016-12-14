@@ -1,7 +1,10 @@
 'use strict';
 
+import * as quickView from './quickView';
+
 export const PRODUCT_TILE = '.product-tile';
 export const IMAGE_CONTAINER = '.imageContainer';
+export const QUICK_VIEW = '.quickview';
 export const SWATCHES = '.swatches';
 export const SWATCH_CIRCLE = '.swatches .swatch-circle';
 export const CARD_TITLE = '.card-title';
@@ -48,6 +51,26 @@ export function getNthProductTileImageHref(tileIdx) {
     let selector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' > a:nth-child(1)';
     return browser.waitForVisible(selector)
         .getAttribute(selector, 'href');
+}
+
+export function getNthProductTileQuickViewImageSrc(tileIdx) {
+    let selector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' ' + QUICK_VIEW + ' > img';
+    return browser.waitForVisible(selector)
+        .getAttribute(selector, 'src');
+}
+
+export function getNthProductTileQuickViewImageHref(tileIdx) {
+    let selector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' ' + QUICK_VIEW;
+    return browser.waitForVisible(selector)
+        .getAttribute(selector, 'href');
+}
+
+export function clickOnNthProductTileQuickView(tileIdx) {
+    let quickViewSelector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' ' + QUICK_VIEW;
+
+    return browser.waitForVisible(quickViewSelector)
+        .click(quickViewSelector)
+        .waitForVisible(quickView.QUICK_VIEW_DIALOG);
 }
 
 export function getNthProductTileColorSwatchCount(tileIdx) {
