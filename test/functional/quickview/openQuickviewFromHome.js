@@ -20,17 +20,19 @@ describe('Home product tile - Open Quickview', () => {
 
     const productMasterId4 = '25519318';
 
-    let quickViewExpected = false;
+    // This flag is to indicate whether Quickview is expected to be present.
+    // Currently it is only available on desktop and tablet-landscape.
+    let isQuickViewExpected = false;
 
 
     before(() => {
         return homePage.navigateTo()
             .then(() => common.isQuickViewExpected())
             .then(expectedFlag => {
-                quickViewExpected = expectedFlag;
+                isQuickViewExpected = expectedFlag;
             })
             .then(() => {
-                if (quickViewExpected) {
+                if (isQuickViewExpected) {
                     return testDataMgr.load();
                 }
                 return Promise.resolve();
@@ -38,7 +40,7 @@ describe('Home product tile - Open Quickview', () => {
     });
 
     it('Open Quickview - variant', () => {
-        if (!quickViewExpected) {
+        if (!isQuickViewExpected) {
             return Promise.resolve();
         }
 
@@ -95,7 +97,7 @@ describe('Home product tile - Open Quickview', () => {
     });
 
     it('Open Quickview - master', () => {
-        if (!quickViewExpected) {
+        if (!isQuickViewExpected) {
             return Promise.resolve();
         }
 

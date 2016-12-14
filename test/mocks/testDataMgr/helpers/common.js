@@ -124,13 +124,16 @@ export function getSearchParams() {
         });
 }
 
-// Since Quick View is only support on desktop and iPad-landscape mode,
-// this function determines if Quick View should be expected base
-// on whether the existing of the mobile menu.
-// (Note: We have decided that this is the best approach for now.)
-//
-// return true - Quick View is expected to be present
-// return false - Quick View is NOT expected to be present
+/**
+ * Since Quick View is only support on desktop and iPad-landscape mode,
+ * this function determines if Quick View should be expected base
+ * on whether the existing of the mobile menu.
+ * (Note: We have decided that this is the best approach for now.)
+ * return true - Quick View is expected to be present
+ * return false - Quick View is NOT expected to be present
+ *
+ * @return {boolean}
+ */
 export function isQuickViewExpected() {
     return browser.isVisible(header.NAV_BAR_TOGGLER)
         .then(navBarVisible => {

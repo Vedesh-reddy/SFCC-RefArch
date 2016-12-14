@@ -46,7 +46,9 @@ describe('Home - Product Tiles Display', () => {
     const productMasterId5 = '25720054';
     const productVariantId5 = '013742003154';
 
-    let quickViewExpected = false;
+    // This flag is to indicate whether Quickview is expected to be present.
+    // Currently it is only available on desktop and tablet-landscape.
+    let isQuickViewExpected = false;
 
 
     before(() => {
@@ -54,12 +56,12 @@ describe('Home - Product Tiles Display', () => {
             .then(() => homePage.navigateTo())
             .then(() => common.isQuickViewExpected())
             .then(expectedFlag => {
-                quickViewExpected = expectedFlag;
+                isQuickViewExpected = expectedFlag;
             });
     });
 
     function verifyQuickView(tileIndex, productId) {
-        if (!quickViewExpected) {
+        if (!isQuickViewExpected) {
             return Promise.resolve();
         }
         // verify QuickView image url and link
