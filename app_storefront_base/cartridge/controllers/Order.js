@@ -8,15 +8,16 @@ var HookMgr = require('dw/system/HookMgr');
 var OrderMgr = require('dw/order/OrderMgr');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
+var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
 var Transaction = require('dw/system/Transaction');
+var URLUtils = require('dw/web/URLUtils');
 
 var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
 var Payment = require('~/cartridge/models/payment');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
-var Resource = require('dw/web/Resource');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 
@@ -161,14 +162,20 @@ server.post('Track', server.middleware.https, function (req, res, next) {
 
         if (validForm) {
             var exitLinkText;
+            var exitLinkUrl;
 
             exitLinkText = !req.currentCustomer.profile
                 ? Resource.msg('link.continue.shop', 'order', null)
                 : Resource.msg('link.orderdetails.myaccount', 'account', null);
 
+            exitLinkUrl = !req.currentCustomer.profile
+                ? URLUtils.https('Home-Show')
+                : URLUtils.https('Account-Show');
+
             res.render('account/orderdetails', {
                 order: orderModel,
-                exitLinkText: exitLinkText
+                exitLinkText: exitLinkText,
+                exitLinkUrl: exitLinkUrl
             });
         } else {
             res.render('/account/login', {
