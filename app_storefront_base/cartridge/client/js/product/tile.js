@@ -6,24 +6,25 @@ var base = require('./base');
  *
  */
 function getModalHtmlElement() {
-    if ($('.quickViewDialog').length === 0) {
-        var htmlString = '<!-- Modal -->'
-            + '<div class="modal fade" id="quickViewModal" role="dialog">'
-            + '<div class="modal-dialog quickViewDialog">'
-            + '<!-- Modal content-->'
-            + '<div class="modal-content">'
-            + '<div class="modal-header">'
-            + '<button type="button" class="close" data-dismiss="modal">'
-            + '<span>Close</span>&times;</button>'
-            + '<a class="fullPdpLink" href=""><h4 class="modal-title">View Full Details</h4></a>'
-            + '</div>'
-            + '<div class="modal-body">'
-            + '</div>'
-            + '</div>'
-            + '</div>'
-            + '</div>';
-        $('body').append(htmlString);
+    if ($('.quickViewDialog').length !== 0) {
+        $('#quickViewModal').remove();
     }
+    var htmlString = '<!-- Modal -->'
+        + '<div class="modal fade" id="quickViewModal" role="dialog">'
+        + '<div class="modal-dialog quickViewDialog">'
+        + '<!-- Modal content-->'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '<button type="button" class="close" data-dismiss="modal">'
+        + '<span>Close</span>&times;</button>'
+        + '<a class="fullPdpLink" href=""><h4 class="modal-title">View Full Details</h4></a>'
+        + '</div>'
+        + '<div class="modal-body">'
+        + '</div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    $('body').append(htmlString);
 }
 
 /**
@@ -82,24 +83,41 @@ module.exports = function () {
 
     $(document).on('click', '[data-attr="color"] a', function (e) {
         e.preventDefault();
-        var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
 
         var productUrl;
-        productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
-        selectedValueUrl = selectedValueUrl.replace('Product-Variation', 'Product-ShowQuickView');
-        fillModalElement(productUrl, selectedValueUrl);
+        var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
+
+        if (selectedValueUrl) {
+            productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
+            $.ajax({
+                url: selectedValueUrl,
+                method: 'GET',
+                success: function (data) {
+                    base.parseJsonResponse(data, 'tile');
+                }
+            });
+            $('.fullPdpLink').attr('href', productUrl);
+            $('.product-quickview .size-chart a').attr('href', productUrl);
+        }
     });
 
     $(document).on('change', 'select[class^="select-"]', function (e) {
         e.preventDefault();
+
+        var productUrl;
         var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
 
         if (selectedValueUrl) {
-            var productUrl;
             productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
-            selectedValueUrl =
-                selectedValueUrl.replace('Product-Variation', 'Product-ShowQuickView');
-            fillModalElement(productUrl, selectedValueUrl);
+            $.ajax({
+                url: selectedValueUrl,
+                method: 'GET',
+                success: function (data) {
+                    base.parseJsonResponse(data, 'tile');
+                }
+            });
+            $('.fullPdpLink').attr('href', productUrl);
+            $('.product-quickview .size-chart a').attr('href', productUrl);
         }
     });
 
