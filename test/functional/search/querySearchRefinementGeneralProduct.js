@@ -31,6 +31,11 @@ describe('Query Search and Refinement - general product', () => {
     var productMaster2;
     var expectedDisplayName2;
 
+    function verifySearchResults(selector, expectedResults) {
+        return browser.getText(selector)
+            .then(displayText => assert.equal(displayText, expectedResults));
+    }
+
     before(() => testDataMgr.load()
         .then(() => homePage.navigateTo())
         .then(() => browser.waitForExist(search.searchForm))
@@ -53,14 +58,13 @@ describe('Query Search and Refinement - general product', () => {
             .then(() => browser.pause(2000))
             .then(() => common.getVisibleSelector(search.searchResultLarge,
                 search.searchResultSmall))
-            .then(mySearchSelector => browser.getText(mySearchSelector))
-            .then(displayText => assert.equal(displayText, '79 Results for pants'))
-
+            .then(mySearchSelector => verifySearchResults(mySearchSelector, '79 Results for pants'));
     });
 
     it('#2 should return 18 results for color refinements=blue', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
+                // access mobile devices
                 if (isTrue) {
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarColor))
@@ -71,15 +75,14 @@ describe('Query Search and Refinement - general product', () => {
                         .then(() => browser.click('.close'))
                         .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                             search.colorRefinementSmall))
-                        .then(mySearchSelector => browser.getText(mySearchSelector))
-                        .then(displayText => assert.equal(displayText, '18 Results for pants'));
+                        .then(mySearchSelector => verifySearchResults(mySearchSelector, '18 Results for pants'));
                 }
+                // access desktop/laptop
                 return browser.click(search.blueColorRefinementSelector)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '18 Results for pants'))
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, '18 Results for pants'));
             });
     });
 
@@ -87,20 +90,20 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
+                    // access mobile devices
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarColorActive))
                         .then(() => browser.click(search.blueColorRefinementSelectorChecked))
                         .then(() => common.waitUntilAjaxCallEnded())
                         .then(() => browser.click(search.buttonClose))
-                        .then(() => browser.getText(search.searchResultMobile))
-                        .then(displayText => assert.equal(displayText, '79 Results for pants'));
+                        .then(() => verifySearchResults(search.searchResultMobile, '79 Results for pants'));
                 }
+                // access desktop/laptop
                 return browser.click(search.blueColorRefinementSelectorChecked)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => common.getVisibleSelector(search.searchResultLarge,
                         search.searchResultSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '79 Results for pants'))
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, '79 Results for pants'));
             });
     });
 
@@ -108,6 +111,7 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
+                    // access mobile devices
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarPrice))
                         .then(() => browser.click(search.refinementBarPrice))
@@ -115,17 +119,16 @@ describe('Query Search and Refinement - general product', () => {
                         .then(() => browser.click(search.priceRefinementSelector))
                         .then(() => common.waitUntilAjaxCallEnded())
                         .then(() => browser.click(search.buttonClose))
-                        .then(() => browser.getText(search.searchResultCount))
-                        .then(displayText => assert.equal(displayText, '8 Results for pants'));
+                        .then(() => verifySearchResults(search.searchResultCount, '8 Results for pants'));
                 }
+                // access desktop/laptop
                 return browser.click(search.priceRefinementSelector)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.getAttribute(search.priceRefinementTitle, 'title'))
                     .then(title => assert.equal(title, 'Currently Refined by Price: $20 - $49.99'))
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '8 Results for pants'))
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, '8 Results for pants'));
             });
     });
 
@@ -133,22 +136,22 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
+                    // access mobile devices
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarPriceActive))
                         .then(() => browser.click(search.priceRefinementMobileSelector))
                         .then(() => common.waitUntilAjaxCallEnded())
-                        .then(() => browser.click(search.resetButton))
-                        .then(() => browser.getText(search.searchResultMobile))
-                        .then(displayText => assert.equal(displayText, '79 Results for pants'));
+                        .then(() => browser.click(search.buttonClose))
+                        .then(() => verifySearchResults(search.searchResultMobile, '79 Results for pants'));
                 }
+                // access desktop/laptop
                 return browser.click(search.priceRefinementCheckSelector)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.getAttribute(search.priceRefinementTitle, 'title'))
                     .then(title => assert.equal(title, 'Refine by Price: $20 - $49.99'))
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '79 Results for pants'))
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, '79 Results for pants'));
             });
     });
 
@@ -156,6 +159,7 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
+                    // access mobile devices
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarNewArrival))
                         .then(() => browser.click(search.refinementBarNewArrival))
@@ -163,15 +167,14 @@ describe('Query Search and Refinement - general product', () => {
                         .then(() => browser.click(search.newArrivalRefinementUnchecked))
                         .then(() => common.waitUntilAjaxCallEnded())
                         .then(() => browser.click(search.buttonClose))
-                        .then(() => browser.getText(search.searchResultCount))
-                        .then(displayText => assert.equal(displayText, '8 Results for pants'));
+                        .then(() => verifySearchResults(search.searchResultCount, '8 Results for pants'));
                 }
+                // access desktop/laptop
                 return browser.click(search.newArrivalRefinementUnchecked)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '8 Results for pants'))
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, '8 Results for pants'));
             });
     });
 
@@ -179,19 +182,21 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
+                    // access mobile devices
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.refinementBarNewArrivalActive))
                         .then(() => browser.click(search.newArrivalRefinementChecked))
                         .then(() => common.waitUntilAjaxCallEnded())
+                        .then(() => browser.click(search.buttonClose))
                         .then(() => browser.getText(search.searchResultMobile))
                         .then(displayText => assert.equal(displayText, '79 Results for pants'));
                 }
+                // access desktop/laptop
                 return browser.click(search.newArrivalRefinementChecked)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '79 Results for pants'))
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, '79 Results for pants'));
             });
     });
 
@@ -199,45 +204,37 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
+                    // access mobile devices
                     return browser.click(search.filterButton)
-                        .then(() => browser.waitForExist(search.refinementBarColor))
-                        .then(() => browser.click(search.refinementBarColor))
                         .then(() => browser.waitForExist(search.refinementBarColorActive))
                         .then(() => browser.click(search.blackColorRefinementSelector))
                         .then(() => common.waitUntilAjaxCallEnded())
-                        .then(() => browser.click(search.refinementBarPrice))
                         .then(() => browser.waitForExist(search.refinementBarPriceActive))
                         .then(() => browser.click(search.priceRefinementSelector))
                         .then(() => common.waitUntilAjaxCallEnded())
-                        .then(() => browser.click(search.refinementBarNewArrival))
                         .then(() => browser.waitForExist(search.refinementBarNewArrivalActive))
                         .then(() => browser.click(search.newArrivalRefinementUnchecked))
                         .then(() => common.waitUntilAjaxCallEnded())
                         .then(() => browser.click(search.buttonClose))
-                        .then(() => browser.getText(search.searchResultCount))
-                        .then(displayText => assert.equal(displayText, '2 Results for pants'))
+                        .then(() => verifySearchResults(search.searchResultCount, '2 Results for pants'))
                         .then(() => browser.click(search.customSelect))
                         .then(() => browser.click(search.sortOrderProductAtoZ))
                         .then(() => common.waitUntilAjaxCallEnded())
-                        .then(() => browser.pause(2000))
-
+                        .then(() => browser.pause(2000));
                 }
+                // access desktop/laptop
                 return browser.click(search.blackColorRefinementSelector)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.click(search.priceRefinementSelector))
                     .then(() => common.waitUntilAjaxCallEnded())
-                    .then(() => browser.getAttribute(search.priceRefinementTitle, 'title'))
-                    .then(title => assert.equal(title, 'Currently Refined by Price: $50 - $99.99'))
                     .then(() => browser.click(search.newArrivalRefinementUnchecked))
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '2 Results for pants'))
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, '2 Results for pants'))
                     .then(() => browser.click(search.customSelect))
                     .then(() => browser.click(search.sortOrderProductAtoZ))
-                    .then(() => common.waitUntilAjaxCallEnded())
-                    .then(() => common.waitUntilPageLoaded());
+                    .then(() => browser.pause(2000));
             });
     });
 
@@ -254,15 +251,17 @@ describe('Query Search and Refinement - general product', () => {
     });
 
     it('#10 should return the correct images when refined by Color, Price and New Arrival', () => {
+        const product1ImageSrc = 'images/medium/PG.10208949.JJ0NLA0.PZ.jpg';
+        const product2ImageSrc = 'images/medium/PG.10208897.JJ0QRXX.PZ.jpg';
         return search.getNthProductTileImageSrc(2)
             .then(imageSrc => {
-                return assert.isTrue(imageSrc.endsWith('images/medium/PG.10208949.JJ0NLA0.PZ.jpg'),
-                                'product image: url not end with images/medium/PG.10208949.JJ0NLA0.PZ.jpg.');
+                return assert.isTrue(imageSrc.endsWith(product1ImageSrc),
+                                'product image: url not end with ' + product1ImageSrc);
             })
             .then(() => search.getNthProductTileImageSrc(1)
                 .then(imageSrc2 => {
-                    return assert.isTrue(imageSrc2.endsWith('images/medium/PG.10208897.JJ0QRXX.PZ.jpg'),
-                        'product image :url not end with images/medium/PG.10208897.JJ0QRXX.PZ.jpg.');
+                    return assert.isTrue(imageSrc2.endsWith(product2ImageSrc),
+                        'product image :url not end with ' + imageSrc2);
                 })
             );
     });
@@ -279,7 +278,7 @@ describe('Query Search and Refinement - general product', () => {
                     return assert.equal(imageLink2, expectedLink2, 'Expected image link not equal to ' + expectedLink2);
                 })
             );
-    })
+    });
 
 
     it('#12 should return the correct color swatch count when refined by Color, Price and New Arrival', () => {
@@ -298,19 +297,19 @@ describe('Query Search and Refinement - general product', () => {
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
+                    // access mobile devices
                     return browser.click(search.filterButton)
                         .then(() => browser.waitForExist(search.buttonClose))
                         .then(() => browser.click(search.resetButton))
                         .then(() => browser.pause(2000))
-                        .then(() => browser.getText(search.searchResultCount))
-                        .then(displayText => assert.equal(displayText, '79 Results for pants'))
+                        .then(() => verifySearchResults(search.searchResultCount, '79 Results for pants'));
                 }
+                // access desktop/laptop
                 return browser.click(search.resetButton)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '79 Results for pants'));
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, '79 Results for pants'));
             });
     });
 });
