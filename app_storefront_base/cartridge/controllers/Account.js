@@ -334,11 +334,16 @@ server.post('SavePassword', function (req, res, next) {
 });
 
 server.get('Header', server.middleware.include, function (req, res, next) {
-    if (!req.currentCustomer.profile) {
-        res.render('account/header-anon', {});
-    } else {
-        res.render('account/header-logged', { name: req.currentCustomer.profile.firstName });
-    }
+    res.render('account/header', { name:
+        req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
+    });
+    next();
+});
+
+server.get('Menu', server.middleware.include, function (req, res, next) {
+    res.render('account/menu', { name:
+        req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
+    });
     next();
 });
 

@@ -45,5 +45,8 @@
                 </div>
     		</div>
     	</div>
+        <div class="search-mobile hidden-sm-up">
+            <isinclude template="components/header/search" />
+        </div>
     </nav>
 </header>
