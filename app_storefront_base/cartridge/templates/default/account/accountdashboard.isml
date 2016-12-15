@@ -29,6 +29,8 @@
                 <div class="col-md-5 offset-md-1 col-sm-6">
                     <!---Profile--->
                     <isinclude template="account/profilecard"/>
+                    <!---Password--->
+                    <isinclude template="account/passwordcard"/>
                     <!---Address Book--->
                     <isinclude template="account/addressbookcard"/>
                 </div>

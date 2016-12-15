@@ -281,6 +281,17 @@ server.post('SaveProfile', function (req, res, next) {
     next();
 });
 
+server.get('EditPassword', function (req, res, next) {
+    var accountModel = getModel(req);
+    if (accountModel) {
+        var profileForm = server.forms.getForm('profile');
+        res.render('account/password', { profileForm: profileForm });
+    } else {
+        res.redirect(URLUtils.url('Login-Show'));
+    }
+    next();
+});
+
 server.post('SavePassword', function (req, res, next) {
     var profileForm = server.forms.getForm('profile');
 

@@ -16,9 +16,5 @@
             <p class="dashboard-info">${Resource.msg('label.profile.email','account',null)}</p>
             <p>${pdict.profile.email}</p>
         </div>
-        <div>
-            <p class="dashboard-info">${Resource.msg('label.profile.password','account',null)}</p>
-            <p>${pdict.profile.password}</p>
-        </div>
     </div>
 </div>
