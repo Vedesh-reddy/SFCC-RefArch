@@ -10,6 +10,7 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 # Getting Started
 
 1 Clone this repository.
+
 2 Upload the `modules` folder to the WebDav location for cartridges for your Sandbox through CyberDuck or any other WebDAV client.
 *Note:* you can't upload the modules folder through Studio. 
 You can upload via dwupload command. For example:
