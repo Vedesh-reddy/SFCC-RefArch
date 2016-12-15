@@ -13,7 +13,7 @@ export const supportedLocales = [
 ];
 export const PRIMARY_CONTENT = '.container';
 export const CATEGORYSLOT = '.category-slot .category-tile';
-const jQuery = null;
+var jQuery;
 
 /**
  *
