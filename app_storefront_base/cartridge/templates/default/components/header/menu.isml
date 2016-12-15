@@ -1,35 +1,35 @@
 <nav class="navbar bg-inverse">
-	<div class="close-menu clearfix">
-		<div class="back pull-left" role="button">
-			<a href="#">
-				<span class="caret-left"></span>
-				Back
-			</a>
-		</div>
-		<div class="close-button pull-right" role="button">
-			<a href="#">
-				Close
-				<span aria-hidden="true">&times;</span>
-			</a>
-		</div>
-	</div>
-	<div aria-label="Main menu" role="navigation">
+    <div class="close-menu clearfix">
+        <div class="back pull-left" role="button">
+            <a href="#">
+                <span class="caret-left"></span>
+                Back
+            </a>
+        </div>
+        <div class="close-button pull-right" role="button">
+            <a href="#">
+                Close
+                <span aria-hidden="true">&times;</span>
+            </a>
+        </div>
+    </div>
+    <div aria-label="Main menu" role="navigation">
         <ul class="nav navbar-nav">
-			<isif condition="${pdict.categories}">
-	            <isloop items="${pdict.categories}" var="category">
-	                <isif condition="${category.subCategories}">
-	                    <li class="nav-item dropdown" role="button">
-	                        <a href="${category.url}" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${category.name}</a>
-	                        <isset name="menuItem" value="${category}" scope="page" />
-	                        <isinclude template="components/header/menuitem" />
-	                    </li>
-	                <iselse/>
-	                    <li class="nav-item" role="button">
-	                        <a href="${category.url}" role="button" class="nav-link">${category.name}</a>
-	                    </li>
-	                </isif>
-	            </isloop>
-			</isif>
+            <isif condition="${pdict.categories}">
+                <isloop items="${pdict.categories}" var="category">
+                    <isif condition="${category.subCategories}">
+                        <li class="nav-item dropdown" role="button">
+                            <a href="${category.url}" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${category.name}</a>
+                            <isset name="menuItem" value="${category}" scope="page" />
+                            <isinclude template="components/header/menuitem" />
+                        </li>
+                    <iselse/>
+                        <li class="nav-item" role="button">
+                            <a href="${category.url}" role="button" class="nav-link">${category.name}</a>
+                        </li>
+                    </isif>
+                </isloop>
+            </isif>
             <isinclude url="${URLUtils.url('Account-Menu')}" />
         </ul>
     </div>

@@ -1,11 +1,11 @@
 <div class="header-banner">
-	<div class="container">
-		<div class="row">
-			<div class="col-xs-12">
-				<isslot id="header-banner" description="Slot above the site header" context="global" />
-			</div>
-		</div>
-	</div>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <isslot id="header-banner" description="Slot above the site header" context="global" />
+            </div>
+        </div>
+    </div>
 </div>
 <header>
     <nav role="navigation">
@@ -39,12 +39,12 @@
             </div>
         </div>
         <div class="main-menu navbar-toggleable-sm collapse menu-toggleable-left multilevel-dropdown" id="sg-navbar-collapse">
-    		<div class="container">
+            <div class="container">
                 <div class="row">
-		            <isinclude url="${URLUtils.url('Page-IncludeHeaderMenu')}"/>
+                    <isinclude url="${URLUtils.url('Page-IncludeHeaderMenu')}"/>
                 </div>
-    		</div>
-    	</div>
+            </div>
+        </div>
         <div class="search-mobile hidden-sm-up">
             <isinclude template="components/header/search" />
         </div>
