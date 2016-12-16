@@ -1,10 +1,7 @@
 'use strict';
 import _ from 'lodash';
 import nodeUrl from 'url';
-
 import * as header from '../pageObjects/header';
-
-
 export const defaultLocale = 'x_default';
 export const supportedLocales = [
     'en_US',
@@ -14,9 +11,9 @@ export const supportedLocales = [
     'ja_JP',
     'zh_CN'
 ];
-
 export const PRIMARY_CONTENT = '.container';
 export const CATEGORYSLOT = '.category-slot .category-tile';
+var jQuery;
 
 /**
  *
@@ -109,6 +106,13 @@ export function waitUntilPageLoaded() {
     return browser.waitUntil(() => {
         return browser.execute(() => document.readyState)
             .then(loaded => loaded.value === 'complete');
+    }, 5000);
+}
+
+export function waitUntilAjaxCallEnded() {
+    return browser.waitUntil(() => {
+        return browser.execute(() => jQuery.active)
+            .then(loaded => loaded.value === 0);
     }, 5000);
 }
 
