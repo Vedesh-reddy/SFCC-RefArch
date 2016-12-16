@@ -80,7 +80,7 @@
             <span class="info-icon">
                 <span class="icon">i</span>
                 <div class="form-tooltip">
-                    ${Resource.msg('tooltip.security.code','creditCard',null)}
+                    ${Resource.msg('tooltip.email','creditCard',null)}
                 </div>
             </span>
             <input type="text" class="form-control email" id="email"

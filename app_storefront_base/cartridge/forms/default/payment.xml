@@ -42,10 +42,11 @@
            max-length="16" missing-error="error.card.info.missing" />
 
     <field formid="cardNumber" label="profile.cardnumber" type="string" mandatory="true" binding="cardNumber"
-           max-length="16" missing-error="error.card.info.missing" />
+           max-length="16" missing-error="error.card.info.missing.cardNumber" />
 
-    <field formid="expirationMonth" label="profile.expirationmonth" type="string" mandatory="true" binding="expirationMonth" missing-error="error.card.info.missing"
-        value-error="address.field.invalid">
+    <field formid="expirationMonth" label="profile.expirationmonth" type="string" mandatory="true"
+           binding="expirationMonth" missing-error="error.card.info.missing.expirationMonth"
+           value-error="address.field.invalid" >
         <options>
             <option optionid="" label="select.default.month" value=""/>
             <option optionid="01" label="01" value="01"/>
@@ -64,19 +65,18 @@
     </field>
 
     <field formid="expirationYear" label="profile.expiration.year" type="string" mandatory="true"
-        missing-error="error.card.info.missing">
+        missing-error="error.card.info.missing.expirationYear" >
         <options>
             <option optionid="" label="select.default.year" value=""/>
         </options>
     </field>
 
-
     <field formid="securityCode" label="profile.securitycode" type="string" mandatory="true" binding="securityCode"
-           max-length="3" missing-error="error.card.info.missing" />
+           max-length="3" missing-error="error.card.info.missing.securityCode" />
 
     <field formid="email" label="profile.email" type="string" mandatory="true" binding="email"
-           max-length="254" missing-error="error.card.info.missing" />
+           max-length="254" missing-error="error.card.info.missing.email" />
 
     <field formid="phone" label="profile.phone" description="address.phone.example" type="string" mandatory="true"
-           binding="phone" max-length="20" missing-error="error.card.info.missing" />
+           binding="phone" max-length="20" missing-error="error.card.info.missing.phone" />
 </form>
