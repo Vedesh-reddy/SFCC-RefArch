@@ -22,20 +22,24 @@
         </div>
     </div>
 
-    <div class="container-fluid homepage shop-the-style">
+    <div class="homepage shop-the-style">
         <isslot id="home-product-set" description="Link to a Product Set." context="global" />
-        <div class="home-email-signup row">
-            <div class="col-xl-2 hidden-lg-down home-email-signup-padding-top"></div>
-            <div class="col-xs-12 col-xl-8 home-email-signup-padding-top">
-                <form role="form">
-                    <div class="form-group col-xs-12 col-md-6">
-                        <input type="text" class="col-xs-8 col-md-6 col-xl-8" name="hpEmailSignUp" placeholder="${Resource.msg('placeholdertext.form.emailsignup', 'homepage', null)}">
-                        <button type="submit" class="btn col-xs-4 col-md-6 col-xl-4">${Resource.msg('button.form.emailsignup', 'homepage', null)}</button>
-                    </div>
-                    <div class="col-xs-12 col-md-6 email-description  home-email-signup-bg ">${Resource.msg('description.form.emailsignup', 'homepage', null)}</div>
-                </form>
+        <div class="home-email-signup">
+            <div class="container">
+                <div class="row">
+                    <form role="form">
+                        <div class="col-sm-5">
+                            <div class="input-group">
+                                <input type="text" class="form-control" name="hpEmailSignUp" placeholder="${Resource.msg('placeholdertext.form.emailsignup', 'homepage', null)}" aria-label="${Resource.msg('placeholdertext.form.emailsignup', 'homepage', null)}">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">${Resource.msg('button.form.emailsignup', 'homepage', null)}</button>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="col-sm-7 email-description">${Resource.msg('description.form.emailsignup', 'homepage', null)}</div>
+                    </form>
+                </div>
             </div>
-            <div class="col-xl-2 hidden-lg-down home-email-signup-padding-top"></div>
         </div>
     </div>
 </isdecorate>

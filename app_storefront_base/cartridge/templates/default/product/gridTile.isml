@@ -1,130 +1,85 @@
-<isif condition="${pdict.product}">
-    <div class="card col-xs-6 col-sm-4 product-tile">
-        <div class="imageContainer">
-            <a href="${pdict.urls.product}">
-                <img class="card-img-top tile-image"
-                    src="${pdict.product.images.medium[0].url}"
-                    alt="${pdict.product.productName}"
-                    title="${pdict.product.images.medium[0].title}">
-            </a>
-            <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}">
-                <img src="${URLUtils.staticURL('/images/quickview.png')}"
-                    alt="${Resource.msg('image.quickview.product.tile', 'common', null)}"
-                    title="${Resource.msg('image.quickview.product.tile', 'common', null)}">
-            </a>
-        </div>
-        <div class="card-block">
-            <isif condition="${pdict.display.swatches}">
-                <div class="card-text color-swatches">
-                    <div class="swatches">
-                        <isloop items="${pdict.product.attributes[0].values}" var="swatch" status="loopstate">
-                            <isif condition="${loopstate.count < 4}">
-                                <span class="swatch swatch-circle"
-                                    data-index="${loopstate.count-1}"
-                                    style="background-image: url(${swatch.images.swatch[0].url})"
-                                    data-attributes="${JSON.stringify(swatch, null, 2)}"></span>
-                            <iselse/>
-                                <span>
-                                    <a href="${pdict.urls.product}">...</a>
-                                </span>
-                                <isbreak>
-                            </isif>
-                        </isloop>
-                    </div>
+<isscript>
+    // TODO: remove this once we support all products
+
+    if (!pdict.product) {
+        pdict.product = {
+            images: {
+                medium: [{
+                    url: URLUtils.staticURL('/images/noimagelarge.png'),
+                    title: Resource.msg('text.comingsoon.tile', 'product', null)
+                }]
+            },
+            productName: Resource.msg('text.comingsoon.tile', 'product', null),
+            display: { },
+            price: {
+                formatted: 'N/A'
+            }
+        };
+    }
+</isscript>
+<div class="col-xs-6 col-sm-4 product-tile">
+    <div class="image-container">
+        <a href="${pdict.urls.product}">
+            <img class="tile-image"
+                src="${pdict.product.images.medium[0].url}"
+                alt="${pdict.product.productName}"
+                title="${pdict.product.images.medium[0].title}" />
+        </a>
+        <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}">
+            <img src="${URLUtils.staticURL('/images/quickview.png')}"
+                alt="${Resource.msg('image.quickview.product.tile', 'common', null)}"
+                title="${Resource.msg('image.quickview.product.tile', 'common', null)}" />
+        </a>
+    </div>
+    <div class="tile-body">
+        <isif condition="${pdict.display.swatches}">
+            <div class="color-swatches">
+                <div class="swatches">
+                    <isloop items="${pdict.product.attributes[0].values}" var="swatch" status="loopstate">
+                        <isif condition="${loopstate.count < 4}">
+                            <span class="swatch swatch-circle"
+                                data-index="${loopstate.count-1}"
+                                style="background-image: url(${swatch.images.swatch[0].url})"
+                                data-attributes="${JSON.stringify(swatch, null, 2)}"></span>
+                        <iselse/>
+                            <span>
+                                <a href="${pdict.urls.product}">...</a>
+                            </span>
+                            <isbreak>
+                        </isif>
+                    </isloop>
                 </div>
-            </isif>
-    
-            <div class="pdpLink">
-                <a class="card-title link" href="${pdict.urls.product}">${pdict.product.productName}</a>
             </div>
-            <p class="card-text pdpPrices">${pdict.product.price.formatted}</p>
-            <div class="card-text reviews-compare">
-                <div class="reviews col-xs-6">
-                    <isif condition="${pdict.display.reviews}">
-                        <isloop items="${[1, 2, 3, 4, 5]}" var="star">
-                            <i class="fa
-                                <isif condition="${pdict.product.rating >= star}">
-                                    fa-star
+        </isif>
+
+        <div class="pdp-link">
+            <a class="link" href="${pdict.urls.product}">${pdict.product.productName}</a>
+        </div>
+        <p class="pdp-prices">${pdict.product.price.formatted}</p>
+        <div class="reviews-compare">
+            <div class="reviews col-xs-12 col-md-6">
+                <isif condition="${pdict.display.reviews}">
+                    <isloop items="${[1, 2, 3, 4, 5]}" var="star">
+                        <i class="fa
+                            <isif condition="${pdict.product.rating >= star}">
+                                fa-star
+                            <iselse/>
+                                <isif condition="${parseInt(pdict.product.rating) < star}">
+                                    fa-star-o
                                 <iselse/>
-                                    <isif condition="${parseInt(pdict.product.rating) < star}">
-                                        fa-star-o
-                                    <iselse/>
-                                        fa-star-half-o
-                                    </isif>
+                                    fa-star-half-o
                                 </isif>
-                                " aria-hidden="true"></i>
-                        </isloop>
-                    </isif>
-                </div>
-                <div class="compare col-xs-6 hidden-md-down">
-                    <isif condition="${pdict.display.compare}">
-                        <input type="checkbox" id="${pdict.product.id}" value="true">
-                        <label for="${pdict.product.id}">${Resource.msg('checkbox.tile.compare', 'product', null)}</label>
-                    </isif>
-                </div>
+                            </isif>
+                            " aria-hidden="true"></i>
+                    </isloop>
+                </isif>
+            </div>
+            <div class="compare col-xs-6 hidden-md-down">
+                <isif condition="${pdict.display.compare}">
+                    <input type="checkbox" id="${pdict.product.id}" value="true" />
+                    <label for="${pdict.product.id}">${Resource.msg('checkbox.tile.compare', 'product', null)}</label>
+                </isif>
             </div>
         </div>
     </div>
-<iselse>
-    <div class="card col-xs-6 col-sm-4 product-tile">
-        <div class="imageContainer">
-            <a href="${pdict.urls.product}">
-                <img class="card-img-top tile-image"
-                    src="${URLUtils.staticURL('/images/noimagelarge.png')}"
-                    alt="${Resource.msg('text.comingsoon.tile', 'product', null)}"
-                    title="${Resource.msg('text.comingsoon.tile', 'product', null)}">
-            </a>
-        </div>
-        <div class="card-block">
-            <isif condition="${pdict.display.swatches}">
-                <div class="card-text color-swatches">
-                    <div class="swatches">
-                        <isloop items="${pdict.product.attributes[0].values}" var="swatch" status="loopstate">
-                            <isif condition="${loopstate.count < 4}">
-                                <span class="swatch swatch-circle"
-                                    data-index="${loopstate.count-1}"
-                                    style="background-image: url(${swatch.images.swatch[0].url})"
-                                    data-attributes="${JSON.stringify(swatch, null, 2)}"></span>
-                            <iselse/>
-                                <span>
-                                    <a href="${pdict.urls.product}">...</a>
-                                </span>
-                                <isbreak>
-                            </isif>
-                        </isloop>
-                    </div>
-                </div>
-            </isif>
-    
-            <div class="pdpLink coming-soon-tile">
-                ${Resource.msg('text.comingsoon.tile', 'product', null)}
-            </div>
-            <p class="card-text pdpPrices">${Resource.msg('text.not.available.price', 'product', null)}</p>
-            <div class="card-text reviews-compare">
-                <div class="reviews col-xs-6">
-                    <isif condition="${pdict.display.reviews}">
-                        <isloop items="${[1, 2, 3, 4, 5]}" var="star">
-                            <i class="fa
-                                <isif condition="${pdict.product.rating >= star}">
-                                    fa-star
-                                <iselse/>
-                                    <isif condition="${parseInt(pdict.product.rating) < star}">
-                                        fa-star-o
-                                    <iselse/>
-                                        fa-star-half-o
-                                    </isif>
-                                </isif>
-                                " aria-hidden="true"></i>
-                        </isloop>
-                    </isif>
-                </div>
-                <div class="compare col-xs-6 hidden-md-down">
-                    <isif condition="${pdict.display.compare}">
-                        <input type="checkbox" id="${pdict.product.id}" value="true">
-                        <label for="${pdict.product.id}">${Resource.msg('checkbox.tile.compare', 'product', null)}</label>
-                    </isif>
-                </div>
-            </div>
-        </div>
-    </div>
-</isif>
+</div>

@@ -1,7 +1,6 @@
 @import "../utilities/swatch";
 
 .product-tile {
-    background-color: transparent; // remove if no longer using Bootstrap .card styles
 
     @include media-breakpoint-down(md) {
         min-height: 23.4375em;
@@ -9,8 +8,6 @@
 
     @include media-breakpoint-down(sm) {
         min-height: 19.6875em;
-        padding-left: 0;
-        padding-right: 0;
     }
 
     @include media-breakpoint-down(xs) {
@@ -20,13 +17,8 @@
     border: 0;
     margin-bottom: 0;
 
-    .card-block {
+    .tile-body {
         padding: 0.625em 0 1.875em;
-
-        @include media-breakpoint-down(sm) {
-            padding-left: 0.9375em;
-            padding-right: 0.9375em;
-        }
 
         .color-swatches {
             min-height: 2.25em;
@@ -45,7 +37,7 @@
             }
         }
 
-        p.pdpPrices {
+        p.pdp-prices {
             font-size: 1.125em;
             margin-bottom: 0;
 
@@ -62,7 +54,7 @@
             text-align: center;
         }
 
-        .pdpLink {
+        .pdp-link {
             height: 3.125em;
             overflow: hidden;
 
@@ -88,23 +80,18 @@
 
         .reviews {
             padding-left: 0;
+            font-size: 0.9em;
         }
     }
 
-    .imageContainer {
+    .image-container {
         position: relative;
         overflow: auto;
 
         .quickview {
             position: absolute;
-            bottom: 0.6em;
-            height: 3.5em;
-            right: 0.6em;
-
-            @include media-breakpoint-down(md) {
-                height: 2.5em;
-                right: 0;
-            }
+            bottom: 0;
+            right: 0;
         }
 
         a {
@@ -131,7 +118,7 @@
     @include swatch(1.8em, $white);
 }
 
-.quickViewDialog {
+.quick-view-dialog {
     max-width: 56.25em;
 
     .attributes {
@@ -148,7 +135,7 @@
     }
 
     .modal-header {
-        .fullPdpLink {
+        .full-pdp-link {
             color: $brand-color;
         }
 
