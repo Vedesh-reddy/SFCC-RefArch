@@ -11,13 +11,13 @@ function getModalHtmlElement() {
     }
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="quickViewModal" role="dialog">'
-        + '<div class="modal-dialog quickViewDialog">'
+        + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
         + '<div class="modal-content">'
         + '<div class="modal-header">'
         + '<button type="button" class="close" data-dismiss="modal">'
         + '<span>Close</span>&times;</button>'
-        + '<a class="fullPdpLink" href=""><h4 class="modal-title">View Full Details</h4></a>'
+        + '<a class="full-pdp-link" href=""><h4 class="modal-title">View Full Details</h4></a>'
         + '</div>'
         + '<div class="modal-body">'
         + '</div>'
@@ -40,7 +40,7 @@ function fillModalElement(productUrl, selectedValueUrl) {
         success: function (html) {
             $('.modal-body').empty();
             $('.modal-body').html(html);
-            $('#quickViewModal .fullPdpLink').attr('href', productUrl);
+            $('#quickViewModal .full-pdp-link').attr('href', productUrl);
             $('#quickViewModal .size-chart').attr('href', productUrl);
             $('#quickViewModal').modal('show');
         }
@@ -96,7 +96,7 @@ module.exports = function () {
                     base.parseJsonResponse(data, 'tile');
                 }
             });
-            $('.fullPdpLink').attr('href', productUrl);
+            $('.full-pdp-link').attr('href', productUrl);
             $('.product-quickview .size-chart a').attr('href', productUrl);
         }
     });
@@ -116,7 +116,7 @@ module.exports = function () {
                     base.parseJsonResponse(data, 'tile');
                 }
             });
-            $('.fullPdpLink').attr('href', productUrl);
+            $('.full-pdp-link').attr('href', productUrl);
             $('.product-quickview .size-chart a').attr('href', productUrl);
         }
     });

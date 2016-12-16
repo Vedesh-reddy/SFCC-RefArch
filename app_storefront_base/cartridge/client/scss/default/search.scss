@@ -1,8 +1,9 @@
-@import 'variables';
-@import 'bootstrap/scss/variables';
-@import 'bootstrap/scss/mixins';
-@import 'bootstrap/scss/mixins/breakpoints';
-@import 'utilities/swatch';
+@import "variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins";
+@import "bootstrap/scss/mixins/breakpoints";
+@import "utilities/swatch";
+@import "components/categoryTiles";
 
 .refinement-bar {
     overflow: auto;
@@ -260,23 +261,12 @@
 }
 
 .category-tile {
-    padding-bottom: 0.938rem;
-
-    h3 {
-        position: absolute;
-        bottom: 1.875rem;
-        left: 1.875rem;
-        color: $white;
-    }
+    margin-bottom: 0.938rem;
 
     &::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        right: 0.938rem;
-        bottom: 0.938rem;
-        left: 0.938rem;
-        background-image: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.5) 100%);
+        left: 0.9375em;
+        right: 0.9375em;
+        width: auto;
     }
 }
 

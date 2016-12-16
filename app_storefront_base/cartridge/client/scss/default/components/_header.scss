@@ -25,6 +25,7 @@ $menu-item-margin: 10px;
     .mini-cart,
     .navbar-toggler {
         line-height: 2.25em; /* 36/16 */
+        height: auto;
     }
 
     .navbar-toggler {
@@ -95,6 +96,7 @@ $menu-item-margin: 10px;
 
 .mini-cart {
     margin-top: 0.1875em; /* 3/16 */
+    vertical-align: top;
 
     a {
         color: $dark-gray;

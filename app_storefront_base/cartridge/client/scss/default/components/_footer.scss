@@ -97,18 +97,21 @@ footer {
     }
 
     .back-to-top {
-
-        @include box-shadow(0 0.313em 0.938em rgba(0,0,0,0.5));
-
         background-color: white;
         border-radius: 50%;
         float: left;
         margin: 0.313em;
-        border-bottom-color: white;
-        border-right-color: white;
+        margin-top: 0.1875em;
+        border-color: transparent;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        cursor: pointer;
+        padding: 0.125em 0.375em 0.1875em;
 
         i {
-            font-size: 1.625em;
+            font-size: 1em;
+            height: 2rem;
+            width: 1.6rem;
+            padding-top: 0.4375em;
         }
     }
 }
