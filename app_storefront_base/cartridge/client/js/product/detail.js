@@ -7,11 +7,16 @@ module.exports = function () {
         var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
 
         if (selectedValueUrl) {
+            $.spinner().start();
             $.ajax({
                 url: selectedValueUrl,
                 method: 'GET',
                 success: function (data) {
                     base.parseJsonResponse(data, 'details');
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
                 }
             });
         }
@@ -21,11 +26,16 @@ module.exports = function () {
         e.preventDefault();
         var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
 
+        $.spinner().start();
         $.ajax({
             url: selectedValueUrl,
             method: 'GET',
             success: function (data) {
                 base.parseJsonResponse(data, 'details');
+                $.spinner().stop();
+            },
+            error: function () {
+                $.spinner().stop();
             }
         });
     });
@@ -35,10 +45,17 @@ module.exports = function () {
         var addToCartUrl = base.getAddToCartUrl(pid);
 
         if (addToCartUrl) {
+            $.spinner().start();
             $.ajax({
                 url: addToCartUrl,
                 method: 'POST',
-                success: base.handlePostCartAdd
+                success: function (data) {
+                    base.handlePostCartAdd(data);
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
+                }
             });
         }
     });

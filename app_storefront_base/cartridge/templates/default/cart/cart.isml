@@ -42,7 +42,7 @@
                     <isinclude template="cart/cartProductCard" />
                 </div>
                 <!---totals, and checkout actions--->
-                <div class="col-sm-5 col-md-4">
+                <div class="col-sm-5 col-md-4 totals">
                     <isinclude template="cart/cartPromoCode" />
                     <div class="row">
                         <isinclude template="cart/cartShippingMethodSelection" />

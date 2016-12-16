@@ -7,3 +7,4 @@ $(document).ready(function () {
 });
 
 require('./thirdparty/bootstrap');
+require('./components/spinner');
