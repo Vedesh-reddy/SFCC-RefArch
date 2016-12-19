@@ -33,6 +33,7 @@ function getModalHtmlElement() {
  * @param {string} selectedValueUrl - url to be used to retrieve a new product model
  */
 function fillModalElement(productUrl, selectedValueUrl) {
+    $('.modal-body').spinner().start();
     $.ajax({
         url: selectedValueUrl,
         method: 'GET',
@@ -43,6 +44,10 @@ function fillModalElement(productUrl, selectedValueUrl) {
             $('#quickViewModal .full-pdp-link').attr('href', productUrl);
             $('#quickViewModal .size-chart').attr('href', productUrl);
             $('#quickViewModal').modal('show');
+            $.spinner().stop();
+        },
+        error: function () {
+            $.spinner().stop();
         }
     });
 }
@@ -89,11 +94,16 @@ module.exports = function () {
 
         if (selectedValueUrl) {
             productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
+            $('.modal-body').spinner().start();
             $.ajax({
                 url: selectedValueUrl,
                 method: 'GET',
                 success: function (data) {
                     base.parseJsonResponse(data, 'tile');
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
                 }
             });
             $('.full-pdp-link').attr('href', productUrl);
@@ -109,11 +119,16 @@ module.exports = function () {
 
         if (selectedValueUrl) {
             productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
+            $('.modal-body').spinner().start();
             $.ajax({
                 url: selectedValueUrl,
                 method: 'GET',
                 success: function (data) {
                     base.parseJsonResponse(data, 'tile');
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
                 }
             });
             $('.full-pdp-link').attr('href', productUrl);
@@ -126,12 +141,17 @@ module.exports = function () {
         var addToCartUrl = base.getAddToCartUrl(pid);
 
         if (addToCartUrl) {
+            $('.modal-body').spinner().start();
             $.ajax({
                 url: addToCartUrl,
                 method: 'POST',
                 success: function (data) {
                     base.handlePostCartAdd(data);
                     $('#quickViewModal').modal('hide');
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
                 }
             });
         }

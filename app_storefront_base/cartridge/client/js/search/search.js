@@ -33,6 +33,7 @@ function updateUrlWithSize(sourceUrl) {
  */
 function updateProductGrid(response) {
     $('.product-grid').empty().html(response);
+    $.spinner().stop();
 }
 
 /**
@@ -126,10 +127,14 @@ module.exports = function () {
     $('.container').on('change', '[name=sort-order]', function (e) {
         e.preventDefault();
 
+        $.spinner().start();
         $.ajax({
             url: updateUrlWithSize(this.value),
             method: 'GET',
-            success: updateProductGrid
+            success: updateProductGrid,
+            error: function () {
+                $.spinner().stop();
+            }
         });
     });
 
@@ -140,10 +145,14 @@ module.exports = function () {
 
         e.preventDefault();
 
+        $.spinner().start();
         $.ajax({
             url: showMoreUrl,
             method: 'GET',
-            success: updateProductGrid
+            success: updateProductGrid,
+            error: function () {
+                $.spinner().stop();
+            }
         });
     });
 
@@ -151,10 +160,17 @@ module.exports = function () {
     $('.container').on('click', '.refinements li a', function (e) {
         e.preventDefault();
 
+        $.spinner().start();
         $.ajax({
             url: updateUrlWithSize(e.currentTarget.href),
             method: 'GET',
-            success: parseResults
+            success: function (response) {
+                $.spinner().stop();
+                parseResults(response);
+            },
+            error: function () {
+                $.spinner().stop();
+            }
         });
     });
 };

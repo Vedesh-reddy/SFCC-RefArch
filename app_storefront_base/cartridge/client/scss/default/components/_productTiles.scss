@@ -95,14 +95,9 @@
         }
 
         a {
-            img.tile-image {
-                width: 100%;
-            }
-        }
+            display: block;
 
-        img {
-
-            @include media-breakpoint-down(xs) {
+            .tile-image {
                 width: 100%;
             }
         }

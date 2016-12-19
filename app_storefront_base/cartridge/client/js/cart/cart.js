@@ -94,6 +94,7 @@ module.exports = function () {
 
         url = appendToUrl(url, urlParams);
 
+        $.spinner().start();
         $.ajax({
             url: url,
             type: 'get',
@@ -112,9 +113,11 @@ module.exports = function () {
                     $('.uuid-' + uuid).remove();
                     updateCartTotals(data);
                 }
+                $.spinner().stop();
             },
             error: function (err) {
                 createErrorNotification(err.responseJSON.errorMessage);
+                $.spinner().stop();
             }
         });
     });
@@ -132,6 +135,8 @@ module.exports = function () {
         };
         url = appendToUrl(url, urlParams);
 
+        $(this).parents('.card').spinner().start();
+
         $.ajax({
             url: url,
             type: 'get',
@@ -145,9 +150,11 @@ module.exports = function () {
                     }
                 }
                 updateCartTotals(data);
+                $.spinner().stop();
             },
             error: function (err) {
                 createErrorNotification(err.responseJSON.errorMessage);
+                $.spinner().stop();
             }
         });
     });
@@ -159,15 +166,18 @@ module.exports = function () {
         };
         url = appendToUrl(url, urlParams);
 
+        $('.totals').spinner().start();
         $.ajax({
             url: url,
             type: 'get',
             dataType: 'json',
             success: function (data) {
                 updateCartTotals(data);
+                $.spinner().stop();
             },
             error: function (err) {
                 createErrorNotification(err.responseJSON.errorMessage);
+                $.spinner().stop();
             }
         });
     });
