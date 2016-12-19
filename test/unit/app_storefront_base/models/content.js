@@ -10,7 +10,8 @@ describe('Content', function () {
                 body: 'Hello'
             },
             template: 'templateName',
-            UUID: 22
+            UUID: 22,
+            online: true
         };
 
         var content = new Content(contentValue);
@@ -21,7 +22,8 @@ describe('Content', function () {
     it('should return converted content model without a body', function () {
         var contentValue = {
             template: 'templateName',
-            UUID: 22
+            UUID: 22,
+            online: true
         };
 
         var content = new Content(contentValue);
@@ -33,7 +35,8 @@ describe('Content', function () {
         var contentValue = {
             custom: {},
             template: 'templateName',
-            UUID: 22
+            UUID: 22,
+            online: true
         };
 
         var content = new Content(contentValue);
@@ -44,11 +47,24 @@ describe('Content', function () {
     it('should return converted content model with default template', function () {
         var contentValue = {
             custom: { body: 'Hello' },
-            UUID: 22
+            UUID: 22,
+            online: true
         };
 
         var content = new Content(contentValue);
 
         assert.equal(content.template, 'components/content/contentassetinc');
+    });
+
+    it('should return undefined for the body if online flag is false', function () {
+        var contentValue = {
+            custom: { body: 'Hello' },
+            UUID: 22,
+            online: false
+        };
+
+        var content = new Content(contentValue);
+
+        assert.isUndefined(content.body);
     });
 });

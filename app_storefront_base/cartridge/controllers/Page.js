@@ -11,8 +11,13 @@ server.get('Include', server.middleware.include, function (req, res, next) {
 
     if (contentMgr) {
         var content = new Content(contentMgr);
-        res.cacheExpiration(24);
-        res.render(content.template, { content: content });
+        if (content.template) {
+            res.cacheExpiration(24);
+            res.render(content.template, { content: content });
+        } else {
+            logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
+            res.render('/components/content/offlinecontent');
+        }
     } else {
         logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);
     }

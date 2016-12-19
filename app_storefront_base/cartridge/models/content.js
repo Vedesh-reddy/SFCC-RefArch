@@ -7,9 +7,14 @@
  * @constructor
  */
 function content(contentValue) {
+    if (!contentValue.online) {
+        return null;
+    }
     this.body = (contentValue && contentValue.custom && contentValue.custom.body) || null;
     this.UUID = contentValue.UUID;
     this.template = contentValue.template || 'components/content/contentassetinc';
+
+    return this;
 }
 
 module.exports = content;
