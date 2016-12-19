@@ -23,7 +23,7 @@
         <div class="form-group
             <isif condition=${creditFields.expirationMonth.mandatory === true}>required</isif>
             ${creditFields.expirationMonth.htmlName}">
-            <label for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
+            <label class="form-control-label" for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
             <select class="form-control expirationMonth" id="expirationMonth"
             <isprint value=${creditFields.expirationMonth.attributes} encoding="off"/>>
                 <isloop items=${creditFields.expirationMonth.options} var="month">
@@ -37,7 +37,7 @@
         <div class="form-group
             <isif condition=${creditFields.expirationYear.mandatory === true}>required</isif>
             ${creditFields.expirationYear.htmlName}">
-            <label for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
+            <label class="form-control-label" for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
             <select class="form-control expirationYear" id="expirationYear"
             <isprint value=${creditFields.expirationYear.attributes} encoding="off"/>>
                 <option value="${pdict.forms.billingForm.expirationYear.options[0].htmlValue}">${pdict.forms.billingForm.expirationYear.options[0].label}</option>
