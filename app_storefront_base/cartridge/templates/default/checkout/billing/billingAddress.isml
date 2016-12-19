@@ -71,7 +71,7 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.states.mandatory === true}>required</isif>
+            <isif condition=${billingFields.states.state.mandatory === true}>required</isif>
             ${billingFields.states.state.htmlName}">
             <label class="form-control-label" for="billingState">${Resource.msg('field.billing.address.state','address',null)}</label>
             <select class="form-control billingState" id="billingState"
