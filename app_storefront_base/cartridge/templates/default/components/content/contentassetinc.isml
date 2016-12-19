@@ -4,5 +4,5 @@
 		<isprint value="${pdict.content.body}" encoding="off"/>
 	</div> <!-- End content-asset -->
 <iselse/>
-	${Resource.msg('global.nocontent','locale',null)}
+	${Resource.msg('global.nocontent','common',null)}
 </isif>
