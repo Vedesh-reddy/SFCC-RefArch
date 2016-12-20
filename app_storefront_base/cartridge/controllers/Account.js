@@ -331,7 +331,7 @@ server.post('SavePassword', function (req, res, next) {
                 formInfo.profileForm.login.currentpassword.error =
                     Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
                 res.render(
-                    'account/profile',
+                    'account/password',
                     { profileForm: profileForm }
                 );
             } else {
@@ -339,7 +339,7 @@ server.post('SavePassword', function (req, res, next) {
             }
         });
     } else {
-        res.render('account/profile', { profileForm: profileForm });
+        res.render('account/password', { profileForm: profileForm });
     }
     next();
 });
