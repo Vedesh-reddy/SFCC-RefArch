@@ -17,7 +17,7 @@
         };
     }
 </isscript>
-<div class="col-xs-6 col-sm-4 product-tile">
+<div class="col-xs-6 col-sm-4 product-tile" data-pid="${pdict.product.id}">
     <div class="image-container">
         <a href="${pdict.urls.product}">
             <img class="tile-image"
