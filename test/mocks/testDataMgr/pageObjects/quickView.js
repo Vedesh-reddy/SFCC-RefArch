@@ -1,6 +1,6 @@
 'use strict';
 
-export const QUICK_VIEW_DIALOG = '.quickViewDialog';
+export const QUICK_VIEW_DIALOG = '.quick-view-dialog';
 export const ACTIVE_IMAGE = '.carousel-item.active .img-fluid';
 export const NEXT_BUTTON = '.right.carousel-control .icon-next';
 export const PRODUCT_NAME = '.product-name';
@@ -61,3 +61,5 @@ export function closeQuickview() {
         .click(selector)
         .waitForVisible(selector, 1000, true);
 }
+
+

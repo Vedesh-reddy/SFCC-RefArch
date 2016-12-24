@@ -1,35 +1,41 @@
 'use strict';
 
+import * as quickViewPage from './quickView';
+
 export const productTile = '.pdp-link';
-export const productGrid = '.product-grid';
 export const imageContainer = '.image-container a[href*="lang=en_US"]';
-export const cardTitle = 'a[href$="en_US"]';
+export const cardTitle = '.link';
 export const swatchCircle = '.swatch-circle';
-export const colorSwatch = '.color-swatches';
 export const quickViewImg = '.quickview img';
 export const quickView = '.quickview';
 export const tileImage = '.tile-image';
-export const pdpPrices = '.pdpPrices';
+export const pdpPrices = '.pdp-prices';
+export const dataPid = '[data-pid=';
+export const SWATCHES = '.swatches';
+export const IMAGE_CONTAINER = '.image-container';
+export const QUICK_VIEW = '.quickview';
 
 function getProductTileById(pid){
-    var prodSelector = '[data-pid='+ pid +']';
+    var prodSelector = dataPid + '"' + pid + '"' + ']';
     return prodSelector;
 }
 
 export function getProductTileImageSrc(pid) {
     let selector = getProductTileById(pid) + ' ' + tileImage;
-    return browser.waitForVisible(selector).getAttribute(selector, 'src');
+    return browser.waitForVisible(selector)
+        .then(() => browser.getAttribute(selector, 'src'));
 }
 
 export function getProductTileImageHref(pid) {
    let selector = getProductTileById(pid) + ' ' + imageContainer;
-    return browser.waitForVisible(selector).getAttribute(selector, 'href');
+    return browser.waitForVisible(selector)
+        .then(() => browser.getAttribute(selector, 'href'));
 }
 
 export function getProductTileProductName(pid) {
-    let selector = getProductTileById(pid) + ' ' +productTile + ' ' + cardTitle;
-    console.log('selector is ', selector);
-    return browser.getText(selector);
+    let selector = [getProductTileById(pid), productTile, cardTitle].join(' ');
+    return browser.waitForVisible(selector)
+        .then(() => browser.getText(selector));
 }
 
 export function getProductTileColorSwatchCount(pid) {
@@ -37,24 +43,38 @@ export function getProductTileColorSwatchCount(pid) {
     return browser.elements(selector)
         .then(swatches => swatches.value.length);
 }
-export function getNthProductTileQuickViewImageSrc(tileIdx) {
-    return browser.elements(quickViewImg)
-        .then(obj => browser.elementIdAttribute(obj.value[tileIdx-1].ELEMENT, 'src'));
-}
-
-export function getNthProductTileQuickViewImageHref(tileIdx) {
-    return browser.elements(quickView)
-        .then(obj => browser.elementIdAttribute(obj.value[tileIdx-1].ELEMENT, 'href'));
-}
-
-export function getNthProductTileProductNameHref(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + cardTitle;
+export function getProductTileMoreColorSwatchHref(pid) {
+    let selector = getProductTileById(pid) + ' ' + SWATCHES + ' > span > a';
     return browser.getAttribute(selector, 'href');
 }
 
-export function getNthProductTileProductPrice(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + pdpPrices;
+export function getProductTileMoreColorSwatch(pid) {
+    let selector = getProductTileById(pid) + ' ' + SWATCHES + ' > span > a';
     return browser.getText(selector);
+}
+
+export function getProductTileQuickViewImageSrc(pid) {
+    let selector = getProductTileById(pid) + ' ' + quickViewImg;
+    return browser.waitForVisible(selector)
+        .then(() => browser.getAttribute(selector, 'src'))
+}
+
+export function getProductTileQuickViewImageHref(pid) {
+    let selector = getProductTileById(pid) + ' ' + quickView;
+    return browser.waitForVisible(selector)
+        .then(obj => browser.getAttribute(selector, 'href'));
+}
+
+export function getProductTileProductNameHref(pid) {
+    let selector = [getProductTileById(pid), productTile, cardTitle].join(' ');
+    return browser.waitForVisible(selector)
+        .then(() => browser.getAttribute(selector, 'href'));
+}
+
+export function getProductTileProductPrice(pid) {
+    let selector = getProductTileById(pid) + ' ' + pdpPrices;
+    return browser.waitForVisible(selector)
+        .then(() => browser.getText(selector));
 }
 
 /**
@@ -62,8 +82,8 @@ export function getNthProductTileProductPrice(tileIdx) {
  * @param {string} tileIdx, start with 1
  * @returns [String] an array of swatch URLs
  */
-export function getNthProductTileColorSwatchUrls(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + swatchCircle;
+export function getProductTileColorSwatchUrls(pid) {
+    let selector = getProductTileById(pid) + ' ' + swatchCircle;
 
     return browser.getAttribute(selector, 'data-attributes')
         .then(swatchList => {
@@ -82,4 +102,9 @@ export function getNthProductTileColorSwatchUrls(tileIdx) {
         });
 }
 
-
+export function clickOnProductTileQuickView(pid) {
+    let quickViewSelector = getProductTileById(pid) + ' ' + IMAGE_CONTAINER + ' ' + QUICK_VIEW;
+    return browser.waitForVisible(quickViewSelector)
+        .click(quickViewSelector)
+        .waitForVisible(quickViewPage.QUICK_VIEW_DIALOG);
+}
