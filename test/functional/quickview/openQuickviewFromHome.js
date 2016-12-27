@@ -105,39 +105,40 @@ describe('Home product tile - Open Quickview', () => {
         const expectedActiveImgSrc1 = '/images/large/PG.10221714.JJ169XX.PZ.jpg';
         const expectedActiveImgSrc2 = '/images/large/PG.10221714.JJ169XX.BZ.jpg';
 
-        return productTile.clickOnProductTileQuickView(productMasterId4)
+        return browser.refresh()
+            .then(() => productTile.clickOnProductTileQuickView(productMasterId4))
             .then(() => quickView.getProductName())
             .then(prodName => {
-                return assert.equal(prodName[0], expectedDisplayName, 'Expected: product name = ' + expectedDisplayName);
+                return assert.equal(prodName, expectedDisplayName, 'Expected: product name = ' + expectedDisplayName);
             })
             .then(() => browser.isVisible(quickView.SELECTED_SWATCH_COLOR))
             .then(colorSelected => {
-                assert.isFalse(colorSelected, 'Expected: no color selected for master product.');
+                return assert.isFalse(colorSelected, 'Expected: no color selected for master product.');
             })
             .then(() => browser.isExisting(quickView.SELECTED_SIZE))
             .then(sizeSelected => {
-                assert.isFalse(sizeSelected[0], 'Expected: Size not selected.');
+                return assert.isFalse(sizeSelected, 'Expected: Size not selected.');
             })
             .then(() => quickView.getSelectedQuantity())
             .then(quantity => {
-                assert.equal(quantity, 1, 'Expected: selected size = 1');
+                return assert.equal(quantity, 1, 'Expected: selected size = 1');
             })
             .then(() => quickView.getPrice())
             .then(price => {
-                assert.equal(price, expectedListedPrice, 'Expected: selected size = ' + expectedListedPrice);
+                return assert.equal(price, expectedListedPrice, 'Expected: selected size = ' + expectedListedPrice);
             })
             .then(() => quickView.getActiveImageSrc())
             .then(activeImgSrc => {
-                assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc1), 'product active image src: url not end with ' + expectedActiveImgSrc1);
+                return assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc1), 'product active image src: url not end with ' + expectedActiveImgSrc1);
             })
             .then(() => quickView.clickOnNextImgageIcon())
             .then(() => quickView.getActiveImageSrc())
             .then(activeImgSrc2 => {
-                assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc2), 'product active image src: url not end with ' + expectedActiveImgSrc2);
+                return assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc2), 'product active image src: url not end with ' + expectedActiveImgSrc2);
             })
             .then(() => browser.isEnabled(quickView.ADD_TO_CART))
             .then(enabled => {
-                assert.equal(enabled, false, 'Expected: Add-to-cart button to be disabled.');
+                return assert.equal(enabled, false, 'Expected: Add-to-cart button to be disabled.');
             })
             .then(() => quickView.closeQuickview());
     });

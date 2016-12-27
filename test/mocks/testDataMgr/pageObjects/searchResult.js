@@ -28,5 +28,3 @@ export const refinementBarNewArrivalActive = '.refinement.new-arrival.active';
 export const customSelect = '.custom-select';
 export const sortOrderProductAtoZ = '.custom-select option:nth-child(3)';
 export const buttonClose = '.close';
-
-

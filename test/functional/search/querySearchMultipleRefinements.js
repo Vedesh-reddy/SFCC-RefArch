@@ -17,7 +17,6 @@ import * as Resource from '../../mocks/dw/web/Resource';
 
 describe('Query Search and multiple refinements -  general product', () => {
     const locale = config.locale;
-    const product1ID = '25502038';
     const product2ID = '25502027';
     const baseUrl = config.baseUrl;
     const localeStr = locale === 'x_default' ? 'en_US' : locale;
@@ -30,8 +29,6 @@ describe('Query Search and multiple refinements -  general product', () => {
         zh_CN: '裤子'
     };
 
-    var productMaster1;
-    var expectedDisplayName1;
     var productMaster2;
     var expectedDisplayName2;
 
@@ -48,8 +45,6 @@ describe('Query Search and multiple refinements -  general product', () => {
         .then(() => homePage.navigateTo())
         .then(() => browser.waitForExist(search.searchForm))
         .then(() => {
-            productMaster1 = testDataMgr.getProductById(product1ID);
-            expectedDisplayName1 = productMaster1.getLocalizedProperty('displayName', locale);
             productMaster2 = testDataMgr.getProductById(product2ID);
             expectedDisplayName2 = productMaster2.getLocalizedProperty('displayName', locale);
         })
@@ -121,7 +116,7 @@ describe('Query Search and multiple refinements -  general product', () => {
         return productTile.getProductTileProductName(product2ID)
             .then(productName => {
                 return assert.equal(productName, expectedDisplayName2, 'Expected: displayed product name = ' + expectedDisplayName2);
-            })
+            });
     });
 
     it('#3 should return the correct images when refined by Color, Price and New Arrival', () => {
@@ -130,7 +125,7 @@ describe('Query Search and multiple refinements -  general product', () => {
             .then(imageSrc => {
                 return assert.isTrue(imageSrc.endsWith(product1ImageSrc),
                     'product image is not end with ' + product1ImageSrc);
-            })
+            });
     });
 
     it('#4 should return the correct href links when refined by Color, Price and New Arrival', () => {
@@ -138,7 +133,7 @@ describe('Query Search and multiple refinements -  general product', () => {
         return productTile.getProductTileImageHref(product2ID)
             .then(imageLink1 => {
                 return assert.equal(imageLink1, expectedLink1, 'Expected image link not equal to ' + expectedLink1);
-            })
+            });
     });
 
 
@@ -146,7 +141,7 @@ describe('Query Search and multiple refinements -  general product', () => {
         return productTile.getProductTileColorSwatchCount(product2ID)
             .then(count => {
                 return assert.equal(count, 1, 'Expected: the number of color swatch to be 1.');
-            })
+            });
     });
 
     it('#6 should return 79 results for pants when reset button is clicked', () => {

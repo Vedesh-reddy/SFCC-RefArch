@@ -1,14 +1,9 @@
 'use strict';
 
-import * as quickView from './quickView';
-
 export const PRODUCT_TILE = '.product-tile';
 export const IMAGE_CONTAINER = '.imageContainer';
-export const QUICK_VIEW = '.quickview';
-export const SWATCHES = '.swatches';
 export const SWATCH_CIRCLE = '.swatches .swatch-circle';
 export const CARD_TITLE = '.card-title';
-export const PDP_PRICES = '.pdpPrices';
 export const NEW_ARRIVALS = 'a[href*="new%20arrivals"]';
 export const WOMEN = '.navbar .nav-item:nth-child(2)';
 export const MEN = '.navbar .nav-item:nth-child(3)';
@@ -53,83 +48,9 @@ export function getNthProductTileImageHref(tileIdx) {
         .getAttribute(selector, 'href');
 }
 
-export function getNthProductTileQuickViewImageSrc(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' ' + QUICK_VIEW + ' > img';
-    return browser.waitForVisible(selector)
-        .getAttribute(selector, 'src');
-}
-
-export function getNthProductTileQuickViewImageHref(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' ' + QUICK_VIEW;
-    return browser.waitForVisible(selector)
-        .getAttribute(selector, 'href');
-}
-
-export function clickOnNthProductTileQuickView(tileIdx) {
-    let quickViewSelector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' ' + QUICK_VIEW;
-
-    return browser.waitForVisible(quickViewSelector)
-        .click(quickViewSelector)
-        .waitForVisible(quickView.QUICK_VIEW_DIALOG);
-}
-
-export function getNthProductTileColorSwatchCount(tileIdx) {
-    let selector = [createCssNthProductTile(tileIdx), SWATCH_CIRCLE].join(' ');
-
-    return browser.elements(selector)
-        .then(swatches => {
-            return swatches.value.length;
-        });
-}
-
-/**
- * Obtain the color swatch URLs associated with the product tile
- * @param {string} tileIdx, start with 1
- * @returns [String] an array of swatch URLs
- */
-export function getNthProductTileColorSwatchUrls(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + SWATCH_CIRCLE;
-
-    return browser.getAttribute(selector, 'data-attributes')
-        .then(swatchList => {
-            let swatchUrlArray = [];
-            if (Array.isArray(swatchList)) {
-                for (let i = 0; i < swatchList.length; i++) {
-                    let dataAttrAsJson = JSON.parse(swatchList[i]);
-                    swatchUrlArray[i] = dataAttrAsJson.images.swatch[0].url;
-                }
-            } else {
-                let dataAttrAsJson = JSON.parse(swatchList);
-                swatchUrlArray[0] = dataAttrAsJson.images.swatch[0].url;
-            }
-
-            return swatchUrlArray;
-        });
-}
-
-export function getNthProductTileMoreColorSwatch(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + SWATCHES + ' > span > a';
-    return browser.getText(selector);
-}
-
-export function getNthProductTileMoreColorSwatchHref(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + SWATCHES + ' > span > a';
-    return browser.getAttribute(selector, 'href');
-}
-
-export function getNthProductTileProductName(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + CARD_TITLE;
-    return browser.getText(selector);
-}
-
 export function getNthProductTileProductNameHref(tileIdx) {
     let selector = createCssNthProductTile(tileIdx) + ' ' + CARD_TITLE;
     return browser.getAttribute(selector, 'href');
-}
-
-export function getNthProductTileProductPrice(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + PDP_PRICES;
-    return browser.getText(selector);
 }
 
 /**

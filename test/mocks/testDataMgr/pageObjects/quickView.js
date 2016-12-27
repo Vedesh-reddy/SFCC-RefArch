@@ -61,5 +61,3 @@ export function closeQuickview() {
         .click(selector)
         .waitForVisible(selector, 1000, true);
 }
-
-

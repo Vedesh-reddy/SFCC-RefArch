@@ -15,8 +15,8 @@ export const SWATCHES = '.swatches';
 export const IMAGE_CONTAINER = '.image-container';
 export const QUICK_VIEW = '.quickview';
 
-function getProductTileById(pid){
-    var prodSelector = dataPid + '"' + pid + '"' + ']';
+function getProductTileById(pid) {
+    var prodSelector = dataPid + '"' + pid + '"]';
     return prodSelector;
 }
 
@@ -27,7 +27,7 @@ export function getProductTileImageSrc(pid) {
 }
 
 export function getProductTileImageHref(pid) {
-   let selector = getProductTileById(pid) + ' ' + imageContainer;
+    let selector = getProductTileById(pid) + ' ' + imageContainer;
     return browser.waitForVisible(selector)
         .then(() => browser.getAttribute(selector, 'href'));
 }
@@ -56,13 +56,13 @@ export function getProductTileMoreColorSwatch(pid) {
 export function getProductTileQuickViewImageSrc(pid) {
     let selector = getProductTileById(pid) + ' ' + quickViewImg;
     return browser.waitForVisible(selector)
-        .then(() => browser.getAttribute(selector, 'src'))
+        .then(() => browser.getAttribute(selector, 'src'));
 }
 
 export function getProductTileQuickViewImageHref(pid) {
     let selector = getProductTileById(pid) + ' ' + quickView;
     return browser.waitForVisible(selector)
-        .then(obj => browser.getAttribute(selector, 'href'));
+        .then(() => browser.getAttribute(selector, 'href'));
 }
 
 export function getProductTileProductNameHref(pid) {
