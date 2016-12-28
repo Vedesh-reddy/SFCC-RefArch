@@ -16,23 +16,13 @@ import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
 import * as keyboard from '../../mocks/testDataMgr/helpers/keyboard';
 import * as common from '../../mocks/testDataMgr/helpers/common';
 import * as search from '../../mocks/testDataMgr/pageObjects/searchResult';
-import { config } from '../webdriver/wdio.conf';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
+import * as Resource from '../../mocks/dw/web/Resource';
 
 describe('Category Navigation and single Refinement - General Product', () => {
-    const locale = config.locale;
     const topTitle = '.page-title';
-    const productGeneral = {
-        x_default: 'pants',
-        en_GB: 'trousers',
-        fr_FR: 'pantalon',
-        it_IT: 'pantaloni',
-        jp_JP: 'パンツ',
-        zh_CN: '裤子'
-    };
-    const searchResultMsg = Resource.msgf('label.resultsfor', 'search', null, '79');
-    const expectedString = searchResultMsg + ' ' + productGeneral[locale];
-    let myQuerySelector;
+    const searchResultMsg = Resource.msgf('label.results', 'search', null, '275');
+    const expectedString = searchResultMsg;
 
     function verifySearchResults(selector, expectedResults) {
         return browser.getText(selector)
@@ -45,6 +35,11 @@ describe('Category Navigation and single Refinement - General Product', () => {
         .then((isVisible) => {
             if (isVisible) {
                 //  Access mobile devices
+                return browser.click(homePage.navBarButton)
+                    .then(() => browser.waitForVisible(homePage.closeButton))
+                    .then(() => browser.click(homePage.navWomenButton))
+                    .then(() => browser.waitForVisible(homePage.backButton))
+                    .then(() => browser.click(homePage.navTopCategory))
             }
             //  Access desktop or laptop browsers
             return browser.click(search.searchForm)
@@ -73,6 +68,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
 
 
     it('#2 should return 12 results for color refinements=red', () => {
+        const searchResultMsg2 = Resource.msgf('label.results', 'search', null, '12');
         return browser.isVisible(search.filterButton)
             .then((isVisible) => {
                 if (isVisible) {
@@ -85,7 +81,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                         .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                             search.colorRefinementSmall))
                         .then(mySearchSelector => browser.getText(mySearchSelector))
-                        .then(displayText => assert.equal(displayText, '12 Results'));
+                        .then(displayText => assert.equal(displayText, searchResultMsg2));
                 }
                 // access desktop or laptop browser
                 return browser.click(search.redColorRefinementSelector)
@@ -93,34 +89,13 @@ describe('Category Navigation and single Refinement - General Product', () => {
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
                     .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '12 Results'))
+                    .then(displayText => assert.equal(displayText, searchResultMsg2))
                     .then(() => common.waitUntilPageLoaded());
             });
     });
 
-    it('#3 should return 275 results when un-check the color refinements=red', () => {
-        return browser.isVisible(search.filterButton)
-            .then((isVisible) => {
-                if (isVisible) {
-                    return browser.click(search.refinementCircle)
-                        .then(() => common.waitUntilPageLoaded())
-                        .then(() => browser.pause(2000))
-                        .then(() => browser.getText('.search-results .grid-header .hidden-xs-down'))
-                        .then(displayText => assert.equal(displayText, '79 Results for pants'));
-                }
-                // access desktop or laptop browser
-                return browser.click(search.redColorRefinementSelectorChecked)
-                    .then(() => browser.pause(2000))
-                    .then(() => browser.waitForExist(search.redColorRefinementSelector))
-                    .then(() => common.getVisibleSelector(search.searchResultLarge,
-                        search.searchResultSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '275 Results'))
-                    .then(() => common.waitUntilPageLoaded());
-            });
-    });
-
-    it('#4 should return 172 results when select price refinements $50-$99.00', () => {
+    it('#3 should return 172 results when select price refinements $50-$99.00', () => {
+        const searchResultMsg2 = Resource.msgf('label.results', 'search', null, '172');
         return browser.isVisible(search.filterButton)
             .then((isVisible) => {
                 if (isVisible) {
@@ -131,7 +106,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                         .then(() => browser.click(search.priceRefinementSelector))
                         .then(() => browser.pause(2000))
                         .then(() => browser.getText('.result-count.hidden-xs-down'))
-                        .then(displayText => assert.equal(displayText, '8 Results for pants'));
+                        .then(displayText => assert.equal(displayText, searchResultMsg2));
                 }
                 // access desktop or laptop browser
                 return browser.click(search.price3RefinementSelector)
@@ -142,38 +117,13 @@ describe('Category Navigation and single Refinement - General Product', () => {
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
                     .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '172 Results'))
-                    .then(() => common.waitUntilPageLoaded());
-            });
-    });
-    it('#5 should return 275 results when un-check price refinement', () => {
-        return browser.isVisible(search.filterButton)
-            .then((isVisible) => {
-                if (isVisible) {
-                    return browser.click(search.refinementPriceClose)
-                        .then(() => browser.waitUntil(() => {
-                            return browser.execute(() => document.readyState)
-                                .then(loaded => loaded.value === 'complete');
-                        }, 5000))
-                        .then(() => browser.pause(2000))
-                        .then(() => browser.getText('.search-results .grid-header .hidden-xs-down'))
-                        .then(displayText => assert.equal(displayText, '79 Results for pants'));
-                }
-                // access desktop or laptop browser
-                return browser.click(search.price3RefinementCheckSelector)
-                    .then(() => browser.pause(2000))
-                    .then(() => browser.getAttribute(search.price3RefinementTitle, 'title'))
-                    .then(title => assert.equal(title, 'Refine by Price: $50 - $99.99'))
-                    .then(() => browser.waitForExist(search.pdpMain))
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '275 Results'))
+                    .then(displayText => assert.equal(displayText, searchResultMsg2))
                     .then(() => common.waitUntilPageLoaded());
             });
     });
 
-    it('#6 should return 6 results when check New Arrival refinement', () => {
+    it('#4 should return 6 results when check New Arrival refinement', () => {
+        const searchResultMsg2 = Resource.msgf('label.results', 'search', null, '6');
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
                 if (isTrue) {
@@ -185,7 +135,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                         .then(() => browser.pause(2000))
                         .then(() => browser.waitForExist(search.pdpMain))
                         .then(() => browser.getText('.result-count.hidden-xs-down'))
-                        .then(displayText => assert.equal(displayText, '8 Results for pants'));
+                        .then(displayText => assert.equal(displayText, searchResultMsg2));
                 }
                 // access desktop or laptop browser
                 return browser.click(search.newArrivalRefinementUnchecked)
@@ -193,30 +143,10 @@ describe('Category Navigation and single Refinement - General Product', () => {
                     .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                         search.colorRefinementSmall))
                     .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '6 Results'))
+                    .then(displayText => assert.equal(displayText, searchResultMsg2))
                     .then(() => common.waitUntilPageLoaded());
             });
     });
 
-    it('#7 should return 275 results when un-check New Arrival refinement', () => {
-        return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
-                    return browser.click(search.refinementPriceClose)
-                        .then(() => common.waitUntilPageLoaded())
-                        .then(() => browser.pause(2000))
-                        .then(() => browser.getText('.search-results .grid-header .hidden-xs-down'))
-                        .then(displayText => assert.equal(displayText, '79 Results for pants'));
-                }
-                // access desktop or laptop browser
-                return browser.click(search.newArrivalRefinementChecked)
-                    .then(() => browser.pause(2000))
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
-                    .then(displayText => assert.equal(displayText, '275 Results'))
-                    .then(() => common.waitUntilPageLoaded());
-            });
-    });
 });
 
