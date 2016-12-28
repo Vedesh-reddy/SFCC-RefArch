@@ -18,11 +18,6 @@ export const priceRefinementTitle = '.price .values li:nth-child(2)';
 export const priceRefinementSelector = priceRefinementTitle + buttonfaCircleO;
 export const newArrivalRefinementUnchecked = '.refinement-bar .fa-square-o';
 export const resetButton = '.reset';
-export const productTile = '.product-tile';
-export const productGrid = '.product-grid';
-export const IMAGE_CONTAINER = '.imageContainer';
-export const CARD_TITLE = '.card-title';
-export const SWATCH_CIRCLE = '.swatches .swatch-circle';
 export const filterButton = '.filter-results';
 export const refinementBarColor = '.refinement.color .title';
 export const refinementBarPrice = '.refinement.price .title';
@@ -33,32 +28,3 @@ export const refinementBarNewArrivalActive = '.refinement.new-arrival.active';
 export const customSelect = '.custom-select';
 export const sortOrderProductAtoZ = '.custom-select option:nth-child(3)';
 export const buttonClose = '.close';
-
-function createCssNthProductTile(idx) {
-    return productGrid + ' > div:nth-child(' + idx + ') ' + productTile;
-}
-
-export function getNthProductTileImageSrc(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' > a > img.card-img-top';
-    return browser.waitForVisible(selector)
-        .getAttribute(selector, 'src');
-}
-
-export function getNthProductTileImageHref(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + IMAGE_CONTAINER + ' > a:nth-child(1)';
-    return browser.waitForVisible(selector)
-        .getAttribute(selector, 'href');
-}
-
-export function getNthProductTileProductName(tileIdx) {
-    let selector = createCssNthProductTile(tileIdx) + ' ' + CARD_TITLE;
-    return browser.getText(selector);
-}
-
-export function getNthProductTileColorSwatchCount(tileIdx) {
-    let selector = [createCssNthProductTile(tileIdx), SWATCH_CIRCLE].join(' ');
-    return browser.elements(selector)
-        .then(swatches => {
-            return swatches.value.length;
-        });
-}

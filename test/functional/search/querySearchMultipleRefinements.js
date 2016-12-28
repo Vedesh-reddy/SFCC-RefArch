@@ -9,6 +9,7 @@ Query Search on General Product then do multiple refinements
 import { assert } from 'chai';
 import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
 import * as search from '../../mocks/testDataMgr/pageObjects/searchResult';
+import * as productTile from '../../mocks/testDataMgr/pageObjects/productTile';
 import * as common from '../../mocks/testDataMgr/helpers/common';
 import { config } from '../webdriver/wdio.conf';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
@@ -16,7 +17,6 @@ import * as Resource from '../../mocks/dw/web/Resource';
 
 describe('Query Search and multiple refinements -  general product', () => {
     const locale = config.locale;
-    const product1ID = '25502038';
     const product2ID = '25502027';
     const baseUrl = config.baseUrl;
     const localeStr = locale === 'x_default' ? 'en_US' : locale;
@@ -29,8 +29,6 @@ describe('Query Search and multiple refinements -  general product', () => {
         zh_CN: '裤子'
     };
 
-    var productMaster1;
-    var expectedDisplayName1;
     var productMaster2;
     var expectedDisplayName2;
 
@@ -47,8 +45,6 @@ describe('Query Search and multiple refinements -  general product', () => {
         .then(() => homePage.navigateTo())
         .then(() => browser.waitForExist(search.searchForm))
         .then(() => {
-            productMaster1 = testDataMgr.getProductById(product1ID);
-            expectedDisplayName1 = productMaster1.getLocalizedProperty('displayName', locale);
             productMaster2 = testDataMgr.getProductById(product2ID);
             expectedDisplayName2 = productMaster2.getLocalizedProperty('displayName', locale);
         })
@@ -117,56 +113,35 @@ describe('Query Search and multiple refinements -  general product', () => {
     });
 
     it('#2 should return the correct names of the products when refined by Color, Price and New Arrival', () => {
-        return search.getNthProductTileProductName(1)
+        return productTile.getProductTileProductName(product2ID)
             .then(productName => {
                 return assert.equal(productName, expectedDisplayName2, 'Expected: displayed product name = ' + expectedDisplayName2);
-            })
-            .then(() => search.getNthProductTileProductName(2))
-            .then(productName2 => {
-                return assert.equal(productName2, expectedDisplayName1, 'Expected: displayed product name = ' + expectedDisplayName1);
             });
     });
 
     it('#3 should return the correct images when refined by Color, Price and New Arrival', () => {
-        const product1ImageSrc = 'images/medium/PG.10208949.JJ0NLA0.PZ.jpg';
-        const product2ImageSrc = 'images/medium/PG.10208897.JJ0QRXX.PZ.jpg';
-        return search.getNthProductTileImageSrc(2)
+        const product1ImageSrc = 'images/medium/PG.10208897.JJ0QRXX.PZ.jpg';
+        return productTile.getProductTileImageSrc(product2ID)
             .then(imageSrc => {
                 return assert.isTrue(imageSrc.endsWith(product1ImageSrc),
-                    'product image: url not end with ' + product1ImageSrc);
-            })
-            .then(() => search.getNthProductTileImageSrc(1))
-            .then(imageSrc2 => {
-                return assert.isTrue(imageSrc2.endsWith(product2ImageSrc),
-                    'product image :url not end with ' + imageSrc2);
+                    'product image is not end with ' + product1ImageSrc);
             });
     });
 
     it('#4 should return the correct href links when refined by Color, Price and New Arrival', () => {
-        const expectedLink1 = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName1) + '/' + product1ID + '.html?lang=' + localeStr;
-        const expectedLink2 = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName2) + '/' + product2ID + '.html?lang=' + localeStr;
-        return search.getNthProductTileImageHref(2)
+        const expectedLink1 = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName2) + '/' + product2ID + '.html?lang=' + localeStr;
+        return productTile.getProductTileImageHref(product2ID)
             .then(imageLink1 => {
                 return assert.equal(imageLink1, expectedLink1, 'Expected image link not equal to ' + expectedLink1);
-            })
-            .then(() => search.getNthProductTileImageHref(1)
-                .then(imageLink2 => {
-                    return assert.equal(imageLink2, expectedLink2, 'Expected image link not equal to ' + expectedLink2);
-                })
-            );
+            });
     });
 
 
     it('#5 should return the correct color swatch count when refined by Color, Price and New Arrival', () => {
-        return search.getNthProductTileColorSwatchCount(1)
+        return productTile.getProductTileColorSwatchCount(product2ID)
             .then(count => {
                 return assert.equal(count, 1, 'Expected: the number of color swatch to be 1.');
-            })
-            .then(() => search.getNthProductTileColorSwatchCount(2)
-                .then(count => {
-                    return assert.equal(count, 1, 'Expected: the number of color swatch to be 1.');
-                })
-            );
+            });
     });
 
     it('#6 should return 79 results for pants when reset button is clicked', () => {
