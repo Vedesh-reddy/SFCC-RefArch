@@ -1,5 +1,8 @@
+'use strict';
+
 /**
- * Created by zsardone on 12/15/16.
+ * refine by color red, size XS and price $50-99.99 at the same time
+ * verify 2 results returned and verify the product details
  */
 
 it('#8 should return 2 results when refine by Color, Price and Size', () => {

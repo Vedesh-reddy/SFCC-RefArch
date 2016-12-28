@@ -1,6 +1,6 @@
 'use strict';
 
-/*
+/**
 Query Search on General Product then do refinement
 - Search for 'pants'
 - refine by Color
