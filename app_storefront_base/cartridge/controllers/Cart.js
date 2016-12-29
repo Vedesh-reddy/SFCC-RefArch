@@ -246,5 +246,24 @@ server.get('SelectShippingMethod', function (req, res, next) {
     }
 });
 
+server.get('MiniCartShow', function (req, res, next) {
+    var totalsModel;
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var productLineItemsModel;
+
+    Transaction.wrap(function () {
+        if (currentBasket) {
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        }
+    });
+
+    productLineItemsModel = new ProductLineItemModel(currentBasket);
+    totalsModel = new Totals(currentBasket);
+
+    var basket = new Cart(currentBasket, null, productLineItemsModel, totalsModel);
+
+    res.render('checkout/cart/miniCart', basket);
+    next();
+});
 
 module.exports = server.exports();

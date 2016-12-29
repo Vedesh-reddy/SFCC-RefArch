@@ -1,0 +1,6 @@
+<p class="line-item-pricing-info">
+    <span class="line-item-total-text">
+    ${Resource.msg('field.selectquantity','cart',null)}
+    </span><br>
+    <span class="pricing"><isprint value="${lineItem.quantity}" formatter="##" /></span>
+</p>
