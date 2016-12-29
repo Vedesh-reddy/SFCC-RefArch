@@ -29,22 +29,21 @@
         <!---now split up details and price--->
         <div class="row">
             <!---product info--->
-            <div class="col-lg-6">
+            <div class="col-lg-5">
                 <div class="row">
                     <!---product image--->
-                    <div class="col-xs-4">
+                    <div class="col-lg-12">
                         <img class="product-image" src="${lineItem.images.small[0].url}" alt="${lineItem.images.small[0].alt}" title="${lineItem.images.small[0].title}">
-                    </div>
-                    <!--product details-->
-                    <div class="col-xs-8" >
-                        <isloop items="${lineItem.attributes}" var="attribute">
-                            <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
-                        </isloop>
+                        <div class="item-attributes">
+                            <isloop items="${lineItem.attributes}" var="attribute">
+                                <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
+                            </isloop>
+                        </div>
                     </div>
                 </div>
             </div>
             <!---product price--->
-            <div class="col-lg-6">
+            <div class="col-lg-7">
                 <hr class="hidden-lg-up line-item-divider">
                 <div class="row text-xs-center">
                     <!---item price--->
@@ -102,14 +101,8 @@
             </div>
         </div>
         <div class="row hidden-xs-down edit-add-to-wishlist">
-            <div class="col-md-12 col-lg-6">
-                <div class="offset-sm-4 col-sm-2">
-                    <a href="${"#"}" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
-                </div>
-                <div class="col-sm-6">
-                    <a href="${"#"}" title="${Resource.msg('link.add.to.wishlist','cart',null)}">${Resource.msg('link.add.to.wishlist','cart',null)}</a>
-                </div>
-            </div>
+            <a href="${"#"}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
+            <a href="${"#"}" class="add-to-wishlist" title="${Resource.msg('link.add.to.wishlist','cart',null)}">${Resource.msg('link.add.to.wishlist','cart',null)}</a>
         </div>
     </div>
 </isloop>
