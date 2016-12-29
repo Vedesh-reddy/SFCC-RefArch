@@ -76,15 +76,15 @@ describe('Query Search and multiple refinements -  general product', () => {
                 .getText(topTitle)
                 .then(title => assert.equal(title, 'Tops'))
                 .then(() => browser.click(search.redColorRefinementSelector))
-                .pause(2000)
+                .then(() => common.waitUntilAjaxCallEnded())
                 .click(search.price3RefinementSelector)
-                .pause(2000)
+                .then(() => common.waitUntilAjaxCallEnded())
                 .click(search.size8RefinementSelector)
-                .pause(2000)
+                .then(() => common.waitUntilAjaxCallEnded())
                 .then(() => browser.click(search.customSelect))
                 .then(() => browser.click(search.sortOrderProductAtoZ))
-                .then(() => browser.pause(2000))
-                .then(() => common.waitUntilPageLoaded())
+                // need this pause since wait for other condition not working
+                .then(() => browser.pause(2000));
         })
     );
 
