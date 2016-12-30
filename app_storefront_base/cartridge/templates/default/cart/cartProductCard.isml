@@ -61,10 +61,14 @@
                     </div>
                     <!---quantity--->
                     <div class="col-xs-4 col-lg-3">
-                        <form action="" method="get">
-                            <div class="form-group quantity-form">
-                                <label class="line-item-price-info" for="quantity">${Resource.msg('field.selectquantity','cart',null)}</label>
-                                <select class="form-control quantity"
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p class="line-item-price-info">${Resource.msg('field.selectquantity','cart',null)}</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <select class=" custom-select quantity" aria-label="${Resource.msg('field.selectquantity','cart',null)}"
                                         data-uuid="${lineItem.UUID}"
                                         data-pid="${lineItem.id}"
                                         data-action="${pdict.actionUrls.updateQuantityUrl}"
@@ -81,7 +85,7 @@
                                     </isloop>
                                 </select>
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <!---line item total price--->
                     <div class="col-xs-4">
