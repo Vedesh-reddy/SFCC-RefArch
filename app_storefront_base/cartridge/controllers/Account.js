@@ -132,6 +132,7 @@ server.post('SubmitRegistration', server.middleware.https, function (req, res, n
     var registrationFormObj = {
         firstName: registrationForm.customer.firstname.value,
         lastName: registrationForm.customer.lastname.value,
+        phone: registrationForm.customer.phone.value,
         email: registrationForm.customer.email.value,
         emailConfirm: registrationForm.customer.emailconfirm.value,
         password: registrationForm.login.password.value,
@@ -164,6 +165,7 @@ server.post('SubmitRegistration', server.middleware.https, function (req, res, n
                                 CustomerMgr.loginCustomer(login, password, false);
                             newCustomerProfile.firstName = registrationForm.firstName;
                             newCustomerProfile.lastName = registrationForm.lastName;
+                            newCustomerProfile.phoneHome = registrationForm.phone;
                             newCustomerProfile.email = registrationForm.email;
                         }
 
@@ -208,6 +210,7 @@ server.get('EditProfile', function (req, res, next) {
         var profileForm = server.forms.getForm('profile');
         profileForm.customer.firstname.value = accountModel.profile.firstName;
         profileForm.customer.lastname.value = accountModel.profile.lastName;
+        profileForm.customer.phone.value = accountModel.profile.phone;
         profileForm.customer.email.value = accountModel.profile.email;
         res.render('account/profile', { profileForm: profileForm });
     } else {

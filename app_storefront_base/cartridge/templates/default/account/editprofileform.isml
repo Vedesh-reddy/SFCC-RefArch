@@ -25,6 +25,18 @@
     </div>
     
     <div class="form-group 
+        <isif condition="${!pdict.profileForm.customer.phone.valid}">has-danger</isif>
+        <isif condition="${pdict.profileForm.customer.phone.mandatory}">required</isif>">
+        <label class="form-control-label" for="phone">
+            <isprint value="${pdict.profileForm.customer.phone.label}" encoding="off" />
+        </label>
+        <input type="text" class="form-control" id="phone" value="${pdict.profileForm.customer.phone.value}" <isprint value=${pdict.profileForm.customer.phone.attributes} encoding="off" />>
+        <div class="form-control-feedback">
+            <isprint value="${pdict.profileForm.customer.phone.error}" encoding="off" />
+        </div>
+    </div>
+    
+    <div class="form-group 
         <isif condition="${!pdict.profileForm.customer.email.valid}">has-danger</isif>
         <isif condition="${pdict.profileForm.customer.email.mandatory}">required</isif>">
         <label class="form-control-label" for="email">

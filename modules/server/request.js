@@ -80,6 +80,7 @@ function getCustomerObject(customer) {
             lastName: customer.profile.lastName,
             firstName: customer.profile.firstName,
             email: customer.profile.email,
+            phone: customer.profile.phoneHome,
             customerNo: customer.profile.customerNo
         },
         addressBook: {
