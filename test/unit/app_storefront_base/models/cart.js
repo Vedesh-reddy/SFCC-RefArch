@@ -51,7 +51,7 @@ var totalsModel = {
 
 describe('cart', function () {
     var Cart = null;
-    Cart = proxyquire('../../../../app_storefront_base/cartridge/models/cart', {
+    Cart = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/cart', {
         'dw/web/URLUtils': urlUtilsMock,
         'dw/web/Resource': {
             msg: function () {

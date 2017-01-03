@@ -1,7 +1,7 @@
 {
   "name": "mfsg",
   "version": "0.0.7",
-  "description": "Mobile first SiteGenesis",
+  "description": "Mobile First SiteGenesis",
   "main": "index.js",
   "engines": {
     "node": ">=4.0"
@@ -13,13 +13,13 @@
     "test:integration": "mocha --reporter spec",
     "test:functional": "wdio test/functional/webdriver/wdio.conf.js",
     "test:functional:docker": "bin/test-functional-docker.sh",
-    "compile:scss": "node-sass --include-path node_modules --include-path node_modules/flag-icon-css/sass app_storefront_base/cartridge/client/scss/default/ -o app_storefront_base/cartridge/static/default/css/",
+    "compile:scss": "node-sass --include-path node_modules --include-path node_modules/flag-icon-css/sass cartridges/app_storefront_base/cartridge/client/scss/default/ -o cartridges/app_storefront_base/cartridge/static/default/css/",
     "compile:js": "webpack",
-    "compile:fonts": "mkdir -p app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/font-awesome/fonts/ app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/flag-icon-css/flags/ app_storefront_base/cartridge/static/default/fonts/flags",
-    "lint": "eslint . && stylelint --syntax scss \"app_storefront_base/cartridge/client/scss/**/*.scss\"",
+    "compile:fonts": "mkdir -p cartridges/app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/font-awesome/fonts/ cartridges/app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/flag-icon-css/flags/ cartridges/app_storefront_base/cartridge/static/default/fonts/flags",
+    "lint": "eslint . && stylelint --syntax scss \"cartridges/app_storefront_base/cartridge/client/scss/**/*.scss\"",
     "upload": "dwupload --file ",
-    "watch:static": "onchange 'app_storefront_base/cartridge/client/js/**/*.js' -- npm run compile:js & onchange 'app_storefront_base/cartridge/client/scss/**/*.scss' -- npm run compile:scss & onchange 'app_storefront_base/cartridge/static/**/*' -w -- npm run upload -- {{changed}}",
-    "watch:cartridge": "onchange 'app_storefront_base/cartridge/(controllers|models|scripts|templates|forms)/**/*' -w -- npm run upload -- {{changed}}",
+    "watch:static": "onchange 'cartridges/app_storefront_base/cartridge/client/js/**/*.js' -- npm run compile:js & onchange 'cartridges/app_storefront_base/cartridge/client/scss/**/*.scss' -- npm run compile:scss & onchange 'cartridges/app_storefront_base/cartridge/static/**/*' -w -- npm run upload -- {{changed}}",
+    "watch:cartridge": "onchange 'cartridges/app_storefront_base/cartridge/(controllers|models|scripts|templates|forms)/**/*' -w -- npm run upload -- {{changed}}",
     "watch": "npm run watch:static & npm run watch:cartridge"
   },
   "repository": {

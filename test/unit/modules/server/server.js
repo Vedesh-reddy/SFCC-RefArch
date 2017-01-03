@@ -2,9 +2,9 @@
 
 'use strict';
 
-var Route = require('../../../../modules/server/route');
+var Route = require('../../../../cartridges/modules/server/route');
 var assert = require('chai').assert;
-var middleware = require('../../../../modules/server/middleware');
+var middleware = require('../../../../cartridges/modules/server/middleware');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
@@ -32,7 +32,7 @@ function request() {
 
 describe('server', function () {
     beforeEach(function () {
-        server = proxyquire('../../../../modules/server/server', {
+        server = proxyquire('../../../../cartridges/modules/server/server', {
             './render': render,
             './request': request
         });

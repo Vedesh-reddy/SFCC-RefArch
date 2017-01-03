@@ -8,7 +8,7 @@ describe('dwHelpers', function () {
     var helpers = null;
 
     beforeEach(function () {
-        helpers = proxyquire('../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
+        helpers = proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
             'dw/util/ArrayList': ArrayList
         });
     });

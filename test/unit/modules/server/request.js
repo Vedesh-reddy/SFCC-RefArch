@@ -1,6 +1,6 @@
 'use strict';
 
-var Request = require('../../../../modules/server/request');
+var Request = require('../../../../cartridges/modules/server/request');
 var assert = require('chai').assert;
 
 var ArrayList = require('../../../mocks/dw.util.Collection');

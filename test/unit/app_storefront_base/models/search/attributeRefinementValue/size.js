@@ -10,9 +10,9 @@ describe('SizeAttributeValue model', function () {
     var refinementValue = {};
     var sizeAttributeValue = {};
 
-    var SizeAttributeValue = proxyquire('../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/size', {
+    var SizeAttributeValue = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/size', {
         '~/cartridge/models/search/attributeRefinementValue/base': proxyquire(
-            '../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
+            '../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
                 'dw/web/Resource': {
                     msgf: function () { return 'some product title'; }
                 }

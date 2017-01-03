@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-var Content = require('../../../../app_storefront_base/cartridge/models/content');
+var Content = require('../../../../cartridges/app_storefront_base/cartridge/models/content');
 
 describe('Content', function () {
     it('should return converted content model', function () {

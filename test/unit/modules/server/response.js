@@ -1,6 +1,6 @@
 'use strict';
 
-var Response = require('../../../../modules/server/response');
+var Response = require('../../../../cartridges/modules/server/response');
 var assert = require('chai').assert;
 
 describe('response', function () {

@@ -7,7 +7,7 @@ var path = require('path');
 var createJSPath = function () {
     var result = {};
 
-    var jsFiles = ls('./app_storefront_base/cartridge/client/js/*.js');
+    var jsFiles = ls('./cartridges/app_storefront_base/cartridge/client/js/default/*.js');
 
     jsFiles.forEach(function (filePath) {
         var name = path.basename(filePath, '.js');
@@ -21,7 +21,7 @@ module.exports = [{
     name: 'js',
     entry: createJSPath(),
     output: {
-        path: './app_storefront_base/cartridge/static/default/js/',
+        path: './cartridges/app_storefront_base/cartridge/static/default/js/',
         filename: '[name].js'
     },
     module: {

@@ -9,7 +9,7 @@ describe('render', function () {
     var ismlRender = sinon.spy();
 
     beforeEach(function () {
-        render = proxyquire('../../../../modules/server/render', {
+        render = proxyquire('../../../../cartridges/modules/server/render', {
             'dw/template/ISML': {
                 renderTemplate: ismlRender
             }
@@ -45,7 +45,7 @@ describe('render', function () {
     });
 
     it('should render error page when template failed', function () {
-        var renderMock = proxyquire('../../../../modules/server/render', {
+        var renderMock = proxyquire('../../../../cartridges/modules/server/render', {
             'dw/template/ISML': {
                 renderTemplate: function () {
                     throw new Error('hello');

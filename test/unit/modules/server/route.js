@@ -1,7 +1,7 @@
 'use strict';
 
-var Response = require('../../../../modules/server/response');
-var Route = require('../../../../modules/server/route');
+var Response = require('../../../../cartridges/modules/server/response');
+var Route = require('../../../../cartridges/modules/server/route');
 var assert = require('chai').assert;
 
 describe('server', function () {

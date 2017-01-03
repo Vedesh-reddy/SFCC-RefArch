@@ -20,7 +20,7 @@ var createApiBasket = function (isAvailable) {
 
 describe('Totals', function () {
     var Totals = null;
-    Totals = proxyquire('../../../../app_storefront_base/cartridge/models/totals', {
+    Totals = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/totals', {
         'dw/util/StringUtils': {
             formatMoney: function () {
                 return 'formatted money';

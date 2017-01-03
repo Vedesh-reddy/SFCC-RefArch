@@ -66,10 +66,10 @@ var paymentInstruments = new ArrayList([
 
 describe('Payment', function () {
     var PaymentModel = null;
-    var helper = proxyquire('../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
+    var helper = proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
         'dw/util/ArrayList': ArrayList
     });
-    PaymentModel = proxyquire('../../../../app_storefront_base/cartridge/models/payment', {
+    PaymentModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/payment', {
         '~/cartridge/scripts/dwHelpers': helper
     });
 

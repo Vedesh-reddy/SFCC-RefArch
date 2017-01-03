@@ -5,7 +5,7 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var mockDwHelpers = require('../../../../mocks/dwHelpers');
 
 describe('ProductSortOptions model', function () {
-    var ProductSortOptions = proxyquire('../../../../../app_storefront_base/cartridge/models/search/productSortOptions', {
+    var ProductSortOptions = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/search/productSortOptions', {
         '~/cartridge/scripts/dwHelpers': {
             map: mockDwHelpers.map
         }
