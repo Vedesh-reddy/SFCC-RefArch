@@ -133,13 +133,20 @@
          */
         function shippingFormResponse(defer, data) {
             // highlight fields with errors
-            if (data.error && data.fieldErrors.length) {
-                data.fieldErrors.forEach(function (error) {
-                    if (Object.keys(error).length) {
-                        loadFormErrors('.shipping-form', error);
-                    }
-                });
-                defer.reject(data);
+            if (data.error) {
+                if (data.fieldErrors.length) {
+                    data.fieldErrors.forEach(function (error) {
+                        if (Object.keys(error).length) {
+                            loadFormErrors('.shipping-form', error);
+                        }
+                    });
+                    defer.reject(data);
+                }
+
+                if (data.cartError) {
+                    window.location.href = data.redirectUrl;
+                    defer.reject();
+                }
             } else {
                 //
                 // Populate the Address Summary
@@ -222,6 +229,10 @@
                                     });
                                 }
 
+                                if (data.cartError) {
+                                    window.location.href = data.redirectUrl;
+                                }
+
                                 defer.reject();
                             } else {
                                 //
@@ -259,8 +270,13 @@
                         method: 'POST',
                         success: function (data) {
                             if (data.error) {
-                                // go to appropriate stage and display error message
-                                defer.reject(data);
+                                if (data.cartError) {
+                                    window.location.href = data.redirectUrl;
+                                    defer.reject();
+                                } else {
+                                    // go to appropriate stage and display error message
+                                    defer.reject(data);
+                                }
                             } else {
                                 var url = data.continueUrl;
                                 var urlParams = { ID: data.orderID };
@@ -307,40 +323,44 @@
                     type: 'get',
                     dataType: 'json',
                     success: function (data) {
-                        $shippingMethodList.empty();
-                        var shippingMethods = data.shipping.applicableShippingMethods;
-                        var address = data.shippingForm.shippingAddress;
-                        var selected = data.shipping.selectedShippingMethod;
+                        if (data.error) {
+                            window.location.href = data.redirectUrl;
+                        } else {
+                            $shippingMethodList.empty();
+                            var shippingMethods = data.shipping.applicableShippingMethods;
+                            var address = data.shippingForm.shippingAddress;
+                            var selected = data.shipping.selectedShippingMethod;
 
-                        //
-                        // Create the new rows for each shipping method
-                        //
-                        $.each(shippingMethods, function (key, shippingMethod) {
-                            var tmpl = $('#shipping-method-template').clone();
-                            // set input
-                            $('input', tmpl)
-                                .prop('id', 'shippingMethod-' + shippingMethod.ID)
-                                .prop('name', address.shippingMethodID.htmlName)
-                                .prop('value', shippingMethod.ID)
-                                .attr('checked', shippingMethod.ID === selected.ID);
+                            //
+                            // Create the new rows for each shipping method
+                            //
+                            $.each(shippingMethods, function (key, shippingMethod) {
+                                var tmpl = $('#shipping-method-template').clone();
+                                // set input
+                                $('input', tmpl)
+                                    .prop('id', 'shippingMethod-' + shippingMethod.ID)
+                                    .prop('name', address.shippingMethodID.htmlName)
+                                    .prop('value', shippingMethod.ID)
+                                    .attr('checked', shippingMethod.ID === selected.ID);
 
-                            // set shipping method name
-                            $('.display-name', tmpl).text(shippingMethod.displayName);
+                                // set shipping method name
+                                $('.display-name', tmpl).text(shippingMethod.displayName);
 
-                            // set or hide arrival time
-                            if (shippingMethod.estimatedArrivalTime) {
-                                $('.arrival-time', tmpl)
-                                    .text(shippingMethod.estimatedArrivalTime)
-                                    .show();
-                            }
+                                // set or hide arrival time
+                                if (shippingMethod.estimatedArrivalTime) {
+                                    $('.arrival-time', tmpl)
+                                        .text(shippingMethod.estimatedArrivalTime)
+                                        .show();
+                                }
 
-                            // set shipping cost
-                            $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
+                                // set shipping cost
+                                $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
 
-                            $shippingMethodList.append(tmpl.html());
-                        });
+                                $shippingMethodList.append(tmpl.html());
+                            });
 
-                        updateTotals(data.totals);
+                            updateTotals(data.totals);
+                        }
                     }
                 });
             },

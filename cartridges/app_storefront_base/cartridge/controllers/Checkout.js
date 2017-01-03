@@ -279,7 +279,13 @@ server.post('SubmitShipping', function (req, res, next) {
             var currentBasket = BasketMgr.getCurrentBasket();
 
             if (!currentBasket) {
-                res.redirect(URLUtils.url('Cart-Show'));
+                res.json({
+                    error: true,
+                    cartError: true,
+                    fieldErrors: [],
+                    serverErrors: [],
+                    redirectUrl: URLUtils.url('Cart-Show').toString()
+                });
                 return;
             }
 
@@ -459,7 +465,13 @@ server.post('SubmitPayment', function (req, res, next) {
             var currentBasket = BasketMgr.getCurrentBasket();
 
             if (!currentBasket) {
-                res.redirect(URLUtils.url('Cart-Show'));
+                res.json({
+                    error: true,
+                    cartError: true,
+                    fieldErrors: [],
+                    serverErrors: [],
+                    redirectUrl: URLUtils.url('Cart-Show').toString()
+                });
                 return;
             }
 
@@ -603,7 +615,13 @@ server.get('UpdateShippingMethodsList', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
-        res.redirect(URLUtils.url('Cart-Show'));
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
         return next();
     }
 
@@ -636,6 +654,7 @@ server.get('UpdateShippingMethodsList', function (req, res, next) {
         shipping: shippingModel,
         shippingForm: server.forms.getForm('singleShipping')
     });
+
     return next();
 });
 
@@ -864,7 +883,13 @@ server.post('PlaceOrder', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
-        res.redirect(URLUtils.url('Cart-Show'));
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
         return next();
     }
 
