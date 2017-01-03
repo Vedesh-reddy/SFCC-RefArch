@@ -18,6 +18,7 @@ function addSpinner($target) {
         $target.append($veil);
         if ($target.css('position') === 'static') {
             $target.parent().css('position', 'relative');
+            $target.parent().addClass('veiled');
         }
         if ($target.get(0).tagName === 'BODY') {
             $veil.find('.spinner').css('position', 'fixed');
@@ -33,8 +34,9 @@ function addSpinner($target) {
  * @param  {element} $veil - jQuery pointer to the veil element
  */
 function removeSpinner($veil) {
-    if ($veil.parent().css('position') === 'relative') {
-        $veil.parent().css('position', 'static');
+    if ($veil.parent().hasClass('veiled')) {
+        $veil.parent().css('position', '');
+        $veil.parent().removeClass('veiled');
     }
     $veil.off('click');
     $veil.remove();

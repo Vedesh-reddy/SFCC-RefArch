@@ -26,10 +26,15 @@ $negative-spacer: -0.625rem;
     }
 }
 
+.edit {
+    margin-right: 0.625em;
+}
+
 .edit-add-to-wishlist {
     padding-bottom: 0.438em;
     position: absolute;
     width: 100%;
+    margin-left: 6.538em;
 
     a {
         font-size: 0.813em;
@@ -47,6 +52,12 @@ $negative-spacer: -0.625rem;
 .line-item-attributes {
     font-size: 0.813em;
     margin: 0;
+}
+
+.item-attributes {
+    display: inline-block;
+    vertical-align: top;
+    margin-left: 0.625em;
 }
 
 .line-item-divider {
