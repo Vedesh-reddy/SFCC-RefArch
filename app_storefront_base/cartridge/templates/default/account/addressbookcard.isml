@@ -1,8 +1,8 @@
 <div class="card">
     <div class="card-header">
-        <p class="dashboard-cards-header">${Resource.msg('label.addressbook','account',null)}</p>
-        <isif condition="${pdict.payment}">
-            <a href="${"#"}" class="dashboard-cards-header-link">${Resource.msg('link.view','account',null)}</a>
+        <h4 class="float-xs-left">${Resource.msg('label.addressbook','account',null)}</h4>
+        <isif condition="${pdict.preferredAddress}">
+            <a href="${URLUtils.url('Address-List')}" class="float-xs-right">${Resource.msg('link.view','account',null)}</a>
         </isif>
     </div>
     <isif condition="${pdict.preferredAddress}">
@@ -17,6 +17,6 @@
         </div>
     </isif>
     <div class="card-footer card-footer-border text-xs-center">
-        <a href="${"#"}" class="card-link dashboard-cards-footer-link">${Resource.msg('link.addnew','account',null)}</a>
+        <a href="${URLUtils.url('Address-AddAddress')}" class="card-link">${Resource.msg('link.addnew','account',null)}</a>
     </div>
 </div>

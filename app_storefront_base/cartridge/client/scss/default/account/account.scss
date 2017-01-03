@@ -1,0 +1,51 @@
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+@import "../variables";
+
+.account-image {
+    background-image: url(../../images/account.jpg);
+
+    @include media-breakpoint-down(md) {
+        background-position-y: -1rem;
+    }
+
+    @include media-breakpoint-down(lg) {
+        background-position-y: -2rem;
+    }
+
+    @include media-breakpoint-down(xl) {
+        background-position-y: -6rem;
+    }
+}
+
+.card-footer > a {
+    color: $brand-color;
+    text-decoration: underline;
+}
+
+.card-header > a {
+    color: $brand-color;
+    float: right;
+    text-decoration: underline;
+}
+
+.card-info-group {
+    p {
+        margin-bottom: 0;
+    }
+
+    div {
+        margin-bottom: 1rem;
+    }
+
+    div:last-child {
+        margin-bottom: 0;
+    }
+}
+
+.required {
+    .form-control-label::before {
+        content: "*";
+        color: $red;
+    }
+}

@@ -1,7 +1,7 @@
 <div class="card">
     <div class="card-header">
-        <p class="dashboard-cards-header">${Resource.msg('label.orderhistory','account',null)}</p>
-        <a href="${"#"}" class="dashboard-cards-header-link">${Resource.msg('link.view','account',null)}</a>
+        <h4 class="float-xs-left">${Resource.msg('label.orderhistory','account',null)}</h4>
+        <a href="${"#"}" class="float-xs-right">${Resource.msg('link.view','account',null)}</a>
     </div>
     <div class="card-block">
         <p class="dashboard-cards-block-title">${Resource.msg('label.orderhistory.mostrecentorder','account',null)}</p>

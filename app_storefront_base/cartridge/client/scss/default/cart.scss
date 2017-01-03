@@ -1,6 +1,7 @@
 @import "variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
+@import "utilities/delete-card-button";
 
 $spacer: 0.625em;
 $negative-spacer: -0.625rem;
@@ -157,16 +158,10 @@ $negative-spacer: -0.625rem;
 }
 
 .remove-btn-lg {
-    background-color: $light-gray;
-    border: none;
-    bottom: 0;
-    color: $slightly-darker-gray;
-    font-size: 1.625em;
+    @include delete-card-button();
+
     padding-left: 0.3125rem;
     padding-right: 0.3125rem;
-    position: absolute;
-    right: 0;
-    top: 0;
     z-index: 1;
 }
 
