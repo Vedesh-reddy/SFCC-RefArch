@@ -1,0 +1,51 @@
+@import "variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+
+.item-attributes {
+    display: inline-block;
+    vertical-align: top;
+}
+
+.line-item-attributes {
+    font-size: 0.813em;
+    margin: 0;
+}
+
+.line-item-name {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    color: $darker-gray;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 0.313em;
+}
+
+.line-item-pricing-info {
+    margin-bottom: 0;
+}
+
+.line-item-price-quantity-info::before {
+    content: "";
+    display: block;
+    border-bottom: 0.063em solid $horizontal-rule-grey;
+    margin: 0.625em 0.313em 0;
+
+    @include media-breakpoint-up(lg) {
+        margin: 0.625em -0.287em 0;
+    }
+}
+
+.line-item-total-text {
+    font-size: 0.813em;
+}
+
+.pricing {
+    font-weight: bolder;
+}
+
+.product-image {
+    width: 5.625em;
+    margin-right: 0.625em;
+}

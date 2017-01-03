@@ -1,0 +1,14 @@
+<div class="line-item-name col-xs-10">
+    <span>${lineItem.productName}</span>
+</div>
+<div class="col-xs-2 remove-line-item">
+    <button type="button" class="remove-btn remove-product" data-toggle="modal"
+            data-target="#removeProductModal" data-pid="${lineItem.id}"
+            data-name="${lineItem.productName}"
+            data-action="${pdict.actionUrls.removeProductLineItemUrl}"
+            data-uuid="${lineItem.UUID}"
+            aria-label="remove">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<isinclude template="cart/cartRemoveProductModal"/>

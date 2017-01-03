@@ -9,30 +9,10 @@ $receipt-spacing: 0.625em;
     font-weight: 600;
 }
 
-.item-attributes {
-    display: inline-block;
-    vertical-align: top;
-}
-
 .order-receipt-label {
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-}
-
-.line-item-attributes {
-    font-size: 0.813em !important;
-    margin: 0;
-}
-
-.line-item-name {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    color: $darker-gray;
-    font-size: $receipt-font-size;
-    font-weight: bold;
-    margin-bottom: $receipt-spacing;
 }
 
 .product-divider {
@@ -53,33 +33,6 @@ $receipt-spacing: 0.625em;
     @include media-breakpoint-up(lg) {
         margin: $receipt-spacing -1.225em;
     }
-}
-
-.line-item-price-quantity-info::before {
-    content: "";
-    display: block;
-    border-bottom: 0.063em solid $horizontal-rule-grey;
-    margin: $receipt-spacing 0.313em 0;
-
-    @include media-breakpoint-up(lg) {
-        margin: $receipt-spacing -0.287em 0;
-    }
-}
-
-.line-item-pricing-info {
-    margin-bottom: 0;
-}
-
-.line-item-total-text {
-    font-size: 0.813em;
-}
-
-.pricing {
-    font-weight: bolder;
-}
-
-.product-image {
-    width: 5.625em;
 }
 
 .shipping-method {

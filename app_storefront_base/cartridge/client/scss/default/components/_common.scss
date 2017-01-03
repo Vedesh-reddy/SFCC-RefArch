@@ -13,7 +13,7 @@ input[placeholder] {
     text-overflow: ellipsis;
 }
 
-header ~ .container a:not(.card-title) {
+header ~ .container a:not(.btn-primary) {
     color: $blue;
 }
 

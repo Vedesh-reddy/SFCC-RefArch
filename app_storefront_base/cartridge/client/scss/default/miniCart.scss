@@ -1,0 +1,47 @@
+@import "variables";
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/mixins/breakpoints";
+@import "productCard";
+
+.remove-btn {
+    color: $slightly-darker-gray;
+    float: right;
+    background-color: white;
+    border: none;
+    font-size: 1.625em;
+    margin-top: -0.313em;
+    padding: 0;
+}
+
+.product-summary {
+    overflow-y: scroll;
+    height: 21.875em;
+    margin-right: -0.938em;
+    padding-right: 0.938em;
+}
+
+.checkout-card-block {
+    padding: 0.625em;
+}
+
+.quantity-label {
+    font-size: 0.813em;
+}
+
+.mini-cart-footer {
+    border-top: 0.063em solid #ccc;
+}
+
+.estimated-total {
+    margin-top: 0.625em;
+}
+
+.sub-total-label {
+    font-size: 1em;
+    font-weight: 600;
+}
+
+.sub-total {
+    font-size: 1em;
+    font-weight: 600;
+}
