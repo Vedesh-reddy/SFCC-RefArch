@@ -5,9 +5,9 @@
     <field formid="shippingAddressUseAsBillingAddress" label="profile.billingSameAsShipping" type="boolean"
            binding="shippingAddressUseAsBillingAddress" checked="true" />
 
-    <field formid="firstName" label="profile.firstname" type="string" mandatory="true" binding="firstName"
+    <field formid="firstName" label="label.input.firstname.profile" type="string" mandatory="true" binding="firstName"
            max-length="50" missing-error="error.address.firstname.missing" range-error="error.address.firstname.range.invalid"/>
-    <field formid="lastName" label="profile.lastname" type="string" mandatory="true" binding="lastName" max-length="50"
+    <field formid="lastName" label="label.input.lastname.profile" type="string" mandatory="true" binding="lastName" max-length="50"
            missing-error="error.address.lastname.missing" range-error="error.address.lastname.range.invalid"/>
     <field formid="address1" label="resource.address1" type="string" mandatory="true" binding="address1" max-length="50"
            missing-error="error.address.address1.missing" range-error="error.address.address1.range.invalid"/>
@@ -39,14 +39,16 @@
 
     <!-- TODO: Add Payment information here -->
     <field formid="cardType" label="profile.cardtype" type="string" mandatory="true" binding="cardType"
-           max-length="16" missing-error="error.card.info.missing" />
+           max-length="16" missing-error="error.message.required" />
 
-    <field formid="cardNumber" label="profile.cardnumber" type="string" mandatory="true" binding="cardNumber"
-           max-length="16" missing-error="error.card.info.missing.cardNumber" />
+    <field formid="cardNumber" label="label.input.creditcard.number" type="string" mandatory="true" binding="cardNumber"
+           max-length="16" missing-error="error.message.required" />
 
-    <field formid="expirationMonth" label="profile.expirationmonth" type="string" mandatory="true"
-           binding="expirationMonth" missing-error="error.card.info.missing.expirationMonth"
-           value-error="address.field.invalid" >
+    <field formid="cardOwner" label="label.input.creditcard.owner" type="string" mandatory="true" binding="cardOwner"
+           max-length="16" missing-error="error.message.required" />
+
+    <field formid="expirationMonth" label="profile.expirationmonth" type="integer" mandatory="true" binding="expirationMonth" missing-error="error.message.required"
+        value-error="address.field.invalid">
         <options>
             <option optionid="" label="select.default.month" value=""/>
             <option optionid="01" label="01" value="01"/>
@@ -64,8 +66,8 @@
         </options>
     </field>
 
-    <field formid="expirationYear" label="profile.expiration.year" type="string" mandatory="true"
-        missing-error="error.card.info.missing.expirationYear" >
+    <field formid="expirationYear" label="profile.expiration.year" type="integer" mandatory="true"
+        missing-error="error.message.required">
         <options>
             <option optionid="" label="select.default.year" value=""/>
         </options>

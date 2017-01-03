@@ -2,7 +2,7 @@
     <div class="card-header">
         <h4 class="float-xs-left">${Resource.msg('label.payment','account',null)}</h4>
         <isif condition="${pdict.payment}">
-            <a href="${"#"}" class="float-xs-right">${Resource.msg('link.view','account',null)}</a>
+            <a href="${URLUtils.url('PaymentInstruments-List')}" class="float-xs-right">${Resource.msg('link.view','account',null)}</a>
         </isif>
     </div>
     <isif condition="${pdict.payment}">
@@ -13,6 +13,6 @@
         </div>
     </isif>
     <div class="card-footer card-footer-border text-xs-center">
-        <a href="${"#"}" class="card-link">${Resource.msg('link.addnew','account',null)}</a>
+        <a href="${URLUtils.url('PaymentInstruments-AddPayment')}" class="card-link">${Resource.msg('link.addnew','account',null)}</a>
     </div>
 </div>
