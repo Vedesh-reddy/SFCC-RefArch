@@ -91,6 +91,14 @@ function getCustomerObject(customer) {
             raw: customer
         };
     }
+    if (!customer.authenticated) {
+        return {
+            raw: customer,
+            credentials: {
+                username: customer.profile.credentials.login
+            }
+        };
+    }
     var preferredAddress = customer.addressBook.preferredAddress;
     var result;
     result = {
