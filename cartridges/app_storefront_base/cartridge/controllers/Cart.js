@@ -252,6 +252,10 @@ server.get('MiniCartShow', function (req, res, next) {
     var productLineItemsModel;
 
     Transaction.wrap(function () {
+        if (currentBasket && !currentBasket.defaultShipment.shippingMethod) {
+            ShippingModel.selectShippingMethod(currentBasket.defaultShipment);
+        }
+
         if (currentBasket) {
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         }
