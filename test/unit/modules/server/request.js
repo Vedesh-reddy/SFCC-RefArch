@@ -25,6 +25,7 @@ function createFakeRequest(overrides) {
                 firstName: 'John',
                 lastName: 'Snow',
                 email: 'jsnow@starks.com',
+                phoneHome: '1234567890',
                 wallet: {
                     paymentInstruments: new ArrayList([
                         {
@@ -102,6 +103,7 @@ describe('request', function () {
         assert.equal(req.currentCustomer.profile.firstName, 'John');
         assert.equal(req.currentCustomer.profile.lastName, 'Snow');
         assert.equal(req.currentCustomer.profile.email, 'jsnow@starks.com');
+        assert.equal(req.currentCustomer.profile.phone, '1234567890');
     });
     it('should contain correct current customer address book and properties', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer);
