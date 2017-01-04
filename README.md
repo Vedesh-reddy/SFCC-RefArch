@@ -82,3 +82,6 @@ Note: always use the pretty storefront URL when writing and running UI tests.
 ## Running Functional UI tests
 `npm run test:functional -- --url http://sbox01-realm1-company.demandware.net/s/SiteGenesis --chrome`
 Note: The same tests can be applied to both Appium and Functional tests, the only time you might run into issues is when a certain element is hidden on a certain size of screen and visible on another size of screen. In this case, you need to compile a different selector to accommodate that.
+
+## Node version control:
+https://nodecasts.io/update-node-js/
