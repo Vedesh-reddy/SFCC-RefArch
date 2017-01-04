@@ -34,10 +34,16 @@ var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
  * Main entry point for Checkout
  */
 server.get('Start', function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.redirect(URLUtils.url('Cart-Show'));
+        return next();
+    }
+
     var applicablePaymentCards;
     var applicablePaymentMethods;
     var countryCode = req.geolocation.countryCode;
-    var currentBasket = BasketMgr.getCurrentBasket();
     var currentCustomer = req.currentCustomer.raw;
     var billingAddress = currentBasket.billingAddress;
     var paymentAmount = currentBasket.totalGrossPrice;
@@ -121,7 +127,7 @@ server.get('Start', function (req, res, next) {
         forms: forms,
         expirationYears: creditCardExpirationYears
     });
-    next();
+    return next();
 });
 
 /**
@@ -271,6 +277,18 @@ server.post('SubmitShipping', function (req, res, next) {
             var shippingData = res.getViewData();
 
             var currentBasket = BasketMgr.getCurrentBasket();
+
+            if (!currentBasket) {
+                res.json({
+                    error: true,
+                    cartError: true,
+                    fieldErrors: [],
+                    serverErrors: [],
+                    redirectUrl: URLUtils.url('Cart-Show').toString()
+                });
+                return;
+            }
+
             var billingAddress = currentBasket.billingAddress;
             var orderTotals;
             var shipment = currentBasket.defaultShipment;
@@ -445,6 +463,18 @@ server.post('SubmitPayment', function (req, res, next) {
 
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var currentBasket = BasketMgr.getCurrentBasket();
+
+            if (!currentBasket) {
+                res.json({
+                    error: true,
+                    cartError: true,
+                    fieldErrors: [],
+                    serverErrors: [],
+                    redirectUrl: URLUtils.url('Cart-Show').toString()
+                });
+                return;
+            }
+
             var billingAddress = currentBasket.billingAddress;
             var billingData = res.getViewData();
             var paymentInstruments;
@@ -582,12 +612,24 @@ server.post('SubmitPayment', function (req, res, next) {
 });
 
 server.get('UpdateShippingMethodsList', function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return next();
+    }
+
     var address = {
         postalCode: req.querystring.postal,
         stateCode: req.querystring.state
     };
     var applicableShippingMethods;
-    var currentBasket = BasketMgr.getCurrentBasket();
     var orderTotals;
     var shipment = currentBasket.defaultShipment;
     var shipmentShippingModel;
@@ -612,7 +654,8 @@ server.get('UpdateShippingMethodsList', function (req, res, next) {
         shipping: shippingModel,
         shippingForm: server.forms.getForm('singleShipping')
     });
-    next();
+
+    return next();
 });
 
 /**
@@ -838,6 +881,18 @@ function sendConfirmationEmail(order) {
 
 server.post('PlaceOrder', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return next();
+    }
+
     var order;
     var validPayment;
     var orderNumber;
