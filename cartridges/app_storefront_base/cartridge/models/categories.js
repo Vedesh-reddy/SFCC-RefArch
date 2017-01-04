@@ -25,7 +25,8 @@ function categoryToObject(category) {
     }
     var result = {
         name: category.getDisplayName(),
-        url: getCategoryUrl(category)
+        url: getCategoryUrl(category),
+        id: category.ID
     };
     var subCategories = category.getOnlineSubCategories();
 
