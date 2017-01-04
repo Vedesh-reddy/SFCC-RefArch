@@ -2,7 +2,7 @@
 
 var assert = require('chai').assert;
 var sinon = require('sinon');
-var middleware = require('../../../../modules/server/middleware');
+var middleware = require('../../../../cartridges/modules/server/middleware');
 
 describe('middleware', function () {
     var next = null;

@@ -8,9 +8,9 @@ describe('CategoryAttributeValue model', function () {
     var refinementDefinition = {};
     var booleanAttributeValue = {};
 
-    var CategoryAttributeValue = proxyquire('../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/category', {
+    var CategoryAttributeValue = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/category', {
         '~/cartridge/models/search/attributeRefinementValue/base': proxyquire(
-            '../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
+            '../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
                 'dw/web/Resource': {
                     msgf: function () { return 'some product title'; }
                 }

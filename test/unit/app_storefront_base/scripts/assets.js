@@ -13,7 +13,7 @@ describe('assets', function () {
     var assets = null;
 
     beforeEach(function () {
-        assets = proxyquire('../../../../app_storefront_base/cartridge/scripts/assets', {
+        assets = proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/assets', {
             'dw/web/URLUtils': urlUtilsMock
         });
     });

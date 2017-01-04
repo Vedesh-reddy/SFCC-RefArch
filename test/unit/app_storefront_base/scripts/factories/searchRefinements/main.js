@@ -11,7 +11,7 @@ var mockSizeRefinementValue = sinon.spy();
 var mockBooleanRefinementValue = sinon.spy();
 var mockCategoryRefinementValue = sinon.spy();
 
-var main = proxyquire('../../../../../../app_storefront_base/cartridge/scripts/factories/searchRefinements/main', {
+var main = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/searchRefinements/main', {
     '~/cartridge/scripts/dwHelpers': mockDwHelpers,
     '~/cartridge/models/search/attributeRefinementValue/price': mockPriceRefinementValue,
     '~/cartridge/models/search/attributeRefinementValue/color': mockColorRefinementValue,

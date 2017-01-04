@@ -1,7 +1,7 @@
 node_modules/
-app_storefront_base/cartridge/static/default/css/
-app_storefront_base/cartridge/static/default/js/
-app_storefront_base/cartridge/static/default/fonts/
+cartridges/app_storefront_base/cartridge/static/default/css/
+cartridges/app_storefront_base/cartridge/static/default/js/
+cartridges/app_storefront_base/cartridge/static/default/fonts/
 coverage/
 npm-debug.log
 cartridges.zip

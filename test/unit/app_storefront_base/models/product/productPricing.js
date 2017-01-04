@@ -6,7 +6,7 @@ var ArrayList = require('../../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../../util');
 
 describe('productPricing', function () {
-    var ProductPricing = proxyquire('../../../../../app_storefront_base/cartridge/models/product/productPricing', {
+    var ProductPricing = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productPricing', {
         'dw/value/Money': require('../../../../mocks/dw.value.Money'),
         'dw/util/StringUtils': {
             formatMoney: function () {
@@ -16,7 +16,7 @@ describe('productPricing', function () {
         'dw/campaign/Promotion': {
             PROMOTION_CLASS_PRODUCT: 'someClass'
         },
-        '../../scripts/dwHelpers': proxyquire('../../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
+        '../../scripts/dwHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
             'dw/util/ArrayList': ArrayList
         })
     });

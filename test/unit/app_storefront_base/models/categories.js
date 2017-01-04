@@ -30,10 +30,10 @@ var createApiCategory = function (name, id) {
 describe('categories', function () {
     var Categories = null;
     beforeEach(function () {
-        var helper = proxyquire('../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
+        var helper = proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
             'dw/util/ArrayList': ArrayList
         });
-        Categories = proxyquire('../../../../app_storefront_base/cartridge/models/categories', {
+        Categories = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/categories', {
             '~/cartridge/scripts/dwHelpers': helper,
             'dw/web/URLUtils': urlUtilsMock
         });

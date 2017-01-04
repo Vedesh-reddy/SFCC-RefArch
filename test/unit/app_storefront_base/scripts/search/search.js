@@ -3,7 +3,7 @@
 var assert = require('chai').assert;
 var sinon = require('sinon');
 
-var search = require('../../../../../app_storefront_base/cartridge/scripts/search/search');
+var search = require('../../../../../cartridges/app_storefront_base/cartridge/scripts/search/search');
 
 
 describe('search script', function () {

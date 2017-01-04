@@ -6,12 +6,12 @@ var ArrayList = require('../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../util');
 
 describe('fullProduct', function () {
-    var ProductLineItem = proxyquire('../../../../app_storefront_base/cartridge/models/productLineItem', {
-        './product/productBase': proxyquire('../../../../app_storefront_base/cartridge/models/product/productBase', {
+    var ProductLineItem = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/productLineItem', {
+        './product/productBase': proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
             './productPricing': function () {},
             './productImages': function () {},
             './productAttributes': function () { return []; },
-            '../../scripts/dwHelpers': proxyquire('../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
+            '../../scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
                 'dw/util/ArrayList': ArrayList
             })
         }),
@@ -78,4 +78,3 @@ describe('fullProduct', function () {
         assert.equal(productLineItem.quantity, 1);
     });
 });
-

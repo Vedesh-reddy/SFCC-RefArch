@@ -104,10 +104,10 @@ var orderModel = {
 };
 
 describe('account', function () {
-    var helper = proxyquire('../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
+    var helper = proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
         'dw/util/ArrayList': ArrayList
     });
-    var AccountModel = proxyquire('../../../../app_storefront_base/cartridge/models/account', {
+    var AccountModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/account', {
         '~/cartridge/scripts/dwHelpers': helper
     });
 

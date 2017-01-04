@@ -65,10 +65,10 @@ var defaultShipment = {
 
 describe('Shipping', function () {
     var ShippingModel = null;
-    var helper = proxyquire('../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
+    var helper = proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
         'dw/util/ArrayList': ArrayList
     });
-    ShippingModel = proxyquire('../../../../app_storefront_base/cartridge/models/shipping', {
+    ShippingModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/shipping', {
         '~/cartridge/scripts/dwHelpers': helper,
         'dw/util/StringUtils': {
             formatMoney: function () {
@@ -180,4 +180,3 @@ describe('Shipping', function () {
         defaultShipment.setShippingMethod.restore();
     });
 });
-

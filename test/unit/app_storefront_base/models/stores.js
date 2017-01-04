@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-var StoresModel = require('../../../../app_storefront_base/cartridge/models/stores');
+var StoresModel = require('../../../../cartridges/app_storefront_base/cartridge/models/stores');
 
 describe('stores', function () {
     var actionUrl = '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Stores-FindStores';

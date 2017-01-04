@@ -6,9 +6,9 @@ var ArrayList = require('../../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../../util');
 
 describe('productAttributes', function () {
-    var ProductAttributes = proxyquire('../../../../../app_storefront_base/cartridge/models/product/productAttributes', {
+    var ProductAttributes = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productAttributes', {
         './productImages': function () {},
-        '../../scripts/dwHelpers': proxyquire('../../../../../app_storefront_base/cartridge/scripts/dwHelpers', {
+        '../../scripts/dwHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
             'dw/util/ArrayList': ArrayList
         })
     });

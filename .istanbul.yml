@@ -9,7 +9,6 @@ instrumentation:
         "**/controllers/**", # We can't test controllers without too much mocking
         "**/server/EventEmitter.js", # Third-party library
         "**/modules/*.js", # Those are just wrappers around modules
-        "bin/**", # Those are build scripts
-        "doc/**" # Those are documentation scripts
+        "webpack.config.js" # This is webpack config for javascript
     ]
     include-all-sources: true

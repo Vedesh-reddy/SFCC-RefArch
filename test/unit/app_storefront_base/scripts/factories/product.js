@@ -24,7 +24,7 @@ describe('productFactory', function () {
         var productModel = function () { this.message = 'full product model'; };
         productModel.getVariationModel = getVariationModel;
         productModel.getProductType = function () { return 'variant'; };
-        var productFactory = proxyquire('../../../../../app_storefront_base/cartridge/scripts/factories/product', {
+        var productFactory = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/product', {
             'dw/catalog/ProductMgr': toProductMock(productMgrMock),
             './../../models/product/product': productModel,
             './../../models/product/productBase': function () {}

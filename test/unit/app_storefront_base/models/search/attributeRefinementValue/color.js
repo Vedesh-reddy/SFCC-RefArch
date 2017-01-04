@@ -10,9 +10,9 @@ describe('ColorAttributeValue model', function () {
     var refinementValue = {};
     var colorAttributeValue = {};
 
-    var ColorAttributeValue = proxyquire('../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/color', {
+    var ColorAttributeValue = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/color', {
         '~/cartridge/models/search/attributeRefinementValue/base': proxyquire(
-            '../../../../../../app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
+            '../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
                 'dw/web/Resource': {
                     msgf: function () { return 'some product title'; }
                 }

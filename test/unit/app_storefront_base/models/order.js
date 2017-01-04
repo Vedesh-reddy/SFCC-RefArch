@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-var Order = require('../../../../app_storefront_base/cartridge/models/order');
+var Order = require('../../../../cartridges/app_storefront_base/cartridge/models/order');
 
 var createApiBasket = function () {
     return {
