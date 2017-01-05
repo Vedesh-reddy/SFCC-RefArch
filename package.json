@@ -17,7 +17,7 @@
     "compile:js": "webpack",
     "compile:fonts": "mkdir -p cartridges/app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/font-awesome/fonts/ cartridges/app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/flag-icon-css/flags/ cartridges/app_storefront_base/cartridge/static/default/fonts/flags",
     "lint": "eslint . && stylelint --syntax scss \"cartridges/app_storefront_base/cartridge/client/scss/**/*.scss\"",
-    "upload": "dwupload --file ",
+    "upload": "node bin/Makefile upload -- ",
     "watch:static": "onchange 'cartridges/app_storefront_base/cartridge/client/js/**/*.js' -- npm run compile:js & onchange 'cartridges/app_storefront_base/cartridge/client/scss/**/*.scss' -- npm run compile:scss & onchange 'cartridges/app_storefront_base/cartridge/static/**/*' -w -- npm run upload -- {{changed}}",
     "watch:cartridge": "onchange 'cartridges/app_storefront_base/cartridge/(controllers|models|scripts|templates|forms)/**/*' -w -- npm run upload -- {{changed}}",
     "watch": "npm run watch:static & npm run watch:cartridge"
