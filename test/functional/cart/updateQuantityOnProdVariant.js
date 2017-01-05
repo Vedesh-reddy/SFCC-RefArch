@@ -142,7 +142,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
             shipCostValue + totalTaxValue;
         const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedEstimatedTotal.toString(), locale);
 
-        return browser.getText(cartPage.SUB_TOTAL)
+        return browser.getText(cartPage.GRAND_TOTAL)
             .then(subTotal => {
                 assert.equal(subTotal, formattedExpectedSubTotal, 'Expected shipping cost to be ' + formattedExpectedSubTotal);
             });
