@@ -234,6 +234,7 @@ server.post('SaveProfile', function (req, res, next) {
     var result = {
         firstName: profileForm.customer.firstname.value,
         lastName: profileForm.customer.lastname.value,
+        phone: profileForm.customer.phone.value,
         email: profileForm.customer.email.value,
         confirmEmail: profileForm.customer.emailconfirm.value,
         password: profileForm.login.password.value,
@@ -269,6 +270,7 @@ server.post('SaveProfile', function (req, res, next) {
                     profile.setFirstName(formInfo.firstName);
                     profile.setLastName(formInfo.lastName);
                     profile.setEmail(formInfo.email);
+                    profile.setPhoneHome(formInfo.phone);
                 });
                 res.redirect(URLUtils.url('Account-Show'));
             } else {
