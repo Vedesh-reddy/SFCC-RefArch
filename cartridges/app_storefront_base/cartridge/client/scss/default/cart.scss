@@ -138,31 +138,33 @@ $negative-spacer: -0.625rem;
     margin-top: -0.313em;
 }
 
-.remove-btn {
-    color: $slightly-darker-gray;
-    font-size: 1.625em;
-    padding: 0;
-    position: absolute;
-    top: $negative-spacer;
-    right: 1.25rem;
-    border: none;
-    background-color: $white;
+.product-info {
+    .remove-btn {
+        color: $slightly-darker-gray;
+        font-size: 1.625em;
+        padding: 0;
+        position: absolute;
+        top: $negative-spacer;
+        right: 1.25rem;
+        border: none;
+        background-color: $white;
 
-    @include media-breakpoint-up(lg) {
-        top: 0;
-        bottom: 0;
-        right: $negative-spacer;
-        margin-top: $negative-spacer;
-        margin-bottom: $negative-spacer;
+        @include media-breakpoint-up(lg) {
+            top: 0;
+            bottom: 0;
+            right: $negative-spacer;
+            margin-top: $negative-spacer;
+            margin-bottom: $negative-spacer;
+        }
     }
-}
 
-.remove-btn-lg {
-    @include delete-card-button();
+    .remove-btn-lg {
+        @include delete-card-button();
 
-    padding-left: 0.3125rem;
-    padding-right: 0.3125rem;
-    z-index: 1;
+        padding-left: 0.3125rem;
+        padding-right: 0.3125rem;
+        z-index: 1;
+    }
 }
 
 .remove-line-item {

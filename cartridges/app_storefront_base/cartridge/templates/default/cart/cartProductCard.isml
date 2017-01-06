@@ -68,7 +68,7 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <select class=" custom-select quantity" aria-label="${Resource.msg('field.selectquantity','cart',null)}"
+                                <select class="custom-select quantity" aria-label="${Resource.msg('field.selectquantity','cart',null)}"
                                         data-uuid="${lineItem.UUID}"
                                         data-pid="${lineItem.id}"
                                         data-action="${pdict.actionUrls.updateQuantityUrl}"

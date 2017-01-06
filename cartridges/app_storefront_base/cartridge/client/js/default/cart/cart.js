@@ -59,7 +59,7 @@ function createErrorNotification(message) {
 }
 
 module.exports = function () {
-    $('.remove-product').click(function (e) {
+    $('body').on('click', '.remove-product', function (e) {
         e.preventDefault();
 
         var actionUrl = $(this).data('action');
@@ -82,7 +82,7 @@ module.exports = function () {
         $('.promo-code-form').toggle();
     });
 
-    $('.delete-confirmation-btn').click(function (e) {
+    $('body').on('click', '.delete-confirmation-btn', function (e) {
         e.preventDefault();
 
         var productID = $(this).data('pid');
@@ -123,7 +123,7 @@ module.exports = function () {
         });
     });
 
-    $('.quantity').change(function () {
+    $('body').on('change', '.quantity', function () {
         var quantity = $(this).val();
         var productID = $(this).data('pid');
         var url = $(this).data('action');
@@ -144,6 +144,7 @@ module.exports = function () {
             dataType: 'json',
             success: function (data) {
                 $('.item-total-' + uuid).empty();
+                $('.quantity[data-uuid="' + uuid + '"]').val(quantity);
                 for (var i = 0; i < data.items.length; i++) {
                     if (data.items[i].UUID === uuid) {
                         $('.item-total-' + uuid).append(data.items[i].priceTotal);
