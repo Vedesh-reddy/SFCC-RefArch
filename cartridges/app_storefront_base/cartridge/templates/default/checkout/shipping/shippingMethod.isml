@@ -1,4 +1,4 @@
-<div class="row leading-lines shipping-method-list" data-action="${URLUtils.url('Checkout-UpdateShippingMethodsList')}">
+<div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.url('Cart-SelectShippingMethod')}" data-action="${URLUtils.url('Checkout-UpdateShippingMethodsList')}">
     <isloop items="${pdict.order.shipping.applicableShippingMethods}" var="shippingMethod" status="loopSate">
         <div class="form-check col-xs-8 start-lines">
             <label class="form-check-label shipping-method-option">

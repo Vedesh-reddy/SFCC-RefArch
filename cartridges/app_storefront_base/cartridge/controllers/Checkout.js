@@ -296,7 +296,6 @@ server.post('SubmitShipping', function (req, res, next) {
             var shippingAddressModel;
             var shippingModel;
             var shipmentShippingModel;
-            var shippingMethodID = shippingData.shippingMethod;
 
             Transaction.wrap(function () {
                 if (shippingAddress === null) {
@@ -329,12 +328,6 @@ server.post('SubmitShipping', function (req, res, next) {
                     billingAddress.setPhone(shippingData.address.phone);
                 }
             });
-
-            if (shippingMethodID !== shipment.shippingMethod.ID) {
-                Transaction.wrap(function () {
-                    ShippingModel.selectShippingMethod(shipment, shippingMethodID);
-                });
-            }
 
             // Calculate the basket
             Transaction.wrap(function () {
@@ -635,12 +628,22 @@ server.get('UpdateShippingMethodsList', function (req, res, next) {
     var shipmentShippingModel;
     var shippingAddressModel;
     var shippingModel;
+    var shippingMethodID;
+
+    if (shipment.shippingMethod) {
+        shippingMethodID = shipment.shippingMethod.ID;
+    }
 
     shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
     applicableShippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
 
     Transaction.wrap(function () {
-        ShippingModel.selectShippingMethod(shipment, null, applicableShippingMethods, address);
+        ShippingModel.selectShippingMethod(
+            shipment,
+            shippingMethodID,
+            applicableShippingMethods,
+            address
+        );
         HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
     });
 

@@ -174,7 +174,11 @@ module.exports = function () {
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                updateCartTotals(data);
+                if (data.error) {
+                    window.location.href = data.redirectUrl;
+                } else {
+                    updateCartTotals(data);
+                }
                 $.spinner().stop();
             },
             error: function (err) {
