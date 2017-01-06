@@ -9,7 +9,7 @@ const locale = wdioConfig.locale;
 export function msg(key, bundleName, defaultValue) {
     let bundlePath;
     let props;
-    const resourceDirPath = './app_storefront_base/cartridge/templates/resources/';
+    const resourceDirPath = './cartridges/app_storefront_base/cartridge/templates/resources/';
     if (!key) {
         return defaultValue;
     }
