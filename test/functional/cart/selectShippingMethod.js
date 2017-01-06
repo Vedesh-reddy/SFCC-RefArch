@@ -142,7 +142,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(taxTotal => {
                     assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
-                .then(() => browser.getText(cartPage.SUB_TOTAL))
+                .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
                     const expectedUnitPrice1 = prodIdUnitPricesMap[productVariantId1].list;
                     const listPriceValue1 = pricingHelpers.getCurrencyValue(expectedUnitPrice1, locale);
@@ -207,7 +207,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(taxTotal => {
                     assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
-                .then(() => browser.getText(cartPage.SUB_TOTAL))
+                .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
                     const expectedUnitPrice1 = prodIdUnitPricesMap[productVariantId1].list;
                     const listPriceValue1 = pricingHelpers.getCurrencyValue(expectedUnitPrice1, locale);
@@ -272,7 +272,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(taxTotal => {
                     assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
-                .then(() => browser.getText(cartPage.SUB_TOTAL))
+                .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
                     const expectedUnitPrice1 = prodIdUnitPricesMap[productVariantId1].list;
                     const listPriceValue1 = pricingHelpers.getCurrencyValue(expectedUnitPrice1, locale);
@@ -337,7 +337,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(taxTotal => {
                     assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
-                .then(() => browser.getText(cartPage.SUB_TOTAL))
+                .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
                     const expectedUnitPrice1 = prodIdUnitPricesMap[productVariantId1].list;
                     const listPriceValue1 = pricingHelpers.getCurrencyValue(expectedUnitPrice1, locale);
@@ -402,7 +402,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(taxTotal => {
                     assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
-                .then(() => browser.getText(cartPage.SUB_TOTAL))
+                .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
                     const expectedUnitPrice1 = prodIdUnitPricesMap[productVariantId1].list;
                     const listPriceValue1 = pricingHelpers.getCurrencyValue(expectedUnitPrice1, locale);

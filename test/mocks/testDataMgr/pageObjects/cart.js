@@ -8,7 +8,7 @@ export const ITEM_QUANTITY = '.quantity';
 export const NUMBER_OF_ITEMS = '.number-of-items';
 export const SHIPPING_COST = '.shipping-cost';
 export const TAX_TOTAL = '.tax-total';
-export const SUB_TOTAL = '.sub-total';
+export const GRAND_TOTAL = '.grand-total';
 export const SHIPPING_METHODS = '.shippingMethods';
 export const SHIPPING_METHOD_OPTIONS = '.shippingMethods  > option';
 
