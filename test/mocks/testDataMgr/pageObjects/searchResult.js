@@ -18,7 +18,6 @@ export const redColorRefinementSelectorChecked = '.swatch-circle-red.selected';
 export const buttonfaCircleO = ' .fa-circle-o';
 export const priceRefinementTitle = '.price .values li:nth-child(2)';
 export const price3RefinementTitle = '.price .values li:nth-child(3)';
-//export const priceRefinementSelector = price3RefinementTitle + buttonfaCircleO;
 export const priceRefinementSelector = priceRefinementTitle + buttonfaCircleO;
 export const newArrivalRefinementUnchecked = '.refinement-bar .fa-square-o';
 export const price3RefinementSelector = price3RefinementTitle + buttonfaCircleO;
