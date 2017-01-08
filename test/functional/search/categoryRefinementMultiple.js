@@ -15,7 +15,7 @@ import { config } from '../webdriver/wdio.conf';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 import * as Resource from '../../mocks/dw/web/Resource';
 
-describe('Query Search and multiple refinements -  general product', () => {
+describe('Category Navigation and multiple refinements -  general product', () => {
     const topTitle = '.page-title';
     const locale = config.locale;
     const productID = '25565106';
@@ -41,21 +41,32 @@ describe('Query Search and multiple refinements -  general product', () => {
         .then((isVisible) => {
             if (isVisible) {
                 // access mobile devices
-                return browser.click(search.filterButton)
-                    .then(() => browser.waitForExist(search.refinementBarColor))
-                    .then(() => browser.click(search.refinementBarColor))
-                    .then(() => browser.waitForExist(search.refinementBarColorActive))
-                    .then(() => browser.click(search.blackColorRefinementSelector))
+                return browser.click(homePage.navBarButton)
+                    .waitForVisible(homePage.navBar)
+                    .click(homePage.navWomenButton)
+                    .waitForVisible(homePage.navWomenClothingButton)
+                    .click(homePage.navWomenClothingButton)
+                    .waitForVisible(homePage.navWomenClothingTopsButton)
+                    .click(homePage.navWomenClothingTopsButton)
+                    .waitForVisible(homePage.navBarButton)
+                    .pause(1000)
+                    .getText(topTitle)
+                    .then(title => assert.equal(title, 'Tops'))
+                    .click(search.filterButton)
+                    .waitForExist(search.refinementBarColor)
+                    .click(search.refinementBarColor)
+                    .waitForExist(search.refinementBarColorActive)
+                    .click(search.redColorRefinementSelector)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.waitForExist(search.refinementBarPrice))
-                    .then(() => browser.click(search.refinementBarPrice))
-                    .then(() => browser.waitForExist(search.refinementBarPriceActive))
-                    .then(() => browser.click(search.priceRefinementSelector))
+                    .click(search.refinementBarPrice)
+                    .waitForExist(search.refinementBarPriceActive)
+                    .click(search.price3RefinementSelector)
                     .then(() => common.waitUntilAjaxCallEnded())
-                    .then(() => browser.waitForExist(search.refinementBarNewArrival))
-                    .then(() => browser.click(search.refinementBarNewArrival))
-                    .then(() => browser.waitForExist(search.refinementBarNewArrivalActive))
-                    .then(() => browser.click(search.newArrivalRefinementUnchecked))
+                    .then(() => browser.waitForExist(search.refinementBarSize))
+                    .click(search.refinementBarSize)
+                    .waitForExist(search.refinementBarSizeActive)
+                    .click(search.size8RefinementSelector)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.click(search.buttonClose))
                     .then(() => common.waitUntilPageLoaded())
@@ -99,66 +110,37 @@ describe('Query Search and multiple refinements -  general product', () => {
                 // access desktop or laptop browser
                 return common.getVisibleSelector(search.colorRefinementLarge,
                     search.colorRefinementSmall)
-                    .then(mySearchSelector => verifySearchResults(mySearchSelector, searchResultMsg2))
-
+                    .then(mySearchSelector => verifySearchResults(mySearchSelector, searchResultMsg2));
             });
     });
 
     it('#2 should return the correct names of the products when refined by Color, Price and Size', () => {
-        return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
-                    // access mobile devices
-                }
-                // access desktop/laptop browsers
-                return productTile.getProductTileProductName(productID)
-                    .then(productName => {
-                        return assert.equal(productName, expectedDisplayName, 'Expected: displayed product name = ' + expectedDisplayName);
-                    })
+        return productTile.getProductTileProductName(productID)
+            .then(productName => {
+                return assert.equal(productName, expectedDisplayName, 'Expected: displayed product name = ' + expectedDisplayName);
             });
     });
 
     it('#3 should return the correct images when refined by Color, Price and Size', () => {
         const product1ImageSrc = 'images/medium/PG.10229049.JJ1TOA0.PZ.jpg';
-        return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
-                    // access mobile devices
-                }
-                // access desktop/laptop browsers
-                return productTile.getProductTileImageSrc(productID)
-                    .then(imageSrc => {
-                        return assert.isTrue(imageSrc.endsWith(product1ImageSrc),
-                            'product image: url not end with ' + product1ImageSrc);
-                    })
+        return productTile.getProductTileImageSrc(productID)
+            .then(imageSrc => {
+                return assert.isTrue(imageSrc.endsWith(product1ImageSrc),
+                    'product image: url not end with ' + product1ImageSrc);
             });
     });
 
     it('#4 should return the correct href links when refined by Color, Price and Size', () => {
-        return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
-                    // access mobile devices
-                }
-                // access desktop/laptop browsers
-                const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productID + '.html?lang=' + localeStr;
-                return productTile.getProductTileImageHref(productID)
-                    .then(imageLink => {
-                        assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
-                    })
+        const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productID + '.html?lang=' + localeStr;
+        return productTile.getProductTileImageHref(productID)
+            .then(imageLink => {
+                assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
             });
     });
 
     it('#5 should return the correct color swatch count when refined by Color, Price and Size', () => {
-        return browser.isVisible(search.filterButton)
-            .then((isTrue) => {
-                if (isTrue) {
-                    // access mobile devices
-                }
-                // access desktop/laptop browsers
-                return productTile.getProductTileColorSwatchCount(productID)
-                    .then(count => assert.equal(count, 1, 'Expected: the number of color swatch to be 1.'))
-            });
+        return productTile.getProductTileColorSwatchCount(productID)
+            .then(count => assert.equal(count, 1, 'Expected: the number of color swatch to be 1.'));
     });
 
     it('#6 should return 275 results for pants when reset button is clicked', () => {
@@ -167,6 +149,14 @@ describe('Query Search and multiple refinements -  general product', () => {
             .then((isTrue) => {
                 if (isTrue) {
                     // access mobile devices
+                    return browser.click(search.filterButton)
+                        .waitForExist(search.refinementBarColorActive, 3000)
+                        .click(search.resetButton)
+                        .then(() => common.waitUntilAjaxCallEnded())
+                        .then(() => browser.pause(1000))
+                        .then(() => common.getVisibleSelector(search.colorRefinementLarge,
+                            search.colorRefinementSmall))
+                        .then(mySearchSelector => verifySearchResults(mySearchSelector, searchResultMsg));
                 }
                 // access desktop/laptop browsers
                 return browser.click(search.resetButton)
@@ -176,5 +166,4 @@ describe('Query Search and multiple refinements -  general product', () => {
                     .then(mySearchSelector => verifySearchResults(mySearchSelector, searchResultMsg));
             });
     });
-
 });

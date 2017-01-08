@@ -36,10 +36,16 @@ describe('Category Navigation and single Refinement - General Product', () => {
             if (isVisible) {
                 //  Access mobile devices
                 return browser.click(homePage.navBarButton)
-                    .then(() => browser.waitForVisible(homePage.closeButton))
-                    .then(() => browser.click(homePage.navWomenButton))
-                    .then(() => browser.waitForVisible(homePage.backButton))
-                    .then(() => browser.click(homePage.navTopCategory))
+                    .waitForVisible(homePage.navBar)
+                    .click(homePage.navWomenButton)
+                    .waitForVisible(homePage.navWomenClothingButton)
+                    .click(homePage.navWomenClothingButton)
+                    .waitForVisible(homePage.navWomenClothingTopsButton)
+                    .click(homePage.navWomenClothingTopsButton)
+                    .waitForVisible(homePage.navBarButton)
+                    .pause(1000)
+                    .getText(topTitle)
+                    .then(title => assert.equal(title, 'Tops'));
             }
             //  Access desktop or laptop browsers
             return browser.click(search.searchForm)
@@ -51,7 +57,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                 .keys(keyboard.DOWN)
                 .keys(keyboard.ENTER)
                 .getText(topTitle)
-                .then(title => assert.equal(title, 'Tops'))
+                .then(title => assert.equal(title, 'Tops'));
         })
     );
 
@@ -59,7 +65,6 @@ describe('Category Navigation and single Refinement - General Product', () => {
         .then(() => common.waitUntilPageLoaded())
         // I need this pause since wait for other condition has failed
         .then(() => browser.pause(2000)));
-
 
     it('#1 should return 275 Results when Navigate to Women->Clothing->Tops', () => {
         return common.getVisibleSelector(search.searchResultLarge, search.searchResultSmall)
@@ -76,7 +81,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                         .then(() => browser.waitForExist(search.refinementBarColor))
                         .then(() => browser.click(search.refinementBarColor))
                         .then(() => browser.waitForExist(search.refinementBarColorActive))
-                        .then(() => browser.click(search.blueColorRefinementSelector))
+                        .then(() => browser.click(search.redColorRefinementSelector))
                         .then(() => browser.pause(2000))
                         .then(() => common.getVisibleSelector(search.colorRefinementLarge,
                             search.colorRefinementSmall))
@@ -147,6 +152,5 @@ describe('Category Navigation and single Refinement - General Product', () => {
                     .then(() => common.waitUntilPageLoaded());
             });
     });
-
 });
 

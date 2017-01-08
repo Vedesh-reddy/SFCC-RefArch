@@ -11,13 +11,15 @@ export const ELECTRONICS = '.navbar .nav-item:nth-child(4)';
 export const TOP_SELLERS = '.navbar .nav-item:nth-child(5)';
 export const navBarButton = '.navbar-toggler';
 export const navNewArrivalButton = '.navbar-nav .nav-item[role=button]:nth-child(1) .nav-link';
-export const navWomenButton = '.navbar-nav .nav-item[role=button]:nth-child(2) .nav-link';
+export const navWomenButton = '#womens';
 export const navMenButton = '.navbar-nav .nav-item[role=button]:nth-child(3) .nav-link';
 export const navElectronics = '.navbar-nav .nav-item[role=button]:nth-child(4) .nav-link';
 export const navTopSellers = '.navbar-nav .nav-item[role=button]:nth-child(5) .nav-link';
 export const closeButton = '.close-button';
 export const backButton = '.dropdown-menu .back .caret-left';
-export const navTopCategory = '.dropdown-item.top-category .nav-link';
+export const navWomenClothingButton = '#womens-clothing';
+export const navWomenClothingTopsButton = '#womens-clothing-tops';
+export const navBar = '#sg-navbar-collapse';
 
 const basePath = '/home';
 
