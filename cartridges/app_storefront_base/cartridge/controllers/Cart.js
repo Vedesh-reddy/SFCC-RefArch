@@ -4,7 +4,6 @@ var server = require('server');
 
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
-var ProductMgr = require('dw/catalog/ProductMgr');
 var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
 var Transaction = require('dw/system/Transaction');
@@ -13,6 +12,7 @@ var Cart = require('~/cartridge/models/cart');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var Totals = require('~/cartridge/models/totals');
+var cartHelpers = require('~/cartridge/scripts/cart/cartHelpers');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
@@ -23,19 +23,13 @@ server.get('MiniCart', server.middleware.include, function (req, res, next) {
 
 // FIXME: This is just a temporary endpoint to add a simple variant from the Product Detail Page.
 server.post('AddProduct', function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentOrNewBasket();
     var productId = req.querystring.pid;
     var quantity = parseInt(req.querystring.quantity, 10);
-    var dwProduct = ProductMgr.getProduct(productId);
-    var dwOptionModel = dwProduct.getOptionModel();
-    var dwBasket = BasketMgr.getCurrentOrNewBasket();
-    var dwShipment = dwBasket.getDefaultShipment();
 
-    Transaction.begin();
-    dwBasket.createProductLineItem(dwProduct, dwOptionModel, dwShipment)
-        .setQuantityValue(quantity);
-    Transaction.commit();
+    cartHelpers.addProductToCart(currentBasket, productId, quantity);
 
-    var quantityTotal = ProductLineItemModel.getTotalQuantity(dwBasket.allProductLineItems);
+    var quantityTotal = ProductLineItemModel.getTotalQuantity(currentBasket.allProductLineItems);
 
     res.json({ quantityTotal: quantityTotal });
     next();
