@@ -57,25 +57,15 @@ function fillModalElement(productUrl, selectedValueUrl) {
  *
  * @param {Object} element - the swatch element that is currently being clicked or hovered over
  */
-function handleSwatchHover(element) {
+function handleSwatchClick(element) {
     var swatchData = element.data('attributes');
-    var productTile = element.closest('.product-tile');
-    var productTileImg = productTile.find('.tile-image');
 
-    productTileImg.attr('src', swatchData.imageUrl);
-    productTileImg.closest('a').attr('href', swatchData.pdpUrl);
-    productTile.find('.link').attr('href', swatchData.pdpUrl);
-    productTile.find('.swatches a').attr('href', swatchData.pdpUrl);
-    productTile.find('.quickview').attr('href', swatchData.quickViewURL);
+    location.assign(swatchData.url.replace('Variation', 'Show'));
 }
 
 module.exports = function () {
-    $('.product-tile .swatch').on('mouseenter', function () {
-        handleSwatchHover($(this));
-    });
-
-    $('.product-tile .swatch').on('click', function () {
-        handleSwatchHover($(this));
+    $('body').on('click', '.product-tile .swatch', function () {
+        handleSwatchClick($(this));
     });
 
     $('body').on('click', '.quickview', function (e) {
