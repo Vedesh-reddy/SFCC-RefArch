@@ -1,5 +1,5 @@
 'use strict';
-/*
+/**
 Query Search on General Product then do multiple refinements
 - Search for 'pants'
 - refine by Color, Price and New Arrival
