@@ -27,11 +27,6 @@
                             &#9776; <span class="hidden-xs-down">Menu</span>
                         </button>
                     </div>
-                    <div class="pull-right">
-                        <div class="mini-cart">
-                            <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

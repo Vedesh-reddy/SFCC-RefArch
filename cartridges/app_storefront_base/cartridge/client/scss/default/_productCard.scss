@@ -26,15 +26,20 @@
     margin-bottom: 0;
 }
 
+#checkout-main {
+    .line-item-price-quantity-info::before {
+
+        @include media-breakpoint-up(lg) {
+            margin: 0.625em -0.287em 0;
+        }
+    }
+}
+
 .line-item-price-quantity-info::before {
     content: "";
     display: block;
     border-bottom: 0.063em solid $horizontal-rule-grey;
     margin: 0.625em 0.313em 0;
-
-    @include media-breakpoint-up(lg) {
-        margin: 0.625em -0.287em 0;
-    }
 }
 
 .line-item-total-text {

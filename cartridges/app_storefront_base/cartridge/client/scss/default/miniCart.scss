@@ -3,45 +3,84 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "productCard";
 
-.remove-btn {
-    color: $slightly-darker-gray;
-    float: right;
-    background-color: white;
-    border: none;
-    font-size: 1.625em;
-    margin-top: -0.313em;
-    padding: 0;
-}
+.mini-cart {
+    position: relative;
 
-.product-summary {
-    overflow-y: scroll;
-    height: 21.875em;
-    margin-right: -0.938em;
-    padding-right: 0.938em;
-}
+    h4 {
+        font-size: 1rem;
+    }
 
-.checkout-card-block {
-    padding: 0.625em;
-}
+    .cart {
+        padding-top: 0.625em;
+        padding-bottom: 0.625em;
+        background-color: $body-bg;
+    }
 
-.quantity-label {
-    font-size: 0.813em;
-}
+    .remove-btn {
+        color: $slightly-darker-gray;
+        float: right;
+        background-color: white;
+        border: none;
+        font-size: 1.625em;
+        margin-top: -0.313em;
+        padding: 0;
+    }
 
-.mini-cart-footer {
-    border-top: 0.063em solid #ccc;
-}
+    .product-summary {
+        overflow-y: scroll;
+        overflow-x: hidden;
+        height: 21.875em;
+        margin-right: -0.938em;
+        padding-right: 0.938em;
+    }
 
-.estimated-total {
-    margin-top: 0.625em;
-}
+    .checkout-card-block {
+        padding: 0.625em;
+    }
 
-.sub-total-label {
-    font-size: 1em;
-    font-weight: 600;
-}
+    .quantity-label {
+        font-size: 0.813em;
+    }
 
-.sub-total {
-    font-size: 1em;
-    font-weight: 600;
+    .popover {
+        top: 100%;
+        left: initial;
+        right: 0;
+        min-width: 350px;
+        max-width: 350px;
+        min-height: 100px;
+        display: none;
+
+        &::before {
+            left: initial;
+            right: 15px;
+        }
+
+        &::after {
+            left: initial;
+            right: 16px;
+        }
+
+        &.show {
+            display: block;
+        }
+    }
+
+    .mini-cart-footer {
+        border-top: 0.063em solid #ccc;
+    }
+
+    .estimated-total {
+        margin-top: 0.625em;
+    }
+
+    .sub-total-label {
+        font-size: 1em;
+        font-weight: 600;
+    }
+
+    .sub-total {
+        font-size: 1em;
+        font-weight: 600;
+    }
 }
