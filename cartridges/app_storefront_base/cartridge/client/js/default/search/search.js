@@ -156,8 +156,8 @@ module.exports = function () {
         });
     });
 
-    // Handle refinement value selection
-    $('.container').on('click', '.refinements li a', function (e) {
+    // Handle refinement value selection and reset click
+    $('.container').on('click', '.refinements li a, .refinement-bar a.reset', function (e) {
         e.preventDefault();
 
         $.spinner().start();
@@ -165,10 +165,9 @@ module.exports = function () {
             url: updateUrlWithSize(e.currentTarget.href),
             method: 'GET',
             success: function (response) {
-                $.spinner().stop();
                 parseResults(response);
             },
-            error: function () {
+            complete: function () {
                 $.spinner().stop();
             }
         });
