@@ -7,6 +7,7 @@ var HookMgr = require('dw/system/HookMgr');
 var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
 var Transaction = require('dw/system/Transaction');
+var URLUtils = require('dw/web/URLUtils');
 
 var Cart = require('~/cartridge/models/cart');
 var ProductLineItemModel = require('~/cartridge/models/productLineItems');
@@ -196,18 +197,37 @@ server.get('UpdateQuantity', function (req, res, next) {
 });
 
 server.get('SelectShippingMethod', function (req, res, next) {
-    var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+
+        return next();
+    }
+
+    var applicableShippingMethods;
+    var cartTotals;
     var error = false;
     var productLineItemModel;
-    var shipmentShippingModel;
+    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(currentBasket.defaultShipment);
     var shippingModel;
+
+    if (req.querystring.state) {
+        var address = {
+            stateCode: req.querystring.state
+        };
+        applicableShippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
+    }
+
 
     if (req.querystring.methodID) {
         Transaction.wrap(function () {
             ShippingModel.selectShippingMethod(
                 currentBasket.defaultShipment,
-                req.querystring.methodID
+                req.querystring.methodID,
+                applicableShippingMethods
             );
 
             if (currentBasket && !currentBasket.defaultShipment.shippingMethod) {
@@ -230,14 +250,13 @@ server.get('SelectShippingMethod', function (req, res, next) {
         var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
 
         res.json(basket);
-        next();
     } else {
         res.setStatusCode(500);
         res.json({
             errorMessage: Resource.msg('error.cannot.select.shipping.method', 'cart', null)
         });
-        next();
     }
+    return next();
 });
 
 server.get('MiniCartShow', function (req, res, next) {

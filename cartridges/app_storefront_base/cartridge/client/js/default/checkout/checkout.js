@@ -474,6 +474,34 @@
                     members.updateShippingMethodList
                 );
 
+                $('.shipping-method-list').change(function () {
+                    var url = $(this).data('select-shipping-method-url');
+                    var urlParams = {
+                        methodID: $(this).find(':checked').val(),
+                        state: $('.shippingState').val()
+                    };
+
+                    url += (url.indexOf('?') !== -1 ? '&' : '?') +
+                        Object.keys(urlParams).map(function (key) {
+                            return key + '=' + encodeURIComponent(urlParams[key]);
+                        }).join('&');
+
+                    $.spinner().start();
+                    $.ajax({
+                        url: url,
+                        type: 'get',
+                        dataType: 'json',
+                        success: function (data) {
+                            if (data.error) {
+                                window.location.href = data.redirectUrl;
+                            } else {
+                                updateTotals(data.totals);
+                            }
+                            $.spinner().stop();
+                        }
+                    });
+                });
+
                 //
                 // Set the form data
                 //
