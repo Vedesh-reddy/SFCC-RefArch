@@ -87,15 +87,17 @@
 
                     <hr>
 
-                    <!-- Prices -->
-                    <div class="prices row">
-                        <div class="col-sm-12">
-                            <isinclude template="/product/components/pricing" />
+                    <div class="prices-add-to-cart-actions">
+                        <!-- Prices -->
+                        <div class="prices row">
+                            <div class="col-sm-12">
+                                <isinclude template="/product/components/pricing" />
+                            </div>
                         </div>
-                    </div>
 
-                    <!-- Cart and [Optionally] Apple Pay -->
-                    <isinclude template="/product/components/addtocart" />
+                        <!-- Cart and [Optionally] Apple Pay -->
+                        <isinclude template="/product/components/addtocart" />
+                    </div>
 
                     <!-- Add to Wishlist and Social Sharing Icons -->
                     <div class="row wishlist-social hidden-sm-down">

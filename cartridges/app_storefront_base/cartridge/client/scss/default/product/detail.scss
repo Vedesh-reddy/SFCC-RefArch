@@ -96,7 +96,10 @@ a.add-to-wish-list {
 }
 
 .description-and-detail {
-    margin-top: 3.125em;
+
+    @include media-breakpoint-up(sm) {
+        margin-top: 3.125em;
+    }
 }
 
 .add-to-wish-list {
@@ -121,9 +124,46 @@ a.add-to-wish-list {
     text-align: center;
 }
 
-.cart-and-ipay {
+.prices-add-to-cart-actions .row.cart-and-ipay {
     text-align: center;
+    padding-right: 0;
+    padding-left: 0;
+
+    .btn {
+        width: 100%;
+    }
+
+    @include media-breakpoint-up(sm) {
+        .btn {
+            width: 8.84em;
+        }
+    }
+
+    @include media-breakpoint-down(xs) {
+        div {
+            padding: 0.625em;
+        }
+    }
+}
+
+.prices-add-to-cart-actions {
     width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 50;
+    padding-right: 0;
+    padding-left: 0;
+
+    @include media-breakpoint-down(xs) {
+        div {
+            background-color: $white;
+        }
+    }
+
+    @include media-breakpoint-up(sm) {
+        position: static;
+        padding: 0 0.9375em;
+    }
 }
 
 div.availability,
