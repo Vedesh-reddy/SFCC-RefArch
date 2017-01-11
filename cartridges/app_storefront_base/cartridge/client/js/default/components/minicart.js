@@ -15,12 +15,13 @@ module.exports = function () {
         if ($('.search:visible').length === 0) {
             return;
         }
+        var url = $('.mini-cart').data('action-url');
         var count = parseInt($('.mini-cart .minicart-quantity').text(), 10);
 
         if (count !== 0 && $('.mini-cart .popover.show').length === 0) {
             $('.mini-cart .popover').addClass('show');
             $('.mini-cart .popover').spinner().start();
-            $.get('Cart-MiniCartShow', function (data) {
+            $.get(url, function (data) {
                 $('.mini-cart .popover').append(data);
                 $.spinner().stop();
             });
