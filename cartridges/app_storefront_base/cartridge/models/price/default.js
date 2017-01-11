@@ -26,11 +26,6 @@ function DefaultPrice(inputListPrice, inputSalesPrice, promotionPrice) {
     this.type = 'default';
     this.list = listPrice ? priceHelper.toPriceModel(listPrice) : null;
     this.sales = priceHelper.toPriceModel(salesPrice);
-    this.html = priceHelper.renderHtml(priceHelper.getHtmlContext({
-        type: this.type,
-        list: this.list,
-        sales: this.sales
-    }));
 }
 
 module.exports = DefaultPrice;

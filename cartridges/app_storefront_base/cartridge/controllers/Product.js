@@ -2,8 +2,40 @@
 
 var server = require('server');
 var URLUtils = require('dw/web/URLUtils');
+var priceHelper = require('../scripts/helpers/pricing');
 var ProductFactory = require('../scripts/factories/product');
 var Resource = require('dw/web/Resource');
+
+
+/**
+ * Generates price html needed for Ajax calls
+ *
+ * @param {Object} price - Instance of <Tiered|Range|Default>Price class
+ * @param {string} price.type - Price type
+ * @return {string} - Rendered HTML for price
+ */
+function getHtml(price) {
+    if (price.type === 'tiered') {
+        return priceHelper.renderHtml(priceHelper.getHtmlContext({
+            type: price.type,
+            tiers: price.tiers
+        }));
+    }
+
+    if (price.type === 'range') {
+        return priceHelper.renderHtml(priceHelper.getHtmlContext({
+            type: price.type,
+            min: price.min,
+            max: price.max
+        }));
+    }
+
+    return priceHelper.renderHtml(priceHelper.getHtmlContext({
+        type: price.type,
+        list: price.list,
+        sales: price.sales
+    }));
+}
 
 /**
  * @typedef ProductDetailPageResourceMap
@@ -49,8 +81,12 @@ server.get('Show', function (req, res, next) {
 
 server.get('Variation', function (req, res, next) {
     var params = req.querystring;
+    var product = ProductFactory.get(params);
+
+    product.price.html = getHtml(product.price);
+
     res.json({
-        product: ProductFactory.get(params),
+        product: product,
         resources: getResources()
     });
 

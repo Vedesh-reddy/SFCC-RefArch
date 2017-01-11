@@ -201,7 +201,7 @@ module.exports = {
         });
 
         // Update pricing
-        $('.price-wrapper .price').replaceWith(response.product.price.html);
+        $('.prices .price').replaceWith(response.product.price.html);
 
         updateAvailability(response);
     }

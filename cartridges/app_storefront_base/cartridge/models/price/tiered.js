@@ -29,11 +29,6 @@ function TieredPrice(priceTable, isProductTile) {
         };
     }, this);
 
-    this.html = priceHelper.renderHtml(priceHelper.getHtmlContext({
-        type: this.type,
-        tiers: this.tiers
-    }));
-
     this.min = startingFromPrice;
 }
 

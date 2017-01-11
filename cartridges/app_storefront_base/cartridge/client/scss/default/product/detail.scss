@@ -4,7 +4,6 @@
 @import "../utilities/shapes";
 @import "../utilities/responsiveUtils";
 @import "../utilities/swatch";
-@import "../components/pricing";
 
 .container.product-detail {
     margin: 1.25em auto;
@@ -176,7 +175,7 @@ label.availability {
     padding-right: 0.3125em;
 }
 
-.price-wrapper {
+.prices {
     padding-bottom: 0.5em;
     text-align: center;
 }
