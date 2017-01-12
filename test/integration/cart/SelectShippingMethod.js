@@ -83,10 +83,13 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'id': '740357440196',
                 'productName': 'Prancer',
                 'price': {
-                    'value': 99,
-                    'currency': 'USD',
-                    'formatted': '$99.00',
-                    'type': 'standard'
+                    'list': null,
+                    'sales': {
+                        'currency': 'USD',
+                        'formatted': '$99.00',
+                        'value': 99
+                    },
+                    'type': 'default'
                 },
                 'productType': 'variant',
                 'images': {
@@ -133,10 +136,13 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'id': '013742335538',
                 'productName': 'Light Hematite Bracelet',
                 'price': {
-                    'value': 40,
-                    'currency': 'USD',
-                    'formatted': '$40.00',
-                    'type': 'standard'
+                    'list': null,
+                    'sales': {
+                        'currency': 'USD',
+                        'formatted': '$40.00',
+                        'value': 40
+                    },
+                    'type': 'default'
                 },
                 'productType': 'variant',
                 'images': {
