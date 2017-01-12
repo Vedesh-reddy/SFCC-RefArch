@@ -1,4 +1,4 @@
-/* globals request:false, response:false, customer:false */
+/* globals request:false, response:false, customer:false, session:false */
 
 'use strict';
 
@@ -55,7 +55,8 @@ Server.prototype = {
         // freeze request object to prevent mutations
         var rq = Object.freeze(
             new Request(typeof request !== 'undefined' ? request : {},
-            typeof customer !== 'undefined' ? customer : {})
+            typeof customer !== 'undefined' ? customer : {},
+            typeof session !== 'undefined' ? session : {})
         );
         var rs = new Response(typeof response !== 'undefined' ? response : {});
 
