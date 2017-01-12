@@ -8,12 +8,12 @@ var toProductMock = require('../../../util');
 describe('fullProduct', function () {
     var ProductLineItem = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/productLineItem', {
         './product/productBase': proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
-            './productPricing': function () {},
             './productImages': function () {},
             './productAttributes': function () { return []; },
             '../../scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
                 'dw/util/ArrayList': ArrayList
-            })
+            }),
+            '../../scripts/factories/price': { getPrice: function () {} }
         }),
         'dw/util/StringUtils': {
             formatMoney: function () {

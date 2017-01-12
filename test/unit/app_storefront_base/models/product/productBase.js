@@ -7,12 +7,12 @@ var toProductMock = require('../../../../util');
 
 describe('productBase', function () {
     var ProductBase = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
-        './productPricing': function () {},
         './productImages': function () {},
         './productAttributes': function () { return []; },
         '../../scripts/dwHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
             'dw/util/ArrayList': ArrayList
-        })
+        }),
+        '../../scripts/factories/price': { getPrice: function () {} }
     });
 
     var productVariantMock = {
