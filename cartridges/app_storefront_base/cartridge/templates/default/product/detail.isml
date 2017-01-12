@@ -66,23 +66,7 @@
 
                     <!-- Availability -->
                     <div class="row">
-                        <div class="availability">
-                            <span>
-                                <label class="availability">
-                                    ${Resource.msg('label.availability', 'common', null)}:
-                                </label>
-                                <span class="availability-msg">
-                                    <isif condition="${pdict.product.hasRequiredAttrsSelected && pdict.product.available}">
-                                        ${pdict.resources.label_instock}
-                                        <iselseif condition="${pdict.product.hasRequiredAttrsSelected && !pdict.product.available}">
-                                            ${pdict.resources.label_allnotavailable}
-                                        </iselseif>
-                                        <iselse>
-                                            ${pdict.resources.info_selectforstock}
-                                    </isif>
-                                </span>
-                            </span>
-                        </div>
+                        <isinclude template="/product/components/availability" />
                     </div>
 
                     <hr>
