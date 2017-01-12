@@ -4,9 +4,9 @@
             ${Resource.msg('label.availability', 'common', null)}:
         </label>
         <span class="availability-msg">
-            <isif condition="${pdict.product.hasRequiredAttrsSelected && pdict.product.isAvailable}">
+            <isif condition="${pdict.product.readyToOrder && pdict.product.available}">
                 ${pdict.resources.label_instock}
-            <iselseif condition="${pdict.product.hasRequiredAttrsSelected && !pdict.product.isAvailable}">
+            <iselseif condition="${pdict.product.readyToOrder && !pdict.product.available}">
                 ${pdict.resources.label_allnotavailable}
             </iselseif>
             <iselse>
