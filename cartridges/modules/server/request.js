@@ -62,6 +62,25 @@ function getFormData(items, qs) {
 }
 
 /**
+ * Retrieves session locale info
+ *
+ * @param {string} locale - Session locale code, xx_XX
+ * @param {dw.util.Currency} currency - Session currency
+ * @return {Object} - Session locale info
+ */
+function getCurrentLocale(locale, currency) {
+    return {
+        id: locale,
+        currency: {
+            currencyCode: currency.currencyCode,
+            defaultFractionDigits: currency.defaultFractionDigits,
+            name: currency.name,
+            symbol: currency.symbol
+        }
+    };
+}
+
+/**
  * Translates global customer object into local object
  * @param {dw.customer.Customer} customer - Global customer object
  * @returns {Object} local instance of customer object
@@ -117,8 +136,9 @@ function getCustomerObject(customer) {
  * Translates global request and customer object to local one
  * @param {Object} request - Global request object
  * @param {dw.customer.Customer} customer - Global customer object
+ * @param {dw.system.Session} session - Global session object
  */
-function Request(request, customer) {
+function Request(request, customer, session) {
     this.httpMethod = request.httpMethod;
     this.host = request.httpHost;
     this.path = request.httpPath;
@@ -126,7 +146,7 @@ function Request(request, customer) {
     this.querystring = parseQueryString(request.httpQueryString);
     this.form = getFormData(request.httpParameterMap, this.querystring);
     this.https = request.isHttpSecure();
-    this.locale = request.locale;
+    this.locale = getCurrentLocale(request.locale, session.currency);
     this.includeRequest = request.includeRequest;
     if (request.geolocation) {
         this.geolocation = {

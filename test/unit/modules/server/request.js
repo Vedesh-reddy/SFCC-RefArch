@@ -53,6 +53,15 @@ function createFakeRequest(overrides) {
                     stateCode: 'MA'
                 }
             }
+        },
+        locale: 'ab_YZ',
+        session: {
+            currency: {
+                currencyCode: 'XYZ',
+                defaultFractionDigits: 10,
+                name: 'Volodin Dollars',
+                symbol: '៛'
+            }
         }
     };
     Object.keys(overrides).forEach(function (key) {
@@ -63,12 +72,12 @@ function createFakeRequest(overrides) {
 
 describe('request', function () {
     it('should parse empty query string', function () {
-        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.isObject(req.querystring);
         assert.equal(Object.keys(req.querystring).length, 0);
     });
     it('should parse simple query string', function () {
-        var req = new Request(createFakeRequest({ httpQueryString: 'id=22&name=foo' }), createFakeRequest().customer);
+        var req = new Request(createFakeRequest({ httpQueryString: 'id=22&name=foo' }), createFakeRequest().customer, createFakeRequest().session);
         assert.isObject(req.querystring);
         assert.equal(req.querystring.id, 22);
         assert.equal(req.querystring.name, 'foo');
@@ -76,7 +85,7 @@ describe('request', function () {
     it('should parse query string with variables', function () {
         var req = new Request(createFakeRequest({
             httpQueryString: 'dwvar_foo_color=1111&dwvar_bar_size=32'
-        }), createFakeRequest().customer);
+        }), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(req.querystring.variables.color.id, 'foo');
         assert.equal(req.querystring.variables.color.value, '1111');
         assert.equal(req.querystring.variables.size.id, 'bar');
@@ -87,26 +96,26 @@ describe('request', function () {
     it('should parse query string with incorrectly formatted variables', function () {
         var req = new Request(createFakeRequest({
             httpQueryString: 'dwvar_color=1111&dwvar_size=32'
-        }), createFakeRequest().customer);
+        }), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(req.querystring.dwvar_color, '1111');
         assert.equal(req.querystring.dwvar_size, '32');
         assert.notProperty(req.querystring, 'variables');
     });
     it('should contain correct geolocation object and properties', function () {
-        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(req.geolocation.countryCode, 'US');
         assert.equal(req.geolocation.latitude, 42.4019);
         assert.equal(req.geolocation.longitude, -71.1193);
     });
     it('should contain correct current customer profile and properties', function () {
-        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(req.currentCustomer.profile.firstName, 'John');
         assert.equal(req.currentCustomer.profile.lastName, 'Snow');
         assert.equal(req.currentCustomer.profile.email, 'jsnow@starks.com');
         assert.equal(req.currentCustomer.profile.phone, '1234567890');
     });
     it('should contain correct current customer address book and properties', function () {
-        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(
             req.currentCustomer.addressBook.preferredAddress.address1,
             '15 South Point Drive'
@@ -149,7 +158,7 @@ describe('request', function () {
         );
     });
     it('should contain correct current customer wallet and properties', function () {
-        var req = new Request(createFakeRequest(), createFakeRequest().customer);
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         var expectedResult = createFakeRequest();
         assert.deepEqual(
             req.currentCustomer.wallet.paymentInstrument,
@@ -157,11 +166,11 @@ describe('request', function () {
         );
     });
     it('should not fail if customer doesn not exist', function () {
-        var req = new Request(createFakeRequest({ customer: null }), null);
+        var req = new Request(createFakeRequest({ customer: null }), null, createFakeRequest().session);
         assert.equal(req.host, 'localhost');
     });
     it('should not fail if customer does not have a profile', function () {
-        var req = new Request(createFakeRequest({ customer: { profile: null } }), { profile: null });
+        var req = new Request(createFakeRequest({ customer: { profile: null } }), { profile: null }, createFakeRequest().session);
         assert.equal(req.currentCustomer.raw.profile, null);
     });
     it('should retrieve form properties', function () {
@@ -194,11 +203,31 @@ describe('request', function () {
                 return items[name];
             }
         };
-        var req = new Request(createFakeRequest({ httpParameterMap: httpParamMap, httpQueryString: 'id=22&name=foo' }));
+        var req = new Request(
+            createFakeRequest({ httpParameterMap: httpParamMap, httpQueryString: 'id=22&name=foo' }),
+            null,
+            createFakeRequest().session
+        );
         assert.equal(req.form.one, 1);
         assert.equal(req.form.two, 2);
         assert.equal(req.form.three, 3);
         assert.isUndefined(req.form.submitted);
         assert.isUndefined(req.form.id);
+    });
+    it('should contain locale ID', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        var expectedResult = createFakeRequest();
+        assert.deepEqual(
+            req.locale.id,
+            expectedResult.locale
+        );
+    });
+    it('should contain session currency', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        var expectedResult = createFakeRequest();
+        assert.deepEqual(
+            req.locale.currency,
+            expectedResult.session.currency
+        );
     });
 });

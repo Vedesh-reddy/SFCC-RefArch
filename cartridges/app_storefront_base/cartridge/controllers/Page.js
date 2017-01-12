@@ -47,7 +47,7 @@ server.get('IncludeHeaderMenu', server.middleware.include, function (req, res, n
 server.get('Locale', function (req, res, next) {
     var LocaleModel = require('~/cartridge/models/locale');
     var locale = require('dw/util/Locale');
-    var localeModel = new LocaleModel(locale.getLocale(req.locale));
+    var localeModel = new LocaleModel(locale.getLocale(req.locale.id));
 
     res.render('/components/header/countryselector', localeModel);
     next();
