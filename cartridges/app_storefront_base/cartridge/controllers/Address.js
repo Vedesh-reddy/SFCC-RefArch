@@ -62,7 +62,7 @@ server.get('List', function (req, res, next) {
 });
 
 server.get('AddAddress', function (req, res, next) {
-    var addressForm = server.forms.getForm('shippingaddress');
+    var addressForm = server.forms.getForm('address');
     addressForm.address1.value = '';
     addressForm.address2.value = '';
     addressForm.addressId.value = '';
@@ -81,7 +81,7 @@ server.get('AddAddress', function (req, res, next) {
 });
 
 server.get('EditAddress', function (req, res, next) {
-    var addressForm = server.forms.getForm('shippingaddress');
+    var addressForm = server.forms.getForm('address');
     var addressId = req.querystring.addressId;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo
@@ -110,7 +110,7 @@ server.get('EditAddress', function (req, res, next) {
 });
 
 server.post('SaveAddress', function (req, res, next) {
-    var addressForm = server.forms.getForm('shippingaddress');
+    var addressForm = server.forms.getForm('address');
     var result = getDetailsObject(addressForm);
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo

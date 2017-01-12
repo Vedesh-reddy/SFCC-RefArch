@@ -1,4 +1,4 @@
-<isset name="billingFields" value="${pdict.forms.billingForm}" scope="page"/>
+<isset name="billingFields" value="${pdict.forms.billingForm.addressFields}" scope="page"/>
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group
@@ -100,11 +100,11 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.postal.mandatory === true}>required</isif>
-            ${billingFields.postal.htmlName}">
+            <isif condition=${billingFields.postalCode.mandatory === true}>required</isif>
+            ${billingFields.postalCode.htmlName}">
             <label class="form-control-label" for="billingZipCode">${Resource.msg('field.billing.address.zip.code','address',null)}</label>
             <input type="text" class="form-control billingZipCode" id="billingZipCode"
-                <isprint value=${billingFields.postal.attributes} encoding="off"/>
+                <isprint value=${billingFields.postalCode.attributes} encoding="off"/>
                 autocomplete="billing postal-code">
             <div class="form-control-feedback"></div>
         </div>
