@@ -1,4 +1,4 @@
-<isset name="miniCart" value="true" scope="page" />
+<isset name="miniCart" value="${true}" scope="page" />
 <div class="container cart">
     <div>
         <div class="row">

@@ -8,6 +8,7 @@
         assets.addJs('/js/checkout.js');
         assets.addCss('/css/checkout/checkout.css');
     </isscript>
+    <isset name="miniCart" value="${false}" scope="page" />
 
     <h1 class="page-title">
         ${Resource.msg('title.checkout','checkout',null)}
