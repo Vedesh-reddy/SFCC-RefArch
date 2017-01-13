@@ -9,7 +9,7 @@
     </div>
     <div class="container receipt">
         <div class="row">
-            <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
+            <div class="col-sm-6 offset-sm-3">
                 <h2>${Resource.msg('heading.order.details','order',null)}</h2>
             </div>
         </div>

@@ -13,6 +13,10 @@ var Transaction = require('dw/system/Transaction');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
+var Mail = require('dw/net/Mail');
+var Template = require('dw/util/Template');
+var Site = require('dw/system/Site');
+var HashMap = require('dw/util/HashMap');
 
 /**
  * Creates an account model for the current customer
@@ -63,7 +67,64 @@ function getModel(req) {
     return new AccountModel(req.currentCustomer, preferredAddressModel, orderModel);
 }
 
-server.get('Show', function (req, res, next) {
+/**
+ * Checks if the email value entered is correct format
+ * @param {string} email - email string to check if valid
+ * @returns {boolean} Whether email is valid
+ */
+function validateEmail(email) {
+    var regex = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
+    return regex.test(email);
+}
+
+/**
+ * Gets the password reset token of a customer
+ * @param {Object} customer - the customer requesting password reset token
+ * @returns {string} password reset token string
+ */
+function getPasswordResetToken(customer) {
+    var passwordResetToken;
+    Transaction.wrap(function () {
+        passwordResetToken = customer.profile.credentials.createResetPasswordToken();
+    });
+    return passwordResetToken;
+}
+
+/**
+ * Sends the email with password reset instructions
+ * @param {string} email - email for password reset
+ * @param {Object} resettingCustomer - the customer requesting password reset
+ */
+function sendPasswordResetEmail(email, resettingCustomer) {
+    var template;
+    var content;
+    var passwordResetToken = getPasswordResetToken(resettingCustomer);
+    var url = URLUtils.https('Account-SetNewPassword', 'token', passwordResetToken);
+    var objectForEmail = {
+        passwordResetToken: passwordResetToken,
+        firstName: resettingCustomer.profile.firstName,
+        lastName: resettingCustomer.profile.lastName,
+        url: url
+    };
+    var resetPasswordEmail = new Mail();
+    var context = new HashMap();
+    Object.keys(objectForEmail).forEach(function (key) {
+        context.put(key, objectForEmail[key]);
+    });
+
+    resetPasswordEmail.addTo(email);
+    resetPasswordEmail.setSubject(
+        Resource.msg('subject.profile.resetpassword.email', 'login', null));
+    resetPasswordEmail.setFrom(Site.current.getCustomPreferenceValue('customerServiceEmail')
+        || 'no-reply@salesforce.com');
+
+    template = new Template('account/password/passwordResetEmail');
+    content = template.render(context).text;
+    resetPasswordEmail.setContent(content, 'text/html', 'UTF-8');
+    resetPasswordEmail.send();
+}
+
+server.get('Show', server.middleware.https, function (req, res, next) {
     var accountModel = getModel(req);
     if (accountModel) {
         res.render('account/accountdashboard', getModel(req));
@@ -99,8 +160,7 @@ server.post('Login', server.middleware.https, function (req, res, next) {
 
 server.get('Registration', server.middleware.https, function (req, res, next) {
     var profileForm = server.forms.getForm('profile');
-
-    // TODO clear form
+    profileForm.clear();
     res.render('/account/register', {
         profileForm: profileForm,
         navTabValue: 'register'
@@ -204,7 +264,7 @@ server.post('SubmitRegistration', server.middleware.https, function (req, res, n
     next();
 });
 
-server.get('EditProfile', function (req, res, next) {
+server.get('EditProfile', server.middleware.https, function (req, res, next) {
     var accountModel = getModel(req);
     if (accountModel) {
         var profileForm = server.forms.getForm('profile');
@@ -220,7 +280,7 @@ server.get('EditProfile', function (req, res, next) {
     next();
 });
 
-server.post('SaveProfile', function (req, res, next) {
+server.post('SaveProfile', server.middleware.https, function (req, res, next) {
     var profileForm = server.forms.getForm('profile');
 
     // form validation
@@ -287,7 +347,7 @@ server.post('SaveProfile', function (req, res, next) {
     next();
 });
 
-server.get('EditPassword', function (req, res, next) {
+server.get('EditPassword', server.middleware.https, function (req, res, next) {
     var accountModel = getModel(req);
     if (accountModel) {
         var profileForm = server.forms.getForm('profile');
@@ -299,22 +359,22 @@ server.get('EditPassword', function (req, res, next) {
     next();
 });
 
-server.post('SavePassword', function (req, res, next) {
+server.post('SavePassword', server.middleware.https, function (req, res, next) {
     var profileForm = server.forms.getForm('profile');
-
+    var newPasswords = profileForm.login.newpasswords;
     // form validation
-    if (profileForm.login.newpassword.value !== profileForm.login.newpasswordconfirm.value) {
+    if (newPasswords.newpassword.value !== newPasswords.newpasswordconfirm.value) {
         profileForm.valid = false;
-        profileForm.login.newpassword.valid = false;
-        profileForm.login.newpasswordconfirm.valid = false;
-        profileForm.login.newpasswordconfirm.error =
+        newPasswords.newpassword.valid = false;
+        newPasswords.newpasswordconfirm.valid = false;
+        newPasswords.newpasswordconfirm.error =
             Resource.msg('error.message.mismatch.newpassword', 'forms', null);
     }
 
     var result = {
         currentPassword: profileForm.login.currentpassword.value,
-        newPassword: profileForm.login.newpassword.value,
-        newPasswordConfirm: profileForm.login.newpasswordconfirm.value,
+        newPassword: newPasswords.newpassword.value,
+        newPasswordConfirm: newPasswords.newpasswordconfirm.value,
         profileForm: profileForm
     };
 
@@ -350,6 +410,162 @@ server.post('SavePassword', function (req, res, next) {
     }
     next();
 });
+
+server.get('PasswordReset', server.middleware.https, function (req, res, next) {
+    res.render('account/password/requestpasswordreset');
+    next();
+});
+
+server.post('PasswordResetForm', server.middleware.https, function (req, res, next) {
+    var email = req.form.loginEmail;
+    var errorMsg;
+    var isValid;
+    var resettingCustomer;
+    if (email) {
+        isValid = validateEmail(email);
+        if (isValid) {
+            resettingCustomer = CustomerMgr.getCustomerByLogin(email);
+            if (resettingCustomer) {
+                sendPasswordResetEmail(email, resettingCustomer);
+            }
+            res.render('account/password/passwordresetreceived');
+        } else {
+            errorMsg = Resource.msg('error.message.passwordreset', 'login', null);
+            res.render('account/password/requestpasswordreset', {
+                error: true, errorMsg: errorMsg
+            });
+        }
+    } else {
+        errorMsg = Resource.msg('error.message.required', 'login', null);
+        res.render('account/password/requestpasswordreset', { error: true, errorMsg: errorMsg });
+    }
+    next();
+});
+
+server.post('PasswordResetDialogForm', server.middleware.https, function (req, res, next) {
+    var email = req.form.loginEmail;
+    var errorMsg;
+    var isValid;
+    var resettingCustomer;
+    var receivedMsgHeading = Resource.msg('label.resetpasswordreceived', 'login', null);
+    var receivedMsgBody = Resource.msg('msg.requestedpasswordreset', 'login', null);
+    var buttonText = Resource.msg('button.text.loginform', 'login', null);
+    if (email) {
+        isValid = validateEmail(email);
+        if (isValid) {
+            resettingCustomer = CustomerMgr.getCustomerByLogin(email);
+            if (resettingCustomer) {
+                sendPasswordResetEmail(email, resettingCustomer);
+            }
+            res.json({
+                receivedMsgHeading: receivedMsgHeading,
+                receivedMsgBody: receivedMsgBody,
+                buttonText: buttonText
+            });
+        } else {
+            errorMsg = Resource.msg('error.message.passwordreset', 'login', null);
+            res.json({
+                validationError: true,
+                errorMsg: errorMsg
+            });
+        }
+    } else {
+        errorMsg = Resource.msg('error.message.required', 'login', null);
+        res.json({
+            validationError: true,
+            errorMsg: errorMsg
+        });
+    }
+    next();
+});
+
+server.get('SetNewPassword', server.middleware.https, function (req, res, next) {
+    var passwordForm = server.forms.getForm('newpasswords');
+    passwordForm.clear();
+    var token = req.querystring.token;
+    var resettingCustomer = CustomerMgr.getCustomerByToken(token);
+    if (!resettingCustomer) {
+        res.redirect(URLUtils.url('Account-PasswordReset'));
+    } else {
+        res.render('account/password/newpassword', { passwordForm: passwordForm, token: token });
+    }
+    next();
+});
+
+server.post('SaveNewPassword', server.middleware.https, function (req, res, next) {
+    var passwordForm = server.forms.getForm('newpasswords');
+    var token = req.querystring.token;
+
+    if (passwordForm.newpassword.value !== passwordForm.newpasswordconfirm.value) {
+        passwordForm.valid = false;
+        passwordForm.newpassword.valid = false;
+        passwordForm.newpasswordconfirm.valid = false;
+        passwordForm.newpasswordconfirm.error =
+            Resource.msg('error.message.mismatch.newpassword', 'forms', null);
+    }
+
+    if (passwordForm.valid) {
+        var result = {
+            newPassword: passwordForm.newpassword.value,
+            newPasswordConfirm: passwordForm.newpasswordconfirm.value,
+            token: token,
+            passwordForm: passwordForm
+        };
+        res.setViewData(result);
+        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var formInfo = res.getViewData();
+            var status;
+            var resettingCustomer;
+            Transaction.wrap(function () {
+                resettingCustomer = CustomerMgr.getCustomerByToken(formInfo.token);
+                status = resettingCustomer.profile.credentials.setPasswordWithToken(
+                    formInfo.token,
+                    formInfo.newPassword
+                );
+            });
+            if (status.error) {
+                passwordForm.newpassword.valid = false;
+                passwordForm.newpasswordconfirm.valid = false;
+                passwordForm.newpasswordconfirm.error =
+                    Resource.msg('error.message.resetpassword.invalidformentry', 'forms', null);
+                res.render('account/password/newpassword', {
+                    passwordForm: passwordForm,
+                    token: token
+                });
+            } else {
+                var email = resettingCustomer.profile.email;
+                var url = URLUtils.https('Login-Show');
+                var objectForEmail = {
+                    firstName: resettingCustomer.profile.firstName,
+                    lastName: resettingCustomer.profile.lastName,
+                    url: url
+                };
+                var passwordChangedEmail = new Mail();
+                var context = new HashMap();
+                Object.keys(objectForEmail).forEach(function (key) {
+                    context.put(key, objectForEmail[key]);
+                });
+
+                passwordChangedEmail.addTo(email);
+                passwordChangedEmail.setSubject(
+                    Resource.msg('subject.profile.resetpassword.email', 'login', null));
+                passwordChangedEmail.setFrom(
+                    Site.current.getCustomPreferenceValue('customerServiceEmail')
+                    || 'no-reply@salesforce.com');
+
+                var template = new Template('account/password/passwordChangedEmail');
+                var content = template.render(context).text;
+                passwordChangedEmail.setContent(content, 'text/html', 'UTF-8');
+                passwordChangedEmail.send();
+                res.redirect(URLUtils.url('Login-Show'));
+            }
+        });
+    } else {
+        res.render('account/password/newpassword', { passwordForm: passwordForm, token: token });
+    }
+    next();
+});
+
 
 server.get('Header', server.middleware.include, function (req, res, next) {
     res.render('account/header', { name:
