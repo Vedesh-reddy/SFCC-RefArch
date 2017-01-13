@@ -8,36 +8,6 @@ var Resource = require('dw/web/Resource');
 
 
 /**
- * Generates price html needed for Ajax calls
- *
- * @param {Object} price - Instance of <Tiered|Range|Default>Price class
- * @param {string} price.type - Price type
- * @return {string} - Rendered HTML for price
- */
-function getHtml(price) {
-    if (price.type === 'tiered') {
-        return priceHelper.renderHtml(priceHelper.getHtmlContext({
-            type: price.type,
-            tiers: price.tiers
-        }));
-    }
-
-    if (price.type === 'range') {
-        return priceHelper.renderHtml(priceHelper.getHtmlContext({
-            type: price.type,
-            min: price.min,
-            max: price.max
-        }));
-    }
-
-    return priceHelper.renderHtml(priceHelper.getHtmlContext({
-        type: price.type,
-        list: price.list,
-        sales: price.sales
-    }));
-}
-
-/**
  * @typedef ProductDetailPageResourceMap
  * @type Object
  * @property {String} global_availability - Localized string for "Availability"
@@ -83,7 +53,7 @@ server.get('Variation', function (req, res, next) {
     var params = req.querystring;
     var product = ProductFactory.get(params);
 
-    product.price.html = getHtml(product.price);
+    product.price.html = priceHelper.renderHtml(priceHelper.getHtmlContext(product.price));
 
     res.json({
         product: product,

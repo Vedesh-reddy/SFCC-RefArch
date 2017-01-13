@@ -62,6 +62,8 @@ function getPromotionPrice(product, promotions, currentOptionModel) {
 }
 
 /**
+ * Retrieves Price instance
+ *
  * @param {dw.catalog.Product} inputProduct - API object for a product
  * @param {string} currency - Current session currencyCode
  * @param {boolean} isProductTile - Flag as to whether this price is for a product tile

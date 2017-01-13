@@ -14,7 +14,7 @@ function TieredPrice(priceTable, isProductTile) {
     var startingFromPrice = null;
 
     this.type = 'tiered';
-    this.isProductTile = isProductTile;
+    this.isProductTile = isProductTile || false;
 
     this.tiers = dwHelpers.map(priceTable.getQuantities(), function (quantity) {
         var price = priceHelper.toPriceModel(priceTable.getPrice(quantity));
@@ -29,7 +29,7 @@ function TieredPrice(priceTable, isProductTile) {
         };
     }, this);
 
-    this.min = startingFromPrice;
+    this.startingFromPrice = startingFromPrice;
 }
 
 module.exports = TieredPrice;
