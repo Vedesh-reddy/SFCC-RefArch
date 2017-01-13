@@ -63,15 +63,7 @@ server.get('List', function (req, res, next) {
 
 server.get('AddAddress', function (req, res, next) {
     var addressForm = server.forms.getForm('address');
-    addressForm.address1.value = '';
-    addressForm.address2.value = '';
-    addressForm.addressId.value = '';
-    addressForm.city.value = '';
-    addressForm.country.value = '';
-    addressForm.firstName.value = '';
-    addressForm.lastName.value = '';
-    addressForm.phone.value = '';
-    addressForm.postalCode.value = '';
+    addressForm.clear();
     var states = addressForm.states.stateCode.options;
     for (var i = 0, j = states.length; i < j; i++) {
         states[i].selected = false;
@@ -82,6 +74,7 @@ server.get('AddAddress', function (req, res, next) {
 
 server.get('EditAddress', function (req, res, next) {
     var addressForm = server.forms.getForm('address');
+    addressForm.clear();
     var addressId = req.querystring.addressId;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo
@@ -133,6 +126,7 @@ server.post('SaveAddress', function (req, res, next) {
                     address.setPhone(formInfo.phone);
                     address.setPostalCode(formInfo.postalCode);
                     address.setStateCode(formInfo.stateCode);
+                    res.redirect(URLUtils.url('Address-List'));
                 } else {
                     var newAddress = addressBook.createAddress(formInfo.addressId);
                     if (newAddress) {
@@ -145,14 +139,16 @@ server.post('SaveAddress', function (req, res, next) {
                         newAddress.setPhone(formInfo.phone);
                         newAddress.setPostalCode(formInfo.postalCode);
                         newAddress.setStateCode(formInfo.stateCode);
+                        res.redirect(URLUtils.url('Address-List'));
                     } else {
+                        formInfo.addressForm.valid = false;
+                        formInfo.addressForm.addressId.valid = false;
                         formInfo.addressForm.addressId.error =
                             Resource.msg('error.message.idalreadyexists', 'forms', null);
                         res.render('account/editaddaddress', { addressForm: formInfo.addressForm });
                     }
                 }
             });
-            res.redirect(URLUtils.url('Address-List'));
         });
     }
     next();
