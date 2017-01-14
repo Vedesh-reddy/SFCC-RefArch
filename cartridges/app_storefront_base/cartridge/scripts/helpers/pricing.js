@@ -30,9 +30,7 @@ function toPriceModel(price) {
 function getRootPriceBook(priceBook) {
     var rootPriceBook = priceBook;
     while (rootPriceBook.parentPriceBook) {
-        rootPriceBook = rootPriceBook.parentPriceBook
-            ? rootPriceBook.parentPriceBook
-            : rootPriceBook;
+        rootPriceBook = rootPriceBook.parentPriceBook;
     }
     return rootPriceBook;
 }
