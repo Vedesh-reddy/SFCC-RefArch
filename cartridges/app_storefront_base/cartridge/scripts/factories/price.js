@@ -97,7 +97,7 @@ function getPrice(inputProduct, currency, isProductTile, currentOptionModel) {
     }
 
     // DEFAULT
-    if (product.master && product.variationModel.variants.size() > 0) {
+    if (product.master && product.variationModel.variants.length > 0) {
         product = product.variationModel.variants[0];
         priceModel = product.priceModel;
     }
