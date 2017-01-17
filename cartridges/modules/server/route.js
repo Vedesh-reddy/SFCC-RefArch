@@ -25,8 +25,19 @@ Route.prototype = EventEmitter.prototype;
  */
 Route.prototype.getRoute = function () {
     var me = this;
-    return (function () {
+    return (function (err) {
         var i = 0;
+
+        if (err && err.ErrorText) {
+            me.req.error = {
+                errorText: err.ErrorText,
+                controllerName: err.ControllerName,
+                startNodeName: err.CurrentStartNodeName || me.name
+            };
+        }
+
+        // freeze request object to avoid mutations
+        Object.freeze(me.req);
 
         /**
          * Go to the next step in the chain or complete the chain after the last step
@@ -37,7 +48,7 @@ Route.prototype.getRoute = function () {
             if (error) {
                 // process error here and output error template
                 me.res.log(error);
-                throw new Error(error);
+                throw new Error(error.message, error.fileName, error.lineNumber);
             }
 
             if (me.res.redirectUrl) {

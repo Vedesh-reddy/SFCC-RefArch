@@ -10,7 +10,7 @@ module.exports = {
      * @param {Object} response - Response object
      * @returns {void}
      */
-    template: function template(view, viewData, response) {
+    template: function template(view, viewData) {
         // create a shallow copy of the data
         var data = {};
         Object.keys(viewData).forEach(function (key) {
@@ -20,10 +20,7 @@ module.exports = {
         try {
             isml.renderTemplate(view, data);
         } catch (e) {
-            response.print('<h1>' + e.javaMessage + '</h1>');
-            response.print('<h3>File: ' + e.fileName + ', line: ' + e.lineNumber + '</h3>');
-            response.print('<h3>Template: ' + view + '</h3>');
-            response.print('<pre>' + e.stack + '</pre>');
+            throw new Error(e.javaMessage + '\n\r' + e.stack, e.fileName, e.lineNumber);
         }
     },
     /**

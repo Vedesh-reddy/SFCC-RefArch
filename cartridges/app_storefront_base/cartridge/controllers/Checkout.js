@@ -33,7 +33,7 @@ var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
 /**
  * Main entry point for Checkout
  */
-server.get('Start', function (req, res, next) {
+server.get('Start', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -240,7 +240,7 @@ function validateShippingForm(form) {
 /**
  * Handle Ajax shipping form submit
  */
-server.post('SubmitShipping', function (req, res, next) {
+server.post('SubmitShipping', server.middleware.https, function (req, res, next) {
     var form = server.forms.getForm('singleShipping');
     var shippingFormErrors;
     var result = {};
@@ -380,7 +380,7 @@ function calculatePaymentTransaction(currentBasket) {
 /**
  *  Handle Ajax payment (and billing) form submit
  */
-server.post('SubmitPayment', function (req, res, next) {
+server.post('SubmitPayment', server.middleware.https, function (req, res, next) {
     var paymentForm = server.forms.getForm('payment');
     var billingFormErrors = {};
     var creditCardErrors;
@@ -604,7 +604,7 @@ server.post('SubmitPayment', function (req, res, next) {
     next();
 });
 
-server.get('UpdateShippingMethodsList', function (req, res, next) {
+server.get('UpdateShippingMethodsList', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -882,7 +882,7 @@ function sendConfirmationEmail(order) {
     confirmationEmail.send();
 }
 
-server.post('PlaceOrder', function (req, res, next) {
+server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
