@@ -66,12 +66,11 @@ function getPromotionPrice(product, promotions, currentOptionModel) {
  *
  * @param {dw.catalog.Product} inputProduct - API object for a product
  * @param {string} currency - Current session currencyCode
- * @param {boolean} isProductTile - Flag as to whether this price is for a product tile
+ * @param {boolean} useSimplePrice - Flag as to whether this price is for a product tile
  * @param {dw.catalog.ProductOptionModel} currentOptionModel - The product's option model
  * @return {TieredPrice|RangePrice|DefaultPrice} - The product's price
  */
-function getPrice(inputProduct, currency, isProductTile, currentOptionModel) {
-    var inputPriceModel;
+function getPrice(inputProduct, currency, useSimplePrice, currentOptionModel) {
     var rangePrice;
     var salesPrice;
     var listPrice;
@@ -83,13 +82,12 @@ function getPrice(inputProduct, currency, isProductTile, currentOptionModel) {
 
     // TIERED
     if (priceTable.quantities.length > 1) {
-        return new TieredPrice(priceTable, isProductTile);
+        return new TieredPrice(priceTable, useSimplePrice);
     }
 
     // RANGE
-    if ((product.master || product.variationGroup) && product.priceModel.priceRange) {
-        inputPriceModel = product.priceModel;
-        rangePrice = new RangePrice(inputPriceModel.minPrice, inputPriceModel.maxPrice);
+    if ((product.master || product.variationGroup) && priceModel.priceRange) {
+        rangePrice = new RangePrice(priceModel.minPrice, priceModel.maxPrice);
 
         if (rangePrice && rangePrice.min.value !== rangePrice.max.value) {
             return rangePrice;

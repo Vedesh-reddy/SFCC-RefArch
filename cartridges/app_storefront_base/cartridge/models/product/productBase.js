@@ -84,7 +84,7 @@ function ProductBase(product, productVariables, quantity) {
     };
     this.quantity = quantity;
     this.attributeConfig = ['color'];
-    this.isProductTile = true;
+    this.useSimplePrice = true;
     this.initialize();
 }
 
@@ -92,7 +92,7 @@ ProductBase.prototype = {
     initialize: function () {
         this.id = this.product.ID;
         this.productName = this.product.name;
-        this.price = priceFactory.getPrice(this.product, null, this.isProductTile);
+        this.price = priceFactory.getPrice(this.product, null, this.useSimplePrice);
         this.productType = getProductType(this.product);
         this.images = new ImageModel(this.variationModel, this.imageConfig);
         this.rating = getRating(this.id);

@@ -53,13 +53,13 @@ describe('Tiered Price Model', function () {
         assert.equal(tieredPrice.type, 'tiered');
     });
 
-    it('should set isProductTile to false by default', function () {
+    it('should set useSimplePrice to false by default', function () {
         var tieredPrice = new TieredPrice(priceTable);
-        assert.equal(tieredPrice.isProductTile, false);
+        assert.equal(tieredPrice.useSimplePrice, false);
     });
 
-    it('should set isProductTile to true when provided', function () {
+    it('should set useSimplePrice to true when provided', function () {
         var tieredPrice = new TieredPrice(priceTable, true);
-        assert.equal(tieredPrice.isProductTile, true);
+        assert.equal(tieredPrice.useSimplePrice, true);
     });
 });
