@@ -98,10 +98,6 @@ $menu-item-margin: 10px;
     margin-top: 0.1875em; /* 3/16 */
     vertical-align: top;
 
-    a {
-        color: $dark-gray;
-    }
-
     .minicart-quantity {
         background-color: $brand-color;
         border-radius: 50%;
@@ -116,4 +112,9 @@ $menu-item-margin: 10px;
         left: -0.6875em; /* 11/16 */
         color: $white;
     }
+}
+
+a.normal {
+    color: $brand-color;
+    text-decoration: underline;
 }
