@@ -95,6 +95,8 @@ module.exports = function () {
 
         url = appendToUrl(url, urlParams);
 
+        $('body > .modal-backdrop').remove();
+
         $.spinner().start();
         $.ajax({
             url: url,
