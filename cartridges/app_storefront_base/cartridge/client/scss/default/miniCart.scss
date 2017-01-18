@@ -27,7 +27,7 @@
     }
 
     .product-summary {
-        overflow-y: scroll;
+        overflow-y: auto;
         overflow-x: hidden;
         height: 21.875em;
         margin-right: -0.938em;
@@ -42,9 +42,13 @@
         font-size: 0.813em;
     }
 
+    .quantity {
+        width: 100%;
+    }
+
     .popover {
         top: 100%;
-        left: initial;
+        left: auto;
         right: 0;
         min-width: 350px;
         max-width: 350px;
@@ -52,12 +56,12 @@
         display: none;
 
         &::before {
-            left: initial;
+            left: auto;
             right: 15px;
         }
 
         &::after {
-            left: initial;
+            left: auto;
             right: 16px;
         }
 
@@ -67,7 +71,7 @@
     }
 
     .mini-cart-footer {
-        border-top: 0.063em solid #ccc;
+        border-top: 0.063em solid $grey3;
     }
 
     .estimated-total {
