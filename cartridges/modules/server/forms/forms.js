@@ -40,7 +40,7 @@ module.exports = function (session) {
             var result = parseForm(currentForm);
             result.base = currentForm;
             result.clear = function () {
-                currentForm.clear();
+                currentForm.clearFormElement();
             };
             return result;
         }
