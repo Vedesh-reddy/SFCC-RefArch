@@ -88,8 +88,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                         'currency': 'USD',
                         'formatted': '$99.00',
                         'value': 99
-                    },
-                    'type': 'default'
+                    }
                 },
                 'productType': 'variant',
                 'images': {
@@ -141,8 +140,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                         'currency': 'USD',
                         'formatted': '$40.00',
                         'value': 40
-                    },
-                    'type': 'default'
+                    }
                 },
                 'productType': 'variant',
                 'images': {

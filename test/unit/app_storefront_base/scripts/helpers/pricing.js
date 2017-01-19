@@ -7,11 +7,7 @@ var sinon = require('sinon');
 
 describe('Helpers - Pricing', function () {
     var templateStub = sinon.stub();
-    var formattedMoney = '₪moolah';
     var priceHelper = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/pricing.js', {
-        'dw/util/StringUtils': {
-            formatMoney: function () { return formattedMoney; }
-        },
         'dw/util/HashMap': function () {
             return {
                 result: {},
@@ -81,34 +77,6 @@ describe('Helpers - Pricing', function () {
             var templatePathOverride = '/custom/path';
             priceHelper.renderHtml(context, templatePathOverride);
             assert.isTrue(templateStub.calledWith(templatePathOverride));
-        });
-    });
-
-    describe('toPriceModel', function () {
-        var apiPrice;
-        var price;
-
-        beforeEach(function () {
-            apiPrice = {
-                available: true,
-                getDecimalValue: function () {
-                    return {
-                        get: function () {}
-                    };
-                },
-                getCurrencyCode: function () {}
-            };
-        });
-
-        it('should return a price object', function () {
-            price = priceHelper.toPriceModel(apiPrice);
-            assert.equal(price.formatted, formattedMoney);
-        });
-
-        it('should return an object with null values if price unavailable', function () {
-            apiPrice.available = false;
-            price = priceHelper.toPriceModel(apiPrice);
-            assert.equal(price.formatted, null);
         });
     });
 });

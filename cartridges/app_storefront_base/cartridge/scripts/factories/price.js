@@ -66,7 +66,8 @@ function getPromotionPrice(product, promotions, currentOptionModel) {
  *
  * @param {dw.catalog.Product} inputProduct - API object for a product
  * @param {string} currency - Current session currencyCode
- * @param {boolean} useSimplePrice - Flag as to whether this price is for a product tile
+ * @param {boolean} useSimplePrice - Flag as to whether a simple price should be used, used for
+ *     product tiles and cart line items.
  * @param {dw.catalog.ProductOptionModel} currentOptionModel - The product's option model
  * @return {TieredPrice|RangePrice|DefaultPrice} - The product's price
  */
@@ -89,7 +90,7 @@ function getPrice(inputProduct, currency, useSimplePrice, currentOptionModel) {
     if ((product.master || product.variationGroup) && priceModel.priceRange) {
         rangePrice = new RangePrice(priceModel.minPrice, priceModel.maxPrice);
 
-        if (rangePrice && rangePrice.min.value !== rangePrice.max.value) {
+        if (rangePrice && rangePrice.min.sales.value !== rangePrice.max.sales.value) {
             return rangePrice;
         }
     }
@@ -105,7 +106,16 @@ function getPrice(inputProduct, currency, useSimplePrice, currentOptionModel) {
     listPrice = getListPrice(priceModel);
     salesPrice = priceModel.price;
 
-    return new DefaultPrice(listPrice, salesPrice, promotionPrice);
+    if (promotionPrice && promotionPrice.available && salesPrice.compareTo(promotionPrice)) {
+        listPrice = salesPrice;
+        salesPrice = promotionPrice;
+    }
+
+    if (salesPrice && listPrice && salesPrice.value === listPrice.value) {
+        listPrice = null;
+    }
+
+    return new DefaultPrice(salesPrice, listPrice);
 }
 
 module.exports = {

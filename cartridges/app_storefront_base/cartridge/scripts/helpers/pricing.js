@@ -1,26 +1,8 @@
 'use strict';
 
-var formatMoney = require('dw/util/StringUtils').formatMoney;
 var HashMap = require('dw/util/HashMap');
-var money = require('dw/value/Money');
 var Template = require('dw/util/Template');
 
-
-/**
- * Convert API price to an object
- * @param {Object} price - Price object returned from the API
- * @returns {Object} price formatted as a simple object
- */
-function toPriceModel(price) {
-    var value = price.available ? price.getDecimalValue().get() : null;
-    var currency = price.available ? price.getCurrencyCode() : null;
-
-    return {
-        value: value,
-        currency: currency,
-        formatted: value !== null ? formatMoney(money(value, currency)) : null
-    };
-}
 
 /**
  * Return root price book for a given price book
@@ -70,6 +52,5 @@ function renderHtml(context, templatePath) {
 module.exports = {
     getHtmlContext: getHtmlContext,
     getRootPriceBook: getRootPriceBook,
-    renderHtml: renderHtml,
-    toPriceModel: toPriceModel
+    renderHtml: renderHtml
 };

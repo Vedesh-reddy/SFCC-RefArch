@@ -2,31 +2,33 @@
 
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
+var sinon = require('sinon');
 
 
 describe('Range Price Model', function () {
+    var defaultPrice = sinon.spy();
     var RangePrice = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/price/range.js', {
-        '../../scripts/helpers/pricing': {
-            toPriceModel: function (price) {
-                return price;
-            }
-        }
+        './default': defaultPrice
     });
     var minPrice = '$5';
     var maxPrice = '$15';
 
     it('should set type property value to "range"', function () {
-        var rangePrice = new RangePrice();
+        var rangePrice = new RangePrice(minPrice, maxPrice);
         assert.equal(rangePrice.type, 'range');
     });
 
-    it('should set min property', function () {
-        var rangePrice = new RangePrice(minPrice, maxPrice);
-        assert.equal(rangePrice.min, minPrice);
+    it('should set min property to a DefaultPrice instance', function () {
+        new RangePrice(minPrice, maxPrice);
+        assert.isTrue(defaultPrice.calledWithNew());
+        assert.isTrue(defaultPrice.calledWith(minPrice));
+        defaultPrice.reset();
     });
 
-    it('should set max property', function () {
-        var rangePrice = new RangePrice(minPrice, maxPrice);
-        assert.equal(rangePrice.max, maxPrice);
+    it('should set max property to a DefaultPrice instance', function () {
+        new RangePrice(minPrice, maxPrice);
+        assert.isTrue(defaultPrice.calledWithNew());
+        assert.isTrue(defaultPrice.calledWith(maxPrice));
+        defaultPrice.reset();
     });
 });

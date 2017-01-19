@@ -1,31 +1,34 @@
 'use strict';
 
-var priceHelper = require('../../scripts/helpers/pricing');
+var formatMoney = require('dw/util/StringUtils').formatMoney;
+var money = require('dw/value/Money');
 
+
+/**
+ * Convert API price to an object
+ * @param {dw.value.Money} price - Price object returned from the API
+ * @returns {Object} price formatted as a simple object
+ */
+function toPriceModel(price) {
+    var value = price.available ? price.getDecimalValue().get() : null;
+    var currency = price.available ? price.getCurrencyCode() : null;
+
+    return {
+        value: value,
+        currency: currency,
+        formatted: value !== null ? formatMoney(money(value, currency)) : null
+    };
+}
 
 /**
  * @constructor
  * @classdesc Default price class
- * @param {dw.value.Money} inputListPrice - List price
- * @param {dw.value.Money} inputSalesPrice - Sales price
- * @param {dw.value.Money} promotionPrice - Promotional price
+ * @param {dw.value.Money} salesPrice - Sales price
+ * @param {dw.value.Money} listPrice - List price
  */
-function DefaultPrice(inputListPrice, inputSalesPrice, promotionPrice) {
-    var listPrice = inputListPrice;
-    var salesPrice = inputSalesPrice;
-
-    if (promotionPrice.available && salesPrice.compareTo(promotionPrice)) {
-        listPrice = salesPrice;
-        salesPrice = promotionPrice;
-    }
-
-    if (salesPrice && listPrice && salesPrice.value === listPrice.value) {
-        listPrice = null;
-    }
-
-    this.type = 'default';
-    this.list = listPrice ? priceHelper.toPriceModel(listPrice) : null;
-    this.sales = priceHelper.toPriceModel(salesPrice);
+function DefaultPrice(salesPrice, listPrice) {
+    this.sales = toPriceModel(salesPrice);
+    this.list = listPrice ? toPriceModel(listPrice) : null;
 }
 
 module.exports = DefaultPrice;

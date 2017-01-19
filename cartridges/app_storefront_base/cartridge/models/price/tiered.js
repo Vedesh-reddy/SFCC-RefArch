@@ -1,7 +1,7 @@
 'use strict';
 
 var dwHelpers = require('../../scripts/dwHelpers');
-var priceHelper = require('../../scripts/helpers/pricing');
+var DefaultPrice = require('./default');
 
 
 /**
@@ -17,7 +17,7 @@ function TieredPrice(priceTable, useSimplePrice) {
     this.useSimplePrice = useSimplePrice || false;
 
     this.tiers = dwHelpers.map(priceTable.getQuantities(), function (quantity) {
-        var price = priceHelper.toPriceModel(priceTable.getPrice(quantity));
+        var price = new DefaultPrice(priceTable.getPrice(quantity));
 
         if (!startingFromPrice) {
             startingFromPrice = price;

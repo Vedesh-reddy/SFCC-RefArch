@@ -157,8 +157,7 @@ describe('Remove product variant from line item', function () {
                             'currency': 'USD',
                             'formatted': '$24.00',
                             'value': 24
-                        },
-                        'type': 'default'
+                        }
                     },
                     'productType': 'variant',
                     'images': {
@@ -207,8 +206,7 @@ describe('Remove product variant from line item', function () {
                             'currency': 'USD',
                             'formatted': '$29.99',
                             'value': 29.99
-                        },
-                        'type': 'default'
+                        }
                     },
                     'productType': 'variant',
                     'images': {

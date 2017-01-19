@@ -1,6 +1,6 @@
 'use strict';
 
-var pricingHelper = require('../../scripts/helpers/pricing');
+var DefaultPrice = require('./default');
 
 
 /**
@@ -11,8 +11,8 @@ var pricingHelper = require('../../scripts/helpers/pricing');
  */
 function RangePrice(min, max) {
     this.type = 'range';
-    this.min = pricingHelper.toPriceModel(min);
-    this.max = pricingHelper.toPriceModel(max);
+    this.min = new DefaultPrice(min);
+    this.max = new DefaultPrice(max);
 }
 
 module.exports = RangePrice;

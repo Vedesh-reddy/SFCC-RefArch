@@ -10,16 +10,15 @@ describe('priceFactory', function () {
     var price;
     var product;
 
-    var mockDefaultPrice = sinon.spy();
-    var mockRangePrice = sinon.stub();
-    var mockTieredPrice = sinon.spy();
-    var mockGetProductPromotions = sinon.stub();
-    mockGetProductPromotions.returns([]);
+    var spyDefaultPrice = sinon.spy();
+    var spyTieredPrice = sinon.spy();
+    var stubRangePrice = sinon.stub();
+    var stubGetProductPromotions = sinon.stub();
+    stubGetProductPromotions.returns([]);
 
     var PROMOTION_CLASS_PRODUCT = 'awesome promotion';
 
     var priceFactory = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/price.js', {
-        'dw/value/Money': { NOT_AVAILABLE: null },
         '../dwHelpers': {
             find: mockDwHelpers.find
         },
@@ -28,22 +27,23 @@ describe('priceFactory', function () {
         },
         'dw/campaign/PromotionMgr': {
             activeCustomerPromotions: {
-                getProductPromotions: mockGetProductPromotions
+                getProductPromotions: stubGetProductPromotions
             }
         },
-        '../../models/price/default': mockDefaultPrice,
-        '../../models/price/range': mockRangePrice,
-        '../../models/price/tiered': mockTieredPrice,
+        '../../models/price/default': spyDefaultPrice,
+        '../../models/price/range': stubRangePrice,
+        '../../models/price/tiered': spyTieredPrice,
         'dw/campaign/Promotion': {
             PROMOTION_CLASS_PRODUCT: PROMOTION_CLASS_PRODUCT
-        }
+        },
+        'dw/value/Money': { NOT_AVAILABLE: null }
     });
 
     describe('Tiered Price', function () {
         var priceTable;
 
         afterEach(function () {
-            mockTieredPrice.reset();
+            spyTieredPrice.reset();
         });
 
         it('should produce a tiered price if price tables have more than 1 quantity', function () {
@@ -56,7 +56,7 @@ describe('priceFactory', function () {
                 }
             };
             price = priceFactory.getPrice(product);
-            assert.isTrue(mockTieredPrice.calledWithNew());
+            assert.isTrue(spyTieredPrice.calledWithNew());
         });
 
         it('should not produce a tiered price if a price table has only 1 quantity', function () {
@@ -81,11 +81,19 @@ describe('priceFactory', function () {
                 }
             };
             price = priceFactory.getPrice(product);
-            assert.isFalse(mockTieredPrice.calledWithNew());
+            assert.isFalse(spyTieredPrice.calledWithNew());
         });
     });
 
     describe('Range Price', function () {
+        var rangePrice = {
+            min: {
+                sales: { value: '$5' }
+            },
+            max: {
+                sales: { value: '$15' }
+            }
+        };
         beforeEach(function () {
             product = {
                 master: true,
@@ -112,25 +120,25 @@ describe('priceFactory', function () {
         });
 
         afterEach(function () {
-            mockRangePrice.reset();
+            stubRangePrice.reset();
         });
 
         it('should produce a range price', function () {
-            var expectedRangePrice = {
-                min: { value: 3 },
-                max: { value: 7 }
-            };
-            mockRangePrice.returns(expectedRangePrice);
+            stubRangePrice.returns(rangePrice);
             price = priceFactory.getPrice(product);
-            assert.equal(price, expectedRangePrice);
+            assert.equal(price, rangePrice);
         });
 
         it('should not produce a range price if min and max values are equal', function () {
-            var rangePrice = {
-                min: { value: 3 },
-                max: { value: 3 }
+            rangePrice = {
+                min: {
+                    sales: { value: '$5' }
+                },
+                max: {
+                    sales: { value: '$5' }
+                }
             };
-            mockRangePrice.returns(rangePrice);
+            stubRangePrice.returns(rangePrice);
             product.variationModel = { variants: [] };
 
             price = priceFactory.getPrice(product);
@@ -140,14 +148,11 @@ describe('priceFactory', function () {
 
     describe('Default Price', function () {
         var priceModel = {};
+        var secondSpyArg;
         var variantPriceModel = {};
 
-        beforeEach(function () {
-
-        });
-
         afterEach(function () {
-            mockDefaultPrice.reset();
+            spyDefaultPrice.reset();
         });
 
         it('should use the first variant if product is a master', function () {
@@ -184,11 +189,14 @@ describe('priceFactory', function () {
                 }
             };
             price = priceFactory.getPrice(product);
-            assert.isTrue(mockDefaultPrice.calledWith(variantPriceModel.minPrice));
+            assert.isTrue(spyDefaultPrice.calledWith(variantPriceModel.price));
         });
 
         it('should assign list price to root pricebook price when available', function () {
-            var expectedPrice = { available: true };
+            var pricebookListPrice = {
+                available: true,
+                value: '$20'
+            };
             product = {
                 master: false,
                 priceModel: {
@@ -200,7 +208,7 @@ describe('priceFactory', function () {
                             quantities: { length: 1 }
                         };
                     },
-                    getPriceBookPrice: function () { return expectedPrice; }
+                    getPriceBookPrice: function () { return pricebookListPrice; }
                 },
                 getPriceModel: function () { return this.priceModel; },
                 variationModel: {
@@ -208,20 +216,26 @@ describe('priceFactory', function () {
                 }
             };
             price = priceFactory.getPrice(product);
-            assert.isTrue(mockDefaultPrice.calledWith(expectedPrice));
+            secondSpyArg = spyDefaultPrice.args[0][1];
+            assert.isTrue(spyDefaultPrice.calledWithNew());
+            assert.equal(secondSpyArg, pricebookListPrice);
         });
 
-        it('should assign list price to priceModel price when root pricebook price not available', function () {
+        it('should instantiate DefaultPrice with only sales price when equal to list price', function () {
             var expectedPrice = { available: false };
             product = {
                 master: false,
                 priceModel: {
                     price: {
                         available: true,
-                        valueOrNull: 'value'
+                        valueOrNull: 'value',
+                        value: '$28'
                     },
                     priceInfo: { priceBook: {} },
                     priceRange: false,
+                    minPrice: {
+                        value: '$2'
+                    },
                     getPriceTable: function () {
                         return {
                             quantities: { length: 1 }
@@ -232,7 +246,7 @@ describe('priceFactory', function () {
                 getPriceModel: function () { return this.priceModel; }
             };
             price = priceFactory.getPrice(product);
-            assert.isTrue(mockDefaultPrice.calledWith(product.priceModel.price));
+            assert.isTrue(spyDefaultPrice.calledWith(product.priceModel.price, null));
         });
 
         it('should assign list price to priceModel minPrice when root pricebook and priceModel price not available', function () {
@@ -242,11 +256,14 @@ describe('priceFactory', function () {
                 priceModel: {
                     price: {
                         available: false,
-                        valueOrNull: 'value'
+                        valueOrNull: 'value',
+                        value: '$28'
                     },
-                    minPrice: '$3',
                     priceInfo: { priceBook: {} },
                     priceRange: false,
+                    minPrice: {
+                        value: '$2'
+                    },
                     getPriceTable: function () {
                         return {
                             quantities: { length: 1 }
@@ -257,13 +274,27 @@ describe('priceFactory', function () {
                 getPriceModel: function () { return this.priceModel; }
             };
             price = priceFactory.getPrice(product);
-            assert.isTrue(mockDefaultPrice.calledWith(product.priceModel.minPrice));
+            secondSpyArg = spyDefaultPrice.args[0][1];
+            assert.isTrue(spyDefaultPrice.calledWithNew());
+            assert.equal(secondSpyArg, product.priceModel.minPrice);
         });
 
         describe('with promotional prices', function () {
-            var listPrice = { available: true };
-            var salesPrice = { valueOrNull: 'value' };
-            var promotionalPrice = '$1';
+            var listPrice = {
+                available: true,
+                value: 50
+            };
+            var salesPrice = {
+                value: 30,
+                valueOrNull: 'value',
+                compareTo: function (otherPrice) {
+                    return this.value > otherPrice.value;
+                }
+            };
+            var promotionalPrice = {
+                available: true,
+                value: 10
+            };
             var promotions = [{
                 promotionClass: {
                     equals: function () { return true; }
@@ -274,11 +305,31 @@ describe('priceFactory', function () {
             }];
 
             beforeEach(function () {
-                mockGetProductPromotions.returns(promotions);
+                stubGetProductPromotions.returns(promotions);
             });
 
             afterEach(function () {
-                mockDefaultPrice.reset();
+                spyDefaultPrice.reset();
+            });
+
+            it('should swap sales price for promo price and list price for sales price', function () {
+                product = {
+                    master: false,
+                    priceModel: {
+                        price: salesPrice,
+                        priceInfo: { priceBook: {} },
+                        getPriceTable: function () {
+                            return {
+                                quantities: { length: 1 }
+                            };
+                        },
+                        getPriceBookPrice: function () { return listPrice; }
+                    },
+                    getPriceModel: function () { return this.priceModel; }
+                };
+                price = priceFactory.getPrice(product, null, null, true);
+                assert.isTrue(spyDefaultPrice.calledWithNew());
+                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
             });
 
             it('should get a promotional price when an option product is provided', function () {
@@ -297,7 +348,8 @@ describe('priceFactory', function () {
                     getPriceModel: function () { return this.priceModel; }
                 };
                 price = priceFactory.getPrice(product, null, null, true);
-                assert.isTrue(mockDefaultPrice.calledWith(listPrice, salesPrice, promotionalPrice));
+                assert.isTrue(spyDefaultPrice.calledWithNew());
+                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
             });
 
             it('should get a promotional price when an option product is not provided', function () {
@@ -313,10 +365,12 @@ describe('priceFactory', function () {
                         },
                         getPriceBookPrice: function () { return listPrice; }
                     },
-                    getPriceModel: function () { return this.priceModel; }
+                    getPriceModel: function () { return this.priceModel; },
+                    optionModel: { option: 'model' }
                 };
                 price = priceFactory.getPrice(product, null, null, false);
-                assert.isTrue(mockDefaultPrice.calledWith(listPrice, salesPrice, promotionalPrice));
+                assert.isTrue(spyDefaultPrice.calledWithNew());
+                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
             });
         });
     });

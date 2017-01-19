@@ -4,50 +4,83 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 
-describe('Default Price Model', function () {
+describe('DefaultPrice model', function () {
+    var formattedMoney = '₪moolah';
     var DefaultPrice = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/price/default.js', {
-        '../../scripts/helpers/pricing': {
-            toPriceModel: function (price) {
-                return price;
-            }
+        'dw/value/Money': function () {},
+        'dw/util/StringUtils': {
+            formatMoney: function () { return formattedMoney; }
         }
     });
-    var unavailablePromotionPrice = {
-        available: false
-    };
-    var availablePromotionPrice = {
-        available: true,
-        value: 2
-    };
-
-    it('should set type property to "default"', function () {
-        var defaultPrice = new DefaultPrice(null, null, unavailablePromotionPrice);
-        assert.equal(defaultPrice.type, 'default');
-    });
-
-    it('should set list price to sales and sales to promotion price when applicable', function () {
-        var listPrice = { value: 15 };
-        var salesPrice = {
-            compareTo: function () { return true; },
-            value: 5
+    var salesPrice;
+    var listPrice;
+    var decimalValue = 'decimalValue';
+    var currencyCode = 'ABC';
+    var defaultPrice;
+    function getDecimalValue() {
+        return {
+            get: function () {
+                return decimalValue;
+            }
         };
-        var defaultPrice = new DefaultPrice(listPrice, salesPrice, availablePromotionPrice);
-        assert.equal(defaultPrice.list, salesPrice);
-        assert.equal(defaultPrice.sales, availablePromotionPrice);
+    }
+    function getCurrencyCode() {
+        return currencyCode;
+    }
+
+    beforeEach(function () {
+        salesPrice = {
+            available: true,
+            getDecimalValue: getDecimalValue,
+            getCurrencyCode: getCurrencyCode
+        };
+
+        listPrice = {
+            available: true,
+            getDecimalValue: getDecimalValue,
+            getCurrencyCode: getCurrencyCode
+        };
     });
 
-    it('should set list property to null if sales and list prices are equal', function () {
-        var listPrice = { value: 5 };
-        var salesPrice = { value: 5 };
-        var defaultPrice = new DefaultPrice(listPrice, salesPrice, unavailablePromotionPrice);
-        assert.isNull(defaultPrice.list);
+    it('should have a sales price', function () {
+        defaultPrice = new DefaultPrice(salesPrice);
+
+        assert.deepEqual(defaultPrice, {
+            list: null,
+            sales: {
+                currency: currencyCode,
+                formatted: formattedMoney,
+                value: decimalValue
+            }
+        });
     });
 
-    it('should set list and sales prices to prices provided if no promotion and not equal', function () {
-        var listPrice = { value: 15 };
-        var salesPrice = { value: 5 };
-        var defaultPrice = new DefaultPrice(listPrice, salesPrice, unavailablePromotionPrice);
-        assert.equal(defaultPrice.list, listPrice);
-        assert.equal(defaultPrice.sales, salesPrice);
+    it('should set property values to null if price is not available', function () {
+        salesPrice.available = false;
+        defaultPrice = new DefaultPrice(salesPrice);
+        assert.deepEqual(defaultPrice, {
+            list: null,
+            sales: {
+                currency: null,
+                formatted: null,
+                value: null
+            }
+        });
+    });
+
+    it('should set list price when provided', function () {
+        defaultPrice = new DefaultPrice(salesPrice, listPrice);
+        assert.deepEqual(defaultPrice, {
+            list: {
+                currency: currencyCode,
+                formatted: formattedMoney,
+                value: decimalValue
+            },
+            sales: {
+                currency: currencyCode,
+                formatted: formattedMoney,
+                value: decimalValue
+            }
+        });
     });
 });

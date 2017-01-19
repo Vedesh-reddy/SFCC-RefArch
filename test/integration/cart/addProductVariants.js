@@ -212,8 +212,7 @@ describe('Add Product variants to cart', function () {
                                         'currency': 'USD',
                                         'formatted': '$24.00',
                                         'value': 24
-                                    },
-                                    'type': 'default'
+                                    }
                                 },
                                 'productType': 'variant',
                                 'images': {
@@ -258,8 +257,7 @@ describe('Add Product variants to cart', function () {
                                         'currency': 'USD',
                                         'formatted': '$24.00',
                                         'value': 24
-                                    },
-                                    'type': 'default'
+                                    }
                                 },
                                 'productType': 'variant',
                                 'images': {
@@ -304,8 +302,7 @@ describe('Add Product variants to cart', function () {
                                         'currency': 'USD',
                                         'formatted': '$20.00',
                                         'value': 20
-                                    },
-                                    'type': 'default'
+                                    }
                                 },
                                 'productType': 'variant',
                                 'images': {
@@ -348,8 +345,7 @@ describe('Add Product variants to cart', function () {
                                         'currency': 'USD',
                                         'formatted': '$29.99',
                                         'value': 29.99
-                                    },
-                                    'type': 'default'
+                                    }
                                 },
                                 'productType': 'variant',
                                 'images': {
