@@ -197,7 +197,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                             .then(text => {
                                 return text !== prevShipCost;
                             });
-                    }, 1000, 'expected text to be different after 1s');
+                    }, 2000, 'expected text to be different after 1s');
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
@@ -262,7 +262,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                             .then(text => {
                                 return text !== prevShipCost;
                             });
-                    }, 1000, 'expected text to be different after 1s');
+                    }, 2000, 'expected text to be different after 1s');
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
@@ -327,7 +327,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                             .then(text => {
                                 return text !== prevShipCost;
                             });
-                    }, 1000, 'expected text to be different after 1s');
+                    }, 2000, 'expected text to be different after 1s');
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
@@ -392,7 +392,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                             .then(text => {
                                 return text !== prevShipCost;
                             });
-                    }, 1000, 'expected text to be different after 1s');
+                    }, 2000, 'expected text to be different after 1s');
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
@@ -506,7 +506,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                             .then(text => {
                                 return text !== prevShipCost;
                             });
-                    }, 1000, 'expected text to be different after 1s');
+                    }, 2000, 'expected text to be different after 1s');
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {

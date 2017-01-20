@@ -47,7 +47,7 @@ describe('Product Details - Product Variant', () => {
     it('should display the secondary default variant primary image after click', () => {
         return browser.element(nextButton)
             .click()
-            .waitForVisible(elementImage, 1000, true)
+            .waitForVisible(elementImage, 2000, true)
             .then(() => browser.element(elementPrimaryImage))
             .then(el => browser.elementIdAttribute(el.value.ELEMENT, 'src'))
             .then(displayedImgSrc => assert.isTrue(displayedImgSrc.value.endsWith(expectedSecondaryImage)));
