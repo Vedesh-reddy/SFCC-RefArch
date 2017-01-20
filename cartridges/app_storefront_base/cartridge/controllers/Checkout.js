@@ -45,7 +45,9 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var applicablePaymentMethods;
     var countryCode = req.geolocation.countryCode;
     var currentCustomer = req.currentCustomer.raw;
+    var currentStage = req.querystring.stage ? req.querystring.stage : 'shipping';
     var billingAddress = currentBasket.billingAddress;
+    var hasEquivalentAddress = true;
     var paymentAmount = currentBasket.totalGrossPrice;
     var paymentInstruments;
     var shipment = currentBasket.defaultShipment;
@@ -61,6 +63,10 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var productLineItemModel;
     var shippingAddressModel;
     var shippingModel;
+
+    if (billingAddress && shippingAddress) {
+        hasEquivalentAddress = billingAddress.isEquivalentAddress(shippingAddress);
+    }
 
     // Calculate the basket
     Transaction.wrap(function () {
@@ -125,7 +131,9 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     res.render('checkout/checkout', {
         order: orderModel,
         forms: forms,
-        expirationYears: creditCardExpirationYears
+        expirationYears: creditCardExpirationYears,
+        currentStage: currentStage,
+        isEquivalentAddress: hasEquivalentAddress
     });
     return next();
 });
