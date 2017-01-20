@@ -142,7 +142,7 @@ describe('forms', function () {
         var forms = formsRequire(session);
         var currentForm = forms.getForm('shippingaddress');
         assert.isNotNull(currentForm.intField);
-        assert.equal(currentForm.intField.value, '');
+        assert.equal(currentForm.intField.value, null);
         assert.equal(currentForm.intField.htmlValue, '');
         assert.isTrue(currentForm.intField.valid);
         assert.isUndefined(currentForm.intField.error);
@@ -172,7 +172,7 @@ describe('forms', function () {
         var forms = formsRequire(session);
         var currentForm = forms.getForm('shippingaddress');
         assert.isNotNull(currentForm.dateField);
-        assert.equal(currentForm.dateField.value, '');
+        assert.equal(currentForm.dateField.value, null);
         assert.equal(currentForm.dateField.htmlValue, '');
         assert.isTrue(currentForm.dateField.valid);
         assert.isUndefined(currentForm.dateField.error);
@@ -304,5 +304,63 @@ describe('forms', function () {
         assert.isTrue(currentForm.innerForm.firstName.mandatory);
         assert.equal(currentForm.innerForm.firstName.label, 'hello');
         assert.equal(currentForm.innerForm.firstName.attributes, 'name = "dwfrm_shippingaddress_innerForm_firstName" required value = "Jon" maxLength = "50" minLength = "1" pattern = "/[a-zA-Z]*/"');
+    });
+    it('should return updated attributes after form clear', function () {
+        var session = { forms: {
+            shippingaddress: {
+                valid: true,
+                error: null,
+                htmlName: 'dwfrm_shippingaddress',
+                dynamicHtmlName: 'dwfrm_shippingaddress_a98dfa9sd8',
+                intField: new FormField({
+                    value: 10,
+                    htmlValue: 10,
+                    mandatory: true,
+                    htmlName: 'dwfrm_shippingaddress_intField',
+                    dynamicHtmlName: 'dwfrm_shippingaddress_intField_as8df7asd98',
+                    type: 3,
+                    FIELD_TYPE_INTEGER: 3,
+                    maxValue: 999,
+                    minValue: 1,
+                    valid: true
+                }),
+                clearFormElement: function () {
+                    this.intField.value = 0;
+                    this.intField.htmlValue = 0;
+                }
+            }
+        } };
+        var forms = formsRequire(session);
+        var currentForm = forms.getForm('shippingaddress');
+        assert.equal(currentForm.intField.attributes, 'name = "dwfrm_shippingaddress_intField" required value = "10" max = "999" min = "1"');
+        currentForm.clear();
+        assert.equal(currentForm.intField.attributes, 'name = "dwfrm_shippingaddress_intField" required value = "0" max = "999" min = "1"');
+    });
+    it('should update htmlValue when value is updated', function () {
+        var session = { forms: {
+            shippingaddress: {
+                valid: true,
+                error: null,
+                htmlName: 'dwfrm_shippingaddress',
+                dynamicHtmlName: 'dwfrm_shippingaddress_a98dfa9sd8',
+                intField: new FormField({
+                    value: 10,
+                    htmlValue: 10,
+                    mandatory: true,
+                    htmlName: 'dwfrm_shippingaddress_intField',
+                    dynamicHtmlName: 'dwfrm_shippingaddress_intField_as8df7asd98',
+                    type: 3,
+                    FIELD_TYPE_INTEGER: 3,
+                    maxValue: 999,
+                    minValue: 1,
+                    valid: true
+                })
+            }
+        } };
+        var forms = formsRequire(session);
+        var currentForm = forms.getForm('shippingaddress');
+        assert.equal(currentForm.intField.htmlValue, 10);
+        currentForm.intField.value = 22;
+        assert.equal(currentForm.intField.value, 22);
     });
 });
