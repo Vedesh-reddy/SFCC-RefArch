@@ -132,7 +132,7 @@ server.get('AddPayment', function (req, res, next) {
     paymentForm.payment.cardOwner.value = '';
     paymentForm.payment.cardNumber.value = '';
     paymentForm.payment.cardType.value = '';
-    paymentForm.payment.expirationYear.value = '';
+    paymentForm.payment.expirationYear.value = 0;
     var months = paymentForm.payment.expirationMonth.options;
     for (var j = 0, k = months.length; j < k; j++) {
         months[j].selected = false;
