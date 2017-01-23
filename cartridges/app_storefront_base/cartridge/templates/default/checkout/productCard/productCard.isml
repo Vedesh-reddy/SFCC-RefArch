@@ -23,7 +23,8 @@
                 <span class="line-item-total-text">
                     ${Resource.msg('label.each.item.price','cart',null)}
                 </span><br>
-                <span class="pricing">${lineItem.price.formatted}</span>
+                <isset name="price" value="${lineItem.price}" scope="page"/>
+                <isinclude template="/product/components/pricing/main.isml" />
             </p>
         </div>
         <!--- quantity --->
