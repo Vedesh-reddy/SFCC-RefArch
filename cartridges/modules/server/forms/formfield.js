@@ -9,11 +9,50 @@ var resource = require('dw/web/Resource');
  */
 function formField(field) {
     var result = {};
+    Object.defineProperty(result, 'attributes', {
+        get: function () {
+            var attributes = '';
+            attributes += 'name = "' + result.htmlName + '"';
+            if (result.mandatory) {
+                attributes += ' required';
+            }
+            if (!result.checked && !result.selected) {
+                var value = field.htmlValue == null ? '' : field.htmlValue;
+                attributes += ' value = "' + value + '"';
+            }
+            if (result.maxValue) {
+                attributes += ' max = "' + result.maxValue + '"';
+            }
+            if (result.minValue) {
+                attributes += ' min = "' + result.minValue + '"';
+            }
+            if (result.maxLength) {
+                attributes += ' maxLength = "' + result.maxLength + '"';
+            }
+            if (result.minLength) {
+                attributes += ' minLength = "' + result.minLength + '"';
+            }
+            if (result.regEx) {
+                attributes += ' pattern = "' + result.regEx + '"';
+            }
+            return attributes;
+        }
+    });
+    Object.defineProperty(result, 'value', {
+        get: function () {
+            return field.value;
+        },
+        set: function (value) {
+            field.value = value; // eslint-disable-line no-param-reassign
+            // reset htmlValue
+            result.htmlValue = field.htmlValue || '';
+        }
+    });
     var attributesToCopy = {
         string: ['maxLength', 'minLength', 'regEx'],
         bool: ['checked', 'selected'],
         int: ['maxValue', 'minValue'],
-        common: ['htmlValue', 'mandatory', 'value',
+        common: ['htmlValue', 'mandatory',
             'dynamicHtmlName', 'htmlName', 'valid'],
         resources: ['error', 'description', 'label']
     };
@@ -50,11 +89,6 @@ function formField(field) {
         result.selectedOption = field.selectedOption ? field.selectedOption.optionId : '';
     }
 
-    result.attributes = 'name = "' + result.htmlName + '"';
-    if (result.mandatory) {
-        result.attributes += ' required';
-    }
-
     switch (field.type) {
         case field.FIELD_TYPE_BOOLEAN:
             attributesToCopy.bool.forEach(function (item) {
@@ -67,28 +101,11 @@ function formField(field) {
             attributesToCopy.int.forEach(function (item) {
                 result[item] = field[item];
             });
-            result.attributes += ' value = "' + result.htmlValue + '"';
-            if (result.maxValue) {
-                result.attributes += ' max = "' + result.maxValue + '"';
-            }
-            if (result.minValue) {
-                result.attributes += ' min = "' + result.minValue + '"';
-            }
             break;
         case field.FIELD_TYPE_STRING:
             attributesToCopy.string.forEach(function (item) {
                 result[item] = field[item];
             });
-            result.attributes += ' value = "' + result.htmlValue + '"';
-            if (result.maxLength) {
-                result.attributes += ' maxLength = "' + result.maxLength + '"';
-            }
-            if (result.minLength) {
-                result.attributes += ' minLength = "' + result.minLength + '"';
-            }
-            if (result.regEx) {
-                result.attributes += ' pattern = "' + result.regEx + '"';
-            }
             break;
         default:
             break;
