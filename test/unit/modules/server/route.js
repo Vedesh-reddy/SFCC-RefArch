@@ -25,6 +25,7 @@ describe('server', function () {
     });
     it('should execute two middleware steps', function (done) {
         var i = 0;
+
         function tempFunc(req, res, next) {
             i += 1;
             next();
@@ -65,5 +66,15 @@ describe('server', function () {
         assert.equal(route.chain.length, 2);
         route.append(tempFunc);
         assert.equal(route.chain.length, 3);
+    });
+    it('should set error object on the response', function () {
+        function tempFunc(req, res, next) {
+            next();
+        }
+        var req = {};
+        var route = new Route('test', [tempFunc], req, {});
+        route.getRoute()({ ErrorText: 'hello' });
+        assert.isNotNull(req.error);
+        assert.equal(req.error.errorText, 'hello');
     });
 });

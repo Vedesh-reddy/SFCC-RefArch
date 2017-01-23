@@ -52,12 +52,10 @@ Server.prototype = {
     use: function use(name) {
         var args = Array.isArray(arguments) ? arguments : Array.prototype.slice.call(arguments);
         var middlewareChain = args.slice(1);
-        // freeze request object to prevent mutations
-        var rq = Object.freeze(
+        var rq =
             new Request(typeof request !== 'undefined' ? request : {},
             typeof customer !== 'undefined' ? customer : {},
-            typeof session !== 'undefined' ? session : {})
-        );
+            typeof session !== 'undefined' ? session : {});
         var rs = new Response(typeof response !== 'undefined' ? response : {});
 
         checkParams(args);

@@ -36,7 +36,7 @@ server.post('AddProduct', function (req, res, next) {
     next();
 });
 
-server.get('Show', function (req, res, next) {
+server.get('Show', server.middleware.https, function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
     var productLineItemModel;
