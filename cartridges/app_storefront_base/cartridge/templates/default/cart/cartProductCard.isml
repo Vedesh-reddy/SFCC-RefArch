@@ -55,7 +55,8 @@
                         </div>
                         <div class="row">
                             <div class="col-xs-12">
-                                <span class="line-item-price">${lineItem.price.formatted}</span>
+                                <isset name="price" value="${lineItem.price}" scope="page"/>
+                                <isinclude template="/product/components/pricing/main.isml" />
                             </div>
                         </div>
                     </div>

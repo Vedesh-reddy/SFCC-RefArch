@@ -24,6 +24,11 @@
 
 .line-item-pricing-info {
     margin-bottom: 0;
+
+    + .price {
+        font-size: 1em;
+        font-weight: bolder;
+    }
 }
 
 #checkout-main {
@@ -47,6 +52,7 @@
 }
 
 .pricing {
+    font-size: 1em;
     font-weight: bolder;
 }
 
