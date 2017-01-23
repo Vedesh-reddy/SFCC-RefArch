@@ -291,6 +291,7 @@ server.get('EditPassword', function (req, res, next) {
     var accountModel = getModel(req);
     if (accountModel) {
         var profileForm = server.forms.getForm('profile');
+        profileForm.clear();
         res.render('account/password', { profileForm: profileForm });
     } else {
         res.redirect(URLUtils.url('Login-Show'));
