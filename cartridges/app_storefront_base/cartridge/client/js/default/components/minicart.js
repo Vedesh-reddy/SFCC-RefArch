@@ -22,6 +22,7 @@ module.exports = function () {
             $('.mini-cart .popover').addClass('show');
             $('.mini-cart .popover').spinner().start();
             $.get(url, function (data) {
+                $('.mini-cart .popover').empty();
                 $('.mini-cart .popover').append(data);
                 $.spinner().stop();
             });
