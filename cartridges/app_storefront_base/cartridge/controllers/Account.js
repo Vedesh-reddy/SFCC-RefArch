@@ -208,6 +208,7 @@ server.get('EditProfile', function (req, res, next) {
     var accountModel = getModel(req);
     if (accountModel) {
         var profileForm = server.forms.getForm('profile');
+        profileForm.clear();
         profileForm.customer.firstname.value = accountModel.profile.firstName;
         profileForm.customer.lastname.value = accountModel.profile.lastName;
         profileForm.customer.phone.value = accountModel.profile.phone;
