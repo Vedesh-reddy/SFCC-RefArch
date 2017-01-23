@@ -71,6 +71,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                         'attributeId': 'size',
                         'displayName': 'Size',
                         'id': 'size',
+                        'resetUrl': myGetRequest.url + '&dwvar_25604455_size=',
                         'swatchable': false,
                         'values': [
                             {
@@ -187,6 +188,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                         'attributeId': 'width',
                         'displayName': 'Width',
                         'id': 'width',
+                        'resetUrl': myGetRequest.url + '&dwvar_25604455_width=',
                         'swatchable': false,
                         'values': [
                             {

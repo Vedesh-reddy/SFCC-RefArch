@@ -18,8 +18,10 @@ describe('ProductVariation - Get product variation with variant ID', function ()
 
     it('should returns variant for the selected attributes', function (done) {
         var urlEndPoint = config.baseUrl + '/Product-Variation';
-        var urlWithMpid = urlEndPoint + '?pid=' + variantPid;
-        myGetRequest.url = urlWithMpid;
+        var urlWithVpid = urlEndPoint + '?pid=' + variantPid;
+        var urlWithMpid = urlEndPoint + '?pid=' + masterPid;
+
+        myGetRequest.url = urlWithVpid;
 
         var expectedResBody = {
             'product': {
@@ -45,7 +47,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': 'SLABLFB',
                                 'selected': false,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_color=SLABLFB&dwvar_25604455_size=160&dwvar_25604455_width=A',
+                                'url': urlWithVpid + '&dwvar_25604455_color=SLABLFB&dwvar_25604455_size=160&dwvar_25604455_width=A',
                                 'images': {
                                     'swatch': [{
                                         'alt': 'No-Iron Textured Dress Shirt, Slate, swatch',
@@ -61,7 +63,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': 'WHITEFB',
                                 'selected': true,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_color=&dwvar_25604455_size=160&dwvar_25604455_width=A',
+                                'url': urlWithVpid + '&dwvar_25604455_color=&dwvar_25604455_size=160&dwvar_25604455_width=A',
                                 'images': {
                                     'swatch': [{
                                         'alt': 'No-Iron Textured Dress Shirt, White, swatch',
@@ -76,6 +78,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                         'attributeId': 'size',
                         'displayName': 'Size',
                         'id': 'size',
+                        'resetUrl': urlWithMpid + '&dwvar_25604455_size=&dwvar_25604455_width=A&dwvar_25604455_color=WHITEFB',
                         'swatchable': false,
                         'values': [
                             {
@@ -85,7 +88,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': '145',
                                 'selected': false,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_size=145&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
+                                'url': urlWithVpid + '&dwvar_25604455_size=145&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
                             },
                             {
                                 'id': '150',
@@ -94,7 +97,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': '150',
                                 'selected': false,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_size=150&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
+                                'url': urlWithVpid + '&dwvar_25604455_size=150&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
                             },
                             {
                                 'id': '155',
@@ -103,7 +106,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': '155',
                                 'selected': false,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_size=155&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
+                                'url': urlWithVpid + '&dwvar_25604455_size=155&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
                             },
                             {
                                 'id': '160',
@@ -112,7 +115,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': '160',
                                 'selected': true,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_size=&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
+                                'url': urlWithVpid + '&dwvar_25604455_size=&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
                             },
                             {
                                 'id': '165',
@@ -121,7 +124,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': '165',
                                 'selected': false,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_size=165&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
+                                'url': urlWithVpid + '&dwvar_25604455_size=165&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
                             },
                             {
                                 'id': '170',
@@ -130,7 +133,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': '170',
                                 'selected': false,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_size=170&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
+                                'url': urlWithVpid + '&dwvar_25604455_size=170&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
                             },
                             {
                                 'id': '175',
@@ -147,7 +150,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': '180',
                                 'selected': false,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_size=180&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
+                                'url': urlWithVpid + '&dwvar_25604455_size=180&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A'
                             },
                             {
                                 'id': '185',
@@ -187,6 +190,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                         'attributeId': 'width',
                         'displayName': 'Width',
                         'id': 'width',
+                        'resetUrl': urlWithMpid + '&dwvar_25604455_width=&dwvar_25604455_size=160&dwvar_25604455_color=WHITEFB',
                         'swatchable': false,
                         'values': [
                             {
@@ -196,7 +200,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': 'A',
                                 'selected': true,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_width=&dwvar_25604455_size=160&dwvar_25604455_color=WHITEFB'
+                                'url': urlWithVpid + '&dwvar_25604455_width=&dwvar_25604455_size=160&dwvar_25604455_color=WHITEFB'
                             },
                             {
                                 'id': 'B',
@@ -205,7 +209,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                                 'value': 'B',
                                 'selected': false,
                                 'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455_width=B&dwvar_25604455_size=160&dwvar_25604455_color=WHITEFB'
+                                'url': urlWithVpid + '&dwvar_25604455_width=B&dwvar_25604455_size=160&dwvar_25604455_color=WHITEFB'
                             }
                         ]
                     }

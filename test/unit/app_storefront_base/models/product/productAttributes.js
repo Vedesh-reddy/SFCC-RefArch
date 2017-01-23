@@ -98,4 +98,79 @@ describe('productAttributes', function () {
         assert.equal(attrs[0].values[0].displayValue, 'blue');
         assert.equal(attrs[0].values[1].displayValue, 'grey');
     });
+
+    it('should return size attributes with multiple values', function () {
+        var tempMock = Object.assign({}, variationsMock);
+        tempMock.productVariationAttributes = new ArrayList([{
+            attributeID: 'color',
+            displayName: 'color',
+            ID: 'COLOR_ID'
+        }, {
+            attributeID: 'size',
+            displayName: 'size',
+            ID: 'SIZE_ID'
+        }]);
+        tempMock.getAllValues.return = new ArrayList([{
+            ID: '038',
+            description: '',
+            displayValue: '38',
+            value: '038'
+        }, {
+            ID: '039',
+            description: '',
+            displayValue: '39',
+            value: '039'
+        }]);
+        var mock = toProductMock(tempMock);
+        var attrs = new ProductAttributes(mock, ['size']);
+
+        assert.equal(attrs.length, 1);
+        assert.equal(attrs[0].displayName, 'size');
+        assert.equal(attrs[0].values.length, 2);
+        assert.equal(attrs[0].values[0].displayValue, '38');
+        assert.equal(attrs[0].values[1].displayValue, '39');
+    });
+
+    it('should return size attributes with a resetUrl', function () {
+        var tempMock = Object.assign({}, variationsMock);
+
+        tempMock.productVariationAttributes = new ArrayList([{
+            attributeID: 'color',
+            displayName: 'color',
+            ID: 'color'
+        }, {
+            attributeID: 'size',
+            displayName: 'size',
+            ID: 'size',
+            resetUrl: ''
+        }]);
+
+        tempMock.getAllValues.return = new ArrayList([{
+            ID: '038',
+            description: '',
+            displayValue: '38',
+            value: '038',
+            selectable: true,
+            selected: false,
+            url: ''
+        }, {
+            ID: '039',
+            description: '',
+            displayValue: '39',
+            value: '039',
+            selectable: true,
+            selected: false,
+            url: ''
+
+        }]);
+
+        tempMock.getSelectedValue.return = false;
+        tempMock.hasOrderableVariants.return = true;
+        tempMock.urlSelectVariationValue.return = '?pid=25604524&dwvar_25604524_size=038&dwvar_25604524_color=BLACKFB';
+
+        var mock = toProductMock(tempMock);
+        var attrs = new ProductAttributes(mock, ['size']);
+
+        assert.equal(attrs[0].resetUrl, '?pid=25604524&dwvar_25604524_size=&dwvar_25604524_color=BLACKFB');
+    });
 });

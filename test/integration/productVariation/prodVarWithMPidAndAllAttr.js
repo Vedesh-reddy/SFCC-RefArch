@@ -79,6 +79,7 @@ describe('ProductVariation - Get product variation with master product ID and al
                         'attributeId': 'size',
                         'displayName': 'Size',
                         'id': 'size',
+                        'resetUrl': urlWithMpid + '&dwvar_25604455_size=&dwvar_25604455_width=A&dwvar_25604455_color=WHITEFB',
                         'swatchable': false,
                         'values': [
                             {
@@ -190,6 +191,7 @@ describe('ProductVariation - Get product variation with master product ID and al
                         'attributeId': 'width',
                         'displayName': 'Width',
                         'id': 'width',
+                        'resetUrl': urlWithMpid + '&dwvar_25604455_width=&dwvar_25604455_size=160&dwvar_25604455_color=WHITEFB',
                         'swatchable': false,
                         'values': [
                             {

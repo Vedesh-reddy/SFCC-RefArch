@@ -48,7 +48,7 @@ Template Notes:
         <iselse>
             <!-- Attribute Values Drop Down Menu -->
             <select class="select-${attr.id}">
-                <option value="null">
+                <option value="${attr.resetUrl}">
                     ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
                 </option>
                 <isloop items="${attr.values}" var="attrValue">
