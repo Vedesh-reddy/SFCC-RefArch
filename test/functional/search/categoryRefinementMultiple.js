@@ -48,7 +48,7 @@ describe('Category Navigation and multiple refinements -  general product', () =
                     .click(homePage.navWomenClothingButton)
                     .waitForVisible(homePage.navWomenClothingTopsButton)
                     .click(homePage.navWomenClothingTopsButton)
-                    .waitForVisible(homePage.navBarButton)
+                    .waitForExist(homePage.navBarButton)
                     .pause(1000)
                     .getText(topTitle)
                     .then(title => assert.equal(title, 'Tops'))

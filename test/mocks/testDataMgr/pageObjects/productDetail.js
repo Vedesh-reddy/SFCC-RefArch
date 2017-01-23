@@ -20,7 +20,7 @@ export function addProductVariationToCart(product) {
 }
 
 export function clickAddToCartButton() {
-    return browser.waitForVisible('.loader-bg', 500, true)
+    return browser.waitForVisible('.loader-bg', 2000, true)
         .waitForEnabled(BTN_ADD_TO_CART)
         .click(BTN_ADD_TO_CART)
         .then(() => browser.waitForVisible(MINI_CART));

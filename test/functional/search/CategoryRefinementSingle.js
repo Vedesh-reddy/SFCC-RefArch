@@ -42,7 +42,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                     .click(homePage.navWomenClothingButton)
                     .waitForVisible(homePage.navWomenClothingTopsButton)
                     .click(homePage.navWomenClothingTopsButton)
-                    .waitForVisible(homePage.navBarButton)
+                    .waitForExist(homePage.navBarButton)
                     .pause(1000)
                     .getText(topTitle)
                     .then(title => assert.equal(title, 'Tops'));
