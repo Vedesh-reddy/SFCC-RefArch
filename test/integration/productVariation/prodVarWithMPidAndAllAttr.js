@@ -214,10 +214,17 @@ describe('ProductVariation - Get product variation with master product ID and al
                     }
                 ],
                 'price': {
-                    'value': 49.99,
-                    'currency': 'USD',
-                    'formatted': '$49.99',
-                    'type': 'standard'
+                    'html': '\n\n\n<div class="price">\n    \n        <span>\n    \n\n    \n        \n        <span class="strike-through list">\n            <span class="value">$69.50</span>\n\n        </span>\n    \n\n    \n    <span class="sales">\n        <span class="value">$49.99</span>\n\n    </span>\n</span>\n\n    \n</div>\n\n',
+                    'list': {
+                        'currency': 'USD',
+                        'formatted': '$69.50',
+                        'value': 69.5
+                    },
+                    'sales': {
+                        'currency': 'USD',
+                        'formatted': '$49.99',
+                        'value': 49.99
+                    }
                 },
                 'images': {
                     'large': [

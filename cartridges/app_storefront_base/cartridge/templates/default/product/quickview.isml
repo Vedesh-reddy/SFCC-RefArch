@@ -41,7 +41,7 @@
                 <!-- Prices -->
                 <div class="prices row">
                     <div class="col-sm-12">
-                        <isinclude template="/product/components/pricing" />
+                        <isinclude template="/product/components/pricing/main" />
                     </div>
                 </div>
 

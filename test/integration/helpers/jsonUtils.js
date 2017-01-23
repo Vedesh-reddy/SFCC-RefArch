@@ -22,7 +22,7 @@ jsonUtils.deleteProperties = function (srcObj, keys) {
  * @param {String[]} keys
  */
 jsonUtils.removeProps = function (obj, keys) {
-    if (obj instanceof Array) {
+    if (obj instanceof Array && obj[0] !== null) {
         obj.forEach(function (item) {
             jsonUtils.removeProps(item, keys);
         });

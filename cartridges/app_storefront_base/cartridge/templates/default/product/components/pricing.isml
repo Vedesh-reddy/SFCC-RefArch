@@ -1,3 +1,0 @@
-<span>
-    ${pdict.product.price.formatted}
-</span>

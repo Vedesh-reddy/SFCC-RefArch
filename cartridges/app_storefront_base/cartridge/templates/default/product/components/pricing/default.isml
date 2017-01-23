@@ -1,0 +1,15 @@
+<span>
+    <isset name="finalOrigPrice" value="${price}" scope="page" />
+
+    <isif condition="${finalOrigPrice.list !== null}">
+        <isset name="price" value="${finalOrigPrice.list}" scope="page" />
+        <span class="strike-through list">
+            <isinclude template="/product/components/pricing/formatted" />
+        </span>
+    </isif>
+
+    <isset name="price" value="${finalOrigPrice.sales}" scope="page" />
+    <span class="sales">
+        <isinclude template="/product/components/pricing/formatted" />
+    </span>
+</span>

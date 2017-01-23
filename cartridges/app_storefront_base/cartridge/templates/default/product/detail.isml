@@ -75,7 +75,8 @@
                         <!-- Prices -->
                         <div class="prices row">
                             <div class="col-sm-12">
-                                <isinclude template="/product/components/pricing" />
+                                <isset name="price" value="${pdict.product.price}" scope="page" />
+                                <isinclude template="/product/components/pricing/main.isml" />
                             </div>
                         </div>
 

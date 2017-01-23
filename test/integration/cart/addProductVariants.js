@@ -207,10 +207,12 @@ describe('Add Product variants to cart', function () {
                                 'id': variantPid1,
                                 'productName': '3/4 Sleeve V-Neck Top',
                                 'price': {
-                                    'value': 24,
-                                    'currency': 'USD',
-                                    'formatted': '$24.00',
-                                    'type': 'standard'
+                                    'list': null,
+                                    'sales': {
+                                        'currency': 'USD',
+                                        'formatted': '$24.00',
+                                        'value': 24
+                                    }
                                 },
                                 'productType': 'variant',
                                 'images': {
@@ -250,10 +252,12 @@ describe('Add Product variants to cart', function () {
                                 'id': variantPid2,
                                 'productName': '3/4 Sleeve V-Neck Top',
                                 'price': {
-                                    'value': 24,
-                                    'currency': 'USD',
-                                    'formatted': '$24.00',
-                                    'type': 'standard'
+                                    'list': null,
+                                    'sales': {
+                                        'currency': 'USD',
+                                        'formatted': '$24.00',
+                                        'value': 24
+                                    }
                                 },
                                 'productType': 'variant',
                                 'images': {
@@ -293,10 +297,12 @@ describe('Add Product variants to cart', function () {
                                 'id': variantPid3,
                                 'productName': 'Bronze Clip On Button Earring',
                                 'price': {
-                                    'value': 20,
-                                    'currency': 'USD',
-                                    'formatted': '$20.00',
-                                    'type': 'standard'
+                                    'list': null,
+                                    'sales': {
+                                        'currency': 'USD',
+                                        'formatted': '$20.00',
+                                        'value': 20
+                                    }
                                 },
                                 'productType': 'variant',
                                 'images': {
@@ -330,10 +336,16 @@ describe('Add Product variants to cart', function () {
                                 'id': variantPid4,
                                 'productName': 'Solid Silk Tie',
                                 'price': {
-                                    'value': 29.99,
-                                    'currency': 'USD',
-                                    'formatted': '$29.99',
-                                    'type': 'standard'
+                                    'list': {
+                                        'currency': 'USD',
+                                        'formatted': '$39.50',
+                                        'value': 39.5
+                                    },
+                                    'sales': {
+                                        'currency': 'USD',
+                                        'formatted': '$29.99',
+                                        'value': 29.99
+                                    }
                                 },
                                 'productType': 'variant',
                                 'images': {

@@ -37,7 +37,7 @@
             }
         }
 
-        p.pdp-prices {
+        .price {
             font-size: 1.125em;
             margin-bottom: 0;
 
@@ -48,6 +48,14 @@
             @include media-breakpoint-down(sm) {
                 font-size: 1em;
             }
+
+            .tiered {
+                font-size: 0.875em;
+
+                .value {
+                    font-weight: bold;
+                }
+            }
         }
 
         .coming-soon-tile {
@@ -55,7 +63,8 @@
         }
 
         .pdp-link {
-            height: 3.125em;
+            height: 3.125rem;
+            line-height: 1.2;
             overflow: hidden;
 
             a {

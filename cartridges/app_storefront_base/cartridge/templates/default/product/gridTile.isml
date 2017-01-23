@@ -55,7 +55,8 @@
         <div class="pdp-link">
             <a class="link" href="${pdict.urls.product}">${pdict.product.productName}</a>
         </div>
-        <p class="pdp-prices">${pdict.product.price.formatted}</p>
+        <isset name="price" value="${pdict.product.price}" scope="page" />
+        <isinclude template="/product/components/pricing/main.isml" />
         <div class="reviews-compare">
             <div class="reviews col-xs-12 col-md-6">
                 <isif condition="${pdict.display.reviews}">

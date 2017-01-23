@@ -2,8 +2,10 @@
 
 var server = require('server');
 var URLUtils = require('dw/web/URLUtils');
+var priceHelper = require('../scripts/helpers/pricing');
 var ProductFactory = require('../scripts/factories/product');
 var Resource = require('dw/web/Resource');
+
 
 /**
  * @typedef ProductDetailPageResourceMap
@@ -49,8 +51,12 @@ server.get('Show', function (req, res, next) {
 
 server.get('Variation', function (req, res, next) {
     var params = req.querystring;
+    var product = ProductFactory.get(params);
+
+    product.price.html = priceHelper.renderHtml(priceHelper.getHtmlContext(product.price));
+
     res.json({
-        product: ProductFactory.get(params),
+        product: product,
         resources: getResources()
     });
 
