@@ -12,8 +12,6 @@ export const GRAND_TOTAL = '.grand-total';
 export const SHIPPING_METHODS = '.shippingMethods';
 export const SHIPPING_METHOD_OPTIONS = '.shippingMethods  > option';
 
-const basePath = '/cart';
-
 // Pseudo private methods
 function createCssNthCartRow(idx) {
     return CART_ITEMS + ':nth-child(' + idx + ')';
@@ -27,7 +25,14 @@ export function createCssNthLineItem(itemIdx, attrIdx) {
 
 // Public methods
 export function navigateTo() {
-    return browser.url(basePath);
+    return getCartURL()
+        .then(cartUrl => browser.url(cartUrl));
+}
+
+export function getCartURL() {
+    let selector = '.mini-cart-link';
+    return browser.waitForVisible(selector)
+        .then(() => browser.getAttribute(selector, 'href'));
 }
 
 export function verifyCartEmpty() {
@@ -61,21 +66,13 @@ export function updateQuantityByRow(rowNum, value) {
 }
 
 export function getEachPriceByRow(rowNum) {
-    let selector = createCssNthCartRow(rowNum) + ' .line-item-price:nth-child(1)';
-
-    return browser.getText(selector)
-        .then(lineItemPrices => {
-            return lineItemPrices[0];
-        });
+    let selector = createCssNthCartRow(rowNum) + ' .price .sales .value';
+    return browser.getText(selector);
 }
 
 export function getTotalPriceByRow(rowNum) {
-    let selector = createCssNthCartRow(rowNum) + ' .line-item-price:nth-child(1)';
-
-    return browser.getText(selector)
-        .then(lineItemPrices => {
-            return lineItemPrices[1];
-        });
+    let selector = createCssNthCartRow(rowNum) + ' .line-item-price';
+    return browser.getText(selector);
 }
 
 /**
