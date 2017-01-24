@@ -129,10 +129,7 @@ server.get('List', function (req, res, next) {
 server.get('AddPayment', function (req, res, next) {
     var creditCardExpirationYears = getExpirationYears();
     var paymentForm = server.forms.getForm('creditcard');
-    paymentForm.payment.cardOwner.value = '';
-    paymentForm.payment.cardNumber.value = '';
-    paymentForm.payment.cardType.value = '';
-    paymentForm.payment.expirationYear.value = '';
+    paymentForm.clear();
     var months = paymentForm.payment.expirationMonth.options;
     for (var j = 0, k = months.length; j < k; j++) {
         months[j].selected = false;
