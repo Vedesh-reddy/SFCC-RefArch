@@ -21,11 +21,15 @@ function createFakeRequest(overrides) {
             longitude: -71.1193
         },
         customer: {
+            authenticated: true,
             profile: {
                 firstName: 'John',
                 lastName: 'Snow',
                 email: 'jsnow@starks.com',
                 phoneHome: '1234567890',
+                credentials: {
+                    login: 'jsnow@starks.com'
+                },
                 wallet: {
                     paymentInstruments: new ArrayList([
                         {
@@ -61,6 +65,9 @@ function createFakeRequest(overrides) {
                 defaultFractionDigits: 10,
                 name: 'Volodin Dollars',
                 symbol: '៛'
+            },
+            custom: {
+                rememberMe: true
             }
         }
     };
@@ -113,6 +120,12 @@ describe('request', function () {
         assert.equal(req.currentCustomer.profile.lastName, 'Snow');
         assert.equal(req.currentCustomer.profile.email, 'jsnow@starks.com');
         assert.equal(req.currentCustomer.profile.phone, '1234567890');
+    });
+    it('should contain correct customer credentials when customer unauthenticated', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.customer.authenticated = false;
+        var req = new Request(fakeRequest, fakeRequest.customer, createFakeRequest().session);
+        assert.equal(req.currentCustomer.credentials.username, 'jsnow@starks.com');
     });
     it('should contain correct current customer address book and properties', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);

@@ -65,7 +65,6 @@ function getModel(req) {
 
 server.get('Show', function (req, res, next) {
     var accountModel = getModel(req);
-
     if (accountModel) {
         res.render('account/accountdashboard', getModel(req));
     } else {
@@ -78,9 +77,8 @@ server.post('Login', server.middleware.https, function (req, res, next) {
     var email = req.form.loginEmail;
     var password = req.form.loginPassword;
     var rememberMe = req.form.loginRememberMe
-        ? req.form.loginRememberMe
+        ? (!!req.form.loginRememberMe)
         : false;
-
     var authenticatedCustomer;
     Transaction.wrap(function () {
         authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
@@ -91,7 +89,9 @@ server.post('Login', server.middleware.https, function (req, res, next) {
     } else {
         res.render('/account/login', {
             navTabValue: 'login',
-            loginFormError: true
+            loginFormError: true,
+            rememberMe: rememberMe,
+            userName: email
         });
     }
     next();
