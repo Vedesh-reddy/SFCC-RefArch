@@ -40,7 +40,7 @@ function getDetailsObject(addressForm) {
         lastName: addressForm.lastName.value,
         phone: addressForm.phone.value,
         postalCode: addressForm.postalCode.value,
-        stateCode: addressForm.states.state.value,
+        stateCode: addressForm.states.stateCode.value,
         addressForm: addressForm
     };
 }
@@ -72,7 +72,7 @@ server.get('AddAddress', function (req, res, next) {
     addressForm.lastName.value = '';
     addressForm.phone.value = '';
     addressForm.postalCode.value = '';
-    var states = addressForm.states.state.options;
+    var states = addressForm.states.stateCode.options;
     for (var i = 0, j = states.length; i < j; i++) {
         states[i].selected = false;
     }
@@ -98,7 +98,7 @@ server.get('EditAddress', function (req, res, next) {
     addressForm.lastName.value = addressModel.address.lastName;
     addressForm.phone.value = addressModel.address.phone;
     addressForm.postalCode.value = addressModel.address.postalCode;
-    var states = addressForm.states.state.options;
+    var states = addressForm.states.stateCode.options;
     for (var i = 0, j = states.length; i < j; i++) {
         states[i].selected = false;
         if (states[i].htmlValue === addressModel.address.stateCode) {

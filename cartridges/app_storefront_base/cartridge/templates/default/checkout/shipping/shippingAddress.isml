@@ -83,19 +83,19 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${addressFields.states.state.mandatory === true}>required</isif>
-            ${addressFields.states.state.htmlName}">
+            <isif condition=${addressFields.states.stateCode.mandatory === true}>required</isif>
+            ${addressFields.states.stateCode.htmlName}">
             <label class="form-control-label" for="shippingState">
                 ${Resource.msg('field.shipping.address.state','address',null)}
             </label>
             <select class="form-control shippingState" id="shippingState"
-                <isprint value=${addressFields.states.state.attributes} encoding="off"/>
+                <isprint value=${addressFields.states.stateCode.attributes} encoding="off"/>
                 autocomplete="shipping region">
-                    <isloop items=${addressFields.states.state.options} var="state">
+                    <isloop items=${addressFields.states.stateCode.options} var="state">
                         <option id="${state.id}" <isif condition="${state.selected}">selected</isif> >${state.htmlValue}</option>
                     </isloop>
             </select>
-            <div class="form-control-feedback"><isprint value="${addressFields.states.state.error}" ></div>
+            <div class="form-control-feedback"><isprint value="${addressFields.states.stateCode.error}" ></div>
         </div>
     </div>
 </div>

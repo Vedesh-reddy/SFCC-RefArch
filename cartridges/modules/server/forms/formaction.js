@@ -5,6 +5,7 @@ module.exports = function (action) {
         description: action.description || null,
         label: action.label || null,
         submitted: action.submitted,
-        triggered: action.triggered
+        triggered: action.triggered,
+        formType: 'formAction'
     };
 };

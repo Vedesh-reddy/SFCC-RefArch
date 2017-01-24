@@ -492,7 +492,7 @@
                 });
 
                 $('#shipping-address .address').on('change',
-                    'select[name$="shippingAddress_addressFields_states_state"]',
+                    'select[name$="shippingAddress_addressFields_states_stateCode"]',
                     members.updateShippingMethodList
                 );
 

@@ -47,7 +47,7 @@
 				"fieldName": "country",
 				"type": "select"
 			}, {
-				"fieldName": "states.state",
+				"fieldName": "states.stateCode",
 				"type": "select",
 				"required": true
 			}],
@@ -69,7 +69,7 @@
 					"type": "select"
 				},
 				"eventAddress": [{
-					"fieldName": "states.state",
+					"fieldName": "states.stateCode",
 					"type": "select"
 				}, {
 					"fieldName": "country",
@@ -127,7 +127,7 @@
 				"fieldName": "country",
 				"type": "select"
 			}, {
-				"fieldName": "states.state"
+				"fieldName": "states.stateCode"
 			}],
 			"type": {
 				"type": "select"
@@ -147,7 +147,7 @@
 					"type": "select"
 				},
 				"eventAddress": [{
-					"fieldName": "states.state"
+					"fieldName": "states.stateCode"
 				}, {
 					"fieldName": "country",
 					"type": "select"
@@ -207,7 +207,7 @@
 				"fieldName": "country",
 				"type": "select"
 			}, {
-				"fieldName": "states.state",
+				"fieldName": "states.stateCode",
 				"type": "select",
 				"required": true
 			}],
@@ -229,7 +229,7 @@
 					"type": "select"
 				},
 				"eventAddress": [{
-					"fieldName": "states.state",
+					"fieldName": "states.stateCode",
 					"type": "select"
 				}, {
 					"fieldName": "country",
@@ -290,7 +290,7 @@
 				"fieldName": "country",
 				"type": "select"
 			}, {
-				"fieldName": "states.state",
+				"fieldName": "states.stateCode",
 				"required": true
 			}],
 			"type": {
@@ -311,7 +311,7 @@
 					"type": "select"
 				},
 				"eventAddress": [{
-					"fieldName": "states.state"
+					"fieldName": "states.stateCode"
 				}, {
 					"fieldName": "country",
 					"type": "select"
@@ -368,7 +368,7 @@
 				"fieldName": "country",
 				"type": "select"
 			}, {
-				"fieldName": "states.state"
+				"fieldName": "states.stateCode"
 
 			}],
 			"type": {
@@ -389,7 +389,7 @@
 					"type": "select"
 				},
 				"eventAddress": [{
-					"fieldName": "states.state"
+					"fieldName": "states.stateCode"
 				}, {
 					"fieldName": "country",
 					"type": "select"
@@ -448,7 +448,7 @@
 				"fieldName": "country",
 				"type": "select"
 			}, {
-				"fieldName": "states.state",
+				"fieldName": "states.stateCode",
 				"type": "select",
 				"required": true
 			}],
@@ -470,7 +470,7 @@
 					"type": "select"
 				},
 				"eventAddress": [{
-					"fieldName": "states.state",
+					"fieldName": "states.stateCode",
 					"type": "select"
 				}, {
 					"fieldName": "country",

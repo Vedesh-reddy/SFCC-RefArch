@@ -71,13 +71,13 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.states.state.mandatory === true}>required</isif>
-            ${billingFields.states.state.htmlName}">
+            <isif condition=${billingFields.states.stateCode.mandatory === true}>required</isif>
+            ${billingFields.states.stateCode.htmlName}">
             <label class="form-control-label" for="billingState">${Resource.msg('field.billing.address.state','address',null)}</label>
             <select class="form-control billingState" id="billingState"
-                <isprint value=${billingFields.states.state.attributes} encoding="off"/>
+                <isprint value=${billingFields.states.stateCode.attributes} encoding="off"/>
                 autocomplete="billing region">
-                    <isloop items=${billingFields.states.state.options} var="state">
+                    <isloop items=${billingFields.states.stateCode.options} var="state">
                         <option id="${state.id}" <isif condition="${state.selected}">selected</isif> >${state.htmlValue}</option>
                     </isloop>
             </select>

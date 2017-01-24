@@ -111,6 +111,8 @@ function formField(field) {
             break;
     }
 
+    result.formType = 'formField';
+
     return result;
 }
 

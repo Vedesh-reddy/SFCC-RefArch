@@ -42,7 +42,8 @@
             <isprint value=${creditFields.expirationYear.attributes} encoding="off"/>>
                 <option value="${pdict.forms.billingForm.creditCardFields.expirationYear.options[0].htmlValue}">${pdict.forms.billingForm.creditCardFields.expirationYear.options[0].label}</option>
                 <isloop items=${pdict.expirationYears} var="year">
-                    <option id="${year}" value="${year}" <isif condition="${year == pdict.forms.billingForm.creditCardFields.expirationYear.value}">selected</isif> >${year}</option>
+                    <option id="${year}" value="${year}" <isif condition="${year === pdict.forms.billingForm.creditCardFields.expirationYear.value}">selected</isif> >
+                    <isprint value="${year}" formatter="####" /></option>
                 </isloop>
             </select>
             <div class="form-control-feedback"></div>
