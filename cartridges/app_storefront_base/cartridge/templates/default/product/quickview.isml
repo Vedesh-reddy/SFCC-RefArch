@@ -41,6 +41,7 @@
                 <!-- Prices -->
                 <div class="prices row">
                     <div class="col-sm-12">
+                        <isset name="price" value="${pdict.product.price}" scope="page" />
                         <isinclude template="/product/components/pricing/main" />
                     </div>
                 </div>
