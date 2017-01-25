@@ -59,7 +59,7 @@ function verifyCard(card, form, paymentInstruments, UUID) {
         helper.forEach(creditCardStatus.items, function (item) {
             switch (item.code) {
                 case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
-                    var targetForm = UUID ? form.editNumber : form.payment.cardNumber;
+                    var targetForm = UUID ? form.editNumber : form.cardNumber;
                     targetForm.valid = false;
                     targetForm.error =
                         Resource.msg('error.message.creditnumber.invalid', 'forms', null);
@@ -67,8 +67,8 @@ function verifyCard(card, form, paymentInstruments, UUID) {
                     break;
 
                 case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
-                    var expirationMonth = form.payment.expirationMonth;
-                    var expirationYear = form.payment.expirationYear;
+                    var expirationMonth = form.expirationMonth;
+                    var expirationYear = form.expirationYear;
                     expirationMonth.valid = false;
                     expirationMonth.error =
                         Resource.msg('error.message.creditexpiration.expired', 'forms', null);
@@ -91,11 +91,11 @@ function verifyCard(card, form, paymentInstruments, UUID) {
  */
 function getDetailsObject(paymentForm, UUID) {
     return {
-        name: paymentForm.payment.cardOwner.value,
-        cardNumber: UUID ? paymentForm.editNumber.value : paymentForm.payment.cardNumber.value,
-        cardType: paymentForm.payment.cardType.value,
-        expirationMonth: paymentForm.payment.expirationMonth.value,
-        expirationYear: paymentForm.payment.expirationYear.value,
+        name: paymentForm.cardOwner.value,
+        cardNumber: UUID ? paymentForm.editNumber.value : paymentForm.cardNumber.value,
+        cardType: paymentForm.cardType.value,
+        expirationMonth: paymentForm.expirationMonth.value,
+        expirationYear: paymentForm.expirationYear.value,
         paymentForm: paymentForm,
         UUID: UUID
     };
@@ -130,7 +130,7 @@ server.get('AddPayment', function (req, res, next) {
     var creditCardExpirationYears = getExpirationYears();
     var paymentForm = server.forms.getForm('creditcard');
     paymentForm.clear();
-    var months = paymentForm.payment.expirationMonth.options;
+    var months = paymentForm.expirationMonth.options;
     for (var j = 0, k = months.length; j < k; j++) {
         months[j].selected = false;
     }
@@ -150,12 +150,12 @@ server.get('EditPayment', function (req, res, next) {
         return UUID === paymentInstrument.UUID;
     });
 
-    paymentForm.payment.cardOwner.value = paymentToEdit.creditCardHolder;
+    paymentForm.cardOwner.value = paymentToEdit.creditCardHolder;
     paymentForm.editNumber.value = '';
-    paymentForm.payment.cardType.value = paymentToEdit.creditCardType;
-    paymentForm.payment.expirationYear.value = paymentToEdit.creditCardExpirationYear;
+    paymentForm.cardType.value = paymentToEdit.creditCardType;
+    paymentForm.expirationYear.value = paymentToEdit.creditCardExpirationYear;
 
-    var months = paymentForm.payment.expirationMonth.options;
+    var months = paymentForm.expirationMonth.options;
     for (var j = 1, k = months.length; j < k; j++) {
         months[j].selected = false;
         if (months[j].value === paymentToEdit.creditCardExpirationMonth) {
@@ -188,8 +188,8 @@ server.post('SavePayment', function (req, res, next) {
             paymentForm.editNumber.valid = false;
             paymentForm.editNumber.error = msg;
         } else {
-            paymentForm.payment.cardNumber.valid = false;
-            paymentForm.payment.cardNumber.error = msg;
+            paymentForm.cardNumber.valid = false;
+            paymentForm.cardNumber.error = msg;
         }
     }
 

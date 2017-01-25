@@ -208,9 +208,9 @@
                     clearPreviousErrors('.payment-form');
 
                     $.ajax({
-                        url: $('#dwfrm_payment').attr('action'),
+                        url: $('#dwfrm_billing').attr('action'),
                         method: 'POST',
-                        data: $('#dwfrm_payment').serialize(),
+                        data: $('#dwfrm_billing').serialize(),
                         success: function (data) {
                             // look for field validation errors
                             if (data.error) {

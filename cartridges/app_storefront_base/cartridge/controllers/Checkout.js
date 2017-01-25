@@ -100,7 +100,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     orderTotals = new TotalsModel(currentBasket);
 
     var shippingForm = server.forms.getForm('singleShipping');
-    var billingForm = server.forms.getForm('payment');
+    var billingForm = server.forms.getForm('billing');
 
     orderModel = new OrderModel(
         currentBasket,
@@ -177,7 +177,7 @@ function validateBillingForm(form) {
         'address1',
         'address2',
         'city',
-        'postal',
+        'postalCode',
         'country',
         'states.state'
     ];
@@ -204,12 +204,12 @@ function validateCreditCard(form) {
     }
 
     var formKeys = [
-        'cardNumber',
-        'expirationYear',
-        'expirationMonth',
-        'securityCode',
-        'email',
-        'phone'
+        'creditCardFields.cardNumber',
+        'creditCardFields.expirationYear',
+        'creditCardFields.expirationMonth',
+        'creditCardFields.securityCode',
+        'creditCardFields.email',
+        'creditCardFields.phone'
     ];
 
     return validateFields(form, formKeys);
@@ -381,14 +381,14 @@ function calculatePaymentTransaction(currentBasket) {
  *  Handle Ajax payment (and billing) form submit
  */
 server.post('SubmitPayment', server.middleware.https, function (req, res, next) {
-    var paymentForm = server.forms.getForm('payment');
+    var paymentForm = server.forms.getForm('billing');
     var billingFormErrors = {};
     var creditCardErrors;
     var viewData = {};
 
     // verify billing form data
     if (!paymentForm.shippingAddressUseAsBillingAddress.value) {
-        billingFormErrors = validateBillingForm(paymentForm);
+        billingFormErrors = validateBillingForm(paymentForm.addressFields);
     }
 
     // verify credit card form data
@@ -404,14 +404,14 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
         });
     } else {
         viewData.address = {
-            firstName: { value: paymentForm.firstName.value },
-            lastName: { value: paymentForm.lastName.value },
-            address1: { value: paymentForm.address1.value },
-            address2: { value: paymentForm.address2.value },
-            city: { value: paymentForm.city.value },
-            stateCode: { value: paymentForm.states.state.value },
-            postalCode: { value: paymentForm.postal.value },
-            countryCode: { value: paymentForm.country.value }
+            firstName: { value: paymentForm.addressFields.firstName.value },
+            lastName: { value: paymentForm.addressFields.lastName.value },
+            address1: { value: paymentForm.addressFields.address1.value },
+            address2: { value: paymentForm.addressFields.address2.value },
+            city: { value: paymentForm.addressFields.city.value },
+            stateCode: { value: paymentForm.addressFields.states.state.value },
+            postalCode: { value: paymentForm.addressFields.postalCode.value },
+            countryCode: { value: paymentForm.addressFields.country.value }
         };
 
         viewData.shippingAddressUseAsBillingAddress = {
@@ -425,32 +425,32 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
 
         viewData.paymentInformation = {
             cardType: {
-                value: paymentForm.cardType.value,
-                htmlName: paymentForm.cardType.htmlName
+                value: paymentForm.creditCardFields.cardType.value,
+                htmlName: paymentForm.creditCardFields.cardType.htmlName
             },
             cardNumber: {
-                value: paymentForm.cardNumber.value,
-                htmlName: paymentForm.cardNumber.htmlName
+                value: paymentForm.creditCardFields.cardNumber.value,
+                htmlName: paymentForm.creditCardFields.cardNumber.htmlName
             },
             securityCode: {
-                value: paymentForm.securityCode.value,
-                htmlName: paymentForm.securityCode.htmlName
+                value: paymentForm.creditCardFields.securityCode.value,
+                htmlName: paymentForm.creditCardFields.securityCode.htmlName
             },
             expirationMonth: {
-                value: paymentForm.expirationMonth.selectedOption,
-                htmlName: paymentForm.expirationMonth.htmlName
+                value: paymentForm.creditCardFields.expirationMonth.selectedOption,
+                htmlName: paymentForm.creditCardFields.expirationMonth.htmlName
             },
             expirationYear: {
-                value: paymentForm.expirationYear.value,
-                htmlName: paymentForm.expirationYear.htmlName
+                value: paymentForm.creditCardFields.expirationYear.value,
+                htmlName: paymentForm.creditCardFields.expirationYear.htmlName
             }
         };
 
         viewData.email = {
-            value: paymentForm.email.value
+            value: paymentForm.creditCardFields.email.value
         };
 
-        viewData.phone = { value: paymentForm.phone.value };
+        viewData.phone = { value: paymentForm.creditCardFields.phone.value };
 
         res.setViewData(viewData);
 
@@ -525,7 +525,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
                     Resource.msg('error.no.selected.payment.method', 'creditCard', null);
 
                 res.json({
-                    form: server.forms.getForm('payment'),
+                    form: server.forms.getForm('billing'),
                     fieldErrors: [noPaymentMethod],
                     serverErrors: [],
                     error: true
@@ -553,7 +553,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             // need to invalidate credit card fields
             if (result.error) {
                 res.json({
-                    form: server.forms.getForm('payment'),
+                    form: server.forms.getForm('billing'),
                     fieldErrors: result.fieldErrors,
                     serverErrors: result.serverErrors,
                     error: true
@@ -595,7 +595,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
                 billingData: billingModel,
                 orderEmail: currentBasket.customerEmail,
                 totals: orderTotals,
-                form: server.forms.getForm('payment'),
+                form: server.forms.getForm('billing'),
                 resource: resource,
                 error: false
             });

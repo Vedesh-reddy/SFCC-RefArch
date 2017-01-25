@@ -3,7 +3,7 @@
     <!-- form for creating and editing shipping address -->
     <group formid="shippingAddress" form-error="address.invalid" >
         <!-- use fields from shipping address definition -->
-        <include formid="addressFields" name="shippingaddress"/>
+        <include formid="addressFields" name="address"/>
 
         <!-- shipping method selection -->
         <field formid="shippingMethodID" type="string" mandatory="true" />

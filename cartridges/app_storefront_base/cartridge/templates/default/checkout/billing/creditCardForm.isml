@@ -1,4 +1,4 @@
-<isset name="creditFields" value="${pdict.forms.billingForm}" scope="page"/>
+<isset name="creditFields" value="${pdict.forms.billingForm.creditCardFields}" scope="page"/>
 
 <!--- Visa is currently hard coded as the payment card type this will change when card type autofill is complete --->
 <input type="hidden" class="form-control cardNumber" id="cardType"
@@ -40,9 +40,9 @@
             <label class="form-control-label" for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
             <select class="form-control expirationYear" id="expirationYear"
             <isprint value=${creditFields.expirationYear.attributes} encoding="off"/>>
-                <option value="${pdict.forms.billingForm.expirationYear.options[0].htmlValue}">${pdict.forms.billingForm.expirationYear.options[0].label}</option>
+                <option value="${pdict.forms.billingForm.creditCardFields.expirationYear.options[0].htmlValue}">${pdict.forms.billingForm.creditCardFields.expirationYear.options[0].label}</option>
                 <isloop items=${pdict.expirationYears} var="year">
-                    <option id="${year}" value="${year}" <isif condition="${year == pdict.forms.billingForm.expirationYear.htmlValue}">selected</isif> >${year}</option>
+                    <option id="${year}" value="${year}" <isif condition="${year == pdict.forms.billingForm.creditCardFields.expirationYear.htmlValue}">selected</isif> >${year}</option>
                 </isloop>
             </select>
             <div class="form-control-feedback"></div>
