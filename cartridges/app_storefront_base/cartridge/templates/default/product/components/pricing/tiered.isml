@@ -1,7 +1,7 @@
 <div class="tiered">
     <isif condition="${price.useSimplePrice}">
         <span class="tile-label">${Resource.msg('label.starting_from', 'pricing', null)}</span>
-        <span class="value">${price.startingFromPrice.formatted}</span>
+        <span class="value">${price.startingFromPrice.sales.formatted}</span>
     <iselse>
         <table>
             <tr>
