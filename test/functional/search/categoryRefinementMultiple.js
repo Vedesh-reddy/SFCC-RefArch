@@ -131,14 +131,13 @@ describe('Category Navigation and multiple refinements -  general product', () =
     });
 
     it('#4 should return the correct href links when refined by Color, Price and Size', () => {
-        let expectedLinkHttp;
-        const expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productID + '.html?lang=' + localeStr;
+        let expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productID + '.html?lang=' + localeStr;
         if (expectedLink.startsWith('https')) {
-            expectedLinkHttp = common.convertHTTPsToHTTP(expectedLink);
+            expectedLink = common.convertHTTPsToHTTP(expectedLink);
         }
         return productTile.getProductTileImageHref(productID)
             .then(imageLink => {
-                assert.equal(imageLink, expectedLinkHttp, 'Expected image link not equal to ' + expectedLinkHttp);
+                assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
             });
     });
 

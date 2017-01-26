@@ -7,7 +7,7 @@ export const PRODUCT_NAME = '.product-name';
 export const SELECTED_SWATCH_COLOR = '.swatch-value.selected';
 export const SELECTED_SIZE = '.select-size option[selected]';
 export const SELECTED_QUANTITY = 'select.quantity';
-export const PRICE = '.prices div span';
+export const PRICE = '.prices .price .sales .value';
 export const ADD_TO_CART = '.add-to-cart';
 export const CLOSE_BUTTON = '.close';
 
