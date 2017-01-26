@@ -102,6 +102,10 @@ export function convertToUrlFormat(inString) {
     return dotRemovedStr.toLowerCase().replace(/ /g, '-');
 }
 
+export function convertHTTPsToHTTP(url) {
+    return url.replace('https', 'http');
+}
+
 export function waitUntilPageLoaded() {
     return browser.waitUntil(() => {
         return browser.execute(() => document.readyState)

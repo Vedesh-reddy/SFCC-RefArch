@@ -9,7 +9,7 @@ export const swatchCircle = '.swatch-circle';
 export const quickViewImg = '.quickview img';
 export const quickView = '.quickview';
 export const tileImage = '.tile-image';
-export const pdpPrices = '.pdp-prices';
+export const pdpPrices = ' .price .sales .value';
 export const dataPid = '[data-pid=';
 export const SWATCHES = '.swatches';
 export const IMAGE_CONTAINER = '.image-container';
