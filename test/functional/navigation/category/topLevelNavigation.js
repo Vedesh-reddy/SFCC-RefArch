@@ -39,16 +39,16 @@ describe('Top Level category navigation', () => {
                 if (isVisible) {
                     return browser.click(homePage.navBarButton)
                         .then(() => browser.waitForVisible(homePage.closeButton))
-                        .then(() => browser.click(homePage.navNewArrivalButton))
+                        .then(() => browser.click(homePage.navNewArrivalsButton))
                         .then(() => browser.waitForVisible(homePage.backButton))
-                        .then(() => browser.click(homePage.navTopCategory))
-                        .then(() => browser.waitForVisible(common.CATEGORYSLOT))
+                        .then(() => browser.click(homePage.navNewArrivalNewArrivalButton))
+                        .then(() => browser.waitForExist(homePage.dropdownMenu, true))
                         .then(() => browser.url())
                         .then(currentUrl => verifyURL(currentUrl, newArrivalLink));
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.NEW_ARRIVALS)
+                    .click(homePage.navNewArrival)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .url()
                     .then(currentUrl => verifyURL(currentUrl, newArrivalLink))
@@ -65,15 +65,15 @@ describe('Top Level category navigation', () => {
                         .then(() => browser.waitForVisible(homePage.closeButton))
                         .then(() => browser.click(homePage.navWomenButton))
                         .then(() => browser.waitForVisible(homePage.backButton))
-                        .then(() => browser.click(homePage.navTopCategory))
-                        .then(() => browser.waitForVisible(common.CATEGORYSLOT))
+                        .then(() => browser.click(homePage.navWomenWomenButton))
+                        .then(() => browser.waitForExist(homePage.dropdownMenu, true))
                         .then(() => browser.url())
                         .then(currentUrl => verifyURL(currentUrl, womenLink))
                         .then(() => common.waitUntilPageLoaded());
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.WOMEN)
+                    .click(homePage.navWomen)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .url()
                     .then(currentUrl => verifyURL(currentUrl, womenLink));
@@ -89,15 +89,15 @@ describe('Top Level category navigation', () => {
                         .then(() => browser.waitForVisible(homePage.closeButton))
                         .then(() => browser.click(homePage.navMenButton))
                         .then(() => browser.waitForVisible(homePage.backButton))
-                        .then(() => browser.click(homePage.navTopCategory))
-                        .then(() => browser.waitForVisible(common.CATEGORYSLOT))
+                        .then(() => browser.click(homePage.navMenMenButton))
+                        .then(() => browser.waitForExist(homePage.dropdownMenu, true))
                         .then(() => browser.url())
                         .then(currentUrl => verifyURL(currentUrl, menLink))
                         .then(() => common.waitUntilPageLoaded());
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.MEN)
+                    .click(homePage.navMen)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .url()
                     .then(currentUrl => verifyURL(currentUrl, menLink));
@@ -110,17 +110,17 @@ describe('Top Level category navigation', () => {
                 if (isVisible) {
                     return browser.click(homePage.navBarButton)
                         .then(() => browser.waitForVisible(homePage.closeButton))
-                        .then(() => browser.click(homePage.navElectronics))
+                        .then(() => browser.click(homePage.navElectronicsButton))
                         .then(() => browser.waitForVisible(homePage.backButton))
-                        .then(() => browser.click(homePage.navTopCategory))
-                        .then(() => browser.waitForVisible(common.CATEGORYSLOT))
+                        .then(() => browser.click(homePage.navElectronicsElectronicsButton))
+                        .then(() => browser.waitForExist(homePage.dropdownMenu, true))
                         .then(() => browser.url())
                         .then(currentUrl => verifyURL(currentUrl, electronicLink))
                         .then(() => common.waitUntilPageLoaded());
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.ELECTRONICS)
+                    .click(homePage.navElectronics)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .url()
                     .then(currentUrl => verifyURL(currentUrl, electronicLink));
@@ -134,14 +134,14 @@ describe('Top Level category navigation', () => {
                 if (isVisible) {
                     return browser.click(homePage.navBarButton)
                         .then(() => browser.waitForVisible(homePage.closeButton))
-                        .then(() => browser.click(homePage.navTopSellers))
+                        .then(() => browser.click(homePage.navTopSellerButton))
                         .then(() => browser.waitForVisible(productDetails.PRODUCT_GRID))
                         .then(() => verifyTopSellersURL())
                         .then(() => common.waitUntilPageLoaded());
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.TOP_SELLERS)
+                    .click(homePage.navTopSeller)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .then(() => verifyTopSellersURL());
             });
