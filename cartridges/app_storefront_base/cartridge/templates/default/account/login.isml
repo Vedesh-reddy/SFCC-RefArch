@@ -2,10 +2,10 @@
     <isscript>
         var assets = require('~/cartridge/scripts/assets.js');
         assets.addCss('/css/login.css');
+        assets.addJs('/js/login.js');
     </isscript>
     <div class="container-fluid">
         <div class="row">
-            <!--- TODO:Replace image once UX has given images --->
             <div class="hero slant-down login-banner">
                 <h1 class="page-title">${Resource.msg('header.hero.image.login', 'login', null)}</h1>
             </div>
@@ -18,6 +18,7 @@
         <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
             <div class="row">
                 <isinclude template="components/login/loginform" />
+                <isinclude template="account/password/requestPasswordResetModal"/>
             </div>
             <div class="row">
                 <isinclude template="components/login/oauth" />

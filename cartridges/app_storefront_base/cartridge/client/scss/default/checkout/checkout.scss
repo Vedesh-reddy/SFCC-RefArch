@@ -2,6 +2,7 @@
 @import "checkoutComponents";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
+@import "../components/formFields";
 
 $checkout-font-weight: 600;
 
@@ -259,23 +260,6 @@ $checkout-font-weight: 600;
             background-color: white;
             z-index: 2;
         }
-    }
-}
-
-.form-group {
-    .form-control-feedback {
-        display: none;
-    }
-
-    &.has-danger {
-        .form-control-feedback {
-            display: block;
-        }
-    }
-
-    &.required .form-control-label::before {
-        content: "*";
-        color: $red;
     }
 }
 

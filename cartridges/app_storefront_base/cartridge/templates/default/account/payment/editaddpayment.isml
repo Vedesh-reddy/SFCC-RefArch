@@ -7,7 +7,7 @@
         <h1 class="page-title">${Resource.msg('page.title.myaccount','account',null)}</h1>
     </div>
     <div class="container">
-        <div class="col-xs-8 offset-xs-2 col-sm-6 offset-sm-3">
+        <div class="col-sm-6 offset-sm-3">
             <div>
                 <h1>${Resource.msg('page.heading.payments','payment',null)}</h1>
             </div>

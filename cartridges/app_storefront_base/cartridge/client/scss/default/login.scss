@@ -1,6 +1,7 @@
 @import "variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
+@import "components/formFields";
 
 .login-page {
     margin-top: 0.938em;
@@ -76,10 +77,6 @@
         }
     }
 
-    .required {
-        color: $alert-danger-bg;
-    }
-
     .login-oauth {
         .btn-oauth-login {
             color: $blue;
@@ -111,6 +108,10 @@
             color: $brand-primary;
         }
     }
+}
+
+.forgot-password-heading {
+    margin-top: 1rem;
 }
 
 .login-banner {

@@ -69,14 +69,13 @@
 
     <!-- Expiration Date -->
     <div class="row">
-    <!-- Label -->
-        <div class="col-xs-12 <isif condition="${pdict.paymentForm.expirationMonth.mandatory}">required</isif>">
-                <p class="expiration-label form-control-label"> ${Resource.msg('label.payment.expiration','payment',null)}</p>
-        </div>
-        <!-- Month -->
         <div class="col-xs-6">
-            <div class="form-group <isif condition="${!pdict.paymentForm.expirationMonth.valid}">has-danger</isif>">
-                <label for="month"></label>
+            <div class="form-group
+                <isif condition="${!pdict.paymentForm.expirationMonth.valid}">has-danger</isif>
+                <isif condition="${pdict.paymentForm.expirationMonth.mandatory}">required</isif>">
+                <label class="form-control-label" for="month">
+                    <isprint value="${pdict.paymentForm.expirationMonth.label}" encoding="off" />
+                </label>
                 <select class="form-control custom-select" id="month" <isprint value=${pdict.paymentForm.expirationMonth.attributes} encoding="off" /> autocomplete="cc-exp-month">
                     <isloop items=${pdict.paymentForm.expirationMonth.options} var="month">
                         <option id="${month.id}" value="${month.htmlValue}" <isif condition="${month.selected}">selected</isif> >${month.label}</option>
@@ -88,10 +87,13 @@
             </div>
         </div>
 
-        <!-- Year -->
         <div class="col-xs-6">
-            <div class="form-group <isif condition="${!pdict.paymentForm.expirationYear.valid}">has-danger</isif>">
-                <label for="year"></label>
+            <div class="form-group
+                <isif condition="${!pdict.paymentForm.expirationYear.valid}">has-danger</isif>
+                <isif condition="${pdict.paymentForm.expirationYear.mandatory}">required</isif>">
+                <label class="form-control-label" for="year">
+                    <isprint value="${pdict.paymentForm.expirationYear.label}" encoding="off" />
+                </label>
                 <select class="form-control custom-select" id="year" <isprint value=${pdict.paymentForm.expirationYear.attributes} encoding="off" /> autocomplete="cc-exp-year">
                     <option value="${pdict.paymentForm.expirationYear.options[0].htmlValue}">${pdict.paymentForm.expirationYear.options[0].label}</option>
                     <isloop items=${pdict.expirationYears} var="year">

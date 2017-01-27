@@ -1,0 +1,16 @@
+.form-group {
+    .form-control-feedback {
+        display: none;
+    }
+
+    &.has-danger {
+        .form-control-feedback {
+            display: block;
+        }
+    }
+
+    &.required .form-control-label::before {
+        content: "*";
+        color: $red;
+    }
+}
