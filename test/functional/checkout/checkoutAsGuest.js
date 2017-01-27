@@ -104,9 +104,9 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
 
     it('should direct to the Payment page after Shipping page has been submitted', () =>
         browser.click(checkoutPage.BTN_NEXT_PAYMENT)
-            .then(() => browser.waitForExist(checkoutPage.BTN_NEXT_PLACE_ORDER))
-            .then(() => browser.waitForVisible(checkoutPage.PAYMENT_FORM))
-            .then(() => browser.isVisible(checkoutPage.PAYMENT_FORM))
+            .waitForExist(checkoutPage.BTN_NEXT_PLACE_ORDER)
+            .waitForVisible(checkoutPage.PAYMENT_FORM)
+            .isVisible(checkoutPage.PAYMENT_FORM)
             .then(paymentFormVisible => assert.ok(paymentFormVisible))
     );
 
@@ -135,7 +135,7 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
             .then((pageTitle) => {
                 const defaultTitle = 'Thank You';
                 const expectedPageTitle = Resource.msgf('title.thank.you.page', 'confirmation', null, defaultTitle);
-                assert.equal(pageTitle, expectedPageTitle, 'Expected to be on order confirmation page with page title = ' + expectedPageTitle);
+                return assert.equal(pageTitle, expectedPageTitle, 'Expected to be on order confirmation page with page title = ' + expectedPageTitle);
             });
     });
 });
