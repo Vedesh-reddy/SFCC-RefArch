@@ -1,6 +1,7 @@
 'use strict';
 
 export const BTN_DELETE = '.card button.remove-btn';
+export const BTN_CHECKOUT = '.checkout-btn';
 export const DELETE_CONFIRMATION = '.delete-confirmation-btn';
 export const CART_EMPTY = '.text-xs-center h1';
 export const CART_ITEMS = '.card';

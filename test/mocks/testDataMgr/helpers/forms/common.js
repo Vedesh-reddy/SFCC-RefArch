@@ -13,6 +13,8 @@ export function populateField(selector, value, fieldType = 'input') {
             return browser.clearElement(selector).setValue(selector, value);
         case 'selectByValue':
             return browser.selectByValue(selector, value);
+        case 'selectByVisibleText':
+            return browser.selectByVisibleText(selector, value);
         case 'selectByIndex':
             return browser.selectByIndex(selector, value);
         // Sets HTML5 input date field
