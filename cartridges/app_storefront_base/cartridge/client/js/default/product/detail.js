@@ -2,7 +2,7 @@
 var base = require('./base');
 
 module.exports = function () {
-    $('select[class^="select-"]').on('change', function (e) {
+    $('select[class*="select-"]').on('change', function (e) {
         e.preventDefault();
         var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
 
