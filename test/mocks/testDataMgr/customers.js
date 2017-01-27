@@ -52,7 +52,7 @@ export class Customer {
     }
 
     getPreferredAddress() {
-        return _.findWhere(this.addresses, { preferred: true });
+        return _.find(this.addresses, { preferred: true });
     }
 }
 
