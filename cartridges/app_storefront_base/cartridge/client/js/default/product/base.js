@@ -58,8 +58,11 @@ function processSwatchValues(attr) {
  *     values, an attribute may be disabled in the Product Detail Page
  */
 function processNonSwatchValues(attr) {
+    var $attr = '[data-attr="' + attr.id + '"]';
+    var $defaultOption = $($attr + ' .select-' + attr.id + ' option:first');
+    $defaultOption.attr('value', attr.resetUrl);
+
     attr.values.forEach(function (attrValue) {
-        var $attr = '[data-attr="' + attr.id + '"]';
         var $attrValue = $($attr + ' [data-attr-value="' + attrValue.value + '"]');
         $attrValue.attr('value', attrValue.url)
             .removeAttr('disabled');

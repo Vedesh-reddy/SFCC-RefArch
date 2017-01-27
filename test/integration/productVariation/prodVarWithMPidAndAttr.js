@@ -75,6 +75,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                         'attributeId': 'size',
                         'displayName': 'Size',
                         'id': 'size',
+                        'resetUrl': urlWithMpid + '&dwvar_25604455_size=&dwvar_25604455_color=SLABLFB',
                         'swatchable': false,
                         'values': [
                             {
@@ -190,6 +191,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                         'attributeId': 'width',
                         'displayName': 'Width',
                         'id': 'width',
+                        'resetUrl': urlWithMpid + '&dwvar_25604455_width=&dwvar_25604455_size=155&dwvar_25604455_color=SLABLFB',
                         'swatchable': false,
                         'values': [
                             {

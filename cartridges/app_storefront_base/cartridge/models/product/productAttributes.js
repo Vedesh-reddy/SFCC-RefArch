@@ -53,6 +53,36 @@ function getAllAttrValues(variationModel, selectedValue, attr) {
 }
 
 /**
+ * Gets the Url needed to relax the given attribute selection, this will not return
+ * anything for attributes represented as swatches.
+ *
+ * @param {Array} values - Attribute values
+ * @param {string} attrID - id of the attribute
+ * @returns {string} -the Url that will remove the selected attribute.
+ */
+function getAttrResetUrl(values, attrID) {
+    var urlReturned;
+    var value;
+
+    for (var i = 0; i < values.length; i++) {
+        value = values[i];
+        if (!value.images) {
+            if (value.selected) {
+                urlReturned = value.url;
+                break;
+            }
+
+            if (value.selectable) {
+                urlReturned = value.url.replace(attrID + '=' + value.value, attrID + '=');
+                break;
+            }
+        }
+    }
+
+    return urlReturned;
+}
+
+/**
  * @constructor
  * @classdesc Get a list of available attributes that matches provided config
  *
@@ -64,6 +94,8 @@ function AttributesModel(variationModel, attrConfig) {
     var result = [];
     dwHelpers.forEach(allAttributes, function (attr) {
         var selectedValue = variationModel.getSelectedValue(attr);
+        var values = getAllAttrValues(variationModel, selectedValue, attr);
+        var resetUrl = getAttrResetUrl(values, attr.ID);
         if ((Array.isArray(attrConfig) && attrConfig.indexOf(attr.attributeID) > -1)
             || attrConfig === '*') {
             result.push({
@@ -71,7 +103,8 @@ function AttributesModel(variationModel, attrConfig) {
                 displayName: attr.displayName,
                 id: attr.ID,
                 swatchable: isSwatchable(attr.attributeID),
-                values: getAllAttrValues(variationModel, selectedValue, attr)
+                values: values,
+                resetUrl: resetUrl
             });
         } else if (attrConfig === 'selected') {
             result.push({
