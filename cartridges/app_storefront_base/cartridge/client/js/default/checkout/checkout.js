@@ -161,6 +161,22 @@
             }
         }
 
+        /**
+         * Updates the URL to determine stage
+         * @param {number} currentStage - The current stage the user is currently on in the checkout
+         */
+        function updateUrl(currentStage) {
+            history.pushState(
+                checkoutStages[currentStage],
+                document.title,
+                location.pathname
+                + '?stage='
+                + checkoutStages[currentStage]
+                + '#'
+                + checkoutStages[currentStage]
+            );
+        }
+
         //
         // Local member methods of the Checkout plugin
         //
@@ -372,7 +388,14 @@
              */
             initialize: function () {
                 // set the initial state of checkout
+                members.currentStage = checkoutStages
+                    .indexOf($('.data-checkout-stage').data('checkout-stage'));
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
+
+                $('.billing-address').toggleClass(
+                    'same-as-shipping',
+                    $('input[name$="_shippingAddressUseAsBillingAddress"]').is(':checked')
+                );
 
                 /**
                  * Toggle "billing same as shipping"
@@ -449,8 +472,7 @@
                 //
                 // remember stage (e.g. shipping)
                 //
-                history.pushState(checkoutStages[members.currentStage],
-                    document.title, location.pathname + '#' + checkoutStages[members.currentStage]);
+                updateUrl(members.currentStage);
 
                 //
                 // Listen for foward/back button press and move to correct checkout-stage
@@ -470,7 +492,7 @@
                 });
 
                 $('#shipping-address .address').on('change',
-                    'select[name$="shippingAddress_addressFields_states_state"]',
+                    'select[name$="shippingAddress_addressFields_states_stateCode"]',
                     members.updateShippingMethodList
                 );
 
@@ -558,8 +580,7 @@
                     // show new stage in url (e.g.payment)
                     //
                     if (bPushState) {
-                        history.pushState(checkoutStages[members.currentStage], document.title,
-                            location.pathname + '#' + checkoutStages[members.currentStage]);
+                        updateUrl(members.currentStage);
                     }
                 }
 
@@ -574,6 +595,7 @@
                 if (members.currentStage > 0) {
                     // move state back
                     members.currentStage--;
+                    updateUrl(members.currentStage);
                 }
 
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
@@ -585,6 +607,7 @@
              */
             gotoStage: function (stageName) {
                 members.currentStage = checkoutStages.indexOf(stageName);
+                updateUrl(members.currentStage);
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
             }
         };

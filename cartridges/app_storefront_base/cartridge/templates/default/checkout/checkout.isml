@@ -13,7 +13,7 @@
     <h1 class="page-title">
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>
-    <div id="checkout-main" class="container data-checkout-stage" data-checkout-stage>
+    <div id="checkout-main" class="container data-checkout-stage" data-checkout-stage="${pdict.currentStage}">
         <!- -------------------------------------------------------------------------------- -->
         <!- Help and Phone -->
         <!- -------------------------------------------------------------------------------- -->

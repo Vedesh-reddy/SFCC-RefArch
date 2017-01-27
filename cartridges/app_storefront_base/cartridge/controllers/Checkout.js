@@ -45,12 +45,16 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var applicablePaymentMethods;
     var countryCode = req.geolocation.countryCode;
     var currentCustomer = req.currentCustomer.raw;
+    var currentStage = req.querystring.stage ? req.querystring.stage : 'shipping';
     var billingAddress = currentBasket.billingAddress;
+    var hasEquivalentAddress = true;
     var paymentAmount = currentBasket.totalGrossPrice;
     var paymentInstruments;
     var shipment = currentBasket.defaultShipment;
     var shippingAddress = shipment.shippingAddress;
     var shipmentShippingModel;
+    var shippingForm = server.forms.getForm('singleShipping');
+    var billingForm = server.forms.getForm('billing');
 
     // models
     var billingAddressModel;
@@ -62,6 +66,13 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var shippingAddressModel;
     var shippingModel;
 
+    shippingForm.clear();
+    billingForm.clear();
+
+    if (billingAddress && shippingAddress) {
+        hasEquivalentAddress = billingAddress.isEquivalentAddress(shippingAddress);
+    }
+
     // Calculate the basket
     Transaction.wrap(function () {
         HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
@@ -71,6 +82,11 @@ server.get('Start', server.middleware.https, function (req, res, next) {
         currentBasket.defaultShipment
     );
     shippingAddressModel = new AddressModel(shippingAddress);
+
+    if (shippingAddress && shippingAddressModel.address) {
+        shippingForm.copyFrom(shippingAddressModel.address);
+    }
+
     shippingModel = new ShippingModel(
         currentBasket.defaultShipment,
         shipmentShippingModel,
@@ -94,13 +110,29 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     );
 
     billingAddressModel = new AddressModel(billingAddress);
+
+    if (!hasEquivalentAddress && billingAddress && billingAddressModel.address) {
+        billingForm.copyFrom(billingAddressModel.address);
+    }
+
+    if (paymentModel.selectedPaymentInstruments) {
+        paymentModel.selectedPaymentInstruments.forEach(function (item) {
+            billingForm.copyFrom(item);
+        });
+    }
+
+    if (billingAddressModel.address) {
+        billingForm.creditCardFields.phone.value = billingAddressModel.address.phone;
+    }
+
+    if (currentBasket.customerEmail) {
+        billingForm.creditCardFields.email.value = currentBasket.customerEmail;
+    }
+
     billingModel = new BillingModel(billingAddressModel, paymentModel);
 
     productLineItemModel = new ProductLineItemModel(currentBasket);
     orderTotals = new TotalsModel(currentBasket);
-
-    var shippingForm = server.forms.getForm('singleShipping');
-    var billingForm = server.forms.getForm('billing');
 
     orderModel = new OrderModel(
         currentBasket,
@@ -114,7 +146,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var creditCardExpirationYears = [];
 
     for (var i = 0; i < 10; i++) {
-        creditCardExpirationYears.push((currentYear + i).toString());
+        creditCardExpirationYears.push(currentYear + i);
     }
 
     var forms = {
@@ -125,7 +157,9 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     res.render('checkout/checkout', {
         order: orderModel,
         forms: forms,
-        expirationYears: creditCardExpirationYears
+        expirationYears: creditCardExpirationYears,
+        currentStage: currentStage,
+        isEquivalentAddress: hasEquivalentAddress
     });
     return next();
 });
@@ -179,7 +213,7 @@ function validateBillingForm(form) {
         'city',
         'postalCode',
         'country',
-        'states.state'
+        'states.stateCode'
     ];
 
     return validateFields(form, formKeys);
@@ -231,7 +265,7 @@ function validateShippingForm(form) {
         'postalCode',
         'country',
         'phone',
-        'states.state'
+        'states.stateCode'
     ];
 
     return validateFields(form, formKeys);
@@ -262,7 +296,7 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
             address1: form.shippingAddress.addressFields.address1.value,
             address2: form.shippingAddress.addressFields.address2.value,
             city: form.shippingAddress.addressFields.city.value,
-            stateCode: form.shippingAddress.addressFields.states.state.value,
+            stateCode: form.shippingAddress.addressFields.states.stateCode.value,
             postalCode: form.shippingAddress.addressFields.postalCode.value,
             countryCode: form.shippingAddress.addressFields.country.value,
             phone: form.shippingAddress.addressFields.phone.value
@@ -325,7 +359,9 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
                     billingAddress.setPostalCode(shippingData.address.postalCode);
                     billingAddress.setStateCode(shippingData.address.stateCode);
                     billingAddress.setCountryCode(shippingData.address.countryCode);
-                    billingAddress.setPhone(shippingData.address.phone);
+                    if (!billingAddress.phone) {
+                        billingAddress.setPhone(shippingData.address.phone);
+                    }
                 }
             });
 
@@ -409,7 +445,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             address1: { value: paymentForm.addressFields.address1.value },
             address2: { value: paymentForm.addressFields.address2.value },
             city: { value: paymentForm.addressFields.city.value },
-            stateCode: { value: paymentForm.addressFields.states.state.value },
+            stateCode: { value: paymentForm.addressFields.states.stateCode.value },
             postalCode: { value: paymentForm.addressFields.postalCode.value },
             countryCode: { value: paymentForm.addressFields.country.value }
         };

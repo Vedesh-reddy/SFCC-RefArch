@@ -17,7 +17,7 @@
             <div class="form-check">
                 <label class="form-check-label checkout-checkbox">
                     <input class="form-check-input billing-same-as-shipping" name="${pdict.forms.billingForm.shippingAddressUseAsBillingAddress.htmlName}" type="checkbox"
-                        value="true" checked >
+                        value="true" <isif condition=${pdict.isEquivalentAddress}>checked</isif> >
                     <span>${Resource.msg('check.shipping.billing.same', 'checkout', null)}</span>
                 </label>
             </div>

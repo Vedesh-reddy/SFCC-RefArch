@@ -3,7 +3,6 @@
 var field = require('./formfield');
 var action = require('./formaction');
 
-
 /**
  * Convert dw.web.Form or dw.web.FormGroup to plain JS object
  * @param  {dw.web.Form|dw.web.FormGroup} form Form to be parsed
@@ -18,7 +17,8 @@ function parseForm(form) {
         htmlName: form.htmlName,
         dynamicHtmlName: form.dynamicHtmlName,
         error: form.error || null,
-        attributes: 'name = "' + form.htmlName + '" id = "' + form.htmlName + '"'
+        attributes: 'name = "' + form.htmlName + '" id = "' + form.htmlName + '"',
+        formType: 'formGroup'
     };
     Object.keys(form).forEach(function (key) {
         if (form[key] instanceof formField) {
@@ -33,6 +33,21 @@ function parseForm(form) {
     return result;
 }
 
+/**
+ * Copy the values of an object to form
+ * @param {Object} object - the object to set the new form values to
+ * @param  {dw.web.Form|dw.web.FormGroup} currentForm - Form to be parsed
+ */
+function copyObjectToForm(object, currentForm) {
+    Object.keys(currentForm).forEach(function (key) {
+        if (currentForm[key] && currentForm[key].formType === 'formGroup') {
+            copyObjectToForm(object, currentForm[key]);
+        } else if (object[key]) {
+            currentForm[key].value = object[key]; // eslint-disable-line no-param-reassign
+        }
+    });
+}
+
 module.exports = function (session) {
     return {
         getForm: function (name) {
@@ -41,6 +56,9 @@ module.exports = function (session) {
             result.base = currentForm;
             result.clear = function () {
                 currentForm.clearFormElement();
+            };
+            result.copyFrom = function (object) {
+                copyObjectToForm(object, result);
             };
             return result;
         }

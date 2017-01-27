@@ -85,6 +85,7 @@ describe('forms', function () {
         assert.isTrue(currentForm.firstName.mandatory);
         assert.equal(currentForm.firstName.label, 'hello');
         assert.equal(currentForm.firstName.attributes, 'name = "dwfrm_address_firstName" required value = "Jon" maxLength = "50" minLength = "1" pattern = "/[a-zA-Z]*/"');
+        assert.equal(currentForm.firstName.formType, 'formField');
     });
 
     it('should load a form with correct bool form fields', function () {
@@ -116,6 +117,7 @@ describe('forms', function () {
         assert.isFalse(currentForm.boolField.valid);
         assert.equal(currentForm.boolField.error, 'Found an issue');
         assert.equal(currentForm.boolField.attributes, 'name = "dwfrm_address_boolField"');
+        assert.equal(currentForm.boolField.formType, 'formField');
     });
 
     it('should load a form with correct int form fields', function () {
@@ -148,6 +150,7 @@ describe('forms', function () {
         assert.isUndefined(currentForm.intField.error);
         assert.isTrue(currentForm.intField.mandatory);
         assert.equal(currentForm.intField.attributes, 'name = "dwfrm_address_intField" required value = "" max = "999" min = "1"');
+        assert.equal(currentForm.intField.formType, 'formField');
     });
 
     it('should load a form with correct date form fields', function () {
@@ -178,6 +181,7 @@ describe('forms', function () {
         assert.isUndefined(currentForm.dateField.error);
         assert.isTrue(currentForm.dateField.mandatory);
         assert.equal(currentForm.dateField.attributes, 'name = "dwfrm_address_dateField" required value = ""');
+        assert.equal(currentForm.dateField.formType, 'formField');
     });
 
     it('should load a form with correct string form field with options', function () {
@@ -232,6 +236,7 @@ describe('forms', function () {
         assert.equal(currentForm.firstName.options[1].id, 2);
         assert.isTrue(currentForm.firstName.options[1].selected);
         assert.equal(currentForm.firstName.selectedOption, 2);
+        assert.equal(currentForm.firstName.formType, 'formField');
     });
 
     it('should load a form with correct actions', function () {
@@ -264,6 +269,8 @@ describe('forms', function () {
         assert.isTrue(currentForm.action2.triggered);
         assert.equal(currentForm.action2.description, 'Some action');
         assert.equal(currentForm.action2.label, 'My action');
+        assert.equal(currentForm.action.formType, 'formAction');
+        assert.equal(currentForm.action2.formType, 'formAction');
     });
     it('should load a form with another form embeded', function () {
         var session = { forms: {
@@ -304,6 +311,8 @@ describe('forms', function () {
         assert.isTrue(currentForm.innerForm.firstName.mandatory);
         assert.equal(currentForm.innerForm.firstName.label, 'hello');
         assert.equal(currentForm.innerForm.firstName.attributes, 'name = "dwfrm_address_innerForm_firstName" required value = "Jon" maxLength = "50" minLength = "1" pattern = "/[a-zA-Z]*/"');
+        assert.equal(currentForm.innerForm.formType, 'formGroup');
+        assert.equal(currentForm.innerForm.firstName.formType, 'formField');
     });
     it('should return updated attributes after form clear', function () {
         var session = { forms: {
@@ -362,5 +371,69 @@ describe('forms', function () {
         assert.equal(currentForm.intField.htmlValue, 10);
         currentForm.intField.value = 22;
         assert.equal(currentForm.intField.value, 22);
+    });
+    it('should copy the values of an object to a form', function () {
+        var session = { forms: {
+            shippingaddress: {
+                valid: true,
+                error: null,
+                htmlName: 'dwfrm_shippingaddress',
+                dynamicHtmlName: 'dwfrm_shippingaddress_a98dfa9sd8',
+                intField: new FormField({
+                    value: 10,
+                    htmlValue: 10,
+                    mandatory: true,
+                    htmlName: 'dwfrm_shippingaddress_intField',
+                    dynamicHtmlName: 'dwfrm_shippingaddress_intField_as8df7asd98',
+                    type: 3,
+                    FIELD_TYPE_INTEGER: 3,
+                    maxValue: 999,
+                    minValue: 1,
+                    valid: true
+                })
+            }
+        } };
+        var object = { intField: 22 };
+        var forms = formsRequire(session);
+        var currentForm = forms.getForm('shippingaddress');
+        assert.equal(currentForm.intField.value, 10);
+        currentForm.copyFrom(object);
+        assert.equal(currentForm.intField.value, 22);
+    });
+    it('should copy the values of an object to a nested form', function () {
+        var session = { forms: {
+            address: {
+                valid: true,
+                error: null,
+                htmlName: 'dwfrm_address',
+                dynamicHtmlName: 'dwfrm_address_a98dfa9sd8',
+                innerForm: new FormGroup({
+                    valid: true,
+                    error: null,
+                    htmlName: 'dwfrm_address_innerForm',
+                    dynamicHtmlName: 'dwfrm_address_innerForm_a90a9s8fasd',
+                    firstName: new FormField({
+                        value: 'Jon',
+                        htmlValue: 'Jon',
+                        valid: true,
+                        mandatory: true,
+                        htmlName: 'dwfrm_address_innerForm_firstName',
+                        dynamicHtmlName: 'dwfrm_address_innerForm_firstName_asdf8979asd8f',
+                        type: 1,
+                        FIELD_TYPE_STRING: 1,
+                        label: 'hello',
+                        regEx: '/[a-zA-Z]*/',
+                        maxLength: 50,
+                        minLength: 1
+                    })
+                })
+            }
+        } };
+        var forms = formsRequire(session);
+        var currentForm = forms.getForm('address');
+        var object = { firstName: 'Sally' };
+        assert.equal(currentForm.innerForm.firstName.value, 'Jon');
+        currentForm.copyFrom(object);
+        assert.equal(currentForm.innerForm.firstName.value, 'Sally');
     });
 });
