@@ -10,6 +10,13 @@ Template Notes:
 </iscomment>
 
 <div data-attr="${attr.id}" class="swatch">
+    <isif condition="${attributeStatus.last}">
+        <!-- Quantity Drop Down Menu -->
+        <div class="quantity col-sm-6">
+            <isinclude template="/product/components/quantity" />
+        </div>
+    </isif>
+
     <div class="attribute">
         <!-- Select <Attribute> Label -->
         <label class="${attr.id}">
@@ -38,16 +45,9 @@ Template Notes:
                 </a>
             </isloop>
 
-            <isif condition="${attributeStatus.last}">
-                <!-- Quantity Drop Down Menu -->
-                <div class="quantity col-sm-6">
-                    <isinclude template="/product/components/quantity" />
-                </div>
-            </isif>
-
         <iselse>
             <!-- Attribute Values Drop Down Menu -->
-            <select class="select-${attr.id}">
+            <select class="custom-select select-${attr.id}">
                 <option value="${attr.resetUrl}">
                     ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
                 </option>
@@ -60,13 +60,6 @@ Template Notes:
                     </option>
                 </isloop>
             </select>
-
-            <isif condition="${attributeStatus.last}">
-                <!-- Quantity Drop Down Menu -->
-                <div class="quantity col-sm-6">
-                    <isinclude template="/product/components/quantity" />
-                </div>
-            </isif>
 
         </isif>
     </div>

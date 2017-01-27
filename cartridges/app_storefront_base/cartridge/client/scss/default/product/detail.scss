@@ -51,7 +51,6 @@ a.add-to-wish-list {
 
     label {
         display: block;
-        margin-bottom: 0;
         margin-top: 0;
         padding-left: 0;
     }
@@ -186,8 +185,9 @@ label.availability {
 
 div.quantity {
     bottom: 0;
+    float: right;
+    margin-bottom: 0;
     padding: 0;
-    position: absolute;
     right: 0;
 }
 
