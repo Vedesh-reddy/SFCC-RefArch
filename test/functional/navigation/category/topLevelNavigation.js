@@ -48,7 +48,7 @@ describe('Top Level category navigation', () => {
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.NEW_ARRIVALS)
+                    .click(homePage.navNewArrival)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .url()
                     .then(currentUrl => verifyURL(currentUrl, newArrivalLink))
@@ -73,7 +73,7 @@ describe('Top Level category navigation', () => {
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.WOMEN)
+                    .click(homePage.navWomen)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .url()
                     .then(currentUrl => verifyURL(currentUrl, womenLink));
@@ -97,7 +97,7 @@ describe('Top Level category navigation', () => {
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.MEN)
+                    .click(homePage.navMen)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .url()
                     .then(currentUrl => verifyURL(currentUrl, menLink));
@@ -120,7 +120,7 @@ describe('Top Level category navigation', () => {
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.ELECTRONICS)
+                    .click(homePage.navElectronics)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .url()
                     .then(currentUrl => verifyURL(currentUrl, electronicLink));
@@ -141,7 +141,7 @@ describe('Top Level category navigation', () => {
                 }
                 //  Access desktop or laptop browsers
                 return browser.waitForVisible(footer.FOOTER_CONTAINER)
-                    .click(homePage.TOP_SELLERS)
+                    .click(homePage.navTopSeller)
                     .waitForVisible(common.PRIMARY_CONTENT)
                     .then(() => verifyTopSellersURL());
             });
