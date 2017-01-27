@@ -39,10 +39,10 @@ describe('Top Level category navigation', () => {
                 if (isVisible) {
                     return browser.click(homePage.navBarButton)
                         .then(() => browser.waitForVisible(homePage.closeButton))
-                        .then(() => browser.click(homePage.navNewArrivalButton))
+                        .then(() => browser.click(homePage.navNewArrivalsButton))
                         .then(() => browser.waitForVisible(homePage.backButton))
-                        .then(() => browser.click(homePage.navTopCategory))
-                        .then(() => browser.waitForVisible(common.CATEGORYSLOT))
+                        .then(() => browser.click(homePage.navNewArrivalNewArrivalButton))
+                        .then(() => browser.waitForExist(homePage.dropdownMenu, true))
                         .then(() => browser.url())
                         .then(currentUrl => verifyURL(currentUrl, newArrivalLink));
                 }
@@ -65,8 +65,8 @@ describe('Top Level category navigation', () => {
                         .then(() => browser.waitForVisible(homePage.closeButton))
                         .then(() => browser.click(homePage.navWomenButton))
                         .then(() => browser.waitForVisible(homePage.backButton))
-                        .then(() => browser.click(homePage.navTopCategory))
-                        .then(() => browser.waitForVisible(common.CATEGORYSLOT))
+                        .then(() => browser.click(homePage.navWomenWomenButton))
+                        .then(() => browser.waitForExist(homePage.dropdownMenu, true))
                         .then(() => browser.url())
                         .then(currentUrl => verifyURL(currentUrl, womenLink))
                         .then(() => common.waitUntilPageLoaded());
@@ -89,8 +89,8 @@ describe('Top Level category navigation', () => {
                         .then(() => browser.waitForVisible(homePage.closeButton))
                         .then(() => browser.click(homePage.navMenButton))
                         .then(() => browser.waitForVisible(homePage.backButton))
-                        .then(() => browser.click(homePage.navTopCategory))
-                        .then(() => browser.waitForVisible(common.CATEGORYSLOT))
+                        .then(() => browser.click(homePage.navMenMenButton))
+                        .then(() => browser.waitForExist(homePage.dropdownMenu, true))
                         .then(() => browser.url())
                         .then(currentUrl => verifyURL(currentUrl, menLink))
                         .then(() => common.waitUntilPageLoaded());
@@ -110,10 +110,10 @@ describe('Top Level category navigation', () => {
                 if (isVisible) {
                     return browser.click(homePage.navBarButton)
                         .then(() => browser.waitForVisible(homePage.closeButton))
-                        .then(() => browser.click(homePage.navElectronics))
+                        .then(() => browser.click(homePage.navElectronicsButton))
                         .then(() => browser.waitForVisible(homePage.backButton))
-                        .then(() => browser.click(homePage.navTopCategory))
-                        .then(() => browser.waitForVisible(common.CATEGORYSLOT))
+                        .then(() => browser.click(homePage.navElectronicsElectronicsButton))
+                        .then(() => browser.waitForExist(homePage.dropdownMenu, true))
                         .then(() => browser.url())
                         .then(currentUrl => verifyURL(currentUrl, electronicLink))
                         .then(() => common.waitUntilPageLoaded());
@@ -134,7 +134,7 @@ describe('Top Level category navigation', () => {
                 if (isVisible) {
                     return browser.click(homePage.navBarButton)
                         .then(() => browser.waitForVisible(homePage.closeButton))
-                        .then(() => browser.click(homePage.navTopSellers))
+                        .then(() => browser.click(homePage.navTopSellerButton))
                         .then(() => browser.waitForVisible(productDetails.PRODUCT_GRID))
                         .then(() => verifyTopSellersURL())
                         .then(() => common.waitUntilPageLoaded());
