@@ -10,6 +10,7 @@
             <div>
                 <p class="dashboard-cards-block-title">${Resource.msg('label.addressbook.defaultaddress','account',null)}</p>
                 <p class="dashboard-info">${pdict.preferredAddress.address.ID}</p>
+                <p>${pdict.preferredAddress.address.firstName} ${pdict.preferredAddress.address.lastName}</p> 
                 <p>${pdict.preferredAddress.address.address1}</p>
                 <p>${pdict.preferredAddress.address.city}, ${pdict.preferredAddress.address.stateCode} ${pdict.preferredAddress.address.postalCode}</p>
                 <p>${pdict.preferredAddress.address.countryCode.displayValue}</p>

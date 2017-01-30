@@ -2,8 +2,8 @@
 
 module.exports = function () {
     var url;
-    $('#email-form').submit(function (f) {
-        f.preventDefault();
+    $('#email-form').submit(function (e) {
+        e.preventDefault();
         url = $('#password-reset').attr('href');
         $('#reset-password-email')
             .parents('.form-group')

@@ -2,11 +2,11 @@
 
     <div class="form-group 
         <isif condition="${!pdict.profileForm.customer.firstname.valid}">has-danger</isif>
-        <isif condition="${pdict.profileForm.customer.firstname.mandatory}">required</isif>">
+        <isif condition="${pdict.profileForm.customer.firstname.mandatory === true}">required</isif>">
         <label class="form-control-label" for="firstName">
             <isprint value="${pdict.profileForm.customer.firstname.label}" encoding="off" />
         </label>
-        <input type="text" class="form-control" id="firstName" value="${pdict.profileForm.customer.firstname.value}" <isprint value=${pdict.profileForm.customer.firstname.attributes} encoding="off" />>
+        <input type="text" class="form-control" id="firstName" value="${pdict.profileForm.customer.firstname.value}" <isprint value="${pdict.profileForm.customer.firstname.attributes}" encoding="off" />>
         <div class="form-control-feedback">
             <isprint value="${pdict.profileForm.customer.firstname.error}" encoding="off" />
         </div>
@@ -14,11 +14,11 @@
     
     <div class="form-group 
         <isif condition="${!pdict.profileForm.customer.lastname.valid}">has-danger</isif>
-        <isif condition="${pdict.profileForm.customer.lastname.mandatory}">required</isif>">
+        <isif condition="${pdict.profileForm.customer.lastname.mandatory === true}">required</isif>">
         <label class="form-control-label" for="lastName">
             <isprint value="${pdict.profileForm.customer.lastname.label}" encoding="off" />
         </label>
-        <input type="text" class="form-control" id="lastName" value="${pdict.profileForm.customer.lastname.value}" <isprint value=${pdict.profileForm.customer.lastname.attributes} encoding="off" />>
+        <input type="text" class="form-control" id="lastName" value="${pdict.profileForm.customer.lastname.value}" <isprint value="${pdict.profileForm.customer.lastname.attributes}" encoding="off" />>
         <div class="form-control-feedback">
             <isprint value="${pdict.profileForm.customer.lastname.error}" encoding="off" />
         </div>
@@ -26,11 +26,11 @@
     
     <div class="form-group 
         <isif condition="${!pdict.profileForm.customer.phone.valid}">has-danger</isif>
-        <isif condition="${pdict.profileForm.customer.phone.mandatory}">required</isif>">
+        <isif condition="${pdict.profileForm.customer.phone.mandatory === true}">required</isif>">
         <label class="form-control-label" for="phone">
             <isprint value="${pdict.profileForm.customer.phone.label}" encoding="off" />
         </label>
-        <input type="text" class="form-control" id="phone" value="${pdict.profileForm.customer.phone.value}" <isprint value=${pdict.profileForm.customer.phone.attributes} encoding="off" />>
+        <input type="text" class="form-control" id="phone" value="${pdict.profileForm.customer.phone.value}" <isprint value="${pdict.profileForm.customer.phone.attributes}" encoding="off" />>
         <div class="form-control-feedback">
             <isprint value="${pdict.profileForm.customer.phone.error}" encoding="off" />
         </div>
@@ -38,11 +38,11 @@
     
     <div class="form-group 
         <isif condition="${!pdict.profileForm.customer.email.valid}">has-danger</isif>
-        <isif condition="${pdict.profileForm.customer.email.mandatory}">required</isif>">
+        <isif condition="${pdict.profileForm.customer.email.mandatory === true}">required</isif>">
         <label class="form-control-label" for="email">
             <isprint value="${pdict.profileForm.customer.email.label}" encoding="off" />
         </label>
-        <input type="email" class="form-control" id="email" value="${pdict.profileForm.customer.email.value}" <isprint value=${pdict.profileForm.customer.email.attributes} encoding="off" />>
+        <input type="email" class="form-control" id="email" value="${pdict.profileForm.customer.email.value}" <isprint value="${pdict.profileForm.customer.email.attributes}" encoding="off" />>
         <div class="form-control-feedback">
             <isprint value="${pdict.profileForm.customer.email.error}" encoding="off" />
         </div>
@@ -50,11 +50,11 @@
     
     <div class="form-group 
         <isif condition="${!pdict.profileForm.customer.emailconfirm.valid}">has-danger</isif>
-        <isif condition="${pdict.profileForm.customer.emailconfirm.mandatory}">required</isif>">
+        <isif condition="${pdict.profileForm.customer.emailconfirm.mandatory === true}">required</isif>">
         <label class="form-control-label" for="confirmEmail">
             <isprint value="${pdict.profileForm.customer.emailconfirm.label}" encoding="off" />
         </label>
-        <input type="email" class="form-control" id="confirmEmail" <isprint value=${pdict.profileForm.customer.emailconfirm.attributes} encoding="off" />>
+        <input type="email" class="form-control" id="confirmEmail" <isprint value="${pdict.profileForm.customer.emailconfirm.attributes}" encoding="off" />>
         <div class="form-control-feedback">
             <isprint value="${pdict.profileForm.customer.emailconfirm.error}" encoding="off" />
         </div>
@@ -62,11 +62,11 @@
     
     <div class="form-group 
         <isif condition="${!pdict.profileForm.login.password.valid}">has-danger</isif>
-        <isif condition="${pdict.profileForm.login.password.mandatory}">required</isif>">
+        <isif condition="${pdict.profileForm.login.password.mandatory === true}">required</isif>">
         <label class="form-control-label" for="password">
             <isprint value="${pdict.profileForm.login.password.label}" encoding="off" />
         </label>
-        <input type="password" class="form-control" id="password" <isprint value=${pdict.profileForm.login.password.attributes} encoding="off" />>
+        <input type="password" class="form-control" id="password" <isprint value="${pdict.profileForm.login.password.attributes}" encoding="off" />>
         <div class="form-control-feedback">
             <isprint value="${pdict.profileForm.login.password.error}" encoding="off" />
         </div>

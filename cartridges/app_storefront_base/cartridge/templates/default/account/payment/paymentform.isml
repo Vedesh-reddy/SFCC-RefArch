@@ -2,7 +2,7 @@
 
     <!-- Credit Card Type -->
     <!--- TODO: Visa is currently hard coded as the payment card type this will change when card type autofill is complete --->
-    <input type="hidden" class="form-control" id="cardType" value="Visa" <isprint value=${pdict.paymentForm.cardType.attributes} encoding="off" /> autocomplete="cc-type">
+    <input type="hidden" class="form-control" id="cardType" value="Visa" <isprint value="${pdict.paymentForm.cardType.attributes}" encoding="off" /> autocomplete="cc-type">
     <!--- Visa is currently hard coded as the payment card type this will change when card type autofill is complete --->
 
     <div class="form-check form-group ">
@@ -13,7 +13,7 @@
                 type="radio"
                 class="form-check-input"
                 checked
-                <isprint value=${pdict.paymentForm.paymentMethod.attributes} encoding="off" />
+                <isprint value="${pdict.paymentForm.paymentMethod.attributes}" encoding="off" />
             >
             <span>${Resource.msg('label.payment.credit','payment',null)}</span>
         </label>
@@ -23,12 +23,12 @@
     <!-- Name on Card -->
     <div class="form-group
         <isif condition="${!pdict.paymentForm.cardOwner.valid}">has-danger</isif>
-        <isif condition="${pdict.paymentForm.cardOwner.mandatory}">required</isif>">
+        <isif condition="${pdict.paymentForm.cardOwner.mandatory === true}">required</isif>">
         <label class="form-control-label" for="cardOwner">
             <isprint value="${pdict.paymentForm.cardOwner.label}" encoding="off" />
         </label>
-        <input type="text" class="form-control" id="cardOwner" value="${pdict.paymentForm.cardOwner.value}"
-            <isprint value=${pdict.paymentForm.cardOwner.attributes} encoding="off" />
+        <input type="text" class="form-control" id="cardOwner"
+            <isprint value="${pdict.paymentForm.cardOwner.attributes}" encoding="off" />
             autocomplete="cc-name">
         <div class="form-control-feedback">
             <isprint value="${pdict.paymentForm.cardOwner.error}" encoding="off" />
@@ -39,12 +39,12 @@
         <!-- Edit Card Number -->
         <div class="form-group
             <isif condition="${!pdict.paymentForm.editNumber.valid}">has-danger</isif>
-            <isif condition="${pdict.paymentForm.editNumber.mandatory}">required</isif>">
+            <isif condition="${pdict.paymentForm.editNumber.mandatory === true}">required</isif>">
             <label class="form-control-label" for="cardNumber">
                 <isprint value="${pdict.paymentForm.editNumber.label}" encoding="off" />
             </label>
             <input type="text" class="form-control" id="cardNumber"
-                <isprint value=${pdict.paymentForm.editNumber.attributes} encoding="off" />
+                <isprint value="${pdict.paymentForm.editNumber.attributes}" encoding="off" />
                 autocomplete="cc-number">
             <div class="form-control-feedback">
                 <isprint value="${pdict.paymentForm.editNumber.error}" encoding="off" />
@@ -54,12 +54,12 @@
         <!-- Card Number -->
         <div class="form-group
             <isif condition="${!pdict.paymentForm.cardNumber.valid}">has-danger</isif>
-            <isif condition="${pdict.paymentForm.cardNumber.mandatory}">required</isif>">
+            <isif condition="${pdict.paymentForm.cardNumber.mandatory === true}">required</isif>">
             <label class="form-control-label" for="cardNumber">
                 <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="off" />
             </label>
-            <input type="text" class="form-control" id="cardNumber" value="${pdict.paymentForm.cardNumber.value}"
-                <isprint value=${pdict.paymentForm.cardNumber.attributes} encoding="off" />
+            <input type="text" class="form-control" id="cardNumber"
+                <isprint value="${pdict.paymentForm.cardNumber.attributes}" encoding="off" />
                 autocomplete="cc-number">
             <div class="form-control-feedback">
                 <isprint value="${pdict.paymentForm.cardNumber.error}" encoding="off" />
@@ -72,11 +72,11 @@
         <div class="col-xs-6">
             <div class="form-group
                 <isif condition="${!pdict.paymentForm.expirationMonth.valid}">has-danger</isif>
-                <isif condition="${pdict.paymentForm.expirationMonth.mandatory}">required</isif>">
+                <isif condition="${pdict.paymentForm.expirationMonth.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="month">
                     <isprint value="${pdict.paymentForm.expirationMonth.label}" encoding="off" />
                 </label>
-                <select class="form-control custom-select" id="month" <isprint value=${pdict.paymentForm.expirationMonth.attributes} encoding="off" /> autocomplete="cc-exp-month">
+                <select class="form-control custom-select" id="month" <isprint value="${pdict.paymentForm.expirationMonth.attributes}" encoding="off" /> autocomplete="cc-exp-month">
                     <isloop items=${pdict.paymentForm.expirationMonth.options} var="month">
                         <option id="${month.id}" value="${month.htmlValue}" <isif condition="${month.selected}">selected</isif> >${month.label}</option>
                     </isloop>
@@ -90,11 +90,11 @@
         <div class="col-xs-6">
             <div class="form-group
                 <isif condition="${!pdict.paymentForm.expirationYear.valid}">has-danger</isif>
-                <isif condition="${pdict.paymentForm.expirationYear.mandatory}">required</isif>">
+                <isif condition="${pdict.paymentForm.expirationYear.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="year">
                     <isprint value="${pdict.paymentForm.expirationYear.label}" encoding="off" />
                 </label>
-                <select class="form-control custom-select" id="year" <isprint value=${pdict.paymentForm.expirationYear.attributes} encoding="off" /> autocomplete="cc-exp-year">
+                <select class="form-control custom-select" id="year" <isprint value="${pdict.paymentForm.expirationYear.attributes}" encoding="off" /> autocomplete="cc-exp-year">
                     <option value="${pdict.paymentForm.expirationYear.options[0].htmlValue}">${pdict.paymentForm.expirationYear.options[0].label}</option>
                     <isloop items=${pdict.expirationYears} var="year">
                         <option id="${year}" value="${year}" <isif condition="${year == pdict.paymentForm.expirationYear.value}">selected</isif> >${year}</option>
@@ -106,7 +106,7 @@
     </div>
 
     <div class="row make-default-payment">
-        <div class="col-xs-6">
+        <div class="col-xs-12">
             <label class="form-check-inline">
                 <input type="checkbox" class="form-check-input" name="makeDefaultPayment">
                     ${Resource.msg('label.payment.checkbox.makedefault', 'payment', null)}

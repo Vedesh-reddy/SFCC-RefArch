@@ -144,6 +144,7 @@ server.get('AddPayment', function (req, res, next) {
 server.get('EditPayment', function (req, res, next) {
     var creditCardExpirationYears = getExpirationYears();
     var paymentForm = server.forms.getForm('creditcard');
+    paymentForm.clear();
     var UUID = req.querystring.UUID;
     var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
     var paymentToEdit = helper.find(paymentInstruments, function (paymentInstrument) {
@@ -151,7 +152,6 @@ server.get('EditPayment', function (req, res, next) {
     });
 
     paymentForm.cardOwner.value = paymentToEdit.creditCardHolder;
-    paymentForm.editNumber.value = '';
     paymentForm.cardType.value = paymentToEdit.creditCardType;
     paymentForm.expirationYear.value = paymentToEdit.creditCardExpirationYear;
 

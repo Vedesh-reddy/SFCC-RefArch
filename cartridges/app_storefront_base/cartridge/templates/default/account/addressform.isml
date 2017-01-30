@@ -2,13 +2,12 @@
     <!-- Address Title -->
     <div class="form-group
         <isif condition="${!pdict.addressForm.addressId.valid}">has-danger</isif>
-        <isif condition="${pdict.addressForm.addressId.mandatory}">required</isif>">
+        <isif condition="${pdict.addressForm.addressId.mandatory === true}">required</isif>">
         <label class="form-control-label" for="addressId">
             <isprint value="${pdict.addressForm.addressId.label}" encoding="off" />
         </label>
-        <input type="text" class="form-control" id="addressId" value="${pdict.addressForm.addressId.value}"
-            <isprint value=${pdict.addressForm.addressId.attributes} encoding="off" />
-        >
+        <input type="text" class="form-control" id="addressId"
+            <isprint value="${pdict.addressForm.addressId.attributes}" encoding="off" />>
         <div class="form-control-feedback">
             <isprint value="${pdict.addressForm.addressId.error}" encoding="off" />
         </div>
@@ -20,12 +19,12 @@
         <div class="col-xs-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.firstName.valid}">has-danger</isif>
-                <isif condition="${pdict.addressForm.firstName.mandatory}">required</isif>">
+                <isif condition="${pdict.addressForm.firstName.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="firstName">
                     <isprint value="${pdict.addressForm.firstName.label}" encoding="off" />
                 </label>
-                <input type="text" class="form-control" id="firstName" value="${pdict.addressForm.firstName.value}"
-                    <isprint value=${pdict.addressForm.firstName.attributes} encoding="off" />
+                <input type="text" class="form-control" id="firstName"
+                    <isprint value="${pdict.addressForm.firstName.attributes}" encoding="off" />
                     autocomplete="given-name">
                 <div class="form-control-feedback">
                     <isprint value="${pdict.addressForm.firstName.error}" encoding="off" />
@@ -37,12 +36,12 @@
         <div class="col-xs-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.lastName.valid}">has-danger</isif>
-                <isif condition="${pdict.addressForm.lastName.mandatory}">required</isif>">
+                <isif condition="${pdict.addressForm.lastName.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="lastName">
                     <isprint value="${pdict.addressForm.lastName.label}" encoding="off" />
                 </label>
-                <input type="text" class="form-control" id="lastName" value="${pdict.addressForm.lastName.value}"
-                    <isprint value=${pdict.addressForm.lastName.attributes} encoding="off" />
+                <input type="text" class="form-control" id="lastName"
+                    <isprint value="${pdict.addressForm.lastName.attributes}" encoding="off" />
                     autocomplete="family-name">
                 <div class="form-control-feedback">
                     <isprint value="${pdict.addressForm.lastName.error}" encoding="off" />
@@ -54,12 +53,12 @@
     <!-- Address 1 -->
     <div class="form-group
         <isif condition="${!pdict.addressForm.address1.valid}">has-danger</isif>
-        <isif condition="${pdict.addressForm.address1.mandatory}">required</isif>">
+        <isif condition="${pdict.addressForm.address1.mandatory === true}">required</isif>">
         <label class="form-control-label" for="address1">
             <isprint value="${pdict.addressForm.address1.label}" encoding="off" />
         </label>
-        <input type="text" class="form-control" id="address1" value="${pdict.addressForm.address1.value}"
-            <isprint value=${pdict.addressForm.address1.attributes} encoding="off" />
+        <input type="text" class="form-control" id="address1"
+            <isprint value="${pdict.addressForm.address1.attributes}" encoding="off" />
             autocomplete="address-line1">
         <div class="form-control-feedback">
             <isprint value="${pdict.addressForm.address1.error}" encoding="off" />
@@ -69,12 +68,12 @@
     <!-- Address 2 -->
     <div class="form-group
         <isif condition="${!pdict.addressForm.address2.valid}">has-danger</isif>
-        <isif condition="${pdict.addressForm.address2.mandatory}">required</isif>">
+        <isif condition="${pdict.addressForm.address2.mandatory === true}">required</isif>">
         <label class="form-control-label" for="address2">
             <isprint value="${pdict.addressForm.address2.label}" encoding="off" />
         </label>
-        <input type="text" class="form-control" id="address2" value="${pdict.addressForm.address2.value}"
-            <isprint value=${pdict.addressForm.address2.attributes} encoding="off" />
+        <input type="text" class="form-control" id="address2"
+            <isprint value="${pdict.addressForm.address2.attributes}" encoding="off" />
             autocomplete="billing address-line2">
         <div class="form-control-feedback">
             <isprint value="${pdict.addressForm.address2.error}" encoding="off" />
@@ -87,12 +86,12 @@
         <div class="col-xs-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.country.valid}">has-danger</isif>
-                <isif condition="${pdict.addressForm.country.mandatory}">required</isif>">
+                <isif condition="${pdict.addressForm.country.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="country">
                     <isprint value="${pdict.addressForm.country.label}" encoding="off" />
                 </label>
                 <select class="form-control" id="country"
-                    <isprint value=${pdict.addressForm.country.attributes} encoding="off" />
+                    <isprint value="${pdict.addressForm.country.attributes}" encoding="off" />
                     autocomplete="country">
                     <isloop items=${pdict.addressForm.country.options} var="country">
                         <option id="${country.id}" <isif condition="${country.selected}">selected</isif>>${country.htmlValue}</option>
@@ -106,12 +105,12 @@
         <div class="col-xs-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.states.stateCode.valid}">has-danger</isif>
-                <isif condition="${pdict.addressForm.states.stateCode.mandatory}">required</isif>">
+                <isif condition="${pdict.addressForm.states.stateCode.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="state">
                     <isprint value="${pdict.addressForm.states.stateCode.label}" encoding="off" />
                 </label>
                 <select class="form-control" id="state"
-                    <isprint value=${pdict.addressForm.states.stateCode.attributes} encoding="off" />
+                    <isprint value="${pdict.addressForm.states.stateCode.attributes}" encoding="off" />
                     autocomplete="region">
                     <isloop items=${pdict.addressForm.states.stateCode.options} var="state">
                         <option id="${state.id}" <isif condition="${state.selected}">selected</isif>>${state.htmlValue}</option>
@@ -130,12 +129,12 @@
         <!-- City  -->
             <div class="form-group
                 <isif condition="${!pdict.addressForm.city.valid}">has-danger</isif>
-                <isif condition="${pdict.addressForm.city.mandatory}">required</isif>">
+                <isif condition="${pdict.addressForm.city.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="city">
                     <isprint value="${pdict.addressForm.city.label}" encoding="off" />
                 </label>
-                <input type="text" class="form-control" id="city" value="${pdict.addressForm.city.value}"
-                    <isprint value=${pdict.addressForm.city.attributes} encoding="off" />
+                <input type="text" class="form-control" id="city"
+                    <isprint value="${pdict.addressForm.city.attributes}" encoding="off" />
                     autocomplete="locality">
                 <div class="form-control-feedback">
                     <isprint value="${pdict.addressForm.city.error}" encoding="off" />
@@ -147,12 +146,12 @@
         <div class="col-xs-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.postalCode.valid}">has-danger</isif>
-                <isif condition="${pdict.addressForm.postalCode.mandatory}">required</isif>">
+                <isif condition="${pdict.addressForm.postalCode.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="zipCode">
                     <isprint value="${pdict.addressForm.postalCode.label}" encoding="off" />
                 </label>
-                <input type="text" class="form-control" id="zipCode" value="${pdict.addressForm.postalCode.value}"
-                    <isprint value=${pdict.addressForm.postalCode.attributes} encoding="off" />
+                <input type="text" class="form-control" id="zipCode"
+                    <isprint value="${pdict.addressForm.postalCode.attributes}" encoding="off" />
                     autocomplete="postal-code">
                 <div class="form-control-feedback">
                     <isprint value="${pdict.addressForm.postalCode.error}" encoding="off" />
@@ -164,12 +163,12 @@
     <!-- Phone Number -->
     <div class="form-group
         <isif condition="${!pdict.addressForm.phone.valid}">has-danger</isif>
-        <isif condition="${pdict.addressForm.phone.mandatory}">required</isif>">
+        <isif condition="${pdict.addressForm.phone.mandatory === true}">required</isif>">
         <label class="form-control-label" for="phone">
             <isprint value="${pdict.addressForm.phone.label}" encoding="off" />
         </label>
-        <input type="text" class="form-control" id="phone" value="${pdict.addressForm.phone.value}"
-            <isprint value=${pdict.addressForm.phone.attributes} encoding="off" />
+        <input type="text" class="form-control" id="phone"
+            <isprint value="${pdict.addressForm.phone.attributes}" encoding="off" />
             autocomplete="tel">
         <div class="form-control-feedback">
             <isprint value="${pdict.addressForm.phone.error}" encoding="off" />

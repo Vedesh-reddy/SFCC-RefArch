@@ -21,7 +21,7 @@
         <div>
             <div class="row">
                 <div class="col-md-5 offset-md-1 col-sm-6">
-                    <h2 class="dashboard-page-heading">${Resource.msg('page.heading.dashboard','account',null)}</h2>
+                    <h1>${Resource.msg('page.heading.dashboard','account',null)}</h1>
                 </div>
             </div>
             <div class="row">
