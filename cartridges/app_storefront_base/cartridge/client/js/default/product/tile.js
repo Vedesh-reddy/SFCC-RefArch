@@ -101,7 +101,7 @@ module.exports = function () {
         }
     });
 
-    $(document).on('change', 'select[class^="select-"]', function (e) {
+    $(document).on('change', 'select[class*="select-"]', function (e) {
         e.preventDefault();
 
         var productUrl;
