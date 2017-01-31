@@ -18,8 +18,11 @@ import * as customers from '../../mocks/testDataMgr/customers';
 describe('Checkout - As Guest, same Billing and Shipping address ', () => {
     const locale = config.locale;
     const userEmail = config.userEmail;
-    const creditcardExpiredYear = new Date().getFullYear() + 1;
-    const creditcardExpiredMonth = 12;
+
+    const nextYear = new Date().getFullYear() + 1;
+    const creditCardExpiredYear = nextYear.toString() + '.0';
+
+    const creditCardExpiredMonth = 12;
     const paymentPhone = '781-425-1010';
     const paymentEmail = 'luckyOne@home.com';
 
@@ -61,8 +64,8 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
                 }
 
                 paymentData[checkoutPage.PAYMENT_CARD_NUMBER] = testDataMgr.creditCard1.number;
-                paymentData[checkoutPage.PAYMENT_EXPIRATION_MONTH] = creditcardExpiredMonth;
-                paymentData[checkoutPage.PAYMENT_EXPIRATION_YEAR] = creditcardExpiredYear;
+                paymentData[checkoutPage.PAYMENT_EXPIRATION_MONTH] = creditCardExpiredMonth;
+                paymentData[checkoutPage.PAYMENT_EXPIRATION_YEAR] = creditCardExpiredYear;
                 paymentData[checkoutPage.PAYMENT_SECURITY_CODE] = testDataMgr.creditCard1.cvn;
                 paymentData[checkoutPage.PAYMENT_PHONE_NUMBER] = paymentPhone;
                 paymentData[checkoutPage.PAYMENT_EMAIL] = paymentEmail;
