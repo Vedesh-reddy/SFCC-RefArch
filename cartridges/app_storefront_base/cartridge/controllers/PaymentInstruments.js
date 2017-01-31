@@ -59,9 +59,9 @@ function verifyCard(card, form, paymentInstruments, UUID) {
         helper.forEach(creditCardStatus.items, function (item) {
             switch (item.code) {
                 case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
-                    var targetForm = UUID ? form.editNumber : form.cardNumber;
-                    targetForm.valid = false;
-                    targetForm.error =
+                    var formCardNumber = form.cardNumber;
+                    formCardNumber.valid = false;
+                    formCardNumber.error =
                         Resource.msg('error.message.creditnumber.invalid', 'forms', null);
                     error = true;
                     break;
@@ -92,7 +92,7 @@ function verifyCard(card, form, paymentInstruments, UUID) {
 function getDetailsObject(paymentForm, UUID) {
     return {
         name: paymentForm.cardOwner.value,
-        cardNumber: UUID ? paymentForm.editNumber.value : paymentForm.cardNumber.value,
+        cardNumber: UUID ? null : paymentForm.cardNumber.value,
         cardType: paymentForm.cardType.value,
         expirationMonth: paymentForm.expirationMonth.value,
         expirationYear: paymentForm.expirationYear.value,
@@ -154,6 +154,7 @@ server.get('EditPayment', function (req, res, next) {
     paymentForm.cardOwner.value = paymentToEdit.creditCardHolder;
     paymentForm.cardType.value = paymentToEdit.creditCardType;
     paymentForm.expirationYear.value = paymentToEdit.creditCardExpirationYear;
+    paymentForm.editNumber.value = paymentToEdit.maskedCreditCardNumber;
 
     var months = paymentForm.expirationMonth.options;
     for (var j = 1, k = months.length; j < k; j++) {
@@ -182,15 +183,10 @@ server.post('SavePayment', function (req, res, next) {
     if (helper.find(paymentInstruments, function (instrument) {
         return instrument.creditCardNumber === result.cardNumber;
     })) {
-        var msg = Resource.msg('error.message.creditnumber.exists', 'forms', null);
         paymentForm.valid = false;
-        if (UUID) {
-            paymentForm.editNumber.valid = false;
-            paymentForm.editNumber.error = msg;
-        } else {
-            paymentForm.cardNumber.valid = false;
-            paymentForm.cardNumber.error = msg;
-        }
+        paymentForm.cardNumber.valid = false;
+        paymentForm.cardNumber.error =
+            Resource.msg('error.message.creditnumber.exists', 'forms', null);
     }
 
     if (paymentForm.valid && !isCardInvalid) {
@@ -215,9 +211,6 @@ server.post('SavePayment', function (req, res, next) {
                     return formInfo.UUID === paymentInstrument.UUID;
                 });
                 Transaction.wrap(function () {
-                    if (formInfo.cardNumber) {
-                        paymentToEdit.setCreditCardNumber(formInfo.cardNumber);
-                    }
                     paymentToEdit.setCreditCardHolder(formInfo.name);
                     paymentToEdit.setCreditCardType(formInfo.cardType);
                     paymentToEdit.setCreditCardExpirationMonth(formInfo.expirationMonth);
