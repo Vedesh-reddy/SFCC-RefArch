@@ -38,7 +38,10 @@ function ProductLineItem(product, productVariables, quantity, lineItem) {
         quantity: 'single'
     };
     this.quantity = quantity;
-    this.attributeConfig = 'selected';
+
+    this.attributeConfig = {
+        attributes: 'selected'
+    };
     this.initialize(lineItem);
 }
 

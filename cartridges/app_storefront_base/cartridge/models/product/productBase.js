@@ -83,7 +83,11 @@ function ProductBase(product, productVariables, quantity) {
         quantity: 'single'
     };
     this.quantity = quantity;
-    this.attributeConfig = ['color'];
+
+    this.attributeConfig = {
+        attributes: ['color'],
+        endPoint: 'Show'
+    };
     this.useSimplePrice = true;
     this.initialize();
 }

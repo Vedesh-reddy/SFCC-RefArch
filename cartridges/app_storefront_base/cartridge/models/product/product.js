@@ -47,7 +47,10 @@ function FullProduct(product, productVariables, quantity) {
     };
     this.selectedQuantity = quantity;
     this.productVariables = productVariables;
-    this.attributeConfig = '*';
+    this.attributeConfig = {
+        attributes: '*',
+        endPoint: 'Variation'
+    };
     this.useSimplePrice = false;
     this.initialize();
 }

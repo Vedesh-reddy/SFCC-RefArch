@@ -37,10 +37,14 @@
                 <div class="swatches">
                     <isloop items="${pdict.product.attributes[0].values}" var="swatch" status="loopstate">
                         <isif condition="${loopstate.count < 4}">
-                            <span class="swatch swatch-circle"
-                                data-index="${loopstate.count-1}"
-                                style="background-image: url(${swatch.images.swatch[0].url})"
-                                data-attributes="${JSON.stringify(swatch, null, 2)}"></span>
+                            <a href="${swatch.url}">
+                                <span>
+                                    <img class="swatch swatch-circle"
+                                        data-index="${loopstate.count-1}"
+                                        style="background-image: url(${swatch.images.swatch[0].url})"
+                                        src="${swatch.images.swatch[0].url}" >
+                               </span>
+                            </a>
                         <iselse/>
                             <span>
                                 <a href="${pdict.urls.product}">...</a>

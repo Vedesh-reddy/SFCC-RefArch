@@ -19,12 +19,13 @@ function isSwatchable(dwAttributeId) {
  *
  * @param {dw.catalog.ProductVariationModel} variationModel - A product's variation model
  * @param {dw.catalog.ProductVariationAttributeValue} selectedValue - Selected attribute value
- * @param {dw.catalog.ProductVariationAttribute} attr - Attribute value
+ * @param {dw.catalog.ProductVariationAttribute} attr - Attribute value'
+ * @param {string} endPoint - The end point to use in the Product Controller
  * @returns {Object[]} - List of attribute value objects for template context
  */
-function getAllAttrValues(variationModel, selectedValue, attr) {
+function getAllAttrValues(variationModel, selectedValue, attr, endPoint) {
     var attrValues = variationModel.getAllValues(attr);
-    var actionEndpoint = 'Product-Variation';
+    var actionEndpoint = 'Product-' + endPoint;
 
     return dwHelpers.map(attrValues, function (value) {
         var isSelected = (selectedValue && selectedValue.equals(value)) || false;
@@ -39,7 +40,7 @@ function getAllAttrValues(variationModel, selectedValue, attr) {
         };
 
         if (processedAttr.selectable) {
-            processedAttr.url = isSelected
+            processedAttr.url = (isSelected && endPoint !== 'Show')
                 ? variationModel.urlUnselectVariationValue(actionEndpoint, attr)
                 : variationModel.urlSelectVariationValue(actionEndpoint, attr, value);
         }
@@ -86,18 +87,30 @@ function getAttrResetUrl(values, attrID) {
  * @constructor
  * @classdesc Get a list of available attributes that matches provided config
  *
- * @param  {dw.catalog.ProductVariationModel} variationModel - current product variation
- * @param  {string[]} attrConfig - attributes to select
+ * @param {dw.catalog.ProductVariationModel} variationModel - current product variation
+ * @param {Object} attrConfig - attributes to select
+ * @param {Array} attrConfig.attributes - an array of strings,representing the
+ *                                        id's of product attributes.
+ * @param {string} attrConfig.attributes - If this is a string and equal to '*' it signifies
+ *                                         that all attributes should be returned.
+ *                                         If the string is 'selected', then this is comming
+ *                                         from something like a product line item, in that
+ *                                         all the attributes have been selected.
+ *
+ * @param {string} attrConfig.endPoint - the endpoint to use when generating urls for
+ *                                       product attributes
  */
 function AttributesModel(variationModel, attrConfig) {
     var allAttributes = variationModel.productVariationAttributes;
     var result = [];
     dwHelpers.forEach(allAttributes, function (attr) {
         var selectedValue = variationModel.getSelectedValue(attr);
-        var values = getAllAttrValues(variationModel, selectedValue, attr);
+        var values = getAllAttrValues(variationModel, selectedValue, attr, attrConfig.endPoint);
         var resetUrl = getAttrResetUrl(values, attr.ID);
-        if ((Array.isArray(attrConfig) && attrConfig.indexOf(attr.attributeID) > -1)
-            || attrConfig === '*') {
+
+        if ((Array.isArray(attrConfig.attributes)
+            && attrConfig.attributes.indexOf(attr.attributeID) > -1)
+            || attrConfig.attributes === '*') {
             result.push({
                 attributeId: attr.attributeID,
                 displayName: attr.displayName,
@@ -106,7 +119,7 @@ function AttributesModel(variationModel, attrConfig) {
                 values: values,
                 resetUrl: resetUrl
             });
-        } else if (attrConfig === 'selected') {
+        } else if (attrConfig.attributes === 'selected') {
             result.push({
                 displayName: attr.displayName,
                 displayValue: selectedValue.displayValue,

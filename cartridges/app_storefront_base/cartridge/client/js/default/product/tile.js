@@ -52,22 +52,7 @@ function fillModalElement(productUrl, selectedValueUrl) {
     });
 }
 
-/**
- * Process the attribute values for an attribute that has image swatches
- *
- * @param {Object} element - the swatch element that is currently being clicked or hovered over
- */
-function handleSwatchClick(element) {
-    var swatchData = element.data('attributes');
-
-    location.assign(swatchData.url.replace('Variation', 'Show'));
-}
-
 module.exports = function () {
-    $('body').on('click', '.product-tile .swatch', function () {
-        handleSwatchClick($(this));
-    });
-
     $('body').on('click', '.quickview', function (e) {
         e.preventDefault();
         var selectedValueUrl = $(this).closest('a.quickview').attr('href');
