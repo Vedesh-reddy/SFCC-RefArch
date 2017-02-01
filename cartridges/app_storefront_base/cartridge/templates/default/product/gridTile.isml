@@ -25,11 +25,6 @@
                 alt="${pdict.product.productName}"
                 title="${pdict.product.images.medium[0].title}" />
         </a>
-        <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}">
-            <img src="${URLUtils.staticURL('/images/quickview.png')}"
-                alt="${Resource.msg('image.quickview.product.tile', 'common', null)}"
-                title="${Resource.msg('image.quickview.product.tile', 'common', null)}" />
-        </a>
     </div>
     <div class="tile-body">
         <isif condition="${pdict.display.swatches}">
