@@ -11,8 +11,8 @@
     <div class="container receipt">
         <div class="row">
             <div class="col-sm-6 offset-sm-3 offset-md-0">
-                <h2>${Resource.msg('msg.placed.order.thank.you','confirmation',null)}</h2>
-                <p>${Resource.msgf('info.receive.email.confirmation', 'confirmation', null, pdict.order.orderEmail)}</p>
+                <h2 class="order-thankyou_msg">${Resource.msg('msg.placed.order.thank.you','confirmation',null)}</h2>
+                <p class="order-thankyou_msg_detail">${Resource.msgf('info.receive.email.confirmation', 'confirmation', null, pdict.order.orderEmail)}</p>
             </div>
         </div>
         <div class="row">

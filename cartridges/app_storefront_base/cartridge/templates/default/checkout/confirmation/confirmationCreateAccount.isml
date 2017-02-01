@@ -1,16 +1,16 @@
 <div>
-    <div class="card">
+    <div class="card order-confirm-create-account">
         <div class="card-header">
             <span class="checkout-card-header">${Resource.msg('title.save.customer.information', 'confirmation', null)}</span>
         </div>
         <div class="checkout-card-block">
-            <form>
-                <div class="form-group">
-                    <label for="password">${Resource.msg('field.password','confirmation',null)}</label>
+            <form class="create-account-form">
+                <div class="form-group password-form">
+                    <label class="password-label" for="password">${Resource.msg('field.password','confirmation',null)}</label>
                     <input type="text" class="form-control" id="password">
                 </div>
-                <div class="form-group">
-                    <label for="confirmPassword">${Resource.msg('field.confirm.password','confirmation',null)}</label>
+                <div class="form-group confirm-password-form">
+                    <label class="confirm-password-label" for="confirmPassword">${Resource.msg('field.confirm.password','confirmation',null)}</label>
                     <input type="text" class="form-control" id="confirmPassword">
                 </div>
                 <button type="submit" class="btn btn-primary btn-block">${Resource.msg('button.create.account','confirmation',null)}</button>
