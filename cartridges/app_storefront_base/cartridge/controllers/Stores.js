@@ -15,7 +15,7 @@ function getModel(req) {
 
     var countryCode = req.geolocation.countryCode;
     var distanceUnit = countryCode === 'US' ? 'mi' : 'km';
-    var radius = req.querystring.radius ? parseInt(req.querystring.radius, 10) : 100;
+    var radius = req.querystring.radius ? parseInt(req.querystring.radius, 10) : 15;
 
     var lat;
     var long;

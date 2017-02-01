@@ -61,33 +61,12 @@ describe('Store Locator', function () {
                         'stateCode': 'MA'
                     }
                 ],
-                'locations': [
-                    {
-                        'name': 'Demandware',
-                        'latitude': 42.5273334,
-                        'longitude': -71.13758250000001
-                    },
-                    {
-                        'name': 'Champaign Electronic Shop',
-                        'latitude': 42.3729794,
-                        'longitude': -71.09346089999997
-                    },
-                    {
-                        'name': 'Downtown TV Shop',
-                        'latitude': 42.3569512,
-                        'longitude': -71.05902600000002
-                    },
-                    {
-                        'name': 'Short Electro',
-                        'latitude': 42.3403189,
-                        'longitude': -71.0817859
-                    },
-                    {
-                        'name': 'Khale Street Electronics',
-                        'latitude': 42.6895548,
-                        'longitude': -71.14878340000001
-                    }
-                ],
+                'locations': '[{"name":"Demandware","latitude":42.5273334,"longitude"' +
+                ':-71.13758250000001},{"name":"Champaign Electronic Shop","latitude":42.3729794,' +
+                '"longitude":-71.09346089999997},{"name":"Downtown TV Shop","latitude"' +
+                ':42.3569512,"longitude":-71.05902600000002},{"name":"Short Electro",' +
+                '"latitude":42.3403189,"longitude":-71.0817859},{"name":"Khale Street ' +
+                'Electronics","latitude":42.6895548,"longitude":-71.14878340000001}]',
                 'searchKey': {
                     'postalCode': '01803'
                 },
@@ -115,7 +94,7 @@ describe('Store Locator', function () {
             });
         });
 
-        it('should returns location for specified postal code and default radius = 100', function (done) {
+        it('should returns location for specified postal code and default radius = 15', function (done) {
             var url = config.baseUrl + '/Stores-FindStores?postalCode=04330';
             var myRequest = {
                 url: url,
@@ -123,28 +102,12 @@ describe('Store Locator', function () {
                 rejectUnauthorized: false
             };
             var ExpectedResBody = {
-                'stores': [
-                    {
-                        'name': 'Electro Turbo',
-                        'address1': '2 Canal Plz',
-                        'address2': null,
-                        'city': 'Portland',
-                        'postalCode': '04101',
-                        'phone': '+1-207-599-5467',
-                        'stateCode': 'ME'
-                    }
-                ],
-                'locations': [
-                    {
-                        'name': 'Electro Turbo',
-                        'latitude': 43.656852,
-                        'longitude': -70.25567999999998
-                    }
-                ],
+                'stores': [],
+                'locations': '[]',
                 'searchKey': {
                     'postalCode': '04330'
                 },
-                'radius': 100
+                'radius': 15
             };
 
             request(myRequest, function (error, response) {
@@ -168,7 +131,7 @@ describe('Store Locator', function () {
             };
             var ExpectedResBody = {
                 'stores': [],
-                'locations': []
+                'locations': '[]'
             };
 
             request(myRequest, function (error, response) {
@@ -191,7 +154,7 @@ describe('Store Locator', function () {
             };
             var ExpectedResBody = {
                 'stores': [],
-                'locations': []
+                'locations': '[]'
             };
 
             request(myRequest, function (error, response) {
@@ -243,23 +206,10 @@ describe('Store Locator', function () {
                         'stateCode': 'MA'
                     }
                 ],
-                'locations': [
-                    {
-                        'name': 'Khale Street Electronics',
-                        'latitude': 42.6895548,
-                        'longitude': -71.14878340000001
-                    },
-                    {
-                        'name': 'Demandware',
-                        'latitude': 42.5273334,
-                        'longitude': -71.13758250000001
-                    },
-                    {
-                        'name': 'Champaign Electronic Shop',
-                        'latitude': 42.3729794,
-                        'longitude': -71.09346089999997
-                    }
-                ],
+                'locations': '[{"name":"Khale Street Electronics","latitude":42.6895548,' +
+                '"longitude":-71.14878340000001},{"name":"Demandware","latitude":42.5273334,' +
+                '"longitude":-71.13758250000001},{"name":"Champaign Electronic Shop",' +
+                '"latitude":42.3729794,"longitude":-71.09346089999997}]',
                 'searchKey': {
                     'lat': 42.6895548,
                     'long': -71.14878340000001
@@ -297,7 +247,7 @@ describe('Store Locator', function () {
             };
             var ExpectedResBody = {
                 'stores': [],
-                'locations': []
+                'locations': '[]'
             };
 
             request(myRequest, function (error, response) {
@@ -320,7 +270,7 @@ describe('Store Locator', function () {
             };
             var ExpectedResBody = {
                 'stores': [],
-                'locations': []
+                'locations': '[]'
             };
 
             request(myRequest, function (error, response) {
@@ -353,7 +303,7 @@ describe('Store Locator', function () {
                 assert.isNotNull(bodyAsJson.stores, 'Expect stores property in response.');
                 assert.isArray(bodyAsJson.stores, 'Expect stores property as array.');
                 assert.isNotNull(bodyAsJson.locations, 'Expect locations property in response.');
-                assert.isArray(bodyAsJson.locations, 'Expect locations property as array.');
+                assert.isString(bodyAsJson.locations, 'Expect locations property as array.');
 
                 done();
             });

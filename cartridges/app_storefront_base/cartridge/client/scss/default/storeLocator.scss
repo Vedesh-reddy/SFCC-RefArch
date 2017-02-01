@@ -14,22 +14,16 @@
     }
 }
 
-.btn-detect-location {
-    background-color: $brand-color;
-    border-color: $brand-color;
-    border-radius: 0;
-    color: $light-gray;
-
-    &:hover {
-        background-color: $light-gray;
-        color: $brand-color;
-    }
+.detect-location {
+    margin-bottom: 1em;
 }
 
 .map-marker {
-    display: block;
-    font-size: 48px;
+    order: 1;
+    font-size: 3em;
     color: $brand-color;
+    vertical-align: top;
+    margin-left: 0.625rem;
 }
 
 .map-canvas {
@@ -38,6 +32,26 @@
     @include media-breakpoint-up(sm) {
         height: 450px;
     }
+}
+
+.store + .store::before {
+    content: "";
+    display: block;
+    border-bottom: 0.063em solid $horizontal-rule-grey;
+    margin: 0.625em -1.25em;
+
+    @include media-breakpoint-up(lg) {
+        margin: 0.625em -1.225em;
+    }
+}
+
+.store-name {
+    font-weight: 600;
+}
+
+.store-details {
+    display: inline-block;
+    margin-left: 1.250em;
 }
 
 .store-locator-no-apiKey {

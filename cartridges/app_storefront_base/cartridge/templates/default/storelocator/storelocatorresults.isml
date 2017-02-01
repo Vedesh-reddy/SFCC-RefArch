@@ -1,46 +1,54 @@
-<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isloop items="${pdict.stores}" var="store" status="loopstate">
+    <div class="card-block store">
+        <i class="fa fa-map-marker map-marker"></i>
+        <div class="store-details">
+            <div class="store-name">${store.name}</div>
+            <address>
+                ${store.address1}
+                <isif condition="${store.address2}">
+                    ${store.address2}
+                </isif>
+                <isif condition="${store.city}">
+                    ${store.city},
+                </isif>
+                <isif condition="${store.stateCode}">
+                    ${store.stateCode}
+                </isif>
+                ${store.postalCode}
+            </address>
 
-<div class="container visible-xs-block">
-    <div class="row">
-        <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
-            <form action="${pdict.actionUrl}" method="get" class="radius">
-                <div class="form-group">
-                    <label for="maxdistance">${Resource.msg('storelocator.distancelabel','storelocator',null)}</label>
-                    <select class="form-control maxdistance" name="maxdistance">
-                        <isloop items="${pdict.radiusOptions}" var="option" status="loopstate">
-                            <option>${StringUtils.formatInteger(option)}</option>
-                        </isloop>
-                    </select>
-                </div>
-            </form>
+            <!--<div class="address1">-->
+                <!--${store.address1}-->
+            <!--</div>-->
+
+            <!--<div class="address2">-->
+                <!--<isif condition="${store.address2}">-->
+                    <!--${store.address2}-->
+                <!--</isif>-->
+            <!--</div>-->
+
+            <!--<span class="city">-->
+                <!--<isif condition="${store.city}">-->
+                    <!--${store.city},-->
+                <!--</isif>-->
+            <!--</span>-->
+
+            <!--<span class="stateCode">-->
+                <!--<isif condition="${store.stateCode}">-->
+                    <!--${store.stateCode}-->
+                <!--</isif>-->
+            <!--</span>-->
+
+            <!--<span class="postalCode">-->
+                <!--${store.postalCode}-->
+            <!--</span>-->
+
+            <isif condition="${store.phone}">
+                <p>
+                    <i class="fa fa-phone" aria-hidden="true"></i>
+                    <span><a class="storelocator-phone" href="tel:${store.phone}">${store.phone}</a></span>
+                </p>
+            </isif>
         </div>
     </div>
-    <hr>
-</div>
-<div class="container results" data-searchKey="${JSON.stringify(pdict.searchKey)}" data-radius="${pdict.radius}" data-hasResults="${pdict.stores.length}">
-    <isloop items="${pdict.stores}" var="store" status="loopstate">
-        <div class="row">
-            <div class="col-xs-2 col-sm-4 col-md-5">
-                <i class="fa fa-map-marker pull-right map-marker"></i>
-            </div>
-            <div class="store-information col-xs-10 col-sm-8 col-md-7">
-                <strong> <isprint value="${store.name}"/></strong> <br/>
-                <p>
-                    <isprint value="${store.address1}"/>
-                    <isprint value="${store.city}"/><isif condition="${store.stateCode != null}">,</isif>
-                    <isprint value="${store.stateCode}"/> <isprint value="${store.postalCode}"/>
-                    <isif condition="${store.phone}">
-                        <p>
-                            <i class="fa fa-phone" aria-hidden="true"></i>
-                            <span class="storelocator-phone">
-                                ${store.phone}
-                            </span>
-                        </p>
-                    </isif>
-                </p>
-            </div>
-        </div>
-        <hr class="hidden-md hidden-lg store-separator">
-        <br class="hidden-sm hidden-xs">
-    </isloop>
-</div>
+</isloop>

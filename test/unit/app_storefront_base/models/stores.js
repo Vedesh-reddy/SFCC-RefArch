@@ -1,9 +1,28 @@
 'use strict';
 
 var assert = require('chai').assert;
-var StoresModel = require('../../../../cartridges/app_storefront_base/cartridge/models/stores');
+// var StoresModel = require('../../../../cartridges/app_storefront_base/cartridge/models/stores');
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 describe('stores', function () {
+    var StoresModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/stores', {
+        'dw/util/HashMap': function () {
+            return {
+                result: {},
+                put: function (key, context) {
+                    this.result[key] = context;
+                }
+            };
+        },
+        'dw/value/Money': function () {},
+        'dw/util/Template': function () {
+            return {
+                render: function () {
+                    return { text: 'someString' };
+                }
+            };
+        }
+    });
     var actionUrl = '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Stores-FindStores';
     var apiKey = 'YOUR_API_KEY';
     var searchKey = { lat: 42.4019, long: -71.1193 };
@@ -36,17 +55,13 @@ describe('stores', function () {
                     stateCode: 'MA'
                 }
             ],
-            locations: [{
-                name: 'Downtown TV Shop',
-                latitude: 42.5273334,
-                longitude: -71.13758250000001
-            }],
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
-            radiusOptions: radiusOptions
-
+            radiusOptions: radiusOptions,
+            storesResultsHtml: 'someString'
         });
     });
 
@@ -72,17 +87,13 @@ describe('stores', function () {
                     postalCode: '02108'
                 }
             ],
-            locations: [{
-                name: 'Downtown TV Shop',
-                latitude: 42.5273334,
-                longitude: -71.13758250000001
-            }],
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
-            radiusOptions: radiusOptions
-
+            radiusOptions: radiusOptions,
+            storesResultsHtml: 'someString'
         });
     });
 
@@ -91,13 +102,13 @@ describe('stores', function () {
 
         assert.deepEqual(stores, {
             stores: [],
-            locations: [],
+            locations: '[]',
             searchKey: searchKey,
             radius: 100,
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
-            radiusOptions: radiusOptions
-
+            radiusOptions: radiusOptions,
+            storesResultsHtml: 'someString'
         });
     });
 
@@ -128,17 +139,13 @@ describe('stores', function () {
                     stateCode: 'MA'
                 }
             ],
-            locations: [{
-                name: 'Downtown TV Shop',
-                latitude: 42.5273334,
-                longitude: -71.13758250000001
-            }],
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
             googleMapsApi: null,
-            radiusOptions: radiusOptions
-
+            radiusOptions: radiusOptions,
+            storesResultsHtml: 'someString'
         });
     });
 });

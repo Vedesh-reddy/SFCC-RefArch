@@ -1,5 +1,8 @@
 'use strict';
 
+var HashMap = require('dw/util/HashMap');
+var Template = require('dw/util/Template');
+
 /**
  * Creates an array of objects containing store information
  * @param {dw.util.Set} storesObject - a set of <dw.catalog.Store> objects
@@ -61,6 +64,22 @@ function getGoogleMapsApi(apiKey) {
 }
 
 /**
+ * create the stores results html
+ * @param {Array} storesInfo - an array of objects that contains store information
+ * @returns {string} The rendered HTML
+ */
+function createStoresResultsHtml(storesInfo) {
+    var context = new HashMap();
+    var object = { stores: storesInfo };
+    Object.keys(object).forEach(function (key) {
+        context.put(key, object[key]);
+    });
+
+    var template = new Template('storelocator/storelocatorresults');
+    return template.render(context).text;
+}
+
+/**
  * @constructor
  * @classdesc The stores model
  * @param {dw.util.Set} storesResultsObject - a set of <dw.catalog.Store> objects
@@ -71,12 +90,13 @@ function getGoogleMapsApi(apiKey) {
  */
 function stores(storesResultsObject, searchKey, searchRadius, actionUrl, apiKey) {
     this.stores = createStoresObject(storesResultsObject);
-    this.locations = createGeoLocationObject(storesResultsObject);
+    this.locations = JSON.stringify(createGeoLocationObject(storesResultsObject));
     this.searchKey = searchKey;
     this.radius = searchRadius;
     this.actionUrl = actionUrl;
     this.googleMapsApi = getGoogleMapsApi(apiKey);
     this.radiusOptions = [15, 30, 50, 100, 300];
+    this.storesResultsHtml = this.stores ? createStoresResultsHtml(this.stores) : null;
 }
 
 module.exports = stores;
