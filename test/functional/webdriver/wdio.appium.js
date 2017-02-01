@@ -7,7 +7,6 @@ var argv = minimist(process.argv.slice(2));
 
 var opts = _.assign({}, getConfig({
     client: 'chrome',
-    url: 'http://dev02-lab03b-dw.demandware.net/on/demandware.store/Sites-SiteGenesis-Site/',
     suite: '*',
     coverage: 'smoke',
     reporter: 'spec',

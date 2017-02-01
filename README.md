@@ -2,7 +2,7 @@
 
 This is a repository for the mobile-optimized version of SiteGenesis.
 
-SiteGenesis Mobile First has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes. 
+SiteGenesis Mobile First has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
 SiteGenesis Mobile-First supplies an apple_pay plugin cartridge to demonstrate how to layer customizations for SiteGenesis.
 
 Your feedback on the ease-of-use and limitations of this new architecture is invaluable during the developer preview. Particularly, feedback on any issues you encounter or workarounds you develop for efficiently customizing the base cartridge without editing it directly.
@@ -12,7 +12,7 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 1 Clone this repository.
 
 2 Upload the `modules` folder to the WebDav location for cartridges for your Sandbox through CyberDuck or any other WebDAV client.
-*Note:* you can't upload the modules folder through Studio. 
+*Note:* you can't upload the modules folder through Studio.
 You can upload via dwupload command. For example:
 
 dwupload --hostname sbox01-realm1-company.demandware.net --username admin --password "Grid is a-4letter-word!" --cartridge modules
@@ -50,35 +50,101 @@ Use the provided NPM scripts to compile and upload changes to your Sandbox.
 
 You can run `npm test` to execute all unit tests in the project. Run `npm test --coverage` to get coverage information. Coverage will be available in `coverage` folder under root directory.
 
-* UNIT test code coverage: 
+* UNIT test code coverage:
 1. Open a terminal and navigate to the root directory of the mfsg repository.
 2. Enter the command: `npm run cover`.
 3. Examine the report that is generated. For example: `Writing coverage reports at [/Users/zsardoone/Demandware/mfsg/coverage]`
-3. Navigate to this directory on your local machine, open up the index.html file. This file contains a detailed report. 
+3. Navigate to this directory on your local machine, open up the index.html file. This file contains a detailed report.
 
 ## Running integration tests
 Integration tests are located in the `mfsg/test/integration` directory.
 
+To run all integration tests you can use the following command:
+
+```
+npm run test:integration
+```
+
+**Note:** Please note that short form of this command will try to locate URL of your sandbox by reading `dw.json` file in the root directory of your project. If you don't have `dw.json` file, integration tests will fail.
+sample dw.json file (this file needs to be in the root of your project)
+{
+    "hostname": "dev03-automation02-qa.demandware.net"
+}
+
+```
+npm run test:integration test/integration/storeLocator
+```
+
+You can also supply URL of the sandbox on the command line:
+
+```
+npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-SiteGenesis-Site/en_US
+```
+
 To run individual tests, such as the `test1.js` in the `storeLocator` subsuite:
-`npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/storeLocator/test1.js`
+
+```
+npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/storeLocator/test1.js
+```
 
 To run tests in a subsuite, such as the storeLocator subsuite:
-`npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/storeLocator`
 
-To run tests in the integration suite:
-`npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/*`
+```
+npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites-SiteGenesis-Site/en_US test/integration/storeLocator
+```
 
 ## Running Appium UI tests
 These tests can only be run locally with Appium and Xcode installed.
 Follow this instruction to install Appium and Xcode:
-[How to install Appium](https://intranet.demandware.com/confluence/display/ENG/How+to+Configure+Appium+for+MFSG)
+[How to install Appium](https://intranet.demandware.com/confluence/display/ENG/Configure+Appium+1.6.3+on+Sierra+MacOS)
 
-Appium UI Tests are located at ../mfsg/test/Appium
+Appium UI Tests are the same tests are functional tests on desktops which located at ../sitegenesis-mobile-first/test/functional
 
-`npm run test:appium -- --url http://sbox01-realm1-company.demandware.net/s/SiteGenesis`
+```
+npm run test:functional appium -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis
+```
 
-Note: always use the pretty storefront URL when writing and running UI tests.
+```
+npm run test:functional appium -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --suite navigation
+
+```
+
+```
+npm run test:functional appium (use the dw.json defined in the root of the project for targeting server url)
+```
+
+```
+npm run test:functional appium -- --suite navigation (run a subset of test by providing a suite name)
+
+```
+
+```
+npm run test:appium -- --suite navigation
+```
+
+*Note: always use the pretty storefront URL when writing and running UI tests.
+
 
 ## Running Functional UI tests
-`npm run test:functional -- --url http://sbox01-realm1-company.demandware.net/s/SiteGenesis --chrome`
-Note: The same tests can be applied to both Appium and Functional tests, the only time you might run into issues is when a certain element is hidden on a certain size of screen and visible on another size of screen. In this case, you need to compile a different selector to accommodate that.
+
+```
+npm run test:functional -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --chrome
+```
+
+```
+npm run test:functional -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --suite navigation (run a suite)
+```
+
+You can also use short-form of this command
+
+```
+npm run test:functional
+```
+
+```
+npm run test:functional -- --suite navigation
+```
+
+**Note:** Please note that short form of this command will try to locate URL of your sandbox by reading `dw.json` file in the root directory of your project. If you don't have `dw.json` file, functional tests will fail.
+
+**Note:** The same tests can be applied to both Appium and Functional tests, the only time you might run into issues is when a certain element is hidden on a certain size of screen and visible on another size of screen. In this case, you need to compile a different selector to accommodate that.

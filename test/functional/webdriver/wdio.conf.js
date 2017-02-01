@@ -6,7 +6,6 @@ var getConfig = require('@tridnguyen/config');
 
 var opts = Object.assign({}, getConfig({
     client: 'chrome',
-    url: 'https://REPLACE.ME',
     suite: '*',
     coverage: 'smoke',
     reporter: 'spec',

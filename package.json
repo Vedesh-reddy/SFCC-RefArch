@@ -8,12 +8,12 @@
   },
   "scripts": {
     "test": "mocha -R spec test/unit/**/*.js",
-    "test:appium": "wdio test/functional/webdriver/wdio.appium.js",
+    "test:appium": "node bin/Makefile functional -- appium -- ",
     "cover": "istanbul cover ./node_modules/.bin/_mocha -- -R spec test/unit/**/*.js",
-    "test:integration": "mocha --reporter spec",
-    "test:functional": "wdio test/functional/webdriver/wdio.conf.js",
+    "test:integration": "node bin/Makefile integration -- ",
+    "test:functional": "node bin/Makefile functional -- ",
     "test:functional:docker": "bin/test-functional-docker.sh",
-    "compile:scss": "node-sass --include-path node_modules --include-path node_modules/flag-icon-css/sass cartridges/app_storefront_base/cartridge/client/scss/default/ -o cartridges/app_storefront_base/cartridge/static/default/css/",
+    "compile:scss": "node-sass --include-path node_modules --include-path node_modules/flag-icon-css/sass cartridges/app_storefront_base/cartridge/client/scss/default/ -o cartridges/app_storefront_base/cartridge/static/default/css/ --output-style compressed",
     "compile:js": "webpack",
     "compile:fonts": "mkdir -p cartridges/app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/font-awesome/fonts/ cartridges/app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/flag-icon-css/flags/ cartridges/app_storefront_base/cartridge/static/default/fonts/flags",
     "lint": "eslint . && stylelint --syntax scss \"cartridges/app_storefront_base/cartridge/client/scss/**/*.scss\"",
@@ -35,6 +35,7 @@
     "babel-loader": "^6.2.7",
     "babel-preset-es2015": "^6.13.2",
     "chai": "^3.5.0",
+    "chalk": "^1.1.3",
     "cldr-data": "^29.0.1",
     "dwupload": "^3.4.0",
     "eslint": "^3.2.2",
@@ -52,6 +53,7 @@
     "properties-parser": "^0.3.0",
     "proxyquire": "1.7.4",
     "request-promise": "^4.1.1",
+    "selenium-standalone": "^5.9.0",
     "shelljs": "^0.7.0",
     "sinon": "^1.17.4",
     "stylelint": "^7.1.0",
@@ -59,8 +61,8 @@
     "stylelint-scss": "^1.3.4",
     "url": "^0.11.0",
     "webdriverio": "^3.3.0",
-    "xml2js": "^0.4.17",
-    "webpack": "^1.13.3"
+    "webpack": "^1.13.3",
+    "xml2js": "^0.4.17"
   },
   "dependencies": {
     "bootstrap": "4.0.0-alpha.5",
