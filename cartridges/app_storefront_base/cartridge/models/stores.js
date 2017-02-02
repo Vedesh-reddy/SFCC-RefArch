@@ -16,7 +16,9 @@ function createStoresObject(storesObject) {
             address1: store.address1,
             address2: store.address2,
             city: store.city,
-            postalCode: store.postalCode
+            postalCode: store.postalCode,
+            latitude: store.latitude,
+            longitude: store.longitude
         };
 
         if (store.phone) {
@@ -26,6 +28,11 @@ function createStoresObject(storesObject) {
         if (store.stateCode) {
             storeObj.stateCode = store.stateCode;
         }
+
+        if (store.storeHours) {
+            storeObj.storeHours = store.storeHours.markup;
+        }
+
         return storeObj;
     });
 }

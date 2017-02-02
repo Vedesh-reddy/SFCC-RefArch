@@ -5,50 +5,35 @@
             <div class="store-name">${store.name}</div>
             <address>
                 ${store.address1}
+
                 <isif condition="${store.address2}">
                     ${store.address2}
                 </isif>
+
                 <isif condition="${store.city}">
                     ${store.city},
                 </isif>
+
                 <isif condition="${store.stateCode}">
                     ${store.stateCode}
                 </isif>
+
                 ${store.postalCode}
-            </address>
 
-            <!--<div class="address1">-->
-                <!--${store.address1}-->
-            <!--</div>-->
+                <div class="store-hours">
+                    <isif condition="${store.storeHours}">
+                        <p><isprint value="${store.storeHours}" encoding="off"/></p>
+                    </isif>
+                </div>
 
-            <!--<div class="address2">-->
-                <!--<isif condition="${store.address2}">-->
-                    <!--${store.address2}-->
-                <!--</isif>-->
-            <!--</div>-->
-
-            <!--<span class="city">-->
-                <!--<isif condition="${store.city}">-->
-                    <!--${store.city},-->
-                <!--</isif>-->
-            <!--</span>-->
-
-            <!--<span class="stateCode">-->
-                <!--<isif condition="${store.stateCode}">-->
-                    <!--${store.stateCode}-->
-                <!--</isif>-->
-            <!--</span>-->
-
-            <!--<span class="postalCode">-->
-                <!--${store.postalCode}-->
-            <!--</span>-->
-
-            <isif condition="${store.phone}">
                 <p>
-                    <i class="fa fa-phone" aria-hidden="true"></i>
-                    <span><a class="storelocator-phone" href="tel:${store.phone}">${store.phone}</a></span>
+                    <isif condition="${store.phone}">
+                        <i class="fa fa-phone" aria-hidden="true"></i>
+                        <span><a class="storelocator-phone" href="tel:${store.phone}">${store.phone}</a></span>
+                    </isif>
+                    <a class="store-map" href="https://maps.google.com/?daddr=${store.latitude},${store.longitude}">${Resource.msg('link.maps','storelocator',null)}</a>
                 </p>
-            </isif>
+            </address>
         </div>
     </div>
 </isloop>

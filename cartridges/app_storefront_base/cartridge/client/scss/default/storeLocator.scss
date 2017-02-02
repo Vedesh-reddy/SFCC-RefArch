@@ -19,29 +19,44 @@
 }
 
 .map-marker {
-    order: 1;
-    font-size: 3em;
+    float: left;
+    font-size: 2.5em;
     color: $brand-color;
     vertical-align: top;
     margin-left: 0.625rem;
 }
 
 .map-canvas {
-    height: 225px;
+    display: none;
 
     @include media-breakpoint-up(sm) {
-        height: 450px;
+        height: 28.125em;
+        display: block;
     }
+}
+
+.store {
+    padding-left: 0.625em;
+    padding-right: 0.625em;
+
+    @include media-breakpoint-up(md) {
+        padding-left: 1.25em;
+        padding-right: 1.25em;
+    }
+}
+.store + .store {
+    padding-bottom: 0;
+    padding-top: 0;
 }
 
 .store + .store::before {
     content: "";
     display: block;
     border-bottom: 0.063em solid $horizontal-rule-grey;
-    margin: 0.625em -1.25em;
+    margin: 0em -0.65em 1em;
 
     @include media-breakpoint-up(lg) {
-        margin: 0.625em -1.225em;
+        margin: 0em -1.25em 1em;
     }
 }
 
@@ -50,8 +65,8 @@
 }
 
 .store-details {
-    display: inline-block;
-    margin-left: 1.250em;
+    display: block;
+    margin-left: 3.125em;
 }
 
 .store-locator-no-apiKey {
@@ -62,8 +77,17 @@
     display: none;
 }
 
+.store-locator-hero {
+    background-image: url('../images/storelocator.jpg');
+    margin-bottom: 0.625em;
+
+    @include media-breakpoint-up(sm) {
+        display: none;
+    }
+}
+
 .storelocator-phone {
-    color: $brand-color;
+    margin-right: 50px;
 }
 
 .store-separator {
@@ -75,4 +99,14 @@
 
 .spacer {
     margin-bottom: 30px;
+}
+
+.results {
+    @include media-breakpoint-up(md) {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 21.875em;
+        margin-right: -0.938em;
+        padding-right: 0.938em;;
+    }
 }

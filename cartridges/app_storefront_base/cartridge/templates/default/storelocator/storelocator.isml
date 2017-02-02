@@ -15,6 +15,9 @@
             </div>
         </div>
     </div>
+    <div class="hero store-locator-hero">
+        <h1 class="page-title">${Resource.msg('storelocator.herotext','storelocator',null)}</h1>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
@@ -40,11 +43,8 @@
                 </div>
             </div>
 
-            <!--<div class="col-sm-12 text-center map-canvas" data-hasGoogleApi="${pdict.googleMapsApi ? true : false}" data-locations="${pdict.locations}">-->
-            <!--</div>-->
-
             <div class="col-sm-6">
-                <div class="card">
+                <div class="card results-card">
                     <div class="card-header">
                         <label for="radius">${Resource.msg('storelocator.distancelabel','storelocator',null)}</label>
                         <select class="form-control custom-select radius" id="radius" name="radius" data-action="${pdict.actionUrl}">

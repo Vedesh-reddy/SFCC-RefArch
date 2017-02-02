@@ -22,7 +22,8 @@ describe('Store Locator', function () {
                         'address2': null,
                         'city': 'Woburn',
                         'postalCode': '01801',
-                        'stateCode': 'MA'
+                        'stateCode': 'MA',
+                        'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\nSun: 12pm - 6pm'
                     },
                     {
                         'name': 'Champaign Electronic Shop',
@@ -194,7 +195,8 @@ describe('Store Locator', function () {
                         'address2': null,
                         'city': 'Woburn',
                         'postalCode': '01801',
-                        'stateCode': 'MA'
+                        'stateCode': 'MA',
+                        'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\nSun: 12pm - 6pm'
                     },
                     {
                         'name': 'Champaign Electronic Shop',

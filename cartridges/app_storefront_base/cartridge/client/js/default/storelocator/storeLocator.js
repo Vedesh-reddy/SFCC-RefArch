@@ -61,7 +61,7 @@ function updateStoresResults(data) {
     }
 
     $resultsDiv.empty();
-    $resultsDiv.attr('data-has-results', data.stores.length);
+    $resultsDiv.data('has-results', data.stores.length);
     $resultsDiv.attr('data-radius', data.radius);
     $resultsDiv.attr('data-search-key', JSON.stringify(data.searchKey));
     $mapDiv.attr('data-locations', data.locations);
@@ -84,7 +84,7 @@ module.exports = function () {
         $('.store-locator-no-apiKey').show();
     }
 
-    if ($('.results').attr('data-has-results') === 0) {
+    if ($('.results').data('has-results') === 0) {
         $('.store-locator-no-results').show();
     }
 

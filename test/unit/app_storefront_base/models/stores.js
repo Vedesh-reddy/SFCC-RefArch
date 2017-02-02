@@ -39,7 +39,10 @@ describe('stores', function () {
             phone: '333-333-3333',
             stateCode: 'MA',
             latitude: 42.5273334,
-            longitude: -71.13758250000001
+            longitude: -71.13758250000001,
+            storeHours: {
+                markup: 'Mon - Sat: 10am - 9pm'
+            }
         }];
         var stores = new StoresModel(storesResults, searchKey, radius, actionUrl, apiKey);
 
@@ -50,9 +53,12 @@ describe('stores', function () {
                     address1: '333 Washington St',
                     address2: '',
                     city: 'Boston',
+                    latitude: 42.5273334,
+                    longitude: -71.13758250000001,
                     postalCode: '02108',
                     phone: '333-333-3333',
-                    stateCode: 'MA'
+                    stateCode: 'MA',
+                    storeHours: 'Mon - Sat: 10am - 9pm'
                 }
             ],
             locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
@@ -84,6 +90,8 @@ describe('stores', function () {
                     address1: '333 Washington St',
                     address2: '',
                     city: 'Boston',
+                    latitude: 42.5273334,
+                    longitude: -71.13758250000001,
                     postalCode: '02108'
                 }
             ],
@@ -134,6 +142,8 @@ describe('stores', function () {
                     address1: '333 Washington St',
                     address2: '',
                     city: 'Boston',
+                    latitude: 42.5273334,
+                    longitude: -71.13758250000001,
                     postalCode: '02108',
                     phone: '333-333-3333',
                     stateCode: 'MA'
