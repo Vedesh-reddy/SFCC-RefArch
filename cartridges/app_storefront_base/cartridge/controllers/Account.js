@@ -141,6 +141,7 @@ server.post('Login', server.middleware.https, function (req, res, next) {
         ? (!!req.form.loginRememberMe)
         : false;
     var authenticatedCustomer;
+    var url = URLUtils.url('Account-Login');
     Transaction.wrap(function () {
         authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
     });
@@ -152,7 +153,8 @@ server.post('Login', server.middleware.https, function (req, res, next) {
             navTabValue: 'login',
             loginFormError: true,
             rememberMe: rememberMe,
-            userName: email
+            userName: email,
+            url: url
         });
     }
     next();

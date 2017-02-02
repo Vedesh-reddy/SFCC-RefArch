@@ -1,11 +1,11 @@
-<form action="${URLUtils.url('Account-Login')}" class="login" method="POST" name="login-form">
+<form action="${pdict.url}" class="login" method="POST" name="login-form">
     <isif condition="${pdict.loginFormError}">
         <div class="form-group">
             <div class="alert alert-danger" role="alert">
                 <strong>${Resource.msg('error.message.login.form', 'login', null)}</strong>
             </div>
         </div>
-    </isif>     
+    </isif>
     <div class="form-group required">
         <label class="form-control-label" for="login-form-email">
             ${Resource.msg('label.input.login.email', 'login', null)}

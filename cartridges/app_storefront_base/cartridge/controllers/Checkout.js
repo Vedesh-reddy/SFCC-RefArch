@@ -18,6 +18,7 @@ var Site = require('dw/system/Site');
 var StoreMgr = require('dw/catalog/StoreMgr');
 var Template = require('dw/util/Template');
 var Transaction = require('dw/system/Transaction');
+var CustomerMgr = require('dw/customer/CustomerMgr');
 
 var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
@@ -34,13 +35,17 @@ var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
  * Main entry point for Checkout
  */
 server.get('Start', server.middleware.https, function (req, res, next) {
+    if (!req.currentCustomer.profile && !req.querystring.guest) {
+        res.redirect(URLUtils.url('Checkout-LoginForm'));
+        return next();
+    }
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
         res.redirect(URLUtils.url('Cart-Show'));
         return next();
     }
-
     var applicablePaymentCards;
     var applicablePaymentMethods;
     var countryCode = req.geolocation.countryCode;
@@ -1039,6 +1044,54 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     res.json({ error: false, orderID: orderNumber, continueUrl: confirmationUrl });
 
     return next();
+});
+
+server.get('LoginForm', server.middleware.https, function (req, res, next) {
+    var rememberMe = false;
+    var userName = '';
+    var url = URLUtils.url('Checkout-Login');
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var orderTotals = new TotalsModel(currentBasket);
+    var details = {
+        subTotal: orderTotals.subTotal,
+        totalQuantity: ProductLineItemModel.getTotalQuantity(currentBasket.allProductLineItems)
+    };
+
+    if (req.currentCustomer.credentials) {
+        rememberMe = true;
+        userName = req.currentCustomer.credentials.username;
+    }
+    res.render('/checkout/checkoutLogin', {
+        rememberMe: rememberMe,
+        userName: userName,
+        url: url,
+        details: details
+    });
+    next();
+});
+
+server.post('Login', server.middleware.https, function (req, res, next) {
+    var email = req.form.loginEmail;
+    var password = req.form.loginPassword;
+    var rememberMe = req.form.loginRememberMe
+        ? (!!req.form.loginRememberMe)
+        : false;
+    var authenticatedCustomer;
+    var url = URLUtils.url('Checkout-Login');
+    Transaction.wrap(function () {
+        authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
+    });
+    if (authenticatedCustomer && authenticatedCustomer.authenticated) {
+        res.redirect(URLUtils.url('Checkout-Start'));
+    } else {
+        res.render('/checkout/checkoutLogin', {
+            loginFormError: true,
+            rememberMe: rememberMe,
+            userName: email,
+            url: url
+        });
+    }
+    next();
 });
 
 module.exports = server.exports();
