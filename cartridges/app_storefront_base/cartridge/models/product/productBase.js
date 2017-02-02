@@ -73,9 +73,11 @@ function getVariationModel(product, productVariables) {
  * @param {dw.catalog.Product} product - Product instance returned from the API
  * @param {Object} productVariables - variables passed in the query string to
  *                                    target product variation group
- * @param {int} quantity - quantity of products selected
+ * @param {number} quantity - Integer quantity of products selected
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
+ *                                                                 product
  */
-function ProductBase(product, productVariables, quantity) {
+function ProductBase(product, productVariables, quantity, promotions) {
     this.variationModel = this.getVariationModel(product, productVariables);
     this.product = this.variationModel.selectedVariant || product;
     this.imageConfig = {
@@ -89,6 +91,7 @@ function ProductBase(product, productVariables, quantity) {
         endPoint: 'Show'
     };
     this.useSimplePrice = true;
+    this.apiPromotions = promotions;
     this.initialize();
 }
 
@@ -96,7 +99,8 @@ ProductBase.prototype = {
     initialize: function () {
         this.id = this.product.ID;
         this.productName = this.product.name;
-        this.price = priceFactory.getPrice(this.product, null, this.useSimplePrice);
+        this.price = priceFactory.getPrice(this.product, null, this.useSimplePrice,
+            this.apiPromotions);
         this.productType = getProductType(this.product);
         this.images = new ImageModel(this.variationModel, this.imageConfig);
         this.rating = getRating(this.id);

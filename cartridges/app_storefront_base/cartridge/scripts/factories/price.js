@@ -3,7 +3,6 @@
 var money = require('dw/value/Money');
 var dwHelpers = require('../dwHelpers');
 var priceHelper = require('../helpers/pricing');
-var PromotionMgr = require('dw/campaign/PromotionMgr');
 var DefaultPrice = require('../../models/price/default');
 var RangePrice = require('../../models/price/range');
 var TieredPrice = require('../../models/price/tiered');
@@ -68,15 +67,16 @@ function getPromotionPrice(product, promotions, currentOptionModel) {
  * @param {string} currency - Current session currencyCode
  * @param {boolean} useSimplePrice - Flag as to whether a simple price should be used, used for
  *     product tiles and cart line items.
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
+ *                                                                 product
  * @param {dw.catalog.ProductOptionModel} currentOptionModel - The product's option model
  * @return {TieredPrice|RangePrice|DefaultPrice} - The product's price
  */
-function getPrice(inputProduct, currency, useSimplePrice, currentOptionModel) {
+function getPrice(inputProduct, currency, useSimplePrice, promotions, currentOptionModel) {
     var rangePrice;
     var salesPrice;
     var listPrice;
     var product = inputProduct;
-    var promotions;
     var promotionPrice = money.NOT_AVAILABLE;
     var priceModel = product.getPriceModel();
     var priceTable = priceModel.getPriceTable();
@@ -101,7 +101,6 @@ function getPrice(inputProduct, currency, useSimplePrice, currentOptionModel) {
         priceModel = product.priceModel;
     }
 
-    promotions = PromotionMgr.activeCustomerPromotions.getProductPromotions(product);
     promotionPrice = getPromotionPrice(product, promotions, currentOptionModel);
     listPrice = getListPrice(priceModel);
     salesPrice = priceModel.price;
