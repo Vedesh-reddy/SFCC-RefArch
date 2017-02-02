@@ -1,5 +1,5 @@
 <!--- Subtotal --->
-<div class="row leading-lines">
+<div class="row leading-lines subtotal-item">
     <div class="col-xs-6 start-lines">
         <p class="order-receipt-label"><span>${Resource.msg('label.order.subtotal','confirmation', null)}</span></p>
     </div>
@@ -19,7 +19,7 @@
 </div>
 
 <!--- Shipping Cost --->
-<div class="row leading-lines">
+<div class="row leading-lines shipping-item">
     <div class="col-xs-6 start-lines">
         <p class="order-receipt-label"><span>${Resource.msg('label.order.shipping.cost','confirmation', null)}</span></p>
     </div>
@@ -39,7 +39,7 @@
 </div>
 
 <!--- Sales Tax --->
-<div class="row leading-lines">
+<div class="row leading-lines sales-tax-item">
     <div class="col-xs-6 start-lines">
         <p class="order-receipt-label"><span>${Resource.msg('label.order.sales.tax','confirmation', null)}</span></p>
     </div>
