@@ -327,7 +327,7 @@ describe('priceFactory', function () {
                     },
                     getPriceModel: function () { return this.priceModel; }
                 };
-                price = priceFactory.getPrice(product, null, null, true);
+                price = priceFactory.getPrice(product, null, null, promotions);
                 assert.isTrue(spyDefaultPrice.calledWithNew());
                 assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
             });
@@ -347,7 +347,7 @@ describe('priceFactory', function () {
                     },
                     getPriceModel: function () { return this.priceModel; }
                 };
-                price = priceFactory.getPrice(product, null, null, true);
+                price = priceFactory.getPrice(product, null, null, promotions, true);
                 assert.isTrue(spyDefaultPrice.calledWithNew());
                 assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
             });
@@ -368,7 +368,7 @@ describe('priceFactory', function () {
                     getPriceModel: function () { return this.priceModel; },
                     optionModel: { option: 'model' }
                 };
-                price = priceFactory.getPrice(product, null, null, false);
+                price = priceFactory.getPrice(product, null, null, promotions, false);
                 assert.isTrue(spyDefaultPrice.calledWithNew());
                 assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
             });

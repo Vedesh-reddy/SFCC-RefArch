@@ -4,6 +4,8 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../../util');
+var dwHelperMap = require('../../../../mocks/dwHelpers');
+
 
 describe('fullProduct', function () {
     var FullProduct = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/product', {
@@ -14,7 +16,11 @@ describe('fullProduct', function () {
                 'dw/util/ArrayList': ArrayList
             }),
             '../../scripts/factories/price': { getPrice: function () {} }
-        })
+        }),
+        '~/cartridge/scripts/dwHelpers': {
+            map: dwHelperMap.map,
+            'dw/util/ArrayList': ArrayList
+        }
     });
 
     var productVariantMock = {
@@ -59,9 +65,19 @@ describe('fullProduct', function () {
         }
     };
 
+    var promotions = [{
+        calloutMsg: 'Super duper promotion discount',
+        details: 'Some Details',
+        enabled: true,
+        id: 'SuperDuperPromo',
+        name: 'Super Duper Promo',
+        promotionClass: 'Some Class',
+        rank: null
+    }];
+
     it('should load simple full product', function () {
         var mock = toProductMock(productMock);
-        var product = new FullProduct(mock);
+        var product = new FullProduct(mock, null, null, promotions);
 
         assert.equal(product.productName, 'test product');
         assert.equal(product.id, 1234567);
@@ -76,7 +92,7 @@ describe('fullProduct', function () {
         tempMock.variationModel.selectedVariant = null;
         tempMock = Object.assign({}, productVariantMock, tempMock);
         tempMock.minOrderQuantity.value = null;
-        var product = new FullProduct(toProductMock(tempMock));
+        var product = new FullProduct(toProductMock(tempMock), null, null, promotions);
 
         assert.equal(product.minOrderQuantity, 1);
         assert.equal(product.maxOrderQuantity, 9);
