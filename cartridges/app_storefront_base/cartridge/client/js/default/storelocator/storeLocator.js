@@ -60,13 +60,14 @@ function updateStoresResults(data) {
         $('.store-locator-no-results').hide();
     }
 
-    $resultsDiv.empty();
-    $resultsDiv.data('has-results', data.stores.length);
-    $resultsDiv.attr('data-radius', data.radius);
-    $resultsDiv.attr('data-search-key', JSON.stringify(data.searchKey));
+    $resultsDiv.empty()
+        .data('has-results', data.stores.length)
+        .data('radius', data.radius)
+        .data('search-key', data.searchKey);
+
     $mapDiv.attr('data-locations', data.locations);
 
-    if (JSON.parse($mapDiv.attr('data-hasGoogleApi')) !== false) {
+    if ($mapDiv.data('has-google-api')) {
         maps();
     } else {
         $('.store-locator-no-apiKey').show();
@@ -78,7 +79,7 @@ function updateStoresResults(data) {
 }
 
 module.exports = function () {
-    if (JSON.parse($('.map-canvas').attr('data-hasGoogleApi'))) {
+    if ($('.map-canvas').data('has-google-api')) {
         maps();
     } else {
         $('.store-locator-no-apiKey').show();
@@ -92,13 +93,14 @@ module.exports = function () {
     $('.detect-location').on('click', function () {
         $.spinner().start();
         if (!navigator.geolocation) {
+            $.spinner().stop();
             return;
         }
 
         navigator.geolocation.getCurrentPosition(function (position) {
-            var detectLocationButton = $('.detect-location');
-            var url = detectLocationButton.data('action');
-            var radius = $('.results').attr('data-radius');
+            var $detectLocationButton = $('.detect-location');
+            var url = $detectLocationButton.data('action');
+            var radius = $('.results').data('radius');
             var urlParams = {
                 radius: radius,
                 lat: position.coords.latitude,
@@ -120,8 +122,9 @@ module.exports = function () {
 
     $('.store-locator').submit(function (e) {
         e.preventDefault();
+        $.spinner().start();
         var $form = $('.store-locator');
-        var radius = $('.results').attr('data-radius');
+        var radius = $('.results').data('radius');
         var url = $form.attr('action');
         var urlParams = { radius: radius };
 
@@ -133,6 +136,7 @@ module.exports = function () {
             data: $form.serialize(),
             dataType: 'json',
             success: function (data) {
+                $.spinner().stop();
                 updateStoresResults(data);
             }
         });
@@ -141,11 +145,9 @@ module.exports = function () {
 
     $('.radius').change(function () {
         var radius = $(this).val();
-        var searchKeys = $('.results').attr('data-search-key');
+        var searchKeys = $('.results').data('search-key');
         var url = $('.radius').data('action');
         var urlParams = {};
-
-        searchKeys = JSON.parse(searchKeys);
 
         if (searchKeys.postalCode) {
             urlParams = {

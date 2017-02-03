@@ -1,7 +1,6 @@
 'use strict';
 
 var assert = require('chai').assert;
-// var StoresModel = require('../../../../cartridges/app_storefront_base/cartridge/models/stores');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 describe('stores', function () {

@@ -21,6 +21,8 @@ describe('Store Locator', function () {
                         'address1': '10 Presidential Way',
                         'address2': null,
                         'city': 'Woburn',
+                        'latitude': 42.5273334,
+                        'longitude': -71.13758250000001,
                         'postalCode': '01801',
                         'stateCode': 'MA',
                         'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\nSun: 12pm - 6pm'
@@ -30,6 +32,8 @@ describe('Store Locator', function () {
                         'address1': '1001 Cambridge St',
                         'address2': null,
                         'city': 'Cambridge',
+                        'latitude': 42.3729794,
+                        'longitude': -71.09346089999997,
                         'postalCode': '02141',
                         'phone': '+1-617-714-2640',
                         'stateCode': 'MA'
@@ -39,6 +43,8 @@ describe('Store Locator', function () {
                         'address1': '333 Washington St',
                         'address2': null,
                         'city': 'Boston',
+                        'latitude': 42.3569512,
+                        'longitude': -71.05902600000002,
                         'postalCode': '02108',
                         'phone': '+1-617-695-1565',
                         'stateCode': 'MA'
@@ -48,6 +54,8 @@ describe('Store Locator', function () {
                         'address1': '584 Columbus Ave',
                         'address2': null,
                         'city': 'Boston',
+                        'latitude': 42.3403189,
+                        'longitude': -71.0817859,
                         'postalCode': '02118',
                         'phone': '+1-617-888-7276',
                         'stateCode': 'MA'
@@ -57,6 +65,8 @@ describe('Store Locator', function () {
                         'address1': '150 Winthrop Ave',
                         'address2': null,
                         'city': 'Lawrence',
+                        'latitude': 42.6895548,
+                        'longitude': -71.14878340000001,
                         'postalCode': '01843',
                         'phone': '+1-978-580-2704',
                         'stateCode': 'MA'
@@ -185,6 +195,8 @@ describe('Store Locator', function () {
                         'address1': '150 Winthrop Ave',
                         'address2': null,
                         'city': 'Lawrence',
+                        'latitude': 42.6895548,
+                        'longitude': -71.14878340000001,
                         'postalCode': '01843',
                         'phone': '+1-978-580-2704',
                         'stateCode': 'MA'
@@ -194,6 +206,8 @@ describe('Store Locator', function () {
                         'address1': '10 Presidential Way',
                         'address2': null,
                         'city': 'Woburn',
+                        'latitude': 42.5273334,
+                        'longitude': -71.13758250000001,
                         'postalCode': '01801',
                         'stateCode': 'MA',
                         'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\nSun: 12pm - 6pm'
@@ -203,6 +217,8 @@ describe('Store Locator', function () {
                         'address1': '1001 Cambridge St',
                         'address2': null,
                         'city': 'Cambridge',
+                        'latitude': 42.3729794,
+                        'longitude': -71.09346089999997,
                         'postalCode': '02141',
                         'phone': '+1-617-714-2640',
                         'stateCode': 'MA'

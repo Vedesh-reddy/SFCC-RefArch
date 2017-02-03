@@ -2,59 +2,36 @@
     <isscript>
         var assets = require('~/cartridge/scripts/assets.js');
         if (pdict.googleMapsApi) {
-        assets.addJs(pdict.googleMapsApi);
+            assets.addJs(pdict.googleMapsApi);
         }
         assets.addJs('/js/storeLocator.js');
         assets.addCss('/css/storeLocator.css');
     </isscript>
-
-    <div class="jumbotron map-canvas" data-hasGoogleApi="${pdict.googleMapsApi ? true : false}" data-locations="${pdict.locations}">
+    <div class="jumbotron map-canvas" data-has-google-api="${pdict.googleMapsApi ? true : false}" data-locations="${pdict.locations}">
         <div class="container">
             <div class="row">
-                <p class="store-locator-no-apiKey alert alert-danger">${Resource.msg('storelocator.noapikey','storelocator',null)}</p>
+                <p class="store-locator-no-apiKey alert alert-danger">${Resource.msg('error.no.api.key','storelocator',null)}</p>
             </div>
         </div>
     </div>
     <div class="hero store-locator-hero">
-        <h1 class="page-title">${Resource.msg('storelocator.herotext','storelocator',null)}</h1>
+        <h1 class="page-title">${Resource.msg('title.hero.text','storelocator',null)}</h1>
     </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-6">
                 <div class="card">
-                    <div class="card-block">
-                        <p>${Resource.msg('storelocator.findstoremessage','storelocator',null)}</p>
-
-                        <button type="submit" class="btn btn-primary btn-block btn-lg detect-location" data-action="${pdict.actionUrl}">
-                            ${Resource.msg('storelocator.detectlocation_btn','storelocator',null)}
-                        </button>
-
-                        <form action="${pdict.actionUrl}" class="store-locator" method="get" name="storelocator">
-                            <div class="form-group">
-                                <label for="postalCode">${Resource.msg('storelocator.zippostalcode','storelocator',null)}</label>
-                                <input type="text" class="form-control" id="postalCode" name="postalCode">
-                            </div>
-
-                            <button class="btn btn-block btn-storelocator-search" type="submit" name="submit" value="submit">
-                                ${Resource.msg('storelocator.search','storelocator',null)}
-                            </button>
-                        </form>
-                    </div>
+                    <isinclude template="storelocator/storelocatorfields" />
                 </div>
             </div>
 
             <div class="col-sm-6">
                 <div class="card results-card">
                     <div class="card-header">
-                        <label for="radius">${Resource.msg('storelocator.distancelabel','storelocator',null)}</label>
-                        <select class="form-control custom-select radius" id="radius" name="radius" data-action="${pdict.actionUrl}">
-                            <isloop items="${pdict.radiusOptions}" var="option" status="loopstate">
-                                <option>${StringUtils.formatInteger(option)}</option>
-                            </isloop>
-                        </select>
+                        <isinclude template="storelocator/storelocatorradius" />
                     </div>
                     <div class="card-block store-locator-no-results">
-                        <p class="alert alert-danger">${Resource.msg('storelocator.noresults','storelocator',null)}</p>
+                        <p class="alert alert-danger">${Resource.msg('error.no.results','storelocator',null)}</p>
                     </div>
                     <div class="results" data-search-key="${JSON.stringify(pdict.searchKey)}" data-radius="${pdict.radius}" data-has-results="${pdict.stores.length}">
                         <isinclude template="storelocator/storelocatorresults" />

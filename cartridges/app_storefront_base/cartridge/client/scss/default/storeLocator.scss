@@ -22,7 +22,6 @@
     float: left;
     font-size: 2.5em;
     color: $brand-color;
-    vertical-align: top;
     margin-left: 0.625rem;
 }
 
@@ -44,6 +43,7 @@
         padding-right: 1.25em;
     }
 }
+
 .store + .store {
     padding-bottom: 0;
     padding-top: 0;
@@ -53,10 +53,10 @@
     content: "";
     display: block;
     border-bottom: 0.063em solid $horizontal-rule-grey;
-    margin: 0em -0.65em 1em;
+    margin: 0 -0.65em 1em;
 
     @include media-breakpoint-up(lg) {
-        margin: 0em -1.25em 1em;
+        margin: 0 -1.25em 1em;
     }
 }
 
@@ -86,27 +86,13 @@
     }
 }
 
-.storelocator-phone {
-    margin-right: 50px;
-}
-
-.store-separator {
-
-    @include media-breakpoint-up(sm) {
-        width: 60%;
-    }
-}
-
-.spacer {
-    margin-bottom: 30px;
-}
-
 .results {
+
     @include media-breakpoint-up(md) {
         overflow-y: auto;
         overflow-x: hidden;
         max-height: 21.875em;
         margin-right: -0.938em;
-        padding-right: 0.938em;;
+        padding-right: 0.938em;
     }
 }

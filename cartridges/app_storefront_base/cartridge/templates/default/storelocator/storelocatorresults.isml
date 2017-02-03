@@ -1,39 +1,6 @@
 <isloop items="${pdict.stores}" var="store" status="loopstate">
     <div class="card-block store">
         <i class="fa fa-map-marker map-marker"></i>
-        <div class="store-details">
-            <div class="store-name">${store.name}</div>
-            <address>
-                ${store.address1}
-
-                <isif condition="${store.address2}">
-                    ${store.address2}
-                </isif>
-
-                <isif condition="${store.city}">
-                    ${store.city},
-                </isif>
-
-                <isif condition="${store.stateCode}">
-                    ${store.stateCode}
-                </isif>
-
-                ${store.postalCode}
-
-                <div class="store-hours">
-                    <isif condition="${store.storeHours}">
-                        <p><isprint value="${store.storeHours}" encoding="off"/></p>
-                    </isif>
-                </div>
-
-                <p>
-                    <isif condition="${store.phone}">
-                        <i class="fa fa-phone" aria-hidden="true"></i>
-                        <span><a class="storelocator-phone" href="tel:${store.phone}">${store.phone}</a></span>
-                    </isif>
-                    <a class="store-map" href="https://maps.google.com/?daddr=${store.latitude},${store.longitude}">${Resource.msg('link.maps','storelocator',null)}</a>
-                </p>
-            </address>
-        </div>
+        <isinclude template="storelocator/storedetails" />
     </div>
 </isloop>
