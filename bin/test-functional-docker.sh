@@ -33,6 +33,7 @@ else
 fi
 
 # run actual test command in a subshell to be able to rm docker container afterwards
+# this command is for Jenkins job to by pass the Makefile.js
 (
     ./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js "$@" 2> /dev/null
 )
