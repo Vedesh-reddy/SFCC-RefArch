@@ -1,15 +1,15 @@
 <div class="card">
     <div class="card-header">
         <h4 class="float-xs-left">${Resource.msg('label.payment','account',null)}</h4>
-        <isif condition="${pdict.payment}">
+        <isif condition="${pdict.account.payment}">
             <a href="${URLUtils.url('PaymentInstruments-List')}" class="float-xs-right">${Resource.msg('link.view','account',null)}</a>
         </isif>
     </div>
-    <isif condition="${pdict.payment}">
+    <isif condition="${pdict.account.payment}">
         <div class="card-block card-info-group">
-            <p>${Resource.msg('label.payment.credit','account',null)} ${pdict.payment.creditCardType}</p>
-            <p>${pdict.payment.maskedCreditCardNumber}</p>
-            <p>${Resource.msg('label.payment.ending','account',null)} ${pdict.payment.creditCardExpirationMonth}/${pdict.payment.creditCardExpirationYear}</p>
+            <p>${Resource.msg('label.payment.credit','account',null)} ${pdict.account.payment.creditCardType}</p>
+            <p>${pdict.account.payment.maskedCreditCardNumber}</p>
+            <p>${Resource.msg('label.payment.ending','account',null)} ${pdict.account.payment.creditCardExpirationMonth}/${pdict.account.payment.creditCardExpirationYear}</p>
         </div>
     </isif>
     <div class="card-footer card-footer-border text-xs-center">

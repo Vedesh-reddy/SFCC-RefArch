@@ -1,19 +1,19 @@
 <div class="card">
     <div class="card-header">
         <h4 class="float-xs-left">${Resource.msg('label.addressbook','account',null)}</h4>
-        <isif condition="${pdict.preferredAddress}">
+        <isif condition="${pdict.account.preferredAddress}">
             <a href="${URLUtils.url('Address-List')}" class="float-xs-right">${Resource.msg('link.view','account',null)}</a>
         </isif>
     </div>
-    <isif condition="${pdict.preferredAddress}">
+    <isif condition="${pdict.account.preferredAddress}">
         <div class="card-block card-info-group">
             <div>
                 <p class="dashboard-cards-block-title">${Resource.msg('label.addressbook.defaultaddress','account',null)}</p>
-                <p class="dashboard-info">${pdict.preferredAddress.address.ID}</p>
-                <p>${pdict.preferredAddress.address.firstName} ${pdict.preferredAddress.address.lastName}</p> 
-                <p>${pdict.preferredAddress.address.address1}</p>
-                <p>${pdict.preferredAddress.address.city}, ${pdict.preferredAddress.address.stateCode} ${pdict.preferredAddress.address.postalCode}</p>
-                <p>${pdict.preferredAddress.address.countryCode.displayValue}</p>
+                <p class="dashboard-info">${pdict.account.preferredAddress.address.ID}</p>
+                <p>${pdict.account.preferredAddress.address.firstName} ${pdict.account.preferredAddress.address.lastName}</p> 
+                <p>${pdict.account.preferredAddress.address.address1}</p>
+                <p>${pdict.account.preferredAddress.address.city}, ${pdict.account.preferredAddress.address.stateCode} ${pdict.account.preferredAddress.address.postalCode}</p>
+                <p>${pdict.account.preferredAddress.address.countryCode.displayValue}</p>
             </div>
         </div>
     </isif>

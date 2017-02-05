@@ -11,14 +11,19 @@ var createApiBasket = function () {
         },
         orderNo: 'some String',
         creationDate: 'some Date',
-        customerEmail: 'some Email'
+        customerEmail: 'some Email',
+        status: 'some status',
+        productQuantityTotal: 1
     };
 };
 
 var shippingModel = {};
 var billingModel = {};
-var orderTotals = {};
-var lineItems = {};
+var totalsModel = {};
+var productLineItemsModel = {};
+var config = {
+    numberOfLineItems: '*'
+};
 
 describe('Order', function () {
     it('should handle null parameters', function () {
@@ -34,17 +39,18 @@ describe('Order', function () {
     });
 
     it('should handle a basket object ', function () {
-        var result = new Order(
-            createApiBasket(),
-            shippingModel,
-            billingModel,
-            orderTotals,
-            lineItems
-        );
+        var modelsObject = {
+            billingModel: billingModel,
+            shippingModel: shippingModel,
+            totalsModel: totalsModel,
+            productLineItemsModel: productLineItemsModel
+        };
+
+        var result = new Order(createApiBasket(), modelsObject, config);
         assert.equal(result.shipping, shippingModel);
         assert.equal(result.billing, billingModel);
-        assert.equal(result.totals, orderTotals);
-        assert.equal(result.items, lineItems);
+        assert.equal(result.totals, totalsModel);
+        assert.equal(result.items, productLineItemsModel);
         assert.deepEqual(result.steps, {
             shipping: {
                 iscompleted: true
@@ -62,7 +68,14 @@ describe('Order', function () {
         var basket = {
             billingAddress: true
         };
-        var result = new Order(basket, null, null, null, null);
+        var modelsObject = {
+            billingModel: null,
+            shippingModel: null,
+            totalsModel: null,
+            productLineItemsModel: null
+        };
+
+        var result = new Order(basket, modelsObject, config);
         assert.deepEqual(result.steps, {
             shipping: {
                 iscompleted: false
@@ -71,5 +84,57 @@ describe('Order', function () {
                 iscompleted: true
             }
         });
+    });
+
+    it('should return the subset of the order model when using config.numberOfLineItems = "single".', function () {
+        config = {
+            numberOfLineItems: 'single'
+        };
+
+        productLineItemsModel = {
+            length: 2,
+            items: [
+                {
+                    images: {
+                        small: [
+                            {
+                                url: 'url to small image',
+                                alt: 'url to small image',
+                                title: 'url to small image'
+                            }
+                        ]
+                    }
+                }
+            ]
+        };
+
+        shippingModel = {
+            shippingAddress: {
+                firstName: 'John',
+                lastName: 'Snow'
+            }
+        };
+
+        totalsModel = {
+            grandTotal: '$129.87'
+        };
+
+        var modelsObject = {
+            billingModel: null,
+            shippingModel: shippingModel,
+            totalsModel: totalsModel,
+            productLineItemsModel: productLineItemsModel
+        };
+
+        var result = new Order(createApiBasket(), modelsObject, config);
+
+        assert.equal(result.creationDate, 'some Date');
+        assert.equal(result.shippedToLastName, 'Snow');
+        assert.equal(result.shippedToFirstName, 'John');
+        assert.equal(result.productQuantityTotal, 1);
+        assert.equal(result.priceTotal, totalsModel.grandTotal);
+        assert.equal(result.orderStatus, 'some status');
+        assert.equal(result.orderNumber, 'some String');
+        assert.equal(result.orderEmail, 'some Email');
     });
 });

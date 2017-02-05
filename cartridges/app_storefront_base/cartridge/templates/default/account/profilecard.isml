@@ -6,19 +6,19 @@
     <div class="card-block card-info-group">
         <div>
             <p class="dashboard-info">${Resource.msg('label.profile.firstname','account',null)}</p>
-            <p>${pdict.profile.firstName}</p>
+            <p>${pdict.account.profile.firstName}</p>
         </div>
         <div>
             <p class="dashboard-info">${Resource.msg('label.profile.lastname','account',null)}</p>
-            <p>${pdict.profile.lastName}</p>
+            <p>${pdict.account.profile.lastName}</p>
         </div>
         <div>
             <p class="dashboard-info">${Resource.msg('label.profile.email','account',null)}</p>
-            <p>${pdict.profile.email}</p>
+            <p>${pdict.account.profile.email}</p>
         </div>
         <div>
             <p class="dashboard-info">${Resource.msg('label.profile.phone','account',null)}</p>
-            <p>${pdict.profile.phone}</p>
+            <p>${pdict.account.profile.phone}</p>
         </div>
     </div>
 </div>

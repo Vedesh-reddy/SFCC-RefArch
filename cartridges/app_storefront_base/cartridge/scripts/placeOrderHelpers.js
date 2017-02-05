@@ -11,7 +11,7 @@ var ShippingModel = require('~/cartridge/models/shipping');
 var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
 var Payment = require('~/cartridge/models/payment');
-var ProductLineItemModel = require('~/cartridge/models/productLineItems');
+var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var TotalsModel = require('~/cartridge/models/totals');
 
 /**
@@ -42,9 +42,10 @@ function placeOrder(order) {
 /**
  * Create order model based on order id
  * @param  {dw.order.Order} order - The order object
+ * @param {Object} config -Objec tmodel configurations
  * @return {Object} order model
  */
-function buildOrderModel(order) {
+function buildOrderModel(order, config) {
     var billingAddress = order.billingAddress;
     var paymentInstruments;
     var shipment = order.defaultShipment;
@@ -55,11 +56,13 @@ function buildOrderModel(order) {
     var billingAddressModel;
     var billingModel;
     var orderModel;
-    var orderTotals;
+    var totalsModel;
     var paymentModel;
-    var productLineItemModel;
+    var productLineItemsModel;
     var shippingAddressModel = new AddressModel(shippingAddress);
     var shippingModel;
+
+    var modelConfig = config;
 
     shippingModel = new ShippingModel(
         order.defaultShipment,
@@ -74,16 +77,22 @@ function buildOrderModel(order) {
     billingAddressModel = new AddressModel(billingAddress);
     billingModel = new BillingModel(billingAddressModel, paymentModel);
 
-    productLineItemModel = new ProductLineItemModel(order);
-    orderTotals = new TotalsModel(order);
+    productLineItemsModel = new ProductLineItemsModel(order);
+    totalsModel = new TotalsModel(order);
 
-    orderModel = new OrderModel(
-        order,
-        shippingModel,
-        billingModel,
-        orderTotals,
-        productLineItemModel
-    );
+    if (!modelConfig) {
+        modelConfig = {
+            numberOfLineItems: '*'
+        };
+    }
+    var modelsObject = {
+        billingModel: billingModel,
+        shippingModel: shippingModel,
+        totalsModel: totalsModel,
+        productLineItemsModel: productLineItemsModel
+    };
+
+    orderModel = new OrderModel(order, modelsObject, modelConfig);
 
     return orderModel;
 }
