@@ -66,10 +66,10 @@ describe('fullProduct', function () {
     };
 
     var promotions = [{
-        calloutMsg: 'Super duper promotion discount',
-        details: 'Some Details',
+        calloutMsg: { markup: 'Super duper promotion discount' },
+        details: { markup: 'Some Details' },
         enabled: true,
-        id: 'SuperDuperPromo',
+        ID: 'SuperDuperPromo',
         name: 'Super Duper Promo',
         promotionClass: 'Some Class',
         rank: null
@@ -96,5 +96,25 @@ describe('fullProduct', function () {
 
         assert.equal(product.minOrderQuantity, 1);
         assert.equal(product.maxOrderQuantity, 9);
+    });
+
+    it('should have an array of Promotions when provided', function () {
+        var expectedPromotions = [{
+            calloutMsg: promotions[0].calloutMsg.markup,
+            details: promotions[0].details.markup,
+            enabled: promotions[0].enabled,
+            id: promotions[0].ID,
+            name: promotions[0].name,
+            promotionClass: promotions[0].promotionClass,
+            rank: promotions[0].rank
+        }];
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel.selectedVariant = null;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        tempMock.minOrderQuantity.value = null;
+
+        var product = new FullProduct(toProductMock(tempMock), null, null, promotions);
+
+        assert.deepEqual(product.promotions, expectedPromotions);
     });
 });
