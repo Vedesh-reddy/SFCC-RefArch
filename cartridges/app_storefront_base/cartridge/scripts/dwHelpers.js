@@ -125,14 +125,18 @@ function pluck(list, property) {
  */
 function find(collection, match, scope) {
     var result = null;
-    var iterator = collection.iterator();
-    while (iterator.hasNext()) {
-        var item = iterator.next();
-        if (scope ? match.call(scope, item) : match(item)) {
-            result = item;
-            break;
+
+    if (collection) {
+        var iterator = collection.iterator();
+        while (iterator.hasNext()) {
+            var item = iterator.next();
+            if (scope ? match.call(scope, item) : match(item)) {
+                result = item;
+                break;
+            }
         }
     }
+
     return result;
 }
 

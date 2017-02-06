@@ -242,6 +242,12 @@ describe('dwHelpers', function () {
             assert.equal(scope[3], 'test');
             assert.equal(result, 3);
         });
+        it('should return null if collection is undefined', function () {
+            var collection;
+            var scope = {};
+            var result = helpers.find(collection, function () {}, scope);
+            assert.isNull(result);
+        });
     });
 
     describe('first', function () {
