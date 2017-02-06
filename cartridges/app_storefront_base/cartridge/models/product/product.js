@@ -2,6 +2,7 @@
 
 var ProductBase = require('./productBase').productBase;
 var productBase = require('./productBase');
+var dwHelper = require('~/cartridge/scripts/dwHelpers');
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;
 
@@ -31,14 +32,48 @@ function hasRequiredAttrsSelected(variationModel) {
 }
 
 /**
+ * @typedef Promotion
+ * @type Object
+ * @property {string} calloutMsg - Promotion callout message
+ * @property {boolean} enabled - Whether Promotion is enabled
+ * @property {string} id - Promotion ID
+ * @property {string} name - Promotion name
+ * @property {string} promotionClass - Type of Promotion (Product, Shipping, or Order)
+ * @property {number|null} rank - Promotion rank for sorting purposes
+ */
+
+/**
+ * Retrieve Promotions that applies to thisProduct
+ *
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
+ *                                                                 product
+ * @return {Promotion} - JSON representation of Promotion instance
+ */
+function getPromotions(promotions) {
+    return dwHelper.map(promotions, function (promotion) {
+        return {
+            calloutMsg: promotion.calloutMsg.markup,
+            details: promotion.details.markup,
+            enabled: promotion.enabled,
+            id: promotion.ID,
+            name: promotion.name,
+            promotionClass: promotion.promotionClass,
+            rank: promotion.rank
+        };
+    });
+}
+
+/**
  * @constructor
  * @classdesc Base product class. Used for product tiles
  * @param {dw.catalog.Product} product - Product instance returned from the API
  * @param {Object} productVariables - variables passed in the query string to
  *                                    target product variation group
  * @param {number} quantity - quantity of products selected
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
+ *                                                                 product
  */
-function FullProduct(product, productVariables, quantity) {
+function FullProduct(product, productVariables, quantity, promotions) {
     this.variationModel = this.getVariationModel(product, productVariables);
     this.product = this.variationModel.selectedVariant || product;
     this.imageConfig = {
@@ -52,6 +87,7 @@ function FullProduct(product, productVariables, quantity) {
         endPoint: 'Variation'
     };
     this.useSimplePrice = false;
+    this.apiPromotions = promotions;
     this.initialize();
 }
 
@@ -67,6 +103,7 @@ FullProduct.prototype.initialize = function () {
     this.minOrderQuantity = this.product.minOrderQuantity.value || 1;
     this.maxOrderQuantity = DEFAULT_MAX_ORDER_QUANTITY;
     this.readyToOrder = hasRequiredAttrsSelected(this.variationModel);
+    this.promotions = getPromotions(this.apiPromotions);
 };
 
 /**
@@ -75,12 +112,14 @@ FullProduct.prototype.initialize = function () {
  * @param {dw.catalog.Product} product - Product instance returned from the API
  * @param {Object} productVariables - variables passed in the query string to
  *                                    target product variation group
+ * @param {number} quantity - quantity of products selected
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
  */
-function ProductWrapper(product, productVariables) {
-    var fullProduct = new FullProduct(product, productVariables);
+function ProductWrapper(product, productVariables, quantity, promotions) {
+    var fullProduct = new FullProduct(product, productVariables, quantity, promotions);
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes',
         'available', 'shortDescription', 'longDescription', 'online', 'searchable',
-        'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder'];
+        'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

@@ -26,6 +26,9 @@ describe('productFactory', function () {
         productModel.getProductType = function () { return 'variant'; };
         var productFactory = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/product', {
             'dw/catalog/ProductMgr': toProductMock(productMgrMock),
+            'dw/campaign/PromotionMgr': {
+                activeCustomerPromotions: { getProductPromotions: function () {} }
+            },
             './../../models/product/product': productModel,
             './../../models/product/productBase': function () {}
         });
