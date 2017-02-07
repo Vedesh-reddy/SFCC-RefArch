@@ -230,3 +230,42 @@ div.quantity {
         width: 100%;
     }
 }
+
+.promotions {
+    .banner {
+        // TODO: Replace placeholder image once permanent image procured
+        background-image: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.5) 100%), url(http://www.pixelstalk.net/wp-content/uploads/2016/05/Fancy-Hotel-Room-Wallpaper.jpg);
+        border-bottom: $border-width solid $grey3;
+        border-top: $border-width solid $grey3;
+        color: $white;
+        min-height: 5em;
+
+        @include media-breakpoint-up(sm) {
+            min-height: 8.125em;
+        }
+    }
+}
+
+.promotion {
+    font-weight: normal;
+    padding-top: 1.563em;
+    text-align: center;
+
+    .callout {
+        font-size: 0.875em;
+
+        @include media-breakpoint-up(sm) {
+            font-size: 1.125em;
+        }
+    }
+
+    .details {
+        font-family: 'Dosis', sans-serif;
+        font-weight: 600;
+        font-size: 1.375em;
+
+        @include media-breakpoint-up(sm) {
+            font-size: 2em;
+        }
+    }
+}
