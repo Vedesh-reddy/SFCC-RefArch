@@ -102,9 +102,11 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <isinclude template="/product/components/promotions" />
-    </div>
+    <isif condition="${pdict.product.promotions.length > 0}">
+        <div class="container-fluid">
+            <isinclude template="/product/components/promotions" />
+        </div>
+    </isif>
 
     <div class="container">
         <div class="description-and-detail">
