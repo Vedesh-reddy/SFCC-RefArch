@@ -256,6 +256,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                 'available': true,
                 'readyToOrder': true,
                 'productType': 'variant',
+                'promotions': [],
                 'rating': 0
             },
             'resources': {
