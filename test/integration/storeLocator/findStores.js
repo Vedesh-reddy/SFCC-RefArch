@@ -47,7 +47,8 @@ describe('Store Locator', function () {
                         'longitude': -71.05902600000002,
                         'postalCode': '02108',
                         'phone': '+1-617-695-1565',
-                        'stateCode': 'MA'
+                        'stateCode': 'MA',
+                        'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\n            Sun: 12pm - 6pm'
                     },
                     {
                         'name': 'Short Electro',
@@ -58,7 +59,8 @@ describe('Store Locator', function () {
                         'longitude': -71.0817859,
                         'postalCode': '02118',
                         'phone': '+1-617-888-7276',
-                        'stateCode': 'MA'
+                        'stateCode': 'MA',
+                        'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\n            Sun: 12pm - 6pm'
                     },
                     {
                         'name': 'Khale Street Electronics',
