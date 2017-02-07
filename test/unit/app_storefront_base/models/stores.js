@@ -1,9 +1,27 @@
 'use strict';
 
 var assert = require('chai').assert;
-var StoresModel = require('../../../../cartridges/app_storefront_base/cartridge/models/stores');
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 describe('stores', function () {
+    var StoresModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/stores', {
+        'dw/util/HashMap': function () {
+            return {
+                result: {},
+                put: function (key, context) {
+                    this.result[key] = context;
+                }
+            };
+        },
+        'dw/value/Money': function () {},
+        'dw/util/Template': function () {
+            return {
+                render: function () {
+                    return { text: 'someString' };
+                }
+            };
+        }
+    });
     var actionUrl = '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Stores-FindStores';
     var apiKey = 'YOUR_API_KEY';
     var searchKey = { lat: 42.4019, long: -71.1193 };
@@ -20,7 +38,10 @@ describe('stores', function () {
             phone: '333-333-3333',
             stateCode: 'MA',
             latitude: 42.5273334,
-            longitude: -71.13758250000001
+            longitude: -71.13758250000001,
+            storeHours: {
+                markup: 'Mon - Sat: 10am - 9pm'
+            }
         }];
         var stores = new StoresModel(storesResults, searchKey, radius, actionUrl, apiKey);
 
@@ -31,22 +52,21 @@ describe('stores', function () {
                     address1: '333 Washington St',
                     address2: '',
                     city: 'Boston',
+                    latitude: 42.5273334,
+                    longitude: -71.13758250000001,
                     postalCode: '02108',
                     phone: '333-333-3333',
-                    stateCode: 'MA'
+                    stateCode: 'MA',
+                    storeHours: 'Mon - Sat: 10am - 9pm'
                 }
             ],
-            locations: [{
-                name: 'Downtown TV Shop',
-                latitude: 42.5273334,
-                longitude: -71.13758250000001
-            }],
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
-            radiusOptions: radiusOptions
-
+            radiusOptions: radiusOptions,
+            storesResultsHtml: 'someString'
         });
     });
 
@@ -69,20 +89,18 @@ describe('stores', function () {
                     address1: '333 Washington St',
                     address2: '',
                     city: 'Boston',
+                    latitude: 42.5273334,
+                    longitude: -71.13758250000001,
                     postalCode: '02108'
                 }
             ],
-            locations: [{
-                name: 'Downtown TV Shop',
-                latitude: 42.5273334,
-                longitude: -71.13758250000001
-            }],
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
-            radiusOptions: radiusOptions
-
+            radiusOptions: radiusOptions,
+            storesResultsHtml: 'someString'
         });
     });
 
@@ -91,13 +109,13 @@ describe('stores', function () {
 
         assert.deepEqual(stores, {
             stores: [],
-            locations: [],
+            locations: '[]',
             searchKey: searchKey,
             radius: 100,
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
-            radiusOptions: radiusOptions
-
+            radiusOptions: radiusOptions,
+            storesResultsHtml: 'someString'
         });
     });
 
@@ -123,22 +141,20 @@ describe('stores', function () {
                     address1: '333 Washington St',
                     address2: '',
                     city: 'Boston',
+                    latitude: 42.5273334,
+                    longitude: -71.13758250000001,
                     postalCode: '02108',
                     phone: '333-333-3333',
                     stateCode: 'MA'
                 }
             ],
-            locations: [{
-                name: 'Downtown TV Shop',
-                latitude: 42.5273334,
-                longitude: -71.13758250000001
-            }],
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
             googleMapsApi: null,
-            radiusOptions: radiusOptions
-
+            radiusOptions: radiusOptions,
+            storesResultsHtml: 'someString'
         });
     });
 });
