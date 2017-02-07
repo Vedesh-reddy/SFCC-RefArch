@@ -19,7 +19,6 @@ describe('Category Navigation and multiple refinements -  general product', () =
     const topTitle = '.page-title';
     const locale = config.locale;
     const productID = '25565106';
-    const baseUrl = config.baseUrl;
     const localeStr = locale === 'x_default' ? 'en_US' : locale;
 
     var expectedDisplayName;
@@ -131,13 +130,13 @@ describe('Category Navigation and multiple refinements -  general product', () =
     });
 
     it('#4 should return the correct href links when refined by Color, Price and Size', () => {
-        let expectedLink = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName) + '/' + productID + '.html?lang=' + localeStr;
+        let expectedLink = common.convertToUrlFormat(expectedDisplayName) + '/' + productID + '.html?lang=' + localeStr;
         if (expectedLink.startsWith('https')) {
             expectedLink = common.convertHTTPsToHTTP(expectedLink);
         }
         return productTile.getProductTileImageHref(productID)
             .then(imageLink => {
-                assert.equal(imageLink, expectedLink, 'Expected image link not equal to ' + expectedLink);
+                assert.isTrue(imageLink.endsWith(expectedLink), 'Expected image link does not end with ' + expectedLink);
             });
     });
 

@@ -18,7 +18,6 @@ import * as Resource from '../../mocks/dw/web/Resource';
 describe('Query Search and multiple refinements -  general product', () => {
     const locale = config.locale;
     const product2ID = '25502027';
-    const baseUrl = config.baseUrl;
     const localeStr = locale === 'x_default' ? 'en_US' : locale;
     const productGeneral = {
         x_default: 'pants',
@@ -129,10 +128,10 @@ describe('Query Search and multiple refinements -  general product', () => {
     });
 
     it('#4 should return the correct href links when refined by Color, Price and New Arrival', () => {
-        const expectedLink1 = baseUrl + '/' + common.convertToUrlFormat(expectedDisplayName2) + '/' + product2ID + '.html?lang=' + localeStr;
+        const expectedLink1 = common.convertToUrlFormat(expectedDisplayName2) + '/' + product2ID + '.html?lang=' + localeStr;
         return productTile.getProductTileImageHref(product2ID)
             .then(imageLink1 => {
-                return assert.equal(imageLink1, expectedLink1, 'Expected image link not equal to ' + expectedLink1);
+                return assert.isTrue(imageLink1.endsWith(expectedLink1), 'Expected image link not end with ' + expectedLink1);
             });
     });
 
