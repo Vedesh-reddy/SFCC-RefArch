@@ -2,6 +2,9 @@
 import _ from 'lodash';
 import nodeUrl from 'url';
 import * as header from '../pageObjects/header';
+import * as checkoutPage from '../pageObjects/checkout';
+import * as customers from '../customers';
+
 export const defaultLocale = 'x_default';
 export const supportedLocales = [
     'en_US',
@@ -150,4 +153,65 @@ export function isQuickViewExpected() {
             }
             return true;
         });
+}
+
+/**
+ * This function return current UTC date in the format "Mon DD, YYYY"
+ * It can be extend to return other format as needed in the future.
+ *
+ * @return {String}
+ */
+export function getCurrentUTCDate() {
+    const monthnames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const todayDate = new Date();
+    const currDate = todayDate.getUTCDate();
+    const currMonth = todayDate.getUTCMonth();
+    const currYear = todayDate.getUTCFullYear();
+    return monthnames[currMonth] + ' ' + currDate + ', ' + currYear;
+}
+
+export function createShippingData(testDataMgr, userEmail, locale) {
+    const shippingData = {};
+
+    const customer = testDataMgr.getCustomerByLogin(userEmail);
+    customer.addresses[0].postalCode = customers.globalPostalCode[locale];
+    customer.addresses[0].countryCode = customers.globalCountryCode[locale];
+    customer.addresses[0].phone = customers.globalPhone[locale];
+
+    const address = customer.getPreferredAddress();
+
+    shippingData[checkoutPage.SHIPPING_FIRST_NAME] = customer.firstName;
+    shippingData[checkoutPage.SHIPPING_LAST_NAME] = customer.lastName;
+    shippingData[checkoutPage.SHIPPING_ADDRESS_ONE] = address.address1;
+    shippingData[checkoutPage.SHIPPING_COUNTRY] = address.countryCode;
+    shippingData[checkoutPage.SHIPPING_ADDRESS_CITY] = address.city;
+    shippingData[checkoutPage.SHIPPING_ZIP_CODE] = address.postalCode;
+    shippingData[checkoutPage.SHIPPING_PHONE_NUMBER] = address.phone;
+
+    if (locale && locale === 'x_default') {
+        shippingData[checkoutPage.SHIPPING_STATE] = address.stateCode;
+    }
+
+    return shippingData;
+}
+
+export function createPaymentData(testDataMgr) {
+    const paymentData = {};
+
+    const nextYear = new Date().getFullYear() + 1;
+    const creditCardExpiredYear = nextYear.toString() + '.0';
+
+    const creditCardExpiredMonth = 12;
+    const paymentPhone = '781-425-1010';
+    const paymentEmail = 'luckyOne@home.com';
+
+    paymentData[checkoutPage.PAYMENT_CARD_NUMBER] = testDataMgr.creditCard1.number;
+    paymentData[checkoutPage.PAYMENT_EXPIRATION_MONTH] = creditCardExpiredMonth;
+    paymentData[checkoutPage.PAYMENT_EXPIRATION_YEAR] = creditCardExpiredYear;
+    paymentData[checkoutPage.PAYMENT_SECURITY_CODE] = testDataMgr.creditCard1.cvn;
+    paymentData[checkoutPage.PAYMENT_PHONE_NUMBER] = paymentPhone;
+    paymentData[checkoutPage.PAYMENT_EMAIL] = paymentEmail;
+
+    return paymentData;
 }

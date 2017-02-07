@@ -10,7 +10,7 @@ var opts = _.assign({}, getConfig({
     suite: '*',
     coverage: 'smoke',
     reporter: 'spec',
-    timeout: '60000',
+    timeout: '90000',
     locale: 'x_default',
     user: 'testuser1'
 }, './config.json'), argv);
@@ -55,7 +55,7 @@ exports.config = _.assign({
         app: ''
     }],
     waitforTimeout: opts.timeout,
-    baseUrl: opts.url,
+    baseUrl: opts.baseUrl,
     reporter: opts.reporter,
     reporterOptions: {
         outputDir: 'test/AppiumReports'

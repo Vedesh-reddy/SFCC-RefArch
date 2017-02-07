@@ -47,7 +47,7 @@ exports.config = Object.assign({
         browserName: opts.client
     }],
     waitforTimeout: opts.timeout,
-    baseUrl: opts.url,
+    baseUrl: opts.baseUrl,
     reporter: opts.reporter,
     reporterOptions: {
         outputDir: 'test/reports'
