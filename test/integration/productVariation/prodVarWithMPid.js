@@ -253,6 +253,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                 },
                 'available': true,
                 'readyToOrder': false,
+                'promotions': [],
                 'rating': 0,
                 'productType': 'master'
             },

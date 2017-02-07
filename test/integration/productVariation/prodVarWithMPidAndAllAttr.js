@@ -257,6 +257,7 @@ describe('ProductVariation - Get product variation with master product ID and al
                 'available': true,
                 'readyToOrder': true,
                 'productType': 'variant',
+                'promotions': [],
                 'rating': 0
             },
             'resources': {
