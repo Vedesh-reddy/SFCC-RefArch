@@ -15,7 +15,7 @@ export const SWATCHES = '.swatches';
 export const IMAGE_CONTAINER = '.image-container';
 export const QUICK_VIEW = '.quickview';
 
-function getProductTileById(pid) {
+export function getProductTileById(pid) {
     var prodSelector = dataPid + '"' + pid + '"]';
     return prodSelector;
 }
@@ -75,31 +75,6 @@ export function getProductTileProductPrice(pid) {
     let selector = getProductTileById(pid) + ' ' + pdpPrices;
     return browser.waitForVisible(selector)
         .then(() => browser.getText(selector));
-}
-
-/**
- * Obtain the color swatch URLs associated with the product tile
- * @param {string} tileIdx, start with 1
- * @returns [String] an array of swatch URLs
- */
-export function getProductTileColorSwatchUrls(pid) {
-    let selector = getProductTileById(pid) + ' ' + swatchCircle;
-
-    return browser.getAttribute(selector, 'data-attributes')
-        .then(swatchList => {
-            let swatchUrlArray = [];
-            if (Array.isArray(swatchList)) {
-                for (let i = 0; i < swatchList.length; i++) {
-                    let dataAttrAsJson = JSON.parse(swatchList[i]);
-                    swatchUrlArray[i] = dataAttrAsJson.images.swatch[0].url;
-                }
-            } else {
-                let dataAttrAsJson = JSON.parse(swatchList);
-                swatchUrlArray[0] = dataAttrAsJson.images.swatch[0].url;
-            }
-
-            return swatchUrlArray;
-        });
 }
 
 export function clickOnProductTileQuickView(pid) {
