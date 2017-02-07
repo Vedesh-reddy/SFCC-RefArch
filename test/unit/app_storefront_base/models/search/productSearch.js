@@ -37,7 +37,7 @@ describe('ProductSearch model', function () {
             map: mockDwHelpers.map,
             pluck: function () { return pluckValue; }
         },
-        '~/cartridge/scripts/factories/searchRefinements/main': {
+        '~/cartridge/scripts/factories/searchRefinements': {
             get: function () { return refinementValues; }
         },
         'dw/web/URLUtils': {

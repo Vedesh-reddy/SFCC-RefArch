@@ -1,7 +1,7 @@
 'use strict';
 
 var dwHelper = require('~/cartridge/scripts/dwHelpers');
-var searchRefinementsFactory = require('~/cartridge/scripts/factories/searchRefinements/main');
+var searchRefinementsFactory = require('~/cartridge/scripts/factories/searchRefinements');
 var URLUtils = require('dw/web/URLUtils');
 
 var ACTION_ENDPOINT = 'Search-Show';
