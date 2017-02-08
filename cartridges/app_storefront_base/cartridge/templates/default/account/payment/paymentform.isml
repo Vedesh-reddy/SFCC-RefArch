@@ -37,18 +37,15 @@
 
     <isif condition="${pdict.UUID}">
         <!-- Edit Card Number -->
-        <div class="form-group
-            <isif condition="${!pdict.paymentForm.editNumber.valid}">has-danger</isif>
-            <isif condition="${pdict.paymentForm.editNumber.mandatory === true}">required</isif>">
-            <label class="form-control-label" for="cardNumber">
-                <isprint value="${pdict.paymentForm.editNumber.label}" encoding="off" />
-            </label>
-            <input type="text" class="form-control" id="cardNumber"
-                <isprint value="${pdict.paymentForm.editNumber.attributes}" encoding="off" />
-                autocomplete="cc-number">
-            <div class="form-control-feedback">
-                <isprint value="${pdict.paymentForm.editNumber.error}" encoding="off" />
-            </div>
+        <div class="form-group">
+            ${pdict.paymentForm.editNumber.label}
+            <span class="info-icon">
+                <span class="icon">i</span>
+                <div class="form-tooltip">
+                    ${Resource.msg('msg.edit.card.tooltip','payment',null)}
+                </div>
+            </span>
+            <p class="masked-card-number">${pdict.paymentForm.editNumber.htmlValue}</p>
         </div>
         <iselse>
         <!-- Card Number -->
