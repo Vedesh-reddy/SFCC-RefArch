@@ -23,7 +23,7 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
     let shippingData = {};
     let paymentData = {};
 
-    const productVariantId1 = '701644130756';
+    const productVariantId1 = '708141677203';
     let productVariant1;
 
     const prodIdUnitPricesMap = {};

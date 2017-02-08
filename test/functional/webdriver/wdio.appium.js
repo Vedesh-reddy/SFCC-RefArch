@@ -10,7 +10,7 @@ var opts = _.assign({}, getConfig({
     suite: '*',
     coverage: 'smoke',
     reporter: 'spec',
-    timeout: '90000',
+    timeout: '120000',
     locale: 'x_default',
     user: 'testuser1'
 }, './config.json'), argv);

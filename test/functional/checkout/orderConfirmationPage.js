@@ -32,6 +32,24 @@ describe('Checkout - verify order confirmation page', () => {
 
     const groundShipMethodIndex = 0;
 
+    const shipCostMap = {
+        'x_default': '$7.99',
+        'en_GB': '£5.99',
+        'fr_FR': '5,99 €',
+        'it_IT': '€ 5,99',
+        'ja_JP': '¥ 14',
+        'zh_CN': '¥13.99'
+    };
+
+    const totalTaxMap = {
+        'x_default': '$6.30',
+        'en_GB': '£5.49',
+        'fr_FR': '5,49 €',
+        'it_IT': '€ 5,49',
+        'ja_JP': '¥ 14',
+        'zh_CN': '¥20.00'
+    };
+
     // in before block:
     // - prepare shipping and payment data
     // - add product to cart
@@ -71,15 +89,17 @@ describe('Checkout - verify order confirmation page', () => {
         .then(() => cartPage.emptyCart())
     );
 
-    // Verify order confirmation page: Receipt
-    it('should have a thank you message and email message', () => {
+    // Verify order confirmation page
+    it('Verify thank you message', () => {
         return browser.getText(orderConfPage.ORDER_THANK_YOU_MSG)
             .then((thankYouMsg) => {
-                const defaultMsg = 'Thank you for your order.';
-                const expectedThankYouMsg = Resource.msgf('msg.placed.order.thank.you', 'confirmation', null, defaultMsg);
+                const expectedThankYouMsg = Resource.msgf('msg.placed.order.thank.you', 'confirmation', null);
                 return assert.equal(thankYouMsg, expectedThankYouMsg, 'Expected to have thank you message = ' + expectedThankYouMsg);
-            })
-            .then(() => browser.getText(orderConfPage.ORDER_THANK_YOU_EMAIL_MSG))
+            });
+    });
+
+    it('Verify email message', () => {
+        return browser.getText(orderConfPage.ORDER_THANK_YOU_EMAIL_MSG)
             .then((emailMsg) => {
                 const emailAddr = paymentData[checkoutPage.PAYMENT_EMAIL];
                 const expectedEmailMsg = Resource.msgf('info.receive.email.confirmation', 'confirmation', null, emailAddr);
@@ -87,31 +107,31 @@ describe('Checkout - verify order confirmation page', () => {
             });
     });
 
-    it('should have the correct receipt title', () => {
+    it('Verify receipt title', () => {
         return browser.getText(orderConfPage.RECEIPT_HEADER)
             .then((receiptHeaderStr) => {
-                const defaultMsg = 'Receipt';
-                const expectedReceiptHeader = Resource.msgf('title.receipt', 'confirmation', null, defaultMsg);
+                const expectedReceiptHeader = Resource.msgf('title.receipt', 'confirmation', null);
                 return assert.equal(receiptHeaderStr, expectedReceiptHeader, 'Expected receipt card to have title = ' + expectedReceiptHeader);
             });
     });
 
-    it('should have order number and date', () => {
+    it('Verify order number', () => {
         return browser.getText(orderConfPage.ORDER_NUMBER_LABEL)
             .then((orderNumLabel) => {
-                const defaultMsg = 'Order Number';
-                const expectedOrderNumLabel = Resource.msgf('label.order.number', 'confirmation', null, defaultMsg);
+                const expectedOrderNumLabel = Resource.msgf('label.order.number', 'confirmation', null);
                 return assert.equal(orderNumLabel, expectedOrderNumLabel, 'Expected to have order number label = ' + expectedOrderNumLabel);
             })
             .then(() => browser.getText(orderConfPage.ORDER_NUMBER))
             .then((orderNumber) => {
                 const orderNumberLength = orderNumber.length;
                 return assert.isAbove(orderNumberLength, 0, 'Expected confirmation page to have order number ');
-            })
-            .then(() => browser.getText(orderConfPage.ORDER_DATE_LABEL))
+            });
+    });
+
+    it('Verify order date', () => {
+        return browser.getText(orderConfPage.ORDER_DATE_LABEL)
             .then((orderDateLabel) => {
-                const defaultMsg = 'Order Date';
-                const expectedOrderDateLabel = Resource.msgf('label.order.date', 'confirmation', null, defaultMsg);
+                const expectedOrderDateLabel = Resource.msgf('label.order.date', 'confirmation', null);
                 return assert.equal(orderDateLabel, expectedOrderDateLabel, 'Expected to have order date label = ' + expectedOrderDateLabel);
             })
             .then(() => browser.getText(orderConfPage.ORDER_DATE))
@@ -121,14 +141,16 @@ describe('Checkout - verify order confirmation page', () => {
             });
     });
 
-    it('should have the correct shipping address details', () => {
+    it('Verify shipping address details: address label', () => {
         return browser.getText(orderConfPage.SHIPPING_ADDR_LABEL)
             .then((shipAddrLabel) => {
-                const defaultMsg = 'Shipping Address:';
-                const expectedShipAddrLabel = Resource.msgf('label.order.shipping.address', 'confirmation', null, defaultMsg);
+                const expectedShipAddrLabel = Resource.msgf('label.order.shipping.address', 'confirmation', null);
                 return assert.equal(shipAddrLabel, expectedShipAddrLabel, 'Expected shipping address label to be = ' + expectedShipAddrLabel);
-            })
-            .then(() => browser.getText(orderConfPage.SHIPPING_ADDR_FIRST_NAME))
+            });
+    });
+
+    it('Verify shipping address details: name', () => {
+        return browser.getText(orderConfPage.SHIPPING_ADDR_FIRST_NAME)
             .then((firstName) => {
                 const expectedFirstName = shippingData[checkoutPage.SHIPPING_FIRST_NAME];
                 return assert.equal(firstName, expectedFirstName, 'Expected shipping first name to be = ' + expectedFirstName);
@@ -137,29 +159,38 @@ describe('Checkout - verify order confirmation page', () => {
             .then((lastName) => {
                 const expectedLastName = shippingData[checkoutPage.SHIPPING_LAST_NAME];
                 return assert.equal(lastName, expectedLastName, 'Expected shipping last name to be = ' + expectedLastName);
-            })
+            });
+    });
 
-            .then(() => browser.getText(orderConfPage.SHIPPING_ADDR_ADDRESS1))
+    it('Verify shipping address details: street name', () => {
+        return browser.getText(orderConfPage.SHIPPING_ADDR_ADDRESS1)
             .then((address1) => {
                 const expectedAddress1 = shippingData[checkoutPage.SHIPPING_ADDRESS_ONE];
                 return assert.equal(address1, expectedAddress1, 'Expected shipping address1 to be = ' + expectedAddress1);
-            })
-            .then(() => browser.getText(orderConfPage.SHIPPING_ADDR_CITY))
+            });
+    });
+
+    it('Verify shipping address details: city', () => {
+        return browser.getText(orderConfPage.SHIPPING_ADDR_CITY)
             .then((city) => {
                 const expectedCity = shippingData[checkoutPage.SHIPPING_ADDRESS_CITY] + ',';
                 return assert.equal(city, expectedCity, 'Expected shipping city to be = ' + expectedCity);
-            })
-            .then(() => {
-                if (locale && locale === 'x_default') {
-                    return browser.getText(orderConfPage.SHIPPING_ADDR_STATE_CODE)
-                        .then((stateCode) => {
-                            const expectedStateCode = shippingData[checkoutPage.SHIPPING_STATE];
-                            return assert.equal(stateCode, expectedStateCode, 'Expected shipping state code to be = ' + expectedStateCode);
-                        });
-                }
-                return Promise.resolve();
-            })
-            .then(() => browser.getText(orderConfPage.SHIPPING_ADDR_POSTAL_CODE))
+            });
+    });
+
+    it('Verify shipping address details: state code', () => {
+        if (locale && locale === 'x_default') {
+            return browser.getText(orderConfPage.SHIPPING_ADDR_STATE_CODE)
+                .then((stateCode) => {
+                    const expectedStateCode = shippingData[checkoutPage.SHIPPING_STATE];
+                    return assert.equal(stateCode, expectedStateCode, 'Expected shipping state code to be = ' + expectedStateCode);
+                });
+        }
+        return Promise.resolve();
+    });
+
+    it('v shipping address details: postal code', () => {
+        return browser.getText(orderConfPage.SHIPPING_ADDR_POSTAL_CODE)
             .then((zipCode) => {
                 const expectedZipCode = shippingData[checkoutPage.SHIPPING_ZIP_CODE];
                 return assert.equal(zipCode, expectedZipCode, 'Expected shipping zip code to be = ' + expectedZipCode);
@@ -171,49 +202,73 @@ describe('Checkout - verify order confirmation page', () => {
             });
     });
 
-    it('should have the correct shipping method information', () => {
+    it('Verify shipping address details: phone', () => {
+        return browser.getText(orderConfPage.SHIPPING_ADDR_SHIPPING_PHONE)
+            .then((shippingPhone) => {
+                const expectedShippingPhone = shippingData[checkoutPage.SHIPPING_PHONE_NUMBER];
+                return assert.equal(shippingPhone, expectedShippingPhone, 'Expected shipping phone to be = ' + expectedShippingPhone);
+            });
+    });
+
+    it('Verify shipping method information: method label', () => {
         return browser.getText(orderConfPage.SHIPPING_METHOD_LABEL)
             .then((shipMethodLabel) => {
-                const defaultMsg = 'Shipping Method:';
-                const expectedShipMethodLabel = Resource.msgf('label.order.shipping.method', 'confirmation', null, defaultMsg);
+                const expectedShipMethodLabel = Resource.msgf('label.order.shipping.method', 'confirmation', null);
                 return assert.equal(shipMethodLabel, expectedShipMethodLabel, 'Expected shipping method label = ' + expectedShipMethodLabel);
-            })
-            .then(() => browser.getText(orderConfPage.SHIPPING_METHOD_TITLE))
+            });
+    });
+
+    it('Verify shipping method information: method title', () => {
+        return browser.getText(orderConfPage.SHIPPING_METHOD_TITLE)
             .then((shipMethodName) => {
                 const expectedShipMethodName = 'Ground';
                 return assert.equal(shipMethodName, expectedShipMethodName, 'Expected shipping method name = ' + expectedShipMethodName);
-            })
-            .then(() => browser.getText(orderConfPage.SHIPPING_METHOD_ARRIVAL_TIME))
+            });
+    });
+
+    it('Verify shipping method information: method arrival time', () => {
+        return browser.getText(orderConfPage.SHIPPING_METHOD_ARRIVAL_TIME)
             .then((shipMethodArrivalTime) => {
                 const expectedShipMethodArrivalTime = '( 7-10 Business Days )';
                 return assert.equal(shipMethodArrivalTime, expectedShipMethodArrivalTime, 'Expected shipping method arrival time = ' + expectedShipMethodArrivalTime);
-            })
-            .then(() => browser.getText(orderConfPage.SHIPPING_METHOD_PRICE))
+            });
+    });
+
+    it('Verify shipping method information: method price', () => {
+        return browser.getText(orderConfPage.SHIPPING_METHOD_PRICE)
             .then((shipMethodPrice) => {
                 const expectedShipMethodPrice = '$7.99';
                 return assert.equal(shipMethodPrice, expectedShipMethodPrice, 'Expected shipping method price = ' + expectedShipMethodPrice);
             });
     });
 
-    it('should have the correct payment information', () => {
+    it('Verify payment information: payment label', () => {
         return browser.getText(orderConfPage.PAYMENT_LABEL)
             .then((paymentLabel) => {
-                const defaultMsg = 'Payment:';
-                const expectedPaymentLabel = Resource.msgf('label.order.payment.info', 'confirmation', null, defaultMsg);
+                const expectedPaymentLabel = Resource.msgf('label.order.payment.info', 'confirmation', null);
                 return assert.equal(paymentLabel, expectedPaymentLabel, 'Expected payment label = ' + expectedPaymentLabel);
-            })
-            .then(() => browser.getText(orderConfPage.PAYMENT_CREDIT_TYPE))
+            });
+    });
+
+    it('Verify payment information: credit card type', () => {
+        return browser.getText(orderConfPage.PAYMENT_CREDIT_TYPE)
             .then((creditCardType) => {
                 const expectedCreditCardType = 'Credit Visa';
                 return assert.equal(creditCardType, expectedCreditCardType, 'Expected credit card type = ' + expectedCreditCardType);
-            })
-            .then(() => browser.getText(orderConfPage.PAYMENT_CREDIT_NUMBER))
+            });
+    });
+
+    it('Verify payment information: credit card number', () => {
+        return browser.getText(orderConfPage.PAYMENT_CREDIT_NUMBER)
             .then((creditCardNumber) => {
                 let expectedCreditCardNumber = paymentData[checkoutPage.PAYMENT_CARD_NUMBER].substr(12, 4);
                 expectedCreditCardNumber = '************' + expectedCreditCardNumber;
                 return assert.equal(creditCardNumber, expectedCreditCardNumber, 'Expected credit card number = ' + expectedCreditCardNumber);
-            })
-            .then(() => browser.getText(orderConfPage.PAYMENT_CREDIT_EXPIRATION_DATE))
+            });
+    });
+
+    it('Verify payment information: credit card expiration date', () => {
+        return browser.getText(orderConfPage.PAYMENT_CREDIT_EXPIRATION_DATE)
             .then((expirationDate) => {
                 const endDateLabel = 'Ending';
                 let expectedExpirationDate = Resource.msgf('msg.card.type.ending', 'confirmation', null, endDateLabel);
@@ -224,14 +279,16 @@ describe('Checkout - verify order confirmation page', () => {
             });
     });
 
-    it('should have the correct billing address information', () => {
+    it('Verify billing information: address label', () => {
         return browser.getText(orderConfPage.BILLING_ADDR_LABEL)
             .then((addrLabel) => {
-                const defaultMsg = 'Billing Address:';
-                const expectedBillingAddrLabel = Resource.msgf('label.order.billing.address', 'confirmation', null, defaultMsg);
+                const expectedBillingAddrLabel = Resource.msgf('label.order.billing.address', 'confirmation', null);
                 return assert.equal(addrLabel, expectedBillingAddrLabel, 'Expected billing address label to be = ' + expectedBillingAddrLabel);
-            })
-            .then(() => browser.getText(orderConfPage.BILLING_ADDR_FIRST_NAME))
+            });
+    });
+
+    it('Verify billing information: name', () => {
+        return browser.getText(orderConfPage.BILLING_ADDR_FIRST_NAME)
             .then((firstName) => {
                 const expectedFirstName = shippingData[checkoutPage.SHIPPING_FIRST_NAME];
                 return assert.equal(firstName, expectedFirstName, 'Expected billing first name to be = ' + expectedFirstName);
@@ -240,45 +297,61 @@ describe('Checkout - verify order confirmation page', () => {
             .then((lastName) => {
                 const expectedLastName = shippingData[checkoutPage.SHIPPING_LAST_NAME];
                 return assert.equal(lastName, expectedLastName, 'Expected billing last name to be = ' + expectedLastName);
-            })
-            .then(() => browser.getText(orderConfPage.BILLING_ADDR_ADDRESS1))
+            });
+    });
+
+    it('Verify billing information: street name', () => {
+        return browser.getText(orderConfPage.BILLING_ADDR_ADDRESS1)
             .then((address1) => {
                 const expectedAddress1 = shippingData[checkoutPage.SHIPPING_ADDRESS_ONE];
                 return assert.equal(address1, expectedAddress1, 'Expected billing address1 to be = ' + expectedAddress1);
-            })
-            .then(() => browser.getText(orderConfPage.BILLING_ADDR_CITY))
+            });
+    });
+
+    it('Verify billing information: city', () => {
+        return browser.getText(orderConfPage.BILLING_ADDR_CITY)
             .then((city) => {
                 const expectedCity = shippingData[checkoutPage.SHIPPING_ADDRESS_CITY] + ',';
                 return assert.equal(city, expectedCity, 'Expected billing city to be = ' + expectedCity);
-            })
-            .then(() => {
-                if (locale && locale === 'x_default') {
-                    return browser.getText(orderConfPage.BILLING_ADDR_STATE_CODE)
-                        .then((stateCode) => {
-                            const expectedStateCode = shippingData[checkoutPage.SHIPPING_STATE];
-                            return assert.equal(stateCode, expectedStateCode, 'Expected billing state code to be = ' + expectedStateCode);
-                        });
-                }
-                return Promise.resolve();
-            })
-            .then(() => browser.getText(orderConfPage.BILLING_ADDR_POSTAL_CODE))
+            });
+    });
+
+    it('Verify billing information: state code', () => {
+        if (locale && locale === 'x_default') {
+            return browser.getText(orderConfPage.BILLING_ADDR_STATE_CODE)
+                .then((stateCode) => {
+                    const expectedStateCode = shippingData[checkoutPage.SHIPPING_STATE];
+                    return assert.equal(stateCode, expectedStateCode, 'Expected billing state code to be = ' + expectedStateCode);
+                });
+        }
+        return Promise.resolve();
+    });
+
+    it('Verify billing information: zip code', () => {
+        return browser.getText(orderConfPage.BILLING_ADDR_POSTAL_CODE)
             .then((zipCode) => {
                 const expectedZipCode = shippingData[checkoutPage.SHIPPING_ZIP_CODE];
                 return assert.equal(zipCode, expectedZipCode, 'Expected billing zip code to be = ' + expectedZipCode);
-            })
-            .then(() => browser.getText(orderConfPage.ORDER_SUMMARY_EMAIL))
+            });
+    });
+
+    it('Verify billing information: email', () => {
+        return browser.getText(orderConfPage.ORDER_SUMMARY_EMAIL)
             .then((emailAddr) => {
                 const expectedPaymentEmail = paymentData[checkoutPage.PAYMENT_EMAIL];
                 return assert.equal(emailAddr, expectedPaymentEmail, 'Expected payment email to be = ' + expectedPaymentEmail);
-            })
-            .then(() => browser.getText(orderConfPage.ORDER_SUMMARY_PHONE))
+            });
+    });
+
+    it('Verify billing information: phone', () => {
+        return browser.getText(orderConfPage.ORDER_SUMMARY_PHONE)
             .then((phone) => {
                 const expectedPaymentPhone = paymentData[checkoutPage.PAYMENT_PHONE_NUMBER];
                 return assert.equal(phone, expectedPaymentPhone, 'Expected payment phone to be = ' + expectedPaymentPhone);
             });
     });
 
-    it('should have order product summary information', () => {
+    it('Verify product summary information: grand total', () => {
         const itemTotalQuantity = 1;
         const expectTotalLabel = Resource.msgf('label.number.items.in.cart', 'cart', null, itemTotalQuantity);
 
@@ -287,39 +360,49 @@ describe('Checkout - verify order confirmation page', () => {
         return browser.getText(orderConfPage.GRAND_TOTAL_LABEL)
             .then((grandTotalLabel) => assert.equal(grandTotalLabel, expectTotalLabel, 'Expected grand total label to be = ' + expectTotalLabel))
             .then(() => browser.getText(orderConfPage.GRAND_TOTAL_PRICE))
-            .then((grandTotalPrice) => assert.equal(grandTotalPrice, expectTotalPrice, 'Expected grand total price to be = ' + expectTotalPrice))
-            .then(() => browser.getAttribute(orderConfPage.PRODUCT_IMAGE, 'src'))
+            .then((grandTotalPrice) => assert.equal(grandTotalPrice, expectTotalPrice, 'Expected grand total price to be = ' + expectTotalPrice));
+    });
+
+    it('Verify product summary information: image source', () => {
+        return browser.getAttribute(orderConfPage.PRODUCT_IMAGE, 'src')
             .then(imageSrc => {
                 const expectImgSrc = '/images/small/PG.10229762.JJ169XX.PZ.jpg';
                 assert.isTrue(imageSrc.endsWith(expectImgSrc), 'product image: url not end with ' + expectImgSrc);
-            })
+            });
+    });
 
-            .then(() => browser.getText(orderConfPage.UNIT_PRICE_LABEL))
+    it('Verify product summary information: unit price', () => {
+        return browser.getText(orderConfPage.UNIT_PRICE_LABEL)
             .then((unitPriceLabel) => {
-                const defaultMsg = 'Each';
-                const expectedUnitPriceLabel = Resource.msgf('label.each.item.price', 'cart', null, defaultMsg);
+                const expectedUnitPriceLabel = Resource.msgf('label.each.item.price', 'cart', null);
                 return assert.equal(unitPriceLabel, expectedUnitPriceLabel, 'Expected unit price label to be = ' + expectedUnitPriceLabel);
             })
             .then(() => browser.getText(orderConfPage.UNIT_PRICE_SALES))
             .then((unitPrice) => {
                 const expectedUnitPrice = prodIdUnitPricesMap[productVariantId1].sale;
                 return assert.equal(unitPrice, expectedUnitPrice, 'Expected unit price to be = ' + expectedUnitPrice);
-            })
-            .then(() => browser.getText(orderConfPage.CARD_QUANTITY_LABEL))
+            });
+    });
+
+    it('Verify product summary information: quantity', () => {
+        return browser.getText(orderConfPage.CARD_QUANTITY_LABEL)
             .then((quantityLabel) => {
-                const defaultMsg = 'Quantity';
-                const expectedQuantityLabel = Resource.msgf('field.selectquantity', 'cart', null, defaultMsg);
+                const expectedQuantityLabel = Resource.msgf('field.selectquantity', 'cart', null);
                 return assert.equal(quantityLabel, expectedQuantityLabel, 'Expected quantity label to be = ' + expectedQuantityLabel);
             })
             .then(() => browser.getText(orderConfPage.CARD_QUANTITY_COUNT))
             .then((quantity) => {
                 const expectQuantity = 1;
                 return assert.equal(quantity, expectQuantity, 'Expected quantity to be = ' + expectQuantity);
-            })
-            .then(() => browser.getText(orderConfPage.CARD_TOTAL_PRICE_LABEL))
+            });
+    });
+
+    it('Verify product summary information: total price', () => {
+        const expectTotalPrice = prodIdUnitPricesMap[productVariantId1].sale;
+
+        return browser.getText(orderConfPage.CARD_TOTAL_PRICE_LABEL)
             .then((totalPriceLabel) => {
-                const defaultMsg = 'Total';
-                const expectedTotalPriceLabel = Resource.msgf('label.total.price', 'cart', null, defaultMsg);
+                const expectedTotalPriceLabel = Resource.msgf('label.total.price', 'cart', null);
                 return assert.equal(totalPriceLabel, expectedTotalPriceLabel, 'Expected total price label to be = ' + expectedTotalPriceLabel);
             })
             .then(() => browser.getText(orderConfPage.CARD_TOTAL_PRICE_AMOUNT))
@@ -328,25 +411,7 @@ describe('Checkout - verify order confirmation page', () => {
             });
     });
 
-    it('should have order total summary information', () => {
-        const shipCostMap = {
-            'x_default': '$7.99',
-            'en_GB': '£5.99',
-            'fr_FR': '5,99 €',
-            'it_IT': '€ 5,99',
-            'ja_JP': '¥ 14',
-            'zh_CN': '¥13.99'
-        };
-
-        const totalTaxMap = {
-            'x_default': '$6.30',
-            'en_GB': '£5.49',
-            'fr_FR': '5,49 €',
-            'it_IT': '€ 5,49',
-            'ja_JP': '¥ 14',
-            'zh_CN': '¥20.00'
-        };
-
+    it('verify total summary information: sub-total', () => {
         return browser.getText(orderConfPage.ORDER_SUBTOTAL_LABEL)
             .then((subTotalLabel) => {
                 const expectSubTotalLabel = Resource.msgf('label.order.subtotal', 'confirmation', null);
@@ -356,9 +421,11 @@ describe('Checkout - verify order confirmation page', () => {
             .then((subTotal) => {
                 const expectSubTotal = prodIdUnitPricesMap[productVariantId1].sale;
                 assert.equal(subTotal, expectSubTotal, 'Expected sub total to be = ' + expectSubTotal);
-            })
+            });
+    });
 
-            .then(() => browser.getText(orderConfPage.ORDER_SHIPPING_LABEL))
+    it('verify total summary information: shipping cost', () => {
+        return browser.getText(orderConfPage.ORDER_SHIPPING_LABEL)
             .then((shippingCostLabel) => {
                 const expectShippingCostLabel = Resource.msgf('label.order.shipping.cost', 'confirmation', null);
                 assert.equal(shippingCostLabel, expectShippingCostLabel, 'Expected shipping cost label to be = ' + expectShippingCostLabel);
@@ -367,9 +434,11 @@ describe('Checkout - verify order confirmation page', () => {
             .then((shippingCost) => {
                 const expectShippingCost = shipCostMap[locale];
                 assert.equal(shippingCost, expectShippingCost, 'Expected shipping cost to be = ' + expectShippingCost);
-            })
+            });
+    });
 
-            .then(() => browser.getText(orderConfPage.ORDER_SALES_TAX_LABEL))
+    it('verify total summary information: sales tax', () => {
+        return browser.getText(orderConfPage.ORDER_SALES_TAX_LABEL)
             .then((salesTaxLabel) => {
                 const expectSalesTaxLabel = Resource.msgf('label.order.sales.tax', 'confirmation', null);
                 assert.equal(salesTaxLabel, expectSalesTaxLabel, 'Expected sales tax label to be = ' + expectSalesTaxLabel);
@@ -378,9 +447,11 @@ describe('Checkout - verify order confirmation page', () => {
             .then((salesTax) => {
                 const expectSalesTax = totalTaxMap[locale];
                 assert.equal(salesTax, expectSalesTax, 'Expected sales tax to be = ' + expectSalesTax);
-            })
+            });
+    });
 
-            .then(() => browser.getText(orderConfPage.ORDER_GRAND_TOTAL_LABEL))
+    it('verify total summary information: grand total', () => {
+        return browser.getText(orderConfPage.ORDER_GRAND_TOTAL_LABEL)
             .then((grandTotalLabel) => {
                 const expectGrandTotalLabel = Resource.msgf('label.order.grand.total', 'confirmation', null);
                 assert.equal(grandTotalLabel, expectGrandTotalLabel, 'Expected grand total label to be = ' + expectGrandTotalLabel);
@@ -399,7 +470,7 @@ describe('Checkout - verify order confirmation page', () => {
             });
     });
 
-    it('should have an enabled continue shopping button', () => {
+    it('Verify continue shopping button exist', () => {
         return browser.isEnabled(orderConfPage.CONTINUE_SHOPPING)
             .then(enabled => assert.ok(enabled, 'Expected Continue Shopping button to be enabled.'))
             .then(() => browser.getText(orderConfPage.CONTINUE_SHOPPING))
@@ -416,23 +487,36 @@ describe('Checkout - verify order confirmation page', () => {
             });
     });
 
-    it('should have save my informaion ', () => {
+    it('Verify save my informaion: title', () => {
         browser.getText(orderConfPage.SAVE_MY_INFO_TITLE)
             .then((saveMyInfoTitle) => {
                 const expectSaveMyInfoTitle = Resource.msgf('title.save.customer.information', 'confirmation', null);
                 assert.equal(saveMyInfoTitle, expectSaveMyInfoTitle, 'Expected save my information to have the title = ' + expectSaveMyInfoTitle);
-            })
-            .then(() => browser.getText(orderConfPage.SAVE_MY_INFO_PASSWORD_LABEL))
+            });
+    });
+
+    it('Verify save my informaion: password', () => {
+        return browser.getText(orderConfPage.SAVE_MY_INFO_PASSWORD_LABEL)
             .then((passwordLabel) => {
                 const expectPasswordLabel = Resource.msgf('field.password', 'confirmation', null);
                 assert.equal(passwordLabel, expectPasswordLabel, 'Expected save my information password label = ' + expectPasswordLabel);
             })
-            .then(() => browser.getText(orderConfPage.SAVE_MY_INFO_CONFIRM_PASSWORD_LABEL))
+            .then(() => browser.isVisible(orderConfPage.SAVE_MY_INFO_PASSWORD))
+            .then(passwordVisible => assert.ok(passwordVisible));
+    });
+
+    it('Verify save my informaion: confirm password', () => {
+        return browser.getText(orderConfPage.SAVE_MY_INFO_CONFIRM_PASSWORD_LABEL)
             .then((confirmPasswordLabel) => {
                 const expectConfirmPasswordLabel = Resource.msgf('field.confirm.password', 'confirmation', null);
                 assert.equal(confirmPasswordLabel, expectConfirmPasswordLabel, 'Expected save my information confirm password label = ' + expectConfirmPasswordLabel);
             })
-            .then(() => browser.isEnabled(orderConfPage.SAVE_MY_INFO_CREATE_ACCOUNT))
+            .then(() => browser.isVisible(orderConfPage.SAVE_MY_INFO_CONFIRM_PASSWORD))
+            .then(passwordVisible => assert.ok(passwordVisible));
+    });
+
+    it('Verify save my informaion: save my account button', () => {
+        return browser.isEnabled(orderConfPage.SAVE_MY_INFO_CREATE_ACCOUNT)
             .then(enabled => assert.ok(enabled, 'Expected Create Account button to be enabled.'));
     });
 });
