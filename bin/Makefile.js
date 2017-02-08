@@ -77,7 +77,7 @@ target.functional = function (args) {
 
     var options = getOptions(defaults, args);
     var optionsString = getOptionsString(options);
-    
+
     console.log(chalk.green('Installing selenium'));
     exec('node_modules/.bin/selenium-standalone install', { silent: true });
 
@@ -88,9 +88,10 @@ target.functional = function (args) {
 
     var tests = spawn('./node_modules/.bin/wdio  ' + configFile + ' ' + optionsString, { stdio: 'inherit', shell: true });
 
-    tests.on('exit', function () {
+    tests.on('exit', function (code) {
         selenium.kill();
         console.log(chalk.green('Stopping Selenium Server'));
+        process.exit(code);
     });
 };
 
@@ -106,7 +107,12 @@ target.integration = function (args) {
         optionsString += ' test/integration/*';
     }
 
-    console.log(chalk.green('Running functional tests'));
+    console.log(chalk.green('Running integration tests'));
 
-    spawn('./node_modules/.bin/_mocha --reporter spec ' + optionsString, { stdio: 'inherit', shell: true });
+    var tests = spawn('./node_modules/.bin/_mocha --reporter spec ' + optionsString, { stdio: 'inherit', shell: true });
+
+    tests.on('exit', function (code) {
+        process.exit(code);
+    });
+
 };
