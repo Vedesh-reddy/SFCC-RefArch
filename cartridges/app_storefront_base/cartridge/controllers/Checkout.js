@@ -1049,7 +1049,7 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
 server.get('LoginForm', server.middleware.https, function (req, res, next) {
     var rememberMe = false;
     var userName = '';
-    var url = URLUtils.url('Checkout-Login');
+    var actionUrl = URLUtils.url('Account-Login', 'checkoutLogin', true);
     var currentBasket = BasketMgr.getCurrentBasket();
     var orderTotals = new TotalsModel(currentBasket);
     var details = {
@@ -1064,33 +1064,9 @@ server.get('LoginForm', server.middleware.https, function (req, res, next) {
     res.render('/checkout/checkoutLogin', {
         rememberMe: rememberMe,
         userName: userName,
-        url: url,
+        actionUrl: actionUrl,
         details: details
     });
-    next();
-});
-
-server.post('Login', server.middleware.https, function (req, res, next) {
-    var email = req.form.loginEmail;
-    var password = req.form.loginPassword;
-    var rememberMe = req.form.loginRememberMe
-        ? (!!req.form.loginRememberMe)
-        : false;
-    var authenticatedCustomer;
-    var url = URLUtils.url('Checkout-Login');
-    Transaction.wrap(function () {
-        authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
-    });
-    if (authenticatedCustomer && authenticatedCustomer.authenticated) {
-        res.redirect(URLUtils.url('Checkout-Start'));
-    } else {
-        res.render('/checkout/checkoutLogin', {
-            loginFormError: true,
-            rememberMe: rememberMe,
-            userName: email,
-            url: url
-        });
-    }
     next();
 });
 

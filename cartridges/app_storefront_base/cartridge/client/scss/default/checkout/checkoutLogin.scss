@@ -3,10 +3,6 @@
 @import "../variables";
 @import "../components/formFields";
 
-.forgot-password {
-    text-align: right;
-}
-
 .login-oauth {
     margin-top: 1rem;
 
@@ -28,7 +24,6 @@
 }
 
 .total-price {
-    float: right;
     font-weight: bold;
     margin-bottom: 0.25rem;
 }

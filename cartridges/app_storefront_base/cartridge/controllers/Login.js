@@ -7,7 +7,7 @@ var URLUtils = require('dw/web/URLUtils');
 server.get('Show', server.middleware.https, function (req, res, next) {
     var rememberMe = false;
     var userName = '';
-    var url = URLUtils.url('Account-Login');
+    var actionUrl = URLUtils.url('Account-Login');
     if (req.currentCustomer.credentials) {
         rememberMe = true;
         userName = req.currentCustomer.credentials.username;
@@ -16,7 +16,7 @@ server.get('Show', server.middleware.https, function (req, res, next) {
         navTabValue: 'login',
         rememberMe: rememberMe,
         userName: userName,
-        url: url
+        actionUrl: actionUrl
     });
     next();
 });
