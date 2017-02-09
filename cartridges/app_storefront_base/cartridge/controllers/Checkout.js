@@ -34,13 +34,17 @@ var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
  * Main entry point for Checkout
  */
 server.get('Start', server.middleware.https, function (req, res, next) {
+    if (!req.currentCustomer.profile && !req.querystring.guest) {
+        res.redirect(URLUtils.url('Checkout-LoginForm'));
+        return next();
+    }
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
         res.redirect(URLUtils.url('Cart-Show'));
         return next();
     }
-
     var applicablePaymentCards;
     var applicablePaymentMethods;
     var countryCode = req.geolocation.countryCode;
@@ -1039,6 +1043,30 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     res.json({ error: false, orderID: orderNumber, continueUrl: confirmationUrl });
 
     return next();
+});
+
+server.get('LoginForm', server.middleware.https, function (req, res, next) {
+    var rememberMe = false;
+    var userName = '';
+    var actionUrl = URLUtils.url('Account-Login', 'checkoutLogin', true);
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var orderTotals = new TotalsModel(currentBasket);
+    var details = {
+        subTotal: orderTotals.subTotal,
+        totalQuantity: ProductLineItemModel.getTotalQuantity(currentBasket.allProductLineItems)
+    };
+
+    if (req.currentCustomer.credentials) {
+        rememberMe = true;
+        userName = req.currentCustomer.credentials.username;
+    }
+    res.render('/checkout/checkoutLogin', {
+        rememberMe: rememberMe,
+        userName: userName,
+        actionUrl: actionUrl,
+        details: details
+    });
+    next();
 });
 
 module.exports = server.exports();

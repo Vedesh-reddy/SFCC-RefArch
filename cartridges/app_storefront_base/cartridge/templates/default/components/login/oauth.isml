@@ -9,6 +9,6 @@
     <button class="btn btn-block btn-oauth-login oauth-facebook" type="submit" name="submit" value="submit">
         <img src="${URLUtils.staticURL('/images/Facebook.png')}" alt="${Resource.msg('button.text.oauth.facebook', 'login', null)}" />
         ${Resource.msg('button.text.oauth.facebook', 'login', null)}
-    </button>   
+    </button>
 </div>
 </form>

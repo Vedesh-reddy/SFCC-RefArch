@@ -1,11 +1,11 @@
-<form action="${URLUtils.url('Account-Login')}" class="login" method="POST" name="login-form">
+<form action="${pdict.actionUrl}" class="login" method="POST" name="login-form">
     <isif condition="${pdict.loginFormError}">
         <div class="form-group">
             <div class="alert alert-danger" role="alert">
                 <strong>${Resource.msg('error.message.login.form', 'login', null)}</strong>
             </div>
         </div>
-    </isif>     
+    </isif>
     <div class="form-group required">
         <label class="form-control-label" for="login-form-email">
             ${Resource.msg('label.input.login.email', 'login', null)}
@@ -31,13 +31,13 @@
             </div>
 
             <div class="col-xs-6 forgot-password">
-                <a class="hidden-sm-up" href="${URLUtils.url('Account-PasswordReset')}" title="${Resource.msg('link.login.forgotpassword', 'login', null)}">
+                <a class="hidden-sm-up pull-right" href="${URLUtils.url('Account-PasswordReset')}" title="${Resource.msg('link.login.forgotpassword', 'login', null)}">
                     ${Resource.msg('link.login.forgotpassword', 'login', null)}
                 </a>
                 
                 <a 
                     id="password-reset"
-                    class="hidden-xs-down" 
+                    class="hidden-xs-down pull-right" 
                     title="${Resource.msg('link.login.forgotpassword', 'login', null)}" 
                     data-toggle="modal" 
                     href="${URLUtils.url('Account-PasswordResetDialogForm')}" 

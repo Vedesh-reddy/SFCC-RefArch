@@ -141,18 +141,31 @@ server.post('Login', server.middleware.https, function (req, res, next) {
         ? (!!req.form.loginRememberMe)
         : false;
     var authenticatedCustomer;
+    var checkoutLogin = req.querystring.checkoutLogin;
+
     Transaction.wrap(function () {
         authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
     });
     if (authenticatedCustomer && authenticatedCustomer.authenticated) {
-        // TODO clear form elements?
-        res.redirect(URLUtils.url('Account-Show'));
+        if (checkoutLogin) {
+            res.redirect(URLUtils.url('Checkout-Start'));
+        } else {
+            res.redirect(URLUtils.url('Account-Show'));
+        }
+    } else if (checkoutLogin) { // re-render the checkout login page with errors
+        res.render('/checkout/checkoutLogin', {
+            loginFormError: true,
+            rememberMe: rememberMe,
+            userName: email,
+            actionUrl: URLUtils.url('Account-Login', 'checkoutLogin', true)
+        });
     } else {
-        res.render('/account/login', {
+        res.render('/account/login', { // re-render the account login page with errors
             navTabValue: 'login',
             loginFormError: true,
             rememberMe: rememberMe,
-            userName: email
+            userName: email,
+            actionUrl: URLUtils.url('Account-Login')
         });
     }
     next();
