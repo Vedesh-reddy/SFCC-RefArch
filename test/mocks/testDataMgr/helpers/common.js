@@ -171,15 +171,23 @@ export function getCurrentUTCDate() {
     return monthnames[currMonth] + ' ' + currDate + ', ' + currYear;
 }
 
-export function createShippingData(testDataMgr, userEmail, locale) {
+/**
+ * This function will create a shipping data object needed for filling
+ * the shipping form in checkout. This function required information
+ * from testDataMgr.
+ *
+ * @param {object} customer an object obtained from testDataMgr.getCustomerByLogin(userEmail)
+ * @param {String} locale locale of the site
+ *
+ * @return {object}
+ */
+export function createShippingData(customer, locale) {
     const shippingData = {};
 
-    const customer = testDataMgr.getCustomerByLogin(userEmail);
-    customer.addresses[0].postalCode = customers.globalPostalCode[locale];
-    customer.addresses[0].countryCode = customers.globalCountryCode[locale];
-    customer.addresses[0].phone = customers.globalPhone[locale];
-
-    const address = customer.getPreferredAddress();
+    let address = customer.getPreferredAddress();
+    address.postalCode = customers.globalPostalCode[locale];
+    address.countryCode = customers.globalCountryCode[locale];
+    address.phone = customers.globalPhone[locale];
 
     shippingData[checkoutPage.SHIPPING_FIRST_NAME] = customer.firstName;
     shippingData[checkoutPage.SHIPPING_LAST_NAME] = customer.lastName;
@@ -196,7 +204,16 @@ export function createShippingData(testDataMgr, userEmail, locale) {
     return shippingData;
 }
 
-export function createPaymentData(testDataMgr) {
+/**
+ * This function will create a payment data object needed for filling
+ * the payment form in checkout. This function required information
+ * from testDataMgr.
+ *
+ * @param {object} creditCard an object obtained from testDataMgr.creditCard1
+ *
+ * @return {object}
+ */
+export function createPaymentData(creditCard) {
     const paymentData = {};
 
     const nextYear = new Date().getFullYear() + 1;
@@ -206,10 +223,10 @@ export function createPaymentData(testDataMgr) {
     const paymentPhone = '781-425-1010';
     const paymentEmail = 'luckyOne@home.com';
 
-    paymentData[checkoutPage.PAYMENT_CARD_NUMBER] = testDataMgr.creditCard1.number;
+    paymentData[checkoutPage.PAYMENT_CARD_NUMBER] = creditCard.number;
     paymentData[checkoutPage.PAYMENT_EXPIRATION_MONTH] = creditCardExpiredMonth;
     paymentData[checkoutPage.PAYMENT_EXPIRATION_YEAR] = creditCardExpiredYear;
-    paymentData[checkoutPage.PAYMENT_SECURITY_CODE] = testDataMgr.creditCard1.cvn;
+    paymentData[checkoutPage.PAYMENT_SECURITY_CODE] = creditCard.cvn;
     paymentData[checkoutPage.PAYMENT_PHONE_NUMBER] = paymentPhone;
     paymentData[checkoutPage.PAYMENT_EMAIL] = paymentEmail;
 
