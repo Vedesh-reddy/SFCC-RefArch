@@ -71,6 +71,9 @@
 
                     <hr>
 
+                    <!-- Applicable Promotions -->
+                    <isinclude template="/product/components/promotions" />
+
                     <div class="prices-add-to-cart-actions">
                         <!-- Prices -->
                         <div class="prices row">
@@ -100,15 +103,7 @@
                 <section class="col-md-1"></section>
             </div>
         </div>
-    </div>
 
-    <isif condition="${pdict.product.promotions.length > 0}">
-        <div class="container-fluid">
-            <isinclude template="/product/components/promotions" />
-        </div>
-    </isif>
-
-    <div class="container">
         <div class="description-and-detail">
             <div class="row description collapsable-xs">
                 <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.description', 'product', null)}</h2>
