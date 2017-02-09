@@ -141,38 +141,32 @@ server.post('Login', server.middleware.https, function (req, res, next) {
         ? (!!req.form.loginRememberMe)
         : false;
     var authenticatedCustomer;
-    var actionUrl;
-    if (req.querystring.checkoutLogin) {
-        actionUrl = URLUtils.url('Account-Login', 'checkoutLogin', true);
-    } else {
-        actionUrl = URLUtils.url('Account-Login');
-    }
+    var checkoutLogin = req.querystring.checkoutLogin;
+
     Transaction.wrap(function () {
         authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
     });
     if (authenticatedCustomer && authenticatedCustomer.authenticated) {
-        if (req.querystring.checkoutLogin) {
+        if (checkoutLogin) {
             res.redirect(URLUtils.url('Checkout-Start'));
         } else {
             res.redirect(URLUtils.url('Account-Show'));
         }
+    } else if (checkoutLogin) { // re-render the checkout login page with errors
+        res.render('/checkout/checkoutLogin', {
+            loginFormError: true,
+            rememberMe: rememberMe,
+            userName: email,
+            actionUrl: URLUtils.url('Account-Login', 'checkoutLogin', true)
+        });
     } else {
-        if (req.querystring.checkoutLogin) {
-            res.render('/checkout/checkoutLogin', {
-                loginFormError: true,
-                rememberMe: rememberMe,
-                userName: email,
-                actionUrl: actionUrl
-            });
-        } else {
-            res.render('/account/login', {
-                navTabValue: 'login',
-                loginFormError: true,
-                rememberMe: rememberMe,
-                userName: email,
-                actionUrl: actionUrl
-            });
-        }
+        res.render('/account/login', { // re-render the account login page with errors
+            navTabValue: 'login',
+            loginFormError: true,
+            rememberMe: rememberMe,
+            userName: email,
+            actionUrl: URLUtils.url('Account-Login')
+        });
     }
     next();
 });

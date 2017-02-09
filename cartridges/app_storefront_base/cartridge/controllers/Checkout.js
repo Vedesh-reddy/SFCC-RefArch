@@ -18,7 +18,6 @@ var Site = require('dw/system/Site');
 var StoreMgr = require('dw/catalog/StoreMgr');
 var Template = require('dw/util/Template');
 var Transaction = require('dw/system/Transaction');
-var CustomerMgr = require('dw/customer/CustomerMgr');
 
 var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
