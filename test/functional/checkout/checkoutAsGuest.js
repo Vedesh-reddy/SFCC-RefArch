@@ -37,8 +37,11 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
     before(() => {
         return testDataMgr.load()
             .then(() => {
-                shippingData = common.createShippingData(testDataMgr, userEmail, locale);
-                paymentData = common.createPaymentData(testDataMgr);
+                const creditCard = testDataMgr.creditCard1;
+                const customer = testDataMgr.getCustomerByLogin(userEmail);
+
+                shippingData = common.createShippingData(customer, locale);
+                paymentData = common.createPaymentData(creditCard);
 
                 prodIdUnitPricesMap[productVariantId1] = testDataMgr.getPricesByProductId(productVariantId1, locale);
 

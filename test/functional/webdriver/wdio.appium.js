@@ -10,7 +10,7 @@ var opts = _.assign({}, getConfig({
     suite: '*',
     coverage: 'smoke',
     reporter: 'spec',
-    timeout: '120000',
+    timeout: '90000',     // timeout set to 90000 because the checkout process can be completed in 60000 when run in Appium/simulator
     locale: 'x_default',
     user: 'testuser1'
 }, './config.json'), argv);
