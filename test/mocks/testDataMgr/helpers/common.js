@@ -2,6 +2,9 @@
 import _ from 'lodash';
 import nodeUrl from 'url';
 import * as header from '../pageObjects/header';
+import * as checkoutPage from '../pageObjects/checkout';
+import * as customers from '../customers';
+
 export const defaultLocale = 'x_default';
 export const supportedLocales = [
     'en_US',
@@ -150,4 +153,82 @@ export function isQuickViewExpected() {
             }
             return true;
         });
+}
+
+/**
+ * This function return current UTC date in the format "Mon DD, YYYY"
+ * It can be extend to return other format as needed in the future.
+ *
+ * @return {String}
+ */
+export function getCurrentUTCDate() {
+    const monthnames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const todayDate = new Date();
+    const currDate = todayDate.getUTCDate();
+    const currMonth = todayDate.getUTCMonth();
+    const currYear = todayDate.getUTCFullYear();
+    return monthnames[currMonth] + ' ' + currDate + ', ' + currYear;
+}
+
+/**
+ * This function will create a shipping data object needed for filling
+ * the shipping form in checkout. This function required information
+ * from testDataMgr.
+ *
+ * @param {object} customer an object obtained from testDataMgr.getCustomerByLogin(userEmail)
+ * @param {String} locale locale of the site
+ *
+ * @return {object}
+ */
+export function createShippingData(customer, locale) {
+    const shippingData = {};
+
+    let address = customer.getPreferredAddress();
+    address.postalCode = customers.globalPostalCode[locale];
+    address.countryCode = customers.globalCountryCode[locale];
+    address.phone = customers.globalPhone[locale];
+
+    shippingData[checkoutPage.SHIPPING_FIRST_NAME] = customer.firstName;
+    shippingData[checkoutPage.SHIPPING_LAST_NAME] = customer.lastName;
+    shippingData[checkoutPage.SHIPPING_ADDRESS_ONE] = address.address1;
+    shippingData[checkoutPage.SHIPPING_COUNTRY] = address.countryCode;
+    shippingData[checkoutPage.SHIPPING_ADDRESS_CITY] = address.city;
+    shippingData[checkoutPage.SHIPPING_ZIP_CODE] = address.postalCode;
+    shippingData[checkoutPage.SHIPPING_PHONE_NUMBER] = address.phone;
+
+    if (locale && locale === 'x_default') {
+        shippingData[checkoutPage.SHIPPING_STATE] = address.stateCode;
+    }
+
+    return shippingData;
+}
+
+/**
+ * This function will create a payment data object needed for filling
+ * the payment form in checkout. This function required information
+ * from testDataMgr.
+ *
+ * @param {object} creditCard an object obtained from testDataMgr.creditCard1
+ *
+ * @return {object}
+ */
+export function createPaymentData(creditCard) {
+    const paymentData = {};
+
+    const nextYear = new Date().getFullYear() + 1;
+    const creditCardExpiredYear = nextYear.toString() + '.0';
+
+    const creditCardExpiredMonth = 12;
+    const paymentPhone = '781-425-1010';
+    const paymentEmail = 'luckyOne@home.com';
+
+    paymentData[checkoutPage.PAYMENT_CARD_NUMBER] = creditCard.number;
+    paymentData[checkoutPage.PAYMENT_EXPIRATION_MONTH] = creditCardExpiredMonth;
+    paymentData[checkoutPage.PAYMENT_EXPIRATION_YEAR] = creditCardExpiredYear;
+    paymentData[checkoutPage.PAYMENT_SECURITY_CODE] = creditCard.cvn;
+    paymentData[checkoutPage.PAYMENT_PHONE_NUMBER] = paymentPhone;
+    paymentData[checkoutPage.PAYMENT_EMAIL] = paymentEmail;
+
+    return paymentData;
 }
