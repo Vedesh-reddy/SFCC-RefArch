@@ -69,10 +69,10 @@
                         <isinclude template="/product/components/availability" />
                     </div>
 
-                    <hr>
-
                     <!-- Applicable Promotions -->
                     <isinclude template="/product/components/promotions" />
+
+                    <hr>
 
                     <div class="prices-add-to-cart-actions">
                         <!-- Prices -->

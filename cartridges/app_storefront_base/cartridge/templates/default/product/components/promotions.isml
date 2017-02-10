@@ -1,13 +1,9 @@
 <div class="promotions">
     <isif condition="${pdict.product.promotions.length > 0}">
         <isloop items="${pdict.product.promotions}" var="promotion">
-            <div class="callout">
+            <div class="callout" title="${promotion.details}">
                 ${promotion.calloutMsg}
             </div>
-            <div class="details">
-                ${promotion.details}
-            </div>
         </isloop>
-        <div class="riser"></div>
     </isif>
 </div>

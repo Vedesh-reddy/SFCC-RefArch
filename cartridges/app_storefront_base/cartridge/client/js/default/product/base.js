@@ -133,6 +133,27 @@ function updateAvailability(response) {
     $('.availability-msg').empty().text(availabilityValue);
 }
 
+/**
+ * Generates html for promotions section
+ *
+ * @param {array} promotions - list of promotions
+ * @return {string} - Compiled HTML
+ */
+function getPromotionsHtml(promotions) {
+    if (!promotions.length) {
+        return '';
+    }
+
+    var html = '';
+
+    promotions.forEach(function (promotion) {
+        html += '<div class="callout" title="' + promotion.details + '">' + promotion.calloutMsg +
+            '</div>';
+    });
+
+    return html;
+}
+
 module.exports = {
     /**
      * Updates the Mini-Cart quantity value after the customer has pressed the "Add to Cart" button
@@ -205,6 +226,9 @@ module.exports = {
 
         // Update pricing
         $('.prices .price').replaceWith(response.product.price.html);
+
+        // Update promotions
+        $('.promotions').empty().html(getPromotionsHtml(response.product.promotions));
 
         updateAvailability(response);
     }
