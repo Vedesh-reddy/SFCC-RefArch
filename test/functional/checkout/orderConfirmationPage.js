@@ -6,6 +6,7 @@ import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
 import * as checkoutPage from '../../mocks/testDataMgr/pageObjects/checkout';
+import * as checkoutInterceptPage from '../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
 import * as orderConfPage from '../../mocks/testDataMgr/pageObjects/orderConfirmation.js';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 import * as common from '../../mocks/testDataMgr/helpers/common';
@@ -73,6 +74,8 @@ describe('Checkout - Order confirmation page', () => {
             .then(() => browser.waitForVisible(cartPage.SHIPPING_METHODS))
             .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, groundShipMethodIndex))
             .then(() => browser.click(cartPage.BTN_CHECKOUT))
+            .then(() => browser.waitForVisible(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))
+            .then(() => browser.click(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))
             .then(() => browser.waitForExist(checkoutPage.SHIPPING_ACTIVE_TAB))
             .then(() => checkoutPage.fillOutShippingForm(shippingData, locale))
             .then(() => browser.click(checkoutPage.BTN_NEXT_PAYMENT))

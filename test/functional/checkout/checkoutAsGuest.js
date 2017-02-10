@@ -6,6 +6,7 @@ import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
 import * as checkoutPage from '../../mocks/testDataMgr/pageObjects/checkout';
+import * as checkoutInterceptPage from '../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
 import * as orderConfPage from '../../mocks/testDataMgr/pageObjects/orderConfirmation.js';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 import * as common from '../../mocks/testDataMgr/helpers/common';
@@ -61,12 +62,18 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
 
     it('Should be able to checkout from cart.', function () {
         return browser.click(cartPage.BTN_CHECKOUT)
+            .then(() => browser.waitForVisible(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))
             .then(() => browser.getText(checkoutPage.PAGE_TITLE))
             .then((pageTitle) => {
                 const defaultTitle = 'Checkout';
                 const expectedPageTitle = Resource.msgf('title.checkout', 'checkout', null, defaultTitle);
                 assert.equal(pageTitle, expectedPageTitle, 'Expected to be on checkout page with page title = ' + expectedPageTitle);
-            })
+            });
+    });
+
+    it('Should be on checkout login intercept page with ability to checkout as guest.', function () {
+        return browser.click(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST)
+            .then(() => browser.waitForVisible(checkoutPage.SHIPPING_ACTIVE_TAB))
             .then(() => browser.getText(checkoutPage.SHIPPING_ACTIVE_TAB))
             .then((activeTabTitle) => {
                 const defaultTabTitle = 'Shipping';
