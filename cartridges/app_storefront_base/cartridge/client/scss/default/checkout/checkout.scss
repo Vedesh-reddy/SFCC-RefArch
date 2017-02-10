@@ -4,16 +4,6 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "../components/formFields";
 
-$checkout-font-weight: 600;
-
-.page {
-    background-color: $light-gray;
-}
-
-.card-header {
-    background-color: $white;
-}
-
 .card.ghost {
     opacity: 0.5;
 }
@@ -28,19 +18,6 @@ $checkout-font-weight: 600;
 
 .billing-address.same-as-shipping {
     display: none;
-}
-
-.checkout-card-block {
-    padding: 0.625em;
-
-    @include media-breakpoint-up(md) {
-        padding: 1.25em;
-    }
-}
-
-.checkout-card-header {
-    font-size: 1.25em;
-    font-weight: $checkout-font-weight;
 }
 
 .checkout-checkbox {
@@ -63,15 +40,6 @@ $checkout-font-weight: 600;
 
 .error-message {
     display: none;
-}
-
-.grand-total-label {
-    font-weight: $checkout-font-weight;
-}
-
-.grand-total-price {
-    float: right;
-    font-weight: $checkout-font-weight;
 }
 
 .next-step-button {
@@ -115,20 +83,6 @@ $checkout-font-weight: 600;
 .shipping-nav {
     padding-top: 0;
     padding-bottom: 0;
-}
-
-.summary-section-label {
-    font-size: 1em;
-    font-weight: $checkout-font-weight;
-
-    @include media-breakpoint-up(lg) {
-        font-weight: 500;
-    }
-}
-
-.summary-details {
-    font-size: 0.938em;
-    margin-bottom: 1em;
 }
 
 .data-checkout-stage {
@@ -225,44 +179,6 @@ $checkout-font-weight: 600;
     }
 }
 
-.leading-lines {
-    overflow: hidden;
-    margin: 0;
-
-    label {
-        background-color: white;
-    }
-
-    .start-lines {
-        padding: 1px;
-
-        span {
-            position: relative;
-            background-color: white;
-            z-index: 2;
-        }
-
-        &::before {
-            float: left;
-            width: 0;
-            white-space: nowrap;
-            content: ". . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . ";
-            z-index: 1;
-            color: #adadad;
-        }
-    }
-
-    .end-lines {
-        padding: 1px;
-
-        span {
-            position: relative;
-            background-color: white;
-            z-index: 2;
-        }
-    }
-}
-
 .nav.nav-tabs {
     border-bottom: 1px solid $grey2;
     text-align: center;
@@ -320,13 +236,4 @@ $checkout-font-weight: 600;
     background-repeat: no-repeat;
     width: 48px;
     height: 33px;
-}
-
-.product-summary-block {
-    margin: 1em 0;
-}
-
-.hero-confirmation {
-    background-image: url('../../images/thankyou.jpg');
-    background-position-y: -8.125em;
 }
