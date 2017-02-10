@@ -81,7 +81,7 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
                 assert.equal(activeTabTitle, expectedActiveTabTitle, 'Expected to be on checkout page with active tab title = ' + expectedActiveTabTitle);
             });
     });
-    
+
     // Fill in Shipping Form
     it('should be able to fill required fields in Shipping form.', () =>
         checkoutPage.fillOutShippingForm(shippingData, locale)

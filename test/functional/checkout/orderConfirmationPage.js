@@ -76,8 +76,6 @@ describe('Checkout - Order confirmation page', () => {
             .then(() => browser.click(cartPage.BTN_CHECKOUT))
             .then(() => browser.waitForVisible(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))
             .then(() => browser.click(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))
-
-            //--- checkoutInterceptPage
             .then(() => browser.waitForExist(checkoutPage.SHIPPING_ACTIVE_TAB))
             .then(() => checkoutPage.fillOutShippingForm(shippingData, locale))
             .then(() => browser.click(checkoutPage.BTN_NEXT_PAYMENT))
