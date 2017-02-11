@@ -106,7 +106,6 @@ function getPrice(inputProduct, currency, useSimplePrice, promotions, currentOpt
     salesPrice = priceModel.price;
 
     if (promotionPrice && promotionPrice.available && salesPrice.compareTo(promotionPrice)) {
-        listPrice = salesPrice;
         salesPrice = promotionPrice;
     }
 

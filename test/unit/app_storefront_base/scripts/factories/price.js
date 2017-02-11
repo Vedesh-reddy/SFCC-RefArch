@@ -312,7 +312,7 @@ describe('priceFactory', function () {
                 spyDefaultPrice.reset();
             });
 
-            it('should swap sales price for promo price and list price for sales price', function () {
+            it('should swap sales price for promo price', function () {
                 product = {
                     master: false,
                     priceModel: {
@@ -329,7 +329,7 @@ describe('priceFactory', function () {
                 };
                 price = priceFactory.getPrice(product, null, null, promotions);
                 assert.isTrue(spyDefaultPrice.calledWithNew());
-                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
+                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, listPrice));
             });
 
             it('should get a promotional price when an option product is provided', function () {
@@ -349,7 +349,7 @@ describe('priceFactory', function () {
                 };
                 price = priceFactory.getPrice(product, null, null, promotions, true);
                 assert.isTrue(spyDefaultPrice.calledWithNew());
-                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
+                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, listPrice));
             });
 
             it('should get a promotional price when an option product is not provided', function () {
@@ -370,7 +370,7 @@ describe('priceFactory', function () {
                 };
                 price = priceFactory.getPrice(product, null, null, promotions, false);
                 assert.isTrue(spyDefaultPrice.calledWithNew());
-                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, salesPrice));
+                assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, listPrice));
             });
         });
     });
