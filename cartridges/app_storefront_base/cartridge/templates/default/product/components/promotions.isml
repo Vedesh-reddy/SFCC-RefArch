@@ -1,14 +1,13 @@
-<div class="row promotions">
-    <div class="banner col-xs-12">
-        <div class="promotion">
-            <isloop items="${pdict.product.promotions}" var="promotion">
-                <div class="callout">
-                    ${promotion.calloutMsg}
-                </div>
-                <div class="details">
-                    ${promotion.details}
-                </div>
-            </isloop>
-        </div>
-    </div>
+<div class="promotions">
+    <isif condition="${pdict.product.promotions.length > 0}">
+        <isloop items="${pdict.product.promotions}" var="promotion">
+            <div class="callout">
+                ${promotion.calloutMsg}
+            </div>
+            <div class="details">
+                ${promotion.details}
+            </div>
+        </isloop>
+        <div class="riser"></div>
+    </isif>
 </div>
