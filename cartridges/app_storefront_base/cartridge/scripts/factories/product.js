@@ -21,8 +21,8 @@ ProductFactory.get = function (params) {
 
     if (productType === 'variant' || productType === 'master' || productType === 'variationGroup') {
         product = params.pview
-            ? new ProductTile(apiProduct, params.variables, promotions)
-            : new Product(apiProduct, params.variables, params.quantity, promotions);
+            ? new ProductTile(product, params.variables, promotions)
+            : new Product(product, params.variables, params.quantity, promotions);
     } else if (productType === 'set') {
         // TODO: Add ProductSet factory
     } else if (productType === 'bundle') {

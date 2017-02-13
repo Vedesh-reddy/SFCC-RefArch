@@ -125,9 +125,11 @@ ProductBase.prototype = {
  * @param {dw.catalog.Product} product - Product instance returned from the API
  * @param {Object} productVariables - variables passed in the query string to
  *                                    target product variation group
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Collection of applicable
+ *                                                                  Promotions
  */
-function ProductWrapper(product, productVariables) {
-    var productBase = new ProductBase(product, productVariables);
+function ProductWrapper(product, productVariables, promotions) {
+    var productBase = new ProductBase(product, productVariables, null, promotions);
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes'];
     items.forEach(function (item) {
         this[item] = productBase[item];
