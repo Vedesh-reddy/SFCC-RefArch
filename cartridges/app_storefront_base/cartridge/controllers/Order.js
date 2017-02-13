@@ -212,7 +212,7 @@ server.get('Filtered', server.middleware.https, function (req, res, next) {
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
 
-        res.render('account/order/list', {
+        res.render('account/order/orderlist', {
             orders: orders,
             filterValues: filterValues,
             orderFilter: req.querystring.orderFilter,
