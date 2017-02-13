@@ -23,7 +23,7 @@ var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
 var Payment = require('~/cartridge/models/payment');
-var ProductLineItemModel = require('~/cartridge/models/productLineItems');
+var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 var URLUtils = require('dw/web/URLUtils');
@@ -64,9 +64,9 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var billingAddressModel;
     var billingModel;
     var orderModel;
-    var orderTotals;
+    var totalsModel;
     var paymentModel;
-    var productLineItemModel;
+    var productLineItemsModel;
     var shippingAddressModel;
     var shippingModel;
 
@@ -135,16 +135,20 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     billingModel = new BillingModel(billingAddressModel, paymentModel);
 
-    productLineItemModel = new ProductLineItemModel(currentBasket);
-    orderTotals = new TotalsModel(currentBasket);
+    productLineItemsModel = new ProductLineItemsModel(currentBasket);
+    totalsModel = new TotalsModel(currentBasket);
+    var config = {
+        numberOfLineItems: '*'
+    };
 
-    orderModel = new OrderModel(
-        currentBasket,
-        shippingModel,
-        billingModel,
-        orderTotals,
-        productLineItemModel
-    );
+    var modelsObject = {
+        billingModel: billingModel,
+        shippingModel: shippingModel,
+        totalsModel: totalsModel,
+        productLineItemsModel: productLineItemsModel
+    };
+
+    orderModel = new OrderModel(currentBasket, modelsObject, config);
 
     var currentYear = new Date().getFullYear();
     var creditCardExpirationYears = [];
@@ -328,7 +332,7 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
             }
 
             var billingAddress = currentBasket.billingAddress;
-            var orderTotals;
+            var totalsModel;
             var shipment = currentBasket.defaultShipment;
             var shippingAddress = shipment.shippingAddress;
             var shippingAddressModel;
@@ -382,10 +386,10 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
                 shippingAddressModel
             );
 
-            orderTotals = new TotalsModel(currentBasket);
+            totalsModel = new TotalsModel(currentBasket);
 
             res.json({
-                totals: orderTotals,
+                totals: totalsModel,
                 shippingData: shippingModel,
                 form: server.forms.getForm('singleShipping')
             });
@@ -618,7 +622,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
                 return;
             }
 
-            var orderTotals = new TotalsModel(currentBasket);
+            var totalsModel = new TotalsModel(currentBasket);
 
             paymentInstruments = currentBasket.paymentInstruments;
             paymentModel = new Payment(null, null, paymentInstruments);
@@ -634,7 +638,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             res.json({
                 billingData: billingModel,
                 orderEmail: currentBasket.customerEmail,
-                totals: orderTotals,
+                totals: totalsModel,
                 form: server.forms.getForm('billing'),
                 resource: resource,
                 error: false
@@ -663,7 +667,7 @@ server.get('UpdateShippingMethodsList', server.middleware.https, function (req, 
         stateCode: req.querystring.state
     };
     var applicableShippingMethods;
-    var orderTotals;
+    var totalsModel;
     var shipment = currentBasket.defaultShipment;
     var shipmentShippingModel;
     var shippingAddressModel;
@@ -687,13 +691,13 @@ server.get('UpdateShippingMethodsList', server.middleware.https, function (req, 
         HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
     });
 
-    orderTotals = new TotalsModel(currentBasket);
+    totalsModel = new TotalsModel(currentBasket);
 
     shippingAddressModel = new AddressModel(address);
     shippingModel = new ShippingModel(shipment, shipmentShippingModel, shippingAddressModel);
 
     res.json({
-        totals: orderTotals,
+        totals: totalsModel,
         shipping: shippingModel,
         shippingForm: server.forms.getForm('singleShipping')
     });
@@ -902,8 +906,10 @@ function validateBasket(basket) {
 function sendConfirmationEmail(order) {
     var confirmationEmail = new Mail();
     var context = new HashMap();
-
-    var orderModel = orderHelpers.buildOrderModel(order);
+    var config = {
+        numberOfLineItems: '*'
+    };
+    var orderModel = orderHelpers.buildOrderModel(order, config);
 
     var orderObject = { order: orderModel };
 
@@ -1050,10 +1056,10 @@ server.get('LoginForm', server.middleware.https, function (req, res, next) {
     var userName = '';
     var actionUrl = URLUtils.url('Account-Login', 'checkoutLogin', true);
     var currentBasket = BasketMgr.getCurrentBasket();
-    var orderTotals = new TotalsModel(currentBasket);
+    var totalsModel = new TotalsModel(currentBasket);
     var details = {
-        subTotal: orderTotals.subTotal,
-        totalQuantity: ProductLineItemModel.getTotalQuantity(currentBasket.allProductLineItems)
+        subTotal: totalsModel.subTotal,
+        totalQuantity: ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems)
     };
 
     if (req.currentCustomer.credentials) {

@@ -65,6 +65,8 @@ var orderModel = {
         displayValue: 'NEW'
     },
     creationDate: 'some Date',
+    shippedToFirstName: 'John',
+    shippedToLastName: 'Snow',
     shipping: {
         shippingAddress: {
             address1: '15 South Point Drive',
@@ -97,6 +99,7 @@ var orderModel = {
             }
         }
     ]),
+    priceTotal: 125.99,
     totals: {
         grandTotal: 125.99
     },
@@ -147,11 +150,11 @@ describe('account', function () {
 
         assert.equal(result.orderHistory.orderNumber, '00000204');
         assert.equal(result.orderHistory.creationDate, 'some Date');
-        assert.equal(result.orderHistory.orderStatus, 'new');
-        assert.equal(result.orderHistory.orderShippedTo.firstName, 'John');
-        assert.equal(result.orderHistory.orderShippedTo.lastName, 'Snow');
-        assert.equal(result.orderHistory.orderTotal, 125.99);
-        assert.equal(result.orderHistory.totalOrderItems, 3);
+        assert.equal(result.orderHistory.orderStatus.displayValue, 'NEW');
+        assert.equal(result.orderHistory.shippedToFirstName, 'John');
+        assert.equal(result.orderHistory.shippedToLastName, 'Snow');
+        assert.equal(result.orderHistory.priceTotal, 125.99);
+        assert.equal(result.orderHistory.productQuantityTotal, 3);
 
         assert.equal(result.payment.maskedCreditCardNumber, '***********4215');
         assert.equal(result.payment.creditCardType, 'Visa');

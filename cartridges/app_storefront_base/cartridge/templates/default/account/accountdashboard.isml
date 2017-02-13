@@ -35,8 +35,9 @@
                 </div>
                 <div class="col-md-5 col-sm-6">
                     <!---Order History--->
-                    <isif condition="${pdict.orderHistory}">
-                        <isinclude template="account/orderhistorycard"/>
+                    <isif condition="${pdict.account.orderHistory}">
+                        <isset name="order" value="${pdict.account.orderHistory}" scope="page"/>
+                        <isinclude template="account/order/orderhistorycard"/>
                     </isif>
                     <!---Payment--->
                     <isinclude template="account/paymentcard"/>

@@ -24,39 +24,6 @@ function getProfile(profile) {
 }
 
 /**
- * Creates a plain object that contains order history
- * @param {Object} orderModel - current customer's recent order history
- * @returns {Object} an object that contains information about the current customer's recent order
- */
-function getOrderHistory(orderModel) {
-    var result;
-    if (orderModel) {
-        var items = orderModel.items;
-        var firstItem = helper.first(items);
-        var firstItemImage = firstItem.product.getImage('small', 0);
-        result = {
-            orderNumber: orderModel.orderNumber,
-            creationDate: orderModel.creationDate,
-            orderStatus: orderModel.orderStatus.displayValue.toLowerCase(),
-            orderShippedTo: {
-                firstName: orderModel.shipping.shippingAddress.firstName,
-                lastName: orderModel.shipping.shippingAddress.lastName
-            },
-            orderTotal: orderModel.totals.grandTotal,
-            totalOrderItems: orderModel.productQuantityTotal,
-            firstItem: {
-                src: firstItemImage.URL.relative().toString(),
-                alt: firstItemImage.alt,
-                title: firstItemImage.title
-            }
-        };
-    } else {
-        result = null;
-    }
-    return result;
-}
-
-/**
  * Creates a plain object that contains payment instrument information
  * @param {Object} wallet - current customer's wallet
  * @returns {Object} object that contains info about the current customer's payment instrument
@@ -88,7 +55,7 @@ function getPayment(wallet) {
 function account(currentCustomer, addressModel, orderModel) {
     this.profile = getProfile(currentCustomer.profile);
     this.preferredAddress = addressModel;
-    this.orderHistory = getOrderHistory(orderModel);
+    this.orderHistory = orderModel;
     this.payment = getPayment(currentCustomer.wallet);
 }
 

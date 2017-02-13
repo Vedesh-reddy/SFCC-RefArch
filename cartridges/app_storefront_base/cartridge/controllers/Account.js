@@ -7,8 +7,9 @@ var ShippingMgr = require('dw/order/ShippingMgr');
 var AccountModel = require('~/cartridge/models/account');
 var AddressModel = require('~/cartridge/models/address');
 var OrderModel = require('~/cartridge/models/order');
+var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var ShippingModel = require('~/cartridge/models/shipping');
-var Totals = require('~/cartridge/models/totals');
+var TotalsModel = require('~/cartridge/models/totals');
 var Transaction = require('dw/system/Transaction');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var Resource = require('dw/web/Resource');
@@ -51,9 +52,20 @@ function getModel(req) {
             shipmentShippingModel,
             shippingAddressModel
         );
-        var allProducts = order.allProductLineItems;
-        var orderTotals = new Totals(order);
-        orderModel = new OrderModel(order, shippingModel, null, orderTotals, allProducts);
+        var productLineItemsModel = new ProductLineItemsModel(order);
+        var totalsModel = new TotalsModel(order);
+        var config = {
+            numberOfLineItems: 'single'
+        };
+
+        var modelsObject = {
+            billingModel: null,
+            shippingModel: shippingModel,
+            totalsModel: totalsModel,
+            productLineItemsModel: productLineItemsModel
+        };
+
+        orderModel = new OrderModel(order, modelsObject, config);
     } else {
         orderModel = null;
     }
@@ -127,7 +139,10 @@ function sendPasswordResetEmail(email, resettingCustomer) {
 server.get('Show', server.middleware.https, function (req, res, next) {
     var accountModel = getModel(req);
     if (accountModel) {
-        res.render('account/accountdashboard', getModel(req));
+        res.render('account/accountdashboard', {
+            account: accountModel,
+            accountlanding: true
+        });
     } else {
         res.redirect(URLUtils.url('Login-Show'));
     }

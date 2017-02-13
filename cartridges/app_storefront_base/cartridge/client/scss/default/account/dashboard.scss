@@ -40,12 +40,18 @@
     padding: 0;
 }
 
-.dashboard-order-card-footer-value {
-    font-weight: bold;
-    font-size: 1rem;
+.account-landing-ordercard {
+    padding: 0;
+    height: 1rem;
+    margin-left: 1.25rem;
+    border-bottom: 0 none;
+    margin-top: 1rem;
+
+    h4 {
+        font-size: 1.2rem;
+    }
 }
 
-.dashboard-order-card-image {
-    width: 7rem;
-    padding-right: 1rem;
+div.order-number {
+    padding-top: 0.2rem;
 }
