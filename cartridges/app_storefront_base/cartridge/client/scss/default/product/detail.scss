@@ -237,24 +237,12 @@ div.quantity {
     color: $red;
 
     .callout {
-        font-size: 0.875em;
+        font-size: 1.25em;
+        padding-bottom: 1.25rem;
+        padding-top: 1.25rem;
 
         @include media-breakpoint-up(sm) {
-            font-size: 1.125em;
+            font-size: 1.375em;
         }
-    }
-
-    .details {
-        font-family: 'Dosis', sans-serif;
-        font-weight: 600;
-        font-size: 1.375em;
-
-        @include media-breakpoint-up(sm) {
-            font-size: 2em;
-        }
-    }
-
-    .riser {
-        padding-bottom: 2.5em;
     }
 }
