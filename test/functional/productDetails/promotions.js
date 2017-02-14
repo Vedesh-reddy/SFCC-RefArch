@@ -34,6 +34,7 @@ describe('Product Details - Promotions', function () {
     it('should not display a Promotion when none apply to a selected Variant', function () {
         const redTie = '[data-attr-value="REDSI"]';
         return browser.click(redTie)
+            .waitForVisible(productDetailPage.PROMOTION_CALLOUT, 6000, true)
             .getText(productDetailPage.PROMOTIONS)
             .then(promotionsText => assert.equal(promotionsText, ''));
     });
