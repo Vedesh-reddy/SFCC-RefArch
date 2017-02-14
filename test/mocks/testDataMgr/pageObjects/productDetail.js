@@ -6,6 +6,8 @@ export const BTN_ADD_TO_CART = '.add-to-cart';
 export const MINI_CART = '.minicart-icon';
 export const PRODUCT_NAME = '.product-detail .product-name.hidden-md-up';
 export const PRODUCT_GRID = '.container .product-grid';
+export const PROMOTIONS = '.promotions';
+export const PROMOTION_CALLOUT = PROMOTIONS + ' .callout';
 
 
 function addProduct(product, btnAdd) {
