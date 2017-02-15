@@ -32,6 +32,7 @@ function getAttributeRefinementValueModel(refinementDefinition) {
  * @return {Array} - List of categories
  */
 function createCategorySearchRefinement(productSearch, refinementDefinition, Model) {
+    var childCategory = null;
     var currentCategory = productSearch.category;
     var topCategory = null;
     var insertPoint = null;
@@ -39,10 +40,8 @@ function createCategorySearchRefinement(productSearch, refinementDefinition, Mod
         topCategory = new Model(productSearch, refinementDefinition, currentCategory, true);
         insertPoint = topCategory.subCategories;
     } else {
-        topCategory = new Model(productSearch,
-            refinementDefinition,
-            currentCategory.parent);
-        var childCategory = new Model(productSearch, refinementDefinition, currentCategory, true);
+        topCategory = new Model(productSearch, refinementDefinition, currentCategory.parent);
+        childCategory = new Model(productSearch, refinementDefinition, currentCategory, true);
         topCategory.subCategories.push(childCategory);
         insertPoint = topCategory.subCategories[0].subCategories;
     }
