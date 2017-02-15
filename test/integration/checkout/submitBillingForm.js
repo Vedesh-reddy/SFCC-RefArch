@@ -82,11 +82,11 @@ describe('billingForm', function () {
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true
             }, function responseCallBack(err, httpResponse) {
+                var bodyAsJson = JSON.parse(httpResponse.body);
                 if (err) {
                     return console.error('Checkout-SubmitPayment request failed with error:', err);
                 }
                 assert.equal(httpResponse.statusCode, 200, 'Expected Checkout-SubmitPayment statusCode to be 200.');
-                var bodyAsJson = JSON.parse(httpResponse.body);
                 assert.deepEqual(bodyAsJson, ExpectedResBody, 'Expecting ' + ExpectedResBody + 'to be equal to ' + bodyAsJson);
                 return done();
             });
