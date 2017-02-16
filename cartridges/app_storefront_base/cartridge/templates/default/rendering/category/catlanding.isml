@@ -13,11 +13,9 @@
     />
 
     <div class="container">
-        <div class="row">
-            <div class="secondary-content">
-                <isslot id="cat-landing-slotbottom" context="category" description="First slot below the Category Banner" context-object="${pdict.category}"/>
-                <isslot id="cat-landing-slotbottom2" context="category" description="Second slot below the Category Banner" context-object="${pdict.category}"/>
-            </div>
+        <div class="secondary-content">
+            <isslot id="cat-landing-slotbottom" context="category" description="First slot below the Category Banner" context-object="${pdict.category}"/>
+            <isslot id="cat-landing-slotbottom2" context="category" description="Second slot below the Category Banner" context-object="${pdict.category}"/>
         </div>
     </div>
 

@@ -1,7 +1,7 @@
 <ul class="values content">
     <isloop items="${categories}" var="category">
-        <a href="${category.url}">
-            <li>
+        <li>
+            <a href="${category.url}">
                 <!--- Radio button --->
                 <isif condition="${category.selected}">
                     <i class="fa fa-check-circle"></i>
@@ -10,16 +10,13 @@
                 </isif>
 
                 <!--- Label --->
-                <span title="${category.title}" class="
-                    <isif condition="${category.selected}">selected</isif>
-                ">
+                <span title="${category.title}" class="${category.selected ? 'selected' : ''}">
                     ${category.displayValue}
                 </span>
-
-                <!--- Process subcategories --->
-                <isset name="categories" value="${category.subCategories}" scope="page" />
-                <isinclude template="search/refinements/categories" />
-            </li>
-        </a>
+            </a>
+            <!--- Process subcategories --->
+            <isset name="categories" value="${category.subCategories}" scope="page" />
+            <isinclude template="search/refinements/categories" />
+        </li>
     </isloop>
 </ul>

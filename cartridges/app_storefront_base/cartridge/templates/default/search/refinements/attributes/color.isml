@@ -8,7 +8,7 @@
         <span
             class="
                 ${refinementValue.swatchId}
-                swatch-circle color-value
+                swatch-circle color-value swatch-mark
                 <isif condition="${refinementValue.selected && refinementValue.selectable}">
                     selected
                 </isif>
@@ -19,5 +19,3 @@
         </span>
     </a>
 </li>
-
-

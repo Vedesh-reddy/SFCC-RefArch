@@ -36,6 +36,10 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
             bottom: 0;
             transition: $slide-out-animation;
             display: block;
+            $gutter: map-get($grid-gutter-widths, $size);
+
+            padding-left: $gutter / 2;
+            padding-right: $gutter / 2;
 
             &.in {
                 min-width: 50%;
@@ -56,12 +60,13 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
         .navbar-nav .nav-link {
             padding: 0.8rem;
+            white-space: nowrap;
         }
     }
 }
 
 .nav-item .nav-link:focus,
-.nav-item.open .nav-link {
+.nav-item.show .nav-link {
     background-color: $white;
     color: $menu-link;
 }
@@ -136,7 +141,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
                 }
             }
 
-            .open > .dropdown-menu {
+            .show > .dropdown-menu {
                 left: 0;
             }
 

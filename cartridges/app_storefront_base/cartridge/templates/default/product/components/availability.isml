@@ -1,4 +1,4 @@
-<div class="availability">
+<div class="availability col-md-10 col-12">
     <span>
         <label class="availability">
             ${Resource.msg('label.availability', 'common', null)}:

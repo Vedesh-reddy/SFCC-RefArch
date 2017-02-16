@@ -1,4 +1,4 @@
-<div class="col-xs-12">
+<div class="col-12">
     <div class="form-group">
         <label for="shippingMethods">${Resource.msg('field.selectshippingmethod','cart',null)}</label>
         <select class="custom-select form-control shippingMethods"

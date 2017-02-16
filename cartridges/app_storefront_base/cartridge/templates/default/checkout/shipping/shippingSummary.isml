@@ -1,5 +1,5 @@
 <!--- Shipping Address --->
-<span class="summary-section-label shipping-addr-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</span><br>
+<span class="summary-section-label shipping-addr-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</span><br/>
 <isif condition="${pdict.order.shipping.shippingAddress !== null}">
     <isset name="address" value="${pdict.order.shipping.shippingAddress}" scope="page"/>
     <iselse>
@@ -15,16 +15,16 @@
 </div>
 
 <!--- Shipping information --->
-<span class="summary-section-label shipping-method-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</span><br>
+<span class="summary-section-label shipping-method-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</span><br/>
 <div class="row summary-details leading-lines">
-    <div class="col-xs-8 start-lines">
+    <div class="col-8 start-lines">
         <p class="shipping-method">
             <span class="shipping-method-title">${pdict.order.shipping.selectedShippingMethod.displayName}</span>
             <span class="shipping-method-arrival-time">( ${pdict.order.shipping.selectedShippingMethod.estimatedArrivalTime} )</span>
         </p>
     </div>
-    <div class="col-xs-4 end-lines">
-        <p class="text-xs-right pricing shipping-method-price">
+    <div class="col-4 end-lines">
+        <p class="text-right pricing shipping-method-price">
             ${pdict.order.totals.totalShippingCost}
         </p>
     </div>

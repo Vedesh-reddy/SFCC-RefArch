@@ -11,12 +11,6 @@
     margin-top: 1rem;
 }
 
-.dashboard-page-header-divider {
-    hr {
-        border-top: 1px solid #ccc;
-    }
-}
-
 .dashboard-cards-block-title {
     font-weight: bold;
 }
@@ -25,19 +19,12 @@
     color: $gray-light;
 }
 
-.dashboard-order-card-details {
-
-    @include media-breakpoint-down(sm) {
-        padding-left: 0;
-    }
-}
-
 .dashboard-order-card-status {
     text-transform: capitalize;
 }
 
-.dashboard-order-card-footer-columns {
-    padding: 0;
+.dashboard-order-card-image {
+    width: 7rem;
 }
 
 .account-landing-ordercard {
@@ -54,4 +41,8 @@
 
 div.order-number {
     padding-top: 0.2rem;
+}
+
+.dashboard-cards-block-title {
+    margin-bottom: 1em;
 }

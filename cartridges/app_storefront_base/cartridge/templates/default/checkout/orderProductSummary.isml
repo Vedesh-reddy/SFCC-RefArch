@@ -1,10 +1,10 @@
 <div class="card order-product-summary">
-    <div class="checkout-card-block">
+    <div class="card-block">
         <div class="row leading-lines">
-            <div class="col-xs-6 start-lines">
+            <div class="col-6 start-lines">
                 <span class="order-receipt-label grand-total-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.order.items.totalQuantity)}</span>
             </div>
-            <div class="col-xs-6 end-lines">
+            <div class="col-6 end-lines">
                 <span class="grand-total-price">${pdict.order.totals.subTotal}</span>
             </div>
         </div>

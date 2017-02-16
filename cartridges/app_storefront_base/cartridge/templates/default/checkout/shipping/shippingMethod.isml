@@ -1,6 +1,6 @@
 <div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.url('Cart-SelectShippingMethod')}" data-action="${URLUtils.url('Checkout-UpdateShippingMethodsList')}">
     <isloop items="${pdict.order.shipping.applicableShippingMethods}" var="shippingMethod" status="loopSate">
-        <div class="form-check col-xs-8 start-lines">
+        <div class="form-check col-8 start-lines">
             <label class="form-check-label shipping-method-option">
                 <isif condition="${shippingMethod.ID === pdict.order.shipping.selectedShippingMethod.ID}">
                     <input id="shippingMethod-${shippingMethod.ID}" name="${pdict.forms.shippingForm.shippingAddress.shippingMethodID.htmlName}" type="radio" class="form-check-input" value="${shippingMethod.ID}" checked>
@@ -13,24 +13,24 @@
                 </isif>
             </label>
         </div>
-        <div class="col-xs-4 text-xs-right shipping-method-pricing end-lines">
+        <div class="col-4 text-right shipping-method-pricing end-lines">
             <span>${shippingMethod.shippingCost}</span>
         </div>
     </isloop>
 </div>
 
-<!-- ------------------------------------------------------------------------------ -->
-<!-- Template used by client to redraw shipping methods                             -->
-<!-- ------------------------------------------------------------------------------ -->
+<!---------------------------------------------------------------------------------->
+<!-- Template used by client to redraw shipping methods                           -->
+<!---------------------------------------------------------------------------------->
 <div id="shipping-method-template" style="display:none;" >
-    <div class="form-check col-xs-8 start-lines">
+    <div class="form-check col-8 start-lines">
         <label class="form-check-label shipping-method-option">
             <input type="radio" class="form-check-input">
             <span class="display-name"></span>
             <span class="text-muted arrival-time" style="display:none"></span>
         </label>
     </div>
-    <div class="col-xs-4 text-xs-right shipping-method-pricing end-lines">
+    <div class="col-4 text-right shipping-method-pricing end-lines">
         <span class="shipping-cost"></span>
     </div>
 </div>

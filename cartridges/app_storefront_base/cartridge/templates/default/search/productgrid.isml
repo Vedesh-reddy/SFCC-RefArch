@@ -4,9 +4,9 @@
 
 <!--- More button --->
 <isif condition="${(pdict.productSearch.count > 0) && (pdict.productSearch.count > pdict.productSearch.productIds.length)}">
-    <div class="row show-more">
-        <div class="col-xs-12 col-sm-4 offset-sm-4">
-            <button class="btn btn-outline-primary btn-block" data-url="${pdict.productSearch.showMoreUrl}">
+    <div class="col-12 show-more">
+        <div class="text-center">
+            <button class="btn btn-outline-primary col-12 col-sm-4" data-url="${pdict.productSearch.showMoreUrl}">
                 ${Resource.msg('button.more', 'search', null)}
             </button>
         </div>

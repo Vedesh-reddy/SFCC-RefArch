@@ -1,13 +1,13 @@
 <isinclude template="/components/modules" />
 
-<div class="homepage-product-listing">
+<div class="homepage-product-listing row">
 
     <isloop items="${slotcontent.content}" var="product" status="loopstate">
 
         <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.ID, 'pview', 'tile', 'reviews', true, 'swatches', true)}"/>
 
         <isif condition="${loopstate.count == 1}" >
-            <div class="card col-xs-6 col-sm-4 hp-product-content">
+            <div class="card col-6 col-sm-4 hp-product-content">
                 <div class="card-block">
                     <iscontentasset aid="home-product-tile-content" />
                 </div>

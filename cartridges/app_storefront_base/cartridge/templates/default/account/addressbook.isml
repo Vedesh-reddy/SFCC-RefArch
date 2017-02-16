@@ -6,51 +6,50 @@
     </isscript>
     <isinclude template="account/deleteAddressModal"/>
     <div class="hero slant-down account-image">
-        <h1 class="page-title">${Resource.msg('page.title.myaccount','account',null)}</h1>
+        <h1 class="page-title">${Resource.msg('label.addressbook','account',null)}</h1>
     </div>
     <div class="container">
-        <div class="col-sm-6 offset-sm-3">
-            <div class="addressList">
-                <h1>${Resource.msg('label.addressbook','account',null)}</h1>
+        <isif condition="${pdict.addressBook.length === 0}">
+             <div class="row justify-content-center">
+                 <div class="col">
+                     <h3>${Resource.msg('msg.no.saved.addresses','address',null)}</h3>
+                 </div>
             </div>
-            <isif condition="${pdict.addressBook.length === 0}">
-                <div>
-                    <h3>${Resource.msg('msg.no.saved.addresses','address',null)}</h3>
-                </div>
-            </isif>
-            <!-- Rows for addresses in the Address Book -->
-            <isloop items="${pdict.addressBook}" var="address">
-                <div class="row" id="uuid-${address.address.UUID}">
+        </isif>
+        <!-- Rows for addresses in the Address Book -->
+        <isloop items="${pdict.addressBook}" var="address">
+            <div class="row justify-content-center" id="uuid-${address.address.UUID}">
+                <div class="col-sm-8 col-md-6">
                     <div class="card">
                         <div class="card-header">
                             <isif condition="${address.address.ID == pdict.addressBook[0].address.ID}">
-                                <h4 class="address-heading float-xs-left">${pdict.addressBook[0].address.ID} (${Resource.msg('label.addressbook.defaultaddress','account',null)})</h4>
-                                    <iselse>
-                                        <h4 class="address-heading float-xs-left">${address.address.ID}</h4>
+                                <h4 class="address-heading pull-left">${pdict.addressBook[0].address.ID} (${Resource.msg('label.addressbook.defaultaddress','account',null)})</h4>
+                            <iselse>
+                                <h4 class="address-heading pull-left">${address.address.ID}</h4>
                             </isif>
-                            <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="float-xs-right">${Resource.msg('link.edit','account',null)}</a>
+                            <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="pull-right">${Resource.msg('link.edit','account',null)}</a>
                         </div>
                         <div class="card-block card-block-positioning">
                             <div class="card-info-group">
-                                <p>${address.address.firstName} ${address.address.lastName}</p>
-                                <p>${address.address.address1}</p>
+                                <div>${address.address.firstName} ${address.address.lastName}</div>
+                                <div>${address.address.address1}</div>
                                 <isif condition="${address.address.address2 !== null}">
-                                    <p>${address.address.address2}</p>
+                                    <div>${address.address.address2}</div>
                                 </isif>
-                                <p>${address.address.city}, ${address.address.stateCode} ${address.address.postalCode}</p>
-                                <p>${address.address.countryCode.displayValue}</p>
+                                <div>${address.address.city}, ${address.address.stateCode} ${address.address.postalCode}</div>
+                                <div>${address.address.countryCode.displayValue}</div>
                             </div>
                             <isif condition="${address.address.ID !== pdict.addressBook[0].address.ID}">
                                 <div class="card-make-default-link">
                                     <a href="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID)}">${Resource.msg('link.addressbook.makedefault','account',null)}</a>
                                 </div>
                             </isif>
-                            <button 
-                                type="button" 
-                                class="remove-btn remove-address" 
-                                data-toggle="modal" 
-                                data-target="#deleteAddressModal" 
-                                data-id="${address.address.ID}" 
+                            <button
+                                type="button"
+                                class="remove-btn remove-address"
+                                data-toggle="modal"
+                                data-target="#deleteAddressModal"
+                                data-id="${address.address.ID}"
                                 data-url="${pdict.actionUrls.deleteActionUrl}"
                                 <isif condition="${address.address.ID == pdict.addressBook[0].address.ID}">data-default="true"</isif>>
                                 &times;
@@ -58,15 +57,19 @@
                         </div>
                     </div>
                 </div>
-            </isloop>
-            <div class="row">
-                <div class="col-xs-6">
-                    <a href="${URLUtils.url('Account-Show')}">
-                        <p class="text-xs-center back-to-account-link">${Resource.msg('link.profile.backtomyaccount','account',null)}</p>
-                    </a>
-                </div>
-                <div class="col-xs-6">
-                    <a href="${URLUtils.url('Address-AddAddress')}" class="btn btn-save btn-block btn-primary">${Resource.msg('button.addnew','account',null)}</a>
+            </div>
+        </isloop>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <a href="${URLUtils.url('Account-Show')}">
+                            <p class="text-center back-to-account-link">${Resource.msg('link.profile.backtomyaccount','account',null)}</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="${URLUtils.url('Address-AddAddress')}" class="btn btn-save btn-block btn-primary">${Resource.msg('button.addnew','account',null)}</a>
+                    </div>
                 </div>
             </div>
         </div>

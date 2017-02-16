@@ -162,41 +162,21 @@ server.post('Login', server.middleware.https, function (req, res, next) {
         authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
     });
     if (authenticatedCustomer && authenticatedCustomer.authenticated) {
-        if (checkoutLogin) {
-            res.redirect(URLUtils.url('Checkout-Start'));
-        } else {
-            res.redirect(URLUtils.url('Account-Show'));
-        }
-    } else if (checkoutLogin) { // re-render the checkout login page with errors
-        res.render('/checkout/checkoutLogin', {
-            loginFormError: true,
-            rememberMe: rememberMe,
-            userName: email,
-            actionUrl: URLUtils.url('Account-Login', 'checkoutLogin', true)
+        res.json({
+            success: true,
+            redirectUrl: checkoutLogin
+                ? URLUtils.url('Checkout-Start').toString()
+                : URLUtils.url('Account-Show').toString()
         });
     } else {
-        res.render('/account/login', { // re-render the account login page with errors
-            navTabValue: 'login',
-            loginFormError: true,
-            rememberMe: rememberMe,
-            userName: email,
-            actionUrl: URLUtils.url('Account-Login')
-        });
+        res.json({ error: [Resource.msg('error.message.login.form', 'login', null)] });
     }
     next();
 });
 
-server.get('Registration', server.middleware.https, function (req, res, next) {
-    var profileForm = server.forms.getForm('profile');
-    profileForm.clear();
-    res.render('/account/register', {
-        profileForm: profileForm,
-        navTabValue: 'register'
-    });
-    next();
-});
-
 server.post('SubmitRegistration', server.middleware.https, function (req, res, next) {
+    var formErrors = require('~/cartridge/scripts/formErrors');
+
     var registrationForm = server.forms.getForm('profile');
 
     // form validation
@@ -266,27 +246,25 @@ server.post('SubmitRegistration', server.middleware.https, function (req, res, n
                 } catch (e) {
                     registrationForm.validForm = false;
                     registrationForm.form.customer.email.valid = false;
-                    registrationForm.form.customer.emailconfirm.valid = false;
-                    registrationForm.form.customer.emailconfirm.error =
+                    registrationForm.form.customer.email.error =
                         Resource.msg('error.message.username.taken', 'forms', null);
                 }
             }
 
             if (registrationForm.validForm) {
-                res.redirect(URLUtils.url('Account-Show'));
+                res.json({
+                    success: true,
+                    redirectUrl: URLUtils.url('Account-Show').toString()
+                });
             } else {
-                res.render('/account/register', {
-                    profileForm: registrationForm.form,
-                    navTabValue: 'register',
-                    registrationFormError: !registrationForm.validForm
+                res.json({
+                    fields: formErrors(registrationForm)
                 });
             }
         });
     } else {
-        res.render('/account/register', {
-            profileForm: registrationForm,
-            navTabValue: 'register',
-            registrationFormError: !registrationForm.validForm
+        res.json({
+            fields: formErrors(registrationForm)
         });
     }
     next();
@@ -439,37 +417,6 @@ server.post('SavePassword', server.middleware.https, function (req, res, next) {
     next();
 });
 
-server.get('PasswordReset', server.middleware.https, function (req, res, next) {
-    res.render('account/password/requestpasswordreset');
-    next();
-});
-
-server.post('PasswordResetForm', server.middleware.https, function (req, res, next) {
-    var email = req.form.loginEmail;
-    var errorMsg;
-    var isValid;
-    var resettingCustomer;
-    if (email) {
-        isValid = validateEmail(email);
-        if (isValid) {
-            resettingCustomer = CustomerMgr.getCustomerByLogin(email);
-            if (resettingCustomer) {
-                sendPasswordResetEmail(email, resettingCustomer);
-            }
-            res.render('account/password/passwordresetreceived');
-        } else {
-            errorMsg = Resource.msg('error.message.passwordreset', 'login', null);
-            res.render('account/password/requestpasswordreset', {
-                error: true, errorMsg: errorMsg
-            });
-        }
-    } else {
-        errorMsg = Resource.msg('error.message.required', 'login', null);
-        res.render('account/password/requestpasswordreset', { error: true, errorMsg: errorMsg });
-    }
-    next();
-});
-
 server.post('PasswordResetDialogForm', server.middleware.https, function (req, res, next) {
     var email = req.form.loginEmail;
     var errorMsg;
@@ -486,6 +433,7 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
                 sendPasswordResetEmail(email, resettingCustomer);
             }
             res.json({
+                success: true,
                 receivedMsgHeading: receivedMsgHeading,
                 receivedMsgBody: receivedMsgBody,
                 buttonText: buttonText
@@ -493,15 +441,17 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
         } else {
             errorMsg = Resource.msg('error.message.passwordreset', 'login', null);
             res.json({
-                validationError: true,
-                errorMsg: errorMsg
+                fields: {
+                    loginEmail: errorMsg
+                }
             });
         }
     } else {
         errorMsg = Resource.msg('error.message.required', 'login', null);
         res.json({
-            validationError: true,
-            errorMsg: errorMsg
+            fields: {
+                loginEmail: errorMsg
+            }
         });
     }
     next();

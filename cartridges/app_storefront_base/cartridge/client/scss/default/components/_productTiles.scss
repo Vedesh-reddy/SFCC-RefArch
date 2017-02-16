@@ -1,4 +1,14 @@
 @import "../utilities/swatch";
+@import "productCommon";
+
+.primary-images {
+    .carousel {
+        img {
+            width: 100%;
+            height: 100%;
+        }
+    }
+}
 
 .product-tile {
 
@@ -117,28 +127,15 @@
             text-decoration: none;
         }
     }
-}
 
-.swatch-circle {
-    // $white will be replaced by color image background via Javascript
-    @include swatch(1.8em, $white);
+    .swatch-circle {
+        // $white will be replaced by color image background via Javascript
+        @include swatch(1.8em, $white);
+    }
 }
 
 .quick-view-dialog {
     max-width: 56.25em;
-
-    .attributes {
-        .attribute select {
-            background-color: $white;
-            width: 70%;
-        }
-
-        .swatch {
-            a {
-                text-decoration: none;
-            }
-        }
-    }
 
     .modal-header {
         .full-pdp-link {
@@ -161,38 +158,6 @@
 
     .product-name {
         font-size: 1.875em;
-    }
-
-    .attribute label {
-        display: block;
-        margin-bottom: 0;
-        margin-top: 0;
-        padding-left: 0;
-    }
-
-    div.quantity {
-        bottom: 0;
-        padding: 0;
-        position: absolute;
-        right: 0;
-        width: 25%;
-    }
-
-    .size-chart {
-        color: $brand-color;
-    }
-
-    .prices {
-        color: $darker-gray;
-        font-size: 1.875em;
-        font-weight: bold;
-        padding-bottom: 0.5em;
-        text-align: center;
-    }
-
-    .cart-and-ipay {
-        text-align: center;
-        width: 100%;
     }
 
     .swatch-circle {

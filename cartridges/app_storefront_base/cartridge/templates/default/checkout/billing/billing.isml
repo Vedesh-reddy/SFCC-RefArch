@@ -6,14 +6,14 @@
 
 <div class="card payment-form">
     <div class="card-header">
-        <span class="checkout-card-header">${Resource.msg('heading.payment', 'checkout', null)}</span>
+        <h4>${Resource.msg('heading.payment', 'checkout', null)}</h4>
     </div>
-    <div class="checkout-card-block">
+    <div class="card-block">
         <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitPayment')}" <isprint value=${pdict.forms.billingForm.attributes} encoding="off" /> >
 
-            <!-- ---------------------------------------------------------------------- -->
-            <!-- Is Billing Address Same as Shipping Address                            -->
-            <!-- ---------------------------------------------------------------------- -->
+            <!-------------------------------------------------------------------------->
+            <!-- Is Billing Address Same as Shipping Address                          -->
+            <!-------------------------------------------------------------------------->
             <div class="form-check">
                 <label class="form-check-label checkout-checkbox">
                     <input class="form-check-input billing-same-as-shipping" name="${pdict.forms.billingForm.shippingAddressUseAsBillingAddress.htmlName}" type="checkbox"
@@ -22,27 +22,26 @@
                 </label>
             </div>
 
-        <!-- ---------------------------------------------------------------------- -->
-            <!-- Billing Address                                                        -->
-            <!-- ---------------------------------------------------------------------- -->
+            <!-------------------------------------------------------------------------->
+            <!-- Billing Address                                                      -->
+            <!-------------------------------------------------------------------------->
             <fieldset class="billing-address same-as-shipping">
                 <isinclude template="checkout/billing/billingAddress" />
             </fieldset>
 
-            <!-- ---------------------------------------------------------------------- -->
-            <!-- Payment Options                                                        -->
-            <!-- ---------------------------------------------------------------------- -->
+            <!-------------------------------------------------------------------------->
+            <!-- Payment Options                                                      -->
+            <!-------------------------------------------------------------------------->
             <fieldset>
                 <isinclude template="checkout/billing/paymentOptions" />
             </fieldset>
 
-            <!-- ---------------------------------------------------------------------- -->
-            <!-- credit Card Form                                                       -->
-            <!-- ---------------------------------------------------------------------- -->
+            <!-------------------------------------------------------------------------->
+            <!-- credit Card Form                                                     -->
+            <!-------------------------------------------------------------------------->
             <fieldset class="credit-card-form">
                 <isinclude template="checkout/billing/creditCardForm" />
             </fieldset>
         </form>
     </div>
 </div>
-

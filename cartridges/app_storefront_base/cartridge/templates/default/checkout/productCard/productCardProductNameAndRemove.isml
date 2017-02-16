@@ -1,7 +1,7 @@
-<div class="line-item-name col-xs-10">
+<div class="line-item-name col-10">
     <span>${lineItem.productName}</span>
 </div>
-<div class="col-xs-2 remove-line-item">
+<div class="col-2 remove-line-item">
     <button type="button" class="remove-btn remove-product" data-toggle="modal"
             data-target="#removeProductModal" data-pid="${lineItem.id}"
             data-name="${lineItem.productName}"

@@ -47,7 +47,7 @@ Template Notes:
 
         <iselse>
             <!-- Attribute Values Drop Down Menu -->
-            <select class="custom-select select-${attr.id}">
+            <select class="custom-select form-control select-${attr.id}">
                 <option value="${attr.resetUrl}">
                     ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
                 </option>

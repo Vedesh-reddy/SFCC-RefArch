@@ -17,7 +17,7 @@
         box-shadow: 0 0.313em 0.938em rgba(0, 0, 0, 0.5);
         display: none;
         left: 0;
-        position: absolute;
+        position: fixed;
         top: 0;
         width: 100%;
         z-index: 1;
@@ -33,14 +33,14 @@
     }
 }
 
+.filter-header {
+    margin-left: map-get($grid-gutter-widths, "sm") / 2 * -1;
+    margin-right: map-get($grid-gutter-widths, "sm") / 2 * -1;
+}
+
 .header-bar {
     background-color: $grey2;
     border-bottom: 0.063em solid $grey2;
-    height: 60px;
-    left: 0;
-    position: fixed;
-    top: 0;
-    width: 100%;
 
     button.close {
         font-size: 1rem;
@@ -105,7 +105,9 @@
 }
 
 .secondary-bar {
-    padding: 0.938em 1.563em;
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 1em;
     overflow: auto;
 
     a.reset {
@@ -113,7 +115,6 @@
 
         @include media-breakpoint-down(sm) {
             float: right;
-            margin-top: 3.75em;
         }
     }
 
@@ -136,19 +137,22 @@
 
 .grid-header {
     text-align: center;
-    padding: 0.938em;
+    margin-top: 1em;
+    margin-bottom: 1em;
 
     @include media-breakpoint-only(xs) {
         .result-count {
             padding-bottom: 0.938em;
         }
+
+        .filter-results {
+            display: block;
+            width: 100%;
+        }
     }
-}
 
-.search-results {
-
-    @include media-breakpoint-down(xs) {
-        padding: 0;
+    select {
+        width: 100%;
     }
 }
 
@@ -160,6 +164,21 @@
 }
 
 .refinement {
+    margin-bottom: 1em;
+
+    @include media-breakpoint-down(sm) {
+        &.card {
+            border-top: 0 none;
+            border-left: 0 none;
+            border-right: 0 none;
+            border-radius: 0;
+        }
+
+        .card-header {
+            border-bottom: 0 none;
+        }
+    }
+
     a {
         text-decoration: none;
     }
@@ -173,29 +192,6 @@
         > ul > li {
             margin-left: 0;
         }
-    }
-
-    .title {
-        font-size: 1.125rem;
-
-        @include media-breakpoint-down(sm) {
-            height: 3.125rem;
-        }
-    }
-
-    @include clearfix;
-
-    @include media-breakpoint-down(sm) {
-        border-top: 0.063em solid $grey2;
-    }
-
-    @include media-breakpoint-only(sm) {
-        margin: 0 auto;
-        width: 90%;
-    }
-
-    @include media-breakpoint-down(xs) {
-        padding: 0 0.938em;
     }
 }
 
@@ -260,17 +256,15 @@
     margin-top: 1.875rem;
 }
 
-.category-tile {
+.category-item {
     margin-bottom: 0.938rem;
-
-    &::before {
-        left: 0.9375em;
-        right: 0.9375em;
-        width: auto;
-    }
 }
 
 .show-more {
     padding: 0.938em;
     clear: both;
+}
+
+.swatch-mark {
+    @include swatch-check-mark();
 }

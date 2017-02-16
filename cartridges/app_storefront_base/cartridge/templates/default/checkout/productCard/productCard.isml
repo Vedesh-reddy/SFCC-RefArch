@@ -16,31 +16,31 @@
             </div>
         </div>
     </div>
-    <div class="row text-xs-center line-item-price-quantity-info">
+    <div class="row text-center line-item-price-quantity-info">
         <!--- item price --->
-        <div class="col-xs-4 line-item-unit-price">
-            <p class="line-item-pricing-info text-xs-left">
+        <div class="col-4 line-item-unit-price">
+            <p class="line-item-pricing-info text-left">
                 <span class="line-item-total-text unit-price-label">
                     ${Resource.msg('label.each.item.price','cart',null)}
-                </span><br>
+                </span><br/>
                 <isset name="price" value="${lineItem.price}" scope="page"/>
                 <isinclude template="/product/components/pricing/main.isml" />
             </p>
         </div>
         <!--- quantity --->
-        <div class="col-xs-4 line-item-quantity">
+        <div class="col-4 line-item-quantity">
             <isif condition=${miniCart}>
                 <isinclude template="checkout/productCard/productCardQuantitySelector" />
-                <iselse>
-                    <isinclude template="checkout/productCard/productCardQuantityDisplay" />
+            <iselse>
+                <isinclude template="checkout/productCard/productCardQuantityDisplay" />
             </isif>
         </div>
         <!--- line item total price --->
-        <div class="col-xs-4 line-item-total-price">
-            <p class="line-item-pricing-info text-xs-right">
+        <div class="col-4 line-item-total-price">
+            <p class="line-item-pricing-info text-right">
                 <span class="line-item-total-text line-item-total-price-label">
                     ${Resource.msg('label.total.price','cart',null)}
-                </span><br>
+                </span><br/>
                 <span class="pricing line-item-total-price-amount item-total-${lineItem.UUID}">${lineItem.priceTotal}</span>
             </p>
         </div>

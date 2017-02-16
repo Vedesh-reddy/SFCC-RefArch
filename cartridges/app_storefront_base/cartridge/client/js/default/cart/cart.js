@@ -48,8 +48,8 @@ function updateCartTotals(data) {
  * @param {Object} message - Error message to display
  */
 function createErrorNotification(message) {
-    $('<div class="alert alert-danger alert-dismissible fade in col-xs-12 ' +
-        'text-xs-center notify" role="alert"> ' +
+    $('<div class="alert alert-danger alert-dismissible fade in col-12 ' +
+        'text-center notify" role="alert"> ' +
         '<button type="button" class="close" data-dismiss="alert" ' +
         'aria-label="Close"> ' +
         '<span aria-hidden="true">&times;</span> ' +
@@ -105,13 +105,15 @@ module.exports = function () {
             success: function (data) {
                 if (data.items.length === 0) {
                     $('.cart').empty().append('<div class="row"> ' +
-                        '<div class="col-xs-12 text-xs-center"> ' +
+                        '<div class="col-12 text-center"> ' +
                         '<h1>' + data.resources.emptyCartMsg + '</h1> ' +
                         '</div> ' +
                         '</div>'
                     );
                     $('.number-of-items').empty().append(data.resources.numberOfItems);
                     $('.minicart-quantity').empty().append(data.numItems);
+                    $('.mini-cart .popover').empty();
+                    $('.mini-cart .popover').removeClass('show');
                 } else {
                     $('.uuid-' + uuid).remove();
                     updateCartTotals(data);
@@ -125,7 +127,7 @@ module.exports = function () {
         });
     });
 
-    $('body').on('change', '.quantity', function () {
+    $('body').on('change', '.quantity-form > .quantity', function () {
         var quantity = $(this).val();
         var productID = $(this).data('pid');
         var url = $(this).data('action');

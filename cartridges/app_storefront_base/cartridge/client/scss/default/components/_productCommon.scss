@@ -1,0 +1,90 @@
+.attribute {
+    margin-top: 0.938em;
+    margin-right: 25%;
+    padding-right: 1em;
+
+    label {
+        display: block;
+    }
+}
+
+.swatch a {
+    text-decoration: none;
+}
+
+.primary-images {
+
+    @include media-breakpoint-down(xs) {
+        margin: 0;
+        padding: 0;
+    }
+}
+
+.prices-add-to-cart-actions {
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    z-index: 50;
+    padding-right: 0;
+    padding-left: 0;
+    left: 0;
+
+    @include media-breakpoint-down(xs) {
+        div {
+            background-color: $white;
+        }
+    }
+
+    @include media-breakpoint-up(sm) {
+        position: static;
+        padding: 0 0.9375em;
+    }
+}
+
+.attributes {
+    .prices {
+        padding-bottom: 0.5em;
+        text-align: center;
+    }
+
+    .price {
+        font-size: 1.5rem;
+    }
+}
+
+div.quantity {
+    float: right;
+    padding: 0;
+    width: 25%;
+}
+
+.cart-and-ipay {
+    text-align: center;
+
+    @include media-breakpoint-only(xs) {
+        .btn {
+            width: 100%;
+        }
+    }
+}
+
+.add-to-basket-alert {
+    display: none;
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    animation: fade 10s linear forwards;
+    box-shadow: 1px 1px 5px grey;
+
+    @keyframes fade {
+        0% { opacity: 0; }
+        10% { opacity: 1; }
+        90% { opacity: 1; }
+        100% { opacity: 0; }
+    }
+
+    &.show {
+        display: block;
+    }
+}

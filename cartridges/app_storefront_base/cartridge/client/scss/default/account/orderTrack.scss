@@ -3,10 +3,6 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 
-.receipt {
-    font-size: $receipt-font-size;
-}
-
 .section-label {
     font-size: $receipt-font-size;
     font-weight: bolder;
@@ -15,8 +11,4 @@
 .my-account {
     text-align: center;
     margin-bottom: 0.938em;
-
-    a {
-        color: $brand-color;
-    }
 }

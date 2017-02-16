@@ -1,6 +1,6 @@
 <div class="row">
     <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
-        <div class="form-check form-group col-xs-12 ${pdict.forms.billingForm.paymentMethod.htmlName}">
+        <div class="form-check form-group col-12 ${pdict.forms.billingForm.paymentMethod.htmlName}">
             <label for="paymentOption-${paymentOption.ID}" class="form-check-label">
                 <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
                     <input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"

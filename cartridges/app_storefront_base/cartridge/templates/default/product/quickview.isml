@@ -1,4 +1,4 @@
-<div class="container product-quickview" data-pid="${pdict.product.id}">
+<div class="product-quickview" data-pid="${pdict.product.id}">
 
     <div class="row">
         <!-- Product Images Carousel -->
@@ -9,49 +9,37 @@
             <section>
                 <h1 class="product-name">${pdict.product.productName}</h1>
             </section>
-        </div>
 
-        <div class="detail-panel col-xs-12 col-sm-6">
-            <!-- Left blank column -->
-            <section class="col-md-1"></section>
-
-            <!-- Attributes -->
-            <section class="attributes">
-                <div class="row">
-                    <div class="col-sm-12">
+            <div class="detail-panel">
+                <!-- Attributes -->
+                <section class="attributes">
+                    <div class="col-12">
                         <isloop items="${pdict.product.attributes}" var="attr" status="attributeStatus">
                             <isinclude template="/product/components/attributes" />
                         </isloop>
                     </div>
-                </div>
 
-                <!-- Size Chart -->
-                <div class="row">
-                    <div class="size-chart col-sm-4">
-                        <a href="${pdict.product.id}" class="size-chart">${Resource.msg('link.size_chart', 'product', null)}</a>
+                    <!-- Size Chart -->
+                    <div class="size-chart col-12">
+                        <a href="${pdict.product.id}" class="size-chart normal">${Resource.msg('link.size_chart', 'product', null)}</a>
                     </div>
 
-                    <div class="availability availablity-container col-sm-8">
-                        <isinclude template="/product/components/availability" />
+                    <isinclude template="/product/components/availability" />
+
+                    <hr>
+
+                    <!-- Prices -->
+                    <div class="prices">
+                        <div class="col-12">
+                            <isset name="price" value="${pdict.product.price}" scope="page" />
+                            <isinclude template="/product/components/pricing/main" />
+                        </div>
                     </div>
-                </div>
 
-                <hr>
-
-                <!-- Prices -->
-                <div class="prices row">
-                    <div class="col-sm-12">
-                        <isset name="price" value="${pdict.product.price}" scope="page" />
-                        <isinclude template="/product/components/pricing/main" />
-                    </div>
-                </div>
-
-                <!-- Cart and [Optionally] Apple Pay -->
-                <isinclude template="/product/components/addtocart" />
-            </section>
-
-            <!-- Right blank column -->
-            <section class="col-md-1"></section>
+                    <!-- Cart and [Optionally] Apple Pay -->
+                    <isinclude template="/product/components/addtocart" />
+                </section>
+            </div>
         </div>
     </div>
 </div>

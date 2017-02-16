@@ -39,7 +39,7 @@ server.get('Show', function (req, res, next) {
 
     res.render('product/detail.isml', {
         CurrentPageMetaData: {
-            title: product.name
+            title: product.productName
         },
         product: product,
         addToCartUrl: addToCartUrl,

@@ -2,10 +2,10 @@
     <div class="card product-info uuid-${lineItem.UUID}">
         <!--product name-->
         <div class="row">
-            <div class="line-item-name col-xs-10">
+            <div class="line-item-name col-10">
                 <span>${lineItem.productName}</span>
             </div>
-            <div class="col-xs-2 remove-line-item hidden-lg-up">
+            <div class="col-2 remove-line-item hidden-lg-up">
                 <button type="button" class="remove-btn remove-product" data-toggle="modal"
                         data-target="#removeProductModal" data-pid="${lineItem.id}"
                         data-name="${lineItem.productName}"
@@ -45,30 +45,30 @@
             <!---product price--->
             <div class="col-lg-7">
                 <hr class="hidden-lg-up line-item-divider">
-                <div class="row text-xs-center">
+                <div class="row">
                     <!---item price--->
-                    <div class="col-xs-4">
+                    <div class="col-4">
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-12">
                                 <p class="line-item-price-info">${Resource.msg('label.each.item.price','cart',null)}</p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-12">
                                 <isset name="price" value="${lineItem.price}" scope="page"/>
                                 <isinclude template="/product/components/pricing/main.isml" />
                             </div>
                         </div>
                     </div>
                     <!---quantity--->
-                    <div class="col-xs-4 col-lg-3">
+                    <div class="col-4 col-lg-3">
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-12">
                                 <p class="line-item-price-info">${Resource.msg('field.selectquantity','cart',null)}</p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-12 quantity-form">
                                 <select class="custom-select quantity" aria-label="${Resource.msg('field.selectquantity','cart',null)}"
                                         data-uuid="${lineItem.UUID}"
                                         data-pid="${lineItem.id}"
@@ -89,14 +89,14 @@
                         </div>
                     </div>
                     <!---line item total price--->
-                    <div class="col-xs-4">
+                    <div class="col-4">
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-12">
                                 <p class="line-item-price-info">${Resource.msg('label.total.price','cart',null)}</p>
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-xs-12">
+                            <div class="col-12">
                                 <span class="line-item-price item-total-${lineItem.UUID}">${lineItem.priceTotal}</span>
                             </div>
                         </div>

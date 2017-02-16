@@ -101,6 +101,9 @@ server.post('Track', server.middleware.https, function (req, res, next) {
     var order;
     var validForm = true;
 
+    var profileForm = server.forms.getForm('profile');
+    profileForm.clear();
+
     if (req.form.trackOrderEmail && req.form.trackOrderPostal && req.form.trackOrderNumber) {
         order = OrderMgr.getOrder(req.form.trackOrderNumber);
     } else {
@@ -110,7 +113,9 @@ server.post('Track', server.middleware.https, function (req, res, next) {
     if (!order) {
         res.render('/account/login', {
             navTabValue: 'login',
-            orderTrackFormError: validForm
+            orderTrackFormError: validForm,
+            profileForm: profileForm,
+            userName: ''
         });
         next();
     } else {
@@ -149,7 +154,9 @@ server.post('Track', server.middleware.https, function (req, res, next) {
         } else {
             res.render('/account/login', {
                 navTabValue: 'login',
-                orderTrackFormError: !validForm
+                profileForm: profileForm,
+                orderTrackFormError: !validForm,
+                userName: ''
             });
         }
 

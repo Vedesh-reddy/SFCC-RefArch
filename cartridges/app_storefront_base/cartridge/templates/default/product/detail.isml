@@ -8,7 +8,9 @@
 
     <div class="container product-detail">
         <div class="row">
-            <h1 class="product-name hidden-md-up col-sm-12">${pdict.product.productName}</h1>
+            <div class="hidden-md-up col-sm-12">
+                <h1 class="product-name">${pdict.product.productName}</h1>
+            </div>
         </div>
 
         <div class="row">
@@ -16,7 +18,7 @@
             <isinclude template="/product/components/image_carousel" />
 
             <!-- Product Name and Number -->
-            <div class="col-sm-6">
+            <div class="col-12 col-sm-6">
                 <section>
                     <h1 class="product-name hidden-sm-down">${pdict.product.productName}</h1>
                     <div class="product-number-rating clearfix">
@@ -41,66 +43,54 @@
                         </div>
                     </div>
                 </section>
-            </div>
-
-            <div class="detail-panel col-xs-12 col-sm-6">
-                <!-- Left blank column -->
-                <section class="col-md-1"></section>
 
                 <!-- Attributes -->
-                <section class="attributes col-sm-12 col-md-10">
-                    <div class="row">
-                        <div class="col-sm-12">
+                <section class="attributes container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-10 col-12">
                             <isloop items="${pdict.product.attributes}" var="attr" status="attributeStatus">
                                 <isinclude template="/product/components/attributes" />
                             </isloop>
                         </div>
-                    </div>
 
-                    <!-- Size Chart -->
-                    <div class="row">
-                        <div class="size-chart">
+                        <!-- Size Chart -->
+                        <div class="size-chart col-md-10 col-12">
                             <a href="${"#"}" class="size-chart">${Resource.msg('link.size_chart', 'product', null)}</a>
                         </div>
-                    </div>
 
-                    <!-- Availability -->
-                    <div class="row">
+                        <!-- Availability -->
                         <isinclude template="/product/components/availability" />
-                    </div>
 
-                    <!-- Applicable Promotions -->
-                    <isinclude template="/product/components/promotions" />
+                        <!-- Applicable Promotions -->
+                        <isinclude template="/product/components/promotions" />
 
-                    <hr>
+                        <div class="col-md-10 col-12">
+                            <hr>
+                        </div>
 
-                    <div class="prices-add-to-cart-actions">
-                        <!-- Prices -->
-                        <div class="prices row">
-                            <div class="col-sm-12">
+                        <div class="col-12 prices-add-to-cart-actions">
+                            <!-- Prices -->
+                            <div class="prices">
                                 <isset name="price" value="${pdict.product.price}" scope="page" />
                                 <isinclude template="/product/components/pricing/main.isml" />
                             </div>
+
+                            <!-- Cart and [Optionally] Apple Pay -->
+                            <isinclude template="/product/components/addtocart" />
                         </div>
 
-                        <!-- Cart and [Optionally] Apple Pay -->
-                        <isinclude template="/product/components/addtocart" />
-                    </div>
-
-                    <!-- Add to Wishlist and Social Sharing Icons -->
-                    <div class="row wishlist-social hidden-sm-down">
-                        <a href="${"#"}" class="add-to-wish-list col-md-6">${Resource.msg('button.add_to_wishlist', 'common', null)}</a>
-                        <span class="social-icons col-md-6">
-                            <i class="fa fa-pinterest" alt="Pinterest"></i>
-                            <i class="fa fa-instagram" alt="Instagram"></i>
-                            <i class="fa fa-facebook-official" alt="Facebook"></i>
-                            <i class="fa fa-twitter" alt="Twitter"></i>
-                        </span>
+                        <!-- Add to Wishlist and Social Sharing Icons -->
+                        <div class="col-12 wishlist-social hidden-sm-down">
+                            <a href="${"#"}" class="add-to-wish-list col-md-6">${Resource.msg('button.add_to_wishlist', 'common', null)}</a>
+                            <span class="social-icons col-md-6">
+                                <i class="fa fa-pinterest" alt="Pinterest"></i>
+                                <i class="fa fa-instagram" alt="Instagram"></i>
+                                <i class="fa fa-facebook-official" alt="Facebook"></i>
+                                <i class="fa fa-twitter" alt="Twitter"></i>
+                            </span>
+                        </div>
                     </div>
                 </section>
-
-                <!-- Right blank column -->
-                <section class="col-md-1"></section>
             </div>
         </div>
 
@@ -122,5 +112,4 @@
             </div>
         </div>
     </div>
-
 </isdecorate>

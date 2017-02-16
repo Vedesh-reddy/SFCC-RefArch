@@ -1,18 +1,18 @@
 <div class="row">
-    <div class="col-xs-12 hidden-sm-up">
+    <div class="col-12 hidden-sm-up">
         <p class="optional-promo">${Resource.msg('action.enter.promo.code','cart',null)}</p>
     </div>
 </div>
 <div class="row promo-code-form">
-    <div class="col-xs-12">
+    <div class="col-12">
         <form>
             <div class="form-group">
                 <label for="promoCode">${Resource.msg('label.promo.code','cart',null)}</label>
                 <div class="row">
-                    <div class="col-xs-7">
+                    <div class="col-7">
                         <input type="text" class="form-control" id="promoCode" placeholder="${Resource.msg('placholder.text.promo.code.input','cart',null)}">
                     </div>
-                    <div class="col-xs-5 promo-code-submit">
+                    <div class="col-5 promo-code-submit">
                         <button type="submit" class="btn btn-primary btn-block promo-code-btn">${Resource.msg('button.submit.promo.code','cart',null)}</button>
                     </div>
                 </div>

@@ -1,9 +1,9 @@
 <div>
     <div class="card order-confirm-create-account">
         <div class="card-header">
-            <span class="checkout-card-header">${Resource.msg('title.save.customer.information', 'confirmation', null)}</span>
+            <h4>${Resource.msg('title.save.customer.information', 'confirmation', null)}</h4>
         </div>
-        <div class="checkout-card-block">
+        <div class="card-block">
             <form class="create-account-form">
                 <div class="form-group password-form">
                     <label class="password-label" for="password">${Resource.msg('field.password','confirmation',null)}</label>

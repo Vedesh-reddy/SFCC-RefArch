@@ -8,15 +8,19 @@ server.get('Show', server.middleware.https, function (req, res, next) {
     var rememberMe = false;
     var userName = '';
     var actionUrl = URLUtils.url('Account-Login');
+    var navTabValue = req.querystring.action;
     if (req.currentCustomer.credentials) {
         rememberMe = true;
         userName = req.currentCustomer.credentials.username;
     }
+    var profileForm = server.forms.getForm('profile');
+    profileForm.clear();
     res.render('/account/login', {
-        navTabValue: 'login',
+        navTabValue: navTabValue || 'login',
         rememberMe: rememberMe,
         userName: userName,
-        actionUrl: actionUrl
+        actionUrl: actionUrl,
+        profileForm: profileForm
     });
     next();
 });

@@ -5,7 +5,7 @@
  * @return {string} - value found in the quantity input
  */
 function getQuantitySelected() {
-    return $('select.quantity').val();
+    return $('.quantity select').val();
 }
 
 /**
@@ -161,6 +161,18 @@ module.exports = {
      */
     handlePostCartAdd: function (response) {
         $('.mini-cart').trigger('count:update', response);
+        // show add to cart toast
+        if ($('.add-to-basket-alert').length === 0) {
+            $('body').append(
+                '<div class="alert alert-success add-to-basket-alert" role="alert">'
+                + response.message
+                + '</div>'
+            );
+        }
+        $('.add-to-basket-alert').addClass('show');
+        setTimeout(function () {
+            $('.add-to-basket-alert').removeClass('show');
+        }, 10000);
     },
 
     /**

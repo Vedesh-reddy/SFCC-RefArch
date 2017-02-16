@@ -5,42 +5,42 @@
 
     <p>
         <strong>${Resource.msg('label.order.number', 'confirmation', null)}</strong>
-        <br>
+        <br/>
         <span>${pdict.order.orderNumber}</span>
     </p>
 
     <p>
         <strong>${Resource.msg('label.order.date', 'confirmation', null)}</strong>
-        <br>
+        <br/>
         <span><isprint value="${pdict.order.creationDate}" style="DATE_LONG"/></span>
     </p>
 
     <!--- Shipping Address --->
-    <strong>${Resource.msg('label.order.shipping.address', 'confirmation', null)}</strong><br>
+    <strong>${Resource.msg('label.order.shipping.address', 'confirmation', null)}</strong><br/>
     <isset name="address" value="${pdict.order.shipping.shippingAddress}" scope="page"/>
     <isinclude template="checkout/addressSummary" />
 
-    </br>
+    <br/>
     <p>
         <strong>${Resource.msg('label.order.shipping.method', 'confirmation', null)}</strong>
-        <br>
+        <br/>
         ${pdict.order.shipping.selectedShippingMethod.displayName} (${pdict.order.shipping.selectedShippingMethod.estimatedArrivalTime}):
-        <br>
+        <br/>
         ${pdict.order.totals.totalShippingCost}
     </p>
 
     <!--- Billing Address --->
     <strong>${Resource.msg('label.order.billing.address', 'confirmation', null)}</strong>
-    <br>
+    <br/>
     <isset name="address" value="${pdict.order.billing.billingAddress.address}" scope="page"/>
     <isinclude template="checkout/addressSummary" />
 
-    </br>
+    <br/>
 
     <!--- Payment information --->
     <div>
         <strong>${Resource.msg('label.order.payment.info', 'confirmation', null)}</strong>
-        <br>
+        <br/>
         <div>
             <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
                 <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
@@ -61,65 +61,65 @@
 
     <p>
         ${Resource.msgf('label.number.items.in.cart','cart', null, pdict.order.items.totalQuantity)}
-        <br>
+        <br/>
         ${pdict.order.totals.subTotal}
     </p>
 
-    </br>
-    <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> </br>
+    <br/>
+    <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>
     <isloop items="${pdict.order.items.items}" var="lineItem" status="loopSate">
         <p>
             ${Resource.msg('label.order.product.name', 'confirmation', null)}: ${lineItem.productName}
-            </br>
+            <br/>
             <isloop items="${lineItem.attributes}" var="attribute">
                 ${attribute.displayName}: ${attribute.displayValue}
-                </br>
+                <br/>
             </isloop>
 
             <!--- item price --->
             ${Resource.msg('label.each.item.price','cart',null)}
             - ${lineItem.price.formatted}
-            </br>
+            <br/>
 
             <!--- quantity --->
             ${Resource.msg('field.selectquantity','cart',null)}
             - <isprint value="${lineItem.quantity}" formatter="##" />
-            </br>
+            <br/>
 
             <!--- line item total price --->
             ${Resource.msg('label.total.price','cart',null)}
             - ${lineItem.priceTotal}
-            </br>
+            <br/>
         </p>
     </isloop>
 
-    <strong>${Resource.msg('label.order.totals', 'confirmation', null)}:</strong> </br>
+    <strong>${Resource.msg('label.order.totals', 'confirmation', null)}:</strong> <br/>
     <!--- Subtotal --->
     ${Resource.msg('label.order.subtotal','confirmation', null)}:
     ${pdict.order.totals.subTotal}
-    </br>
+    <br/>
 
     <isif condition="${pdict.order.totals.orderLevelDiscountTotal.value !== 0}">
         ${Resource.msg('label.order.discount', 'common', null)}:
         - ${pdict.order.totals.orderLevelDiscountTotal.formatted}
-        </br>
+        <br/>
     </isif>
 
     <!--- Shipping Cost --->
     ${Resource.msg('label.order.shipping.cost','confirmation', null)}:
     ${pdict.order.totals.totalShippingCost}
-    </br>
+    <br/>
 
     <isif condition="${pdict.order.totals.shippingLevelDiscountTotal.value !== 0}">
         ${Resource.msg('label.shipping.discount', 'common', null)}:
         - ${pdict.order.totals.shippingLevelDiscountTotal.formatted}
-        </br>
+        <br/>
     </isif>
 
     <!--- Sales Tax --->
     ${Resource.msg('label.order.sales.tax','confirmation', null)}:
     ${pdict.order.totals.totalTax}
-    </br>
+    <br/>
 
     <!--- Grand Total --->
     ${Resource.msg('label.order.grand.total','confirmation', null)}:

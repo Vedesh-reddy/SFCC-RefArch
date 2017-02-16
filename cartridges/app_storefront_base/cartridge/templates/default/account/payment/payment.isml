@@ -6,25 +6,24 @@
     </isscript>
     <isinclude template="account/payment/deletePaymentModal"/>
     <div class="hero slant-down account-image">
-        <h1 class="page-title">${Resource.msg('page.title.myaccount','account',null)}</h1>
+        <h1 class="page-title">${Resource.msg('page.heading.payments','payment',null)}</h1>
     </div>
     <div class="container">
-        <div class="col-sm-6 offset-sm-3">
-            <div class="paymentInstruments">
-                <h1>${Resource.msg('page.heading.payments','payment',null)}</h1>
-            </div>
-            <isif condition="${!pdict.paymentInstruments}">
-                <div>
+        <isif condition="${!pdict.paymentInstruments}">
+            <div class="row justify-content-center">
+                <div class="col">
                     <h3>${Resource.msg('msg.no.saved.payments','payment',null)}</h3>
                 </div>
-            </isif>
-            <!-- Rows for Credit Cards -->
-            <isloop items="${pdict.paymentInstruments}" var="paymentInstrument">
-                <div class="row" id="uuid-${paymentInstrument.UUID}" >
+            </div>
+        </isif>
+        <!-- Rows for Credit Cards -->
+        <isloop items="${pdict.paymentInstruments}" var="paymentInstrument">
+            <div class="row justify-content-center" id="uuid-${paymentInstrument.UUID}">
+                <div class="col-sm-8 col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="float-xs-left">${paymentInstrument.creditCardHolder}</h4>
-                            <a href="${URLUtils.url('PaymentInstruments-EditPayment', 'UUID', paymentInstrument.UUID)}" class="float-xs-right">${Resource.msg('link.edit','payment',null)}</a>
+                            <h4 class="pull-left">${paymentInstrument.creditCardHolder}</h4>
+                            <a href="${URLUtils.url('PaymentInstruments-EditPayment', 'UUID', paymentInstrument.UUID)}" class="pull-right">${Resource.msg('link.edit','payment',null)}</a>
                         </div>
                         <div class="card-block card-block-positioning">
                             <div class="card-info-group">
@@ -32,28 +31,32 @@
                                 <p>${paymentInstrument.maskedCreditCardNumber}</p>
                                 <p>${Resource.msg('label.payment.ending','account',null)} ${paymentInstrument.creditCardExpirationMonth}/${paymentInstrument.creditCardExpirationYear}</p>
                             </div>
-                            <button 
-                                type="button" 
-                                class="remove-btn remove-payment" 
-                                data-toggle="modal" 
-                                data-target="#deletePaymentModal" 
-                                data-id="${paymentInstrument.UUID}" 
-                                data-card="${paymentInstrument.maskedCreditCardNumber}" 
+                            <button
+                                type="button"
+                                class="remove-btn remove-payment"
+                                data-toggle="modal"
+                                data-target="#deletePaymentModal"
+                                data-id="${paymentInstrument.UUID}"
+                                data-card="${paymentInstrument.maskedCreditCardNumber}"
                                 data-url="${pdict.actionUrl}">
                                 &times;
                             </button>
                         </div>
                     </div>
                 </div>
-            </isloop>
-            <div class="row">
-                <div class="col-xs-6">
-                    <a href="${URLUtils.url('Account-Show')}">
-                        <p class="text-xs-center back-to-account-link">${Resource.msg('link.profile.backtomyaccount','account',null)}</p>
-                    </a>
-                </div>
-                <div class="col-xs-6">
-                    <a href="${URLUtils.url('PaymentInstruments-AddPayment')}" class="btn btn-save btn-block btn-primary">${Resource.msg('button.addnew','payment',null)}</a>
+            </div>
+        </isloop>
+        <div class="row justify-content-center">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col">
+                        <a href="${URLUtils.url('Account-Show')}">
+                            <p class="text-center back-to-account-link">${Resource.msg('link.profile.backtomyaccount','account',null)}</p>
+                        </a>
+                    </div>
+                    <div class="col">
+                        <a href="${URLUtils.url('PaymentInstruments-AddPayment')}" class="btn btn-save btn-block btn-primary">${Resource.msg('button.addnew','payment',null)}</a>
+                    </div>
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
-<label class="quantity">${Resource.msg('label.quantity', 'common', null)}</label>
-<select class="quantity custom-select">
+<label>${Resource.msg('label.quantity', 'common', null)}</label>
+<select class="custom-select form-control">
     <isloop begin="${pdict.product.minOrderQuantity}"
             end="${pdict.product.maxOrderQuantity}"
             status="status">

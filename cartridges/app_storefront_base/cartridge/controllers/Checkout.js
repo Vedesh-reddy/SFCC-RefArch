@@ -33,12 +33,36 @@ var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
 /**
  * Main entry point for Checkout
  */
-server.get('Start', server.middleware.https, function (req, res, next) {
-    if (!req.currentCustomer.profile && !req.querystring.guest) {
-        res.redirect(URLUtils.url('Checkout-LoginForm'));
-        return next();
-    }
 
+server.get('Login', server.middleware.https, function (req, res, next) {
+    if (req.currentCustomer.profile) {
+        res.redirect(URLUtils.url('Checkout-LoginForm'));
+    } else {
+        var rememberMe = false;
+        var userName = '';
+        var actionUrl = URLUtils.url('Account-Login', 'checkoutLogin', true);
+        var currentBasket = BasketMgr.getCurrentBasket();
+        var totalsModel = new TotalsModel(currentBasket);
+        var details = {
+            subTotal: totalsModel.subTotal,
+            totalQuantity: ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems)
+        };
+
+        if (req.currentCustomer.credentials) {
+            rememberMe = true;
+            userName = req.currentCustomer.credentials.username;
+        }
+        res.render('/checkout/checkoutLogin', {
+            rememberMe: rememberMe,
+            userName: userName,
+            actionUrl: actionUrl,
+            details: details
+        });
+    }
+    next();
+});
+
+server.get('Start', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -1049,30 +1073,6 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     res.json({ error: false, orderID: orderNumber, continueUrl: confirmationUrl });
 
     return next();
-});
-
-server.get('LoginForm', server.middleware.https, function (req, res, next) {
-    var rememberMe = false;
-    var userName = '';
-    var actionUrl = URLUtils.url('Account-Login', 'checkoutLogin', true);
-    var currentBasket = BasketMgr.getCurrentBasket();
-    var totalsModel = new TotalsModel(currentBasket);
-    var details = {
-        subTotal: totalsModel.subTotal,
-        totalQuantity: ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems)
-    };
-
-    if (req.currentCustomer.credentials) {
-        rememberMe = true;
-        userName = req.currentCustomer.credentials.username;
-    }
-    res.render('/checkout/checkoutLogin', {
-        rememberMe: rememberMe,
-        userName: userName,
-        actionUrl: actionUrl,
-        details: details
-    });
-    next();
 });
 
 module.exports = server.exports();

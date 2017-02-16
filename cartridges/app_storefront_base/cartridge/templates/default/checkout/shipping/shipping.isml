@@ -1,14 +1,14 @@
 <div class="card shipping-form">
     <div class="card-header">
-        <span class="checkout-card-header">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</span>
+        <h4>${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
     </div>
 
-    <div class="container checkout-card-block form-nav shipping-nav">
-        <ul class="row nav nav-tabs" role="tablist">
-            <li class="col-xs-6 nav-item">
+    <div class="card-block form-nav shipping-nav">
+        <ul class="nav nav-tabs nav-fill" role="tablist">
+            <li class="nav-item">
                 <a class="nav-link shipping-tab active" data-toggle="tab" href="#shipping-address" role="tab">${Resource.msg('action.shipping.form', 'checkout', null)}</a>
             </li>
-            <li class="col-xs-6 nav-item disable">
+            <li class="nav-item disable">
                 <a class="nav-link shipping-tab" data-toggle="tab" href="#pick-up-in-store" role="tab">${Resource.msg('action.in.store.pick.up', 'checkout', null)}</a>
             </li>
         </ul>
@@ -16,7 +16,7 @@
 
     <div class="tab-content">
         <!--- Shipping Address Form--->
-        <div class="tab-pane active checkout-card-block" id="shipping-address" role="tabpanel">
+        <div class="tab-pane active card-block" id="shipping-address" role="tabpanel">
             <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
             <!--<form action="${URLUtils.url('Checkout-Shipping')}" class="shipping" method="post" name="shipping">-->
                 <fieldset>
@@ -50,7 +50,7 @@
         </div>
         <!--- In Store Pick up--->
         <div class="tab-pane" id="pick-up-in-store" role="tabpanel">
-            <div class="checkout-card-block">
+            <div class="card-block">
                 ${Resource.msg('error.not.implemented', 'common', null)}
             </div>
         </div>

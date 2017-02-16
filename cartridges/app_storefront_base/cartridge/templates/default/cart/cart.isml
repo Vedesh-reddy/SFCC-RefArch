@@ -12,10 +12,10 @@
                     ${Resource.msg('link.continue.shopping','cart',null)}
                 </a>
             </div>
-            <div class="col-sm-3 text-xs-right">
+            <div class="col-sm-3 text-center">
                 <h5 class="number-of-items">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.numItems)}</h5>
             </div>
-            <div class="col-sm-5 text-xs-right hidden-xs-down">
+            <div class="col-sm-5 text-right hidden-xs-down">
                 <div>
                     <span>${Resource.msg('info.need.help','cart',null)}</span>
                     <span><a class="help-phone-number" href="tel:${Resource.msg('info.phone.number','common',null)}">${Resource.msg('info.phone.number','common',null)}</a></span>
@@ -28,7 +28,7 @@
     <isif condition="${pdict.items.length === 0}">
         <div class="container cart-empty">
             <div class="row">
-                <div class="col-xs-12 text-xs-center">
+                <div class="col-12 text-center">
                     <h1>${Resource.msg('info.cart.empty.msg','cart',null)}</h1>
                 </div>
             </div>
@@ -48,11 +48,11 @@
                     </div>
                     <isinclude template="cart/cartTotals" />
                     <div class="row">
-                        <div class="col-xs-12 checkout-continue">
+                        <div class="col-12 checkout-continue">
                             <isinclude template="cart/checkoutButtons" />
                         </div>
                     </div>
-                    <br>
+                    <br/>
                 </div>
             </div>
         </div>

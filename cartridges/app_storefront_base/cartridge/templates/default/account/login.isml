@@ -4,27 +4,35 @@
         assets.addCss('/css/login.css');
         assets.addJs('/js/login.js');
     </isscript>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="hero slant-down login-banner">
-                <h1 class="page-title">${Resource.msg('header.hero.image.login', 'login', null)}</h1>
-            </div>
-        </div>
+
+    <div class="hero slant-down login-banner">
+        <h1 class="page-title">${Resource.msg('header.hero.image.login', 'login', null)}</h1>
     </div>
     <div class="container login-page">
-        <div class="row">
-            <isinclude template="components/login/navtabs" />
-        </div>
-        <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
-            <div class="row">
-                <isinclude template="components/login/loginform" />
-                <isinclude template="account/password/requestPasswordResetModal"/>
+        <div class="row justify-content-center equal-height">
+            <div class="col-sm-8 col-md-6">
+                <div class="card">
+                    <div class="card-block">
+                        <div class="login-form-nav">
+                            <isinclude template="account/components/navtabs" />
+                            <div class="tab-content">
+                                <div class="tab-pane ${pdict.navTabValue === 'login' ? 'active' : ''}" id="login" role="tabpanel">
+                                    <isinclude template="account/components/loginform" />
+                                    <isinclude template="account/password/requestPasswordResetModal"/>
+                                    <isinclude template="account/components/oauth" />
+                                </div>
+                                <div class="tab-pane ${pdict.navTabValue === "register" ? 'active' : ''}" id="register" role="tabpanel">
+                                    <isinclude template="account/components/registerform" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="row">
-                <isinclude template="components/login/oauth" />
-            </div>
-            <div class="row">
-                <isinclude template="components/login/trackorderform" />
+            <div class="col-sm-8 col-md-6">
+                <div class="card">
+                    <isinclude template="account/components/trackorderform" />
+                </div>
             </div>
         </div>
     </div>

@@ -6,7 +6,7 @@
        value="Visa">
 
 <div class="row">
-    <div class="col-xs-12">
+    <div class="col-12">
         <div class="form-group
             <isif condition=${creditFields.cardNumber.mandatory === true}>required</isif>
             ${creditFields.cardNumber.htmlName}">
@@ -19,7 +19,7 @@
 </div>
 
 <div class="row">
-    <div class="col-xs-6">
+    <div class="col-6">
         <div class="form-group
             <isif condition=${creditFields.expirationMonth.mandatory === true}>required</isif>
             ${creditFields.expirationMonth.htmlName}">
@@ -33,7 +33,7 @@
             <div class="form-control-feedback"></div>
         </div>
     </div>
-    <div class="col-xs-6">
+    <div class="col-6">
         <div class="form-group
             <isif condition=${creditFields.expirationYear.mandatory === true}>required</isif>
             ${creditFields.expirationYear.htmlName}">
@@ -56,10 +56,10 @@
         <div class="form-group
             <isif condition=${creditFields.securityCode.mandatory === true}>required</isif>
             ${creditFields.securityCode.htmlName}">
-            <label class="form-control-label"for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
+            <label class="form-control-label" for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
             <span class="info-icon">
                 <span class="icon">i</span>
-                <div class="form-tooltip">
+                <div class="tooltip">
                     ${Resource.msg('tooltip.security.code','creditCard',null)}
                 </div>
             </span>
@@ -77,10 +77,10 @@
         <div class="form-group
             <isif condition=${creditFields.email.mandatory === true}>required</isif>
             ${creditFields.email.htmlName}">
-            <label class="form-control-label"for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
+            <label class="form-control-label" for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
             <span class="info-icon">
                 <span class="icon">i</span>
-                <div class="form-tooltip">
+                <div class="tooltip">
                     ${Resource.msg('tooltip.email','creditCard',null)}
                 </div>
             </span>
@@ -93,10 +93,10 @@
         <div class="form-group
             <isif condition=${creditFields.phone.mandatory === true}>required</isif>
             ${creditFields.phone.htmlName}">
-            <label class="form-control-label"for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
+            <label class="form-control-label" for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
             <span class="info-icon">
                 <span class="icon">i</span>
-                <div class="form-tooltip">
+                <div class="tooltip">
                     ${Resource.msg('tooltip.phone.number','creditCard',null)}
                 </div>
             </span>

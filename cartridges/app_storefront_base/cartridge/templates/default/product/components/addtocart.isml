@@ -1,7 +1,7 @@
 <div class="row cart-and-ipay">
     <div class="col-sm-12">
         <input type="hidden" name="addToCartUrl" value="${pdict.addToCartUrl}">
-        <button class="add-to-cart btn btn-success button button-primary"
+        <button class="add-to-cart btn btn-primary"
             <isif condition="${!pdict.product.readyToOrder || !pdict.product.available}">
                 disabled
             </isif>

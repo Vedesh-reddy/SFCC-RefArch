@@ -1,0 +1,14 @@
+<form action="" class="login-oauth" method="post" name="login-oauth-form">
+    <div class="form-group">
+    <button class="btn btn-block btn-outline-primary oauth-google" type="submit" name="submit" value="submit">
+        <i class="fa fa-google" aria-hidden="true"></i>
+        ${Resource.msg('button.text.oauth.google', 'login', null)}
+    </button>
+</div>
+<div class="form-group">
+    <button class="btn btn-block btn-outline-primary oauth-facebook" type="submit" name="submit" value="submit">
+        <i class="fa fa-facebook-official" aria-hidden="true"></i>
+        ${Resource.msg('button.text.oauth.facebook', 'login', null)}
+    </button>
+</div>
+</form>

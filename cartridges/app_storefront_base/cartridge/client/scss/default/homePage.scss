@@ -4,13 +4,8 @@
 @import "components/categoryTiles";
 
 .page {
-    .homepage {
-        padding-left: 0;
-        padding-right: 0;
-
-        .hero {
-            background-position-y: 0;
-        }
+    .hero {
+        background-position-y: 0;
     }
 
     .shop-the-style {
@@ -26,10 +21,6 @@
     bottom: 0.9375em;
     left: 1.875em;
 
-    @include media-breakpoint-down(xs) {
-        bottom: 0.9375em;
-    }
-
     a {
         color: $white;
     }
@@ -39,73 +30,77 @@
     }
 }
 
-.home-categories {
+.category-tile {
+    border: 1px solid white;
+}
 
-    @include media-breakpoint-down(md) {
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 100%;
-    }
+.half-height {
+    min-height: 23.125em;
 
-    .home-main-categories {
-        padding-top: 0.9375em;
-        padding-bottom: 0.9375em;
-        margin: 0;
-
-        @include media-breakpoint-down(xs) {
-            padding-top: 0;
-            padding-bottom: 0;
-        }
+    @include media-breakpoint-down(sm) {
+        min-height: 15.375em;
     }
 }
 
-.cat-cell,
-.cat-row,
-.cat-cellspan2,
-.cat-rowspan2 {
-    padding-left: 0;
-    padding-right: 0;
-    background-repeat: no-repeat;
+.full-height {
+    min-height: 51.725em;
+
+    @include media-breakpoint-down(sm) {
+        min-height: 35.375em;
+    }
+
+    @include media-breakpoint-only(xs) {
+        min-height: 15.375em;
+    }
 }
 
-.cat-rowspan2 {
-    min-height: 41.4375em;
+.mens-jackets {
     background-position: 50% 34%;
+
+    @include media-breakpoint-up(sm) {
+        background-size: auto 100%;
+    }
 
     @include media-breakpoint-down(xs) {
         background-position-y: 8%;
     }
 }
 
-.cat-cell {
-    min-height: 16.5em;
-}
-
-.cat-cell-1 {
+.womens-dresses {
     background-position: 50% 15%;
 }
 
-.cat-cell-2 {
+.womens-jewelry {
     background-position: 40% 60%;
+
+    @include media-breakpoint-up(sm) {
+        background-size: auto 100%;
+    }
 }
 
-.cat-cellspan2 {
-    min-height: 24.9375em;
+.shop-red {
     background-position-y: 60%;
+    min-height: 28.65em;
+
+    @include media-breakpoint-down(sm) {
+        min-height: 15.375em;
+    }
 
     @include media-breakpoint-down(xs) {
         background-position: 45% 85%;
     }
 }
 
-.cat-cell,
-.cat-cellspan2,
-.cat-rowspan2 {
-    border: 0.0625em solid $white;
+.container.home-categories {
 
-    @include media-breakpoint-down(xs) {
-        min-height: 11.25em;
+    @include media-breakpoint-only(xs) {
+        padding-left: 0;
+        padding-right: 0;
     }
+}
+
+.home-main-categories {
+    margin-bottom: 2em;
 }
 
 .hp-product-grid {

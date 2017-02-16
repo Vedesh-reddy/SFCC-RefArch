@@ -3,12 +3,24 @@
 
 @mixin swatch($diameter, $color) {
     @include circle($diameter, $color);
+    @include swatch-check-mark();
 
     border: 0.063em solid rgba(0, 0, 0, 0.3);
     display: inline-block;
     margin-right: 0.313em;
     position: relative;
 
+    // swatch-filter x mark to undo a filter
+    i.fa-times-circle {
+        background: $white;
+        border-radius: 50%;
+        height: 0.75em;
+        line-height: 0.8em;
+        width: 0.8em;
+    }
+}
+
+@mixin swatch-check-mark() {
     &.color-value[data-selected=true]::after {
         color: $black;
         content: '\f058';
@@ -17,6 +29,22 @@
         font-size: 1.625em;
         left: 0.295em;
         position: absolute;
+    }
+
+    &.color-value.selected::after {
+        background: $white;
+        border-radius: 50%;
+        color: $black;
+        content: '\f058';
+        display: table-caption;
+        font-family: 'FontAwesome';
+        font-size: 1.625em;
+        height: 0.75em;
+        left: 0.31em;
+        line-height: 0.8em;
+        position: absolute;
+        top: 0.35em;
+        width: 0.8em;
     }
 }
 
@@ -106,31 +134,6 @@ $swatch-colors: (
     }
 }
 
-.color-value.selected::after {
-    background: $white;
-    border-radius: 50%;
-    color: $black;
-    content: '\f058';
-    display: table-caption;
-    font-family: 'FontAwesome';
-    font-size: 1.625em;
-    height: 0.75em;
-    left: 0.31em;
-    line-height: 0.8em;
-    position: absolute;
-    top: 0.35em;
-    width: 0.8em;
-}
-
-// swatch-filter x mark to undo a filter
-i.fa-times-circle {
-    background: $white;
-    border-radius: 50%;
-    height: 0.75em;
-    line-height: 0.8em;
-    width: 0.8em;
-}
-
 .swatch-square-miscellaneous {
     background:
         linear-gradient(
@@ -169,4 +172,3 @@ i.fa-times-circle {
         transform: rotate(-35deg);
     }
 }
-

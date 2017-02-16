@@ -1,4 +1,4 @@
-<nav class="navbar bg-inverse">
+<nav class="navbar bg-inverse col-12">
     <div class="close-menu clearfix">
         <div class="back pull-left" role="button">
             <a href="#">

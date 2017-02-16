@@ -1,8 +1,8 @@
 <isdecorate template="common/layout/checkout">
 
-    <!- -------------------------------------------------------------------------------- -->
-    <!- Load Static Assets -->
-    <!- -------------------------------------------------------------------------------- -->
+    <!----------------------------------------------------------------------------------->
+    <!-- Load Static Assets -->
+    <!----------------------------------------------------------------------------------->
     <isscript>
         var assets = require('~/cartridge/scripts/assets.js');
         assets.addJs('/js/checkout.js');
@@ -14,12 +14,12 @@
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>
     <div id="checkout-main" class="container data-checkout-stage" data-checkout-stage="${pdict.currentStage}">
-        <!- -------------------------------------------------------------------------------- -->
-        <!- Help and Phone -->
-        <!- -------------------------------------------------------------------------------- -->
+        <!----------------------------------------------------------------------------------->
+        <!-- Help and Phone -->
+        <!----------------------------------------------------------------------------------->
         <div class="row hidden-xs-down">
-            <div class="col-xs-12 col-sm-5 offset-sm-7 col-md-4 offset-md-8">
-                <div class="text-xs-center">
+            <div class="col-12 col-sm-5 offset-sm-7 col-md-4 offset-md-8">
+                <div class="text-center">
                     <span>${Resource.msg('info.need.help','cart',null)}</span>
                     <span><a href="tel:${Resource.msg('info.phone.number','common',null)}">${Resource.msg('info.phone.number','common',null)}</a></span>
                 </div>
@@ -27,7 +27,7 @@
         </div>
 
         <div class="row hidden-sm-up">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <span class="grand-total-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.order.items.totalQuantity)}</span>
                 <span class="grand-total-price">${pdict.order.totals.subTotal}</span>
             </div>
@@ -36,9 +36,9 @@
         <div class="row">
             <div class="col-sm-7">
 
-                <!- -------------------------------------------------------------------------------- -->
-                <!- Checkout Forms: Shipping, Payment, Coupons, Billing, etc -->
-                <!- -------------------------------------------------------------------------------- -->
+                <!----------------------------------------------------------------------------------->
+                <!-- Checkout Forms: Shipping, Payment, Coupons, Billing, etc -->
+                <!----------------------------------------------------------------------------------->
 
                 <div class="alert alert-danger alert-dismissible fade in error-message" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -51,11 +51,11 @@
                 <isinclude template="checkout/shipping/shipping" />
 
                 <div class="card shipping-summary">
-                    <div class="card-header">
-                        <p class="checkout-summary-header checkout-card-header">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</p>
-                        <span class="edit-button">Edit</span>
+                    <div class="card-header clearfix">
+                        <h4 class="pull-left">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
+                        <span class="edit-button pull-right">Edit</span>
                     </div>
-                    <div class="checkout-card-block">
+                    <div class="card-block">
                         <isinclude template="checkout/shipping/shippingSummary" />
                     </div>
                 </div>
@@ -63,21 +63,21 @@
                 <!-- Step 2: Payment and Billing-->
                 <isinclude template="checkout/billing/billing" />
                 <div class="card payment-summary">
-                    <div class="card-header">
-                        <p class="checkout-summary-header checkout-card-header">${Resource.msg('heading.payment', 'checkout', null)}</p>
-                        <span class="edit-button">${Resource.msg('action.edit.step', 'checkout', null)}</span>
+                    <div class="card-header clearfix">
+                        <h4 class="pull-left">${Resource.msg('heading.payment', 'checkout', null)}</h4>
+                        <span class="edit-button pull-right">${Resource.msg('action.edit.step', 'checkout', null)}</span>
                     </div>
 
-                    <div class="checkout-card-block">
+                    <div class="card-block">
                         <isinclude template="checkout/billing/billingSummary" />
                     </div>
                 </div>
 
-                <!- -------------------------------------------------------------------------------- -->
-                <!- Checkout Workflow Buttons -->
-                <!- -------------------------------------------------------------------------------- -->
-                <div class="row" >
-                    <div class="col-xs-12 next-step-button">
+                <!----------------------------------------------------------------------------------->
+                <!-- Checkout Workflow Buttons -->
+                <!----------------------------------------------------------------------------------->
+                <div class="row">
+                    <div class="col-12 next-step-button">
                         <div>
                             <button class="btn btn-primary btn-block submit-shipping" type="submit" name="submit" value="submit-shipping">
                                 ${Resource.msg('button.next.payment', 'checkout', null)}
@@ -96,16 +96,16 @@
 
             </div>
 
-            <!- -------------------------------------------------------------------------------- -->
-            <!- Order Totals, Details and Summary -->
-            <!- -------------------------------------------------------------------------------- -->
+            <!----------------------------------------------------------------------------------->
+            <!-- Order Totals, Details and Summary -->
+            <!----------------------------------------------------------------------------------->
             <div class="col-sm-5">
 
                 <div class="card">
                     <div class="card-header">
-                        <span class="checkout-card-header">${Resource.msg('heading.order.summary', 'checkout', null)}</span>
+                        <h4>${Resource.msg('heading.order.summary', 'checkout', null)}</h4>
                     </div>
-                    <div class="checkout-card-block order-total-summary">
+                    <div class="card-block order-total-summary">
                         <isinclude template="checkout/orderTotalSummary" />
                     </div>
                 </div>

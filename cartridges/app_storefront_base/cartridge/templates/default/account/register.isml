@@ -5,7 +5,6 @@
     </isscript>
     <div class="container-fluid">
         <div class="row">
-            <!--- TODO:Replace image once UX has given images --->
             <div class="hero slant-down" style="background-image: url(http://www.pixelstalk.net/wp-content/uploads/2016/08/Background-HD-Wallpapers.jpg)">
                 <h1 class="page-title">${Resource.msg('page.heading.registration', 'registration', null)}</h1>
             </div>
@@ -13,11 +12,11 @@
     </div>
     <div class="container login-page registration-page ">
         <div class="row">
-            <isinclude template="components/login/navtabs" />
+            <isinclude template="account/components/navtabs" />
         </div>
         <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
             <div class="row">
-                <isinclude template="components/login/registerform" />
+                <isinclude template="account/components/registerform" />
             </div>
         </div>
     </div>

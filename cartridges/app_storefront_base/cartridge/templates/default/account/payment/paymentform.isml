@@ -41,7 +41,7 @@
             ${pdict.paymentForm.editNumber.label}
             <span class="info-icon">
                 <span class="icon">i</span>
-                <div class="form-tooltip">
+                <div class="tooltip">
                     ${Resource.msg('msg.edit.card.tooltip','payment',null)}
                 </div>
             </span>
@@ -65,8 +65,12 @@
     </isif>
 
     <!-- Expiration Date -->
+    <div class="<isif condition="${pdict.paymentForm.expirationMonth.mandatory}">required</isif>">
+        <p class="expiration-label form-control-label"> ${Resource.msg('label.payment.expiration','payment',null)}</p>
+    </div>
+    <!-- Month -->
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-6">
             <div class="form-group
                 <isif condition="${!pdict.paymentForm.expirationMonth.valid}">has-danger</isif>
                 <isif condition="${pdict.paymentForm.expirationMonth.mandatory === true}">required</isif>">
@@ -84,7 +88,7 @@
             </div>
         </div>
 
-        <div class="col-xs-6">
+        <div class="col-6">
             <div class="form-group
                 <isif condition="${!pdict.paymentForm.expirationYear.valid}">has-danger</isif>
                 <isif condition="${pdict.paymentForm.expirationYear.mandatory === true}">required</isif>">
@@ -102,9 +106,9 @@
         </div>
     </div>
 
-    <div class="row make-default-payment">
-        <div class="col-xs-12">
-            <label class="form-check-inline">
+    <div class="make-default-payment">
+        <div class="form-group">
+            <label class="form-check-label">
                 <input type="checkbox" class="form-check-input" name="makeDefaultPayment">
                     ${Resource.msg('label.payment.checkbox.makedefault', 'payment', null)}
             </label>
@@ -112,11 +116,13 @@
     </div>
 
     <!-- Cancel and Save Buttons -->
-    <div class="col-xs-6">
-        <a href="${URLUtils.url('PaymentInstruments-List')}" class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
-    </div>
-    <div class="col-xs-6">
-        <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save','account',null)}</button>
+    <div class="row">
+        <div class="col">
+            <a href="${URLUtils.url('PaymentInstruments-List')}" class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
+        </div>
+        <div class="col">
+            <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save','account',null)}</button>
+        </div>
     </div>
 
 </form>

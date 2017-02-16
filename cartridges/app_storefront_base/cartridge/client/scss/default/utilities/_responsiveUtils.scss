@@ -26,3 +26,7 @@ $pull: left, right;
         }
     }
 }
+
+.row.equal-height > [class^="col"] {
+    display: flex;
+}

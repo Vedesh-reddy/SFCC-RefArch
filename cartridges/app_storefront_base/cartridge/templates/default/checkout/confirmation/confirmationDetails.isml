@@ -1,13 +1,13 @@
 <div class="card confirm-details">
     <div class="card-header">
-        <span class="checkout-card-header">${Resource.msg('title.receipt', 'confirmation', null)}</span>
+        <h4>${Resource.msg('title.receipt', 'confirmation', null)}</h4>
     </div>
 
-    <div class="checkout-card-block">
+    <div class="card-block">
         <p>
             <span class="summary-section-label order-number-label">${Resource.msg('label.order.number', 'confirmation', null)}</span>
             <span class="summary-details order-number">${pdict.order.orderNumber}</span>
-            </br>
+            <br/>
             <span class="summary-section-label order-date-label">${Resource.msg('label.order.date', 'confirmation', null)}</span>
             <span class="summary-details order-date"><isprint value="${pdict.order.creationDate}" style="DATE_LONG"/></span>
         </p>
@@ -22,8 +22,7 @@
 
 
 <div class="card checkout-order-total-summary">
-    <div class="checkout-card-block order-total-summary">
+    <div class="card-block order-total-summary">
         <isinclude template="checkout/orderTotalSummary" />
     </div>
 </div>
-

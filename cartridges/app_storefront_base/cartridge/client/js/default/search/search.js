@@ -118,11 +118,6 @@ module.exports = function () {
         $('.refinement-bar, .modal-background').hide();
     });
 
-    // Expand/collapse refinement sections when clicked
-    $('.container').on('click', '.collapsable-sm .title', function () {
-        $(this).parents('.collapsable-sm').toggleClass('active');
-    });
-
     // Handle sort order menu selection
     $('.container').on('change', '[name=sort-order]', function (e) {
         e.preventDefault();

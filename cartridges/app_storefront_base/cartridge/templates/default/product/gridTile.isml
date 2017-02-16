@@ -18,7 +18,7 @@
         showQuickView = false;//TODO: remove the reference to this once we support all products
     }
 </isscript>
-<div class="col-xs-6 col-sm-4 product-tile" data-pid="${pdict.product.id}">
+<div class="col-6 col-sm-4 product-tile" data-pid="${pdict.product.id}">
     <div class="image-container">
         <a href="${pdict.urls.product}">
             <img class="tile-image"
@@ -65,7 +65,7 @@
         <isset name="price" value="${pdict.product.price}" scope="page" />
         <isinclude template="/product/components/pricing/main.isml" />
         <div class="reviews-compare">
-            <div class="reviews col-xs-12 col-md-6">
+            <div class="reviews col-12 col-md-6">
                 <isif condition="${pdict.display.reviews}">
                     <isloop items="${[1, 2, 3, 4, 5]}" var="star">
                         <i class="fa
@@ -82,7 +82,7 @@
                     </isloop>
                 </isif>
             </div>
-            <div class="compare col-xs-6 hidden-md-down">
+            <div class="compare col-6 hidden-md-down">
                 <isif condition="${pdict.display.compare}">
                     <input type="checkbox" id="${pdict.product.id}" value="true" />
                     <label for="${pdict.product.id}">${Resource.msg('checkbox.tile.compare', 'product', null)}</label>

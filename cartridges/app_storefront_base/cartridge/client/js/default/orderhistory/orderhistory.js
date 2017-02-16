@@ -4,7 +4,7 @@ module.exports = function () {
     $('body').on('change', '.order-history-select', function (e) {
         var $ordersContainer = $('.order-list-container');
         $ordersContainer.empty();
-        $ordersContainer.spinner().start();
+        $.spinner().start();
         $.ajax({
             url: e.currentTarget.value,
             method: 'GET',

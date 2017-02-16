@@ -32,7 +32,10 @@ server.post('AddProduct', function (req, res, next) {
 
     var quantityTotal = ProductLineItemModel.getTotalQuantity(currentBasket.allProductLineItems);
 
-    res.json({ quantityTotal: quantityTotal });
+    res.json({
+        quantityTotal: quantityTotal,
+        message: Resource.msg('text.alert.addedtobasket', 'product', null)
+    });
     next();
 });
 

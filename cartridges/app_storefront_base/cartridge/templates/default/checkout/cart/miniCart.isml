@@ -2,10 +2,10 @@
 <div class="container cart">
     <div>
         <div class="row">
-            <div class="col-xs-6">
+            <div class="col-6">
                 <h4>${Resource.msg('title.your.shopping.cart','cart',null)}</h4>
             </div>
-            <div class="col-xs-6 text-xs-right">
+            <div class="col-6 text-right">
                 <a class="normal" href="${URLUtils.https('Cart-Show')}" title="${Resource.msg('link.view.cart','cart',null)}">
                     ${Resource.msg('link.view.cart','cart',null)}
                 </a>
@@ -14,9 +14,9 @@
         <div class="product-summary">
             <isloop items="${pdict.items}" var="lineItem">
                 <div class="row">
-                    <div class="col-xs-12">
+                    <div class="col-12">
                         <div class="card uuid-${lineItem.UUID}">
-                            <div class="checkout-card-block">
+                            <div class="card-block">
                                 <isinclude template="checkout/productCard/productCard" />
                             </div>
                         </div>
@@ -27,15 +27,15 @@
     </div>
     <div class="mini-cart-footer">
         <div class="row estimated-total">
-            <div class="col-xs-8">
+            <div class="col-8">
                 <p class="sub-total-label">${Resource.msg('label.estimatedtotal','cart',null)}</p>
             </div>
-            <div class="col-xs-4">
-                <p class="text-xs-right sub-total">${pdict.totals.subTotal}</p>
+            <div class="col-4">
+                <p class="text-right sub-total">${pdict.totals.subTotal}</p>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12 checkout-continue">
+            <div class="col-12 checkout-continue">
                 <isinclude template="cart/checkoutButtons" />
             </div>
         </div>

@@ -2,7 +2,8 @@
 
     @include media-breakpoint-down($size) {
         .collapsable-#{$size} {
-            .title {
+            .title,
+            .card-header {
                 line-height: 2.5em; /* 40/16 */
 
                 @include clearfix;
@@ -14,17 +15,20 @@
                 }
             }
 
-            .content {
+            .content,
+            .card-block {
                 display: none;
             }
 
             &.active {
-                .title::after {
+                .title::after,
+                .card-header::after {
                     content: "\f077";
                     margin-top: -0.125em; /* 2/16 */
                 }
 
-                .content {
+                .content,
+                .card-block {
                     display: block;
                 }
             }

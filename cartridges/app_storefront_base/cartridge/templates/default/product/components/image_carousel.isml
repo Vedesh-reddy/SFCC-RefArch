@@ -1,5 +1,5 @@
-<div class="primary-images col-xs-12 col-sm-6">
-    <div id="pdpCarousel" class="carousel" data-interval="0">
+<div class="primary-images col-12 col-sm-6">
+    <div id="pdpCarousel" class="carousel slide" data-interval="0">
         <ol class="carousel-indicators">
             <isloop items="${pdict.product.images['large']}" var="image" status="loopStatus">
                 <li data-target="#pdpCarousel" data-slide-to="${loopStatus.index}"
@@ -11,16 +11,16 @@
         <div class="carousel-inner" role="listbox">
             <isloop items="${pdict.product.images['large']}" var="image" status="loopStatus">
                 <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
-                    <img src="${image.url}" class="img-fluid">
+                    <img src="${image.url}" class="d-block img-fluid" alt="${image.alt}">
                 </div>
             </isloop>
         </div>
 
-        <a class="left carousel-control" href="#pdpCarousel" role="button" data-slide="prev">
+        <a class="carousel-control-prev" href="#pdpCarousel" role="button" data-slide="prev">
             <span class="fa icon-prev" aria-hidden="true"></span>
             <span class="sr-only">${Resource.msg('button.previous', 'common', null)}</span>
         </a>
-        <a class="right carousel-control" href="#pdpCarousel" role="button" data-slide="next">
+        <a class="carousel-control-next" href="#pdpCarousel" role="button" data-slide="next">
             <span class="fa icon-next" aria-hidden="true"></span>
             <span class="sr-only">${Resource.msg('button.next', 'common', null)}</span>
         </a>

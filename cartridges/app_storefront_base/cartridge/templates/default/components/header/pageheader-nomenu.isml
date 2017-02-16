@@ -1,7 +1,7 @@
 <div class="header-banner">
     <div class="container">
         <div class="row">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <isslot id="header-banner" description="Slot above the site header" context="global" />
             </div>
         </div>
@@ -10,7 +10,7 @@
 <header>
     <nav role="navigation">
         <div class="header container">
-            <div class="col-xs-12">
+            <div class="col-12">
                 <div class="navbar-header brand row">
                     <a href="${URLUtils.url('Home-Show')}" title="${ Resource.msgf('global.homepage.tooltip', 'common', null, Resource.msg('global.storename', 'common', null), Resource.msg('global.home', 'common', null)) }">
                         <img class="hidden-md-down" src="${URLUtils.staticURL('/images/logo.svg')}" alt="${Resource.msg('global.storename', 'common', null)}" />

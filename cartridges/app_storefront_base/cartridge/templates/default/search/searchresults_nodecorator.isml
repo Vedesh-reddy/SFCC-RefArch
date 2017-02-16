@@ -15,21 +15,15 @@
 
 <div class="container search-results">
     <div class="row grid-header">
-        <div class="result-count col-xs-12 hidden-sm-up">
+        <div class="result-count col-md-9 col-sm-6 col-12 push-sm-3">
             <isinclude template="search/results-count" />
         </div>
-
-        <div class="pull-left col-xs-6 col-sm-3">
+        <div class="col-6 col-sm-3 pull-md-9 pull-sm-6">
             <isinclude template="/search/sort-order-menu" />
         </div>
-
-        <div class="pull-left result-count col-md-9 col-sm-6 hidden-xs-down">
-            <isinclude template="search/results-count" />
-        </div>
-
         <isif condition="${pdict.productSearch.productIds.length > 0}">
-            <div class="pull-left col-xs-6 col-sm-3 hidden-md-up">
-                <button type="button" class="btn btn-success filter-results col-xs-12">
+            <div class="col-6 col-sm-3 text-right hidden-md-up">
+                <button type="button" class="btn btn-primary filter-results col-12">
                     ${Resource.msg('button.filter', 'search', null)}
                 </button>
             </div>
@@ -37,23 +31,27 @@
     </div>
 
     <!--- Refinement bar --->
-    <div class="refinement-bar col-md-3">
-        <isinclude template="/search/searchrefinebar" />
-    </div>
+    <div class="row">
+        <div class="refinement-bar col-md-3">
+            <isinclude template="/search/searchrefinebar" />
+        </div>
 
-    <div class="col-sm-12 col-md-9">
-        <!--- Selected filters bar --->
-        <isif condition="${pdict.productSearch.selectedFilters.length > 0}" />
-            <div class="row">
-                <div class="filter-bar col-sm-12 hidden-md-up">
-                    <isinclude template="/search/filterbar" />
+        <div class="col-sm-12 col-md-9">
+            <div class="container">
+                <!--- Selected filters bar --->
+                <isif condition="${pdict.productSearch.selectedFilters.length > 0}" />
+                    <div class="row">
+                        <div class="filter-bar col-sm-12 hidden-md-up">
+                            <isinclude template="/search/filterbar" />
+                        </div>
+                    </div>
+                </isif>
+
+                <!--- Product Grid --->
+                <div class="row product-grid">
+                    <isinclude template="/search/productgrid" />
                 </div>
             </div>
-        </isif>
-
-        <!--- Product Grid --->
-        <div class="row product-grid">
-            <isinclude template="/search/productgrid" />
         </div>
     </div>
 </div>

@@ -4,6 +4,8 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "../components/formFields";
 
+$checkout-font-weight: 600;
+
 .card.ghost {
     opacity: 0.5;
 }
@@ -175,34 +177,6 @@
 
         button.place-order {
             display: none;
-        }
-    }
-}
-
-.nav.nav-tabs {
-    border-bottom: 1px solid $grey2;
-    text-align: center;
-    padding: 0;
-    margin: 0;
-
-    .nav-item {
-        border: none;
-        margin: 0;
-        text-align: center;
-        padding: 0;
-
-        .nav-link {
-            border: none;
-            font-weight: 600;
-
-            &.active {
-                border: none;
-                border-bottom: 4px solid $brand-color;
-            }
-
-            &.disable {
-                border: none;
-            }
         }
     }
 }

@@ -16,7 +16,7 @@
     <!-- Name -->
     <div class="row">
         <!-- First Name -->
-        <div class="col-xs-6">
+        <div class="col-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.firstName.valid}">has-danger</isif>
                 <isif condition="${pdict.addressForm.firstName.mandatory === true}">required</isif>">
@@ -33,7 +33,7 @@
         </div>
 
         <!-- Last Name -->
-        <div class="col-xs-6">
+        <div class="col-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.lastName.valid}">has-danger</isif>
                 <isif condition="${pdict.addressForm.lastName.mandatory === true}">required</isif>">
@@ -83,7 +83,7 @@
     <!-- Country and State drop downs -->
     <div class="row">
         <!-- Country  -->
-        <div class="col-xs-6">
+        <div class="col-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.country.valid}">has-danger</isif>
                 <isif condition="${pdict.addressForm.country.mandatory === true}">required</isif>">
@@ -102,7 +102,7 @@
         </div>
 
         <!-- State  -->
-        <div class="col-xs-6">
+        <div class="col-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.states.stateCode.valid}">has-danger</isif>
                 <isif condition="${pdict.addressForm.states.stateCode.mandatory === true}">required</isif>">
@@ -125,7 +125,7 @@
 
     <!-- City and ZIP -->
     <div class="row">
-        <div class="col-xs-6">
+        <div class="col-6">
         <!-- City  -->
             <div class="form-group
                 <isif condition="${!pdict.addressForm.city.valid}">has-danger</isif>
@@ -143,7 +143,7 @@
         </div>
 
         <!-- ZIP Code -->
-        <div class="col-xs-6">
+        <div class="col-6">
             <div class="form-group
                 <isif condition="${!pdict.addressForm.postalCode.valid}">has-danger</isif>
                 <isif condition="${pdict.addressForm.postalCode.mandatory === true}">required</isif>">
@@ -176,11 +176,13 @@
     </div>
 
     <!-- Cancel and Save Buttons -->
-    <div class="col-xs-6">
-        <a href="${URLUtils.url('Address-List')}" class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
-    </div>
-    <div class="col-xs-6">
-        <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save','account',null)}</button>
+    <div class="row">
+        <div class="col-6">
+            <a href="${URLUtils.url('Address-List')}" class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
+        </div>
+        <div class="col-6">
+            <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save','account',null)}</button>
+        </div>
     </div>
 
 </form>

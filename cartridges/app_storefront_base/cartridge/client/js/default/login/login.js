@@ -1,40 +1,87 @@
 'use strict';
 
+var formValidation = require('../components/form-validation');
+
 module.exports = function () {
-    var url;
-    $('#email-form').submit(function (e) {
+    $('form.login').submit(function (e) {
+        var form = $(this);
         e.preventDefault();
-        url = $('#password-reset').attr('href');
-        $('#reset-password-email')
-            .parents('.form-group')
-            .removeClass('has-danger');
-        $('.form-control-feedback').empty();
+        var url = form.attr('action');
+        form.spinner().start();
         $.ajax({
             url: url,
             type: 'post',
             dataType: 'json',
-            data: $('#email-form').serialize(),
+            data: form.serialize(),
             success: function (data) {
-                var receivedMsgHeading;
-                var receivedMsgBody;
-                var buttonText;
-                var bodyHtml;
-                if (data.validationError) {
-                    $('#reset-password-email')
-                        .parents('.form-group')
-                        .addClass('has-danger');
-                    $('.form-control-feedback').html(data.errorMsg);
+                form.spinner().stop();
+                if (!data.success) {
+                    formValidation(form, data);
                 } else {
-                    receivedMsgHeading = data.receivedMsgHeading;
-                    receivedMsgBody = data.receivedMsgBody;
-                    buttonText = data.buttonText;
-                    bodyHtml = '<p>' + receivedMsgBody + '</p>';
-                    $('.modal-title').text(receivedMsgHeading);
-                    $('.modal-body').empty().append(bodyHtml);
-                    $('#modalButton').text(buttonText).attr('data-dismiss', 'modal');
+                    location.href = data.redirectUrl;
                 }
+            },
+            error: function () {
+                form.spinner().stop();
             }
         });
         return false;
+    });
+
+    $('form.registration').submit(function (e) {
+        var form = $(this);
+        e.preventDefault();
+        var url = form.attr('action');
+        form.spinner().start();
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            data: form.serialize(),
+            success: function (data) {
+                form.spinner().stop();
+                if (!data.success) {
+                    formValidation(form, data);
+                } else {
+                    location.href = data.redirectUrl;
+                }
+            },
+            error: function () {
+                form.spinner().stop();
+            }
+        });
+        return false;
+    });
+
+    $('form#email-form').submit(function (e) {
+        var form = $(this);
+        e.preventDefault();
+        var url = form.attr('action');
+        form.spinner().start();
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            data: form.serialize(),
+            success: function (data) {
+                form.spinner().stop();
+                if (!data.success) {
+                    formValidation(form, data);
+                } else {
+                    $('.modal-title').text(data.receivedMsgHeading);
+                    $('.modal-body').empty().append('<p>' + data.receivedMsgBody + '</p>');
+                    $('#modalButton').text(data.buttonText).attr('data-dismiss', 'modal');
+                }
+            },
+            error: function () {
+                form.spinner().stop();
+            }
+        });
+        return false;
+    });
+
+    $('.modal-dialog').on('hidden.bs.modal', function () {
+        $('.reset-password-email').val('');
+        $('.modal-dialog .form-group.has-danger').removeClass('has-danger');
     });
 };
