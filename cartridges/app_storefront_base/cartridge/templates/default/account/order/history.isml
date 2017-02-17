@@ -24,9 +24,6 @@
                             </option>
                         </isloop>
                     </select>
-                    <div class="form-control-feedback">
-                        <isprint value="${pdict.paymentForm.expirationMonth.error}" encoding="off" />
-                    </div>
                 </div>
             </div>
         </div>
