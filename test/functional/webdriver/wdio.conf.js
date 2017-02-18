@@ -26,9 +26,18 @@ if (opts.sauce) {
     sauce.port = 80;
     sauce.user = process.env.SAUCE_USER;
     sauce.key = process.env.SAUCE_ACCESS_KEY;
-    //sauce.capabilities = opts.capabilities;
-    sauce.capabilities = {browserName: 'chrome', platform: 'OS X 10.10', version: '45.0'},
-    console.log('sauce is ', sauce);
+    sauce.capabilities = [
+        {browserName: 'chrome', platform: 'OS X 10.10', version: '45.0'},
+        {
+            browserName: 'safari',
+            appiumVersion: '1.6.3',
+            deviceName: 'iPad Retina Simulator',
+            orientation: 'PORTRAIT',
+            platformVersion: '10.0',
+            platformName: 'iOS',
+            app: ''
+        }
+        ]
 }
 
 if (opts.suite.indexOf('.js') === -1) {
