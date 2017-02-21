@@ -286,4 +286,98 @@ server.get('MiniCartShow', function (req, res, next) {
     next();
 });
 
+server.get('AddCoupon', server.middleware.https, function (req, res, next) {
+    var cartTotals;
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var productLineItemModel;
+
+    try {
+        Transaction.wrap(function () {
+            return currentBasket.createCouponLineItem(req.querystring.code, true);
+        });
+    } catch (e) {
+        switch (e.errorCode) {
+            case 'COUPON_CODE_ALREADY_IN_BASKET':
+
+            case 'COUPON_ALREADY_IN_BASKET':
+
+            case 'COUPON_CODE_ALREADY_REDEEMED':
+
+            case 'COUPON_CODE_UNKNOWN':
+
+            case 'COUPON_DISABLED':
+
+            case 'REDEMPTION_LIMIT_EXCEEDED':
+
+            case 'CUSTOMER_REDEMPTION_LIMIT_EXCEEDED':
+
+            case 'TIMEFRAME_REDEMPTION_LIMIT_EXCEEDED':
+
+            case 'NO_ACTIVE_PROMOTION':
+
+            default:
+                res.json({
+                    error: true,
+                    errorMessage: Resource.msgf(
+                        'error.unable.to.add.coupon',
+                        'cart',
+                        null,
+                        e.errorCode
+                    )
+                });
+                return next();
+        }
+    }
+
+    Transaction.wrap(function () {
+        if (currentBasket) {
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        }
+    });
+
+    productLineItemModel = new ProductLineItemModel(currentBasket);
+    cartTotals = new Totals(currentBasket);
+
+    var basket = new Cart(currentBasket, null, productLineItemModel, cartTotals);
+
+    res.json(basket);
+    next();
+});
+
+server.get('RemoveCouponLineItem', function (req, res, next) {
+    var cartTotals;
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var productLineItemModel;
+    var isCouponLineItemFound = false;
+
+    Transaction.wrap(function () {
+        if (req.querystring.uuid) {
+            var couponLineItems = currentBasket.couponLineItems;
+            for (var i = 0; i < couponLineItems.length; i++) {
+                var item = couponLineItems[i];
+                if ((item.UUID === req.querystring.uuid)) {
+                    currentBasket.removeCouponLineItem(item);
+                    isCouponLineItemFound = true;
+                    break;
+                }
+            }
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        }
+    });
+
+    if (isCouponLineItemFound) {
+        productLineItemModel = new ProductLineItemModel(currentBasket);
+        cartTotals = new Totals(currentBasket);
+        var basket = new Cart(currentBasket, null, productLineItemModel, cartTotals);
+
+        res.json(basket);
+        next();
+    } else {
+        res.setStatusCode(500);
+        res.json({ errorMessage: Resource.msg('error.cannot.remove.coupon', 'cart', null) });
+        next();
+    }
+});
+
+
 module.exports = server.exports();

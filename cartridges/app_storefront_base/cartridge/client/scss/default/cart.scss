@@ -171,6 +171,11 @@ $negative-spacer: -0.625rem;
     position: relative;
 }
 
+.remove-coupon {
+    border: none;
+    background: transparent;
+}
+
 .sub-total {
     font-weight: bold;
 }

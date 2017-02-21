@@ -2,6 +2,9 @@
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
 var money = require('dw/value/Money');
+var helper = require('~/cartridge/scripts/dwHelpers');
+var HashMap = require('dw/util/HashMap');
+var Template = require('dw/util/Template');
 
 /**
  * Accepts a total object and formats the value
@@ -46,6 +49,62 @@ function getShippingLevelDiscountTotal(lineItemContainer) {
     };
 }
 
+function getOrderLevelPriceAdjustments(lineItemContainer) {
+    var priceAdjustments = {};
+
+    helper.forEach(lineItemContainer.priceAdjustments, function (item) {
+        if (item.basedOnCoupon) {
+            var coupon = item.couponLineItem;
+            var priceAdjustment = {
+                UUID: item.UUID,
+                coupon: false,
+                couponCode: null,
+                relationShip: null,
+                callOutMsg: item.promotion.calloutMsg
+            };
+
+            if (priceAdjustments[coupon.UUID]) {
+                priceAdjustments[coupon.UUID].relationship.append(priceAdjustment);
+            } else {
+                priceAdjustments[coupon.UUID] = {
+                    UUID: coupon.UUID,
+                    coupon: true,
+                    couponCode: coupon.couponCode,
+                    relationShip: [priceAdjustment],
+                    callOutMsg: null
+                };
+            }
+        } else {
+            priceAdjustments[item.UUID] = {
+                UUID: item.UUID,
+                coupon: false,
+                couponCode: null,
+                relationShip: null,
+                callOutMsg: item.promotion.calloutMsg
+            };
+        }
+    });
+
+    var what = Object.keys(priceAdjustments).map(function (key) {
+        return priceAdjustments[key];
+    });
+
+    return what;
+}
+
+function getOrderLevelPriceAdjustmentHtml(priceAdjustments) {
+    var context = new HashMap();
+    var object = { totals: { orderLevelPriceAdjustments: priceAdjustments } };
+
+    Object.keys(object).forEach(function (key) {
+        context.put(key, object[key]);
+    });
+
+    var template = new Template('cart/cartCouponDisplay');
+    var whatText = template.render(context).text;
+    return whatText;
+}
+
 /**
  * @constructor
  * @classdesc totals class that represents the order totals of the current line item container
@@ -60,6 +119,10 @@ function totals(lineItemContainer) {
         this.totalShippingCost = getTotals(lineItemContainer.shippingTotalPrice);
         this.orderLevelDiscountTotal = getOrderLevelDiscountTotal(lineItemContainer);
         this.shippingLevelDiscountTotal = getShippingLevelDiscountTotal(lineItemContainer);
+        this.orderLevelPriceAdjustments = getOrderLevelPriceAdjustments(lineItemContainer);
+        this.orderLevelPriceAdjustmentHtml = getOrderLevelPriceAdjustmentHtml(
+            this.orderLevelPriceAdjustments
+        );
     } else {
         this.subTotal = '-';
         this.grandTotal = '-';
@@ -67,6 +130,7 @@ function totals(lineItemContainer) {
         this.totalShippingCost = '-';
         this.orderLevelDiscountTotal = '-';
         this.shippingLevelDiscountTotal = '-';
+        this.priceAdjustments = null;
     }
 }
 

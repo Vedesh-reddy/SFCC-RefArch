@@ -48,7 +48,7 @@ function updateCartTotals(data) {
  * @param {Object} message - Error message to display
  */
 function createErrorNotification(message) {
-    $('<div class="alert alert-danger alert-dismissible fade in col-12 ' +
+    $('<div class="alert alert-danger alert-dismissible fade show col-12 ' +
         'text-center notify" role="alert"> ' +
         '<button type="button" class="close" data-dismiss="alert" ' +
         'aria-label="Close"> ' +
@@ -187,6 +187,81 @@ module.exports = function () {
             },
             error: function (err) {
                 createErrorNotification(err.responseJSON.errorMessage);
+                $.spinner().stop();
+            }
+        });
+    });
+
+    $('body').on('click', '.promo-code-btn', function (e) {
+        e.preventDefault();
+        var url = $(this).data('action-url');
+        var urlParams = {
+            code: $('.coupon-code-field').val()
+        };
+        url = appendToUrl(url, urlParams);
+        $.spinner().start();
+
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                if (data.error) {
+                    createErrorNotification(data.errorMessage);
+                } else {
+                    $('.coupons-promos').empty().append(data.totals.orderLevelPriceAdjustmentHtml);
+                    updateCartTotals(data);
+                }
+                $.spinner().stop();
+            },
+            error: function (err) {
+                createErrorNotification(err.errorMessage);
+                $.spinner().stop();
+            }
+        });
+    });
+
+    $('body').on('click', '.remove-coupon', function (e) {
+        e.preventDefault();
+
+        var couponCode = $(this).data('code');
+        var uuid = $(this).data('uuid');
+        var $deleteConfirmBtn = $('.delete-coupon-confirmation-btn');
+        var $productToRemoveSpan = $('.coupon-to-remove');
+
+        $deleteConfirmBtn.data('uuid', uuid);
+        $deleteConfirmBtn.data('code', couponCode);
+
+        $productToRemoveSpan.empty().append(couponCode);
+    });
+
+    $('body').on('click', '.delete-coupon-confirmation-btn', function (e) {
+        e.preventDefault();
+
+        var url = $(this).data('action');
+        var uuid = $(this).data('uuid');
+        var couponCode = $(this).data('code');
+        var urlParams = {
+            code: couponCode,
+            uuid: uuid
+        };
+
+        url = appendToUrl(url, urlParams);
+
+        $('body > .modal-backdrop').remove();
+
+        $.spinner().start();
+        $.ajax({
+            url: url,
+            type: 'get',
+            dataType: 'json',
+            success: function (data) {
+                $('.coupon-uuid-' + uuid).remove();
+                updateCartTotals(data);
+                $.spinner().stop();
+            },
+            error: function (err) {
+                createErrorNotification(err.errorMessage);
                 $.spinner().stop();
             }
         });
