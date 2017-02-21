@@ -196,7 +196,7 @@ server.get('Details', server.middleware.https, function (req, res, next) {
             };
 
             var orderModel = orderHelpers.buildOrderModel(order, config);
-            var exitLinkText = Resource.msg('link.orderdetails.myaccount', 'account', null);
+            var exitLinkText = Resource.msg('link.orderdetails.orderhistory', 'account', null);
             var exitLinkUrl =
                 URLUtils.https('Order-History', 'orderFilter', req.querystring.orderFilter);
             res.render('account/orderdetails', {
