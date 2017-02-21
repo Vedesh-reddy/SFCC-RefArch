@@ -148,3 +148,15 @@ npm run test:functional -- --suite navigation
 **Note:** Please note that short form of this command will try to locate URL of your sandbox by reading `dw.json` file in the root directory of your project. If you don't have `dw.json` file, functional tests will fail.
 
 **Note:** The same tests can be applied to both Appium and Functional tests, the only time you might run into issues is when a certain element is hidden on a certain size of screen and visible on another size of screen. In this case, you need to compile a different selector to accommodate that.
+
+## Running UI tests via Saucelabs
+
+```
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --suite home --sauce
+```
+```
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce
+**Note:** Currently the UI automation are being configured to run on Chrome and iPad Retina only.
+
+**Note:** To see the results, please login to https://saucelabs.com/beta/dashboard/tests to find your jobs reports.
+

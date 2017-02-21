@@ -26,7 +26,18 @@ if (opts.sauce) {
     sauce.port = 80;
     sauce.user = process.env.SAUCE_USER;
     sauce.key = process.env.SAUCE_ACCESS_KEY;
-    sauce.capabilities = opts.capabilities;
+    sauce.capabilities = [
+        { browserName: 'chrome', platform: 'OS X 10.10', version: '45.0' },
+        {
+            browserName: 'safari',
+            appiumVersion: '1.6.3',
+            deviceName: 'iPad Retina Simulator',
+            orientation: 'PORTRAIT',
+            platformVersion: '10.0',
+            platformName: 'iOS',
+            app: ''
+        }
+    ];
 }
 
 if (opts.suite.indexOf('.js') === -1) {
@@ -35,6 +46,7 @@ if (opts.suite.indexOf('.js') === -1) {
 
 exports.config = Object.assign({
     framework: 'mocha',
+    services: ['sauce'],
     mochaOpts: {
         ui: 'bdd',
         timeout: opts.timeout,
