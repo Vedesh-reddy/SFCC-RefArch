@@ -3,7 +3,7 @@
 import * as common from '../helpers/common';
 
 export const BTN_ADD_TO_CART = '.add-to-cart';
-export const MINI_CART = '.minicart-icon';
+export const MINI_CART ='.mini-cart-total';
 export const PRODUCT_NAME = '.product-name hidden-sm-down';
 export const PRODUCT_NAME_SMALL = '.product-detail';
 export const PRODUCT_GRID = '.container .product-grid';
