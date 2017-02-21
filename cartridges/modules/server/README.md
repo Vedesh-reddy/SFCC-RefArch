@@ -70,7 +70,7 @@ var server = require('server');
 
 server.extend(page);
 
-server.append(function(req, res, next) {
+server.append('Show', function(req, res, next) {
     res.setViewData({ value: 'Hello Commerce Cloud' });
     next();
 });
@@ -89,7 +89,7 @@ var server = require('server');
 
 server.extend(page);
 
-server.append(function(req, res, next) {
+server.append('Show', function(req, res, next) {
     res.render('myNewTemplate');
     next();
 });
