@@ -152,11 +152,11 @@ npm run test:functional -- --suite navigation
 ## Running UI tests via Saucelabs
 
 ```
-npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-compnay.demandware.net/s/SiteGenesis --suite home --sauce
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --suite home --sauce
 ```
 ```
-npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-compnay.demandware.net/s/SiteGenesis --sauce
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce
 **Note:** Currently the UI automation are being configured to run on Chrome and iPad Retina only.
 
-**Note:** To see the results, please login to https://saucelabs.com/beta/dashboard/tests to find your jobs reports. 
+**Note:** To see the results, please login to https://saucelabs.com/beta/dashboard/tests to find your jobs reports.
 
