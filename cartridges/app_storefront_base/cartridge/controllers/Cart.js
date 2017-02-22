@@ -287,96 +287,94 @@ server.get('MiniCartShow', function (req, res, next) {
 });
 
 server.get('AddCoupon', server.middleware.https, function (req, res, next) {
-    var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.setStatusCode(500);
+        res.json({ errorMessage: Resource.msg('error.add.coupon', 'cart', null) });
+        return next();
+    }
+
+    var basket;
+    var cartTotals;
+    var error = false;
+    var errorMessage;
     var productLineItemModel;
 
     try {
         Transaction.wrap(function () {
-            return currentBasket.createCouponLineItem(req.querystring.code, true);
+            return currentBasket.createCouponLineItem(req.querystring.couponCode, true);
         });
     } catch (e) {
-        switch (e.errorCode) {
-            case 'COUPON_CODE_ALREADY_IN_BASKET':
+        error = true;
+        var errorCodes = {
+            COUPON_CODE_ALREADY_IN_BASKET: 'error.coupon.already.in.cart',
+            COUPON_ALREADY_IN_BASKET: 'error.coupon.cannot.be.combined',
+            COUPON_CODE_ALREADY_REDEEMED: 'error.coupon.already.redeemed',
+            COUPON_CODE_UNKNOWN: 'error.unable.to.add.coupon',
+            COUPON_DISABLED: 'error.unable.to.add.coupon',
+            REDEMPTION_LIMIT_EXCEEDED: 'error.unable.to.add.coupon',
+            TIMEFRAME_REDEMPTION_LIMIT_EXCEEDED: 'error.unable.to.add.coupon',
+            NO_ACTIVE_PROMOTION: 'error.unable.to.add.coupon',
+            default: 'error.unable.to.add.coupon'
+        };
 
-            case 'COUPON_ALREADY_IN_BASKET':
+        var errorMessageKey = errorCodes[e.errorCode] || errorCodes.default;
+        errorMessage = Resource.msg(errorMessageKey, 'cart', null);
+    }
 
-            case 'COUPON_CODE_ALREADY_REDEEMED':
-
-            case 'COUPON_CODE_UNKNOWN':
-
-            case 'COUPON_DISABLED':
-
-            case 'REDEMPTION_LIMIT_EXCEEDED':
-
-            case 'CUSTOMER_REDEMPTION_LIMIT_EXCEEDED':
-
-            case 'TIMEFRAME_REDEMPTION_LIMIT_EXCEEDED':
-
-            case 'NO_ACTIVE_PROMOTION':
-
-            default:
-                res.json({
-                    error: true,
-                    errorMessage: Resource.msgf(
-                        'error.unable.to.add.coupon',
-                        'cart',
-                        null,
-                        e.errorCode
-                    )
-                });
-                return next();
-        }
+    if (error) {
+        res.json({
+            error: error,
+            errorMessage: errorMessage
+        });
+        return next();
     }
 
     Transaction.wrap(function () {
-        if (currentBasket) {
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-        }
+        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
     });
 
     productLineItemModel = new ProductLineItemModel(currentBasket);
     cartTotals = new Totals(currentBasket);
 
-    var basket = new Cart(currentBasket, null, productLineItemModel, cartTotals);
+    basket = new Cart(currentBasket, null, productLineItemModel, cartTotals);
 
     res.json(basket);
-    next();
+    return next();
 });
 
 server.get('RemoveCouponLineItem', function (req, res, next) {
-    var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
+    var basket;
+    var cartTotals;
+    var couponLineItem;
+    var helper = require('~/cartridge/scripts/dwHelpers');
     var productLineItemModel;
-    var isCouponLineItemFound = false;
 
-    Transaction.wrap(function () {
-        if (req.querystring.uuid) {
-            var couponLineItems = currentBasket.couponLineItems;
-            for (var i = 0; i < couponLineItems.length; i++) {
-                var item = couponLineItems[i];
-                if ((item.UUID === req.querystring.uuid)) {
-                    currentBasket.removeCouponLineItem(item);
-                    isCouponLineItemFound = true;
-                    break;
-                }
-            }
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+    if (currentBasket && req.querystring.uuid) {
+        couponLineItem = helper.find(currentBasket.couponLineItems, function (item) {
+            return item.UUID === req.querystring.uuid;
+        });
+
+        if (couponLineItem) {
+            Transaction.wrap(function () {
+                currentBasket.removeCouponLineItem(couponLineItem);
+                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            });
+
+            productLineItemModel = new ProductLineItemModel(currentBasket);
+            cartTotals = new Totals(currentBasket);
+            basket = new Cart(currentBasket, null, productLineItemModel, cartTotals);
+
+            res.json(basket);
+            return next();
         }
-    });
-
-    if (isCouponLineItemFound) {
-        productLineItemModel = new ProductLineItemModel(currentBasket);
-        cartTotals = new Totals(currentBasket);
-        var basket = new Cart(currentBasket, null, productLineItemModel, cartTotals);
-
-        res.json(basket);
-        next();
-    } else {
-        res.setStatusCode(500);
-        res.json({ errorMessage: Resource.msg('error.cannot.remove.coupon', 'cart', null) });
-        next();
     }
+
+    res.setStatusCode(500);
+    res.json({ errorMessage: Resource.msg('error.cannot.remove.coupon', 'cart', null) });
+    return next();
 });
 
 

@@ -13,8 +13,9 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">${Resource.msg('button.cancel','cart',null)}</button>
                 <button type="button" class="btn btn-primary delete-coupon-confirmation-btn"
                         data-dismiss="modal"
-                        data-action="${pdict.actionUrls.removeCouponLineItem}"
-                >${Resource.msg('button.confirm','cart',null)}</button>
+                        data-action="${pdict.actionUrls.removeCouponLineItem}">
+                    ${Resource.msg('button.confirm','cart',null)}
+                </button>
             </div>
         </div>
     </div>

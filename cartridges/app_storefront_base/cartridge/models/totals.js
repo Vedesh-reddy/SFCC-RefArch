@@ -49,60 +49,60 @@ function getShippingLevelDiscountTotal(lineItemContainer) {
     };
 }
 
-function getOrderLevelPriceAdjustments(lineItemContainer) {
-    var priceAdjustments = {};
+/**
+ * creates an array of discounts.
+ * @param {dw.order.LineItemCtnr} lineItemContainer - the current line item container
+ * @returns {Array} an array of objects containing promotion and coupon information
+ */
+function getDiscounts(lineItemContainer) {
+    var discounts = {};
+
+    helper.forEach(lineItemContainer.couponLineItems, function (couponLineItem) {
+        var priceAdjustments = helper.map(
+            couponLineItem.priceAdjustments, function (priceAdjustment) {
+                return { callOutMsg: priceAdjustment.promotion.calloutMsg };
+            });
+        discounts[couponLineItem.UUID] = {
+            type: 'coupon',
+            UUID: couponLineItem.UUID,
+            couponCode: couponLineItem.couponCode,
+            applied: couponLineItem.applied,
+            valid: couponLineItem.valid,
+            relationship: priceAdjustments
+        };
+    });
 
     helper.forEach(lineItemContainer.priceAdjustments, function (item) {
-        if (item.basedOnCoupon) {
-            var coupon = item.couponLineItem;
-            var priceAdjustment = {
+        if (!item.basedOnCoupon) {
+            discounts[item.UUID] = {
                 UUID: item.UUID,
-                coupon: false,
-                couponCode: null,
-                relationShip: null,
-                callOutMsg: item.promotion.calloutMsg
-            };
-
-            if (priceAdjustments[coupon.UUID]) {
-                priceAdjustments[coupon.UUID].relationship.append(priceAdjustment);
-            } else {
-                priceAdjustments[coupon.UUID] = {
-                    UUID: coupon.UUID,
-                    coupon: true,
-                    couponCode: coupon.couponCode,
-                    relationShip: [priceAdjustment],
-                    callOutMsg: null
-                };
-            }
-        } else {
-            priceAdjustments[item.UUID] = {
-                UUID: item.UUID,
-                coupon: false,
-                couponCode: null,
-                relationShip: null,
+                type: 'promotion',
                 callOutMsg: item.promotion.calloutMsg
             };
         }
     });
 
-    var what = Object.keys(priceAdjustments).map(function (key) {
-        return priceAdjustments[key];
+    return Object.keys(discounts).map(function (key) {
+        return discounts[key];
     });
-
-    return what;
 }
 
-function getOrderLevelPriceAdjustmentHtml(priceAdjustments) {
+/**
+ * create the discount results html
+ * @param {Array} discounts - an array of objects that contains coupon and priceAdjustment
+ * information
+ * @returns {string} The rendered HTML
+ */
+function getDiscountsHtml(discounts) {
     var context = new HashMap();
-    var object = { totals: { orderLevelPriceAdjustments: priceAdjustments } };
+    var object = { totals: { discounts: discounts } };
 
     Object.keys(object).forEach(function (key) {
         context.put(key, object[key]);
     });
 
     var template = new Template('cart/cartCouponDisplay');
-    var whatText = template.render(context).text;
-    return whatText;
+    return template.render(context).text;
 }
 
 /**
@@ -119,10 +119,8 @@ function totals(lineItemContainer) {
         this.totalShippingCost = getTotals(lineItemContainer.shippingTotalPrice);
         this.orderLevelDiscountTotal = getOrderLevelDiscountTotal(lineItemContainer);
         this.shippingLevelDiscountTotal = getShippingLevelDiscountTotal(lineItemContainer);
-        this.orderLevelPriceAdjustments = getOrderLevelPriceAdjustments(lineItemContainer);
-        this.orderLevelPriceAdjustmentHtml = getOrderLevelPriceAdjustmentHtml(
-            this.orderLevelPriceAdjustments
-        );
+        this.discounts = getDiscounts(lineItemContainer);
+        this.discountsHtml = getDiscountsHtml(this.discounts);
     } else {
         this.subTotal = '-';
         this.grandTotal = '-';

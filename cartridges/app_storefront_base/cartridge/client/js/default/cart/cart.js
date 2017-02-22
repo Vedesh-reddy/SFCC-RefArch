@@ -28,10 +28,11 @@ function updateCartTotals(data) {
     $('.minicart-quantity').empty().append(data.numItems);
 
     if (data.totals.orderLevelDiscountTotal.value > 0) {
-        $('.order-discount').show();
-        $('.order-discount-total').text('- ' + data.totals.orderLevelDiscountTotal.formatted);
+        $('.order-discount').removeClass('hide-order-discount');
+        $('.order-discount-total').empty()
+            .append('- ' + data.totals.orderLevelDiscountTotal.formatted);
     } else {
-        $('.order-discount').hide();
+        $('.order-discount').addClass('hide-order-discount');
     }
 
     if (data.totals.shippingLevelDiscountTotal.value > 0) {
@@ -116,6 +117,7 @@ module.exports = function () {
                     $('.mini-cart .popover').removeClass('show');
                 } else {
                     $('.uuid-' + uuid).remove();
+                    $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
                 }
                 $.spinner().stop();
@@ -155,6 +157,7 @@ module.exports = function () {
                         break;
                     }
                 }
+                $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                 updateCartTotals(data);
                 $.spinner().stop();
             },
@@ -192,26 +195,35 @@ module.exports = function () {
         });
     });
 
-    $('body').on('click', '.promo-code-btn', function (e) {
+    $('.promo-code-form').submit(function (e) {
         e.preventDefault();
-        var url = $(this).data('action-url');
-        var urlParams = {
-            code: $('.coupon-code-field').val()
-        };
-        url = appendToUrl(url, urlParams);
         $.spinner().start();
+        $('.coupon-missing-error').hide();
+        $('.coupon-error-message').empty();
+        if (!$('.coupon-code-field').val()) {
+            $('.promo-code-form').addClass('has-danger');
+            $('.coupon-missing-error').show();
+            $.spinner().stop();
+            return false;
+        }
+        var $form = $('.promo-code-form');
+        $form.removeClass('has-danger');
+        $('.coupon-error-message').empty();
 
         $.ajax({
-            url: url,
-            type: 'get',
+            url: $form.attr('action'),
+            type: 'GET',
             dataType: 'json',
+            data: $form.serialize(),
             success: function (data) {
                 if (data.error) {
-                    createErrorNotification(data.errorMessage);
+                    $('.promo-code-form').addClass('has-danger');
+                    $('.coupon-error-message').empty().append(data.errorMessage);
                 } else {
-                    $('.coupons-promos').empty().append(data.totals.orderLevelPriceAdjustmentHtml);
+                    $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
                 }
+                $('.coupon-code-field').val('');
                 $.spinner().stop();
             },
             error: function (err) {
@@ -219,6 +231,7 @@ module.exports = function () {
                 $.spinner().stop();
             }
         });
+        return false;
     });
 
     $('body').on('click', '.remove-coupon', function (e) {
