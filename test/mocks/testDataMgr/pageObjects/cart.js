@@ -42,7 +42,7 @@ export function verifyCartEmpty() {
 
 export function getItemList() {
     return browser
-        .waitForExist(CART_ITEMS, 5000)
+        .waitForExist(CART_ITEMS, 6000)
         .elements(CART_ITEMS);
 }
 
