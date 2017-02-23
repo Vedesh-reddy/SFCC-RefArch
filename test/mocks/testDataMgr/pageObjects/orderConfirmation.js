@@ -6,7 +6,7 @@ export const ORDER_THANK_YOU_MSG = '.order-thank-you-msg';
 export const ORDER_THANK_YOU_EMAIL_MSG = '.order-thank-you-email-msg';
 
 export const RECEIPT_CONTAINER = '.container.receipt';
-export const RECEIPT_HEADER = '.confirm-details .checkout-card-header';
+export const RECEIPT_HEADER = '.confirm-details .card-header';
 
 export const ORDER_NUMBER_LABEL = '.order-number-label';
 export const ORDER_NUMBER = '.order-number';

@@ -55,7 +55,7 @@ describe('Query Search and single Refinement - general product', () => {
 
     it('#1 should return 79 Results for pants when query search for pants', () => {
         return common.getVisibleSelector(search.searchResultLarge, search.searchResultSmall)
-            .then(mySearchSelector => verifySearchResults(mySearchSelector, expectedString));
+            .then(() => verifySearchResults(search.searchResult, expectedString));
     });
 
     it('#2 should return 18 results for color refinements=blue', () => {
@@ -72,16 +72,12 @@ describe('Query Search and single Refinement - general product', () => {
                         .then(() => browser.click(search.blueColorRefinementSelector))
                         .then(() => common.waitUntilAjaxCallEnded())
                         .then(() => browser.click(search.buttonClose))
-                        .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                            search.colorRefinementSmall))
-                        .then(mySearchSelector => verifySearchResults(mySearchSelector, expectedString2));
+                        .then(() => verifySearchResults(search.searchResult, expectedString2));
                 }
                 // access desktop/laptop
                 return browser.click(search.blueColorRefinementSelector)
                     .then(() => common.waitUntilAjaxCallEnded())
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => verifySearchResults(mySearchSelector, expectedString2));
+                    .then(() => verifySearchResults(search.searchResult, expectedString2));
             });
     });
 
@@ -106,9 +102,7 @@ describe('Query Search and single Refinement - general product', () => {
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.getAttribute(search.priceRefinementTitle, 'title'))
                     .then(title => assert.equal(title, 'Currently Refined by Price: $20 - $49.99'))
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => verifySearchResults(mySearchSelector, expectedString3));
+                    .then(() => verifySearchResults(search.searchResult, expectedString3));
             });
     });
 
@@ -131,9 +125,7 @@ describe('Query Search and single Refinement - general product', () => {
                 // access desktop/laptop
                 return browser.click(search.newArrivalRefinementUnchecked)
                     .then(() => common.waitUntilAjaxCallEnded())
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => verifySearchResults(mySearchSelector, expectedString4));
+                    .then(() => verifySearchResults(search.searchResult, expectedString4));
             });
     });
 });

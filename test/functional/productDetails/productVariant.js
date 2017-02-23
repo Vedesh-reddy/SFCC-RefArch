@@ -3,12 +3,13 @@
 import { assert } from 'chai';
 import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
+import * as common from '../../mocks/testDataMgr/helpers/common';
 
 describe('Product Details - Product Variant', () => {
     const variantId = '708141676190';
     const expectedPrimaryImage = 'PG.15J0037EJ.WHITEFB.PZ.jpg';
     const expectedSecondaryImage = 'PG.15J0037EJ.WHITEFB.BZ.jpg';
-    const nextButton = '.right.carousel-control .icon-next';
+    const nextButton = '.carousel-control-next .icon-next';
     const elementPrimaryImage = '.carousel-item.active .img-fluid';
     const elementImage = '.img-fluid';
 
@@ -28,8 +29,8 @@ describe('Product Details - Product Variant', () => {
     });
 
     it('should display its product name', () => {
-        return browser.waitUntil(() => browser.element(productDetailPage.PRODUCT_NAME))
-            .then(() => browser.getHTML(productDetailPage.PRODUCT_NAME))
+        return common.getVisibleSelector(productDetailPage.PRODUCT_NAME, productDetailPage.PRODUCT_NAME_SMALL)
+            .then(mySelector => browser.getHTML(mySelector))
             .then(name => assert.include(name, 'No-Iron Textured Dress Shirt'));
     });
 

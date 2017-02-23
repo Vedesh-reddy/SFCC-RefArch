@@ -34,9 +34,7 @@ describe('Testing a NoResultsPage presented when search for a non-existing produ
             })
             .then(() => browser.submitForm(myQuerySelector))
             .then(() => browser.waitForExist(search.pdpMain))
-            .then(() => common.getVisibleSelector(search.searchNoResultLarge,
-                search.searchNoResultSmall))
-            .then(mySearchSelector => browser.getText(mySearchSelector))
+            .then(() => browser.getText(search.searchResult))
             .then(displayText => assert.equal(displayText, [s1 + ' ' + queryString, s2, s3, s4, s5].join('\n')))
             .then(() => common.waitUntilPageLoaded());
     });
