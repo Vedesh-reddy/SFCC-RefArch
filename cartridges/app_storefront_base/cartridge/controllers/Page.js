@@ -2,24 +2,25 @@
 
 var server = require('server');
 
+var ContentMgr = require('dw/content/ContentMgr');
+var Logger = require('dw/system/Logger');
+
+var ContentModel = require('~/cartridge/models/content');
+
 server.get('Include', server.middleware.include, function (req, res, next) {
-    var ContentMgr = require('dw/content/ContentMgr');
-    var Content = require('~/cartridge/models/content');
-    var logger = require('dw/system/Logger');
+    var apiContent = ContentMgr.getContent(req.querystring.cid);
 
-    var contentMgr = ContentMgr.getContent(req.querystring.cid);
-
-    if (contentMgr) {
-        var content = new Content(contentMgr);
+    if (apiContent) {
+        var content = new ContentModel(apiContent, 'components/content/contentassetinc');
         if (content.template) {
             res.cacheExpiration(24);
             res.render(content.template, { content: content });
         } else {
-            logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
+            Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
             res.render('/components/content/offlinecontent');
         }
     } else {
-        logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);
+        Logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);
     }
     next();
 });
@@ -50,6 +51,25 @@ server.get('Locale', function (req, res, next) {
     var localeModel = new LocaleModel(locale.getLocale(req.locale.id));
 
     res.render('/components/header/countryselector', localeModel);
+    next();
+});
+
+server.get('Show', function (req, res, next) {
+    var apiContent = ContentMgr.getContent(req.querystring.cid);
+
+    if (apiContent) {
+        var content = new ContentModel(apiContent, 'content/contentasset');
+        if (content.template) {
+            res.cacheExpiration(24);
+            res.render(content.template, { content: content });
+        } else {
+            Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
+            res.render('/components/content/offlinecontent');
+        }
+    } else {
+        Logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);
+    }
+
     next();
 });
 
