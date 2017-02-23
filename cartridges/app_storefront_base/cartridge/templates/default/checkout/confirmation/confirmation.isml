@@ -3,7 +3,7 @@
         var assets = require('~/cartridge/scripts/assets.js');
         assets.addCss('/css/checkout/checkout.css');
     </isscript>
-    <isset name="miniCart" value="${false}" scope="page" />
+
     <!--- Replace image once UX has given images --->
     <div class="hero slant-down hero-confirmation">
         <h1 class="page-title">${Resource.msg('title.thank.you.page','confirmation',null)}</h1>

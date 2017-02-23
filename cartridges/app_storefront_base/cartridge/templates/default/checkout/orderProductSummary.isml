@@ -1,3 +1,4 @@
+<isset name="miniCart" value="${false}" scope="page" />
 <div class="card order-product-summary">
     <div class="card-block">
         <div class="row leading-lines">
