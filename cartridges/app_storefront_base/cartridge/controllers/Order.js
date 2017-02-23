@@ -2,10 +2,17 @@
 
 var server = require('server');
 
+var CustomerMgr = require('dw/customer/CustomerMgr');
+var HashMap = require('dw/util/HashMap');
+var Mail = require('dw/net/Mail');
 var OrderMgr = require('dw/order/OrderMgr');
 var Order = require('dw/order/Order');
 var Resource = require('dw/web/Resource');
+var Site = require('dw/system/Site');
+var Template = require('dw/util/Template');
+var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
+
 var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
 
 /**
@@ -86,14 +93,64 @@ function getOrders(currentCustomer, querystring) {
     };
 }
 
+/**
+ * Sends a confirmation email to the newly registered user
+ * @param {Object} registeredUser - The newly registered user
+ * @returns {void}
+ */
+function sendConfirmationEmail(registeredUser) {
+    var confirmationEmail = new Mail();
+    var context = new HashMap();
+    var template;
+    var content;
+
+    var userObject = {
+        email: registeredUser.email,
+        firstName: registeredUser.firstName,
+        lastName: registeredUser.lastName,
+        url: URLUtils.https('Login-Show')
+    };
+
+    confirmationEmail.addTo(userObject.email);
+    confirmationEmail.setSubject(
+        Resource.msg('email.subject.new.registration', 'registration', null)
+    );
+    confirmationEmail.setFrom(Site.current.getCustomPreferenceValue('customerServiceEmail')
+        || 'no-reply@salesforce.com');
+
+    Object.keys(userObject).forEach(function (key) {
+        context.put(key, userObject[key]);
+    });
+
+    template = new Template('checkout/confirmation/accountRegisteredEmail');
+    content = template.render(context).text;
+    confirmationEmail.setContent(content, 'text/html', 'UTF-8');
+    confirmationEmail.send();
+}
+
 server.get('Confirm', function (req, res, next) {
     var order = OrderMgr.getOrder(req.querystring.ID);
     var config = {
         numberOfLineItems: '*'
     };
     var orderModel = orderHelpers.buildOrderModel(order, config);
+    var passwordForm;
 
-    res.render('checkout/confirmation/confirmation', { order: orderModel });
+    if (!req.currentCustomer.profile) {
+        passwordForm = server.forms.getForm('newpasswords');
+        passwordForm.clear();
+        res.render('checkout/confirmation/confirmation', {
+            order: orderModel,
+            returningCustomer: false,
+            passwordForm: passwordForm
+        });
+    } else {
+        res.render('checkout/confirmation/confirmation', {
+            order: orderModel,
+            returningCustomer: true
+        });
+    }
+
     next();
 });
 
@@ -224,6 +281,82 @@ server.get('Filtered', server.middleware.https, function (req, res, next) {
             filterValues: filterValues,
             orderFilter: req.querystring.orderFilter,
             accountlanding: false
+        });
+    }
+    next();
+});
+
+server.post('CreateAccount', server.middleware.https, function (req, res, next) {
+    var formErrors = require('~/cartridge/scripts/formErrors');
+
+    var passwordForm = server.forms.getForm('newpasswords');
+    var newPassword = passwordForm.newpassword.htmlValue;
+    var confirmPassword = passwordForm.newpasswordconfirm.htmlValue;
+    if (newPassword !== confirmPassword) {
+        passwordForm.valid = false;
+        passwordForm.newpasswordconfirm.valid = false;
+        passwordForm.newpasswordconfirm.error =
+            Resource.msg('error.message.mismatch.newpassword', 'forms', null);
+    }
+
+    var order = OrderMgr.getOrder(req.querystring.ID);
+
+    var registrationObj = {
+        firstName: order.billingAddress.firstName,
+        lastName: order.billingAddress.lastName,
+        phone: order.billingAddress.phone,
+        email: order.customerEmail,
+        password: newPassword
+    };
+
+    if (passwordForm.valid) {
+        res.setViewData(registrationObj);
+
+        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var registrationData = res.getViewData();
+
+            var login = registrationData.email;
+            var password = registrationData.password;
+            var newCustomer;
+            var authenticatedCustomer;
+            var newCustomerProfile;
+            var registeredUser;
+
+            // attempt to create a new user and log that user in.
+            try {
+                Transaction.wrap(function () {
+                    newCustomer = CustomerMgr.createCustomer(login, password);
+                    authenticatedCustomer =
+                        CustomerMgr.loginCustomer(login, password, false);
+                    if (newCustomer && authenticatedCustomer.authenticated) {
+                        // assign values to the profile
+                        newCustomerProfile = newCustomer.getProfile();
+                        newCustomerProfile.firstName = registrationData.firstName;
+                        newCustomerProfile.lastName = registrationData.lastName;
+                        newCustomerProfile.phoneHome = registrationData.phone;
+                        newCustomerProfile.email = registrationData.email;
+                        order.setCustomer(newCustomer);
+                        registeredUser = {
+                            email: login,
+                            firstName: registrationData.firstName,
+                            lastName: registrationData.lastName
+                        };
+                        sendConfirmationEmail(registeredUser);
+                        res.json({
+                            success: true,
+                            redirectUrl: URLUtils.url('Account-Show').toString()
+                        });
+                    }
+                });
+            } catch (e) {
+                res.json({
+                    error: [Resource.msg('error.account.exists', 'checkout', null)]
+                }); // Show error if the login email already exists
+            }
+        });
+    } else {
+        res.json({
+            fields: formErrors(passwordForm)
         });
     }
     next();

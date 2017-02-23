@@ -4,16 +4,38 @@
             <h4>${Resource.msg('title.save.customer.information', 'confirmation', null)}</h4>
         </div>
         <div class="card-block">
-            <form class="create-account-form">
-                <div class="form-group password-form">
-                    <label class="password-label" for="password">${Resource.msg('field.password','confirmation',null)}</label>
-                    <input type="text" class="form-control" id="password">
+            <form
+                action="${URLUtils.url('Order-CreateAccount', 'ID', pdict.order.orderNumber)}"
+                class="checkout-registration"
+                method="POST"
+                name="checkout-register-form" ${pdict.passwordForm.attributes}>
+                <div class="form-group
+                    <isif condition="${pdict.passwordForm.newpassword.mandatory === true}">required</isif>">
+                    <label class="form-control-label" for="newPassword">
+                        ${Resource.msg('field.password','confirmation',null)}
+                    </label>
+                    <input
+                       type="password"
+                       class="form-control"
+                       id="newPassword"
+                       <isprint value="${pdict.passwordForm.newpassword.attributes}" encoding="off" />>
+                    <div class="form-control-feedback"></div>
                 </div>
-                <div class="form-group confirm-password-form">
-                    <label class="confirm-password-label" for="confirmPassword">${Resource.msg('field.confirm.password','confirmation',null)}</label>
-                    <input type="text" class="form-control" id="confirmPassword">
+                <div class="form-group
+                    <isif condition="${pdict.passwordForm.newpasswordconfirm.mandatory === true}">required</isif>">
+                    <label class="form-control-label" for="newPasswordConfirm">
+                        ${Resource.msg('field.confirm.password','confirmation',null)}
+                    </label>
+                    <input
+                       type="password"
+                       class="form-control"
+                       id="newPasswordConfirm"
+                       <isprint value="${pdict.passwordForm.newpasswordconfirm.attributes}" encoding="off" />>
+                    <div class="form-control-feedback"></div>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">${Resource.msg('button.create.account','confirmation',null)}</button>
+                <button class="btn btn-primary btn-block">
+                    ${Resource.msg('button.create.account','confirmation',null)}
+                </button>
             </form>
         </div>
     </div>

@@ -36,7 +36,7 @@ var orderHelpers = require('~/cartridge/scripts/placeOrderHelpers');
 
 server.get('Login', server.middleware.https, function (req, res, next) {
     if (req.currentCustomer.profile) {
-        res.redirect(URLUtils.url('Checkout-LoginForm'));
+        res.redirect(URLUtils.url('Checkout-Start'));
     } else {
         var rememberMe = false;
         var userName = '';
