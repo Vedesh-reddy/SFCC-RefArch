@@ -106,8 +106,7 @@ describe('Query Search and multiple refinements -  general product', () => {
                     return verifySearchResults(search.searchResultCount, expectedString2);
                 }
                 // access desktop/laptop
-                return common.getVisibleSelector(search.colorRefinementLarge, search.colorRefinementSmall)
-                    .then(mySearchSelector => verifySearchResults(mySearchSelector, expectedString2));
+                return verifySearchResults(search.searchResult, expectedString2);
             });
     });
 
@@ -158,9 +157,7 @@ describe('Query Search and multiple refinements -  general product', () => {
                 // access desktop/laptop
                 return browser.click(search.resetButton)
                     .then(() => common.waitUntilAjaxCallEnded())
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => verifySearchResults(mySearchSelector, expectedString));
+                    .then(() => verifySearchResults(search.searchResult, expectedString));
             });
     });
 });

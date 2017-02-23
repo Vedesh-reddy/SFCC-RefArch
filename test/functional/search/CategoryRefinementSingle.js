@@ -67,8 +67,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
         .then(() => browser.pause(2000)));
 
     it('#1 should return 275 Results when Navigate to Women->Clothing->Tops', () => {
-        return common.getVisibleSelector(search.searchResultLarge, search.searchResultSmall)
-            .then(mySearchSelector => verifySearchResults(mySearchSelector, expectedString));
+        return verifySearchResults(search.searchResult, expectedString);
     });
 
 
@@ -83,17 +82,13 @@ describe('Category Navigation and single Refinement - General Product', () => {
                         .then(() => browser.waitForExist(search.refinementBarColorActive))
                         .then(() => browser.click(search.redColorRefinementSelector))
                         .then(() => browser.pause(2000))
-                        .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                            search.colorRefinementSmall))
-                        .then(mySearchSelector => browser.getText(mySearchSelector))
+                        .then(() => browser.getText(search.searchResult))
                         .then(displayText => assert.equal(displayText, searchResultMsg2));
                 }
                 // access desktop or laptop browser
                 return browser.click(search.redColorRefinementSelector)
                     .then(() => browser.waitForExist(search.redColorRefinementSelectorChecked))
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
+                    .then(() => browser.getText(search.searchResult))
                     .then(displayText => assert.equal(displayText, searchResultMsg2))
                     .then(() => common.waitUntilPageLoaded());
             });
@@ -119,9 +114,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                     .then(() => browser.getAttribute(search.price3RefinementTitle, 'title'))
                     .then(title => assert.equal(title, 'Currently Refined by Price: $50 - $99.99'))
                     .then(() => browser.waitForExist(search.pdpMain))
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
+                    .then(() => browser.getText(search.searchResult))
                     .then(displayText => assert.equal(displayText, searchResultMsg2))
                     .then(() => common.waitUntilPageLoaded());
             });
@@ -145,9 +138,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                 // access desktop or laptop browser
                 return browser.click(search.newArrivalRefinementUnchecked)
                     .then(() => browser.pause(2000))
-                    .then(() => common.getVisibleSelector(search.colorRefinementLarge,
-                        search.colorRefinementSmall))
-                    .then(mySearchSelector => browser.getText(mySearchSelector))
+                    .then(() => browser.getText(search.searchResult))
                     .then(displayText => assert.equal(displayText, searchResultMsg2))
                     .then(() => common.waitUntilPageLoaded());
             });
