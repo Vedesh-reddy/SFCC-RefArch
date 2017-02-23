@@ -53,7 +53,7 @@ module.exports = function () {
         return false;
     });
 
-    $('form#email-form').submit(function (e) {
+    $('.reset-password-form').submit(function (e) {
         var form = $(this);
         e.preventDefault();
         var url = form.attr('action');
@@ -80,8 +80,8 @@ module.exports = function () {
         return false;
     });
 
-    $('.modal-dialog').on('hidden.bs.modal', function () {
-        $('.reset-password-email').val('');
+    $('#login .modal').on('hidden.bs.modal', function () {
+        $('#reset-password-email').val('');
         $('.modal-dialog .form-group.has-danger').removeClass('has-danger');
     });
 };

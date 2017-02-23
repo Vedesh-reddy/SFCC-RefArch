@@ -30,19 +30,7 @@
 
 .login-banner {
     background-image: url('../images/account.jpg');
-    background-position-y: -7.125em;
-
-    @include media-breakpoint-up(sm) {
-        background-position-y: -9.125em;
-    }
-
-    @include media-breakpoint-up(md) {
-        background-position-y: -14.125em;
-    }
-
-    @include media-breakpoint-up(lg) {
-        background-position-y: -18.125em;
-    }
+    background-position-y: 40%;
 }
 
 .equal-height .card {

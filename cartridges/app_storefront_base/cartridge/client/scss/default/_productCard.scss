@@ -32,7 +32,12 @@
 }
 
 .line-item-price-quantity-info {
-    border-top: 0.063em solid $horizontal-rule-grey;
+    margin-top: 0.625em;
+    border-top: 1px solid $horizontal-rule-grey;
+}
+
+.flex {
+    display: flex;
 }
 
 .line-item-total-text {

@@ -5,18 +5,7 @@
 
 .account-image {
     background-image: url(../../images/account.jpg);
-
-    @include media-breakpoint-down(md) {
-        background-position-y: -1rem;
-    }
-
-    @include media-breakpoint-down(lg) {
-        background-position-y: -2rem;
-    }
-
-    @include media-breakpoint-down(xl) {
-        background-position-y: -6rem;
-    }
+    background-position-y: 40%;
 }
 
 .card-footer > a {

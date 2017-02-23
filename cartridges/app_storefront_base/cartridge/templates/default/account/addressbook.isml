@@ -30,18 +30,16 @@
                             <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="pull-right">${Resource.msg('link.edit','account',null)}</a>
                         </div>
                         <div class="card-block card-block-positioning">
-                            <div class="card-info-group">
-                                <div>${address.address.firstName} ${address.address.lastName}</div>
-                                <div>${address.address.address1}</div>
-                                <isif condition="${address.address.address2 !== null}">
-                                    <div>${address.address.address2}</div>
-                                </isif>
-                                <div>${address.address.city}, ${address.address.stateCode} ${address.address.postalCode}</div>
-                                <div>${address.address.countryCode.displayValue}</div>
-                            </div>
+                            <div>${address.address.firstName} ${address.address.lastName}</div>
+                            <div>${address.address.address1}</div>
+                            <isif condition="${address.address.address2 !== null}">
+                                <div>${address.address.address2}</div>
+                            </isif>
+                            <div>${address.address.city}, ${address.address.stateCode} ${address.address.postalCode}</div>
+                            <div>${address.address.phone}</div>
                             <isif condition="${address.address.ID !== pdict.addressBook[0].address.ID}">
                                 <div class="card-make-default-link">
-                                    <a href="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID)}">${Resource.msg('link.addressbook.makedefault','account',null)}</a>
+                                    <a href="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID)}" class="normal">${Resource.msg('link.addressbook.makedefault','account',null)}</a>
                                 </div>
                             </isif>
                             <button
@@ -62,9 +60,9 @@
         <div class="row justify-content-center">
             <div class="col-6">
                 <div class="row">
-                    <div class="col">
-                        <a href="${URLUtils.url('Account-Show')}">
-                            <p class="text-center back-to-account-link">${Resource.msg('link.profile.backtomyaccount','account',null)}</p>
+                    <div class="col text-center">
+                        <a href="${URLUtils.url('Account-Show')}" class="normal">
+                            ${Resource.msg('link.profile.backtomyaccount','account',null)}
                         </a>
                     </div>
                     <div class="col">

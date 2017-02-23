@@ -16,10 +16,10 @@
             </div>
         </div>
     </div>
-    <div class="row text-center line-item-price-quantity-info">
+    <div class="row line-item-price-quantity-info align-items-start">
         <!--- item price --->
         <div class="col-4 line-item-unit-price">
-            <p class="line-item-pricing-info text-left">
+            <p class="line-item-pricing-info">
                 <span class="line-item-total-text unit-price-label">
                     ${Resource.msg('label.each.item.price','cart',null)}
                 </span><br/>
@@ -28,7 +28,7 @@
             </p>
         </div>
         <!--- quantity --->
-        <div class="col-4 line-item-quantity">
+        <div class="col-4 line-item-quantity justify-content-center flex">
             <isif condition=${miniCart}>
                 <isinclude template="checkout/productCard/productCardQuantitySelector" />
             <iselse>
@@ -36,8 +36,8 @@
             </isif>
         </div>
         <!--- line item total price --->
-        <div class="col-4 line-item-total-price">
-            <p class="line-item-pricing-info text-right">
+        <div class="col-4 line-item-total-price justify-content-end flex">
+            <p class="line-item-pricing-info">
                 <span class="line-item-total-text line-item-total-price-label">
                     ${Resource.msg('label.total.price','cart',null)}
                 </span><br/>
