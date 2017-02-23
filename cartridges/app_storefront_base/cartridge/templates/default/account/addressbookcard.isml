@@ -6,14 +6,14 @@
         </isif>
     </div>
     <isif condition="${pdict.account.preferredAddress}">
-        <div class="card-block card-info-group">
+        <div class="card-block">
             <div>
-                <p class="dashboard-cards-block-title">${Resource.msg('label.addressbook.defaultaddress','account',null)}</p>
-                <p class="dashboard-info">${pdict.account.preferredAddress.address.ID}</p>
-                <p>${pdict.account.preferredAddress.address.firstName} ${pdict.account.preferredAddress.address.lastName}</p> 
-                <p>${pdict.account.preferredAddress.address.address1}</p>
-                <p>${pdict.account.preferredAddress.address.city}, ${pdict.account.preferredAddress.address.stateCode} ${pdict.account.preferredAddress.address.postalCode}</p>
-                <p>${pdict.account.preferredAddress.address.countryCode.displayValue}</p>
+                <div class="dashboard-cards-block-title">${Resource.msg('label.addressbook.defaultaddress','account',null)}</div>
+                <dt class="dashboard-info">${pdict.account.preferredAddress.address.ID}</dt>
+                <div>${pdict.account.preferredAddress.address.firstName} ${pdict.account.preferredAddress.address.lastName}</div>
+                <div>${pdict.account.preferredAddress.address.address1}</div>
+                <div>${pdict.account.preferredAddress.address.city}, ${pdict.account.preferredAddress.address.stateCode} ${pdict.account.preferredAddress.address.postalCode}</div>
+                <div>${pdict.account.preferredAddress.address.phone}</div>
             </div>
         </div>
     </isif>

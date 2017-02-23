@@ -25,6 +25,14 @@
             content: '\f105';
         }
     }
+
+    .carousel-control-prev {
+        justify-content: flex-start;
+    }
+
+    .carousel-control-next {
+        justify-content: flex-end;
+    }
 }
 
 .nav-tabs {
@@ -42,4 +50,13 @@
 
 .card {
     margin-bottom: 1em;
+}
+
+.modal .modal-body {
+    flex: 0 0 auto;
+}
+
+dt {
+    color: $gray-light;
+    font-weight: normal;
 }

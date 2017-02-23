@@ -64,10 +64,6 @@
         </div>
     </isif>
 
-    <!-- Expiration Date -->
-    <div class="<isif condition="${pdict.paymentForm.expirationMonth.mandatory}">required</isif>">
-        <p class="expiration-label form-control-label"> ${Resource.msg('label.payment.expiration','payment',null)}</p>
-    </div>
     <!-- Month -->
     <div class="row">
         <div class="col-6">

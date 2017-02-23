@@ -135,6 +135,7 @@ module.exports = function () {
 
     // Show more products
     $('.container').on('click', '.show-more button', function (e) {
+        e.stopPropagation();
         var showMoreUrl = $(this).data('url');
         currentPageSize = showMoreUrl.match(/sz=(\d+)/)[1];
 

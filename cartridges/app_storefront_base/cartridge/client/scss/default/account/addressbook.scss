@@ -8,6 +8,10 @@
     position: relative;
 }
 
+.card-make-default-link {
+    margin-top: 0.625em; /* 10/16 */
+}
+
 .remove-btn {
     @include delete-card-button();
 
