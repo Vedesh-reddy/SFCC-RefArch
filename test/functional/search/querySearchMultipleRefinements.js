@@ -68,7 +68,7 @@ describe('Query Search and multiple refinements -  general product', () => {
                     .then(() => browser.waitForExist(search.refinementBarPrice))
                     .then(() => browser.click(search.refinementBarPrice))
                     .then(() => browser.waitForExist(search.refinementBarPriceActive))
-                    .then(() => browser.click(search.priceRefinementSelector))
+                    .then(() => browser.click(search.priceRefinementAppium))
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.waitForExist(search.refinementBarNewArrival))
                     .then(() => browser.click(search.refinementBarNewArrival))
@@ -85,7 +85,7 @@ describe('Query Search and multiple refinements -  general product', () => {
             // access desktop/laptop
             return browser.click(search.blackColorRefinementSelector)
                 .then(() => common.waitUntilAjaxCallEnded())
-                .then(() => browser.click(search.priceRefinementSelector))
+                .then(() => browser.click(search.priceRefinementBrowser))
                 .then(() => common.waitUntilAjaxCallEnded())
                 .then(() => browser.click(search.newArrivalRefinementUnchecked))
                 .then(() => common.waitUntilAjaxCallEnded())

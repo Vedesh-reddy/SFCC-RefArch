@@ -118,6 +118,7 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getText(orderConfPage.RECEIPT_HEADER)
                 .then((receiptHeaderStr) => {
                     const expectedReceiptHeader = Resource.msgf('title.receipt', 'confirmation', null);
+
                     return assert.equal(receiptHeaderStr, expectedReceiptHeader, 'Expected receipt card to have title = ' + expectedReceiptHeader);
                 });
         });

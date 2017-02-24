@@ -69,8 +69,8 @@ export const ORDER_GRAND_TOTAL = '.grand-total .grand-total-sum';
 
 export const CONTINUE_SHOPPING = '.order-confirmation-continue-shopping';
 export const SAVE_MY_INFO_TITLE = '.order-confirm-create-account .checkout-card-header';
-export const SAVE_MY_INFO_PASSWORD_LABEL = '.password-label';
-export const SAVE_MY_INFO_PASSWORD = '#password';
-export const SAVE_MY_INFO_CONFIRM_PASSWORD_LABEL = '.confirm-password-label';
-export const SAVE_MY_INFO_CONFIRM_PASSWORD = '#confirmPassword';
-export const SAVE_MY_INFO_CREATE_ACCOUNT = '.create-account-form .btn';
+export const SAVE_MY_INFO_PASSWORD_LABEL = '[for=newPassword]';
+export const SAVE_MY_INFO_PASSWORD = '#newPassword';
+export const SAVE_MY_INFO_CONFIRM_PASSWORD_LABEL = '[for=newPasswordConfirm]';
+export const SAVE_MY_INFO_CONFIRM_PASSWORD = '#newPasswordConfirm';
+export const SAVE_MY_INFO_CREATE_ACCOUNT = '.order-confirm-create-account .btn-primary.btn-block';
