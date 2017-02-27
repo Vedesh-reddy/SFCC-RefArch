@@ -56,7 +56,9 @@ describe('Select different State in Shipping Form', function () {
                     'shippingLevelDiscountTotal': {
                         'formatted': '$0.00',
                         'value': 0
-                    }
+                    },
+                    'discounts': [],
+                    'discountsHtml': '\n'
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -166,7 +168,9 @@ describe('Select different State in Shipping Form', function () {
                     'shippingLevelDiscountTotal': {
                         'formatted': '$0.00',
                         'value': 0
-                    }
+                    },
+                    'discounts': [],
+                    'discountsHtml': '\n'
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -276,7 +280,9 @@ describe('Select different State in Shipping Form', function () {
                     'shippingLevelDiscountTotal': {
                         'formatted': '$0.00',
                         'value': 0
-                    }
+                    },
+                    'discounts': [],
+                    'discountsHtml': '\n'
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -373,7 +379,9 @@ describe('Select different State in Shipping Form', function () {
                     'shippingLevelDiscountTotal': {
                         'formatted': '$0.00',
                         'value': 0
-                    }
+                    },
+                    'discounts': [],
+                    'discountsHtml': '\n'
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -479,7 +487,9 @@ describe('Select different State in Shipping Form', function () {
                     'shippingLevelDiscountTotal': {
                         'formatted': '$0.00',
                         'value': 0
-                    }
+                    },
+                    'discounts': [],
+                    'discountsHtml': '\n'
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -588,7 +598,9 @@ describe('Select different State in Shipping Form', function () {
                     'shippingLevelDiscountTotal': {
                         'formatted': '$0.00',
                         'value': 0
-                    }
+                    },
+                    'discounts': [],
+                    'discountsHtml': '\n'
                 },
                 'shipping': {
                     'applicableShippingMethods': [

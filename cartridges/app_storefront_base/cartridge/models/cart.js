@@ -11,7 +11,9 @@ function getCartActionUrls() {
     return {
         removeProductLineItemUrl: URLUtils.url('Cart-RemoveProductLineItem').toString(),
         updateQuantityUrl: URLUtils.url('Cart-UpdateQuantity').toString(),
-        selectShippingUrl: URLUtils.url('Cart-SelectShippingMethod').toString()
+        selectShippingUrl: URLUtils.url('Cart-SelectShippingMethod').toString(),
+        submitCouponCodeUrl: URLUtils.url('Cart-AddCoupon').toString(),
+        removeCouponLineItem: URLUtils.url('Cart-RemoveCouponLineItem').toString()
     };
 }
 

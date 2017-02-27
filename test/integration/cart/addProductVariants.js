@@ -142,8 +142,10 @@ describe('Add Product variants to cart', function () {
                     // the path has radomly generated code.
                     var expectedResponse = {
                         'actionUrls': {
+                            'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                             'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
                             'updateQuantityUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-UpdateQuantity',
+                            'submitCouponCodeUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-AddCoupon',
                             'selectShippingUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-SelectShippingMethod'
                         },
                         'numOfShipments': 1,
@@ -159,7 +161,9 @@ describe('Add Product variants to cart', function () {
                             'shippingLevelDiscountTotal': {
                                 'formatted': '$0.00',
                                 'value': 0
-                            }
+                            },
+                            'discounts': [],
+                            'discountsHtml': '\n'
                         },
                         'shippingMethods': [
                             {

@@ -2,6 +2,9 @@
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
 var money = require('dw/value/Money');
+var helper = require('~/cartridge/scripts/dwHelpers');
+var HashMap = require('dw/util/HashMap');
+var Template = require('dw/util/Template');
 
 /**
  * Accepts a total object and formats the value
@@ -47,6 +50,62 @@ function getShippingLevelDiscountTotal(lineItemContainer) {
 }
 
 /**
+ * creates an array of discounts.
+ * @param {dw.order.LineItemCtnr} lineItemContainer - the current line item container
+ * @returns {Array} an array of objects containing promotion and coupon information
+ */
+function getDiscounts(lineItemContainer) {
+    var discounts = {};
+
+    helper.forEach(lineItemContainer.couponLineItems, function (couponLineItem) {
+        var priceAdjustments = helper.map(
+            couponLineItem.priceAdjustments, function (priceAdjustment) {
+                return { callOutMsg: priceAdjustment.promotion.calloutMsg };
+            });
+        discounts[couponLineItem.UUID] = {
+            type: 'coupon',
+            UUID: couponLineItem.UUID,
+            couponCode: couponLineItem.couponCode,
+            applied: couponLineItem.applied,
+            valid: couponLineItem.valid,
+            relationship: priceAdjustments
+        };
+    });
+
+    helper.forEach(lineItemContainer.priceAdjustments, function (item) {
+        if (!item.basedOnCoupon) {
+            discounts[item.UUID] = {
+                UUID: item.UUID,
+                type: 'promotion',
+                callOutMsg: item.promotion.calloutMsg
+            };
+        }
+    });
+
+    return Object.keys(discounts).map(function (key) {
+        return discounts[key];
+    });
+}
+
+/**
+ * create the discount results html
+ * @param {Array} discounts - an array of objects that contains coupon and priceAdjustment
+ * information
+ * @returns {string} The rendered HTML
+ */
+function getDiscountsHtml(discounts) {
+    var context = new HashMap();
+    var object = { totals: { discounts: discounts } };
+
+    Object.keys(object).forEach(function (key) {
+        context.put(key, object[key]);
+    });
+
+    var template = new Template('cart/cartCouponDisplay');
+    return template.render(context).text;
+}
+
+/**
  * @constructor
  * @classdesc totals class that represents the order totals of the current line item container
  *
@@ -60,6 +119,8 @@ function totals(lineItemContainer) {
         this.totalShippingCost = getTotals(lineItemContainer.shippingTotalPrice);
         this.orderLevelDiscountTotal = getOrderLevelDiscountTotal(lineItemContainer);
         this.shippingLevelDiscountTotal = getShippingLevelDiscountTotal(lineItemContainer);
+        this.discounts = getDiscounts(lineItemContainer);
+        this.discountsHtml = getDiscountsHtml(this.discounts);
     } else {
         this.subTotal = '-';
         this.grandTotal = '-';
@@ -67,6 +128,7 @@ function totals(lineItemContainer) {
         this.totalShippingCost = '-';
         this.orderLevelDiscountTotal = '-';
         this.shippingLevelDiscountTotal = '-';
+        this.priceAdjustments = null;
     }
 }
 

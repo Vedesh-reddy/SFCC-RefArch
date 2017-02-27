@@ -29,8 +29,10 @@ describe('Cart: Selecting Shipping Methods', function () {
     // the path has radomly generated code.
     var expectedResponseCommon = {
         'actionUrls': {
+            'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
             'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
             'updateQuantityUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-UpdateQuantity',
+            'submitCouponCodeUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-AddCoupon',
             'selectShippingUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-SelectShippingMethod'
         },
         'numOfShipments': 1,
@@ -228,7 +230,9 @@ describe('Cart: Selecting Shipping Methods', function () {
             'shippingLevelDiscountTotal': {
                 'formatted': '$0.00',
                 'value': 0
-            }
+            },
+            'discounts': [],
+            'discountsHtml': '\n'
         };
 
         var shipMethodId = '003';   // 003 = Overnight
@@ -264,7 +268,9 @@ describe('Cart: Selecting Shipping Methods', function () {
             'shippingLevelDiscountTotal': {
                 'formatted': '$0.00',
                 'value': 0
-            }
+            },
+            'discounts': [],
+            'discountsHtml': '\n'
         };
 
         var shipMethodId = '001';   // 001 = Ground
@@ -300,7 +306,9 @@ describe('Cart: Selecting Shipping Methods', function () {
             'shippingLevelDiscountTotal': {
                 'formatted': '$0.00',
                 'value': 0
-            }
+            },
+            'discounts': [],
+            'discountsHtml': '\n'
         };
 
         var shipMethodId = '002';   // 002 = 2-Day Express
@@ -333,7 +341,9 @@ describe('Cart: Selecting Shipping Methods', function () {
             'shippingLevelDiscountTotal': {
                 'formatted': '$0.00',
                 'value': 0
-            }
+            },
+            'discounts': [],
+            'discountsHtml': '\n'
         };
 
         var shipMethodId = '005';   // 001 = Store Pickup
@@ -369,7 +379,9 @@ describe('Cart: Selecting Shipping Methods', function () {
             'shippingLevelDiscountTotal': {
                 'formatted': '$0.00',
                 'value': 0
-            }
+            },
+            'discounts': [],
+            'discountsHtml': '\n'
         };
 
         var shipMethodId = '012';   // 012 = Express
@@ -405,7 +417,9 @@ describe('Cart: Selecting Shipping Methods', function () {
             'shippingLevelDiscountTotal': {
                 'formatted': '$0.00',
                 'value': 0
-            }
+            },
+            'discounts': [],
+            'discountsHtml': '\n'
         };
 
         var shipMethodId = '021';   // 021 = USPS
@@ -441,7 +455,9 @@ describe('Cart: Selecting Shipping Methods', function () {
             'shippingLevelDiscountTotal': {
                 'formatted': '$0.00',
                 'value': 0
-            }
+            },
+            'discounts': [],
+            'discountsHtml': '\n'
         };
 
         var shipMethodId = '004';   // 004 = Super Saver, has excluded Products
@@ -478,7 +494,9 @@ describe('Cart: Selecting Shipping Methods', function () {
             'shippingLevelDiscountTotal': {
                 'formatted': '$0.00',
                 'value': 0
-            }
+            },
+            'discounts': [],
+            'discountsHtml': '\n'
         };
 
         var shipMethodId = '9999';

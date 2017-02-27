@@ -171,6 +171,11 @@ $negative-spacer: -0.625rem;
     position: relative;
 }
 
+.remove-coupon {
+    border: none;
+    background: transparent;
+}
+
 .sub-total {
     font-weight: bold;
 }
@@ -178,4 +183,45 @@ $negative-spacer: -0.625rem;
 .grand-total {
     font-size: 1em;
     font-weight: 600;
+}
+
+.coupon-price-adjustment + .coupon-price-adjustment {
+    margin-top: 0.625rem;
+}
+
+.coupon-price-adjustment {
+    background-color: $white;
+    padding: 0.625em;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.1875rem;
+}
+
+.coupon-promotion-relationship {
+    font-size: 0.813em;
+    padding-left: 1rem;
+    margin-bottom: 0;
+}
+
+.coupons-and-promos {
+    margin-bottom: 0.625rem;
+    padding-right: 0;
+    padding-left: 0;
+}
+
+.coupon-code {
+    font-size: 1.125em;
+}
+
+.coupon-applied {
+    color: $brand-success;
+    font-size: 0.813em;
+}
+
+.coupon-not-applied {
+    color: $brand-danger;
+    font-size: 0.813em;
+}
+
+.coupon-missing-error {
+    display: none;
 }

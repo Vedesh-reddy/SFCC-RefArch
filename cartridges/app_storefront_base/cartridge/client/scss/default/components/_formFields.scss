@@ -11,7 +11,7 @@
 
     &.required .form-control-label::before {
         content: "*";
-        color: $red;
+        color: $brand-danger;
     }
 }
 
