@@ -111,7 +111,7 @@
     overflow: auto;
 
     a.reset {
-        color: $green;
+        color: $brand-success;
 
         @include media-breakpoint-down(sm) {
             float: right;

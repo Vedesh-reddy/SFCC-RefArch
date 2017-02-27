@@ -7,8 +7,8 @@ $flag-icon-css-path: "../fonts/flags/";
 $white: #fff;
 $black: #000;
 $blue: #0070d2;
-$green: #008827;
-$red: #c00;
+$brand-success: #008827;
+$brand-danger: #c00;
 $brand-primary: #00a1e0;
 
 // Consolidated values
@@ -55,9 +55,7 @@ $border-radius-lg: $border-radius;
 $border-radius-sm: $border-radius;
 
 $state-danger-text: #fff;
-$alert-danger-bg: $red;
 $alert-success-text: #fff;
-$alert-success-bg: $green;
 
 // Font sizes
 $base16-14px: 0.875em;
