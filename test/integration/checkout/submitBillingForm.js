@@ -84,7 +84,7 @@ describe('billingForm', function () {
             }, function responseCallBack(err, httpResponse) {
                 var bodyAsJson = JSON.parse(httpResponse.body);
                 if (err) {
-                    return console.error('Checkout-SubmitPayment request failed with error:', err);
+                    throw new Error('Checkout-SubmitPayment request failed with error: ' + err);
                 }
                 assert.equal(httpResponse.statusCode, 200, 'Expected Checkout-SubmitPayment statusCode to be 200.');
                 assert.deepEqual(bodyAsJson, ExpectedResBody, 'Expecting ' + ExpectedResBody + 'to be equal to ' + bodyAsJson);
