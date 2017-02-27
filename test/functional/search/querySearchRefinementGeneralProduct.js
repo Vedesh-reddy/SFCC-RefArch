@@ -98,9 +98,9 @@ describe('Query Search and single Refinement - general product', () => {
                         .then(() => verifySearchResults(search.searchResultCount, expectedString3));
                 }
                 // access desktop/laptop
-                return browser.click(search.priceRefinementSelector)
+                return browser.click(search.priceRefinementBrowser)
                     .then(() => common.waitUntilAjaxCallEnded())
-                    .then(() => browser.getAttribute(search.priceRefinementTitle, 'title'))
+                    .then(() => browser.getAttribute(search.priceRefinementTitleBrowser, 'title'))
                     .then(title => assert.equal(title, 'Currently Refined by Price: $20 - $49.99'))
                     .then(() => verifySearchResults(search.searchResult, expectedString3));
             });
