@@ -115,6 +115,8 @@ module.exports = function () {
                     $('.minicart-quantity').empty().append(data.numItems);
                     $('.mini-cart .popover').empty();
                     $('.mini-cart .popover').removeClass('show');
+                    $('body').removeClass('modal-open');
+                    $('html').removeClass('veiled');
                 } else {
                     $('.uuid-' + uuid).remove();
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
