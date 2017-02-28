@@ -128,7 +128,7 @@ npm run test:appium -- --suite navigation
 ## Running Functional UI tests
 
 ```
-npm run test:functional -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --chrome
+npm run test:functional -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --client chrome
 ```
 
 ```
@@ -149,14 +149,43 @@ npm run test:functional -- --suite navigation
 
 **Note:** The same tests can be applied to both Appium and Functional tests, the only time you might run into issues is when a certain element is hidden on a certain size of screen and visible on another size of screen. In this case, you need to compile a different selector to accommodate that.
 
-## Running UI tests via Saucelabs
+## Running UI tests via Saucelabs:
 
 ```
 npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --suite home --sauce
 ```
+
 ```
 npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce
+```
+**Note:** To run on chrome or appium only, specify with --client option, otherwise it will run on both browsers by default, for example:
+
+```
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client chrome
+```
+
+```
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client appium
+```
+
+**Note:** To provide a name for your job, use the --name option, you can find your test results with this name from saucelabs dashboard later, for example:
+
+```
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client chrome --name QuickViewIntegrationBranch --suite quickview
+```
+
+```
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client appium —name appiumIntegrationBranch
+```
+
+**Note:** To run both browsers with one command :
+
+```
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --name quickview --suite quickview
+```
 **Note:** Currently the UI automation are being configured to run on Chrome and iPad Retina only.
 
-**Note:** To see the results, please login to https://saucelabs.com/beta/dashboard/tests to find your jobs reports.
+**Note:** To see the results, please login to https://saucelabs.com/beta/dashboard/tests to find your jobs reports under dashboard.
+
+
 
