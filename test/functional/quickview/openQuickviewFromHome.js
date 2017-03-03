@@ -49,7 +49,8 @@ describe('Home product tile - Open Quickview', () => {
         const expectedSize = productVariant.customAttributes.size;
 
         const expectedListedPrice = testDataMgr.getPricesByProductId(productVariantId2, locale).list;
-        const expectedActiveImgSrc = 'images/large/PG.10256582.JJI15XX.PZ.jpg';
+        const expectedActiveImgSrc1 = 'images/large/PG.10256582.JJI15XX.PZ.jpg';
+        const expectedActiveImgSrc2 = 'images/large/PG.10256582.JJI15XX.BZ.jpg';
 
         return productTile.clickOnProductTileQuickView(productVariantId2)
             .then(() => quickView.getProductName())
@@ -74,12 +75,12 @@ describe('Home product tile - Open Quickview', () => {
             })
             .then(() => quickView.getActiveImageSrc())
             .then(activeImgSrc => {
-                assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc), 'product active image src: url not end with ' + expectedActiveImgSrc);
+                assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc1), 'product active image src: url not end with ' + expectedActiveImgSrc1);
             })
             .then(() => quickView.clickOnNextImgageIcon())
             .then(() => quickView.getActiveImageSrc())
             .then(activeImgSrc2 => {
-                assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc), 'product active image src: url not end with ' + expectedActiveImgSrc);
+                assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc2), 'product active image src: url not end with ' + expectedActiveImgSrc2);
             })
             .then(() => browser.isEnabled(quickView.ADD_TO_CART))
             .then(enabled => {
@@ -101,7 +102,8 @@ describe('Home product tile - Open Quickview', () => {
         const expectedDisplayName = productMaster.getLocalizedProperty('displayName', locale);
 
         const expectedListedPrice = testDataMgr.getPricesByProductId(productMasterId4, locale).list;
-        const expectedActiveImgSrc = '/images/large/PG.10221714.JJ169XX.PZ.jpg';
+        const expectedActiveImgSrc1 = '/images/large/PG.10221714.JJ169XX.PZ.jpg';
+        const expectedActiveImgSrc2 = '/images/large/PG.10221714.JJ169XX.BZ.jpg';
 
         return browser.refresh()
             .then(() => productTile.clickOnProductTileQuickView(productMasterId4))
@@ -127,12 +129,12 @@ describe('Home product tile - Open Quickview', () => {
             })
             .then(() => quickView.getActiveImageSrc())
             .then(activeImgSrc => {
-                return assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc), 'product active image src: url not end with ' + expectedActiveImgSrc);
+                return assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc1), 'product active image src: url not end with ' + expectedActiveImgSrc1);
             })
             .then(() => quickView.clickOnNextImgageIcon())
             .then(() => quickView.getActiveImageSrc())
             .then(activeImgSrc2 => {
-                return assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc), 'product active image src: url not end with ' + expectedActiveImgSrc);
+                return assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc2), 'product active image src: url not end with ' + expectedActiveImgSrc2);
             })
             .then(() => browser.isEnabled(quickView.ADD_TO_CART))
             .then(enabled => {
