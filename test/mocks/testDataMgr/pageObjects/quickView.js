@@ -2,7 +2,7 @@
 
 export const QUICK_VIEW_DIALOG = '.quick-view-dialog';
 export const ACTIVE_IMAGE = '.carousel-item.active .img-fluid';
-export const NEXT_BUTTON = '.carousel-control-next .icon-next';
+export const NEXT_BUTTON = '.icon-next';
 export const PRODUCT_NAME = '.product-name';
 export const SELECTED_SWATCH_COLOR = '.swatch-value.selected';
 export const SELECTED_SIZE = '.select-size option[selected]';
@@ -48,16 +48,30 @@ export function getActiveImageSrc() {
         .getAttribute(selector, 'src');
 }
 
-export function clickOnNextImgageIcon() {
+export function clickOnNextImageIcon() {
+    let initialActiveImageSrc;
     let nextBtnSelector = NEXT_BUTTON;
+
     return browser.waitForVisible(nextBtnSelector)
-        .click(nextBtnSelector)
-        .waitForVisible(ACTIVE_IMAGE);
+        .then(() => getActiveImageSrc())
+        .then(activeImageSrc => {
+            initialActiveImageSrc = activeImageSrc;
+            return Promise.resolve();
+        })
+        .then(() => browser.click(nextBtnSelector))
+        .then(() => {
+            return browser.waitUntil(() => {
+                return getActiveImageSrc()
+                    .then(activeImageSrc => {
+                        return activeImageSrc !== initialActiveImageSrc;
+                    });
+            }, 3000, 'expected Quickview image src to be different after clicking next');
+        });
 }
 
 export function closeQuickview() {
     let selector = CLOSE_BUTTON;
     return browser.waitForVisible(selector)
         .click(selector)
-        .waitForVisible(selector, 1000, true);
+        .waitForVisible(selector, 3000, true);
 }
