@@ -103,6 +103,8 @@ server.get('EditAddress', function (req, res, next) {
 });
 
 server.post('SaveAddress', function (req, res, next) {
+    var formErrors = require('~/cartridge/scripts/formErrors');
+
     var addressForm = server.forms.getForm('address');
     var result = getDetailsObject(addressForm);
     var customer = CustomerMgr.getCustomerByCustomerNumber(
@@ -126,7 +128,10 @@ server.post('SaveAddress', function (req, res, next) {
                     address.setPhone(formInfo.phone);
                     address.setPostalCode(formInfo.postalCode);
                     address.setStateCode(formInfo.stateCode);
-                    res.redirect(URLUtils.url('Address-List'));
+                    res.json({
+                        success: true,
+                        redirectUrl: URLUtils.url('Address-List').toString()
+                    });
                 } else {
                     var newAddress = addressBook.createAddress(formInfo.addressId);
                     if (newAddress) {
@@ -139,16 +144,27 @@ server.post('SaveAddress', function (req, res, next) {
                         newAddress.setPhone(formInfo.phone);
                         newAddress.setPostalCode(formInfo.postalCode);
                         newAddress.setStateCode(formInfo.stateCode);
-                        res.redirect(URLUtils.url('Address-List'));
+                        res.json({
+                            success: true,
+                            redirectUrl: URLUtils.url('Address-List').toString()
+                        });
                     } else {
                         formInfo.addressForm.valid = false;
                         formInfo.addressForm.addressId.valid = false;
                         formInfo.addressForm.addressId.error =
                             Resource.msg('error.message.idalreadyexists', 'forms', null);
-                        res.render('account/editaddaddress', { addressForm: formInfo.addressForm });
+                        res.json({
+                            success: false,
+                            fields: formErrors(addressForm)
+                        });
                     }
                 }
             });
+        });
+    } else {
+        res.json({
+            success: false,
+            fields: formErrors(addressForm)
         });
     }
     next();

@@ -1,4 +1,8 @@
-<form action="${URLUtils.url('PaymentInstruments-SavePayment', 'UUID', pdict.UUID)}" method="POST" name="payment-form" ${pdict.paymentForm.attributes}>
+<form
+    action="${URLUtils.url('PaymentInstruments-SavePayment', 'UUID', pdict.UUID)}"
+    class="payment-form"
+    method="POST"
+    name="payment-form" ${pdict.paymentForm.attributes}>
 
     <!-- Credit Card Type -->
     <!--- TODO: Visa is currently hard coded as the payment card type this will change when card type autofill is complete --->
@@ -22,7 +26,6 @@
 
     <!-- Name on Card -->
     <div class="form-group
-        <isif condition="${!pdict.paymentForm.cardOwner.valid}">has-danger</isif>
         <isif condition="${pdict.paymentForm.cardOwner.mandatory === true}">required</isif>">
         <label class="form-control-label" for="cardOwner">
             <isprint value="${pdict.paymentForm.cardOwner.label}" encoding="off" />
@@ -50,7 +53,6 @@
         <iselse>
         <!-- Card Number -->
         <div class="form-group
-            <isif condition="${!pdict.paymentForm.cardNumber.valid}">has-danger</isif>
             <isif condition="${pdict.paymentForm.cardNumber.mandatory === true}">required</isif>">
             <label class="form-control-label" for="cardNumber">
                 <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="off" />
@@ -68,7 +70,6 @@
     <div class="row">
         <div class="col-6">
             <div class="form-group
-                <isif condition="${!pdict.paymentForm.expirationMonth.valid}">has-danger</isif>
                 <isif condition="${pdict.paymentForm.expirationMonth.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="month">
                     <isprint value="${pdict.paymentForm.expirationMonth.label}" encoding="off" />
@@ -86,7 +87,6 @@
 
         <div class="col-6">
             <div class="form-group
-                <isif condition="${!pdict.paymentForm.expirationYear.valid}">has-danger</isif>
                 <isif condition="${pdict.paymentForm.expirationYear.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="year">
                     <isprint value="${pdict.paymentForm.expirationYear.label}" encoding="off" />

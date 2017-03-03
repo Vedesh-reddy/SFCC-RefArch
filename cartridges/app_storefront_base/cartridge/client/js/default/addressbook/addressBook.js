@@ -1,5 +1,7 @@
 'use strict';
 
+var formValidation = require('../components/form-validation');
+
 module.exports = function () {
     var url;
     var isDefault;
@@ -41,5 +43,30 @@ module.exports = function () {
                 }
             });
         });
+    });
+
+    $('form.address-form').submit(function (e) {
+        var $form = $(this);
+        e.preventDefault();
+        url = $form.attr('action');
+        $form.spinner().start();
+        $.ajax({
+            url: url,
+            type: 'post',
+            dataType: 'json',
+            data: $form.serialize(),
+            success: function (data) {
+                $form.spinner().stop();
+                if (!data.success) {
+                    formValidation($form, data);
+                } else {
+                    location.href = data.redirectUrl;
+                }
+            },
+            error: function () {
+                $form.spinner().stop();
+            }
+        });
+        return false;
     });
 };
