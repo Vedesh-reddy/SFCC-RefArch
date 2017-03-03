@@ -48,7 +48,7 @@ export function getActiveImageSrc() {
         .getAttribute(selector, 'src');
 }
 
-export function clickOnNextImgageIcon() {
+export function clickOnNextImageIcon() {
     let initialActiveImageSrc;
     let nextBtnSelector = NEXT_BUTTON;
 
@@ -58,7 +58,7 @@ export function clickOnNextImgageIcon() {
             initialActiveImageSrc = activeImageSrc;
             return Promise.resolve();
         })
-        .click(nextBtnSelector)
+        .then(() => browser.click(nextBtnSelector))
         .then(() => {
             return browser.waitUntil(() => {
                 return getActiveImageSrc()

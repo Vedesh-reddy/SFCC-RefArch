@@ -77,7 +77,7 @@ describe('Home product tile - Open Quickview', () => {
             .then(activeImgSrc => {
                 assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc1), 'product active image src: url not end with ' + expectedActiveImgSrc1);
             })
-            .then(() => quickView.clickOnNextImgageIcon())
+            .then(() => quickView.clickOnNextImageIcon())
             .then(() => quickView.getActiveImageSrc())
             .then(activeImgSrc2 => {
                 assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc2), 'product active image src: url not end with ' + expectedActiveImgSrc2);
@@ -131,7 +131,7 @@ describe('Home product tile - Open Quickview', () => {
             .then(activeImgSrc => {
                 return assert.isTrue(activeImgSrc.endsWith(expectedActiveImgSrc1), 'product active image src: url not end with ' + expectedActiveImgSrc1);
             })
-            .then(() => quickView.clickOnNextImgageIcon())
+            .then(() => quickView.clickOnNextImageIcon())
             .then(() => quickView.getActiveImageSrc())
             .then(activeImgSrc2 => {
                 return assert.isTrue(activeImgSrc2.endsWith(expectedActiveImgSrc2), 'product active image src: url not end with ' + expectedActiveImgSrc2);
