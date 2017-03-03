@@ -225,3 +225,13 @@ $negative-spacer: -0.625rem;
 .coupon-missing-error {
     display: none;
 }
+
+.applied-promotion-discount {
+    color: $brand-success;
+    float: right;
+}
+
+.promotion-information {
+    margin-bottom: 0.625rem;
+    margin-top: 0.625rem;
+}

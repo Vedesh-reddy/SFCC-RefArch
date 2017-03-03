@@ -31,12 +31,16 @@ var createApiBasket = function (isAvailable) {
             UUID: 10987654321,
             calloutMsg: 'some call out message',
             basedOnCoupon: false,
+            price: { value: 'some value', currencyCode: 'usd' },
+            lineItemText: 'someString',
             promotion: { calloutMsg: 'some call out message' }
         }]),
-        shippingPriceAdjustments: new ArrayList([{
+        allShippingPriceAdjustments: new ArrayList([{
             UUID: 12029384756,
             calloutMsg: 'some call out message',
             basedOnCoupon: false,
+            price: { value: 'some value', currencyCode: 'usd' },
+            lineItemText: 'someString',
             promotion: { calloutMsg: 'some call out message' }
         }])
     };

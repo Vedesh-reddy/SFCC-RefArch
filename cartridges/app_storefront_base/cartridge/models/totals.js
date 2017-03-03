@@ -61,6 +61,11 @@ function createDiscountObject(collection, discounts) {
         if (!item.basedOnCoupon) {
             result[item.UUID] = {
                 UUID: item.UUID,
+                lineItemText: item.lineItemText,
+                price: formatMoney(money(
+                     item.price.value,
+                     item.price.currencyCode
+                )),
                 type: 'promotion',
                 callOutMsg: item.promotion.calloutMsg
             };
@@ -94,7 +99,7 @@ function getDiscounts(lineItemContainer) {
     });
 
     discounts = createDiscountObject(lineItemContainer.priceAdjustments, discounts);
-    discounts = createDiscountObject(lineItemContainer.shippingPriceAdjustments, discounts);
+    discounts = createDiscountObject(lineItemContainer.allShippingPriceAdjustments, discounts);
 
     return Object.keys(discounts).map(function (key) {
         return discounts[key];
