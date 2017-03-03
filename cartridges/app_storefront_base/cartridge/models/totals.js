@@ -50,6 +50,27 @@ function getShippingLevelDiscountTotal(lineItemContainer) {
 }
 
 /**
+ * Adds discounts to a discounts object
+ * @param {dw.util.Collection} collection - a collection of price adjustments
+ * @param {Object} discounts - an object of price adjustments
+ * @returns {Object} an object of price adjustments
+ */
+function createDiscountObject(collection, discounts) {
+    var result = discounts;
+    helper.forEach(collection, function (item) {
+        if (!item.basedOnCoupon) {
+            result[item.UUID] = {
+                UUID: item.UUID,
+                type: 'promotion',
+                callOutMsg: item.promotion.calloutMsg
+            };
+        }
+    });
+
+    return result;
+}
+
+/**
  * creates an array of discounts.
  * @param {dw.order.LineItemCtnr} lineItemContainer - the current line item container
  * @returns {Array} an array of objects containing promotion and coupon information
@@ -72,15 +93,8 @@ function getDiscounts(lineItemContainer) {
         };
     });
 
-    helper.forEach(lineItemContainer.priceAdjustments, function (item) {
-        if (!item.basedOnCoupon) {
-            discounts[item.UUID] = {
-                UUID: item.UUID,
-                type: 'promotion',
-                callOutMsg: item.promotion.calloutMsg
-            };
-        }
-    });
+    discounts = createDiscountObject(lineItemContainer.priceAdjustments, discounts);
+    discounts = createDiscountObject(lineItemContainer.shippingPriceAdjustments, discounts);
 
     return Object.keys(discounts).map(function (key) {
         return discounts[key];

@@ -36,11 +36,11 @@ function updateCartTotals(data) {
     }
 
     if (data.totals.shippingLevelDiscountTotal.value > 0) {
-        $('.shipping-discount').show();
-        $('.shipping-discount-total').text('- ' +
+        $('.shipping-discount').removeClass('hide-shipping-discount');
+        $('.shipping-discount-total').empty().append('- ' +
             data.totals.shippingLevelDiscountTotal.formatted);
     } else {
-        $('.shipping-discount').hide();
+        $('.shipping-discount').addClass('hide-shipping-discount');
     }
 }
 
@@ -186,6 +186,7 @@ module.exports = function () {
                 if (data.error) {
                     window.location.href = data.redirectUrl;
                 } else {
+                    $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
                 }
                 $.spinner().stop();

@@ -32,8 +32,13 @@ var createApiBasket = function (isAvailable) {
             calloutMsg: 'some call out message',
             basedOnCoupon: false,
             promotion: { calloutMsg: 'some call out message' }
+        }]),
+        shippingPriceAdjustments: new ArrayList([{
+            UUID: 12029384756,
+            calloutMsg: 'some call out message',
+            basedOnCoupon: false,
+            promotion: { calloutMsg: 'some call out message' }
         }])
-
     };
 };
 
@@ -86,13 +91,14 @@ describe('Totals', function () {
 
     it('should get discounts', function () {
         var result = new Totals(createApiBasket(true));
-        assert.equal(result.discounts.length, 2);
+        assert.equal(result.discounts.length, 3);
         assert.equal(result.discounts[0].UUID, 1234567890);
         assert.equal(result.discounts[0].type, 'coupon');
         assert.equal(result.discounts[0].applied, true);
         assert.equal(result.discounts[1].type, 'promotion');
         assert.equal(result.discounts[1].callOutMsg, 'some call out message');
         assert.equal(result.discounts[1].UUID, 10987654321);
+        assert.equal(result.discounts[2].UUID, 12029384756);
     });
 
     it('should accept a basket where the totals are unavailable', function () {
