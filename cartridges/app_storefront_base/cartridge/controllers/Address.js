@@ -55,7 +55,20 @@ server.get('List', function (req, res, next) {
         };
         res.render('account/addressbook', {
             addressBook: getList(req.currentCustomer.profile.customerNo),
-            actionUrls: actionUrls
+            actionUrls: actionUrls,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                },
+                {
+                    htmlValue: Resource.msg('label.addressbook', 'account', null)
+                }
+            ]
         });
     }
     next();
@@ -68,7 +81,26 @@ server.get('AddAddress', function (req, res, next) {
     for (var i = 0, j = states.length; i < j; i++) {
         states[i].selected = false;
     }
-    res.render('account/editaddaddress', { addressForm: addressForm });
+    res.render('account/editaddaddress', {
+        addressForm: addressForm,
+        breadcrumbs: [
+            {
+                htmlValue: Resource.msg('global.home', 'common', null),
+                url: URLUtils.home().toString()
+            },
+            {
+                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                url: URLUtils.url('Account-Show').toString()
+            },
+            {
+                htmlValue: Resource.msg('label.addressbook', 'account', null),
+                url: URLUtils.url('Address-List').toString()
+            },
+            {
+                htmlValue: Resource.msg('label.addressbook.addnewaddress', 'account', null)
+            }
+        ]
+    });
     next();
 });
 
@@ -98,7 +130,28 @@ server.get('EditAddress', function (req, res, next) {
             states[i].selected = true;
         }
     }
-    res.render('account/editaddaddress', { addressForm: addressForm, addressId: addressId });
+    res.render('account/editaddaddress', {
+        addressForm: addressForm,
+        addressId: addressId,
+        breadcrumbs: [
+            {
+                htmlValue: Resource.msg('global.home', 'common', null),
+                url: URLUtils.home().toString()
+            },
+            {
+                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                url: URLUtils.url('Account-Show').toString()
+            },
+            {
+                htmlValue: Resource.msg('label.addressbook', 'account', null),
+                url: URLUtils.url('Address-List').toString()
+            },
+            {
+                htmlValue: Resource.msg('label.addressbook.editaddress', 'account', null)
+            }
+        ]
+    });
+
     next();
 });
 

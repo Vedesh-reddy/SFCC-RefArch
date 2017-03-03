@@ -141,7 +141,16 @@ server.get('Show', server.middleware.https, function (req, res, next) {
     if (accountModel) {
         res.render('account/accountdashboard', {
             account: accountModel,
-            accountlanding: true
+            accountlanding: true,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null)
+                }
+            ]
         });
     } else {
         res.redirect(URLUtils.url('Login-Show'));
@@ -279,7 +288,22 @@ server.get('EditProfile', server.middleware.https, function (req, res, next) {
         profileForm.customer.lastname.value = accountModel.profile.lastName;
         profileForm.customer.phone.value = accountModel.profile.phone;
         profileForm.customer.email.value = accountModel.profile.email;
-        res.render('account/profile', { profileForm: profileForm });
+        res.render('account/profile', {
+            profileForm: profileForm,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                },
+                {
+                    htmlValue: Resource.msg('label.profile.edit', 'account', null)
+                }
+            ]
+        });
     } else {
         res.redirect(URLUtils.url('Login-Show'));
     }
@@ -358,7 +382,22 @@ server.get('EditPassword', server.middleware.https, function (req, res, next) {
     if (accountModel) {
         var profileForm = server.forms.getForm('profile');
         profileForm.clear();
-        res.render('account/password', { profileForm: profileForm });
+        res.render('account/password', {
+            profileForm: profileForm,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                },
+                {
+                    htmlValue: Resource.msg('label.profile.changepassword', 'account', null)
+                }
+            ]
+        });
     } else {
         res.redirect(URLUtils.url('Login-Show'));
     }

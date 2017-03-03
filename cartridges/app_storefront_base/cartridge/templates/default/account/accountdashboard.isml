@@ -7,18 +7,8 @@
         <h1 class="page-title">${Resource.msg('page.heading.dashboard','account',null)}</h1>
     </div>
     <div class="container">
-
-        <!---Temporary placeholder for Breadcrumb implementation--->
-        <div class="row">
-            <div class="col">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="${URLUtils.home()}">${Resource.msg('global.home', 'common', null)}</a></li>
-                    <li class="breadcrumb-item active">${Resource.msg('page.title.myaccount','account',null)}</li>
-                </ol>
-            </div>
-        </div>
-        <!--------------------------------------------------------->
-
+        <!---Breadcrumbs--->
+        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
         <div class="row justify-content-center">
             <div class="col-sm-6">
                 <!---Profile--->

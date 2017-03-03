@@ -120,7 +120,20 @@ server.get('List', function (req, res, next) {
     } else {
         res.render('account/payment/payment', {
             paymentInstruments: getList(req.currentCustomer.wallet.paymentInstruments),
-            actionUrl: URLUtils.url('PaymentInstruments-DeletePayment').toString()
+            actionUrl: URLUtils.url('PaymentInstruments-DeletePayment').toString(),
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.heading.payments', 'payment', null)
+                }
+            ]
         });
     }
     next();
@@ -136,7 +149,24 @@ server.get('AddPayment', function (req, res, next) {
     }
     res.render('account/payment/editaddpayment', {
         paymentForm: paymentForm,
-        expirationYears: creditCardExpirationYears
+        expirationYears: creditCardExpirationYears,
+        breadcrumbs: [
+            {
+                htmlValue: Resource.msg('global.home', 'common', null),
+                url: URLUtils.home().toString()
+            },
+            {
+                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                url: URLUtils.url('Account-Show').toString()
+            },
+            {
+                htmlValue: Resource.msg('page.heading.payments', 'payment', null),
+                url: URLUtils.url('PaymentInstruments-List').toString()
+            },
+            {
+                htmlValue: Resource.msg('label.payment.addnewpayment', 'payment', null)
+            }
+        ]
     });
     next();
 });
@@ -166,7 +196,24 @@ server.get('EditPayment', function (req, res, next) {
     res.render('account/payment/editaddpayment', {
         paymentForm: paymentForm,
         UUID: UUID,
-        expirationYears: creditCardExpirationYears
+        expirationYears: creditCardExpirationYears,
+        breadcrumbs: [
+            {
+                htmlValue: Resource.msg('global.home', 'common', null),
+                url: URLUtils.home().toString()
+            },
+            {
+                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                url: URLUtils.url('Account-Show').toString()
+            },
+            {
+                htmlValue: Resource.msg('page.heading.payments', 'payment', null),
+                url: URLUtils.url('PaymentInstruments-List').toString()
+            },
+            {
+                htmlValue: Resource.msg('label.payment.editpayment', 'payment', null)
+            }
+        ]
     });
     next();
 });

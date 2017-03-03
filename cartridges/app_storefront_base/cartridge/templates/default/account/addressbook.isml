@@ -9,6 +9,8 @@
         <h1 class="page-title">${Resource.msg('label.addressbook','account',null)}</h1>
     </div>
     <div class="container">
+        <!---Breadcrumbs--->
+        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
         <isif condition="${pdict.addressBook.length === 0}">
              <div class="row justify-content-center">
                  <div class="col">
