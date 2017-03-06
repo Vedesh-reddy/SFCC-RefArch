@@ -1,8 +1,6 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var money = require('dw/value/Money');
-
 
 /**
  * Convert API price to an object
@@ -16,7 +14,7 @@ function toPriceModel(price) {
     return {
         value: value,
         currency: currency,
-        formatted: value !== null ? formatMoney(money(value, currency)) : null
+        formatted: price.available ? formatMoney(price) : null
     };
 }
 

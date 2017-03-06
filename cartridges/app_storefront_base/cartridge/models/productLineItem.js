@@ -1,7 +1,6 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var money = require('dw/value/Money');
 
 var ProductBase = require('./product/productBase').productBase;
 
@@ -50,10 +49,7 @@ ProductLineItem.prototype = Object.create(ProductBase.prototype);
 ProductLineItem.prototype.initialize = function (lineItem) {
     ProductBase.prototype.initialize.call(this);
     this.quantityOptions = getMinMaxQuantityOptions(this.product, this.quantity);
-    this.priceTotal = formatMoney(money(
-        lineItem.adjustedPrice.value,
-        lineItem.adjustedPrice.currencyCode
-    ));
+    this.priceTotal = formatMoney(lineItem.adjustedPrice);
     this.isBonusProductLineItem = lineItem.bonusProductLineItem;
     this.isGift = lineItem.gift;
     this.UUID = lineItem.UUID;
