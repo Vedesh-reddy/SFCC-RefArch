@@ -3,6 +3,7 @@
 var server = require('server');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var URLUtils = require('dw/web/URLUtils');
+var Resource = require('dw/web/Resource');
 
 server.get('Show', server.middleware.https, function (req, res, next) {
     var rememberMe = false;
@@ -13,6 +14,15 @@ server.get('Show', server.middleware.https, function (req, res, next) {
         rememberMe = true;
         userName = req.currentCustomer.credentials.username;
     }
+    var breadcrumbs = [
+        {
+            htmlValue: Resource.msg('global.home', 'common', null),
+            url: URLUtils.home().toString()
+        },
+        {
+            htmlValue: Resource.msg('header.hero.image.login', 'login', null)
+        }
+    ];
     var profileForm = server.forms.getForm('profile');
     profileForm.clear();
     res.render('/account/login', {
@@ -20,7 +30,8 @@ server.get('Show', server.middleware.https, function (req, res, next) {
         rememberMe: rememberMe,
         userName: userName,
         actionUrl: actionUrl,
-        profileForm: profileForm
+        profileForm: profileForm,
+        breadcrumbs: breadcrumbs
     });
     next();
 });

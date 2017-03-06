@@ -20,6 +20,8 @@
             <!-- Product Name and Number -->
             <div class="col-12 col-sm-6">
                 <section>
+                    <!---Breadcrumbs--->
+                    <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
                     <h1 class="product-name hidden-sm-down">${pdict.product.productName}</h1>
                     <div class="product-number-rating clearfix">
                         <div class="product-number hidden-xs-down pull-left">

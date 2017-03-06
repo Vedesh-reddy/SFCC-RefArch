@@ -5,7 +5,29 @@ var URLUtils = require('dw/web/URLUtils');
 var priceHelper = require('../scripts/helpers/pricing');
 var ProductFactory = require('../scripts/factories/product');
 var Resource = require('dw/web/Resource');
+var CatalogMgr = require('dw/catalog/CatalogMgr');
+var ProductMgr = require('dw/catalog/ProductMgr');
 
+/**
+ * Creates the breadcrumbs object
+ * @param {string} cgid - category ID from navigation and search
+ * @param {string} pid - product ID
+ * @param {Array} breadcrumbs - array of breadcrumbs object
+ * @returns {Array} an array of breadcrumb objects
+ */
+function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
+    var category = cgid ?
+            CatalogMgr.getCategory(cgid) :
+            ProductMgr.getProduct(pid).getPrimaryCategory();
+    breadcrumbs.push({
+        htmlValue: category.displayName,
+        url: URLUtils.url('Search-Show', 'cgid', category.ID)
+    });
+    if (category.parent && category.parent.ID !== 'root') {
+        return getAllBreadcrumbs(category.parent.ID, null, breadcrumbs);
+    }
+    return breadcrumbs;
+}
 
 /**
  * @typedef ProductDetailPageResourceMap
@@ -36,14 +58,15 @@ server.get('Show', function (req, res, next) {
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
-
+    var breadcrumbs = getAllBreadcrumbs(req.querystring.cgid, product.id, []).reverse();
     res.render('product/detail.isml', {
         CurrentPageMetaData: {
             title: product.productName
         },
         product: product,
         addToCartUrl: addToCartUrl,
-        resources: getResources()
+        resources: getResources(),
+        breadcrumbs: breadcrumbs
     });
 
     next();
@@ -84,12 +107,15 @@ server.get('ShowTile', function (req, res, next) {
     var product;
     var productUrl;
     var quickViewUrl;
+    var cgid = req.querystring.cgid;
 
     // TODO: remove this logic once the Product factory is
     // able to handle the different product types
     try {
         product = ProductFactory.get(productTileParams);
-        productUrl = URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
+        productUrl = cgid ?
+            URLUtils.url('Product-Show', 'pid', product.id, 'cgid', cgid).relative().toString() :
+            URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
         quickViewUrl = URLUtils.url('Product-ShowQuickView', 'pid', product.id)
             .relative().toString();
     } catch (e) {
