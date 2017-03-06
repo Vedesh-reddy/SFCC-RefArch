@@ -1,7 +1,6 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var money = require('dw/value/Money');
 var helper = require('~/cartridge/scripts/dwHelpers');
 var HashMap = require('dw/util/HashMap');
 var Template = require('dw/util/Template');
@@ -12,7 +11,7 @@ var Template = require('dw/util/Template');
  * @returns {string} the formatted money value
  */
 function getTotals(total) {
-    return !total.available ? '-' : formatMoney(money(total.value, total.currencyCode));
+    return !total.available ? '-' : formatMoney(total);
 }
 
 /**
@@ -28,7 +27,7 @@ function getOrderLevelDiscountTotal(lineItemContainer) {
 
     return {
         value: orderDiscount.value,
-        formatted: formatMoney(money(orderDiscount.value, orderDiscount.currencyCode))
+        formatted: formatMoney(orderDiscount)
     };
 }
 
@@ -45,7 +44,7 @@ function getShippingLevelDiscountTotal(lineItemContainer) {
 
     return {
         value: shippingDiscount.value,
-        formatted: formatMoney(money(shippingDiscount.value, shippingDiscount.currencyCode))
+        formatted: formatMoney(shippingDiscount)
     };
 }
 
@@ -62,10 +61,7 @@ function createDiscountObject(collection, discounts) {
             result[item.UUID] = {
                 UUID: item.UUID,
                 lineItemText: item.lineItemText,
-                price: formatMoney(money(
-                     item.price.value,
-                     item.price.currencyCode
-                )),
+                price: formatMoney(item.price),
                 type: 'promotion',
                 callOutMsg: item.promotion.calloutMsg
             };

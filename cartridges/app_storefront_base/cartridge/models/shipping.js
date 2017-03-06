@@ -3,7 +3,6 @@
 var helper = require('~/cartridge/scripts/dwHelpers');
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var money = require('dw/value/Money');
 var ShippingMgr = require('dw/order/ShippingMgr');
 
 
@@ -68,10 +67,7 @@ function getApplicableShippingMethods(shipmentModel, address) {
             description: shippingMethod.description,
             displayName: shippingMethod.displayName,
             ID: shippingMethod.ID,
-            shippingCost: formatMoney(money(
-                shippingCost.amount.value,
-                shippingCost.amount.currencyCode
-            )),
+            shippingCost: formatMoney(shippingCost.amount),
             estimatedArrivalTime: shippingMethod.custom.estimatedArrivalTime
         };
     });
