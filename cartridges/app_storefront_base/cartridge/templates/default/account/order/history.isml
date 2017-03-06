@@ -9,6 +9,8 @@
         <h1 class="page-title">${Resource.msg('page.title.myaccount','account',null)}</h1>
     </div>
     <div class="container">
+        <!---Breadcrumbs--->
+        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
         <div class="row justify-content-center">
             <div class="col-12 col-sm-4 col-md-3">
                 <h4>${Resource.msg('label.orderhistory','account',null)}</h4>

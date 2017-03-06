@@ -10,6 +10,8 @@
         <h1 class="page-title">${Resource.msg('heading.order.details','order',null)}</h1>
     </div>
     <div class="container receipt">
+        <!---Breadcrumbs--->
+        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
         <div class="row justify-content-center">
             <div class="col-sm-8 col-md-6">
                 <isinclude template="checkout/confirmation/confirmationDetails" />

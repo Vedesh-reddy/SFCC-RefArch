@@ -228,12 +228,26 @@ server.get('History', server.middleware.https, function (req, res, next) {
         var ordersResult = getOrders(req.currentCustomer, req.querystring);
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
+        var breadcrumbs = [
+            {
+                htmlValue: Resource.msg('global.home', 'common', null),
+                url: URLUtils.home().toString()
+            },
+            {
+                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                url: URLUtils.url('Account-Show').toString()
+            },
+            {
+                htmlValue: Resource.msg('label.orderhistory', 'account', null)
+            }
+        ];
 
         res.render('account/order/history', {
             orders: orders,
             filterValues: filterValues,
             orderFilter: req.querystring.orderFilter,
-            accountlanding: false
+            accountlanding: false,
+            breadcrumbs: breadcrumbs
         });
     }
     next();
@@ -246,6 +260,23 @@ server.get('Details', server.middleware.https, function (req, res, next) {
         var order = OrderMgr.getOrder(req.querystring.orderID);
         var orderCustomerNo = req.currentCustomer.profile.customerNo;
         var currentCustomerNo = order.customer.profile.customerNo;
+        var breadcrumbs = [
+            {
+                htmlValue: Resource.msg('global.home', 'common', null),
+                url: URLUtils.home().toString()
+            },
+            {
+                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                url: URLUtils.url('Account-Show').toString()
+            },
+            {
+                htmlValue: Resource.msg('label.orderhistory', 'account', null),
+                url: URLUtils.url('Order-History').toString()
+            },
+            {
+                htmlValue: Resource.msg('heading.order.details', 'order', null)
+            }
+        ];
 
         if (order && orderCustomerNo === currentCustomerNo) {
             var config = {
@@ -259,7 +290,8 @@ server.get('Details', server.middleware.https, function (req, res, next) {
             res.render('account/orderdetails', {
                 order: orderModel,
                 exitLinkText: exitLinkText,
-                exitLinkUrl: exitLinkUrl
+                exitLinkUrl: exitLinkUrl,
+                breadcrumbs: breadcrumbs
             });
         } else {
             res.redirect(URLUtils.url('Account-Show'));
