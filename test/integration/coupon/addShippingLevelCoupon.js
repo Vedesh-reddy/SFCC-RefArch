@@ -2,9 +2,8 @@ var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
 var jsonHelpers = require('../helpers/jsonUtils');
-
-
-
+var html2json = require('html2json').html2json;
+var json2html = require('html2json').json2html;
 
 describe('Shipping Level Coupon - should be able to add ', function () {
     this.timeout(5000);
@@ -83,7 +82,9 @@ describe('Shipping Level Coupon - should be able to add ', function () {
         return request(myRequest)
             .then(function (response) {
             assert.equal(response.statusCode, 200, 'Expected add coupon request statusCode to be 200.');
-            console.log('coupon response is ', response);
+            //console.log('coupon response is ', response.body);
+            //console.log('parsedHtml is ', html2json(response.body));
+                console.log('coupon response is ', JSON.stringify(response, null, 4));
 
             var bodyAsJson = JSON.parse(response.body);
 
