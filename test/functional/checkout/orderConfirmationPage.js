@@ -384,7 +384,7 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getAttribute(orderConfPage.PRODUCT_IMAGE, 'src')
                 .then(imageSrc => {
                     const expectImgSrc = '/images/small/PG.10229762.JJ169XX.PZ.jpg';
-                    assert.isTrue(imageSrc.endsWith(expectImgSrc), 'product image: url not end with ' + expectImgSrc);
+                    return assert.isTrue(imageSrc.endsWith(expectImgSrc), 'product image: url not end with ' + expectImgSrc);
                 });
         });
 
@@ -434,12 +434,12 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getText(orderConfPage.ORDER_SUBTOTAL_LABEL)
                 .then((subTotalLabel) => {
                     const expectSubTotalLabel = Resource.msgf('label.order.subtotal', 'confirmation', null);
-                    assert.equal(subTotalLabel, expectSubTotalLabel, 'Expected sub total label to be = ' + expectSubTotalLabel);
+                    return assert.equal(subTotalLabel, expectSubTotalLabel, 'Expected sub total label to be = ' + expectSubTotalLabel);
                 })
                 .then(() => browser.getText(orderConfPage.ORDER_SUBTOTAL))
                 .then((subTotal) => {
                     const expectSubTotal = prodIdUnitPricesMap[productVariantId1].sale;
-                    assert.equal(subTotal, expectSubTotal, 'Expected sub total to be = ' + expectSubTotal);
+                    return assert.equal(subTotal, expectSubTotal, 'Expected sub total to be = ' + expectSubTotal);
                 });
         });
 
@@ -447,12 +447,12 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getText(orderConfPage.ORDER_SHIPPING_LABEL)
                 .then((shippingCostLabel) => {
                     const expectShippingCostLabel = Resource.msgf('label.order.shipping.cost', 'confirmation', null);
-                    assert.equal(shippingCostLabel, expectShippingCostLabel, 'Expected shipping cost label to be = ' + expectShippingCostLabel);
+                    return assert.equal(shippingCostLabel, expectShippingCostLabel, 'Expected shipping cost label to be = ' + expectShippingCostLabel);
                 })
                 .then(() => browser.getText(orderConfPage.ORDER_SHIPPING_COST))
                 .then((shippingCost) => {
                     const expectShippingCost = shipCostMap[locale];
-                    assert.equal(shippingCost, expectShippingCost, 'Expected shipping cost to be = ' + expectShippingCost);
+                    return assert.equal(shippingCost, expectShippingCost, 'Expected shipping cost to be = ' + expectShippingCost);
                 });
         });
 
@@ -460,12 +460,12 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getText(orderConfPage.ORDER_SALES_TAX_LABEL)
                 .then((salesTaxLabel) => {
                     const expectSalesTaxLabel = Resource.msgf('label.order.sales.tax', 'confirmation', null);
-                    assert.equal(salesTaxLabel, expectSalesTaxLabel, 'Expected sales tax label to be = ' + expectSalesTaxLabel);
+                    return assert.equal(salesTaxLabel, expectSalesTaxLabel, 'Expected sales tax label to be = ' + expectSalesTaxLabel);
                 })
                 .then(() => browser.getText(orderConfPage.ORDER_SALES_TAX))
                 .then((salesTax) => {
                     const expectSalesTax = totalTaxMap[locale];
-                    assert.equal(salesTax, expectSalesTax, 'Expected sales tax to be = ' + expectSalesTax);
+                    return assert.equal(salesTax, expectSalesTax, 'Expected sales tax to be = ' + expectSalesTax);
                 });
         });
 
@@ -473,7 +473,7 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getText(orderConfPage.ORDER_GRAND_TOTAL_LABEL)
                 .then((grandTotalLabel) => {
                     const expectGrandTotalLabel = Resource.msgf('label.order.grand.total', 'confirmation', null);
-                    assert.equal(grandTotalLabel, expectGrandTotalLabel, 'Expected grand total label to be = ' + expectGrandTotalLabel);
+                    return assert.equal(grandTotalLabel, expectGrandTotalLabel, 'Expected grand total label to be = ' + expectGrandTotalLabel);
                 })
                 .then(() => browser.getText(orderConfPage.ORDER_GRAND_TOTAL))
                 .then((grandTotal) => {
@@ -485,7 +485,7 @@ describe('Checkout - Order confirmation page', () => {
                     const totalPrice = listPriceValue1 + shipCostValue + totalTaxValue;
                     const expectGrandTotal = pricingHelpers.getFormattedPrice(totalPrice.toString(), locale);
 
-                    assert.equal(grandTotal, expectGrandTotal, 'Expected grand total to be = ' + expectGrandTotal);
+                    return assert.equal(grandTotal, expectGrandTotal, 'Expected grand total to be = ' + expectGrandTotal);
                 });
         });
     });
@@ -501,7 +501,7 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getText(orderConfPage.CONTINUE_SHOPPING)
                 .then((buttonName) => {
                     const expectButtonName = Resource.msgf('button.continue.shopping', 'confirmation', null);
-                    assert.equal(buttonName, expectButtonName, 'Expected continue shopping button to have name = ' + expectButtonName);
+                    return assert.equal(buttonName, expectButtonName, 'Expected continue shopping button to have name = ' + expectButtonName);
                 });
         });
 
@@ -511,17 +511,17 @@ describe('Checkout - Order confirmation page', () => {
                     const myLocale = locale === 'x_default' ? 'en_US' : locale;
 
                     const expectHrefLink = '/home?lang=' + myLocale;
-                    assert.isTrue(hrefLink.endsWith(expectHrefLink), 'Expected continue shopping button href link end with = ' + expectHrefLink);
+                    return assert.isTrue(hrefLink.endsWith(expectHrefLink), 'Expected continue shopping button href link end with = ' + expectHrefLink);
                 });
         });
     });
 
     describe('Save my informaion:', () => {
         it('Verify title', () => {
-            browser.getText(orderConfPage.SAVE_MY_INFO_TITLE)
+            return browser.getText(orderConfPage.SAVE_MY_INFO_TITLE)
                 .then((saveMyInfoTitle) => {
                     const expectSaveMyInfoTitle = Resource.msgf('title.save.customer.information', 'confirmation', null);
-                    assert.equal(saveMyInfoTitle, expectSaveMyInfoTitle, 'Expected save my information to have the title = ' + expectSaveMyInfoTitle);
+                    return assert.equal(saveMyInfoTitle, expectSaveMyInfoTitle, 'Expected save my information to have the title = ' + expectSaveMyInfoTitle);
                 });
         });
 
@@ -529,7 +529,7 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getText(orderConfPage.SAVE_MY_INFO_PASSWORD_LABEL)
                 .then((passwordLabel) => {
                     const expectPasswordLabel = Resource.msgf('field.password', 'confirmation', null);
-                    assert.equal(passwordLabel, expectPasswordLabel, 'Expected save my information password label = ' + expectPasswordLabel);
+                    return assert.equal(passwordLabel, expectPasswordLabel, 'Expected save my information password label = ' + expectPasswordLabel);
                 })
                 .then(() => browser.isVisible(orderConfPage.SAVE_MY_INFO_PASSWORD))
                 .then(passwordVisible => assert.ok(passwordVisible));
@@ -539,7 +539,7 @@ describe('Checkout - Order confirmation page', () => {
             return browser.getText(orderConfPage.SAVE_MY_INFO_CONFIRM_PASSWORD_LABEL)
                 .then((confirmPasswordLabel) => {
                     const expectConfirmPasswordLabel = Resource.msgf('field.confirm.password', 'confirmation', null);
-                    assert.equal(confirmPasswordLabel, expectConfirmPasswordLabel, 'Expected save my information confirm password label = ' + expectConfirmPasswordLabel);
+                    return assert.equal(confirmPasswordLabel, expectConfirmPasswordLabel, 'Expected save my information confirm password label = ' + expectConfirmPasswordLabel);
                 })
                 .then(() => browser.isVisible(orderConfPage.SAVE_MY_INFO_CONFIRM_PASSWORD))
                 .then(passwordVisible => assert.ok(passwordVisible));

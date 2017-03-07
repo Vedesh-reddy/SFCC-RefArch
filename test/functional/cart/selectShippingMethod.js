@@ -61,41 +61,41 @@ describe('Cart - Selecting Shipping Methods', () => {
         it('Should have the correct number shipping methods on the list.', function () {
             return browser.elements(cartPage.SHIPPING_METHOD_OPTIONS)
                 .then(methodList => {
-                    assert.equal(methodList.value.length, expectedShipMethodList.length, 'Expected the number of shipping methods = ' + expectedShipMethodList.length);
+                    return assert.equal(methodList.value.length, expectedShipMethodList.length, 'Expected the number of shipping methods = ' + expectedShipMethodList.length);
                 });
         });
 
         it('Should have the correct shipping method names on the list.', function () {
             return cartPage.getShippingMethodAtIndex(1)
                 .then(method => {
-                    assert.equal(method, expectedShipMethodList[0], 'Expected first shipping method = ' + expectedShipMethodList[0]);
+                    return assert.equal(method, expectedShipMethodList[0], 'Expected first shipping method = ' + expectedShipMethodList[0]);
                 })
                 .then(() => cartPage.getShippingMethodAtIndex(2))
                 .then(method => {
-                    assert.equal(method, expectedShipMethodList[1], 'Expected first shipping method = ' + expectedShipMethodList[1]);
+                    return assert.equal(method, expectedShipMethodList[1], 'Expected first shipping method = ' + expectedShipMethodList[1]);
                 })
                 .then(() => cartPage.getShippingMethodAtIndex(3))
                 .then(method => {
-                    assert.equal(method, expectedShipMethodList[2], 'Expected first shipping method = ' + expectedShipMethodList[2]);
+                    return assert.equal(method, expectedShipMethodList[2], 'Expected first shipping method = ' + expectedShipMethodList[2]);
                 })
                 .then(() => cartPage.getShippingMethodAtIndex(4))
                 .then(method => {
-                    assert.equal(method, expectedShipMethodList[3], 'Expected first shipping method = ' + expectedShipMethodList[3]);
+                    return assert.equal(method, expectedShipMethodList[3], 'Expected first shipping method = ' + expectedShipMethodList[3]);
                 })
                 .then(() => cartPage.getShippingMethodAtIndex(5))
                 .then(method => {
-                    assert.equal(method, expectedShipMethodList[4], 'Expected first shipping method = ' + expectedShipMethodList[4]);
+                    return assert.equal(method, expectedShipMethodList[4], 'Expected first shipping method = ' + expectedShipMethodList[4]);
                 })
                 .then(() => cartPage.getShippingMethodAtIndex(6))
                 .then(method => {
-                    assert.equal(method, expectedShipMethodList[5], 'Expected first shipping method = ' + expectedShipMethodList[5]);
+                    return assert.equal(method, expectedShipMethodList[5], 'Expected first shipping method = ' + expectedShipMethodList[5]);
                 });
         });
 
         it('Should have default shipping method selected.', function () {
             return cartPage.isShippingMethodSelectedAtIndex(1)
                 .then(selected => {
-                    assert.isTrue(selected, 'Expected first shipping method to be selected but it is not');
+                    return assert.isTrue(selected, 'Expected first shipping method to be selected but it is not');
                 });
         });
     });
@@ -136,11 +136,11 @@ describe('Cart - Selecting Shipping Methods', () => {
 
             return browser.getText(cartPage.SHIPPING_COST)
                 .then(shippingCost => {
-                    assert.equal(shippingCost, expectShipCost, 'Expected Ground shipping cost to be ' + expectShipCost);
+                    return assert.equal(shippingCost, expectShipCost, 'Expected Ground shipping cost to be ' + expectShipCost);
                 })
                 .then(() => browser.getText(cartPage.TAX_TOTAL))
                 .then(taxTotal => {
-                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                    return assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
                 .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
@@ -189,7 +189,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 2))
                 .then(() => cartPage.isShippingMethodSelectedAtIndex(3))
                 .then(selected => {
-                    assert.isTrue(selected, 'Expected Overnight method to be selected but it is not.');
+                    return assert.isTrue(selected, 'Expected Overnight method to be selected but it is not.');
                 })
                 .then(() => {
                     return browser.waitUntil(() => {
@@ -201,11 +201,11 @@ describe('Cart - Selecting Shipping Methods', () => {
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
-                    assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                    return assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
                 })
                 .then(() => browser.getText(cartPage.TAX_TOTAL))
                 .then(taxTotal => {
-                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                    return assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
                 .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
@@ -219,7 +219,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                     const expectedEstimatedTotal = listPriceValue1 + shipCostValue + totalTaxValue;
                     const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedEstimatedTotal.toString(), locale);
 
-                    assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
+                    return assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
                 });
         });
 
@@ -254,7 +254,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 3))
                 .then(() => cartPage.isShippingMethodSelectedAtIndex(4))
                 .then(selected => {
-                    assert.isTrue(selected, 'Expected Store Pickup method to be selected but it is not.');
+                    return assert.isTrue(selected, 'Expected Store Pickup method to be selected but it is not.');
                 })
                 .then(() => {
                     return browser.waitUntil(() => {
@@ -266,11 +266,11 @@ describe('Cart - Selecting Shipping Methods', () => {
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
-                    assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                    return assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
                 })
                 .then(() => browser.getText(cartPage.TAX_TOTAL))
                 .then(taxTotal => {
-                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                    return assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
                 .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
@@ -284,7 +284,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                     const expectedEstimatedTotal = listPriceValue1 + shipCostValue + totalTaxValue;
                     const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedEstimatedTotal.toString(), locale);
 
-                    assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
+                    return assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
                 });
         });
 
@@ -319,7 +319,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 4))
                 .then(() => cartPage.isShippingMethodSelectedAtIndex(5))
                 .then(selected => {
-                    assert.isTrue(selected, 'Expected Express method to be selected but it is not.');
+                    return assert.isTrue(selected, 'Expected Express method to be selected but it is not.');
                 })
                 .then(() => {
                     return browser.waitUntil(() => {
@@ -331,11 +331,11 @@ describe('Cart - Selecting Shipping Methods', () => {
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
-                    assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                    return assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
                 })
                 .then(() => browser.getText(cartPage.TAX_TOTAL))
                 .then(taxTotal => {
-                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                    return assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
                 .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
@@ -349,7 +349,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                     const expectedEstimatedTotal = listPriceValue1 + shipCostValue + totalTaxValue;
                     const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedEstimatedTotal.toString(), locale);
 
-                    assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
+                    return assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
                 });
         });
 
@@ -384,7 +384,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 5))
                 .then(() => cartPage.isShippingMethodSelectedAtIndex(6))
                 .then(selected => {
-                    assert.isTrue(selected, 'Expected USPS method to be selected but it is not.');
+                    return assert.isTrue(selected, 'Expected USPS method to be selected but it is not.');
                 })
                 .then(() => {
                     return browser.waitUntil(() => {
@@ -396,11 +396,11 @@ describe('Cart - Selecting Shipping Methods', () => {
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
-                    assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                    return assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
                 })
                 .then(() => browser.getText(cartPage.TAX_TOTAL))
                 .then(taxTotal => {
-                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                    return assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 })
                 .then(() => browser.getText(cartPage.GRAND_TOTAL))
                 .then(subTotal => {
@@ -414,7 +414,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                     const expectedEstimatedTotal = listPriceValue1 + shipCostValue + totalTaxValue;
                     const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedEstimatedTotal.toString(), locale);
 
-                    assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
+                    return assert.equal(subTotal, formattedExpectedSubTotal, 'Expected estimated total to be ' + formattedExpectedSubTotal);
                 });
         });
     });
@@ -463,7 +463,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 })
                 .then(() => browser.getText(cartPage.TAX_TOTAL))
                 .then(taxTotal => {
-                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                    return assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 });
         });
 
@@ -498,7 +498,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, 1))
                 .then(() => cartPage.isShippingMethodSelectedAtIndex(2))
                 .then(selected => {
-                    assert.isTrue(selected, 'Expected 2 Day Express method to be selected but it is not.');
+                    return assert.isTrue(selected, 'Expected 2 Day Express method to be selected but it is not.');
                 })
                 .then(() => {
                     return browser.waitUntil(() => {
@@ -510,11 +510,11 @@ describe('Cart - Selecting Shipping Methods', () => {
                 })
                 .then(() => browser.getText(cartPage.SHIPPING_COST))
                 .then(shippingCost => {
-                    assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                    return assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
                 })
                 .then(() => browser.getText(cartPage.TAX_TOTAL))
                 .then(taxTotal => {
-                    assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
+                    return assert.equal(taxTotal, expectTotalTax, 'Expected total tax to be ' + expectTotalTax);
                 });
         });
     });
