@@ -57,7 +57,7 @@ describe('cart', function () {
     });
     var ProductLineItems = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/productLineItems', {
         '~/cartridge/scripts/dwHelpers': helper,
-        './productLineItem': function () {}
+        '../scripts/factories/product': { get: function () { return 'productLineItem'; } }
     });
 
     it('should accept/process a null Basket object', function () {

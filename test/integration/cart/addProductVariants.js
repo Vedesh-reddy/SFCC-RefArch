@@ -250,6 +250,7 @@ describe('Add Product variants to cart', function () {
                                     'maxOrderQuantity': 10
                                 },
                                 'priceTotal': '$48.00',
+                                'promotions': null,
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
@@ -296,6 +297,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'priceTotal': '$24.00',
                                 'isBonusProductLineItem': false,
+                                'promotions': null,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
                                 'quantity': qty2,
@@ -334,6 +336,7 @@ describe('Add Product variants to cart', function () {
                                     'maxOrderQuantity': 11
                                 },
                                 'priceTotal': '$220.00',
+                                'promotions': null,
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
@@ -377,6 +380,7 @@ describe('Add Product variants to cart', function () {
                                     'maxOrderQuantity': 10
                                 },
                                 'priceTotal': '$89.97',
+                                'promotions': null,
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',

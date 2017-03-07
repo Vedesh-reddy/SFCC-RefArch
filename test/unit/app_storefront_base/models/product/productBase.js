@@ -15,6 +15,16 @@ describe('productBase', function () {
         '../../scripts/factories/price': { getPrice: function () {} }
     });
 
+    var promotions = new ArrayList([{
+        calloutMsg: { markup: 'Super duper promotion discount' },
+        details: { markup: 'Some Details' },
+        enabled: true,
+        ID: 'SuperDuperPromo',
+        name: 'Super Duper Promo',
+        promotionClass: 'Some Class',
+        rank: null
+    }]);
+
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
@@ -68,10 +78,39 @@ describe('productBase', function () {
         tempMock = Object.assign({}, productVariantMock, tempMock);
         tempMock.variant = false;
         tempMock.variationGroup = true;
-        var product = new ProductBase(toProductMock(tempMock), { color: { value: 123 } });
+        var product = new ProductBase(toProductMock(tempMock), { color: { value: 123 } }, null);
 
         assert.equal(product.productName, 'test product');
         assert.equal(product.id, 1234567);
         assert.equal(product.rating, 4);
+    });
+
+    it('should contain an array of promotions', function () {
+        var expectedPromotions = [{
+            calloutMsg: 'Super duper promotion discount',
+            details: 'Some Details',
+            enabled: true,
+            id: 'SuperDuperPromo',
+            name: 'Super Duper Promo',
+            promotionClass: 'Some Class',
+            rank: null
+        }];
+
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel.selectedVariant = null;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        tempMock.variant = false;
+        tempMock.variationGroup = true;
+        var product = new ProductBase(toProductMock(tempMock), null, promotions);
+
+        assert.deepEqual(product.promotions, expectedPromotions);
+    });
+
+    it('should handle no promotions provided', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.promotions, null);
     });
 });

@@ -194,6 +194,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'priceTotal': '$48.00',
                     'isBonusProductLineItem': false,
+                    'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid1,
                     'quantity': expectQty1,
@@ -239,6 +240,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'priceTotal': '$120.00',
                     'isBonusProductLineItem': false,
+                    'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid2,
                     'quantity': expectQty2,
@@ -283,6 +285,7 @@ describe('Update quantity for product variant', function () {
 
                     'priceTotal': '$89.97',
                     'isBonusProductLineItem': false,
+                    'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid3,
                     'quantity': expectQty3,

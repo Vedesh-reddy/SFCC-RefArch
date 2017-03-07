@@ -37,6 +37,37 @@ function getRating(id) {
     return Math.ceil((sum % 5) * 2) / 2;
 }
 
+/**
+ * @typedef Promotion
+ * @type Object
+ * @property {string} calloutMsg - Promotion callout message
+ * @property {boolean} enabled - Whether Promotion is enabled
+ * @property {string} id - Promotion ID
+ * @property {string} name - Promotion name
+ * @property {string} promotionClass - Type of Promotion (Product, Shipping, or Order)
+ * @property {number|null} rank - Promotion rank for sorting purposes
+ */
+
+/**
+ * Retrieve Promotions that applies to thisProduct
+ *
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
+ *                                                                 product
+ * @return {Promotion} - JSON representation of Promotion instance
+ */
+function getPromotions(promotions) {
+    return dwHelpers.map(promotions, function (promotion) {
+        return {
+            calloutMsg: promotion.calloutMsg.markup,
+            details: promotion.details.markup,
+            enabled: promotion.enabled,
+            id: promotion.ID,
+            name: promotion.name,
+            promotionClass: promotion.promotionClass,
+            rank: promotion.rank
+        };
+    });
+}
 
 /**
  * Normalize product and return Product variation model
@@ -105,6 +136,7 @@ ProductBase.prototype = {
         this.images = new ImageModel(this.variationModel, this.imageConfig);
         this.rating = getRating(this.id);
         this.attributes = (new AttributesModel(this.variationModel, this.attributeConfig)).slice(0);
+        this.promotions = this.apiPromotions ? getPromotions(this.apiPromotions) : null;
     },
     /**
      * Normalize product and return Product variation model
@@ -130,7 +162,17 @@ ProductBase.prototype = {
  */
 function ProductWrapper(product, productVariables, promotions) {
     var productBase = new ProductBase(product, productVariables, null, promotions);
-    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes'];
+    var items = [
+        'id',
+        'productName',
+        'price',
+        'productType',
+        'images',
+        'rating',
+        'attributes',
+        'promotions'
+    ];
+
     items.forEach(function (item) {
         this[item] = productBase[item];
     }, this);

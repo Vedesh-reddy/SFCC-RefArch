@@ -140,7 +140,7 @@ function updateAvailability(response) {
  * @return {string} - Compiled HTML
  */
 function getPromotionsHtml(promotions) {
-    if (!promotions.length) {
+    if (!promotions) {
         return '';
     }
 

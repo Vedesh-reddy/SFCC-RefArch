@@ -28,8 +28,9 @@ function getMinMaxQuantityOptions(product, quantity) {
  * @param {Array} productVariables - empty array
  * @param {number} quantity - The quantity of this product line item currently in the baskets
  * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - a collection of promotions
  */
-function ProductLineItem(product, productVariables, quantity, lineItem) {
+function ProductLineItem(product, productVariables, quantity, lineItem, promotions) {
     this.variationModel = this.getVariationModel(product, productVariables);
     this.product = this.variationModel.selectedVariant || product;
     this.imageConfig = {
@@ -41,6 +42,8 @@ function ProductLineItem(product, productVariables, quantity, lineItem) {
     this.attributeConfig = {
         attributes: 'selected'
     };
+    this.useSimplePrice = false;
+    this.apiPromotions = promotions;
     this.initialize(lineItem);
 }
 
@@ -64,17 +67,19 @@ ProductLineItem.prototype.initialize = function (lineItem) {
  * @param {Array} productVariables - Empty array
  * @param {number} quantity - The quantity of this product line item currently in the baskets
  * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - a collection of promotions
  */
-function ProductWrapper(product, productVariables, quantity, lineItem) {
+function ProductWrapper(product, productVariables, quantity, lineItem, promotions) {
     var productLineItem = new ProductLineItem(
         product,
         productVariables,
         quantity,
-        lineItem
+        lineItem,
+        promotions
     );
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes',
         'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift', 'UUID', 'quantity',
-        'isOrderable'];
+        'isOrderable', 'promotions'];
     items.forEach(function (item) {
         this[item] = productLineItem[item];
     }, this);

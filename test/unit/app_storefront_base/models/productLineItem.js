@@ -5,7 +5,7 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../util');
 
-describe('fullProduct', function () {
+describe('Product Line Item', function () {
     var ProductLineItem = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/productLineItem', {
         './product/productBase': proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
             './productImages': function () {},
