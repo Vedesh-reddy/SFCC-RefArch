@@ -68,7 +68,7 @@ export const ORDER_GRAND_TOTAL_LABEL = '.grand-total .order-receipt-label';
 export const ORDER_GRAND_TOTAL = '.grand-total .grand-total-sum';
 
 export const CONTINUE_SHOPPING = '.order-confirmation-continue-shopping';
-export const SAVE_MY_INFO_TITLE = '.order-confirm-create-account .checkout-card-header';
+export const SAVE_MY_INFO_TITLE = '.order-confirm-create-account .card-header';
 export const SAVE_MY_INFO_PASSWORD_LABEL = '[for=newPassword]';
 export const SAVE_MY_INFO_PASSWORD = '#newPassword';
 export const SAVE_MY_INFO_CONFIRM_PASSWORD_LABEL = '[for=newPasswordConfirm]';

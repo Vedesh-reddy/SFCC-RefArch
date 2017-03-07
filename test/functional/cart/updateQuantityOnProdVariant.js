@@ -73,14 +73,14 @@ describe('Cart - Update Quantity On Product Variant', () => {
     it('Should be able to update quantity of variant item.', function () {
         return cartPage.updateQuantityByRow(2, newQty.toString())
             .then(quantity => {
-                assert.equal(quantity, newQty, 'Expected the product quantity updated to ' + newQty);
+                return assert.equal(quantity, newQty, 'Expected the product quantity updated to ' + newQty);
             });
     });
 
     it('Should have updated total line items', function () {
         return browser.getText(cartPage.NUMBER_OF_ITEMS)
             .then(totalItems => {
-                assert.equal(totalItems, '5 Items', 'Expected the total number of items to be 5 Items.');
+                return assert.equal(totalItems, '5 Items', 'Expected the total number of items to be 5 Items.');
             });
     });
 
@@ -88,7 +88,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
         return cartPage.getEachPriceByRow(2)
             .then(price => {
                 const expectedUnitPrice = prodIdUnitPricesMap[productVariantId2].list;
-                assert.equal(price, expectedUnitPrice, 'Expected the line item 2 have total price of ' + expectedUnitPrice);
+                return assert.equal(price, expectedUnitPrice, 'Expected the line item 2 have total price of ' + expectedUnitPrice);
             });
     });
 
@@ -100,7 +100,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
                 const expectedSubTotal = listPriceValue * newQty;
                 const formattedExpectedSubTotal = pricingHelpers.getFormattedPrice(expectedSubTotal.toString(), locale);
 
-                assert.equal(price, formattedExpectedSubTotal, 'Expected the line item 2 have total price of ' + formattedExpectedSubTotal);
+                return assert.equal(price, formattedExpectedSubTotal, 'Expected the line item 2 have total price of ' + formattedExpectedSubTotal);
             });
     });
 
@@ -109,7 +109,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
 
         return browser.getText(cartPage.SHIPPING_COST)
             .then(shippingCost => {
-                assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
+                return assert.equal(shippingCost, expectShipCost, 'Expected shipping cost to be ' + expectShipCost);
             });
     });
 
@@ -118,7 +118,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
 
         return browser.getText(cartPage.TAX_TOTAL)
             .then(taxTotal => {
-                assert.equal(taxTotal, expectTotalTax, 'Expected shipping cost to be ' + expectTotalTax);
+                return assert.equal(taxTotal, expectTotalTax, 'Expected shipping cost to be ' + expectTotalTax);
             });
     });
 
@@ -144,7 +144,7 @@ describe('Cart - Update Quantity On Product Variant', () => {
 
         return browser.getText(cartPage.GRAND_TOTAL)
             .then(subTotal => {
-                assert.equal(subTotal, formattedExpectedSubTotal, 'Expected shipping cost to be ' + formattedExpectedSubTotal);
+                return assert.equal(subTotal, formattedExpectedSubTotal, 'Expected shipping cost to be ' + formattedExpectedSubTotal);
             });
     });
 });

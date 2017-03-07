@@ -110,7 +110,7 @@ describe('Category Navigation and single Refinement - General Product', () => {
                 }
                 // access desktop or laptop browser
                 return browser.click(search.price3RefinementBrowser)
-                    .then(() => browser.pause(2000))
+                    .then(() => browser.pause(2500))
                     .then(() => browser.getAttribute(search.price3RefinementTitleBrowser, 'title'))
                     .then(title => assert.equal(title, 'Currently Refined by Price: $50 - $99.99'))
                     .then(() => browser.waitForExist(search.pdpMain))

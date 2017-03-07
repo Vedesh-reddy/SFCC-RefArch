@@ -67,7 +67,7 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
             .then((pageTitle) => {
                 const defaultTitle = 'Checkout';
                 const expectedPageTitle = Resource.msgf('title.checkout', 'checkout', null, defaultTitle);
-                assert.equal(pageTitle, expectedPageTitle, 'Expected to be on checkout page with page title = ' + expectedPageTitle);
+                return assert.equal(pageTitle, expectedPageTitle, 'Expected to be on checkout page with page title = ' + expectedPageTitle);
             });
     });
 
@@ -78,7 +78,7 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
             .then((activeTabTitle) => {
                 const defaultTabTitle = 'Shipping';
                 const expectedActiveTabTitle = Resource.msgf('action.shipping.form', 'checkout', null, defaultTabTitle);
-                assert.equal(activeTabTitle, expectedActiveTabTitle, 'Expected to be on checkout page with active tab title = ' + expectedActiveTabTitle);
+                return assert.equal(activeTabTitle, expectedActiveTabTitle, 'Expected to be on checkout page with active tab title = ' + expectedActiveTabTitle);
             });
     });
 
