@@ -81,6 +81,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
     @include media-breakpoint-down($breakpoint-name) {
         background-color: $white;
+        z-index: 4;
     }
 }
 

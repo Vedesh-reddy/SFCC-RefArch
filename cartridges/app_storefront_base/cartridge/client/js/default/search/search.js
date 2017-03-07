@@ -1,3 +1,5 @@
+'use strict';
+
 // Initial page size set to default page size
 var currentPageSize = 12;
 
@@ -162,8 +164,9 @@ module.exports = function () {
             method: 'GET',
             success: function (response) {
                 parseResults(response);
+                $.spinner().stop();
             },
-            complete: function () {
+            error: function () {
                 $.spinner().stop();
             }
         });

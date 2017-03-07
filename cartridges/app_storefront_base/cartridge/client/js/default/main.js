@@ -5,6 +5,7 @@ $(document).ready(function () {
     require('./components/footer')();
     require('./components/minicart')();
     require('./components/collapsable-item')();
+    require('./components/search')();
 });
 
 require('./thirdparty/bootstrap');
