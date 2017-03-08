@@ -16,9 +16,17 @@ var ProductMgr = require('dw/catalog/ProductMgr');
  * @returns {Array} an array of breadcrumb objects
  */
 function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
-    var category = cgid ?
+    var primaryCategory;
+    var product;
+    if (pid) {
+        product = ProductMgr.getProduct(pid);
+        primaryCategory = product.master ?
+            product.primaryCategory :
+            product.masterProduct.primaryCategory;
+    }
+    var category = cgid && cgid !== 'root' ?
             CatalogMgr.getCategory(cgid) :
-            ProductMgr.getProduct(pid).getPrimaryCategory();
+            primaryCategory;
     breadcrumbs.push({
         htmlValue: category.displayName,
         url: URLUtils.url('Search-Show', 'cgid', category.ID)
@@ -54,11 +62,16 @@ function getResources() {
     };
 }
 
-server.get('Show', function (req, res, next) {
-    var params = req.querystring;
+/**
+ * Renders the Product Details Page
+ * @param {Object} querystring - query string parameters
+ * @param {Object} res - response object
+ */
+function showProductPage(querystring, res) {
+    var params = querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
-    var breadcrumbs = getAllBreadcrumbs(req.querystring.cgid, product.id, []).reverse();
+    var breadcrumbs = getAllBreadcrumbs(querystring.cgid, product.id, []).reverse();
     res.render('product/detail.isml', {
         CurrentPageMetaData: {
             title: product.productName
@@ -68,7 +81,15 @@ server.get('Show', function (req, res, next) {
         resources: getResources(),
         breadcrumbs: breadcrumbs
     });
+}
 
+server.get('Show', function (req, res, next) {
+    showProductPage(req.querystring, res);
+    next();
+});
+
+server.get('ShowInCategory', function (req, res, next) {
+    showProductPage(req.querystring, res);
     next();
 });
 
@@ -116,8 +137,10 @@ server.get('ShowTile', function (req, res, next) {
         productUrl = cgid ?
             URLUtils.url('Product-Show', 'pid', product.id, 'cgid', cgid).relative().toString() :
             URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
-        quickViewUrl = URLUtils.url('Product-ShowQuickView', 'pid', product.id)
-            .relative().toString();
+        quickViewUrl = cgid ?
+            URLUtils.url('Product-ShowQuickView', 'pid', product.id, 'cgid', cgid)
+                .relative().toString() :
+            URLUtils.url('Product-ShowQuickView', 'pid', product.id).relative().toString();
     } catch (e) {
         product = false;
         productUrl = URLUtils.url('Home-Show');// TODO: change to coming soon page
