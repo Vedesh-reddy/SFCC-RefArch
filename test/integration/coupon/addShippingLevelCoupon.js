@@ -77,14 +77,14 @@ describe('Shipping Level Coupon - should be able to add ', function () {
         }
 
         myRequest.method = 'GET';
-        myRequest.url = config.baseUrl + 'Cart-AddCoupon?couponCode=' + couponCode;
+        myRequest.url = config.baseUrl + '/Cart-AddCoupon?couponCode=' + couponCode;
 
         return request(myRequest)
             .then(function (response) {
             assert.equal(response.statusCode, 200, 'Expected add coupon request statusCode to be 200.');
-            //console.log('coupon response is ', response.body);
+            console.log('coupon response body is ', response.body);
             //console.log('parsedHtml is ', html2json(response.body));
-                console.log('coupon response is ', JSON.stringify(response, null, 4));
+                //console.log('coupon response is ', JSON.stringify(response, null, 4));
 
             var bodyAsJson = JSON.parse(response.body);
 
