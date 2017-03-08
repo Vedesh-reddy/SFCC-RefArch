@@ -1,7 +1,7 @@
 'use strict';
 
 var helper = require('~/cartridge/scripts/dwHelpers');
-var ProductLineItemModel = require('./productLineItem');
+var ProductFactory = require('../scripts/factories/product');
 
 /**
  * Creates an array of product line items
@@ -11,7 +11,15 @@ var ProductLineItemModel = require('./productLineItem');
  */
 function createProductLineItemsObject(allLineItems) {
     var lineItems = helper.map(allLineItems, function (item) {
-        return new ProductLineItemModel(item.product, null, item.quantity.value, item);
+        var params = {
+            pid: item.product.ID,
+            quantity: item.quantity.value,
+            variables: null,
+            pview: 'productLineItem',
+            lineItem: item
+        };
+
+        return ProductFactory.get(params);
     });
 
     return lineItems;

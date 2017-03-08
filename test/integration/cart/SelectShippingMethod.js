@@ -127,6 +127,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 },
 
                 'priceTotal': '$99.00',
+                'promotions': null,
                 'isBonusProductLineItem': false,
                 'isGift': false,
                 'UUID': '',
@@ -166,6 +167,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                     'maxOrderQuantity': 10
                 },
                 'priceTotal': '$40.00',
+                'promotions': null,
                 'isBonusProductLineItem': false,
                 'isGift': false,
                 'UUID': '',
