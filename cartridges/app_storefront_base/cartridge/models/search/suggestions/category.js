@@ -24,7 +24,7 @@ function CategorySuggestions(suggestions, maxItems) {
             category = iter.next().category;
             this.categories.push({
                 name: category.displayName,
-                imageUrl: category.image.url,
+                imageUrl: category.image ? category.image.url : '',
                 url: URLUtils.url(endpoint, 'cgid', category.ID)
             });
         }

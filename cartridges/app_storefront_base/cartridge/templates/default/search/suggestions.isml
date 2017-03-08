@@ -55,9 +55,11 @@
                     <div class="col-12 item">
                         <div class="row">
                             <div class="hidden-xs-down col-sm-2">
-                                <a href="${category.url}">
-                                    <img class="swatch-circle" alt="${category.name}" src="${category.imageUrl}" />
-                                </a>
+                                <isif condition="${category.imageUrl != ''}">
+                                    <a href="${category.url}">
+                                        <img class="swatch-circle" alt="${category.name}" src="${category.imageUrl}" />
+                                    </a>
+                                </isif>
                             </div>
                             <div class="col-xs-12 col-sm-10 name">
                                 <a href="${category.url}">${category.name}</a>
