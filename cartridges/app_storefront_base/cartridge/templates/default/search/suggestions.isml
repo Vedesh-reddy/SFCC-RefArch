@@ -1,10 +1,10 @@
 <div class="suggestions">
     <div class="container">
-        <div class="row justify-content-end header">
-            <div class="col-xs-12 col-sm-10 do-you-mean">${Resource.msg('label.suggest.doyoumean', 'search', null)}</div>
-        </div>
 
-        <isif condition="${pdict.suggestions.product}">
+        <isif condition="${pdict.suggestions.product && pdict.suggestions.product.phrases.length > 1}">
+            <div class="row justify-content-end header">
+                <div class="col-xs-12 col-sm-10 do-you-mean">${Resource.msg('label.suggest.doyoumean', 'search', null)}</div>
+            </div>
             <div class="row items">
                 <isloop items="${pdict.suggestions.product.phrases}" var="phrase">
                     <div class="col-12 item term">
