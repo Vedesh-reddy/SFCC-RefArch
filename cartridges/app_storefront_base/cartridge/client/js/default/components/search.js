@@ -175,8 +175,6 @@ module.exports = function () {
     });
 
     $('body').on('click', function (e) {
-        e.stopPropagation();
-
         if (!$('.suggestions').has(e.target).length && !$(e.target).hasClass('search-field')) {
             $('.suggestions').hide();
         }
