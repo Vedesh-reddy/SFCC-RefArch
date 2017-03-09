@@ -10,7 +10,7 @@ var AddressModel = require('~/cartridge/models/address');
 var ShippingModel = require('~/cartridge/models/shipping');
 var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
-var Payment = require('~/cartridge/models/payment');
+var PaymentModel = require('~/cartridge/models/payment');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var TotalsModel = require('~/cartridge/models/totals');
 
@@ -46,39 +46,18 @@ function placeOrder(order) {
  * @return {Object} order model
  */
 function buildOrderModel(order, config) {
-    var billingAddress = order.billingAddress;
-    var paymentInstruments;
-    var shipment = order.defaultShipment;
-    var shippingAddress = shipment.shippingAddress;
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(order.defaultShipment);
-
     // models
-    var billingAddressModel;
-    var billingModel;
-    var orderModel;
-    var totalsModel;
-    var paymentModel;
-    var productLineItemsModel;
-    var shippingAddressModel = new AddressModel(shippingAddress);
-    var shippingModel;
-
     var modelConfig = config;
 
-    shippingModel = new ShippingModel(
-        order.defaultShipment,
-        shipmentShippingModel,
-        shippingAddressModel
-    );
+    var shippingModels = ShippingModel.getShippingModels(order);
 
-    paymentInstruments = order.paymentInstruments;
+    var paymentModel = new PaymentModel(order, order.customer, order.currencyCode);
 
-    paymentModel = new Payment(null, null, paymentInstruments);
+    var billingAddressModel = new AddressModel(order.billingAddress);
+    var billingModel = new BillingModel(billingAddressModel, paymentModel);
 
-    billingAddressModel = new AddressModel(billingAddress);
-    billingModel = new BillingModel(billingAddressModel, paymentModel);
-
-    productLineItemsModel = new ProductLineItemsModel(order);
-    totalsModel = new TotalsModel(order);
+    var productLineItemsModel = new ProductLineItemsModel(order);
+    var totalsModel = new TotalsModel(order);
 
     if (!modelConfig) {
         modelConfig = {
@@ -87,14 +66,12 @@ function buildOrderModel(order, config) {
     }
     var modelsObject = {
         billingModel: billingModel,
-        shippingModel: shippingModel,
+        shippingModels: shippingModels,
         totalsModel: totalsModel,
         productLineItemsModel: productLineItemsModel
     };
 
-    orderModel = new OrderModel(order, modelsObject, modelConfig);
-
-    return orderModel;
+    return new OrderModel(order, modelsObject, modelConfig);
 }
 
 module.exports = {

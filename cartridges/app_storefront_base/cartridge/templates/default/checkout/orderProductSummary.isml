@@ -10,8 +10,15 @@
             </div>
         </div>
         <div class="product-summary-block">
-            <isloop items="${pdict.order.items.items}" var="lineItem" status="loopSate">
-                <isinclude template="checkout/productCard/productCard" />
+            <isloop items="${pdict.order.shipping}" var="shippingModel" status="shipmentLoopState">
+	            <isif condition="${pdict.order.shipping.length>1}"><div class="shipment-block"></isif>
+	            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
+	               <isinclude template="checkout/productCard/productCard" />
+	            </isloop>
+	            <isif condition="${pdict.order.shipping.length>1}">
+	            	<isinclude template="checkout/shipping/shippingCard" />
+	            	</div>
+	            </isif>
             </isloop>
         </div>
     </div>

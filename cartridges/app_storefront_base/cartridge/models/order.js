@@ -1,5 +1,16 @@
 'use strict';
 
+var AddressModel = require('~/cartridge/models/address');
+var ShippingModel = require('~/cartridge/models/shipping');
+var BillingModel = require('~/cartridge/models/billing');
+var PaymentModel = require('~/cartridge/models/payment');
+var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
+var TotalsModel = require('~/cartridge/models/totals');
+
+var DEFAULT_MODEL_CONFIG = {
+    numberOfLineItems: '*'
+};
+
 /**
  * Creates an object of information that contains information about the steps
  * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket
@@ -39,14 +50,14 @@ function getFirstProductLineItem(productLineItemsModel) {
  * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket/order
  * @param {Object} modelsObject - object with models for building a order model
  * @param {Object} modelsObject.billingModel - The current order's billing information
- * @param {Object} modelsObject.shippingModel - The current order's shipping information
+ * @param {Object} modelsObject.shippingModels - The current order's shipping information
  * @param {Object} modelsObject.totalsModel - The current order's total information
  * @param {Object} modelsObject.productLineItemsModel - The current order's line items
  * @param {Object} config - Object to help configure the orderModel
  * @param {string} config.numberOfLineItems - helps determine the number of lineitems needed
  * @constructor
  */
-function Order(lineItemContainer, modelsObject, config) {
+function OrderModel(lineItemContainer, modelsObject, config) {
     if (lineItemContainer) {
         this.orderNumber = Object.hasOwnProperty.call(lineItemContainer, 'orderNo')
             ? lineItemContainer.orderNo
@@ -74,11 +85,11 @@ function Order(lineItemContainer, modelsObject, config) {
                 : null;
             this.items = modelsObject.productLineItemsModel;
             this.billing = modelsObject.billingModel;
-            this.shipping = modelsObject.shippingModel;
+            this.shipping = modelsObject.shippingModels;
         } else if (config.numberOfLineItems === 'single') {
             this.firstLineItem = getFirstProductLineItem(modelsObject.productLineItemsModel);
-            this.shippedToFirstName = modelsObject.shippingModel.shippingAddress.firstName;
-            this.shippedToLastName = modelsObject.shippingModel.shippingAddress.lastName;
+            this.shippedToFirstName = modelsObject.shippingModels[0].shippingAddress.firstName;
+            this.shippedToLastName = modelsObject.shippingModels[0].shippingAddress.lastName;
         }
     } else {
         this.orderNumber = null;
@@ -88,4 +99,31 @@ function Order(lineItemContainer, modelsObject, config) {
     }
 }
 
-module.exports = Order;
+OrderModel.getOrderModel = function(order, options) {
+	var safeOptions = options || {};
+	
+    var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
+    var customer = safeOptions.customer || order.customer;
+    var currencyCode = safeOptions.currencyCode || order.currencyCode;
+
+    var shippingModels = ShippingModel.getShippingModels(order);
+
+    var paymentModel = new PaymentModel(order, customer, currencyCode);
+
+    var billingAddressModel = new AddressModel(order.billingAddress);
+    var billingModel = new BillingModel(billingAddressModel, paymentModel);
+
+    var productLineItemsModel = new ProductLineItemsModel(order);
+    var totalsModel = new TotalsModel(order);
+    
+    var modelsObject = {
+        billingModel: billingModel,
+        shippingModels: shippingModels,
+        totalsModel: totalsModel,
+        productLineItemsModel: productLineItemsModel
+    };
+
+    return new OrderModel(order, modelsObject, modelConfig);
+};
+
+module.exports = OrderModel;

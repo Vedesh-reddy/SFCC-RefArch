@@ -76,14 +76,27 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
  *      of payment instruments that the user is using to pay for the current basket
  * @constructor
  */
-function payment(paymentMethods, paymentCards, selectedPaymentInstruments) {
+function payment( currentBasket, currentCustomer, countryCode ) {
+	var paymentAmount = currentBasket.totalGrossPrice;
+	var paymentMethods = dw.order.PaymentMgr.getApplicablePaymentMethods(
+	    currentCustomer,
+	    countryCode,
+	    paymentAmount.value
+	);
+	var paymentCards = dw.order.PaymentMgr.getPaymentMethod(dw.order.PaymentInstrument.METHOD_CREDIT_CARD)
+    	.getApplicablePaymentCards(currentCustomer, countryCode, paymentAmount.value);
+	var paymentInstruments = currentBasket.paymentInstruments;
+	
+	
+	// Should compare currentBasket and currentCustomer and countryCode to see if we need them or not
     this.applicablePaymentMethods =
         paymentMethods ? applicablePaymentMethods(paymentMethods) : null;
 
-    this.applicablePaymentCards = paymentCards ? applicablePaymentCards(paymentCards) : null;
+    this.applicablePaymentCards = 
+    	 paymentCards ? applicablePaymentCards(paymentCards) : null;
 
-    this.selectedPaymentInstruments = selectedPaymentInstruments ?
-        getSelectedPaymentInstruments(selectedPaymentInstruments) : null;
+    this.selectedPaymentInstruments = paymentInstruments ?
+        getSelectedPaymentInstruments(paymentInstruments) : null;
 }
 
 module.exports = payment;

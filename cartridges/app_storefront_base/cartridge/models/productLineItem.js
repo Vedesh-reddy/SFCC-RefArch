@@ -31,8 +31,10 @@ function getMinMaxQuantityOptions(product, quantity) {
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - a collection of promotions
  */
 function ProductLineItem(product, productVariables, quantity, lineItem, promotions) {
+	product = product || {};
+
     this.variationModel = this.getVariationModel(product, productVariables);
-    this.product = this.variationModel.selectedVariant || product;
+    this.product = this.variationModel && this.variationModel.selectedVariant ? this.variationModel.selectedVariant : product;
     this.imageConfig = {
         types: ['small'],
         quantity: 'single'
@@ -56,7 +58,11 @@ ProductLineItem.prototype.initialize = function (lineItem) {
     this.isBonusProductLineItem = lineItem.bonusProductLineItem;
     this.isGift = lineItem.gift;
     this.UUID = lineItem.UUID;
+    this.shipmentUUID = lineItem.shipment.UUID;
     this.isOrderable = this.product.availabilityModel.isOrderable(this.quantity);
+    // TODO: Pull out this constant to top
+    this.isAvailableForInStorePickup = ("isAvailableForInStorePickup" in this.product.custom && !!this.product.custom.isAvailableForInStorePickup);
+    this.isInStorePickup = ("fromStoreId" in lineItem.custom && !!lineItem.custom.fromStoreId);
 };
 
 /**

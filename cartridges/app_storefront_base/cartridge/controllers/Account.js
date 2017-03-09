@@ -8,7 +8,7 @@ var AccountModel = require('~/cartridge/models/account');
 var AddressModel = require('~/cartridge/models/address');
 var OrderModel = require('~/cartridge/models/order');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
-var ShippingModel = require('~/cartridge/models/shipping');
+var ShippingModels = require('~/cartridge/models/shipping');
 var TotalsModel = require('~/cartridge/models/totals');
 var Transaction = require('dw/system/Transaction');
 var CustomerMgr = require('dw/customer/CustomerMgr');
@@ -43,15 +43,16 @@ function getModel(req) {
     var order = customerOrders.first();
 
     if (order) {
-        var defaultShipment = order.defaultShipment;
-        var ordershippingAdress = defaultShipment.shippingAddress;
-        var shippingAddressModel = new AddressModel(ordershippingAdress);
-        var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(defaultShipment);
-        var shippingModel = new ShippingModel(
-            defaultShipment,
-            shipmentShippingModel,
-            shippingAddressModel
-        );
+//        var defaultShipment = order.defaultShipment;
+//        var ordershippingAdress = defaultShipment.shippingAddress;
+//        var shippingAddressModel = new AddressModel(ordershippingAdress);
+//        var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(defaultShipment);
+//        var shippingModels = new ShippingModels(
+//            defaultShipment,
+//            shipmentShippingModel,
+//            shippingAddressModel
+//        );
+    	var shippingModels = new ShippingModels(order);
         var productLineItemsModel = new ProductLineItemsModel(order);
         var totalsModel = new TotalsModel(order);
         var config = {
@@ -60,7 +61,7 @@ function getModel(req) {
 
         var modelsObject = {
             billingModel: null,
-            shippingModel: shippingModel,
+            shippingModels: shippingModels,
             totalsModel: totalsModel,
             productLineItemsModel: productLineItemsModel
         };

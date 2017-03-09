@@ -17,18 +17,18 @@
 
     <!--- Shipping Address --->
     <strong>${Resource.msg('label.order.shipping.address', 'confirmation', null)}</strong><br/>
-    <isset name="address" value="${pdict.order.shipping.shippingAddress}" scope="page"/>
-    <isinclude template="checkout/addressSummary" />
-
-    <br/>
-    <p>
-        <strong>${Resource.msg('label.order.shipping.method', 'confirmation', null)}</strong>
-        <br/>
-        ${pdict.order.shipping.selectedShippingMethod.displayName} (${pdict.order.shipping.selectedShippingMethod.estimatedArrivalTime}):
-        <br/>
-        ${pdict.order.totals.totalShippingCost}
-    </p>
-
+    <isloop items="${pdict.order.shipping}" var="shippingModel" status="shippingLoop">
+	    <isset name="address" value="${shippingModel.shippingAddress}" scope="page"/>
+	    <isinclude template="checkout/addressSummary" />
+	
+	    <br/>
+	    <p>
+	        <strong>${Resource.msg('label.order.shipping.method', 'confirmation', null)}</strong>
+	        <br/>
+	        ${shippingModel.selectedShippingMethod.displayName} (${shippingModel.selectedShippingMethod.estimatedArrivalTime}):
+	    </p>
+	</isloop>
+	<p>${pdict.order.totals.totalShippingCost}</p>
     <!--- Billing Address --->
     <strong>${Resource.msg('label.order.billing.address', 'confirmation', null)}</strong>
     <br/>

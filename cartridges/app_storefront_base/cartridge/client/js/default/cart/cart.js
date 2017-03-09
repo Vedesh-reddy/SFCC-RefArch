@@ -175,13 +175,14 @@ module.exports = function () {
         var urlParams = {
             methodID: $(this).find(':selected').attr('data-shipping-id')
         };
-        url = appendToUrl(url, urlParams);
+        //url = appendToUrl(url, urlParams);
 
         $('.totals').spinner().start();
         $.ajax({
             url: url,
-            type: 'get',
+            type: 'post',
             dataType: 'json',
+            data: urlParams,
             success: function (data) {
                 if (data.error) {
                     window.location.href = data.redirectUrl;

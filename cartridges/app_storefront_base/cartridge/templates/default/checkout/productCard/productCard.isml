@@ -2,7 +2,7 @@
     <div class="row product-line-item-name">
         <isif condition=${miniCart}>
             <isinclude template="checkout/productCard/productCardProductNameAndRemove" />
-            <iselse>
+        <iselse>
             <isinclude template="checkout/productCard/productCardProductName" />
         </isif>
     </div>

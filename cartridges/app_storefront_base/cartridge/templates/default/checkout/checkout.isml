@@ -109,8 +109,9 @@
                     </div>
                 </div>
 
-                <isinclude template="checkout/orderProductSummary" />
-
+				<div class="card order-product-summary">
+                	<isinclude template="checkout/orderProductSummary" />
+				</div>
             </div>
         </div>
     </div>

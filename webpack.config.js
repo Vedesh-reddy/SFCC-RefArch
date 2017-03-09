@@ -36,14 +36,14 @@ module.exports = [{
             }
         ]
     },
-    plugins: [new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        sourceMap: false,
-        compress: {
-            drop_console: true
-        },
-        mangle: {
-            except: ['$', 'exports', 'require']
-        }
-    })]
+    plugins: [/*new webpack.optimize.UglifyJsPlugin({
+        minimize: false,
+        sourceMap: true,
+        // compress: {
+        //     drop_console: true
+        // },
+        // mangle: {
+        //     except: ['$', 'exports', 'require']
+        // }
+    })*/]
 }];

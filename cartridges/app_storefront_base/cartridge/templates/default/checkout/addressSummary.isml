@@ -1,37 +1,18 @@
 <div class="address-summary">
+	<div>
+		<span class="firstName"> ${address.firstName} </span> <span
+			class="lastName"> ${address.lastName} </span>
+	</div>
 
-    <div>
-        <span class="firstName" >
-            ${address.firstName}
-        </span>
-        <span class="lastName" >
-            ${address.lastName}
-        </span>
-    </div>
+	<div class="address1">${address.address1}</div>
 
-    <div class="address1">
-        ${address.address1}
-    </div>
+	<div class="address2">
+		<isif condition="${address.address2}"> ${address.address2} </isif>
+	</div>
 
-    <div class="address2">
-        <isif condition="${address.address2}">
-            ${address.address2}
-        </isif>
-    </div>
-
-    <span class="city">
-        <isif condition="${address.city}">
-                ${address.city},
-        </isif>
-    </span>
-
-    <span class="stateCode">
-        <isif condition="${address.stateCode}">
-                ${address.stateCode}
-        </isif>
-    </span>
-
-    <span class="postalCode">
-        ${address.postalCode}
-    </span>
+	<span class="city"> <isif condition="${address.city}">
+		${address.city}, </isif>
+	</span> <span class="stateCode"> <isif condition="${address.stateCode}">
+		${address.stateCode} </isif>
+	</span> <span class="postalCode"> ${address.postalCode} </span>
 </div>

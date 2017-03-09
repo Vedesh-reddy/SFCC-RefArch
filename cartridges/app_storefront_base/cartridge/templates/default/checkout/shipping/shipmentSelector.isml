@@ -1,0 +1,26 @@
+
+
+	<select name="shipmentSelector" class="addressSelector form-control">
+		<option value="new"
+			data-first-name="" data-last-name=""
+			data-address1="" data-address2=""
+			data-city="" data-state-code=""
+			data-country-code="" data-postal-code=""
+			data-phone="">Add New Address</option>
+		<isif condition="${pdict.order.shipping[0].shippingAddress}">
+			<option disabled="true">-</option>
+			<isloop items="${pdict.order.shipping}" var="aShippingModel">
+				<option value="${aShippingModel.UUID}" <isif condition="${aShippingModel.UUID==shippingModel.UUID}">selected="selected"</isif>
+				data-first-name="${aShippingModel.shippingAddress.firstName||''}" data-last-name="${aShippingModel.shippingAddress.lastName||''}"
+				data-address1="${aShippingModel.shippingAddress.address1||''}" data-address2="${aShippingModel.shippingAddress.address2||''}"
+				data-city="${aShippingModel.shippingAddress.city}" data-state-code="${aShippingModel.shippingAddress.stateCode}"
+				data-country-code="${aShippingModel.shippingAddress.countryCode}" data-postal-code="${aShippingModel.shippingAddress.postalCode}"
+				data-phone="${aShippingModel.shippingAddress.phone}">${aShippingModel.shippingAddress.address1} ${aShippingModel.shippingAddress.city}, ${aShippingModel.shippingAddress.stateCode} ${aShippingModel.shippingAddress.postalCode} - ${aShippingModel.selectedShippingMethod.displayName}</option>
+			</isloop>
+		</isif>
+		<isif condition="${lineItem.isAvailableForInStorePickup}">
+			<option disabled="true">-</option>
+			<option <isif condition="${lineItem.fromStoreId}">selected="selected"</isif>>In Store Pickup</option>
+		</isif>			               					
+	</select>	
+

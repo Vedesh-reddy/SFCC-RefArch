@@ -87,6 +87,21 @@ $checkout-font-weight: 600;
     padding-bottom: 0;
 }
 
+// multiship related
+
+.multi-ship .single-shipping {
+    display: none;
+}
+
+.multi-shipping {
+    display: none;
+}
+
+.multi-ship .multi-shipping {
+    display: block;
+}
+
+
 .data-checkout-stage {
     // Initial states ------------------------
     &[data-checkout-stage] {
@@ -109,14 +124,19 @@ $checkout-font-weight: 600;
         button.submit-shipping {
             display: block;
         }
+        
+        .order-product-summary {
+        	display: none;
+        }
+        
+        .hide-details .shipping-address-form {
+        	display: none;
+        }
     }
 
     // Payment -------------------------------
     &[data-checkout-stage=payment] {
-        .card.shipping-form {
-            display: none;
-        }
-
+        .shipping-form,
         .card.ghost {
             display: none;
         }
@@ -133,11 +153,8 @@ $checkout-font-weight: 600;
 
     // Place Order -----------------------------
     &[data-checkout-stage=placeOrder] {
-        .card.shipping-form,
-        .card.payment-form {
-            display: none;
-        }
-
+        .shipping-form,
+        .card.payment-form,
         .card.ghost {
             display: none;
         }
@@ -145,10 +162,6 @@ $checkout-font-weight: 600;
         .card.payment-summary,
         .shipping-summary {
             display: block;
-        }
-
-        .card.shipping-form {
-            display: none;
         }
 
         button.place-order {
@@ -157,11 +170,8 @@ $checkout-font-weight: 600;
     }
 
     &[data-checkout-stage=submitted] {
-        .card.shipping-form,
-        .card.payment-form {
-            display: none;
-        }
-
+        .shipping-form,
+        .card.payment-form,
         .card.ghost {
             display: none;
         }
@@ -169,10 +179,6 @@ $checkout-font-weight: 600;
         .card.payment-summary,
         .shipping-summary {
             display: block;
-        }
-
-        .card.shipping-form {
-            display: none;
         }
 
         button.place-order {
