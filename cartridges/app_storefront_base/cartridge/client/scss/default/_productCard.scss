@@ -53,3 +53,12 @@
     width: 5.625em;
     margin-right: 0.625em;
 }
+
+.non-adjusted-price {
+    display: none;
+}
+
+.line-item-promo {
+    color: $brand-success;
+    font-size: 0.813em;
+}

@@ -20,7 +20,10 @@ describe('Product Line Item', function () {
                 return 'formattedMoney';
             }
         },
-        'dw/value/Money': require('../../../mocks/dw.value.Money')
+        'dw/value/Money': require('../../../mocks/dw.value.Money'),
+        '~/cartridge/scripts/renderTemplateHelper': {
+            getRenderedHtml: function () { return 'string'; }
+        }
     });
 
     var productVariantMock = {
@@ -61,7 +64,9 @@ describe('Product Line Item', function () {
             value: 'some value',
             currencyCode: 'US'
         },
-        product: toProductMock(productMock)
+        product: toProductMock(productMock),
+        priceAdjustments: new ArrayList([]),
+        getPrice: function () { return 'money object'; }
     };
 
     it('should load productLineItem', function () {
@@ -74,7 +79,10 @@ describe('Product Line Item', function () {
         assert.equal(productLineItem.isGift, false);
         assert.equal(productLineItem.UUID, 'some UUID');
         assert.equal(productLineItem.isOrderable, true);
-        assert.equal(productLineItem.priceTotal, 'formattedMoney');
+        assert.deepEqual(productLineItem.priceTotal, {
+            price: 'formattedMoney',
+            renderedPrice: 'string'
+        });
         assert.equal(productLineItem.quantity, 1);
     });
 });

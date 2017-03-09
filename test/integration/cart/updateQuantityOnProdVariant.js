@@ -192,7 +192,10 @@ describe('Update quantity for product variant', function () {
                         'minOrderQuantity': 1,
                         'maxOrderQuantity': 10
                     },
-                    'priceTotal': '$48.00',
+                    'priceTotal': {
+                        'price': '$48.00',
+                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$48.00</div>\n\n'
+                    },
                     'isBonusProductLineItem': false,
                     'promotions': null,
                     'isGift': false,
@@ -238,7 +241,10 @@ describe('Update quantity for product variant', function () {
                         'minOrderQuantity': 1,
                         'maxOrderQuantity': 10
                     },
-                    'priceTotal': '$120.00',
+                    'priceTotal': {
+                        'price': '$120.00',
+                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$120.00</div>\n\n'
+                    },
                     'isBonusProductLineItem': false,
                     'promotions': null,
                     'isGift': false,
@@ -283,7 +289,10 @@ describe('Update quantity for product variant', function () {
                         'maxOrderQuantity': 10
                     },
 
-                    'priceTotal': '$89.97',
+                    'priceTotal': {
+                        'price': '$89.97',
+                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$89.97</div>\n\n'
+                    },
                     'isBonusProductLineItem': false,
                     'promotions': null,
                     'isGift': false,

@@ -38,6 +38,10 @@
                             <isloop items="${lineItem.attributes}" var="attribute">
                                 <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                             </isloop>
+                            <div class="hidden-xs-down edit-add-to-wishlist">
+                                <a href="${"#"}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
+                                <a href="${"#"}" class="add-to-wishlist" title="${Resource.msg('link.add.to.wishlist','cart',null)}">${Resource.msg('link.add.to.wishlist','cart',null)}</a>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -96,18 +100,15 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-12">
-                                <span class="line-item-price item-total-${lineItem.UUID}">${lineItem.priceTotal}</span>
+                            <div class="col-12 item-total-${lineItem.UUID} price">
+                                <isinclude template="checkout/productCard/productCardProductTotalPrice" />
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-1 hidden-md-down remove-line-item-lg"></div>
                 </div>
+                <isinclude template="checkout/productCard/productCardProductPromotions" />
             </div>
-        </div>
-        <div class="row hidden-xs-down edit-add-to-wishlist">
-            <a href="${"#"}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
-            <a href="${"#"}" class="add-to-wishlist" title="${Resource.msg('link.add.to.wishlist','cart',null)}">${Resource.msg('link.add.to.wishlist','cart',null)}</a>
         </div>
     </div>
 </isloop>

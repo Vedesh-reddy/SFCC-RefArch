@@ -126,7 +126,10 @@ describe('Cart: Selecting Shipping Methods', function () {
                     'maxOrderQuantity': 10
                 },
 
-                'priceTotal': '$99.00',
+                'priceTotal': {
+                    'price': '$99.00',
+                    'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$99.00</div>\n\n'
+                },
                 'promotions': null,
                 'isBonusProductLineItem': false,
                 'isGift': false,
@@ -166,7 +169,10 @@ describe('Cart: Selecting Shipping Methods', function () {
                     'minOrderQuantity': 1,
                     'maxOrderQuantity': 10
                 },
-                'priceTotal': '$40.00',
+                'priceTotal': {
+                    'price': '$40.00',
+                    'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$40.00</div>\n\n'
+                },
                 'promotions': null,
                 'isBonusProductLineItem': false,
                 'isGift': false,
