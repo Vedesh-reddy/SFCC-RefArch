@@ -101,7 +101,6 @@ $checkout-font-weight: 600;
     display: block;
 }
 
-
 .data-checkout-stage {
     // Initial states ------------------------
     &[data-checkout-stage] {
@@ -124,13 +123,13 @@ $checkout-font-weight: 600;
         button.submit-shipping {
             display: block;
         }
-        
+
         .order-product-summary {
-        	display: none;
+            display: none;
         }
-        
+
         .hide-details .shipping-address-form {
-        	display: none;
+            display: none;
         }
     }
 
