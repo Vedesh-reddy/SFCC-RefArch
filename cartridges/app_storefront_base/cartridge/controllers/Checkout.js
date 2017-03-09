@@ -346,7 +346,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     var billingAddress = currentBasket.billingAddress;
     var shippingAddress = currentBasket.defaultShipment.shippingAddress;
-    var hasEquivalentAddress = false;
+    var hasEquivalentAddress = true;
 
     var currentCustomer = req.currentCustomer.raw;
 //    var preferredAddress = currentCustomer.addressBook ?
