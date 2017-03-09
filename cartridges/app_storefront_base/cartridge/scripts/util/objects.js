@@ -1,53 +1,67 @@
-function keys(obj, own){
-	var arr = [];
-	for( var key in obj ){
-		if( !own || obj.hasOwnProperty(key) ){
-			arr.push(key);
-		}
-	}
-	return arr;
+'use strict';
+
+/**
+ * Returns an array of all property keys for an object
+ * @param {Object} obj - the target object
+ * @return {Array} the array of property keys
+ */
+function keys(obj) {
+    return Object.keys(obj);
 }
 
-function values(obj, own){
-	var arr = [];
-	for( var key in obj ){
-		if( !own || obj.hasOwnProperty(key) ){
-			arr.push(obj[key]);
-		}
-	}
-	return arr;
+/**
+ * Returns an array of all property values for an object
+ * @param {Object} obj - the target object
+ * @return {Array} the array of property keys
+ */
+function values(obj) {
+    var objKeys = keys(obj);
+    return objKeys.map(function (key) {
+        return obj[key];
+    });
 }
 
-function createClass( prototype, properties ){
-	var $model = Object.create( prototype||{} );
-	if( properties ) {
-		for( var key in properties ){
-			if( properties.hasOwnProperty(key) ) {
-				$model[key] = properties[key];
-			}
-		}
-	}
-	return $model;
+/**
+ * Returns a new class instance with class and instance
+ * @param {Object} prototype - the class properties
+ * @param {Object} properties - the instance properties
+ * @return {Object} the output object
+ */
+function createClass(prototype, properties) {
+    var $model = Object.create(prototype || {});
+    if (properties) {
+        var propKeys = keys(properties);
+        propKeys.forEach(function (key) {
+            $model[key] = properties[key];
+        });
+    }
+    return $model;
 }
 
-function valueForKeyPath(context, keyPath){
-	var keys = keyPath.split('.'),
-		value = ctx;
-	
-	try {
-		for( var i=0, ii=keys.length; i<ii; i++ ){
-			value = value ? value[keys[i]] : null;
-		}
-	} catch(e){
-		value = null;
-	}
-	
-	return value;
+/**
+ * Returns the value of a key path applied to an object
+ * @param {Object} context - the target object
+ * @param {string} keyPath - the keyPath to evaluate against the context
+ * @return {Object} the output value
+ */
+function valueForKeyPath(context, keyPath) {
+    var keyPathKeys = keyPath.split('.');
+    var value = context;
+
+    try {
+        for (var i = 0, ii = keyPathKeys.length; i < ii; i++) {
+            value = value ? value[keyPathKeys[i]] : null;
+        }
+    } catch (e) {
+        value = null;
+    }
+
+    return value;
 }
 
 module.exports = {
-	keys: keys,
-	values: values,
-	createClass: createClass,
-	valueForKeyPath: valueForKeyPath
+    keys: keys,
+    values: values,
+    createClass: createClass,
+    valueForKeyPath: valueForKeyPath
 };

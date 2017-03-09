@@ -1,5 +1,8 @@
 'use strict';
 
+var PaymentMgr = require('dw/order/PaymentMgr');
+var PaymentInstrument = require('dw/order/PaymentInstrument');
+
 var helper = require('~/cartridge/scripts/dwHelpers');
 
 /**
@@ -67,36 +70,34 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
 }
 
 /**
- * payment class that represents payment information for the current basket
- * @param {dw.util.ArrayList <dw.order.dw.order.PaymentMethod>} paymentMethods - An ArrayList of
- *      applicable payment methods that the user could use for the current basket.
- * @param {dw.util.Collection <dw.order.PaymentCard>} paymentCards - An ArrayList of applicable
- *      payment cards that the user could use for the current basket.
- * @param {dw.util.ArrayList <dw.order.PaymentInstrument>} selectedPaymentInstruments - ArrayList
- *      of payment instruments that the user is using to pay for the current basket
+ * Payment class that represents payment information for the current basket
+ * @param {dw.order.Basket} currentBasket - the target Basket object
+ * @param {dw.customer.Customer} currentCustomer - the associated Customer object
+ * @param {string} countryCode - the associated Site countryCode
  * @constructor
  */
-function payment( currentBasket, currentCustomer, countryCode ) {
-	var paymentAmount = currentBasket.totalGrossPrice;
-	var paymentMethods = dw.order.PaymentMgr.getApplicablePaymentMethods(
-	    currentCustomer,
-	    countryCode,
-	    paymentAmount.value
-	);
-	var paymentCards = dw.order.PaymentMgr.getPaymentMethod(dw.order.PaymentInstrument.METHOD_CREDIT_CARD)
-    	.getApplicablePaymentCards(currentCustomer, countryCode, paymentAmount.value);
-	var paymentInstruments = currentBasket.paymentInstruments;
-	
-	
-	// Should compare currentBasket and currentCustomer and countryCode to see if we need them or not
+function Payment(currentBasket, currentCustomer, countryCode) {
+    var paymentAmount = currentBasket.totalGrossPrice;
+    var paymentMethods = PaymentMgr.getApplicablePaymentMethods(
+        currentCustomer,
+        countryCode,
+        paymentAmount.value
+    );
+    var paymentCards = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD)
+        .getApplicablePaymentCards(currentCustomer, countryCode, paymentAmount.value);
+    var paymentInstruments = currentBasket.paymentInstruments;
+
+
+	// TODO: Should compare currentBasket and currentCustomer and countryCode to see
+    //     if we need them or not
     this.applicablePaymentMethods =
         paymentMethods ? applicablePaymentMethods(paymentMethods) : null;
 
-    this.applicablePaymentCards = 
-    	 paymentCards ? applicablePaymentCards(paymentCards) : null;
+    this.applicablePaymentCards =
+        paymentCards ? applicablePaymentCards(paymentCards) : null;
 
     this.selectedPaymentInstruments = paymentInstruments ?
         getSelectedPaymentInstruments(paymentInstruments) : null;
 }
 
-module.exports = payment;
+module.exports = Payment;

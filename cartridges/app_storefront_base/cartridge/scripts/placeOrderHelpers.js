@@ -4,7 +4,6 @@ var Order = require('dw/order/Order');
 var OrderMgr = require('dw/order/OrderMgr');
 var Status = require('dw/system/Status');
 var Transaction = require('dw/system/Transaction');
-var ShippingMgr = require('dw/order/ShippingMgr');
 
 var AddressModel = require('~/cartridge/models/address');
 var ShippingModel = require('~/cartridge/models/shipping');

@@ -10,9 +10,9 @@ var Money = require('dw/value/Money');
  * @return {string} formatted currency string
  */
 function formatCurrency(value, currencyCode) {
-	return formatMoney(Money(value, currencyCode));
+    return formatMoney(new Money(value, currencyCode));
 }
 
 module.exports = {
-		formatCurrency: formatCurrency
+    formatCurrency: formatCurrency
 };

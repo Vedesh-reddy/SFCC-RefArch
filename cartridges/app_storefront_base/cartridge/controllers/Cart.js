@@ -18,7 +18,7 @@ var cartHelpers = require('~/cartridge/scripts/cart/cartHelpers');
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
     var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems);
-    
+
     res.render('/components/header/minicart', { quantityTotal: quantityTotal });
     next();
 });
@@ -44,11 +44,11 @@ server.get('Show', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (currentBasket) {
-	    Transaction.wrap(function () {
-	    	CartModel.ensureAllShipmentsHaveMethods(currentBasket);
+        Transaction.wrap(function () {
+            CartModel.ensureAllShipmentsHaveMethods(currentBasket);
 
-	        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-	    });
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        });
     }
 
     var basketModel = CartModel.getCartModel(currentBasket);
@@ -62,7 +62,7 @@ server.get('Test', function (req, res, next) {
 
     Transaction.wrap(function () {
         if (currentBasket) {
-	    	CartModel.ensureAllShipmentsHaveMethods(currentBasket);
+            CartModel.ensureAllShipmentsHaveMethods(currentBasket);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         }
@@ -164,11 +164,16 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
     var shipUUID = req.form.shipmentUUID;
     var methodID = req.form.methodID;
-    var shipment = shipUUID ? ShippingModel.getShipmentByUUID(currentBasket, shipUUID) : currentBasket.defaultShipment;
+    var shipment;
+    if (shipUUID) {
+        shipment = ShippingModel.getShipmentByUUID(currentBasket, shipUUID);
+    } else {
+        shipment = currentBasket.defaultShipment;
+    }
 
     if (methodID) {
         Transaction.wrap(function () {
-        	ShippingModel.selectShippingMethod(shipment, methodID);
+            ShippingModel.selectShippingMethod(shipment, methodID);
 
             if (currentBasket && !shipment.shippingMethod) {
                 error = true;
@@ -194,14 +199,14 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
 server.get('MiniCartShow', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
-    
-    if( currentBasket ){
-	    Transaction.wrap(function () {
-	    	CartModel.ensureAllShipmentsHaveMethods(currentBasket);
-	        
-	    	// TODO: shouldn't we check to see if we changed anything first?
-	    	HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-	    });
+
+    if (currentBasket) {
+        Transaction.wrap(function () {
+            CartModel.ensureAllShipmentsHaveMethods(currentBasket);
+
+            // TODO: shouldn't we check to see if we changed anything first?
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        });
     }
 
     var basketModel = CartModel.getCartModel(currentBasket);

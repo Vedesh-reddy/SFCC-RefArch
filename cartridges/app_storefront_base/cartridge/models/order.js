@@ -99,9 +99,9 @@ function OrderModel(lineItemContainer, modelsObject, config) {
     }
 }
 
-OrderModel.getOrderModel = function(order, options) {
-	var safeOptions = options || {};
-	
+OrderModel.getOrderModel = function (order, options) {
+    var safeOptions = options || {};
+
     var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
     var customer = safeOptions.customer || order.customer;
     var currencyCode = safeOptions.currencyCode || order.currencyCode;
@@ -115,7 +115,7 @@ OrderModel.getOrderModel = function(order, options) {
 
     var productLineItemsModel = new ProductLineItemsModel(order);
     var totalsModel = new TotalsModel(order);
-    
+
     var modelsObject = {
         billingModel: billingModel,
         shippingModels: shippingModels,

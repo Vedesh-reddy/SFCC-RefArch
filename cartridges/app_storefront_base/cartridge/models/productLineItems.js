@@ -44,28 +44,28 @@ function getTotalQuantity(items) {
 /**
  * @constructor
  * @classdesc class that represents a collection of line items and total quantity of
- * items in current basket
+ * items in current basket or per shipment
  *
- * @param {dw.order.Shipment} basket Current users's basket
+ * @param {Object} shipment - the target Shipment or Basket object
  */
-function productLineItems(shipment) {
-	var productLineItems;
-	if( shipment ){
-		if( "allProductLineItems" in shipment ){
-			productLineItems = shipment.allProductLineItems;
-		} else {
-			productLineItems = shipment.productLineItems;
-		}
-	}
-    if (productLineItems) {
-        this.items = createProductLineItemsObject(productLineItems);
-        this.totalQuantity = getTotalQuantity(productLineItems);
+function ProductLineItems(shipment) {
+    var plis;
+    if (shipment) {
+        if ('allProductLineItems' in shipment) {
+            plis = shipment.allProductLineItems;
+        } else {
+            plis = shipment.productLineItems;
+        }
+    }
+    if (plis) {
+        this.items = createProductLineItemsObject(plis);
+        this.totalQuantity = getTotalQuantity(plis);
     } else {
         this.items = [];
         this.totalQuantity = 0;
     }
 }
 
-productLineItems.getTotalQuantity = getTotalQuantity;
+ProductLineItems.getTotalQuantity = getTotalQuantity;
 
-module.exports = productLineItems;
+module.exports = ProductLineItems;

@@ -3,13 +3,6 @@
 var server = require('server');
 var OrderMgr = require('dw/order/OrderMgr');
 var Order = require('dw/order/Order');
-var ShippingMgr = require('dw/order/ShippingMgr');
-var AccountModel = require('~/cartridge/models/account');
-var AddressModel = require('~/cartridge/models/address');
-var OrderModel = require('~/cartridge/models/order');
-var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
-var ShippingModels = require('~/cartridge/models/shipping');
-var TotalsModel = require('~/cartridge/models/totals');
 var Transaction = require('dw/system/Transaction');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var Resource = require('dw/web/Resource');
@@ -18,6 +11,13 @@ var Mail = require('dw/net/Mail');
 var Template = require('dw/util/Template');
 var Site = require('dw/system/Site');
 var HashMap = require('dw/util/HashMap');
+
+var AccountModel = require('~/cartridge/models/account');
+var AddressModel = require('~/cartridge/models/address');
+var OrderModel = require('~/cartridge/models/order');
+var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
+var ShippingModels = require('~/cartridge/models/shipping');
+var TotalsModel = require('~/cartridge/models/totals');
 
 /**
  * Creates an account model for the current customer
@@ -52,7 +52,7 @@ function getModel(req) {
 //            shipmentShippingModel,
 //            shippingAddressModel
 //        );
-    	var shippingModels = new ShippingModels(order);
+        var shippingModels = new ShippingModels(order);
         var productLineItemsModel = new ProductLineItemsModel(order);
         var totalsModel = new TotalsModel(order);
         var config = {

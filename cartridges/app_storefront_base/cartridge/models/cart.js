@@ -2,7 +2,6 @@
 
 var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
-var ShippingMgr = require('dw/order/ShippingMgr');
 
 var TotalsModel = require('~/cartridge/models/totals');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
@@ -27,10 +26,10 @@ function getCartActionUrls() {
 
 /**
  * @constructor
- * @classdesc Cart class that represents the current basket
+ * @classdesc CartModel class that represents the current basket
  *
  * @param {dw.order.Basket} basket - Current users's basket
- * @param {Object} shippingModel - Instance of the shipping model
+ * @param {Array} shippingModels - Array of ShippingModels
  * @param {Object} productLineItemsModel - Model for a given product line items
  * @param {Object} totalsModel - Model with total costs for the cart
  */
@@ -43,14 +42,15 @@ function CartModel(basket, shippingModels, productLineItemsModel, totalsModel) {
 
         // TODO: shipments should be deprecated ... just use shippingModels ...
         if (shippingModels) {
-        	var shippingModel, shipment;
-	        for( var i=0, ii=this.numOfShipments; i<ii; i++ ){
-	        	shippingModel = shippingModels[i];
-	        	shipment = {};
-	        	shipment.shippingMethods = shippingModel.applicableShippingMethods;
-	        	shipment.selectedShippingMethod = shippingModel.selectedShippingMethodID;
-	        	this.shipments.push(shipment);
-	        }
+            var shippingModel;
+            var shipment;
+            for (var i = 0, ii = this.numOfShipments; i < ii; i++) {
+                shippingModel = shippingModels[i];
+                shipment = {};
+                shipment.shippingMethods = shippingModel.applicableShippingMethods;
+                shipment.selectedShippingMethod = shippingModel.selectedShippingMethodID;
+                this.shipments.push(shipment);
+            }
         }
     }
 
@@ -63,30 +63,32 @@ function CartModel(basket, shippingModels, productLineItemsModel, totalsModel) {
 }
 
 /**
- * 
+ * Returns the CartModel for the associated Basket object
+ * @param {dw.order.Basket} basket - the target Basket object
+ * @returns {Object} a CartModel object
  */
-CartModel.getCartModel = function(basket){
-	helper.assertRequiredParameter(basket, 'basket');
-	
-	var shippingModels = ShippingModel.getShippingModels(basket);
-	var productLineItemsModel = new ProductLineItemsModel(basket);
-	var totalsModel = new TotalsModel(basket);
-	
-	return new CartModel(basket, shippingModels, productLineItemsModel, totalsModel);
+CartModel.getCartModel = function (basket) {
+    helper.assertRequiredParameter(basket, 'basket');
+
+    var shippingModels = ShippingModel.getShippingModels(basket);
+    var productLineItemsModel = new ProductLineItemsModel(basket);
+    var totalsModel = new TotalsModel(basket);
+
+    return new CartModel(basket, shippingModels, productLineItemsModel, totalsModel);
 };
 
 /**
- * 
+ * Loops through all Shipments and attempts to select a ShippingMethod, where absent
+ * @param {dw.order.Basket} basket - the target Basket object
  */
-CartModel.ensureAllShipmentsHaveMethods = function(basket) {
-	helper.assertRequiredParameter(basket, 'basket');
+CartModel.ensureAllShipmentsHaveMethods = function (basket) {
+    helper.assertRequiredParameter(basket, 'basket');
 
-	var shipments = basket.shipments,
-		defaultMethod = ShippingMgr.getDefaultShippingMethod();
-	
-	helper.forEach(shipments, function(shipment){
-		ShippingModel.ensureShipmentHasMethod(shipment);    		
-	});
+    var shipments = basket.shipments;
+
+    helper.forEach(shipments, function (shipment) {
+        ShippingModel.ensureShipmentHasMethod(shipment);
+    });
 };
 
 module.exports = CartModel;

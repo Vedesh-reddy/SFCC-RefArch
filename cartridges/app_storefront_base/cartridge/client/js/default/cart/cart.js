@@ -175,7 +175,7 @@ module.exports = function () {
         var urlParams = {
             methodID: $(this).find(':selected').attr('data-shipping-id')
         };
-        //url = appendToUrl(url, urlParams);
+        // url = appendToUrl(url, urlParams);
 
         $('.totals').spinner().start();
         $.ajax({

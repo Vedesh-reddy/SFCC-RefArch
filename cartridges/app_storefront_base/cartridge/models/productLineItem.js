@@ -31,10 +31,11 @@ function getMinMaxQuantityOptions(product, quantity) {
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - a collection of promotions
  */
 function ProductLineItem(product, productVariables, quantity, lineItem, promotions) {
-	product = product || {};
+    var safeProduct = product || {};
 
-    this.variationModel = this.getVariationModel(product, productVariables);
-    this.product = this.variationModel && this.variationModel.selectedVariant ? this.variationModel.selectedVariant : product;
+    this.variationModel = this.getVariationModel(safeProduct, productVariables);
+    this.product = this.variationModel && this.variationModel.selectedVariant ?
+        this.variationModel.selectedVariant : safeProduct;
     this.imageConfig = {
         types: ['small'],
         quantity: 'single'
@@ -60,9 +61,12 @@ ProductLineItem.prototype.initialize = function (lineItem) {
     this.UUID = lineItem.UUID;
     this.shipmentUUID = lineItem.shipment.UUID;
     this.isOrderable = this.product.availabilityModel.isOrderable(this.quantity);
+
     // TODO: Pull out this constant to top
-    this.isAvailableForInStorePickup = ("isAvailableForInStorePickup" in this.product.custom && !!this.product.custom.isAvailableForInStorePickup);
-    this.isInStorePickup = ("fromStoreId" in lineItem.custom && !!lineItem.custom.fromStoreId);
+    this.isAvailableForInStorePickup = ('isAvailableForInStorePickup' in this.product.custom
+        && !!this.product.custom.isAvailableForInStorePickup);
+    this.isInStorePickup = ('fromStoreId' in lineItem.custom
+        && !!lineItem.custom.fromStoreId);
 };
 
 /**
