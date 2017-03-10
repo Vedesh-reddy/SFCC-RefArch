@@ -102,3 +102,13 @@ label.availability {
         }
     }
 }
+
+.product-breadcrumb .breadcrumb {
+    border-bottom: none;
+    margin-left: -1rem;
+    margin-bottom: 0;
+
+    @include media-breakpoint-down(md) {
+        border-top: 1px solid $grey3;
+    }
+}
