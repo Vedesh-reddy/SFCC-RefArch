@@ -146,9 +146,6 @@ server.get('Show', server.middleware.https, function (req, res, next) {
                 {
                     htmlValue: Resource.msg('global.home', 'common', null),
                     url: URLUtils.home().toString()
-                },
-                {
-                    htmlValue: Resource.msg('page.title.myaccount', 'account', null)
                 }
             ]
         });
@@ -298,9 +295,6 @@ server.get('EditProfile', server.middleware.https, function (req, res, next) {
                 {
                     htmlValue: Resource.msg('page.title.myaccount', 'account', null),
                     url: URLUtils.url('Account-Show').toString()
-                },
-                {
-                    htmlValue: Resource.msg('label.profile.edit', 'account', null)
                 }
             ]
         });
@@ -392,9 +386,6 @@ server.get('EditPassword', server.middleware.https, function (req, res, next) {
                 {
                     htmlValue: Resource.msg('page.title.myaccount', 'account', null),
                     url: URLUtils.url('Account-Show').toString()
-                },
-                {
-                    htmlValue: Resource.msg('label.profile.changepassword', 'account', null)
                 }
             ]
         });
