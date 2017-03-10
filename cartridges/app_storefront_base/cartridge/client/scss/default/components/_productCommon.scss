@@ -62,8 +62,11 @@ div.quantity {
     text-align: center;
 
     @include media-breakpoint-only(xs) {
+        padding-bottom: 26px;
+    
         .btn {
-            width: 100%;
+            width: 98%;
+            margin: 1%;
         }
     }
 }
