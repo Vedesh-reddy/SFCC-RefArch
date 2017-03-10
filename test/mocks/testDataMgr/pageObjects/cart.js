@@ -72,7 +72,7 @@ export function getEachPriceByRow(rowNum) {
 }
 
 export function getTotalPriceByRow(rowNum) {
-    let selector = createCssNthCartRow(rowNum) + ' .line-item-price';
+    let selector = createCssNthCartRow(rowNum) + ' .line-item-total-price-amount';
     return browser.getText(selector);
 }
 
