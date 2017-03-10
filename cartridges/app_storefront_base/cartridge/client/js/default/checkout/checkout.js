@@ -134,7 +134,7 @@
         function shippingFormResponse(defer, data) {
             var isMultiShip = $('#checkout-main').hasClass('multi-ship');
             var formSelector = isMultiShip ?
-            		'.multi-shipping .active form' : '.single-shipping .active form';
+                    '.multi-shipping .active form' : '.single-shipping .active form';
 
             // highlight fields with errors
             if (data.error) {
@@ -208,7 +208,7 @@
                     //
                     var isMultiShip = $('#checkout-main').hasClass('multi-ship');
                     var formSelector = isMultiShip ?
-                    		'.multi-shipping .active form' : '.single-shipping .active form';
+                            '.multi-shipping .active form' : '.single-shipping .active form';
                     var form = $(formSelector);
                     $.ajax({
                         url: form.attr('action'),
@@ -522,22 +522,22 @@
                                 dataType: 'json',
                                 data: data
                             })
-	                        .done(function (response) {
-	                            if (response.error) {
-	                                loadFormErrors(form, response.fieldErrors);
-	                            } else {
-	                                window.location.href = window.location.href.replace(/#.+/g, '');
-	                                // toggleMultiShipStep(tabPanel, rootPanel);
-	                            }
-	                            $.spinner().stop();
-	                        })
-	                        .fail(function () {
-	                            // console.error('error saving address!');
-	                            // console.dir(err);
-	                            $.spinner().stop();
-	                        });
-	
-	                        // pull down applicable shipping methods
+                            .done(function (response) {
+                                if (response.error) {
+                                    loadFormErrors(form, response.fieldErrors);
+                                } else {
+                                    window.location.href = window.location.href.replace(/#.+/g, '');
+                                    // toggleMultiShipStep(tabPanel, rootPanel);
+                                }
+                                $.spinner().stop();
+                            })
+                            .fail(function () {
+                                // console.error('error saving address!');
+                                // console.dir(err);
+                                $.spinner().stop();
+                            });
+
+                            // pull down applicable shipping methods
                             break;
                         case '#save-shipping-method':
                         // Save shipping method to PLI / checkoutAddressBook
@@ -557,7 +557,7 @@
                             .fail(function () {
                                 // console.error('error saving address!');
                                 // console.dir(err);
-	                            $.spinner().stop();
+                                $.spinner().stop();
                             });
                             break;
                         default:
