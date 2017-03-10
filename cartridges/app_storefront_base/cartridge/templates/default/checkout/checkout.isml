@@ -12,7 +12,7 @@
     <h1 class="page-title">
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>
-    <div id="checkout-main" class="container data-checkout-stage" data-checkout-stage="${pdict.currentStage}">
+    <div id="checkout-main" class="container data-checkout-stage<isif condition="${pdict.CurrentSession.privacy.usingMultiShipping}"> multi-ship</isif>" data-checkout-stage="${pdict.currentStage}">
         <!----------------------------------------------------------------------------------->
         <!-- Help and Phone -->
         <!----------------------------------------------------------------------------------->
@@ -48,7 +48,6 @@
 
                 <!-- Step 1: Shipping -->
                 <isinclude template="checkout/shipping/shipping" />
-
                 <div class="card shipping-summary">
                     <div class="card-header clearfix">
                         <h4 class="pull-left">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
@@ -109,9 +108,7 @@
                     </div>
                 </div>
 
-				<div class="card order-product-summary">
-                	<isinclude template="checkout/orderProductSummary" />
-				</div>
+                <isinclude template="checkout/orderProductSummary" />
             </div>
         </div>
     </div>

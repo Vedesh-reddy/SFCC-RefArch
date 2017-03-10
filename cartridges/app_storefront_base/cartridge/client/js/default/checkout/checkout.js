@@ -92,7 +92,7 @@
             $('.shipping-method-title').text(shippingMethod.displayName);
             if (shippingMethod.estimatedArrivalTime) {
                 $('.shipping-method-arrival-time')
-                    .text('( ' + shippingMethod.estimatedArrivalTime + ' )');
+                    .text('(' + shippingMethod.estimatedArrivalTime + ')');
             } else {
                 $('.shipping-method-arrival-time').empty();
             }
@@ -415,9 +415,9 @@
 
                 var toggleMultiShipForm = function (usingMultiShip) {
                     if (usingMultiShip) {
-                        $('.shipping-form').addClass('multi-ship');
+                        $('#checkout-main').addClass('multi-ship');
                     } else {
-                        $('.shipping-form').removeClass('multi-ship');
+                        $('#checkout-main').removeClass('multi-ship');
                     }
                 };
 

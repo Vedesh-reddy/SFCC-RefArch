@@ -1,5 +1,5 @@
 <isset name="miniCart" value="${false}" scope="page" />
-<div class="card order-product-summary">
+<div class="card order-product-summary single-shipping">
     <div class="card-block">
         <div class="row leading-lines">
             <div class="col-6 start-lines">
