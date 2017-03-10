@@ -163,9 +163,10 @@ function getShipmentByUUID(basket, uuid) {
  * @constructor
  * @classdesc Model that represents shipping information
  *
- * @param {dw.order.shipment} shipment - the default shipment of the current basket
+ * @param {dw.order.Shipment} shipment - the default shipment of the current basket
+ * @param {Object} address - the address to use to filter the shipping method list
  */
-function ShippingModel(shipment) {
+function ShippingModel(shipment, address) {
     helper.assertRequiredParameter(shipment, 'shipment');
 
 	// Simple properties
@@ -173,7 +174,7 @@ function ShippingModel(shipment) {
 
 	// Derived properties
     this.productLineItems = getProductLineItemsModel(shipment);
-    this.applicableShippingMethods = getApplicableShippingMethods(shipment);
+    this.applicableShippingMethods = getApplicableShippingMethods(shipment, address);
     this.selectedShippingMethod = getSelectedShippingMethod(shipment);
 
     // Optional properties

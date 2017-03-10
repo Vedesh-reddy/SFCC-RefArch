@@ -812,7 +812,7 @@ server.get('UpdateShippingMethodsList', server.middleware.https, function (req, 
     var applicableShippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
 
     Transaction.wrap(function () {
-        ShippingModel.selectShippingMethod(shipment, shippingMethodID, applicableShippingMethods);
+        ShippingModel.selectShippingMethod(shipment, shippingMethodID, applicableShippingMethods, address);
 
         HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
     });
