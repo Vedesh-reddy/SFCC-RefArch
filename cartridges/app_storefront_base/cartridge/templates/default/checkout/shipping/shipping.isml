@@ -83,7 +83,7 @@
 		            		</div>
 			               	<div class="tab-content">
 			            		<div class="tab-pane card-block <isif condition="${!shippingModel.shippingAddress}">active</isif>">
-				            		<a class="btn btn-outline-primary col-12" data-action="enter" data-toggle="tab" href="${'#'}edit-address-${shipmentLoopState.index}${loopState.index}" role="tab">
+				            		<a class="btn btn-outline-primary col-12" data-action="enter" data-toggle="tab1" href="${'#'}edit-address-${shipmentLoopState.index}${loopState.index}" role="tab">
 				            			Enter Address
 				            		</a>
 			            		</div>
@@ -116,7 +116,7 @@
 							   				
 						                    	<isinclude template="checkout/shipping/shippingMethod" />
 						                    </fieldset>
-				            				<a href="${'#'}view-address-${shipmentLoopState.index}${loopState.index}" data-action="save" class="btn btn-outline-primary save-address col-12" data-toggle="tab" role="tab">
+				            				<a href="${'#'}view-address-${shipmentLoopState.index}${loopState.index}" data-action="save" class="btn btn-outline-primary save-address col-12" data-toggle="tab1" role="tab">
 				            					Save
 				            				</a>
 			            				</div>
@@ -124,7 +124,7 @@
 								</div>
 				               	<div class="tab-pane card-block <isif condition="${shippingModel.shippingAddress}">active</isif>" id="view-address-${shipmentLoopState.index}${loopState.index}">
 		            				<isinclude template="checkout/shipping/shippingCard" />
-	   								<a class="btn btn-outline-primary col-12" data-action="edit" href="${'#'}edit-address-${shipmentLoopState.index}${loopState.index}" data-toggle="tab" role="tab">
+	   								<a class="btn btn-outline-primary col-12" data-action="edit" href="${'#'}edit-address-${shipmentLoopState.index}${loopState.index}" data-toggle="tab1" role="tab">
 										Edit
 									</a> 
 								</div>

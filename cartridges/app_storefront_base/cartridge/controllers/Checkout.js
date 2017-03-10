@@ -243,6 +243,7 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
     var pliUUID = req.form.productLineItemUUID;
     var shipmentUUID = req.form.shipmentUUID;
     var origUUID = req.form.originalShipmentUUID;
+
     var form = server.forms.getForm('shipping');
     var shippingFormErrors = validateShippingForm(form.shippingAddress.addressFields);
     var basket = BasketMgr.getCurrentBasket();
@@ -251,7 +252,7 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
     if (Object.keys(shippingFormErrors).length > 0) {
         res.json({
             form: form,
-            fieldErrors: [shippingFormErrors],
+            fieldErrors: shippingFormErrors,
             serverErrors: [],
             error: true
         });

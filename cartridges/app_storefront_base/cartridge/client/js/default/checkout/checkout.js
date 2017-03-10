@@ -132,12 +132,16 @@
          *  valid model data.
          */
         function shippingFormResponse(defer, data) {
+            var isMultiShip = $('#checkout-main').hasClass('multi-ship');
+            var formSelector = isMultiShip ?
+            		'.multi-shipping .active form' : '.single-shipping .active form';
+
             // highlight fields with errors
             if (data.error) {
                 if (data.fieldErrors.length) {
                     data.fieldErrors.forEach(function (error) {
                         if (Object.keys(error).length) {
-                            loadFormErrors('.shipping-form', error);
+                            loadFormErrors(formSelector, error);
                         }
                     });
                     defer.reject(data);
@@ -202,10 +206,14 @@
                     //
                     // Submit the Shipiing Address Form
                     //
+                    var isMultiShip = $('#checkout-main').hasClass('multi-ship');
+                    var formSelector = isMultiShip ?
+                    		'.multi-shipping .active form' : '.single-shipping .active form';
+                    var form = $(formSelector);
                     $.ajax({
-                        url: $('#dwfrm_shipping').attr('action'),
+                        url: form.attr('action'),
                         method: 'POST',
-                        data: $('#dwfrm_shipping').serialize(),
+                        data: form.serialize(),
                         success: function (data) {
                             shippingFormResponse(defer, data);
                         },
@@ -483,7 +491,7 @@
                     $(form).removeClass('hide-details');
                 });
 
-                $('.product-shipping-block [data-toggle="tab"]').on('click', function (e) {
+                $('.product-shipping-block [data-toggle="tab1"]').on('click', function (e) {
                     e.preventDefault();
 
                     var target = this.hash;
@@ -514,21 +522,22 @@
                                 dataType: 'json',
                                 data: data
                             })
-                        .done(function (response) {
-                            if (response.error) {
-                                loadFormErrors(form, response.fieldErrors);
-                            } else {
-                                window.location.href = window.location.href.replace(/#.+/g, '');
-                                // toggleMultiShipStep(tabPanel, rootPanel);
-                            }
-                            $.spinner().stop();
-                        })
-                        .fail(function () {
-                            // console.error('error saving address!');
-                            // console.dir(err);
-                        });
-
-                        // pull down applicable shipping methods
+	                        .done(function (response) {
+	                            if (response.error) {
+	                                loadFormErrors(form, response.fieldErrors);
+	                            } else {
+	                                window.location.href = window.location.href.replace(/#.+/g, '');
+	                                // toggleMultiShipStep(tabPanel, rootPanel);
+	                            }
+	                            $.spinner().stop();
+	                        })
+	                        .fail(function () {
+	                            // console.error('error saving address!');
+	                            // console.dir(err);
+	                            $.spinner().stop();
+	                        });
+	
+	                        // pull down applicable shipping methods
                             break;
                         case '#save-shipping-method':
                         // Save shipping method to PLI / checkoutAddressBook
@@ -548,11 +557,13 @@
                             .fail(function () {
                                 // console.error('error saving address!');
                                 // console.dir(err);
+	                            $.spinner().stop();
                             });
                             break;
                         default:
                             // console.error('unhandled tab target: ' + testTarget);
                     }
+                    return false;
                 });
                 //
                 // Handle Payment option selection
