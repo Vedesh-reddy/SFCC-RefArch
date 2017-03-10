@@ -91,6 +91,7 @@ describe('Update quantity for product variant', function () {
                 'submitCouponCodeUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-AddCoupon',
                 'selectShippingUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-SelectShippingMethod'
             },
+            'approachingDiscounts': [],
             'numOfShipments': 1,
             'totals': {
                 'subTotal': '$257.97',

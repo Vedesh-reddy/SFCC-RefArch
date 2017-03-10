@@ -39,6 +39,9 @@
                 <!---product cards--->
                 <div class="col-sm-7 col-md-8">
                     <isinclude template="cart/cartProductCard" />
+                    <div class="hidden-xs-down">
+                        <isinclude template="cart/cartApproachingDiscount" />
+                    </div>
                 </div>
                 <!---totals, and checkout actions--->
                 <div class="col-sm-5 col-md-4 totals">

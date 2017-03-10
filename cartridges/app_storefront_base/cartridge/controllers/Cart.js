@@ -3,6 +3,7 @@
 var server = require('server');
 
 var BasketMgr = require('dw/order/BasketMgr');
+var PromotionMgr = require('dw/campaign/PromotionMgr');
 var HookMgr = require('dw/system/HookMgr');
 var Resource = require('dw/web/Resource');
 var ShippingMgr = require('dw/order/ShippingMgr');
@@ -42,6 +43,7 @@ server.post('AddProduct', function (req, res, next) {
 server.get('Show', server.middleware.https, function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
+    var discountPlan = PromotionMgr.getDiscounts(currentBasket);
     var productLineItemModel;
     var shippingModel;
     var shipmentShippingModel;
@@ -65,7 +67,13 @@ server.get('Show', server.middleware.https, function (req, res, next) {
     productLineItemModel = new ProductLineItemModel(currentBasket);
     cartTotals = new Totals(currentBasket);
 
-    var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
+    var basket = new Cart(
+        currentBasket,
+        shippingModel,
+        productLineItemModel,
+        cartTotals,
+        discountPlan
+    );
 
     res.render('cart/cart', basket);
     next();
@@ -74,6 +82,7 @@ server.get('Show', server.middleware.https, function (req, res, next) {
 server.get('Test', function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
+    var discountPlan;
     var productLineItemModel;
     var shippingModel;
     var shipmentShippingModel;
@@ -96,8 +105,15 @@ server.get('Test', function (req, res, next) {
 
     productLineItemModel = new ProductLineItemModel(currentBasket);
     cartTotals = new Totals(currentBasket);
+    discountPlan = PromotionMgr.getDiscounts(currentBasket);
 
-    var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
+    var basket = new Cart(
+        currentBasket,
+        shippingModel,
+        productLineItemModel,
+        cartTotals,
+        discountPlan
+    );
 
     res.json(basket);
     next();
@@ -106,6 +122,7 @@ server.get('Test', function (req, res, next) {
 server.get('RemoveProductLineItem', function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
+    var discountPlan;
     var productLineItemModel;
     var shipmentShippingModel;
     var shippingModel;
@@ -133,8 +150,15 @@ server.get('RemoveProductLineItem', function (req, res, next) {
 
     if (isProductLineItemFound) {
         productLineItemModel = new ProductLineItemModel(currentBasket);
+        discountPlan = PromotionMgr.getDiscounts(currentBasket);
         cartTotals = new Totals(currentBasket);
-        var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
+        var basket = new Cart(
+            currentBasket,
+            shippingModel,
+            productLineItemModel,
+            cartTotals,
+            discountPlan
+        );
 
         res.json(basket);
         next();
@@ -148,6 +172,7 @@ server.get('RemoveProductLineItem', function (req, res, next) {
 server.get('UpdateQuantity', function (req, res, next) {
     var cartTotals;
     var currentBasket = BasketMgr.getCurrentBasket();
+    var discountPlan;
     var productLineItemModel;
     var shipmentShippingModel;
     var shippingModel;
@@ -185,8 +210,15 @@ server.get('UpdateQuantity', function (req, res, next) {
 
     if (isProductLineItemFound && !error) {
         productLineItemModel = new ProductLineItemModel(currentBasket);
+        discountPlan = PromotionMgr.getDiscounts(currentBasket);
         cartTotals = new Totals(currentBasket);
-        var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
+        var basket = new Cart(
+            currentBasket,
+            shippingModel,
+            productLineItemModel,
+            cartTotals,
+            discountPlan
+        );
 
         res.json(basket);
         next();
@@ -201,6 +233,8 @@ server.get('UpdateQuantity', function (req, res, next) {
 
 server.get('SelectShippingMethod', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+    var discountPlan;
+
     if (!currentBasket) {
         res.json({
             error: true,
@@ -249,8 +283,15 @@ server.get('SelectShippingMethod', function (req, res, next) {
 
     if (!error) {
         productLineItemModel = new ProductLineItemModel(currentBasket);
+        discountPlan = PromotionMgr.getDiscounts(currentBasket);
         cartTotals = new Totals(currentBasket);
-        var basket = new Cart(currentBasket, shippingModel, productLineItemModel, cartTotals);
+        var basket = new Cart(
+            currentBasket,
+            shippingModel,
+            productLineItemModel,
+            cartTotals,
+            discountPlan
+        );
 
         res.json(basket);
     } else {
@@ -288,6 +329,7 @@ server.get('MiniCartShow', function (req, res, next) {
 
 server.get('AddCoupon', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+    var discountPlan;
 
     if (!currentBasket) {
         res.setStatusCode(500);
@@ -336,9 +378,10 @@ server.get('AddCoupon', server.middleware.https, function (req, res, next) {
     });
 
     productLineItemModel = new ProductLineItemModel(currentBasket);
+    discountPlan = PromotionMgr.getDiscounts(currentBasket);
     cartTotals = new Totals(currentBasket);
 
-    basket = new Cart(currentBasket, null, productLineItemModel, cartTotals);
+    basket = new Cart(currentBasket, null, productLineItemModel, cartTotals, discountPlan);
 
     res.json(basket);
     return next();
@@ -346,6 +389,7 @@ server.get('AddCoupon', server.middleware.https, function (req, res, next) {
 
 server.get('RemoveCouponLineItem', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+    var discountPlan;
     var basket;
     var cartTotals;
     var couponLineItem;
@@ -364,8 +408,9 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
             });
 
             productLineItemModel = new ProductLineItemModel(currentBasket);
+            discountPlan = PromotionMgr.getDiscounts(currentBasket);
             cartTotals = new Totals(currentBasket);
-            basket = new Cart(currentBasket, null, productLineItemModel, cartTotals);
+            basket = new Cart(currentBasket, null, productLineItemModel, cartTotals, discountPlan);
 
             res.json(basket);
             return next();

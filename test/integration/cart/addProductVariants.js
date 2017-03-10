@@ -148,6 +148,7 @@ describe('Add Product variants to cart', function () {
                             'submitCouponCodeUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-AddCoupon',
                             'selectShippingUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-SelectShippingMethod'
                         },
+                        'approachingDiscounts': [],
                         'numOfShipments': 1,
                         'totals': {
                             'subTotal': '$381.97',

@@ -6,6 +6,13 @@
 $spacer: 0.625em;
 $negative-spacer: -0.625rem;
 
+.single-approaching-discount {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    background-color: $white;
+    color: $brand-success;
+    margin-bottom: 0.3125rem;
+}
+
 .checkout-continue {
     position: fixed;
     bottom: 0;
