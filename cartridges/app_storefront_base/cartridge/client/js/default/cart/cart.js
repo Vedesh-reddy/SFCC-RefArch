@@ -151,11 +151,11 @@ module.exports = function () {
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                $('.item-total-' + uuid).empty();
                 $('.quantity[data-uuid="' + uuid + '"]').val(quantity);
                 for (var i = 0; i < data.items.length; i++) {
                     if (data.items[i].UUID === uuid) {
-                        $('.item-total-' + uuid).append(data.items[i].priceTotal);
+                        $('.item-total-' + uuid).empty()
+                            .append(data.items[i].priceTotal.renderedPrice);
                         break;
                     }
                 }

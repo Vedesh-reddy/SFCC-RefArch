@@ -36,13 +36,18 @@
             </isif>
         </div>
         <!--- line item total price --->
-        <div class="col-4 line-item-total-price justify-content-end flex">
+        <div class="col-4 line-item-total-price justify-content-end">
             <p class="line-item-pricing-info">
                 <span class="line-item-total-text line-item-total-price-label">
                     ${Resource.msg('label.total.price','cart',null)}
-                </span><br/>
-                <span class="pricing line-item-total-price-amount item-total-${lineItem.UUID}">${lineItem.priceTotal}</span>
+                </span>
             </p>
+            <div class="item-total-${lineItem.UUID} price">
+                <isinclude template="checkout/productCard/productCardProductTotalPrice" />
+            </div>
         </div>
     </div>
+    <isif condition=${miniCart}>
+        <isinclude template="checkout/productCard/productCardProductPromotions" />
+    </isif>
 </div>

@@ -32,27 +32,18 @@ $negative-spacer: -0.625rem;
 }
 
 .edit-add-to-wishlist {
-    padding-bottom: 0.438em;
     position: absolute;
-    width: 100%;
-    margin-left: 6.538em;
+    bottom: 0;
 
     a {
         font-size: 0.813em;
-    }
-
-    @include media-breakpoint-down(md) {
-        bottom: 5.313em;
-    }
-
-    @include media-breakpoint-up(lg) {
-        bottom: 0;
     }
 }
 
 .line-item-attributes {
     font-size: 0.813em;
     margin: 0;
+    height: 100%;
 }
 
 .item-attributes {
