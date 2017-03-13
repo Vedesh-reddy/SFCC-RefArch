@@ -101,6 +101,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                     }]
                 },
                 'rating': 1,
+                'renderedPromotions': '',
                 'attributes': [
                     {
                         'attributeId': 'color',
@@ -157,6 +158,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                     }]
                 },
                 'rating': 0,
+                'renderedPromotions': '',
                 'attributes': [
                     {
                         'attributeId': 'color',

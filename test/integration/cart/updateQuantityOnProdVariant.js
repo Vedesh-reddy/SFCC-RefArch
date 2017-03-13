@@ -174,6 +174,7 @@ describe('Update quantity for product variant', function () {
                         }]
                     },
                     'rating': 1,
+                    'renderedPromotions': '',
                     'attributes': [
                         {
                             'attributeId': 'color',
@@ -223,6 +224,7 @@ describe('Update quantity for product variant', function () {
                         }]
                     },
                     'rating': 3,
+                    'renderedPromotions': '',
                     'attributes': [
                         {
                             'attributeId': 'color',
@@ -276,6 +278,7 @@ describe('Update quantity for product variant', function () {
                         }]
                     },
                     'rating': 0,
+                    'renderedPromotions': '',
                     'attributes': [
                         {
                             'attributeId': 'color',

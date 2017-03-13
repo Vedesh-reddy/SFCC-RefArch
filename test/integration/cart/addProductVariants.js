@@ -231,6 +231,7 @@ describe('Add Product variants to cart', function () {
                                     }]
                                 },
                                 'rating': 1,
+                                'renderedPromotions': '',
                                 'attributes': [
                                     {
                                         'attributeId': 'color',
@@ -280,6 +281,7 @@ describe('Add Product variants to cart', function () {
                                     }]
                                 },
                                 'rating': 3,
+                                'renderedPromotions': '',
                                 'attributes': [
                                     {
                                         'attributeId': 'color',
@@ -329,6 +331,7 @@ describe('Add Product variants to cart', function () {
                                     }]
                                 },
                                 'rating': 2,
+                                'renderedPromotions': '',
                                 'attributes': [
                                     {
                                         'attributeId': 'color',
@@ -376,6 +379,7 @@ describe('Add Product variants to cart', function () {
                                     }]
                                 },
                                 'rating': 0,
+                                'renderedPromotions': '',
                                 'attributes': [
                                     {
                                         'attributeId': 'color',
