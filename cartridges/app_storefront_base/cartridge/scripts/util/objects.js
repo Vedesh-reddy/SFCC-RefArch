@@ -44,7 +44,7 @@ function createClass(prototype, properties) {
  * @param {string} keyPath - the keyPath to evaluate against the context
  * @return {Object} the output value
  */
-function valueForKeyPath(context, keyPath) {
+function get(context, keyPath) {
     var keyPathKeys = keyPath.split('.');
     var value = context;
 
@@ -63,5 +63,5 @@ module.exports = {
     keys: keys,
     values: values,
     createClass: createClass,
-    valueForKeyPath: valueForKeyPath
+    get: get
 };

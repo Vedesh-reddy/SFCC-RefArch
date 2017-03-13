@@ -81,6 +81,16 @@ function getCurrentLocale(locale, currency) {
 }
 
 /**
+ * Translates global session object into local object
+ * @param {dw.system.Request} request - Global request object
+ * @returns {dw.system.Session} local instance of Session object
+ */
+function getSession(request) {
+    // TODO: Define public API wrapper class for session ??
+    return request.getSession();
+}
+
+/**
  * Translates global customer object into local object
  * @param {dw.customer.Customer} customer - Global customer object
  * @returns {Object} local instance of customer object
@@ -164,6 +174,7 @@ function Request(request, customer, session) {
         };
     }
     this.currentCustomer = getCustomerObject(customer);
+    this.session = getSession(request);
 }
 
 module.exports = Request;

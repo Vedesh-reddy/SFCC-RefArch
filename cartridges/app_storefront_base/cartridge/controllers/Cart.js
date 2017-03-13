@@ -8,12 +8,13 @@ var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
 
+var Collections = require('~/cartridge/scripts/util/collections');
+
 var CartModel = require('~/cartridge/models/cart');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
-var ShippingModel = require('~/cartridge/models/shipping');
 
-var helper = require('~/cartridge/scripts/dwHelpers');
-var cartHelpers = require('~/cartridge/scripts/cart/cartHelpers');
+var CartHelper = require('~/cartridge/scripts/cart/cartHelpers');
+var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
@@ -29,7 +30,7 @@ server.post('AddProduct', function (req, res, next) {
     var productId = req.querystring.pid;
     var quantity = parseInt(req.querystring.quantity, 10);
 
-    cartHelpers.addProductToCart(currentBasket, productId, quantity);
+    CartHelper.addProductToCart(currentBasket, productId, quantity);
 
     var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems);
 
@@ -45,13 +46,13 @@ server.get('Show', server.middleware.https, function (req, res, next) {
 
     if (currentBasket) {
         Transaction.wrap(function () {
-            CartModel.ensureAllShipmentsHaveMethods(currentBasket);
+            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
 
-    var basketModel = CartModel.getCartModel(currentBasket);
+    var basketModel = new CartModel(currentBasket);
 
     res.render('cart/cart', basketModel);
     next();
@@ -62,13 +63,13 @@ server.get('Test', function (req, res, next) {
 
     Transaction.wrap(function () {
         if (currentBasket) {
-            CartModel.ensureAllShipmentsHaveMethods(currentBasket);
+            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         }
     });
 
-    var basketModel = CartModel.getCartModel(currentBasket);
+    var basketModel = new CartModel(currentBasket);
 
     res.json(basketModel);
     next();
@@ -94,7 +95,7 @@ server.get('RemoveProductLineItem', function (req, res, next) {
     });
 
     if (isProductLineItemFound) {
-        var basketModel = CartModel.getCartModel(currentBasket);
+        var basketModel = new CartModel(currentBasket);
 
         res.json(basketModel);
         next();
@@ -136,7 +137,7 @@ server.get('UpdateQuantity', function (req, res, next) {
     });
 
     if (isProductLineItemFound && !error) {
-        var basketModel = CartModel.getCartModel(currentBasket);
+        var basketModel = new CartModel(currentBasket);
 
         res.json(basketModel);
         next();
@@ -166,14 +167,14 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     var methodID = req.form.methodID;
     var shipment;
     if (shipUUID) {
-        shipment = ShippingModel.getShipmentByUUID(currentBasket, shipUUID);
+        shipment = ShippingHelper.getShipmentByUUID(currentBasket, shipUUID);
     } else {
         shipment = currentBasket.defaultShipment;
     }
 
     if (methodID) {
         Transaction.wrap(function () {
-            ShippingModel.selectShippingMethod(shipment, methodID);
+            ShippingHelper.selectShippingMethod(shipment, methodID);
 
             if (currentBasket && !shipment.shippingMethod) {
                 error = true;
@@ -185,7 +186,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     }
 
     if (!error) {
-        var basketModel = CartModel.getCartModel(currentBasket);
+        var basketModel = new CartModel(currentBasket);
 
         res.json(basketModel);
     } else {
@@ -202,14 +203,14 @@ server.get('MiniCartShow', function (req, res, next) {
 
     if (currentBasket) {
         Transaction.wrap(function () {
-            CartModel.ensureAllShipmentsHaveMethods(currentBasket);
+            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
             // TODO: shouldn't we check to see if we changed anything first?
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
 
-    var basketModel = CartModel.getCartModel(currentBasket);
+    var basketModel = new CartModel(currentBasket);
 
     res.render('checkout/cart/miniCart', basketModel);
     next();
@@ -261,7 +262,7 @@ server.get('AddCoupon', server.middleware.https, function (req, res, next) {
         HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
     });
 
-    var basketModel = CartModel.getCartModel(currentBasket);
+    var basketModel = new CartModel(currentBasket);
 
     res.json(basketModel);
     return next();
@@ -272,7 +273,7 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (currentBasket && req.querystring.uuid) {
-        var couponLineItem = helper.find(currentBasket.couponLineItems, function (item) {
+        var couponLineItem = Collections.find(currentBasket.couponLineItems, function (item) {
             return item.UUID === req.querystring.uuid;
         });
 
@@ -282,7 +283,7 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
                 HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
             });
 
-            var basketModel = CartModel.getCartModel(currentBasket);
+            var basketModel = new CartModel(currentBasket);
 
             res.json(basketModel);
             return next();

@@ -52,21 +52,21 @@ function getModel(req) {
 //            shipmentShippingModel,
 //            shippingAddressModel
 //        );
-        var shippingModels = new ShippingModels(order);
-        var productLineItemsModel = new ProductLineItemsModel(order);
-        var totalsModel = new TotalsModel(order);
+//        var shippingModels = new ShippingModels(order);
+//        var productLineItemsModel = new ProductLineItemsModel(order);
+//        var totalsModel = new TotalsModel(order);
         var config = {
             numberOfLineItems: 'single'
         };
+//
+//        var modelsObject = {
+//            billingModel: null,
+//            shippingModels: shippingModels,
+//            totalsModel: totalsModel,
+//            productLineItemsModel: productLineItemsModel
+//        };
 
-        var modelsObject = {
-            billingModel: null,
-            shippingModels: shippingModels,
-            totalsModel: totalsModel,
-            productLineItemsModel: productLineItemsModel
-        };
-
-        orderModel = new OrderModel(order, modelsObject, config);
+        orderModel = new OrderModel(order, { config: config });
     } else {
         orderModel = null;
     }

@@ -5,10 +5,8 @@ var Resource = require('dw/web/Resource');
 
 var TotalsModel = require('~/cartridge/models/totals');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
-var ShippingModel = require('~/cartridge/models/shipping');
 
-var helper = require('~/cartridge/scripts/dwHelpers');
-
+var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 /**
  * Generates an object of URLs
@@ -29,18 +27,18 @@ function getCartActionUrls() {
  * @classdesc CartModel class that represents the current basket
  *
  * @param {dw.order.Basket} basket - Current users's basket
- * @param {Array} shippingModels - Array of ShippingModels
- * @param {Object} productLineItemsModel - Model for a given product line items
- * @param {Object} totalsModel - Model with total costs for the cart
  */
-function CartModel(basket, shippingModels, productLineItemsModel, totalsModel) {
+function CartModel(basket) {
+    var shippingModels = ShippingHelpers.getShippingModels(basket);
+    var productLineItemsModel = new ProductLineItemsModel(basket);
+    var totalsModel = new TotalsModel(basket);
+
     if (basket !== null) {
         this.actionUrls = getCartActionUrls();
         this.numOfShipments = basket.shipments.length;
         this.totals = totalsModel;
         this.shipments = [];
 
-        // TODO: shipments should be deprecated ... just use shippingModels ...
         if (shippingModels) {
             var shippingModel;
             var shipment;
@@ -61,34 +59,5 @@ function CartModel(basket, shippingModels, productLineItemsModel, totalsModel) {
         emptyCartMsg: Resource.msg('info.cart.empty.msg', 'cart', null)
     };
 }
-
-/**
- * Returns the CartModel for the associated Basket object
- * @param {dw.order.Basket} basket - the target Basket object
- * @returns {Object} a CartModel object
- */
-CartModel.getCartModel = function (basket) {
-    helper.assertRequiredParameter(basket, 'basket');
-
-    var shippingModels = ShippingModel.getShippingModels(basket);
-    var productLineItemsModel = new ProductLineItemsModel(basket);
-    var totalsModel = new TotalsModel(basket);
-
-    return new CartModel(basket, shippingModels, productLineItemsModel, totalsModel);
-};
-
-/**
- * Loops through all Shipments and attempts to select a ShippingMethod, where absent
- * @param {dw.order.Basket} basket - the target Basket object
- */
-CartModel.ensureAllShipmentsHaveMethods = function (basket) {
-    helper.assertRequiredParameter(basket, 'basket');
-
-    var shipments = basket.shipments;
-
-    helper.forEach(shipments, function (shipment) {
-        ShippingModel.ensureShipmentHasMethod(shipment);
-    });
-};
 
 module.exports = CartModel;

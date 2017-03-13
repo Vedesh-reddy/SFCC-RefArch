@@ -1,11 +1,12 @@
 'use strict';
 
 var AddressModel = require('~/cartridge/models/address');
-var ShippingModel = require('~/cartridge/models/shipping');
 var BillingModel = require('~/cartridge/models/billing');
 var PaymentModel = require('~/cartridge/models/payment');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var TotalsModel = require('~/cartridge/models/totals');
+
+var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 var DEFAULT_MODEL_CONFIG = {
     numberOfLineItems: '*'
@@ -48,22 +49,38 @@ function getFirstProductLineItem(productLineItemsModel) {
 /**
  * Order class that represents the current order
  * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket/order
- * @param {Object} modelsObject - object with models for building a order model
- * @param {Object} modelsObject.billingModel - The current order's billing information
- * @param {Object} modelsObject.shippingModels - The current order's shipping information
- * @param {Object} modelsObject.totalsModel - The current order's total information
- * @param {Object} modelsObject.productLineItemsModel - The current order's line items
- * @param {Object} config - Object to help configure the orderModel
- * @param {string} config.numberOfLineItems - helps determine the number of lineitems needed
+ * @param {Object} options - The current order's line items
+ * @param {Object} options.config - Object to help configure the orderModel
+ * @param {string} options.config.numberOfLineItems - helps determine the number of lineitems needed
  * @constructor
  */
-function OrderModel(lineItemContainer, modelsObject, config) {
-    if (lineItemContainer) {
+function OrderModel(lineItemContainer, options) {
+    if (!lineItemContainer) {
+        this.orderNumber = null;
+        this.creationDate = null;
+        this.orderEmail = null;
+        this.orderStatus = null;
+    } else {
+        var safeOptions = options || {};
+
+        var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
+        var customer = safeOptions.customer || lineItemContainer.customer;
+        var currencyCode = safeOptions.currencyCode || lineItemContainer.currencyCode;
+
+        var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer);
+
+        var paymentModel = new PaymentModel(lineItemContainer, customer, currencyCode);
+
+        var billingAddressModel = new AddressModel(lineItemContainer.billingAddress);
+        var billingModel = new BillingModel(billingAddressModel, paymentModel);
+
+        var productLineItemsModel = new ProductLineItemsModel(lineItemContainer);
+        var totalsModel = new TotalsModel(lineItemContainer);
+
         this.orderNumber = Object.hasOwnProperty.call(lineItemContainer, 'orderNo')
             ? lineItemContainer.orderNo
             : null;
-        this.priceTotal = modelsObject.totalsModel
-            ? modelsObject.totalsModel.grandTotal
+        this.priceTotal = totalsModel ? totalsModel.grandTotal
             : null;
         this.creationDate = Object.hasOwnProperty.call(lineItemContainer, 'creationDate')
             ? lineItemContainer.creationDate
@@ -75,55 +92,21 @@ function OrderModel(lineItemContainer, modelsObject, config) {
         this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
                 lineItemContainer.productQuantityTotal : null;
 
-        if (config.numberOfLineItems === '*') {
-            this.totals = modelsObject.totalsModel;
-            this.lineItemTotal = modelsObject.productLineItemsModel
-                ? modelsObject.productLineItemsModel.length
-                : null;
+        if (modelConfig.numberOfLineItems === '*') {
+            this.totals = totalsModel;
+            this.lineItemTotal = productLineItemsModel ? productLineItemsModel.length : null;
             this.steps = lineItemContainer
                 ? getCheckoutStepInformation(lineItemContainer)
                 : null;
-            this.items = modelsObject.productLineItemsModel;
-            this.billing = modelsObject.billingModel;
-            this.shipping = modelsObject.shippingModels;
-        } else if (config.numberOfLineItems === 'single') {
-            this.firstLineItem = getFirstProductLineItem(modelsObject.productLineItemsModel);
-            this.shippedToFirstName = modelsObject.shippingModels[0].shippingAddress.firstName;
-            this.shippedToLastName = modelsObject.shippingModels[0].shippingAddress.lastName;
+            this.items = productLineItemsModel;
+            this.billing = billingModel;
+            this.shipping = shippingModels;
+        } else if (modelConfig.numberOfLineItems === 'single') {
+            this.firstLineItem = getFirstProductLineItem(productLineItemsModel);
+            this.shippedToFirstName = shippingModels[0].shippingAddress.firstName;
+            this.shippedToLastName = shippingModels[0].shippingAddress.lastName;
         }
-    } else {
-        this.orderNumber = null;
-        this.creationDate = null;
-        this.orderEmail = null;
-        this.orderStatus = null;
     }
 }
-
-OrderModel.getOrderModel = function (order, options) {
-    var safeOptions = options || {};
-
-    var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
-    var customer = safeOptions.customer || order.customer;
-    var currencyCode = safeOptions.currencyCode || order.currencyCode;
-
-    var shippingModels = ShippingModel.getShippingModels(order);
-
-    var paymentModel = new PaymentModel(order, customer, currencyCode);
-
-    var billingAddressModel = new AddressModel(order.billingAddress);
-    var billingModel = new BillingModel(billingAddressModel, paymentModel);
-
-    var productLineItemsModel = new ProductLineItemsModel(order);
-    var totalsModel = new TotalsModel(order);
-
-    var modelsObject = {
-        billingModel: billingModel,
-        shippingModels: shippingModels,
-        totalsModel: totalsModel,
-        productLineItemsModel: productLineItemsModel
-    };
-
-    return new OrderModel(order, modelsObject, modelConfig);
-};
 
 module.exports = OrderModel;

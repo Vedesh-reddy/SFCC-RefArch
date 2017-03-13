@@ -1,11 +1,9 @@
 'use strict';
 
-var helper = require('~/cartridge/scripts/dwHelpers');
-var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurrency;
-
 var ShippingMgr = require('dw/order/ShippingMgr');
 
-// Private (module) static model functions
+var Assertions = require('~/cartridge/scripts/util/assertions');
+var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurrency;
 
 /**
  * Returns shippingCost property for a specific Shipment / ShippingMethod pair
@@ -14,8 +12,8 @@ var ShippingMgr = require('dw/order/ShippingMgr');
  * @returns {string} String representation of Shipping Cost
  */
 function getShippingCost(shippingMethod, shipment) {
-    helper.assertRequiredParameter(shipment, 'shipment');
-    helper.assertRequiredParameter(shipment, 'shippingMethod');
+    Assertions.assertRequiredParameter(shipment, 'shipment');
+    Assertions.assertRequiredParameter(shipment, 'shippingMethod');
 
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
     var shippingCost = shipmentShippingModel.getShippingCost(shippingMethod);
@@ -30,8 +28,8 @@ function getShippingCost(shippingMethod, shipment) {
  * @returns {boolean} true is shippingMethod is selected in Shipment
  */
 function getIsSelected(shippingMethod, shipment) {
-    helper.assertRequiredParameter(shipment, 'shipment');
-    helper.assertRequiredParameter(shipment, 'shippingMethod');
+    Assertions.assertRequiredParameter(shipment, 'shipment');
+    Assertions.assertRequiredParameter(shipment, 'shippingMethod');
 
     var selectedShippingMethod = shipment.shippingMethod || ShippingMgr.getDefaultShippingMethod();
     var selectedShippingMethodID = selectedShippingMethod ? selectedShippingMethod.ID : null;
@@ -40,15 +38,13 @@ function getIsSelected(shippingMethod, shipment) {
 }
 
 
-// Public model constructor
-
 /**
  * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
  * @param {dw.order.ShippingMethod} shippingMethod - the default shipment of the current basket
  * @param {dw.order.Shipment} [shipment] - a Shipment
  */
 function ShippingMethodModel(shippingMethod, shipment) {
-    helper.assertRequiredParameter(shipment, 'shippingMethod');
+    Assertions.assertRequiredParameter(shippingMethod, 'shippingMethod');
 
     this.ID = shippingMethod.ID;
     this.displayName = shippingMethod.displayName;
@@ -63,34 +59,5 @@ function ShippingMethodModel(shippingMethod, shipment) {
         this.isSelected = getIsSelected(shippingMethod, shipment);
     }
 }
-
-
-// Public (class) static model functions
-
-/**
- * Returns a new ShippingMethodModel object
- * @param {dw.order.ShippingMethod} shippingMethod - the default shipment of the current basket
- * @param {dw.order.Shipment} [shipment] - a Shipment
- * @returns {Object} object containing information about the selected shipping method
- */
-ShippingMethodModel.getShippingMethodModel = function (shippingMethod, shipment) {
-    return new ShippingMethodModel(shippingMethod, shipment);
-};
-
-/**
- * Returns an ArrayList-compatible collection of ShippingMethodModel object
- * @param {dw.util.Collection} shippingMethods - a collection of ShippingMethod Script API objects
- * @param {dw.order.Shipment} [shipment] - a Shipment
- * @returns {Array} array of ShippingMethodModels
- */
-ShippingMethodModel.getShippingMethodModels = function (shippingMethods, shipment) {
-    return helper.map(shippingMethods, function (shippingMethod) {
-        return new ShippingMethodModel(shippingMethod, shipment);
-    });
-};
-
-// extend class with helper/utility functions
-ShippingMethodModel.getShippingCost = getShippingCost;
-ShippingMethodModel.getIsSelected = getIsSelected;
 
 module.exports = ShippingMethodModel;
