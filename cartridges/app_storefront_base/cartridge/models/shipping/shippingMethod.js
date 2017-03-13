@@ -13,7 +13,7 @@ var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurren
  */
 function getShippingCost(shippingMethod, shipment) {
     Assertions.assertRequiredParameter(shipment, 'shipment');
-    Assertions.assertRequiredParameter(shipment, 'shippingMethod');
+    Assertions.assertRequiredParameter(shippingMethod, 'shippingMethod');
 
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
     var shippingCost = shipmentShippingModel.getShippingCost(shippingMethod);
