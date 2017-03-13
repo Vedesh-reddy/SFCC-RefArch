@@ -2,17 +2,11 @@
     <div class="col">
         <ol class="breadcrumb">
             <isloop items="${pdict.breadcrumbs}" var="breadcrumbValue">
-                <isif condition="${breadcrumbValue.url}">
-                    <li class="breadcrumb-item">
-                        <a href="${breadcrumbValue.url}">
-                            ${breadcrumbValue.htmlValue}
-                        </a>
-                    </li>
-                <iselse>
-                    <li class="breadcrumb-item active">
+                <li class="breadcrumb-item">
+                    <a href="${breadcrumbValue.url}">
                         ${breadcrumbValue.htmlValue}
-                    </li>
-                </isif>
+                    </a>
+                </li>
             </isloop>
         </ol>
     </div>

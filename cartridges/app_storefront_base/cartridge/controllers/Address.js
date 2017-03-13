@@ -64,9 +64,6 @@ server.get('List', function (req, res, next) {
                 {
                     htmlValue: Resource.msg('page.title.myaccount', 'account', null),
                     url: URLUtils.url('Account-Show').toString()
-                },
-                {
-                    htmlValue: Resource.msg('label.addressbook', 'account', null)
                 }
             ]
         });
@@ -95,9 +92,6 @@ server.get('AddAddress', function (req, res, next) {
             {
                 htmlValue: Resource.msg('label.addressbook', 'account', null),
                 url: URLUtils.url('Address-List').toString()
-            },
-            {
-                htmlValue: Resource.msg('label.addressbook.addnewaddress', 'account', null)
             }
         ]
     });
@@ -145,9 +139,6 @@ server.get('EditAddress', function (req, res, next) {
             {
                 htmlValue: Resource.msg('label.addressbook', 'account', null),
                 url: URLUtils.url('Address-List').toString()
-            },
-            {
-                htmlValue: Resource.msg('label.addressbook.editaddress', 'account', null)
             }
         ]
     });

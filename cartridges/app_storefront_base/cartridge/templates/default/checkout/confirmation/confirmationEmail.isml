@@ -88,7 +88,7 @@
 
             <!--- line item total price --->
             ${Resource.msg('label.total.price','cart',null)}
-            - ${lineItem.priceTotal}
+            - ${lineItem.priceTotal.price}
             <br/>
         </p>
     </isloop>

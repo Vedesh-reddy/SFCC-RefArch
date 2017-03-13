@@ -3,6 +3,7 @@
 var server = require('server');
 
 var BasketMgr = require('dw/order/BasketMgr');
+var PromotionMgr = require('dw/campaign/PromotionMgr');
 var HookMgr = require('dw/system/HookMgr');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
@@ -108,7 +109,6 @@ server.get('RemoveProductLineItem', function (req, res, next) {
 
 server.get('UpdateQuantity', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
-
     var isProductLineItemFound = false;
     var error = false;
 
@@ -153,6 +153,7 @@ server.get('UpdateQuantity', function (req, res, next) {
 
 server.post('SelectShippingMethod', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+
     if (!currentBasket) {
         res.json({
             error: true,
@@ -271,6 +272,7 @@ server.get('AddCoupon', server.middleware.https, function (req, res, next) {
 
 server.get('RemoveCouponLineItem', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+    var couponLineItem;
 
     if (currentBasket && req.querystring.uuid) {
         var couponLineItem = Collections.find(currentBasket.couponLineItems, function (item) {

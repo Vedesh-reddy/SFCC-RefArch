@@ -59,6 +59,22 @@ function createErrorNotification(message) {
     ).appendTo('.page');
 }
 
+/**
+ * re-renders the approaching discount messages
+ * @param {Object} approachingDiscounts - updated approaching discounts for the cart
+ */
+function updateApproachingDiscounts(approachingDiscounts) {
+    var html;
+    $('.approaching-discounts').empty();
+    if (approachingDiscounts.length > 0) {
+        approachingDiscounts.forEach(function (item) {
+            html += '<div class="single-approaching-discount text-center">'
+                + item.discountMsg + '</div>';
+        });
+    }
+    $('.approaching-discounts').append(html);
+}
+
 module.exports = function () {
     $('body').on('click', '.remove-product', function (e) {
         e.preventDefault();
@@ -121,6 +137,7 @@ module.exports = function () {
                     $('.uuid-' + uuid).remove();
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
+                    updateApproachingDiscounts(data.approachingDiscounts);
                 }
                 $.spinner().stop();
             },
@@ -151,16 +168,17 @@ module.exports = function () {
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                $('.item-total-' + uuid).empty();
                 $('.quantity[data-uuid="' + uuid + '"]').val(quantity);
                 for (var i = 0; i < data.items.length; i++) {
                     if (data.items[i].UUID === uuid) {
-                        $('.item-total-' + uuid).append(data.items[i].priceTotal);
+                        $('.item-total-' + uuid).empty()
+                            .append(data.items[i].priceTotal.renderedPrice);
                         break;
                     }
                 }
                 $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                 updateCartTotals(data);
+                updateApproachingDiscounts(data.approachingDiscounts);
                 $.spinner().stop();
             },
             error: function (err) {
@@ -189,6 +207,7 @@ module.exports = function () {
                 } else {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
+                    updateApproachingDiscounts(data.approachingDiscounts);
                 }
                 $.spinner().stop();
             },
@@ -226,6 +245,7 @@ module.exports = function () {
                 } else {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
+                    updateApproachingDiscounts(data.approachingDiscounts);
                 }
                 $('.coupon-code-field').val('');
                 $.spinner().stop();
@@ -275,6 +295,7 @@ module.exports = function () {
             success: function (data) {
                 $('.coupon-uuid-' + uuid).remove();
                 updateCartTotals(data);
+                updateApproachingDiscounts(data.approachingDiscounts);
                 $.spinner().stop();
             },
             error: function (err) {

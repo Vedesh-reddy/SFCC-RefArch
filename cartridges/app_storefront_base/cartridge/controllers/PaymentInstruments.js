@@ -129,9 +129,6 @@ server.get('List', function (req, res, next) {
                 {
                     htmlValue: Resource.msg('page.title.myaccount', 'account', null),
                     url: URLUtils.url('Account-Show').toString()
-                },
-                {
-                    htmlValue: Resource.msg('page.heading.payments', 'payment', null)
                 }
             ]
         });
@@ -162,9 +159,6 @@ server.get('AddPayment', function (req, res, next) {
             {
                 htmlValue: Resource.msg('page.heading.payments', 'payment', null),
                 url: URLUtils.url('PaymentInstruments-List').toString()
-            },
-            {
-                htmlValue: Resource.msg('label.payment.addnewpayment', 'payment', null)
             }
         ]
     });
@@ -209,9 +203,6 @@ server.get('EditPayment', function (req, res, next) {
             {
                 htmlValue: Resource.msg('page.heading.payments', 'payment', null),
                 url: URLUtils.url('PaymentInstruments-List').toString()
-            },
-            {
-                htmlValue: Resource.msg('label.payment.editpayment', 'payment', null)
             }
         ]
     });

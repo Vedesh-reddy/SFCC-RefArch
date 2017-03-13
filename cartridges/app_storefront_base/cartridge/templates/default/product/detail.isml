@@ -7,6 +7,10 @@
     </isscript>
 
     <div class="container product-detail">
+        <!---Breadcrumbs--->
+        <div class="product-breadcrumb hidden-md-up">
+            <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+        </div>
         <div class="row">
             <div class="hidden-md-up col-sm-12">
                 <h1 class="product-name">${pdict.product.productName}</h1>
@@ -21,7 +25,9 @@
             <div class="col-12 col-sm-6">
                 <section>
                     <!---Breadcrumbs--->
-                    <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                    <div class="product-breadcrumb hidden-sm-down">
+                        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                    </div>
                     <h1 class="product-name hidden-sm-down">${pdict.product.productName}</h1>
                     <div class="product-number-rating clearfix">
                         <div class="product-number hidden-xs-down pull-left">

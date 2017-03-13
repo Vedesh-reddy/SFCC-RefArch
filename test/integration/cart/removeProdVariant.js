@@ -89,6 +89,7 @@ describe('Remove product variant from line item', function () {
                 'submitCouponCodeUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-AddCoupon',
                 'selectShippingUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-SelectShippingMethod'
             },
+            'approachingDiscounts': [],
             'numOfShipments': 1,
             'totals': {
                 'subTotal': '$137.97',
@@ -190,7 +191,10 @@ describe('Remove product variant from line item', function () {
                         'minOrderQuantity': 1,
                         'maxOrderQuantity': 10
                     },
-                    'priceTotal': '$48.00',
+                    'priceTotal': {
+                        'price': '$48.00',
+                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$48.00</div>\n\n'
+                    },
                     'isBonusProductLineItem': false,
                     'promotions': null,
                     'isGift': false,
@@ -234,7 +238,10 @@ describe('Remove product variant from line item', function () {
                         'minOrderQuantity': 1,
                         'maxOrderQuantity': 10
                     },
-                    'priceTotal': '$89.97',
+                    'priceTotal': {
+                        'price': '$89.97',
+                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$89.97</div>\n\n'
+                    },
                     'isBonusProductLineItem': false,
                     'promotions': null,
                     'isGift': false,
@@ -305,6 +312,7 @@ describe('Remove product variant from line item', function () {
                 'submitCouponCodeUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-AddCoupon',
                 'selectShippingUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-SelectShippingMethod'
             },
+            'approachingDiscounts': [],
             'numOfShipments': 1,
             'totals': {
                 'subTotal': '$0.00',

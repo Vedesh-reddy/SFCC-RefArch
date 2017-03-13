@@ -1,8 +1,8 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-
 var ProductBase = require('./product/productBase').productBase;
+var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
 
 /**
  * get the min and max numbers to display in the quantity drop down.
@@ -18,6 +18,28 @@ function getMinMaxQuantityOptions(product, quantity) {
         minOrderQuantity: product.minOrderQuantity.value || 1,
         maxOrderQuantity: max
     };
+}
+
+/**
+ * get the total price for the product line item
+ * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
+ * @returns {Object} an object containing the product line item total info.
+ */
+function getTotalPrice(lineItem) {
+    var context;
+    var result = {};
+    var template = 'checkout/productCard/productCardProductRenderedTotalPrice';
+
+    if (lineItem.priceAdjustments.length) {
+        result.nonAdjustedPrice = formatMoney(lineItem.getPrice());
+    }
+
+    result.price = formatMoney(lineItem.adjustedPrice);
+    context = { lineItem: { priceTotal: result } };
+
+    result.renderedPrice = renderTemplateHelper.getRenderedHtml(context, template);
+
+    return result;
 }
 
 /**
@@ -55,7 +77,7 @@ ProductLineItem.prototype = Object.create(ProductBase.prototype);
 ProductLineItem.prototype.initialize = function (lineItem) {
     ProductBase.prototype.initialize.call(this);
     this.quantityOptions = getMinMaxQuantityOptions(this.product, this.quantity);
-    this.priceTotal = formatMoney(lineItem.adjustedPrice);
+    this.priceTotal = getTotalPrice(lineItem);
     this.isBonusProductLineItem = lineItem.bonusProductLineItem;
     this.isGift = lineItem.gift;
     this.UUID = lineItem.UUID;

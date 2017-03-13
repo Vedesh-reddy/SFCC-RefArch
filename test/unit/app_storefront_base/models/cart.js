@@ -4,6 +4,7 @@ var assert = require('chai').assert;
 var ArrayList = require('../../../mocks/dw.util.Collection');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var urlUtilsMock = require('../../../mocks/dw.web.URLUtils');
+var Money = require('../../../mocks/dw.value.Money');
 
 
 var createApiBasket = function () {
@@ -12,7 +13,8 @@ var createApiBasket = function () {
             shippingMethod: {
                 ID: '005'
             }
-        }
+        },
+        productLineItems: 'some items'
     };
 
     basket.shipments = new ArrayList([{}]);
@@ -42,6 +44,47 @@ var createProductLineItemModel = function () {
     };
 };
 
+var createDiscountPlan = function () {
+    return {
+        getApproachingOrderDiscounts: function () {
+            return new ArrayList([{
+                getDistanceFromConditionThreshold: function () {
+                    return new Money();
+                },
+                getDiscount: function () {
+                    return {
+                        getPromotion: function () {
+                            return {
+                                getCalloutMsg: function () {
+                                    return 'someString';
+                                }
+                            };
+                        }
+                    };
+                }
+            }]);
+        },
+        getApproachingShippingDiscounts: function () {
+            return new ArrayList([{
+                getDistanceFromConditionThreshold: function () {
+                    return new Money();
+                },
+                getDiscount: function () {
+                    return {
+                        getPromotion: function () {
+                            return {
+                                getCalloutMsg: function () {
+                                    return 'someString';
+                                }
+                            };
+                        }
+                    };
+                }
+            }]);
+        }
+    };
+};
+
 var totalsModel = {
     subTotal: '$10.50',
     grandTotal: '$12.50',
@@ -50,9 +93,18 @@ var totalsModel = {
 };
 
 describe('cart', function () {
+    var helper = proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
+        'dw/util/ArrayList': ArrayList
+    });
     var Cart = null;
     Cart = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/cart', {
+        '~/cartridge/scripts/dwHelpers': helper,
         'dw/web/URLUtils': urlUtilsMock,
+        'dw/util/StringUtils': {
+            formatMoney: function () {
+                return 'formatted money';
+            }
+        },
         'dw/web/Resource': {
             msg: function () {
                 return 'someString';
@@ -76,7 +128,8 @@ describe('cart', function () {
             createApiBasket(),
             createShipmentShippingModel(),
             createProductLineItemModel(),
-            totalsModel
+            totalsModel,
+            createDiscountPlan()
         );
         assert.equal(result.shippingMethods[0].description, 'Order received within 7-10 ' +
             'business days'
@@ -88,10 +141,15 @@ describe('cart', function () {
     });
 
     it('should get totals from totals model', function () {
-        var result = new Cart(createApiBasket(), null, createProductLineItemModel(), totalsModel);
+        var result = new Cart(createApiBasket(), null, createProductLineItemModel(), totalsModel, createDiscountPlan());
         assert.equal(result.totals.subTotal, '$10.50');
         assert.equal(result.totals.grandTotal, '$12.50');
         assert.equal(result.totals.totalTax, '$1.00');
         assert.equal(result.totals.totalShippingCost, '$1.00');
+    });
+    it('should get approaching discounts', function () {
+        var result = new Cart(createApiBasket(), null, createProductLineItemModel(), null, createDiscountPlan());
+        assert.equal(result.approachingDiscounts[0].discountMsg, 'someString');
+        assert.equal(result.approachingDiscounts[1].discountMsg, 'someString');
     });
 });
