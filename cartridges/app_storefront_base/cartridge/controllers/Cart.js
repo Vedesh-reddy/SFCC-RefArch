@@ -3,7 +3,6 @@
 var server = require('server');
 
 var BasketMgr = require('dw/order/BasketMgr');
-var PromotionMgr = require('dw/campaign/PromotionMgr');
 var HookMgr = require('dw/system/HookMgr');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
@@ -275,7 +274,7 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
     var couponLineItem;
 
     if (currentBasket && req.querystring.uuid) {
-        var couponLineItem = Collections.find(currentBasket.couponLineItems, function (item) {
+        couponLineItem = Collections.find(currentBasket.couponLineItems, function (item) {
             return item.UUID === req.querystring.uuid;
         });
 

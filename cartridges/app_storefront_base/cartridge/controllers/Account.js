@@ -15,9 +15,6 @@ var HashMap = require('dw/util/HashMap');
 var AccountModel = require('~/cartridge/models/account');
 var AddressModel = require('~/cartridge/models/address');
 var OrderModel = require('~/cartridge/models/order');
-var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
-var ShippingModels = require('~/cartridge/models/shipping');
-var TotalsModel = require('~/cartridge/models/totals');
 
 /**
  * Creates an account model for the current customer
