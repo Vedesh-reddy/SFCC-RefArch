@@ -46,7 +46,10 @@ server.get('UpdateGrid', function (req, res, next) {
     dwProductSearch.search();
     productSearch = new ProductSearch(dwProductSearch, params);
 
-    res.render('/search/productgrid', { productSearch: productSearch });
+    res.render('/search/productgrid', {
+        productSearch: productSearch,
+        category: dwProductSearch.category
+    });
 
     next();
 });
