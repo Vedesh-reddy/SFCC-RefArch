@@ -204,6 +204,23 @@ export function createShippingData(customer, locale) {
     return shippingData;
 }
 
+export function createBillingData(locale) {
+    const billingData = {};
+
+    billingData[checkoutPage.BILLING_FIRST_NAME] = 'Mommy';
+    billingData[checkoutPage.BILLING_LAST_NAME] = 'Dear';
+    billingData[checkoutPage.BILLING_ADDRESS_ONE] = '10 Marble Road';
+    billingData[checkoutPage.BILLING_COUNTRY] = customers.globalCountryCode[locale];
+    billingData[checkoutPage.BILLING_ADDRESS_CITY] = 'Bath';
+    billingData[checkoutPage.BILLING_ZIP_CODE] = customers.globalPostalCode2[locale];
+
+    if (locale && locale === 'x_default') {
+        billingData[checkoutPage.BILLING_STATE] = 'ME';
+    }
+
+    return billingData;
+}
+
 /**
  * This function will create a payment data object needed for filling
  * the payment form in checkout. This function required information
@@ -231,4 +248,26 @@ export function createPaymentData(creditCard) {
     paymentData[checkoutPage.PAYMENT_EMAIL] = paymentEmail;
 
     return paymentData;
+}
+
+export function checkCheckbox(selector) {
+    return browser.click(selector)
+        .isSelected(selector)
+        .then(selected => {
+            if (!selected) {
+                return browser.click(selector);
+            }
+            return Promise.resolve();
+        });
+}
+
+export function uncheckCheckbox(selector) {
+    return browser.click(selector)
+        .isSelected(selector)
+        .then(selected => {
+            if (selected) {
+                return browser.click(selector);
+            }
+            return Promise.resolve();
+        });
 }
