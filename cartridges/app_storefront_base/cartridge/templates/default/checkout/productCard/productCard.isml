@@ -48,6 +48,8 @@
         </div>
     </div>
     <isif condition=${miniCart}>
-        <isinclude template="checkout/productCard/productCardProductPromotions" />
+        <div class="line-item-promo item-${lineItem.UUID}">
+            <isinclude template="checkout/productCard/productCardProductPromotions" />
+        </div>
     </isif>
 </div>

@@ -173,6 +173,7 @@ describe('Remove product variant from line item', function () {
                         }]
                     },
                     'rating': 1,
+                    'renderedPromotions': '',
                     'attributes': [
                         {
                             'attributeId': 'color',
@@ -226,6 +227,7 @@ describe('Remove product variant from line item', function () {
                         }]
                     },
                     'rating': 0,
+                    'renderedPromotions': '',
                     'attributes': [
                         {
                             'attributeId': 'color',

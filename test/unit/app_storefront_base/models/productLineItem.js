@@ -23,7 +23,10 @@ describe('Product Line Item', function () {
         'dw/value/Money': require('../../../mocks/dw.value.Money'),
         '~/cartridge/scripts/renderTemplateHelper': {
             getRenderedHtml: function () { return 'string'; }
-        }
+        },
+        '~/cartridge/scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
+            'dw/util/ArrayList': ArrayList
+        })
     });
 
     var productVariantMock = {
@@ -56,6 +59,16 @@ describe('Product Line Item', function () {
         }
     };
 
+    var priceAdjustments = new ArrayList([
+        {
+            promotion: {
+                calloutMsg: { markup: 'string' },
+                details: { markup: 'string' },
+                name: 'some name'
+            }
+        }
+    ]);
+
     var lineItem = {
         bonusProductLineItem: false,
         gift: false,
@@ -64,9 +77,9 @@ describe('Product Line Item', function () {
             value: 'some value',
             currencyCode: 'US'
         },
-        product: toProductMock(productMock),
-        priceAdjustments: new ArrayList([]),
-        getPrice: function () { return 'money object'; }
+        priceAdjustments: priceAdjustments,
+        getPrice: function () { return 'money object'; },
+        product: toProductMock(productMock)
     };
 
     it('should load productLineItem', function () {
@@ -80,9 +93,14 @@ describe('Product Line Item', function () {
         assert.equal(productLineItem.UUID, 'some UUID');
         assert.equal(productLineItem.isOrderable, true);
         assert.deepEqual(productLineItem.priceTotal, {
+            nonAdjustedPrice: 'formattedMoney',
             price: 'formattedMoney',
             renderedPrice: 'string'
         });
         assert.equal(productLineItem.quantity, 1);
+        assert.equal(productLineItem.appliedPromotions.length, 1);
+        assert.deepEqual(productLineItem.appliedPromotions,
+            [{ callOutMsg: 'string', name: 'some name', details: 'string' }]);
+        assert.equal(productLineItem.renderedPromotions, 'string');
     });
 });

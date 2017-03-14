@@ -59,7 +59,7 @@ server.get('Login', server.middleware.https, function (req, res, next) {
             details: details
         });
     }
-    next();
+    return next();
 });
 
 

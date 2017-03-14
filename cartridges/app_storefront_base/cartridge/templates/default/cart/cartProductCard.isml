@@ -107,7 +107,9 @@
                     </div>
                     <div class="col-lg-1 hidden-md-down remove-line-item-lg"></div>
                 </div>
-                <isinclude template="checkout/productCard/productCardProductPromotions" />
+                <div class="line-item-promo item-${lineItem.UUID}">
+                    <isinclude template="checkout/productCard/productCardProductPromotions" />
+                </div>
             </div>
         </div>
     </div>
