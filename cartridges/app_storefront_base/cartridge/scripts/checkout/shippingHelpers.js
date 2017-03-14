@@ -16,8 +16,6 @@ var ShippingModel = require('~/cartridge/models/shipping');
  * @returns {dw.util.ArrayList} an array of ShippingModels
  */
 function getShippingModels(currentBasket) {
-    Assertions.assertRequiredParameter(currentBasket, 'currentBasket');
-
     var shipments = currentBasket ? currentBasket.getShipments() : null;
 
     if (!shipments) return [];

@@ -92,7 +92,6 @@ function CartModel(basket) {
     var shippingModels = ShippingHelpers.getShippingModels(basket);
     var productLineItemsModel = new ProductLineItemsModel(basket);
     var totalsModel = new TotalsModel(basket);
-    var discountPlan = PromotionMgr.getDiscounts(basket);
 
     if (basket !== null) {
         this.actionUrls = getCartActionUrls();
@@ -111,6 +110,7 @@ function CartModel(basket) {
                 this.shipments.push(shipment);
             }
         }
+        var discountPlan = PromotionMgr.getDiscounts(basket);
         if (discountPlan) {
             this.approachingDiscounts = getApproachingDiscounts(basket, discountPlan);
         }

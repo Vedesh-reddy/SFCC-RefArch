@@ -30,13 +30,18 @@ var COHelpers = require('~/cartridge/scripts/checkout/checkoutHelpers');
  */
 
 server.get('Login', server.middleware.https, function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+    if (!currentBasket) {
+        res.redirect(URLUtils.url('Cart-Show'));
+        return next();
+    }
+
     if (req.currentCustomer.profile) {
         res.redirect(URLUtils.url('Checkout-Start'));
     } else {
         var rememberMe = false;
         var userName = '';
         var actionUrl = URLUtils.url('Account-Login', 'checkoutLogin', true);
-        var currentBasket = BasketMgr.getCurrentBasket();
         var totalsModel = new TotalsModel(currentBasket);
         var details = {
             subTotal: totalsModel.subTotal,
