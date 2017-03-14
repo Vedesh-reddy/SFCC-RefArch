@@ -5,6 +5,7 @@ module.exports = function () {
         var $ordersContainer = $('.order-list-container');
         $ordersContainer.empty();
         $.spinner().start();
+        $('.order-history-select').trigger('orderHistory:sort', e);
         $.ajax({
             url: e.currentTarget.value,
             method: 'GET',

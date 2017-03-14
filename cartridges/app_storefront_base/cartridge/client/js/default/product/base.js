@@ -229,6 +229,10 @@ module.exports = {
         // Enable "Add to Cart" button if all required attributes have been selected
         $('button.add-to-cart').attr('disabled', !response.product.readyToOrder);
 
+        if (response.product.readyToOrder) {
+            $('button.add-to-cart').trigger('product:readyToOrder');
+        }
+
         // Update primary images
         var primaryImageUrls = response.product.images;
         primaryImageUrls.large.forEach(function (imageUrl, idx) {

@@ -1,11 +1,12 @@
 window.jQuery = window.$ = require('jquery');
+var processInclude = require('./util');
 
 $(document).ready(function () {
-    require('./components/menu')();
-    require('./components/footer')();
-    require('./components/minicart')();
-    require('./components/collapsable-item')();
-    require('./components/search')();
+    processInclude(require('./components/menu'));
+    processInclude(require('./components/footer'));
+    processInclude(require('./components/minicart'));
+    processInclude(require('./components/collapsable-item'));
+    processInclude(require('./components/search'));
 });
 
 require('./thirdparty/bootstrap');
