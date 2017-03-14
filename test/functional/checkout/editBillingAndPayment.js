@@ -93,13 +93,13 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Uncheck Billing and Shipping details are the same', () => {
+        it('should uncheck Billing and Shipping details are the same', () => {
             return checkoutPage.uncheckSameBillingShipping()
                 .then(() => browser.waitForVisible(checkoutPage.BILLING_ADDRESS_FORM));
         });
 
         // Fill in Billing Form and submit
-        it('Fill required fields in billing form and submit', () => {
+        it('should fill required fields in billing form and submit', () => {
             return checkoutPage.fillOutBillingForm(billingData, locale)
                 .then(() => browser.isEnabled(checkoutPage.BTN_NEXT_PLACE_ORDER))
                 .then(btnEnabled => assert.ok(btnEnabled))
@@ -110,7 +110,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
     });
 
     describe('Summary of billing information - different billing and shipping address', () => {
-        it('Verify billing address label', () => {
+        it('should verify billing address label', () => {
             return browser.getText(checkoutPage.BILLING_ADDRESS_LABEL)
                 .then((billingAddrLabel) => {
                     const expectedBillingAddrLabel = Resource.msgf('label.order.billing.address', 'confirmation', null);
@@ -118,7 +118,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify name', () => {
+        it('should verify name', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_FIRST_NAME)
                 .then((firstName) => {
                     const expectedFirstName = billingData[checkoutPage.BILLING_FIRST_NAME];
@@ -132,7 +132,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
         });
 
 
-        it('Verify street name', () => {
+        it('should verify street name', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_ADDRESS1)
                 .then((address1) => {
                     const expectedAddress1 = billingData[checkoutPage.BILLING_ADDRESS_ONE];
@@ -140,7 +140,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify city name', () => {
+        it('should verify city name', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_CITY)
                 .then((city) => {
                     const expectedCity = billingData[checkoutPage.BILLING_ADDRESS_CITY];
@@ -148,7 +148,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify state code', () => {
+        it('should verify state code', () => {
             if (locale && locale === 'x_default') {
                 return browser.getText(checkoutPage.BILLING_ADDR_STATE_CODE)
                     .then((stateCode) => {
@@ -159,7 +159,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
             return Promise.resolve();
         });
 
-        it('Verify postal code', () => {
+        it('should verify postal code', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_POSTAL_CODE)
                 .then((zipCode) => {
                     const expectedZipCode = billingData[checkoutPage.BILLING_ZIP_CODE];
@@ -167,7 +167,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify email', () => {
+        it('should verify email', () => {
             return browser.getText(checkoutPage.ORDER_SUMMARY_EMAIL)
                 .then((email) => {
                     const expectedEmail = paymentData[checkoutPage.PAYMENT_EMAIL];
@@ -175,7 +175,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify phone', () => {
+        it('should verify phone', () => {
             return browser.getText(checkoutPage.ORDER_SUMMARY_PHONE)
                 .then((phone) => {
                     const expectedPhone = paymentData[checkoutPage.PAYMENT_PHONE_NUMBER];
@@ -185,7 +185,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
     });
 
     describe('Summary payment information - on Place Order page', () => {
-        it('Verify payment label', () => {
+        it('should verify payment label', () => {
             return browser.getText(checkoutPage.PAYMENT_INFO_LABEL)
                 .then((paymentLabel) => {
                     const expectedPaymentLabel = Resource.msgf('label.order.payment.info', 'confirmation', null);
@@ -193,7 +193,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify credit type', () => {
+        it('should verify credit type', () => {
             return browser.getText(checkoutPage.PAYMENT_DETAILS)
                 .then((creditCard) => {
                     const creditCardType = Resource.msgf('msg.payment.type.credit', 'confirmation', null) + ' Visa';
@@ -211,7 +211,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
     });
 
     describe('Edit billing information, set billing address same as shipping address', () => {
-        it('Verify billing form no longer visible. Submit form', () => {
+        it('should verify billing form no longer visible. Submit form', () => {
             return browser.waitForVisible(checkoutPage.BTN_PAYMENT_EDIT)
                 .click(checkoutPage.BTN_PAYMENT_EDIT)
                 .then(() => browser.waitForVisible(checkoutPage.PAYMENT_FORM_TITLE))
@@ -224,7 +224,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
     });
 
     describe('Summary of billing information - same billing and shipping address', () => {
-        it('Verify name', () => {
+        it('should verify name', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_FIRST_NAME)
                 .then((firstName) => {
                     const expectedFirstName = shippingData[checkoutPage.BILLING_FIRST_NAME];
@@ -238,7 +238,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
         });
 
 
-        it('Verify street name', () => {
+        it('should verify street name', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_ADDRESS1)
                 .then((address1) => {
                     const expectedAddress1 = shippingData[checkoutPage.BILLING_ADDRESS_ONE];
@@ -246,7 +246,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify city name', () => {
+        it('should verify city name', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_CITY)
                 .then((city) => {
                     const expectedCity = shippingData[checkoutPage.BILLING_ADDRESS_CITY];
@@ -254,7 +254,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify state code', () => {
+        it('should verify state code', () => {
             if (locale && locale === 'x_default') {
                 return browser.getText(checkoutPage.BILLING_ADDR_STATE_CODE)
                     .then((stateCode) => {
@@ -265,7 +265,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
             return Promise.resolve();
         });
 
-        it('Verify postal code', () => {
+        it('should verify postal code', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_POSTAL_CODE)
                 .then((zipCode) => {
                     const expectedZipCode = shippingData[checkoutPage.BILLING_ZIP_CODE];
@@ -273,7 +273,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify email', () => {
+        it('should verify email', () => {
             return browser.getText(checkoutPage.ORDER_SUMMARY_EMAIL)
                 .then((email) => {
                     const expectedEmail = paymentData[checkoutPage.PAYMENT_EMAIL];
@@ -281,7 +281,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('Verify phone', () => {
+        it('should verify phone', () => {
             return browser.getText(checkoutPage.ORDER_SUMMARY_PHONE)
                 .then((phone) => {
                     const expectedPhone = paymentData[checkoutPage.PAYMENT_PHONE_NUMBER];
