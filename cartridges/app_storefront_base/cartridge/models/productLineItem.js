@@ -3,6 +3,7 @@
 var formatMoney = require('dw/util/StringUtils').formatMoney;
 var ProductBase = require('./product/productBase').productBase;
 var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
+var helper = require('~/cartridge/scripts/dwHelpers');
 
 /**
  * get the min and max numbers to display in the quantity drop down.
@@ -30,7 +31,7 @@ function getTotalPrice(lineItem) {
     var result = {};
     var template = 'checkout/productCard/productCardProductRenderedTotalPrice';
 
-    if (lineItem.priceAdjustments.length) {
+    if (lineItem.priceAdjustments.getLength() > 0) {
         result.nonAdjustedPrice = formatMoney(lineItem.getPrice());
     }
 
@@ -38,6 +39,47 @@ function getTotalPrice(lineItem) {
     context = { lineItem: { priceTotal: result } };
 
     result.renderedPrice = renderTemplateHelper.getRenderedHtml(context, template);
+
+    return result;
+}
+
+/**
+ * get the promotions applied to the product line item
+ * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
+ * @returns {Object[]|undefined} an array of objects containing the promotions applied to the
+ *                               product line item.
+ */
+function getAppliedPromotions(lineItem) {
+    var priceAdjustments;
+
+    if (lineItem.priceAdjustments.getLength() > 0) {
+        priceAdjustments = helper.map(lineItem.priceAdjustments, function (priceAdjustment) {
+            return {
+                callOutMsg: priceAdjustment.promotion.calloutMsg.markup,
+                name: priceAdjustment.promotion.name,
+                details: priceAdjustment.promotion.details.markup
+            };
+        });
+    }
+
+    return priceAdjustments;
+}
+
+/**
+ * get the rendered applied promotions
+ * @param {Object[]} appliedPromotions - an array of objects containing the product line items
+ *                                    applied promotions
+ * @returns {string} the rendered html for the applied promotions
+ */
+function getRenderedPromotions(appliedPromotions) {
+    var context;
+    var result = '';
+    var template = 'checkout/productCard/productCardProductRenderedPromotions';
+
+    if (appliedPromotions) {
+        context = { lineItem: { appliedPromotions: appliedPromotions } };
+        result = renderTemplateHelper.getRenderedHtml(context, template);
+    }
 
     return result;
 }
@@ -79,6 +121,8 @@ ProductLineItem.prototype.initialize = function (lineItem) {
     this.isGift = lineItem.gift;
     this.UUID = lineItem.UUID;
     this.isOrderable = this.product.availabilityModel.isOrderable(this.quantity);
+    this.appliedPromotions = getAppliedPromotions(lineItem);
+    this.renderedPromotions = getRenderedPromotions(this.appliedPromotions);
 };
 
 /**
@@ -101,7 +145,7 @@ function ProductWrapper(product, productVariables, quantity, lineItem, promotion
     );
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes',
         'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift', 'UUID', 'quantity',
-        'isOrderable', 'promotions'];
+        'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions'];
     items.forEach(function (item) {
         this[item] = productLineItem[item];
     }, this);

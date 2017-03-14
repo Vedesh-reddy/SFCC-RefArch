@@ -42,6 +42,11 @@ function updateCartTotals(data) {
     } else {
         $('.shipping-discount').addClass('hide-shipping-discount');
     }
+
+    data.items.forEach(function (item) {
+        $('.item-' + item.UUID).empty().append(item.renderedPromotions);
+        $('.item-total-' + item.UUID).empty().append(item.priceTotal.renderedPrice);
+    });
 }
 
 /**
@@ -169,13 +174,6 @@ module.exports = function () {
             dataType: 'json',
             success: function (data) {
                 $('.quantity[data-uuid="' + uuid + '"]').val(quantity);
-                for (var i = 0; i < data.items.length; i++) {
-                    if (data.items[i].UUID === uuid) {
-                        $('.item-total-' + uuid).empty()
-                            .append(data.items[i].priceTotal.renderedPrice);
-                        break;
-                    }
-                }
                 $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                 updateCartTotals(data);
                 updateApproachingDiscounts(data.approachingDiscounts);
