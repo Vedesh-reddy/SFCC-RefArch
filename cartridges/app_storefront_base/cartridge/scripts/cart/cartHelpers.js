@@ -3,7 +3,6 @@
 var ProductMgr = require('dw/catalog/ProductMgr');
 var Transaction = require('dw/system/Transaction');
 
-var Assertions = require('~/cartridge/scripts/util/assertions');
 var Collections = require('~/cartridge/scripts/util/collections');
 
 var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
@@ -54,8 +53,6 @@ function addProductToCart(currentBasket, productId, quantity) {
  * @param {dw.order.Basket} basket - the target Basket object
  */
 function ensureAllShipmentsHaveMethods(basket) {
-    Assertions.assertRequiredParameter(basket, 'basket');
-
     var shipments = basket.shipments;
 
     Collections.forEach(shipments, function (shipment) {

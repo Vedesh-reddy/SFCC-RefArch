@@ -1,6 +1,5 @@
 'use strict';
 
-var Assertions = require('~/cartridge/scripts/util/assertions');
 var Collections = require('~/cartridge/scripts/util/collections');
 
 var ShippingMgr = require('dw/order/ShippingMgr');
@@ -33,8 +32,6 @@ function getShippingModels(currentBasket) {
  * @param {Object} address - the address
  */
 function selectShippingMethod(shipment, shippingMethodID, shippingMethods, address) {
-    Assertions.assertRequiredParameter(shipment, 'shipment');
-
     var applicableShippingMethods;
     var defaultShippingMethod = ShippingMgr.getDefaultShippingMethod();
     var shippingAddress;
@@ -91,8 +88,6 @@ function selectShippingMethod(shipment, shippingMethodID, shippingMethods, addre
  * @param {dw.order.Shipment} shipment - the target Shipment object
  */
 function ensureShipmentHasMethod(shipment) {
-    Assertions.assertRequiredParameter(shipment, 'shipment');
-
     var shippingMethod = shipment.shippingMethod;
     if (!shippingMethod) {
         var methods = ShippingMgr.getShipmentShippingModel(shipment).applicableShippingMethods;
@@ -126,9 +121,6 @@ function ensureShipmentHasMethod(shipment) {
  * @returns {dw.order.Shipment} a Shipment object
  */
 function getShipmentByUUID(basket, uuid) {
-    Assertions.assertRequiredParameter(basket, 'basket');
-    Assertions.assertRequiredParameter(uuid, 'uuid');
-
     return Collections.find(basket.shipments, function (shipment) {
         return shipment.UUID === uuid;
     });

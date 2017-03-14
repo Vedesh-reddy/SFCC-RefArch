@@ -2,7 +2,6 @@
 
 var ShippingMgr = require('dw/order/ShippingMgr');
 
-var Assertions = require('~/cartridge/scripts/util/assertions');
 var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurrency;
 
 /**
@@ -12,9 +11,6 @@ var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurren
  * @returns {string} String representation of Shipping Cost
  */
 function getShippingCost(shippingMethod, shipment) {
-    Assertions.assertRequiredParameter(shipment, 'shipment');
-    Assertions.assertRequiredParameter(shippingMethod, 'shippingMethod');
-
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
     var shippingCost = shipmentShippingModel.getShippingCost(shippingMethod);
 
@@ -28,9 +24,6 @@ function getShippingCost(shippingMethod, shipment) {
  * @returns {boolean} true is shippingMethod is selected in Shipment
  */
 function getIsSelected(shippingMethod, shipment) {
-    Assertions.assertRequiredParameter(shipment, 'shipment');
-    Assertions.assertRequiredParameter(shipment, 'shippingMethod');
-
     var selectedShippingMethod = shipment.shippingMethod || ShippingMgr.getDefaultShippingMethod();
     var selectedShippingMethodID = selectedShippingMethod ? selectedShippingMethod.ID : null;
 
@@ -44,8 +37,6 @@ function getIsSelected(shippingMethod, shipment) {
  * @param {dw.order.Shipment} [shipment] - a Shipment
  */
 function ShippingMethodModel(shippingMethod, shipment) {
-    Assertions.assertRequiredParameter(shippingMethod, 'shippingMethod');
-
     this.ID = shippingMethod.ID;
     this.displayName = shippingMethod.displayName;
     this.description = shippingMethod.description;

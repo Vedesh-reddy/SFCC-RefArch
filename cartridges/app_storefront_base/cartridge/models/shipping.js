@@ -2,7 +2,6 @@
 
 var ShippingMgr = require('dw/order/ShippingMgr');
 
-var Assertions = require('~/cartridge/scripts/util/assertions');
 var Collections = require('~/cartridge/scripts/util/collections');
 
 var AddressModel = require('~/cartridge/models/address');
@@ -17,8 +16,6 @@ var ShippingMethodModel = require('~/cartridge/models/shipping/shippingMethod');
  * @returns {dw.util.Collection} an array of ShippingModels
  */
 function getApplicableShippingMethods(shipment, address) {
-    Assertions.assertRequiredParameter(shipment, 'shipment');
-
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
     var shippingMethods;
     if (address) {
@@ -38,9 +35,6 @@ function getApplicableShippingMethods(shipment, address) {
  * @returns {ProductLineItemsModel} an array of ShippingModels
  */
 function getProductLineItemsModel(shipment) {
-    Assertions.assertRequiredParameter(shipment, 'shipment');
-
-	// TODO: Implement ProductLineItemsModel.getProductLineItemsModel in other file ...
     return new ProductLineItemsModel(shipment);
 }
 
@@ -50,8 +44,6 @@ function getProductLineItemsModel(shipment) {
  * @returns {Object} a ShippingMethodModel object
  */
 function getSelectedShippingMethod(shipment) {
-    Assertions.assertRequiredParameter(shipment, 'shipment');
-
     var method = shipment.getShippingMethod();
 
     return method ? new ShippingMethodModel(method, shipment) : null;
@@ -65,8 +57,6 @@ function getSelectedShippingMethod(shipment) {
  * @param {Object} address - the address to use to filter the shipping method list
  */
 function ShippingModel(shipment, address) {
-    Assertions.assertRequiredParameter(shipment, 'shipment');
-
 	// Simple properties
     this.UUID = shipment.UUID;
 
