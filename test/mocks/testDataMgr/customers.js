@@ -9,6 +9,15 @@ export const globalPostalCode = {
     zh_CN: '123456'
 };
 
+export const globalPostalCode2 = {
+    x_default: '01705',
+    en_GB: 'SW42 4HT',
+    fr_FR: '12346',
+    it_IT: '12347',
+    ja_JP: '123-1235',
+    zh_CN: '123457'
+};
+
 export const globalCountryCode = {
     x_default: 'us',
     en_GB: 'gb',
@@ -25,6 +34,15 @@ export const globalPhone = {
     it_IT: '02 12345678',
     ja_JP: '01-1234-1234',
     zh_CN: '333-333-3333'
+};
+
+export const globalPhone2 = {
+    x_default: '333-333-2222',
+    en_GB: '01222 555 444',
+    fr_FR: '01 23 45 67 88',
+    it_IT: '02 12345677',
+    ja_JP: '01-1234-1233',
+    zh_CN: '333-333-5555'
 };
 
 export class Customer {
