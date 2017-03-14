@@ -37,7 +37,21 @@ function selectShippingMethod(shipment, shippingMethodID, shippingMethods, addre
 
     var applicableShippingMethods;
     var defaultShippingMethod = ShippingMgr.getDefaultShippingMethod();
-
+    var shippingAddress;
+    
+    if (address && shipment) {
+        shippingAddress = shipment.shippingAddress;
+        
+        if (shippingAddress) {
+        	if (shippingAddress.stateCode !== address.stateCode) {
+        	    shippingAddress.stateCode = address.stateCode;   
+        	}
+        	if (shippingAddress.postalCode !== address.postalCode) {
+        	    shippingAddress.postalCode = address.postalCode;   
+        	}
+        }
+    }
+    
     var isShipmentSet = false;
 
     if (shippingMethods) {
