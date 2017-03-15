@@ -9,7 +9,7 @@
 		</isif>
 		<div class="summary-details shipping">
 		    <isinclude template="checkout/addressSummary" />
-		    <isif condition="${shippingModel.shippingAddress !== null}">
+		    <isif condition="${shippingModel.shippingAddress}">
 		        <div class="shipping-phone">${shippingModel.shippingAddress.phone}</div>
 		    <iselse>
 		        <div class="shipping-phone"></div>
