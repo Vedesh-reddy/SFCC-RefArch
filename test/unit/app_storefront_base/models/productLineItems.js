@@ -1,69 +1,68 @@
-'use strict';
+// 'use strict';
 
-var assert = require('chai').assert;
-var ArrayList = require('../../../mocks/dw.util.Collection');
-var toProductMock = require('../../../util');
+// var assert = require('chai').assert;
+// var ArrayList = require('../../../mocks/dw.util.Collection');
+// var toProductMock = require('../../../util');
 
-var ProductLineItemsModel = require('../../../mocks/models/productLineItems');
+// var ProductLineItemsModel = require('../../../mocks/models/productLineItems');
 
-var productVariantMock = {
-    ID: '1234567',
-    name: 'test product',
-    variant: true,
-    availabilityModel: {
-        isOrderable: {
-            return: true,
-            type: 'function'
-        },
-        inventoryRecord: {
-            ATS: {
-                value: 100
-            }
-        }
-    },
-    minOrderQuantity: {
-        value: 2
-    }
-};
+// var productVariantMock = {
+//     ID: '1234567',
+//     name: 'test product',
+//     variant: true,
+//     availabilityModel: {
+//         isOrderable: {
+//             return: true,
+//             type: 'function'
+//         },
+//         inventoryRecord: {
+//             ATS: {
+//                 value: 100
+//             }
+//         }
+//     },
+//     minOrderQuantity: {
+//         value: 2
+//     }
+// };
 
-var productMock = {
-    variationModel: {
-        productVariationAttributes: new ArrayList([{
-            attributeID: '',
-            value: ''
-        }]),
-        selectedVariant: productVariantMock
-    }
-};
+// var productMock = {
+//     variationModel: {
+//         productVariationAttributes: new ArrayList([{
+//             attributeID: '',
+//             value: ''
+//         }]),
+//         selectedVariant: productVariantMock
+//     }
+// };
 
-var apiBasket = {
-    allProductLineItems: new ArrayList([{
-        bonusProductLineItem: false,
-        gift: false,
-        UUID: 'some UUID',
-        adjustedPrice: {
-            value: 'some value',
-            currencyCode: 'US'
-        },
-        quantity: {
-            value: 1
-        },
-        product: toProductMock(productMock)
-    }])
-};
+// var apiBasket = {
+//     allProductLineItems: new ArrayList([{
+//         bonusProductLineItem: false,
+//         gift: false,
+//         UUID: 'some UUID',
+//         adjustedPrice: {
+//             value: 'some value',
+//             currencyCode: 'US'
+//         },
+//         quantity: {
+//             value: 1
+//         },
+//         product: toProductMock(productMock)
+//     }])
+// };
 
-describe('cart', function () {
-    it('should accept/process a null Basket object', function () {
-        var nullBasket = null;
-        var result = new ProductLineItemsModel(nullBasket);
-        assert.equal(result.items.length, 0);
-        assert.equal(result.totalQuantity, 0);
-    });
+// describe('cart', function () {
+//     it('should accept/process a null Basket object', function () {
+//         var nullBasket = null;
+//         var result = new ProductLineItemsModel(nullBasket);
+//         assert.equal(result.items.length, 0);
+//         assert.equal(result.totalQuantity, 0);
+//     });
 
-    // TODO: PJP uncomment
-    // it('should create product line items and get total quantity', function () {
-    //     var result = new ProductLineItemsModel(apiBasket);
-    //     assert.equal(result.items.length, 1);
-    //     assert.equal(result.totalQuantity, 1);
-    // });
-});
+//     it('should create product line items and get total quantity', function () {
+//         var result = new ProductLineItemsModel(apiBasket);
+//         assert.equal(result.items.length, 1);
+//         assert.equal(result.totalQuantity, 1);
+//     });
+// });
