@@ -89,11 +89,11 @@ function getCartActionUrls() {
  * @param {dw.campaign.DiscountPlan} discountPlan - set of applicable discounts
  */
 function CartModel(basket) {
-    var shippingModels = ShippingHelpers.getShippingModels(basket);
-    var productLineItemsModel = new ProductLineItemsModel(basket);
-    var totalsModel = new TotalsModel(basket);
-
     if (basket !== null) {
+        var shippingModels = ShippingHelpers.getShippingModels(basket);
+        var productLineItemsModel = new ProductLineItemsModel(basket);
+        var totalsModel = new TotalsModel(basket);
+
         this.actionUrls = getCartActionUrls();
         this.numOfShipments = basket.shipments.length;
         this.totals = totalsModel;
@@ -114,10 +114,13 @@ function CartModel(basket) {
         if (discountPlan) {
             this.approachingDiscounts = getApproachingDiscounts(basket, discountPlan);
         }
+        this.items = productLineItemsModel.items;
+        this.numItems = productLineItemsModel.totalQuantity;
+    } else {
+        this.items = [];
+        this.numItems = 0;
     }
 
-    this.items = productLineItemsModel.items;
-    this.numItems = productLineItemsModel.totalQuantity;
     this.resources = {
         numberOfItems: Resource.msgf('label.number.items.in.cart', 'cart', null, this.numItems),
         emptyCartMsg: Resource.msg('info.cart.empty.msg', 'cart', null)

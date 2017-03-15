@@ -68,6 +68,9 @@ function createFakeRequest(overrides) {
             },
             custom: {
                 rememberMe: true
+            },
+            privacy: {
+                key: 'value'
             }
         }
     };
@@ -242,5 +245,10 @@ describe('request', function () {
             req.locale.currency,
             expectedResult.session.currency
         );
+    });
+    it('should contain session privacy', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        var expectedResult = req.privacyCache.get('key');
+        assert.equal(expectedResult, 'value');
     });
 });

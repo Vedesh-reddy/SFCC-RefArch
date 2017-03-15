@@ -55,7 +55,8 @@ Server.prototype = {
         var rq =
             new Request(typeof request !== 'undefined' ? request : {},
             typeof customer !== 'undefined' ? customer : {},
-            typeof session !== 'undefined' ? session : {});
+            typeof session !== 'undefined' ? session : {}
+            );
         var rs = new Response(typeof response !== 'undefined' ? response : {});
 
         checkParams(args);
