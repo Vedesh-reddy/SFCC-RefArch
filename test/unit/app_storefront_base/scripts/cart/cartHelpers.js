@@ -42,6 +42,9 @@ describe('cartHelpers', function () {
                 };
             }
         },
+        '~/cartridge/scripts/util/collections': {
+        },
+        '~/cartridge/scripts/checkout/shippingHelpers': {},
         'dw/system/Transaction': {
             wrap: function (item) {
                 item();

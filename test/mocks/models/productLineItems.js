@@ -2,11 +2,13 @@
 
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-function ProxyModel(){
-	return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/productLineItems', {
-		'~/cartridge/scripts/dwHelpers':{},
+var dwHelpers = require('../dwHelpers');
+
+function proxyModel() {
+    return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/productLineItems', {
+        '~/cartridge/scripts/dwHelpers': dwHelpers,
         '../scripts/factories/product': { get: function () { return 'productLineItem'; } }
-	});
+    });
 }
 
-module.exports = ProxyModel();
+module.exports = proxyModel();

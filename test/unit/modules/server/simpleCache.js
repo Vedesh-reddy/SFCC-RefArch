@@ -17,7 +17,7 @@ describe('simpleCache', function () {
     });
 
     it('should accept a pre-filled KV store', function () {
-        var cache = new SimpleCache({'foo':'bar'});
+        var cache = new SimpleCache({ 'foo': 'bar' });
         var value = cache.get('foo');
 
         assert.isTrue(value === 'bar');
@@ -25,7 +25,7 @@ describe('simpleCache', function () {
 
     it('should get a value previously set', function () {
         var cache = new SimpleCache({});
-        cache.set('foo','bar');
+        cache.set('foo', 'bar');
         var value = cache.get('foo');
 
         assert.isTrue(value === 'bar');
@@ -33,7 +33,7 @@ describe('simpleCache', function () {
 
     it('should correctly clear() values previously set', function () {
         var cache = new SimpleCache({});
-        cache.set('foo','bar');
+        cache.set('foo', 'bar');
         cache.clear();
         var value = cache.get('foo');
 

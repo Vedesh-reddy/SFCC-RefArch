@@ -5,8 +5,8 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var TotalsModel = require('./totals');
 var ProductLineItemsModel = require('./productLineItems');
 
-function ProxyModel(){
-	return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/cart', {
+function proxyModel() {
+    return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/cart', {
         '~/cartridge/scripts/util/collections': {
         },
         'dw/campaign/PromotionMgr': {
@@ -34,4 +34,4 @@ function ProxyModel(){
     });
 }
 
-module.exports = ProxyModel();
+module.exports = proxyModel();

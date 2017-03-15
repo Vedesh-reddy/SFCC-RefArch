@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-var BillingModel = require('../../../../cartridges/app_storefront_base/cartridge/models/billing');
+var BillingModel = require('../../../mocks/models/billing');
 
 var billingAddress = {
     address: {}

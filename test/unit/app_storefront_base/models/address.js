@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-var AddressModel = require('../../../../cartridges/app_storefront_base/cartridge/models/address');
+var AddressModel = require('../../../mocks/models/address');
 
 var createOrderAddress = function () {
     return {
