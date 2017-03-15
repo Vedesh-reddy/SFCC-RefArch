@@ -69,7 +69,7 @@ function createErrorNotification(message) {
  * @param {Object} approachingDiscounts - updated approaching discounts for the cart
  */
 function updateApproachingDiscounts(approachingDiscounts) {
-    var html;
+    var html = '';
     $('.approaching-discounts').empty();
     if (approachingDiscounts.length > 0) {
         approachingDiscounts.forEach(function (item) {
