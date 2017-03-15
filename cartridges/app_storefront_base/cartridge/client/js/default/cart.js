@@ -1,3 +1,7 @@
+'use strict';
+
+var processInclude = require('./util');
+
 $(document).ready(function () {
-    require('./cart/cart')();
+    processInclude(require('./cart/cart'));
 });

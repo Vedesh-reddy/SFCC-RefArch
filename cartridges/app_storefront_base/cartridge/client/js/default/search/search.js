@@ -102,73 +102,86 @@ function parseResults(response) {
     }
 }
 
-module.exports = function () {
-    /* SET LISTENERS */
-
-    // Display refinements bar when Menu icon clicked
-    $('.container').on('click', 'button.filter-results', function () {
-        $('.refinement-bar, .modal-background').show();
-    });
-
-    // Refinements close button
-    $('.container').on('click', '.refinement-bar button.close, .modal-background', function () {
-        $('.refinement-bar, .modal-background').hide();
-    });
-
-    // Close refinement bar and hide modal background if user resizes browser
-    $(window).resize(function () {
-        $('.refinement-bar, .modal-background').hide();
-    });
-
-    // Handle sort order menu selection
-    $('.container').on('change', '[name=sort-order]', function (e) {
-        e.preventDefault();
-
-        $.spinner().start();
-        $.ajax({
-            url: updateUrlWithSize(this.value),
-            method: 'GET',
-            success: updateProductGrid,
-            error: function () {
-                $.spinner().stop();
-            }
+module.exports = {
+    filter: function () {
+        // Display refinements bar when Menu icon clicked
+        $('.container').on('click', 'button.filter-results', function () {
+            $('.refinement-bar, .modal-background').show();
         });
-    });
+    },
 
-    // Show more products
-    $('.container').on('click', '.show-more button', function (e) {
-        e.stopPropagation();
-        var showMoreUrl = $(this).data('url');
-        currentPageSize = showMoreUrl.match(/sz=(\d+)/)[1];
-
-        e.preventDefault();
-
-        $.spinner().start();
-        $.ajax({
-            url: showMoreUrl,
-            method: 'GET',
-            success: updateProductGrid,
-            error: function () {
-                $.spinner().stop();
-            }
+    closeRefinments: function () {
+        // Refinements close button
+        $('.container').on('click', '.refinement-bar button.close, .modal-background', function () {
+            $('.refinement-bar, .modal-background').hide();
         });
-    });
+    },
 
-    // Handle refinement value selection and reset click
-    $('.container').on('click', '.refinements li a, .refinement-bar a.reset', function (e) {
-        e.preventDefault();
-
-        $.spinner().start();
-        $.ajax({
-            url: updateUrlWithSize(e.currentTarget.href),
-            method: 'GET',
-            success: function (response) {
-                parseResults(response);
-                $.spinner().stop();
-            },
-            error: function () {
-                $.spinner().stop();
-            }
+    resize: function () {
+        // Close refinement bar and hide modal background if user resizes browser
+        $(window).resize(function () {
+            $('.refinement-bar, .modal-background').hide();
         });
-    });
+    },
+
+    sort: function () {
+        // Handle sort order menu selection
+        $('.container').on('change', '[name=sort-order]', function (e) {
+            e.preventDefault();
+
+            $.spinner().start();
+            $(this).trigger('search:sort', this.value);
+            $.ajax({
+                url: updateUrlWithSize(this.value),
+                method: 'GET',
+                success: updateProductGrid,
+                error: function () {
+                    $.spinner().stop();
+                }
+            });
+        });
+    },
+
+    showMore: function () {
+        // Show more products
+        $('.container').on('click', '.show-more button', function (e) {
+            e.stopPropagation();
+            var showMoreUrl = $(this).data('url');
+            currentPageSize = showMoreUrl.match(/sz=(\d+)/)[1];
+
+            e.preventDefault();
+
+            $.spinner().start();
+            $(this).trigger('search:showMore', e);
+            $.ajax({
+                url: showMoreUrl,
+                method: 'GET',
+                success: updateProductGrid,
+                error: function () {
+                    $.spinner().stop();
+                }
+            });
+        });
+    },
+
+    applyFilter: function () {
+        // Handle refinement value selection and reset click
+        $('.container').on('click', '.refinements li a, .refinement-bar a.reset', function (e) {
+            e.preventDefault();
+
+            $.spinner().start();
+            $(this).trigger('search:filter', e);
+            $.ajax({
+                url: updateUrlWithSize(e.currentTarget.href),
+                method: 'GET',
+                success: function (response) {
+                    parseResults(response);
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
+                }
+            });
+        });
+    }
 };

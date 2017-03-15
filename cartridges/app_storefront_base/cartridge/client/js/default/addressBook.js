@@ -1,5 +1,7 @@
 'use strict';
 
+var processInclude = require('./util');
+
 $(document).ready(function () {
-    require('./addressbook/addressBook')();
+    processInclude(require('./addressbook/addressBook'));
 });

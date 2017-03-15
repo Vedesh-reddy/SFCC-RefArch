@@ -1,4 +1,8 @@
+'use strict';
+
+var processInclude = require('./util');
+
 $(document).ready(function () {
-    require('./search/search')();
-    require('./product/tile')();
+    processInclude(require('./search/search'));
+    processInclude(require('./product/tile'));
 });

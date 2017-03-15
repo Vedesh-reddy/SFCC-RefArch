@@ -78,36 +78,99 @@ function updateStoresResults(data) {
     }
 }
 
-module.exports = function () {
-    if ($('.map-canvas').data('has-google-api')) {
-        maps();
-    } else {
-        $('.store-locator-no-apiKey').show();
-    }
-
-    if ($('.results').data('has-results') === 0) {
-        $('.store-locator-no-results').show();
-    }
-
-    // clicking on detect location.
-    $('.detect-location').on('click', function () {
-        $.spinner().start();
-        if (!navigator.geolocation) {
-            $.spinner().stop();
-            return;
+module.exports = {
+    init: function () {
+        if ($('.map-canvas').data('has-google-api')) {
+            maps();
+        } else {
+            $('.store-locator-no-apiKey').show();
         }
 
-        navigator.geolocation.getCurrentPosition(function (position) {
-            var $detectLocationButton = $('.detect-location');
-            var url = $detectLocationButton.data('action');
+        if ($('.results').data('has-results') === 0) {
+            $('.store-locator-no-results').show();
+        }
+    },
+
+    detectLocation: function () {
+        // clicking on detect location.
+        $('.detect-location').on('click', function () {
+            $.spinner().start();
+            if (!navigator.geolocation) {
+                $.spinner().stop();
+                return;
+            }
+
+            navigator.geolocation.getCurrentPosition(function (position) {
+                var $detectLocationButton = $('.detect-location');
+                var url = $detectLocationButton.data('action');
+                var radius = $('.results').data('radius');
+                var urlParams = {
+                    radius: radius,
+                    lat: position.coords.latitude,
+                    long: position.coords.longitude
+                };
+
+                url = appendToUrl(url, urlParams);
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        $.spinner().stop();
+                        updateStoresResults(data);
+                    }
+                });
+            });
+        });
+    },
+
+    search: function () {
+        $('.store-locator').submit(function (e) {
+            e.preventDefault();
+            $.spinner().start();
+            var $form = $('.store-locator');
             var radius = $('.results').data('radius');
-            var urlParams = {
-                radius: radius,
-                lat: position.coords.latitude,
-                long: position.coords.longitude
-            };
+            var url = $form.attr('action');
+            var urlParams = { radius: radius };
 
             url = appendToUrl(url, urlParams);
+
+            $.ajax({
+                url: url,
+                type: $form.attr('method'),
+                data: $form.serialize(),
+                dataType: 'json',
+                success: function (data) {
+                    $.spinner().stop();
+                    updateStoresResults(data);
+                }
+            });
+            return false;
+        });
+    },
+
+    changeRadius: function () {
+        $('.radius').change(function () {
+            var radius = $(this).val();
+            var searchKeys = $('.results').data('search-key');
+            var url = $('.radius').data('action');
+            var urlParams = {};
+
+            if (searchKeys.postalCode) {
+                urlParams = {
+                    radius: radius,
+                    postalCode: searchKeys.postalCode
+                };
+            } else if (searchKeys.lat && searchKeys.long) {
+                urlParams = {
+                    radius: radius,
+                    lat: searchKeys.lat,
+                    long: searchKeys.long
+                };
+            }
+
+            url = appendToUrl(url, urlParams);
+            $.spinner().start();
             $.ajax({
                 url: url,
                 type: 'get',
@@ -118,60 +181,5 @@ module.exports = function () {
                 }
             });
         });
-    });
-
-    $('.store-locator').submit(function (e) {
-        e.preventDefault();
-        $.spinner().start();
-        var $form = $('.store-locator');
-        var radius = $('.results').data('radius');
-        var url = $form.attr('action');
-        var urlParams = { radius: radius };
-
-        url = appendToUrl(url, urlParams);
-
-        $.ajax({
-            url: url,
-            type: $form.attr('method'),
-            data: $form.serialize(),
-            dataType: 'json',
-            success: function (data) {
-                $.spinner().stop();
-                updateStoresResults(data);
-            }
-        });
-        return false;
-    });
-
-    $('.radius').change(function () {
-        var radius = $(this).val();
-        var searchKeys = $('.results').data('search-key');
-        var url = $('.radius').data('action');
-        var urlParams = {};
-
-        if (searchKeys.postalCode) {
-            urlParams = {
-                radius: radius,
-                postalCode: searchKeys.postalCode
-            };
-        } else if (searchKeys.lat && searchKeys.long) {
-            urlParams = {
-                radius: radius,
-                lat: searchKeys.lat,
-                long: searchKeys.long
-            };
-        }
-
-        url = appendToUrl(url, urlParams);
-        $.spinner().start();
-        $.ajax({
-            url: url,
-            type: 'get',
-            dataType: 'json',
-            success: function (data) {
-                $.spinner().stop();
-                updateStoresResults(data);
-            }
-        });
-    });
+    }
 };

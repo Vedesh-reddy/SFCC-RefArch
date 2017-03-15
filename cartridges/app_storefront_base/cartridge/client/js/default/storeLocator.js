@@ -1,5 +1,7 @@
 'use strict';
 
+var processInclude = require('./util');
+
 $(document).ready(function () {
-    require('./storelocator/storeLocator')();
+    processInclude(require('./storelocator/storeLocator'));
 });

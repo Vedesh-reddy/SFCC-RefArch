@@ -52,83 +52,92 @@ function fillModalElement(productUrl, selectedValueUrl) {
     });
 }
 
-module.exports = function () {
-    $('body').on('click', '.quickview', function (e) {
-        e.preventDefault();
-        var selectedValueUrl = $(this).closest('a.quickview').attr('href');
-        var productUrl = selectedValueUrl.replace('Product-ShowQuickView', 'Product-Show');
-        getModalHtmlElement();
-        fillModalElement(productUrl, selectedValueUrl);
-    });
+module.exports = {
+    showQuickview: function () {
+        $('body').on('click', '.quickview', function (e) {
+            e.preventDefault();
+            var selectedValueUrl = $(this).closest('a.quickview').attr('href');
+            var productUrl = selectedValueUrl.replace('Product-ShowQuickView', 'Product-Show');
+            $(e.target).trigger('quickview:show');
+            getModalHtmlElement();
+            fillModalElement(productUrl, selectedValueUrl);
+        });
+    },
 
-    $(document).on('click', '[data-attr="color"] a', function (e) {
-        e.preventDefault();
+    colorAttribute: function () {
+        $(document).on('click', '[data-attr="color"] a', function (e) {
+            e.preventDefault();
 
-        var productUrl;
-        var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
+            var productUrl;
+            var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
 
-        if (selectedValueUrl) {
-            productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
-            $('.modal-body').spinner().start();
-            $.ajax({
-                url: selectedValueUrl,
-                method: 'GET',
-                success: function (data) {
-                    base.parseJsonResponse(data, 'tile');
-                    $.spinner().stop();
-                },
-                error: function () {
-                    $.spinner().stop();
-                }
-            });
-            $('.full-pdp-link').attr('href', productUrl);
-            $('.product-quickview .size-chart a').attr('href', productUrl);
-        }
-    });
+            if (selectedValueUrl) {
+                productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
+                $('.modal-body').spinner().start();
+                $.ajax({
+                    url: selectedValueUrl,
+                    method: 'GET',
+                    success: function (data) {
+                        base.parseJsonResponse(data, 'tile');
+                        $.spinner().stop();
+                    },
+                    error: function () {
+                        $.spinner().stop();
+                    }
+                });
+                $('.full-pdp-link').attr('href', productUrl);
+                $('.product-quickview .size-chart a').attr('href', productUrl);
+            }
+        });
+    },
 
-    $(document).on('change', 'select[class*="select-"]', function (e) {
-        e.preventDefault();
+    selectAttribute: function () {
+        $(document).on('change', 'select[class*="select-"]', function (e) {
+            e.preventDefault();
 
-        var productUrl;
-        var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
+            var productUrl;
+            var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
 
-        if (selectedValueUrl) {
-            productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
-            $('.modal-body').spinner().start();
-            $.ajax({
-                url: selectedValueUrl,
-                method: 'GET',
-                success: function (data) {
-                    base.parseJsonResponse(data, 'tile');
-                    $.spinner().stop();
-                },
-                error: function () {
-                    $.spinner().stop();
-                }
-            });
-            $('.full-pdp-link').attr('href', productUrl);
-            $('.product-quickview .size-chart a').attr('href', productUrl);
-        }
-    });
+            if (selectedValueUrl) {
+                productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
+                $('.modal-body').spinner().start();
+                $.ajax({
+                    url: selectedValueUrl,
+                    method: 'GET',
+                    success: function (data) {
+                        base.parseJsonResponse(data, 'tile');
+                        $.spinner().stop();
+                    },
+                    error: function () {
+                        $.spinner().stop();
+                    }
+                });
+                $('.full-pdp-link').attr('href', productUrl);
+                $('.product-quickview .size-chart a').attr('href', productUrl);
+            }
+        });
+    },
 
-    $(document).on('click', 'button.add-to-cart', function () {
-        var pid = $(this).closest('.product-quickview').data('pid');
-        var addToCartUrl = base.getAddToCartUrl(pid);
+    addToCart: function () {
+        $(document).on('click', 'button.add-to-cart', function () {
+            var pid = $(this).closest('.product-quickview').data('pid');
+            var addToCartUrl = base.getAddToCartUrl(pid);
 
-        if (addToCartUrl) {
-            $('.modal-body').spinner().start();
-            $.ajax({
-                url: addToCartUrl,
-                method: 'POST',
-                success: function (data) {
-                    base.handlePostCartAdd(data);
-                    $('#quickViewModal').modal('hide');
-                    $.spinner().stop();
-                },
-                error: function () {
-                    $.spinner().stop();
-                }
-            });
-        }
-    });
+            if (addToCartUrl) {
+                $('.modal-body').spinner().start();
+                $.ajax({
+                    url: addToCartUrl,
+                    method: 'POST',
+                    success: function (data) {
+                        base.handlePostCartAdd(data);
+                        $('#quickViewModal').modal('hide');
+                        $.spinner().stop();
+                    },
+                    error: function () {
+                        $.spinner().stop();
+                    }
+                });
+            }
+        });
+    }
 };

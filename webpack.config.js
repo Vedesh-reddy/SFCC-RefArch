@@ -29,7 +29,7 @@ module.exports = [{
         loaders: [
             {
                 test: /bootstrap(.)*\.js$/,
-                loader: 'babel', // 'babel-loader' is also a valid name to reference
+                loader: 'babel-loader',
                 query: {
                     presets: ['es2015']
                 }
