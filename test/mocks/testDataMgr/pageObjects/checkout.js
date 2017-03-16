@@ -79,7 +79,7 @@ export function fillOutShippingForm(shippingData, locale) {
     fieldTypes.set(SHIPPING_PHONE_NUMBER, 'input');
 
     _.each(shippingData, (value, key) => {
-        let prefix = '#shipping';
+        let prefix = '.single-shipping #shipping';
         let selector = prefix + key;
         fieldsPromise.push(formHelpers.populateField(selector, value, fieldTypes.get(key)));
     });
