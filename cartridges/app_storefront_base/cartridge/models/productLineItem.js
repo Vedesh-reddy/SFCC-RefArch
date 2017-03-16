@@ -127,9 +127,11 @@ ProductLineItem.prototype.initialize = function (lineItem) {
     this.isOrderable = this.product.availabilityModel.isOrderable(this.quantity);
 
     // TODO: Pull out this constant to top
-    this.isAvailableForInStorePickup = ('isAvailableForInStorePickup' in this.product.custom
+    this.isAvailableForInStorePickup = (this.product.custom
+        && this.product.custom.hasOwnProperty('isAvailableForInStorePickup')
         && !!this.product.custom.isAvailableForInStorePickup);
-    this.isInStorePickup = ('fromStoreId' in lineItem.custom
+    this.isInStorePickup = (lineItem.custom
+        && lineItem.custom.hasOwnProperty('fromStoreId')
         && !!lineItem.custom.fromStoreId);
 
     this.appliedPromotions = getAppliedPromotions(lineItem);
