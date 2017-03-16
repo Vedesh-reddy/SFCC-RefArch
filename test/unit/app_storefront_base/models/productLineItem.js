@@ -81,7 +81,7 @@ describe('Product Line Item', function () {
         getPrice: function () { return 'money object'; },
         product: toProductMock(productMock),
         shipment: {
-        	UUID: 'shipment UUID'
+            UUID: 'shipment UUID'
         }
     };
 

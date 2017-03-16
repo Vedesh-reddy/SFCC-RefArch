@@ -4,7 +4,7 @@ function map() {
     var args = Array.from(arguments);
     var list = args[0];
     var callback = args[1];
-    if( list && list.hasOwnProperty('toArray') ){
+    if (list && Object.prototype.hasOwnProperty.call(list, 'toArray')) {
         list = list.toArray();
     }
     return list ? list.map(callback) : [];
@@ -14,7 +14,7 @@ function find() {
     var args = Array.from(arguments);
     var list = args[0];
     var callback = args[1];
-    if( list && list.hasOwnProperty('toArray') ){
+    if (list && Object.prototype.hasOwnProperty.call(list, 'toArray')) {
         list = list.toArray();
     }
     return list ? list.find(callback) : null;
@@ -24,7 +24,7 @@ function forEach() {
     var args = Array.from(arguments);
     var list = args[0];
     var callback = args[1];
-    if( list && list.hasOwnProperty('toArray') ){
+    if (list && Object.prototype.hasOwnProperty.call(list, 'toArray')) {
         list = list.toArray();
     }
     return list ? list.forEach(callback) : null;

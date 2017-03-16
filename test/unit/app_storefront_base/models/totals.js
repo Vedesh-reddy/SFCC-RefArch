@@ -58,7 +58,6 @@ describe('Totals', function () {
 
     it('should accept a basket and format the totals', function () {
         var basket = createApiBasket(true);
-        console.dir(basket);
         var result = new Totals(basket);
         assert.equal(result.subTotal, 'formatted money');
         assert.equal(result.grandTotal, 'formatted money');

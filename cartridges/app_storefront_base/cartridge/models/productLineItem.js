@@ -128,10 +128,10 @@ ProductLineItem.prototype.initialize = function (lineItem) {
 
     // TODO: Pull out this constant to top
     this.isAvailableForInStorePickup = (this.product.custom
-        && this.product.custom.hasOwnProperty('isAvailableForInStorePickup')
+        && Object.prototype.hasOwnProperty.call(this.product.custom, 'isAvailableForInStorePickup')
         && !!this.product.custom.isAvailableForInStorePickup);
     this.isInStorePickup = (lineItem.custom
-        && lineItem.custom.hasOwnProperty('fromStoreId')
+        && Object.prototype.hasOwnProperty.call(lineItem.custom, 'fromStoreId')
         && !!lineItem.custom.fromStoreId);
 
     this.appliedPromotions = getAppliedPromotions(lineItem);
