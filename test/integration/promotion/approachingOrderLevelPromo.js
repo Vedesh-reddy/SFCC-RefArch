@@ -33,17 +33,22 @@ var assert = require('chai').assert;
     it('should return a response containing promotion call out message', function(done) {
         var cookieJar = request.jar();
         var cookieString;
+
+        var myRequest = {
+            url: '',
+            method: 'POST',
+            rejectUnauthorized: false,
+            resolveWithFullResponse: true,
+            jar: cookieJar
+        };
+
         myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid + '&quantity=' + qty;
-        console.log(myRequest.url);
-        myRequest.method = 'POST';
-        myRequest.resolveWithFullResponse = 'true';
-        myRequest.rejectUnauthorized = 'false';
-        myRequest.jar = 'cookieJar';
         return request(myRequest)
             .then(function(response) {
                 assert.equal(response.statusCode, 200, 'expected add variant to Cart call to return status code 200');
-                var bodyAdJson = JSON.parse(response.body);
-                assert.isTrue(bodyAdJson.quantityTotal === '2', '2 items has been added to Cart');
+                var bodyAsJson = JSON.parse(response.body);
+                assert.isTrue(bodyAsJson.quantityTotal == 2, 'should have 2 items added to Cart');
+                assert.isTrue(bodyAsJson.message === 'Product added to basket');
                 cookieString = cookieJar.getCookieString(myRequest.url);
                 done();
             })
