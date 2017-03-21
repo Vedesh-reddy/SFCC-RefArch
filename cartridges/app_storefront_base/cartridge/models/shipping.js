@@ -16,7 +16,10 @@ var ShippingMethodModel = require('~/cartridge/models/shipping/shippingMethod');
  * @returns {dw.util.Collection} an array of ShippingModels
  */
 function getApplicableShippingMethods(shipment, address) {
+    if (!shipment) return null;
+
     var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
+
     var shippingMethods;
     if (address) {
         shippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
@@ -35,6 +38,8 @@ function getApplicableShippingMethods(shipment, address) {
  * @returns {ProductLineItemsModel} an array of ShippingModels
  */
 function getProductLineItemsModel(shipment) {
+    if (!shipment) return null;
+
     return new ProductLineItemsModel(shipment);
 }
 
@@ -44,9 +49,22 @@ function getProductLineItemsModel(shipment) {
  * @returns {Object} a ShippingMethodModel object
  */
 function getSelectedShippingMethod(shipment) {
-    var method = shipment.getShippingMethod();
+    if (!shipment) return null;
+
+    var method = shipment.shippingMethod;
 
     return method ? new ShippingMethodModel(method, shipment) : null;
+}
+
+/**
+ * ppingMethod object
+ * @param {dw.order.Shipment} shipment - the target Shipment
+ * @returns {string} the Shipment UUID or null
+ */
+function getShipmentUUID(shipment) {
+    if (!shipment) return null;
+
+    return shipment.UUID;
 }
 
 /**
@@ -58,7 +76,7 @@ function getSelectedShippingMethod(shipment) {
  */
 function ShippingModel(shipment, address) {
 	// Simple properties
-    this.UUID = shipment.UUID;
+    this.UUID = getShipmentUUID(shipment);
 
 	// Derived properties
     this.productLineItems = getProductLineItemsModel(shipment);
@@ -66,8 +84,10 @@ function ShippingModel(shipment, address) {
     this.selectedShippingMethod = getSelectedShippingMethod(shipment);
 
     // Optional properties
-    if (shipment.shippingAddress) {
+    if (shipment && shipment.shippingAddress) {
         this.shippingAddress = new AddressModel(shipment.shippingAddress).address;
+    } else {
+        this.shippingAddress = address;
     }
 }
 

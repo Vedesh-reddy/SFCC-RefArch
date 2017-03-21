@@ -35,7 +35,11 @@ function proxyModel() {
         '~/cartridge/models/payment': PaymentModel,
         '~/cartridge/models/totals': TotalsModel,
         '~/cartridge/models/productLineItems': ProductLineItemsModel,
-        '~/cartridge/scripts/checkout/shippingHelpers': {}
+        '~/cartridge/scripts/checkout/shippingHelpers': {
+            getShippingModels: function (basket) {
+                return ['shipping model'];
+            }
+        }
     });
 }
 

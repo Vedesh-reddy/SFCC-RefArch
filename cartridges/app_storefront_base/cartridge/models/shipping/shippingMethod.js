@@ -37,11 +37,12 @@ function getIsSelected(shippingMethod, shipment) {
  * @param {dw.order.Shipment} [shipment] - a Shipment
  */
 function ShippingMethodModel(shippingMethod, shipment) {
-    this.ID = shippingMethod.ID;
-    this.displayName = shippingMethod.displayName;
-    this.description = shippingMethod.description;
-    this.estimatedArrivalTime = shippingMethod.custom.estimatedArrivalTime;
-    this.isDefault = shippingMethod.defaultMethod;
+    this.ID = shippingMethod ? shippingMethod.ID : null;
+    this.displayName = shippingMethod ? shippingMethod.displayName : null;
+    this.description = shippingMethod ? shippingMethod.description : null;
+    this.estimatedArrivalTime = shippingMethod && shippingMethod.custom
+        ? shippingMethod.custom.estimatedArrivalTime : null;
+    this.isDefault = shippingMethod ? shippingMethod.defaultMethod : null;
 
 	// Mix in dynamically transformed properties
     if (shipment) {

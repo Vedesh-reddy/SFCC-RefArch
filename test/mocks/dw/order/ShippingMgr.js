@@ -1,6 +1,3 @@
-'use strict';
-
-var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 var defaultShippingMethod = 
     {
@@ -64,22 +61,11 @@ function createShipmentShippingModel(shipment) {
     };
 }
 
-function proxyModel() {
-    return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/shipping/shippingMethod', {
-        '~/cartridge/scripts/util/formatting': {
-        	formatCurrency: function() {
-        		return '$0.00';
-        	}
-        },
-        'dw/order/ShippingMgr': {
-            getDefaultShippingMethod: function () {
-                return defaultShippingMethod;
-            },
-            getShipmentShippingModel: function (shipment) {
-                return createShipmentShippingModel(shipment);
-            }
-        }
-    });
-}
-
-module.exports = proxyModel();
+module.exports = {
+    getDefaultShippingMethod: function () {
+        return defaultShippingMethod;
+    },
+    getShipmentShippingModel: function (shipment) {
+        return createShipmentShippingModel(shipment);
+    }
+};
