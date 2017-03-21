@@ -5,7 +5,9 @@ module.exports = function (include) {
         include();
     } else if (typeof include === 'object') {
         Object.keys(include).forEach(function (key) {
-            include[key]();
+            if (typeof include[key] === 'function') {
+                include[key]();
+            }
         });
     }
 };
