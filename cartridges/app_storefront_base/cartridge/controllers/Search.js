@@ -46,8 +46,7 @@ server.get('UpdateGrid', function (req, res, next) {
     productSearch = new ProductSearch(dwProductSearch, params);
 
     res.render('/search/productgrid', {
-        productSearch: productSearch,
-        category: dwProductSearch.category
+        productSearch: productSearch
     });
 
     next();
@@ -62,6 +61,7 @@ server.get('Show', function (req, res, next) {
     var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
     var params = search.parseParams(req.querystring);
     var dwProductSearch = new ProductSearchModel();
+    var maxSlots = 4;
 
     dwProductSearch = setupSearch(dwProductSearch, params);
     dwProductSearch.search();
@@ -83,13 +83,13 @@ server.get('Show', function (req, res, next) {
     ) {
         res.render(categoryTemplate, {
             productSearch: productSearch,
-            category: dwProductSearch.category
+            maxSlots: maxSlots
         });
     } else {
         res.render(resultsTemplate, {
             productSearch: productSearch,
-            productSort: productSort,
-            category: dwProductSearch.category
+            maxSlots: maxSlots,
+            productSort: productSort
         });
     }
 

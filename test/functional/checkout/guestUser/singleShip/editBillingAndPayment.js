@@ -1,15 +1,15 @@
 'use strict';
 
 import { assert } from 'chai';
-import { config } from '../webdriver/wdio.conf';
-import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
-import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
-import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
-import * as checkoutPage from '../../mocks/testDataMgr/pageObjects/checkout';
-import * as checkoutInterceptPage from '../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
-import * as testDataMgr from '../../mocks/testDataMgr/main';
-import * as common from '../../mocks/testDataMgr/helpers/common';
-import * as Resource from '../../mocks/dw/web/Resource';
+import { config } from '../../../webdriver/wdio.conf';
+import * as homePage from '../../../../mocks/testDataMgr/pageObjects/home';
+import * as productDetailPage from '../../../../mocks/testDataMgr/pageObjects/productDetail';
+import * as cartPage from '../../../../mocks/testDataMgr/pageObjects/cart';
+import * as checkoutPage from '../../../../mocks/testDataMgr/pageObjects/checkout';
+import * as checkoutInterceptPage from '../../../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
+import * as testDataMgr from '../../../../mocks/testDataMgr/main';
+import * as common from '../../../../mocks/testDataMgr/helpers/common';
+import * as Resource from '../../../../mocks/dw/web/Resource';
 
 
 /*
@@ -41,7 +41,8 @@ describe('Checkout - As Guest - Editing billing address', () => {
     // - prepare shipping and payment data
     // - add product to cart
     // - navigate to cart
-    // - checkout
+    // - proceed to checkout
+    // - submit shipping/billing details
     before(() => {
         return testDataMgr.load()
             .then(() => {
@@ -62,7 +63,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
             .then(() => browser.waitForVisible(cartPage.SHIPPING_METHODS))
             .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, groundShipMethodIndex))
             .then(() => browser.waitForVisible(cartPage.BTN_CHECKOUT))
-            .then(() => browser.pause(1000))
+            .then(() => browser.waitForEnabled(cartPage.BTN_CHECKOUT))
             .then(() => browser.click(cartPage.BTN_CHECKOUT))
             .then(() => browser.waitForVisible(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))
             .then(() => browser.click(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))

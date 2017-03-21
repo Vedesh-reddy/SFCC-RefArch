@@ -156,7 +156,7 @@ server.get('ShowTile', function (req, res, next) {
         display: {
             swatches: req.querystring.swatches,
             reviews: req.querystring.reviews,
-            compare: req.querystring.compare
+            compare: req.querystring.compare === 'true'
         }
     });
 

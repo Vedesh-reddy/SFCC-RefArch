@@ -4,12 +4,15 @@ import _ from 'lodash';
 import * as formHelpers from '../helpers/forms/common';
 import * as common from '../helpers/common';
 
+export const BTN_SHIPPING_EDIT = '.shipping-summary .edit-button';
 export const BTN_NEXT_PAYMENT = '.submit-shipping';
 export const BTN_NEXT_PLACE_ORDER = '.submit-payment';
 export const BTN_PAYMENT_EDIT = '.payment-summary .edit-button';
 export const BTN_PLACE_ORDER = '.place-order';
 export const PAGE_TITLE = '.page-title';
+export const SHIPPING_FORM_TITLE = '.shipping-form .card-header h4';
 export const SHIPPING_ACTIVE_TAB = '.shipping-tab.active';
+export const CHECK_BOX_USE_SHIPPING_ADDR_AS_BILLING_ADDR = '#shippingAddressUseAsBillingAddress';
 export const GHOST_PAYMENT_FORM = '.ghost.payment';
 export const CHECK_BOX_SAME_BILLING_AND_SHIPPING = '.billing-same-as-shipping';
 export const PAYMENT_FORM = '.payment-form';
@@ -30,6 +33,23 @@ export const ORDER_SUMMARY_PHONE = '.order-summary-phone';
 
 export const PAYMENT_INFO_LABEL = '.payment-info-label';
 export const PAYMENT_DETAILS = '.payment-details';
+
+export const SHIPPING_METHOD_2DAY_EXPRESS = '#shippingMethod-002';
+
+export const SHIPPING_ADDRESS_LABEL = '.shipping-addr-label';
+export const SHIPPING_ADDR_FIRST_NAME = '.shipping .firstName';
+export const SHIPPING_ADDR_LAST_NAME = '.shipping .lastName';
+export const SHIPPING_ADDR_ADDRESS1 = '.shipping .address1';
+export const SHIPPING_ADDR_ADDRESS2 = '.shipping .address2';
+export const SHIPPING_ADDR_CITY = '.shipping .city';
+export const SHIPPING_ADDR_STATE_CODE = '.shipping .stateCode';
+export const SHIPPING_ADDR_POSTAL_CODE = '.shipping .postalCode';
+export const SHIPPING_ADDR_SHIPPING_PHONE = '.shipping .shipping-phone';
+
+export const SHIPPING_METHOD_LABEL = '.shipping-method-label';
+export const SHIPPING_METHOD_TITLE = '.shipping-method-title';
+export const SHIPPING_METHOD_ARRIVAL_TIME = '.shipping-method-arrival-time';
+export const SHIPPING_METHOD_PRICE = '.shipping-method-price';
 
 // keys (IDs) for fields in shipping form
 export const SHIPPING_FIRST_NAME = 'FirstName';
@@ -128,6 +148,10 @@ export function fillOutPaymentForm(billingFields) {
     });
 
     return Promise.all(fieldsPromise);
+}
+
+export function uncheckUseShippingAddrAsBillingAddr() {
+    return common.uncheckCheckbox(CHECK_BOX_USE_SHIPPING_ADDR_AS_BILLING_ADDR);
 }
 
 export function checkSameBillingShipping() {

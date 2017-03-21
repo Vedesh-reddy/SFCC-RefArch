@@ -204,6 +204,25 @@ export function createShippingData(customer, locale) {
     return shippingData;
 }
 
+export function createShippingDataWithAddress2(locale) {
+    const shippingData = {};
+
+    shippingData[checkoutPage.SHIPPING_FIRST_NAME] = 'Jane';
+    shippingData[checkoutPage.SHIPPING_LAST_NAME] = 'Smith';
+    shippingData[checkoutPage.SHIPPING_ADDRESS_ONE] = '22 Spring Road';
+    shippingData[checkoutPage.SHIPPING_ADDRESS_TWO] = 'unit 6';
+    shippingData[checkoutPage.SHIPPING_COUNTRY] = customers.globalCountryCode[locale];
+    shippingData[checkoutPage.SHIPPING_ADDRESS_CITY] = 'Nashua';
+    shippingData[checkoutPage.SHIPPING_ZIP_CODE] = customers.globalPostalCode2[locale];
+    shippingData[checkoutPage.SHIPPING_PHONE_NUMBER] = customers.globalPhone2[locale];
+
+    if (locale && locale === 'x_default') {
+        shippingData[checkoutPage.SHIPPING_STATE] = 'NH';
+    }
+
+    return shippingData;
+}
+
 export function createBillingData(locale) {
     const billingData = {};
 
