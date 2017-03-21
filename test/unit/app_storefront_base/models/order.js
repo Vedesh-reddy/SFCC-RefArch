@@ -16,46 +16,42 @@ var createApiBasket = function () {
         status: 'some status',
         productQuantityTotal: 1,
         totalGrossPrice: {
-        	available: true,
+            available: true,
             value: 180.00
         },
         totalTax: {
-        	available: true,
-        	value: 20.00
+            available: true,
+            value: 20.00
         },
         shippingTotalPrice: {
-        	available: true,
-        	value: 20.00,
-        	subtract: function(){
-        		return {
-        			value: 20.00
-        		};
-        	}
+            available: true,
+            value: 20.00,
+            subtract: function () {
+                return {
+                    value: 20.00
+                };
+            }
         },
         discounts: [],
-    	adjustedShippingTotalPrice: {
-    		value: 20.00,
-    		available: true
-    	},
+        adjustedShippingTotalPrice: {
+            value: 20.00,
+            available: true
+        },
 
         getAdjustedMerchandizeTotalPrice: function () {
             return {
-            	subtract: function(){
-            		return {
-            			value: 100.00
-            		};
-            	},
-            	value: 140.00,
-            	available: true
+                subtract: function () {
+                    return {
+                        value: 100.00
+                    };
+                },
+                value: 140.00,
+                available: true
             };
         }
     };
 };
 
-var shippingModel = {};
-var billingModel = {};
-var totalsModel = {};
-var productLineItemsModel = {};
 var config = {
     numberOfLineItems: '*'
 };
@@ -74,7 +70,7 @@ describe('Order', function () {
     });
 
     it('should handle a basket object ', function () {
-        var result = new Order(createApiBasket(), {config:config});
+        var result = new Order(createApiBasket(), { config: config });
         assert.deepEqual(result.steps, {
             shipping: {
                 iscompleted: true
@@ -93,7 +89,7 @@ describe('Order', function () {
         basket.billingAddress = true;
         basket.defaultShipment = null;
 
-        var result = new Order(basket, {config:config});
+        var result = new Order(basket, { config: config });
         assert.deepEqual(result.steps, {
             shipping: {
                 iscompleted: false

@@ -42,26 +42,26 @@ var createApiBasket = function (options) {
     var safeOptions = options || {};
 
     var basket = {
-		allProductLineItems: new ArrayList([{
-	        bonusProductLineItem: false,
-	        gift: false,
-	        UUID: 'some UUID',
-	        adjustedPrice: {
-	            value: 'some value',
-	            currencyCode: 'US'
-	        },
-	        quantity: {
-	            value: 1
-	        },
-	        product: toProductMock(productMock)
-	    }]),
-	    totalGrossPrice: Money(true),
-	    totalTax: Money(true),
-	    shippingTotalPrice: Money(true)
+        allProductLineItems: new ArrayList([{
+            bonusProductLineItem: false,
+            gift: false,
+            UUID: 'some UUID',
+            adjustedPrice: {
+                value: 'some value',
+                currencyCode: 'US'
+            },
+            quantity: {
+                value: 1
+            },
+            product: toProductMock(productMock)
+        }]),
+        totalGrossPrice: new Money(true),
+        totalTax: new Money(true),
+        shippingTotalPrice: new Money(true)
     };
 
 
-    if( safeOptions.shipping ) {
+    if (safeOptions.shipping) {
         basket.shipments = [safeOptions.shipping];
     } else {
         basket.shipments = [{
@@ -72,92 +72,22 @@ var createApiBasket = function (options) {
     }
     basket.defaultShipment = basket.shipments[0];
 
-    basket.getShipments = function(){
-    	return basket.shipments;
-    }
-    basket.getAdjustedMerchandizeTotalPrice = function(){
-    	return Money(true);
-    }
+    basket.getShipments = function () {
+        return basket.shipments;
+    };
+    basket.getAdjustedMerchandizeTotalPrice = function () {
+        return new Money(true);
+    };
 
-    if( safeOptions.productLineItems ) {
+    if (safeOptions.productLineItems) {
         basket.productLineItems = safeOptions.productLineItems;
     }
 
-    if( safeOptions.totals ) {
+    if (safeOptions.totals) {
         basket.totals = safeOptions.totals;
     }
 
     return basket;
-};
-
-var createShipmentShippingModel = function () {
-    return {
-        applicableShippingMethods: [{
-            description: 'Order received within 7-10 business days',
-            displayName: 'Ground',
-            ID: '001',
-            shippingCost: '$0.00',
-            estimatedArrivalTime: '7-10 Business Days'
-        }],
-        selectedShippingMethod: {
-            ID: 'some ID'
-        }
-    };
-};
-
-var createProductLineItemModel = function () {
-    return {
-        items: [],
-        totalQuantity: 0
-    };
-};
-
-var createDiscountPlan = function () {
-    return {
-        getApproachingOrderDiscounts: function () {
-            return new ArrayList([{
-                getDistanceFromConditionThreshold: function () {
-                    return new Money();
-                },
-                getDiscount: function () {
-                    return {
-                        getPromotion: function () {
-                            return {
-                                getCalloutMsg: function () {
-                                    return 'someString';
-                                }
-                            };
-                        }
-                    };
-                }
-            }]);
-        },
-        getApproachingShippingDiscounts: function () {
-            return new ArrayList([{
-                getDistanceFromConditionThreshold: function () {
-                    return new Money();
-                },
-                getDiscount: function () {
-                    return {
-                        getPromotion: function () {
-                            return {
-                                getCalloutMsg: function () {
-                                    return 'someString';
-                                }
-                            };
-                        }
-                    };
-                }
-            }]);
-        }
-    };
-};
-
-var totalsModel = {
-    subTotal: '$10.50',
-    grandTotal: '$12.50',
-    totalTax: '$1.00',
-    totalShippingCost: '$1.00'
 };
 
 describe('cart', function () {
@@ -172,7 +102,7 @@ describe('cart', function () {
     });
 
     it('should get shippingMethods from the shipping model', function () {
-        var result = new Cart( createApiBasket() );
+        var result = new Cart(createApiBasket());
         assert.equal(result.shipments[0].shippingMethods[0].description, 'Order received within 7-10 ' +
             'business days'
         );

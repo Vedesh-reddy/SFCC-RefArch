@@ -1,1 +1,1 @@
-//checkoutHelpers.js
+// checkoutHelpers.js

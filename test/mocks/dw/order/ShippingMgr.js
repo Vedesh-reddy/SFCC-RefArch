@@ -1,5 +1,5 @@
 
-var defaultShippingMethod = 
+var defaultShippingMethod =
     {
         description: 'Order received within 7-10 business days',
         displayName: 'Ground',
@@ -9,7 +9,7 @@ var defaultShippingMethod =
         }
     };
 
-function createShipmentShippingModel(shipment) {
+function createShipmentShippingModel() {
     return {
         applicableShippingMethods: [
             {
@@ -30,7 +30,7 @@ function createShipmentShippingModel(shipment) {
                 }
             }
         ],
-        getApplicableShippingMethods: function() {
+        getApplicableShippingMethods: function () {
             return [
                 {
                     description: 'Order received within 7-10 business days',

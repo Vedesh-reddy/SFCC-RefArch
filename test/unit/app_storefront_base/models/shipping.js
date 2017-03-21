@@ -1,9 +1,6 @@
 'use strict';
 
 var assert = require('chai').assert;
-var sinon = require('sinon');
-
-var ArrayList = require('../../../mocks/dw.util.Collection');
 
 var otherAddress = {
     'city': 'Boston',
@@ -11,7 +8,7 @@ var otherAddress = {
 };
 
 var defaultShipment = {
-	UUID: '1234-1234-1234-1234',
+    UUID: '1234-1234-1234-1234',
     setShippingMethod: function (shippingMethod) {
         return shippingMethod;
     },
@@ -26,7 +23,7 @@ var defaultShipment = {
 };
 
 var defaultShipmentWithAddress = {
-	UUID: '1234-1234-1234-1235',
+    UUID: '1234-1234-1234-1235',
     setShippingMethod: function (shippingMethod) {
         return shippingMethod;
     },
@@ -69,7 +66,7 @@ describe('Shipping', function () {
     });
 
     it('should get the selected shipping method information', function () {
-        var result = new ShippingModel(defaultShipment,  null);
+        var result = new ShippingModel(defaultShipment, null);
 
         assert.equal(result.selectedShippingMethod.ID, '001');
         assert.equal(result.selectedShippingMethod.displayName, 'Ground');

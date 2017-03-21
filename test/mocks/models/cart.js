@@ -8,12 +8,14 @@ var ProductLineItemsModel = require('./productLineItems');
 var ShippingHelpers = require('../helpers/shippingHelpers');
 
 var URLUtils = require('../dw.web.URLUtils');
+var ArrayList = require('../dw.util.Collection');
+var Money = require('../dw.value.Money');
 
 function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/cart', {
         '~/cartridge/scripts/util/collections': {},
         'dw/campaign/PromotionMgr': {
-            getDiscounts: function(){
+            getDiscounts: function () {
                 return {
                     getApproachingOrderDiscounts: function () {
                         return new ArrayList([{
@@ -51,7 +53,7 @@ function proxyModel() {
                             }
                         }]);
                     }
-                }
+                };
             }
         },
         '~/cartridge/models/totals': TotalsModel,

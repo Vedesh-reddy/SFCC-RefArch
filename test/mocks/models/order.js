@@ -36,7 +36,7 @@ function proxyModel() {
         '~/cartridge/models/totals': TotalsModel,
         '~/cartridge/models/productLineItems': ProductLineItemsModel,
         '~/cartridge/scripts/checkout/shippingHelpers': {
-            getShippingModels: function (basket) {
+            getShippingModels: function () {
                 return ['shipping model'];
             }
         }
