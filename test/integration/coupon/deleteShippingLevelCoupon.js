@@ -1,24 +1,24 @@
-var assert = require('chai').assert;
-var request = require('request-promise');
-var config = require('../it.config');
-
-describe('Shipping Level Coupon -  remove coupon', function () {
-    this.timeout(5000);
-
-    var variantId = '740357377119';
-    var quantity = 5;
-    var couponCode = 'shipping';
-    var cookieJar = request.jar();
-    var cookieString;
-    var UUID;
-
-    var myRequest = {
-        url: '',
-        method: 'POST',
-        rejectUnauthorized: false,
-        resolveWithFullResponse: true,
-        jar: cookieJar
-    };
+// var assert = require('chai').assert;
+// var request = require('request-promise');
+// var config = require('../it.config');
+//
+// describe('Shipping Level Coupon -  remove coupon', function () {
+//     this.timeout(5000);
+//
+//     var variantId = '740357377119';
+//     var quantity = 5;
+//     var couponCode = 'shipping';
+//     var cookieJar = request.jar();
+//     var cookieString;
+//     var UUID;
+//
+//     var myRequest = {
+//         url: '',
+//         method: 'POST',
+//         rejectUnauthorized: false,
+//         resolveWithFullResponse: true,
+//         jar: cookieJar
+//     };
 
 //     myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantId + '&quantity=' + quantity;
 
