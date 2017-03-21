@@ -1,8 +1,8 @@
 <isloop items="${pdict.productSearch.productIds}" var="productId">
-    <isif condition="${pdict.category}">
-        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true', 'reviews', 'true', 'cgid', pdict.category.ID)}" />
+    <isif condition="${pdict.productSearch.category}">
+        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true', 'reviews', 'true', 'cgid', pdict.productSearch.category.id, 'compare', 'true')}" />
     <iselse>
-        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true', 'reviews', 'true')}" />
+        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true', 'reviews', 'true', 'compare', 'false')}" />
     </isif>
 </isloop>
 
@@ -15,4 +15,10 @@
             </button>
         </div>
     </div>
+</isif>
+
+<input type="hidden" class="max-comparison-slots" value="${pdict.maxSlots}" />
+
+<isif condition="${pdict.productSearch.category != null}">
+    <input type="hidden" class="category-id" value="${pdict.productSearch.category.id}" />
 </isif>

@@ -153,7 +153,10 @@ function ProductSearch(productSearch, httpParams) {
     this.showMoreUrl = getShowMoreUrl(paging, productSearch);
 
     if (productSearch.category) {
-        this.categoryName = productSearch.category.displayName;
+        this.category = {
+            name: productSearch.category.displayName,
+            id: productSearch.category.ID
+        };
     }
 }
 

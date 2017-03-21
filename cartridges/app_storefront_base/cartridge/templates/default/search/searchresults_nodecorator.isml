@@ -6,7 +6,7 @@
 >
     <h1 class="header page-title">
         <isif condition="${pdict.productSearch.isCategorySearch}">
-            ${pdict.productSearch.categoryName}
+            ${pdict.productSearch.category.name}
         <iselse>
             ${Resource.msg('label.header.banner', 'search', null)}
         </isif>

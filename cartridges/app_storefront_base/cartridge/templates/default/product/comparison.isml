@@ -1,0 +1,19 @@
+<!--- Page Stub until RAP-5832 (Add Controller and template to handle Compare Products) is completed --->
+
+<isdecorate template="common/layout/page">
+    <div align="center">
+        <h1>Product Comparison Feature</h1>
+        <h2>Under Construction</h2>
+        <br />
+        <br />
+
+        <h3>Category:  ${pdict.category}</h3>
+        <br />
+        <br />
+
+        <h3>Product IDs:</h3>
+        <isloop items="${pdict.pids}" var="pid">
+            <h3>${pid}</h3>
+        </isloop>
+    </div>
+</isdecorate>
