@@ -1,16 +1,16 @@
 'use strict';
 
 import { assert } from 'chai';
-import { config } from '../webdriver/wdio.conf';
-import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
-import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
-import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
-import * as checkoutPage from '../../mocks/testDataMgr/pageObjects/checkout';
-import * as checkoutInterceptPage from '../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
-import * as orderConfPage from '../../mocks/testDataMgr/pageObjects/orderConfirmation.js';
-import * as testDataMgr from '../../mocks/testDataMgr/main';
-import * as common from '../../mocks/testDataMgr/helpers/common';
-import * as Resource from '../../mocks/dw/web/Resource';
+import { config } from '../../../webdriver/wdio.conf';
+import * as homePage from '../../../../mocks/testDataMgr/pageObjects/home';
+import * as productDetailPage from '../../../../mocks/testDataMgr/pageObjects/productDetail';
+import * as cartPage from '../../../../mocks/testDataMgr/pageObjects/cart';
+import * as checkoutPage from '../../../../mocks/testDataMgr/pageObjects/checkout';
+import * as checkoutInterceptPage from '../../../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
+import * as orderConfPage from '../../../../mocks/testDataMgr/pageObjects/orderConfirmation.js';
+import * as testDataMgr from '../../../../mocks/testDataMgr/main';
+import * as common from '../../../../mocks/testDataMgr/helpers/common';
+import * as Resource from '../../../../mocks/dw/web/Resource';
 
 
 /*

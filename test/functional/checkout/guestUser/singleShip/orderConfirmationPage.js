@@ -1,17 +1,17 @@
 'use strict';
 
 import { assert } from 'chai';
-import { config } from '../webdriver/wdio.conf';
-import * as homePage from '../../mocks/testDataMgr/pageObjects/home';
-import * as productDetailPage from '../../mocks/testDataMgr/pageObjects/productDetail';
-import * as cartPage from '../../mocks/testDataMgr/pageObjects/cart';
-import * as checkoutPage from '../../mocks/testDataMgr/pageObjects/checkout';
-import * as checkoutInterceptPage from '../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
-import * as orderConfPage from '../../mocks/testDataMgr/pageObjects/orderConfirmation.js';
-import * as testDataMgr from '../../mocks/testDataMgr/main';
-import * as common from '../../mocks/testDataMgr/helpers/common';
-import * as Resource from '../../mocks/dw/web/Resource';
-import * as pricingHelpers from '../../mocks/testDataMgr/helpers/pricing';
+import { config } from '../../../webdriver/wdio.conf';
+import * as homePage from '../../../../mocks/testDataMgr/pageObjects/home';
+import * as productDetailPage from '../../../../mocks/testDataMgr/pageObjects/productDetail';
+import * as cartPage from '../../../../mocks/testDataMgr/pageObjects/cart';
+import * as checkoutPage from '../../../../mocks/testDataMgr/pageObjects/checkout';
+import * as checkoutInterceptPage from '../../../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
+import * as orderConfPage from '../../../../mocks/testDataMgr/pageObjects/orderConfirmation.js';
+import * as testDataMgr from '../../../../mocks/testDataMgr/main';
+import * as common from '../../../../mocks/testDataMgr/helpers/common';
+import * as Resource from '../../../../mocks/dw/web/Resource';
+import * as pricingHelpers from '../../../../mocks/testDataMgr/helpers/pricing';
 
 
 /*
@@ -23,6 +23,7 @@ describe('Checkout - Order confirmation page', () => {
     const userEmail = config.userEmail;
 
     let shippingData = {};
+    let billingData = {};
     let paymentData = {};
 
     const productVariantId1 = '701644130756';
@@ -30,22 +31,22 @@ describe('Checkout - Order confirmation page', () => {
 
     const prodIdUnitPricesMap = {};
 
-    const groundShipMethodIndex = 0;
+    const TwoDayExpressShipMethodIndex = 1;
 
     const shipCostMap = {
-        'x_default': '$7.99',
-        'en_GB': '£5.99',
-        'fr_FR': '5,99 €',
-        'it_IT': '€ 5,99',
-        'ja_JP': '¥ 14',
-        'zh_CN': '¥13.99'
+        'x_default': '$11.99',
+        'en_GB': '£9.99',
+        'fr_FR': '9,99 €',
+        'it_IT': '€ 9,99',
+        'ja_JP': '¥ 22',
+        'zh_CN': '¥21.99'
     };
 
     const totalTaxMap = {
-        'x_default': '$6.30',
-        'en_GB': '£5.49',
-        'fr_FR': '5,49 €',
-        'it_IT': '€ 5,49',
+        'x_default': '$6.50',
+        'en_GB': '£5.64',
+        'fr_FR': '5,64 €',
+        'it_IT': '€ 5,64',
         'ja_JP': '¥ 14',
         'zh_CN': '¥20.00'
     };
@@ -54,7 +55,8 @@ describe('Checkout - Order confirmation page', () => {
     // - prepare shipping and payment data
     // - add product to cart
     // - navigate to cart
-    // - checkout
+    // - proceed to checkout
+    // - place the order
     before(() => {
         return testDataMgr.load()
             .then(() => {
@@ -62,6 +64,7 @@ describe('Checkout - Order confirmation page', () => {
                 const customer = testDataMgr.getCustomerByLogin(userEmail);
 
                 shippingData = common.createShippingData(customer, locale);
+                billingData = common.createBillingData(locale);
                 paymentData = common.createPaymentData(creditCard);
 
                 prodIdUnitPricesMap[productVariantId1] = testDataMgr.getPricesByProductId(productVariantId1, locale);
@@ -72,14 +75,19 @@ describe('Checkout - Order confirmation page', () => {
             .then(() => productDetailPage.clickAddToCartButton())
             .then(() => cartPage.navigateTo())
             .then(() => browser.waitForVisible(cartPage.SHIPPING_METHODS))
-            .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, groundShipMethodIndex))
+            .then(() => browser.selectByIndex(cartPage.SHIPPING_METHODS, TwoDayExpressShipMethodIndex))
+            .then(() => browser.waitForVisible(cartPage.BTN_CHECKOUT))
+            .then(() => browser.waitForEnabled(cartPage.BTN_CHECKOUT))
             .then(() => browser.click(cartPage.BTN_CHECKOUT))
             .then(() => browser.waitForVisible(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))
             .then(() => browser.click(checkoutInterceptPage.BTN_CHECKOUT_AS_GUEST))
             .then(() => browser.waitForExist(checkoutPage.SHIPPING_ACTIVE_TAB))
             .then(() => checkoutPage.fillOutShippingForm(shippingData, locale))
+            .then(() => checkoutPage.uncheckUseShippingAddrAsBillingAddr())
             .then(() => browser.click(checkoutPage.BTN_NEXT_PAYMENT))
             .then(() => browser.waitForExist(checkoutPage.BTN_NEXT_PLACE_ORDER))
+            .then(() => browser.waitForVisible(checkoutPage.BILLING_ADDRESS_FORM))
+            .then(() => checkoutPage.fillOutBillingForm(billingData, locale))
             .then(() => browser.waitForVisible(checkoutPage.PAYMENT_FORM))
             .then(() => checkoutPage.fillOutPaymentForm(paymentData))
             .then(() => browser.click(checkoutPage.BTN_NEXT_PLACE_ORDER))
@@ -232,7 +240,7 @@ describe('Checkout - Order confirmation page', () => {
         it('should display method title', () => {
             return browser.getText(orderConfPage.SHIPPING_METHOD_TITLE)
                 .then((shipMethodName) => {
-                    const expectedShipMethodName = 'Ground';
+                    const expectedShipMethodName = '2-Day Express';
                     return assert.equal(shipMethodName, expectedShipMethodName, 'Expected shipping method name = ' + expectedShipMethodName);
                 });
         });
@@ -240,7 +248,7 @@ describe('Checkout - Order confirmation page', () => {
         it('should display method arrival time', () => {
             return browser.getText(orderConfPage.SHIPPING_METHOD_ARRIVAL_TIME)
                 .then((shipMethodArrivalTime) => {
-                    const expectedShipMethodArrivalTime = '( 7-10 Business Days )';
+                    const expectedShipMethodArrivalTime = '( 2 Business Days )';
                     return assert.equal(shipMethodArrivalTime, expectedShipMethodArrivalTime, 'Expected shipping method arrival time = ' + expectedShipMethodArrivalTime);
                 });
         });
@@ -248,7 +256,7 @@ describe('Checkout - Order confirmation page', () => {
         it('should display method price', () => {
             return browser.getText(orderConfPage.SHIPPING_METHOD_PRICE)
                 .then((shipMethodPrice) => {
-                    const expectedShipMethodPrice = '$7.99';
+                    const expectedShipMethodPrice = '$11.99';
                     return assert.equal(shipMethodPrice, expectedShipMethodPrice, 'Expected shipping method price = ' + expectedShipMethodPrice);
                 });
         });
@@ -305,12 +313,12 @@ describe('Checkout - Order confirmation page', () => {
         it('should display name', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_FIRST_NAME)
                 .then((firstName) => {
-                    const expectedFirstName = shippingData[checkoutPage.SHIPPING_FIRST_NAME];
+                    const expectedFirstName = billingData[checkoutPage.BILLING_FIRST_NAME];
                     return assert.equal(firstName, expectedFirstName, 'Expected billing first name to be = ' + expectedFirstName);
                 })
                 .then(() => browser.getText(orderConfPage.BILLING_ADDR_LAST_NAME))
                 .then((lastName) => {
-                    const expectedLastName = shippingData[checkoutPage.SHIPPING_LAST_NAME];
+                    const expectedLastName = billingData[checkoutPage.BILLING_LAST_NAME];
                     return assert.equal(lastName, expectedLastName, 'Expected billing last name to be = ' + expectedLastName);
                 });
         });
@@ -318,7 +326,7 @@ describe('Checkout - Order confirmation page', () => {
         it('should display street name', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_ADDRESS1)
                 .then((address1) => {
-                    const expectedAddress1 = shippingData[checkoutPage.SHIPPING_ADDRESS_ONE];
+                    const expectedAddress1 = billingData[checkoutPage.BILLING_ADDRESS_ONE];
                     return assert.equal(address1, expectedAddress1, 'Expected billing address1 to be = ' + expectedAddress1);
                 });
         });
@@ -326,7 +334,7 @@ describe('Checkout - Order confirmation page', () => {
         it('should display city name', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_CITY)
                 .then((city) => {
-                    const expectedCity = shippingData[checkoutPage.SHIPPING_ADDRESS_CITY] + ',';
+                    const expectedCity = billingData[checkoutPage.BILLING_ADDRESS_CITY] + ',';
                     return assert.equal(city, expectedCity, 'Expected billing city to be = ' + expectedCity);
                 });
         });
@@ -335,7 +343,7 @@ describe('Checkout - Order confirmation page', () => {
             if (locale && locale === 'x_default') {
                 return browser.getText(orderConfPage.BILLING_ADDR_STATE_CODE)
                     .then((stateCode) => {
-                        const expectedStateCode = shippingData[checkoutPage.SHIPPING_STATE];
+                        const expectedStateCode = billingData[checkoutPage.BILLING_STATE];
                         return assert.equal(stateCode, expectedStateCode, 'Expected billing state code to be = ' + expectedStateCode);
                     });
             }
@@ -345,7 +353,7 @@ describe('Checkout - Order confirmation page', () => {
         it('should display zip code', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_POSTAL_CODE)
                 .then((zipCode) => {
-                    const expectedZipCode = shippingData[checkoutPage.SHIPPING_ZIP_CODE];
+                    const expectedZipCode = billingData[checkoutPage.BILLING_ZIP_CODE];
                     return assert.equal(zipCode, expectedZipCode, 'Expected billing zip code to be = ' + expectedZipCode);
                 });
         });
