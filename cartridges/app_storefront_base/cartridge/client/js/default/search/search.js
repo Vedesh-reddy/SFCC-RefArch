@@ -102,6 +102,28 @@ function parseResults(response) {
     }
 }
 
+/**
+ * This function retrieves another page of content to display in the content search grid
+ * @param {JQuery} $element - the jquery element that has the click event attached
+ * @param {JQuery} $target - the jquery element that will receive the response
+ * @return {undefined}
+ */
+function getContent($element, $target) {
+    var showMoreUrl = $element.data('url');
+    $.spinner().start();
+    $.ajax({
+        url: showMoreUrl,
+        method: 'GET',
+        success: function (response) {
+            $target.append(response);
+            $.spinner().stop();
+        },
+        error: function () {
+            $.spinner().stop();
+        }
+    });
+}
+
 module.exports = {
     filter: function () {
         // Display refinements bar when Menu icon clicked
@@ -182,6 +204,21 @@ module.exports = {
                     $.spinner().stop();
                 }
             });
+        });
+    },
+
+    showContentTab: function () {
+        // Display content results from the search
+        $('.container').on('click', '.content-search', function () {
+            if ($('#content-search-results').html() === '') {
+                getContent($(this), $('#content-search-results'));
+            }
+        });
+
+        // Display the next page of content results from the search
+        $('.container').on('click', '.show-more-content button', function () {
+            getContent($(this), $('#content-search-results .result-count'));
+            $('.show-more-content').remove();
         });
     }
 };

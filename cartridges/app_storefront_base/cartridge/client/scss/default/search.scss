@@ -135,7 +135,8 @@
     pointer-events: none;
 }
 
-.grid-header {
+.grid-header,
+.content-grid-header {
     text-align: center;
     margin-top: 1em;
     margin-bottom: 1em;
@@ -260,11 +261,33 @@
     margin-bottom: 0.938rem;
 }
 
-.show-more {
+.show-more,
+.show-more-content {
     padding: 0.938em;
     clear: both;
 }
 
 .swatch-mark {
     @include swatch-check-mark();
+}
+
+.search-nav {
+    margin-bottom: 1em;
+    border-bottom: 0.063em solid $grey3;
+
+    .nav-tabs-wrapper {
+        padding: 0;
+
+        @include media-breakpoint-down(xs) {
+            width: 100%;
+        }
+
+        .nav-tabs {
+            border-bottom: 0 none;
+        }
+    }
+
+    .nav-link:focus {
+        background-color: $grey1;
+    }
 }

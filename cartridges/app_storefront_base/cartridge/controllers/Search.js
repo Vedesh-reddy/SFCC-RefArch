@@ -8,7 +8,6 @@ var ProductSearchModel = require('dw/catalog/ProductSearchModel');
 var ProductSearch = require('~/cartridge/models/search/productSearch');
 var ProductSortOptions = require('~/cartridge/models/search/productSortOptions');
 
-
 /**
  * Set search configuration values
  *
@@ -94,6 +93,28 @@ server.get('Show', function (req, res, next) {
         });
     }
 
+    next();
+});
+
+server.get('Content', function (req, res, next) {
+    var ContentSearchModel = require('dw/content/ContentSearchModel');
+    var ContentSearch = require('~/cartridge/models/search/contentSearch');
+    var apiContentSearchModel = new ContentSearchModel();
+    var contentSearch;
+    var contentSearchResult;
+    var queryPhrase = req.querystring.q;
+    var startingPage = Number(req.querystring.startingPage);
+
+    apiContentSearchModel.setRecursiveFolderSearch(true);
+    apiContentSearchModel.setSearchPhrase(req.querystring.q);
+    apiContentSearchModel.search();
+    contentSearchResult = apiContentSearchModel.getContent();
+    var count = Number(apiContentSearchModel.getCount());
+    contentSearch = new ContentSearch(contentSearchResult, count, queryPhrase, startingPage, null);
+
+    res.render('/search/contentgrid', {
+        contentSearch: contentSearch
+    });
     next();
 });
 
