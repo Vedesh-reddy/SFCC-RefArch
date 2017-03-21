@@ -1,6 +1,7 @@
 'use strict';
 
 /**
+ * Navigate from Women->Clothing->Tops then
  * refine by color red, size XS and price $50-99.99 at the same time
  * verify 2 results returned and verify the product details
  */
@@ -128,13 +129,13 @@ describe('Category Navigation and multiple refinements -  general product', () =
     });
 
     it('#4 should return the correct href links when refined by Color, Price and Size', () => {
-        let expectedLink = common.convertToUrlFormat(expectedDisplayName) + '/' + productID + '.html?lang=' + localeStr;
+        let expectedLink = common.convertToUrlFormat(expectedDisplayName) + '/' + productID + '.html?cgid=womens-clothing-tops&lang=' + localeStr;
         if (expectedLink.startsWith('https')) {
             expectedLink = common.convertHTTPsToHTTP(expectedLink);
         }
         return productTile.getProductTileImageHref(productID)
             .then(imageLink => {
-                assert.isTrue(imageLink.endsWith(expectedLink), 'Expected image link does not end with ' + expectedLink);
+                assert.include(imageLink, expectedLink, 'Actual image link does not include ' + expectedLink);
             });
     });
 

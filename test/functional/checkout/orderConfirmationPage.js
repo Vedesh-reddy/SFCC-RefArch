@@ -95,7 +95,7 @@ describe('Checkout - Order confirmation page', () => {
     );
 
     describe('Thank you message email', () => {
-        it('Verify thank you message', () => {
+        it('should display thank you message', () => {
             return browser.getText(orderConfPage.ORDER_THANK_YOU_MSG)
                 .then((thankYouMsg) => {
                     const expectedThankYouMsg = Resource.msgf('msg.placed.order.thank.you', 'confirmation', null);
@@ -103,7 +103,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify email message', () => {
+        it('should display email message', () => {
             return browser.getText(orderConfPage.ORDER_THANK_YOU_EMAIL_MSG)
                 .then((emailMsg) => {
                     const emailAddr = paymentData[checkoutPage.PAYMENT_EMAIL];
@@ -114,7 +114,7 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Order number and Date', () => {
-        it('Verify receipt title', () => {
+        it('should display receipt title', () => {
             return browser.getText(orderConfPage.RECEIPT_HEADER)
                 .then((receiptHeaderStr) => {
                     const expectedReceiptHeader = Resource.msgf('title.receipt', 'confirmation', null);
@@ -122,7 +122,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify order number', () => {
+        it('should display order number', () => {
             return browser.getText(orderConfPage.ORDER_NUMBER_LABEL)
                 .then((orderNumLabel) => {
                     const expectedOrderNumLabel = Resource.msgf('label.order.number', 'confirmation', null);
@@ -135,7 +135,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify order date', () => {
+        it('should display order date', () => {
             return browser.getText(orderConfPage.ORDER_DATE_LABEL)
                 .then((orderDateLabel) => {
                     const expectedOrderDateLabel = Resource.msgf('label.order.date', 'confirmation', null);
@@ -150,7 +150,7 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Shipping address details', () => {
-        it('Verify address label', () => {
+        it('should display address label', () => {
             return browser.getText(orderConfPage.SHIPPING_ADDR_LABEL)
                 .then((shipAddrLabel) => {
                     const expectedShipAddrLabel = Resource.msgf('label.order.shipping.address', 'confirmation', null);
@@ -158,7 +158,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify name', () => {
+        it('should display name', () => {
             return browser.getText(orderConfPage.SHIPPING_ADDR_FIRST_NAME)
                 .then((firstName) => {
                     const expectedFirstName = shippingData[checkoutPage.SHIPPING_FIRST_NAME];
@@ -171,7 +171,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify street name', () => {
+        it('should display street name', () => {
             return browser.getText(orderConfPage.SHIPPING_ADDR_ADDRESS1)
                 .then((address1) => {
                     const expectedAddress1 = shippingData[checkoutPage.SHIPPING_ADDRESS_ONE];
@@ -179,7 +179,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify city name', () => {
+        it('should display city name', () => {
             return browser.getText(orderConfPage.SHIPPING_ADDR_CITY)
                 .then((city) => {
                     const expectedCity = shippingData[checkoutPage.SHIPPING_ADDRESS_CITY] + ',';
@@ -187,7 +187,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify state code', () => {
+        it('should display state code', () => {
             if (locale && locale === 'x_default') {
                 return browser.getText(orderConfPage.SHIPPING_ADDR_STATE_CODE)
                     .then((stateCode) => {
@@ -198,7 +198,7 @@ describe('Checkout - Order confirmation page', () => {
             return Promise.resolve();
         });
 
-        it('Verify postal code', () => {
+        it('should display postal code', () => {
             return browser.getText(orderConfPage.SHIPPING_ADDR_POSTAL_CODE)
                 .then((zipCode) => {
                     const expectedZipCode = shippingData[checkoutPage.SHIPPING_ZIP_CODE];
@@ -211,7 +211,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify phone number', () => {
+        it('should display phone number', () => {
             return browser.getText(orderConfPage.SHIPPING_ADDR_SHIPPING_PHONE)
                 .then((shippingPhone) => {
                     const expectedShippingPhone = shippingData[checkoutPage.SHIPPING_PHONE_NUMBER];
@@ -221,7 +221,7 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Shipping method information', () => {
-        it('Verify method label', () => {
+        it('should display method label', () => {
             return browser.getText(orderConfPage.SHIPPING_METHOD_LABEL)
                 .then((shipMethodLabel) => {
                     const expectedShipMethodLabel = Resource.msgf('label.order.shipping.method', 'confirmation', null);
@@ -229,7 +229,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify method title', () => {
+        it('should display method title', () => {
             return browser.getText(orderConfPage.SHIPPING_METHOD_TITLE)
                 .then((shipMethodName) => {
                     const expectedShipMethodName = 'Ground';
@@ -237,7 +237,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify method arrival time', () => {
+        it('should display method arrival time', () => {
             return browser.getText(orderConfPage.SHIPPING_METHOD_ARRIVAL_TIME)
                 .then((shipMethodArrivalTime) => {
                     const expectedShipMethodArrivalTime = '( 7-10 Business Days )';
@@ -245,7 +245,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify method price', () => {
+        it('should display method price', () => {
             return browser.getText(orderConfPage.SHIPPING_METHOD_PRICE)
                 .then((shipMethodPrice) => {
                     const expectedShipMethodPrice = '$7.99';
@@ -255,7 +255,7 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Payment information:', () => {
-        it('Verify payment label', () => {
+        it('should display payment label', () => {
             return browser.getText(orderConfPage.PAYMENT_LABEL)
                 .then((paymentLabel) => {
                     const expectedPaymentLabel = Resource.msgf('label.order.payment.info', 'confirmation', null);
@@ -263,7 +263,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify credit card type', () => {
+        it('should display credit card type', () => {
             return browser.getText(orderConfPage.PAYMENT_CREDIT_TYPE)
                 .then((creditCardType) => {
                     const expectedCreditCardType = 'Credit Visa';
@@ -271,7 +271,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify credit card number', () => {
+        it('should display credit card number', () => {
             return browser.getText(orderConfPage.PAYMENT_CREDIT_NUMBER)
                 .then((creditCardNumber) => {
                     let expectedCreditCardNumber = paymentData[checkoutPage.PAYMENT_CARD_NUMBER].substr(12, 4);
@@ -280,7 +280,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify credit card expiration date', () => {
+        it('should display credit card expiration date', () => {
             return browser.getText(orderConfPage.PAYMENT_CREDIT_EXPIRATION_DATE)
                 .then((expirationDate) => {
                     const endDateLabel = 'Ending';
@@ -294,7 +294,7 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Billing information:', () => {
-        it('Verify address label', () => {
+        it('should display address label', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_LABEL)
                 .then((addrLabel) => {
                     const expectedBillingAddrLabel = Resource.msgf('label.order.billing.address', 'confirmation', null);
@@ -302,7 +302,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify name', () => {
+        it('should display name', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_FIRST_NAME)
                 .then((firstName) => {
                     const expectedFirstName = shippingData[checkoutPage.SHIPPING_FIRST_NAME];
@@ -315,7 +315,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify street name', () => {
+        it('should display street name', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_ADDRESS1)
                 .then((address1) => {
                     const expectedAddress1 = shippingData[checkoutPage.SHIPPING_ADDRESS_ONE];
@@ -323,7 +323,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify city name', () => {
+        it('should display city name', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_CITY)
                 .then((city) => {
                     const expectedCity = shippingData[checkoutPage.SHIPPING_ADDRESS_CITY] + ',';
@@ -331,7 +331,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify state code', () => {
+        it('should display state code', () => {
             if (locale && locale === 'x_default') {
                 return browser.getText(orderConfPage.BILLING_ADDR_STATE_CODE)
                     .then((stateCode) => {
@@ -342,7 +342,7 @@ describe('Checkout - Order confirmation page', () => {
             return Promise.resolve();
         });
 
-        it('Verify zip code', () => {
+        it('should display zip code', () => {
             return browser.getText(orderConfPage.BILLING_ADDR_POSTAL_CODE)
                 .then((zipCode) => {
                     const expectedZipCode = shippingData[checkoutPage.SHIPPING_ZIP_CODE];
@@ -350,7 +350,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify email', () => {
+        it('should display email', () => {
             return browser.getText(orderConfPage.ORDER_SUMMARY_EMAIL)
                 .then((emailAddr) => {
                     const expectedPaymentEmail = paymentData[checkoutPage.PAYMENT_EMAIL];
@@ -358,7 +358,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify phone', () => {
+        it('should display phone', () => {
             return browser.getText(orderConfPage.ORDER_SUMMARY_PHONE)
                 .then((phone) => {
                     const expectedPaymentPhone = paymentData[checkoutPage.PAYMENT_PHONE_NUMBER];
@@ -368,7 +368,7 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Product summary information:', () => {
-        it('Verify grand total', () => {
+        it('should display grand total', () => {
             const itemTotalQuantity = 1;
             const expectTotalLabel = Resource.msgf('label.number.items.in.cart', 'cart', null, itemTotalQuantity);
 
@@ -380,7 +380,7 @@ describe('Checkout - Order confirmation page', () => {
                 .then((grandTotalPrice) => assert.equal(grandTotalPrice, expectTotalPrice, 'Expected grand total price to be = ' + expectTotalPrice));
         });
 
-        it('Verify image source', () => {
+        it('should display image source', () => {
             return browser.getAttribute(orderConfPage.PRODUCT_IMAGE, 'src')
                 .then(imageSrc => {
                     const expectImgSrc = '/images/small/PG.10229762.JJ169XX.PZ.jpg';
@@ -388,7 +388,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify unit price', () => {
+        it('should display unit price', () => {
             return browser.getText(orderConfPage.UNIT_PRICE_LABEL)
                 .then((unitPriceLabel) => {
                     const expectedUnitPriceLabel = Resource.msgf('label.each.item.price', 'cart', null);
@@ -401,7 +401,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify quantity', () => {
+        it('should display quantity', () => {
             return browser.getText(orderConfPage.CARD_QUANTITY_LABEL)
                 .then((quantityLabel) => {
                     const expectedQuantityLabel = Resource.msgf('field.selectquantity', 'cart', null);
@@ -414,7 +414,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify total price', () => {
+        it('should display total price', () => {
             const expectTotalPrice = prodIdUnitPricesMap[productVariantId1].sale;
 
             return browser.getText(orderConfPage.CARD_TOTAL_PRICE_LABEL)
@@ -430,7 +430,7 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Total summary information:', () => {
-        it('verify sub-total', () => {
+        it('should display sub-total', () => {
             return browser.getText(orderConfPage.ORDER_SUBTOTAL_LABEL)
                 .then((subTotalLabel) => {
                     const expectSubTotalLabel = Resource.msgf('label.order.subtotal', 'confirmation', null);
@@ -443,7 +443,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('verify shipping cost', () => {
+        it('should display shipping cost', () => {
             return browser.getText(orderConfPage.ORDER_SHIPPING_LABEL)
                 .then((shippingCostLabel) => {
                     const expectShippingCostLabel = Resource.msgf('label.order.shipping.cost', 'confirmation', null);
@@ -456,7 +456,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('verify sales tax', () => {
+        it('should display sales tax', () => {
             return browser.getText(orderConfPage.ORDER_SALES_TAX_LABEL)
                 .then((salesTaxLabel) => {
                     const expectSalesTaxLabel = Resource.msgf('label.order.sales.tax', 'confirmation', null);
@@ -469,7 +469,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('verify grand total', () => {
+        it('should display grand total', () => {
             return browser.getText(orderConfPage.ORDER_GRAND_TOTAL_LABEL)
                 .then((grandTotalLabel) => {
                     const expectGrandTotalLabel = Resource.msgf('label.order.grand.total', 'confirmation', null);
@@ -491,13 +491,13 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Continue Shopping button', () => {
-        it('Verify continue shopping button exist', () => {
+        it('should display continue shopping button', () => {
             return browser
                 .isEnabled(orderConfPage.CONTINUE_SHOPPING)
                 .then(enabled => assert.ok(enabled, 'Expected Continue Shopping button to be enabled.'));
         });
 
-        it('Verify button has the correct name', () => {
+        it('should display the correct button name', () => {
             return browser.getText(orderConfPage.CONTINUE_SHOPPING)
                 .then((buttonName) => {
                     const expectButtonName = Resource.msgf('button.continue.shopping', 'confirmation', null);
@@ -505,7 +505,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify button has the correct href', () => {
+        it('should have the correct href for button', () => {
             return browser.getAttribute(orderConfPage.CONTINUE_SHOPPING, 'href')
                 .then((hrefLink) => {
                     const myLocale = locale === 'x_default' ? 'en_US' : locale;
@@ -517,7 +517,7 @@ describe('Checkout - Order confirmation page', () => {
     });
 
     describe('Save my informaion:', () => {
-        it('Verify title', () => {
+        it('should display title', () => {
             return browser.getText(orderConfPage.SAVE_MY_INFO_TITLE)
                 .then((saveMyInfoTitle) => {
                     const expectSaveMyInfoTitle = Resource.msgf('title.save.customer.information', 'confirmation', null);
@@ -525,7 +525,7 @@ describe('Checkout - Order confirmation page', () => {
                 });
         });
 
-        it('Verify password', () => {
+        it('should display password', () => {
             return browser.getText(orderConfPage.SAVE_MY_INFO_PASSWORD_LABEL)
                 .then((passwordLabel) => {
                     const expectPasswordLabel = Resource.msgf('field.password', 'confirmation', null);
@@ -535,7 +535,7 @@ describe('Checkout - Order confirmation page', () => {
                 .then(passwordVisible => assert.ok(passwordVisible));
         });
 
-        it('Verify confirm password', () => {
+        it('should display confirm password', () => {
             return browser.getText(orderConfPage.SAVE_MY_INFO_CONFIRM_PASSWORD_LABEL)
                 .then((confirmPasswordLabel) => {
                     const expectConfirmPasswordLabel = Resource.msgf('field.confirm.password', 'confirmation', null);
@@ -545,7 +545,7 @@ describe('Checkout - Order confirmation page', () => {
                 .then(passwordVisible => assert.ok(passwordVisible));
         });
 
-        it('Verify save my account button', () => {
+        it('should display save my account button', () => {
             return browser.isEnabled(orderConfPage.SAVE_MY_INFO_CREATE_ACCOUNT)
                 .then(enabled => assert.ok(enabled, 'Expected Create Account button to be enabled.'));
         });
