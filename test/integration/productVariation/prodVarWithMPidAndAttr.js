@@ -269,7 +269,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
         };
 
         // strip out all "url" properties from the expected response
-        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url']);
+        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url', 'resetUrl']);
 
         request(myGetRequest, function (error, response) {
             assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
@@ -277,7 +277,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
             var bodyAsJson = JSON.parse(response.body);
 
             // strip out all "url" properties from the actual response
-            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url']);
+            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl']);
 
             assert.deepEqual(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
 

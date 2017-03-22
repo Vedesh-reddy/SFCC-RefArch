@@ -97,18 +97,14 @@ function CartModel(basket) {
         this.actionUrls = getCartActionUrls();
         this.numOfShipments = basket.shipments.length;
         this.totals = totalsModel;
-        this.shipments = [];
 
         if (shippingModels) {
-            var shippingModel;
-            var shipment;
-            for (var i = 0, ii = this.numOfShipments; i < ii; i++) {
-                shippingModel = shippingModels[i];
-                shipment = {};
-                shipment.shippingMethods = shippingModel.applicableShippingMethods;
-                shipment.selectedShippingMethod = shippingModel.selectedShippingMethodID;
-                this.shipments.push(shipment);
-            }
+            this.shipments = shippingModels.map(function (shippingModel) {
+                return {
+                    shippingMethods: shippingModel.applicableShippingMethods,
+                    selectedShippingMethod: shippingModel.selectedShippingMethod.ID
+                };
+            });
         }
         var discountPlan = PromotionMgr.getDiscounts(basket);
         if (discountPlan) {

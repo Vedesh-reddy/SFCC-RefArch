@@ -1,10 +1,8 @@
 'use strict';
 
 var ProductMgr = require('dw/catalog/ProductMgr');
-var Transaction = require('dw/system/Transaction');
 
 var Collections = require('~/cartridge/scripts/util/collections');
-
 var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 /**
@@ -31,21 +29,19 @@ function addProductToCart(currentBasket, productId, quantity) {
         }
     }
 
-    Transaction.wrap(function () {
-        if (productInCart) {
-            productQuantityInCart = productInCart.quantity;
-            quantityToSet = quantity ? quantity + productQuantityInCart : productQuantityInCart + 1;
-            productInCart.setQuantityValue(quantityToSet);
-        } else {
-            var productLineItem = currentBasket.createProductLineItem(
-                product,
-                optionModel,
-                defaultShipment
-            );
+    if (productInCart) {
+        productQuantityInCart = productInCart.quantity;
+        quantityToSet = quantity ? quantity + productQuantityInCart : productQuantityInCart + 1;
+        productInCart.setQuantityValue(quantityToSet);
+    } else {
+        var productLineItem = currentBasket.createProductLineItem(
+            product,
+            optionModel,
+            defaultShipment
+        );
 
-            productLineItem.setQuantityValue(quantity);
-        }
-    });
+        productLineItem.setQuantityValue(quantity);
+    }
 }
 
 /**

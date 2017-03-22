@@ -30,7 +30,13 @@ server.post('AddProduct', function (req, res, next) {
     var productId = req.querystring.pid;
     var quantity = parseInt(req.querystring.quantity, 10);
 
-    CartHelper.addProductToCart(currentBasket, productId, quantity);
+    if (currentBasket) {
+        Transaction.wrap(function () {
+            CartHelper.addProductToCart(currentBasket, productId, quantity);
+
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        });
+    }
 
     var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems);
 
@@ -61,13 +67,13 @@ server.get('Show', server.middleware.https, function (req, res, next) {
 server.get('Test', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
-    Transaction.wrap(function () {
-        if (currentBasket) {
+    if (currentBasket) {
+        Transaction.wrap(function () {
             CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-        }
-    });
+        });
+    }
 
     var basketModel = new CartModel(currentBasket);
 
@@ -90,8 +96,8 @@ server.get('RemoveProductLineItem', function (req, res, next) {
                     break;
                 }
             }
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         }
+        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
     });
 
     if (isProductLineItemFound) {
@@ -163,8 +169,8 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
     var error = false;
 
-    var shipUUID = req.form.shipmentUUID;
-    var methodID = req.form.methodID;
+    var shipUUID = req.querystring.shipmentUUID;
+    var methodID = req.querystring.methodID;
     var shipment;
     if (shipUUID) {
         shipment = ShippingHelper.getShipmentByUUID(currentBasket, shipUUID);
@@ -172,18 +178,16 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
         shipment = currentBasket.defaultShipment;
     }
 
-    if (methodID) {
-        Transaction.wrap(function () {
-            ShippingHelper.selectShippingMethod(shipment, methodID);
+    Transaction.wrap(function () {
+        ShippingHelper.selectShippingMethod(shipment, methodID);
 
-            if (currentBasket && !shipment.shippingMethod) {
-                error = true;
-                return;
-            }
+        if (currentBasket && !shipment.shippingMethod) {
+            error = true;
+            return;
+        }
 
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-        });
-    }
+        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+    });
 
     if (!error) {
         var basketModel = new CartModel(currentBasket);
@@ -205,7 +209,6 @@ server.get('MiniCartShow', function (req, res, next) {
         Transaction.wrap(function () {
             CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
-            // TODO: shouldn't we check to see if we changed anything first?
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
