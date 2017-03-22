@@ -117,8 +117,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '001',
                             'shippingCost': '$7.99',
                             'estimatedArrivalTime': '7-10 Business Days',
-                            'isDefault': true,
-                            'isSelected': true
+                            'default': true,
+                            'selected': true
                         },
                         {
                             'description': 'Order received in 2 business days',
@@ -126,8 +126,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '002',
                             'shippingCost': '$11.99',
                             'estimatedArrivalTime': '2 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Order received the next business day',
@@ -135,8 +135,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '003',
                             'shippingCost': '$19.99',
                             'estimatedArrivalTime': 'Next Day',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Store Pickup',
@@ -144,8 +144,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '005',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': null,
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Orders shipped outside continental US received in 2-3 business days',
@@ -153,8 +153,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '012',
                             'shippingCost': '$22.99',
                             'estimatedArrivalTime': '2-3 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Order shipped by USPS received within 7-10 business days',
@@ -162,8 +162,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '021',
                             'shippingCost': '$7.99',
                             'estimatedArrivalTime': '7-10 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         }
                     ]
                 }
@@ -358,8 +358,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '001',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': '7-10 Business Days',
-                            'isDefault': true,
-                            'isSelected': true
+                            'default': true,
+                            'selected': true
                         },
                         {
                             'description': 'Order received in 2 business days',
@@ -367,8 +367,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '002',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': '2 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Order received the next business day',
@@ -376,8 +376,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '003',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': 'Next Day',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Super Saver Delivery (arrives in 3-7 business days)',
@@ -385,8 +385,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '004',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': '3-7 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Store Pickup',
@@ -394,8 +394,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '005',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': null,
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Orders shipped outside continental US received in 2-3 business days',
@@ -403,8 +403,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '012',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': '2-3 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Order shipped by USPS received within 7-10 business days',
@@ -412,8 +412,8 @@ describe('Remove product variant from line item', function () {
                             'ID': '021',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': '7-10 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         }
                     ]
                 }

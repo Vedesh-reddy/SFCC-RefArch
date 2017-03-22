@@ -176,8 +176,8 @@ describe('Add Product variants to cart', function () {
                                         'displayName': 'Ground',
                                         'ID': '001',
                                         'estimatedArrivalTime': '7-10 Business Days',
-                                        'isDefault': true,
-                                        'isSelected': true,
+                                        'default': true,
+                                        'selected': true,
                                         'shippingCost': '$9.99'
                                     },
                                     {
@@ -185,8 +185,8 @@ describe('Add Product variants to cart', function () {
                                         'displayName': '2-Day Express',
                                         'ID': '002',
                                         'estimatedArrivalTime': '2 Business Days',
-                                        'isDefault': false,
-                                        'isSelected': false,
+                                        'default': false,
+                                        'selected': false,
                                         'shippingCost': '$15.99'
                                     },
                                     {
@@ -194,8 +194,8 @@ describe('Add Product variants to cart', function () {
                                         'displayName': 'Overnight',
                                         'estimatedArrivalTime': 'Next Day',
                                         'ID': '003',
-                                        'isDefault': false,
-                                        'isSelected': false,
+                                        'default': false,
+                                        'selected': false,
                                         'shippingCost': '$21.99'
                                     },
                                     {
@@ -203,8 +203,8 @@ describe('Add Product variants to cart', function () {
                                         'displayName': 'Store Pickup',
                                         'ID': '005',
                                         'estimatedArrivalTime': null,
-                                        'isDefault': false,
-                                        'isSelected': false,
+                                        'default': false,
+                                        'selected': false,
                                         'shippingCost': '$0.00'
                                     },
                                     {
@@ -212,8 +212,8 @@ describe('Add Product variants to cart', function () {
                                         'displayName': 'Express',
                                         'ID': '012',
                                         'estimatedArrivalTime': '2-3 Business Days',
-                                        'isDefault': false,
-                                        'isSelected': false,
+                                        'default': false,
+                                        'selected': false,
                                         'shippingCost': '$28.99'
                                     },
                                     {
@@ -221,8 +221,8 @@ describe('Add Product variants to cart', function () {
                                         'displayName': 'USPS',
                                         'ID': '021',
                                         'estimatedArrivalTime': '7-10 Business Days',
-                                        'isDefault': false,
-                                        'isSelected': false,
+                                        'default': false,
+                                        'selected': false,
                                         'shippingCost': '$9.99'
                                     }
                                 ]

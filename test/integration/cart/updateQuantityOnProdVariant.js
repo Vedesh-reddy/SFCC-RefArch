@@ -119,8 +119,8 @@ describe('Update quantity for product variant', function () {
                             'ID': '001',
                             'shippingCost': '$9.99',
                             'estimatedArrivalTime': '7-10 Business Days',
-                            'isDefault': true,
-                            'isSelected': true
+                            'default': true,
+                            'selected': true
                         },
                         {
                             'description': 'Order received in 2 business days',
@@ -128,8 +128,8 @@ describe('Update quantity for product variant', function () {
                             'ID': '002',
                             'shippingCost': '$15.99',
                             'estimatedArrivalTime': '2 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Order received the next business day',
@@ -137,8 +137,8 @@ describe('Update quantity for product variant', function () {
                             'ID': '003',
                             'shippingCost': '$21.99',
                             'estimatedArrivalTime': 'Next Day',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Store Pickup',
@@ -146,8 +146,8 @@ describe('Update quantity for product variant', function () {
                             'ID': '005',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': null,
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Orders shipped outside continental US received in 2-3 business days',
@@ -155,8 +155,8 @@ describe('Update quantity for product variant', function () {
                             'ID': '012',
                             'shippingCost': '$28.99',
                             'estimatedArrivalTime': '2-3 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         },
                         {
                             'description': 'Order shipped by USPS received within 7-10 business days',
@@ -164,8 +164,8 @@ describe('Update quantity for product variant', function () {
                             'ID': '021',
                             'shippingCost': '$9.99',
                             'estimatedArrivalTime': '7-10 Business Days',
-                            'isDefault': false,
-                            'isSelected': false
+                            'default': false,
+                            'selected': false
                         }
                     ]
                 }
