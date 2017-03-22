@@ -169,8 +169,8 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
     var error = false;
 
-    var shipUUID = req.querystring.shipmentUUID;
-    var methodID = req.querystring.methodID;
+    var shipUUID = req.querystring.shipmentUUID || req.form.shipmentUUID;
+    var methodID = req.querystring.methodID || req.form.methodID;
     var shipment;
     if (shipUUID) {
         shipment = ShippingHelper.getShipmentByUUID(currentBasket, shipUUID);
