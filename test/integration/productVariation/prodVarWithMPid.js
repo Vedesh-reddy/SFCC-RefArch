@@ -18,6 +18,7 @@ describe('ProductVariation - Get product variation with only master product ID',
 
         var expectedResBody = {
             'product': {
+                'attributes': null,
                 'id': masterPid,
                 'productName': 'No-Iron Textured Dress Shirt',
                 'shortDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
@@ -26,7 +27,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                 'searchable': true,
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
-                'attributes': [
+                'variationAttributes': [
                     {
                         'attributeId': 'color',
                         'displayName': 'Color',
@@ -278,63 +279,63 @@ describe('ProductVariation - Get product variation with only master product ID',
 
             assert.deepEqual(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
 
-            // Verify URL for product.attributes of color = SLABLFB
-            var attrColorBlue = bodyAsJson.product.attributes[0].values[0];
+            // Verify URL for product.variationAttributes of color = SLABLFB
+            var attrColorBlue = bodyAsJson.product.variationAttributes[0].values[0];
             assert.equal(attrColorBlue.url, myGetRequest.url + '&dwvar_25604455_color=SLABLFB', 'Actual color attribute = SLABLFB: url not as expected.');
 
             var colorBlueImages = attrColorBlue.images;
             assert.isTrue(colorBlueImages.swatch[0].url.endsWith('SLABLFB.CP.jpg'), 'color SLABLFB image swatch[0]: url not ended with SLABLFB.CP.jpg.');
 
-            // Verify URL for product.attributes of color = WHITEFB
-            var attrColorWhite = bodyAsJson.product.attributes[0].values[1];
+            // Verify URL for product.variationAttributes of color = WHITEFB
+            var attrColorWhite = bodyAsJson.product.variationAttributes[0].values[1];
             assert.equal(attrColorWhite.url, myGetRequest.url + '&dwvar_25604455_color=WHITEFB', 'Actual color attribute = WHITEFB: url not as expected.');
 
             var colorWhiteImages = attrColorWhite.images;
             assert.isTrue(colorWhiteImages.swatch[0].url.endsWith('WHITEFB.CP.jpg'), 'color WHITEFB image swatch[0].url not ended with WHITEFB.CP.jpg.');
 
-            // Verify URL for product.attributes of Size of id = 145
-            assert.equal(bodyAsJson.product.attributes[1].values[0].url, myGetRequest.url + '&dwvar_25604455_size=145', 'Actual product.attributes[1].values[0].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 145
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[0].url, myGetRequest.url + '&dwvar_25604455_size=145', 'Actual product.variationAttributes[1].values[0].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 150
-            assert.equal(bodyAsJson.product.attributes[1].values[1].url, myGetRequest.url + '&dwvar_25604455_size=150', 'Actual product.attributes[1].values[1].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 150
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[1].url, myGetRequest.url + '&dwvar_25604455_size=150', 'Actual product.variationAttributes[1].values[1].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 155
-            assert.equal(bodyAsJson.product.attributes[1].values[2].url, myGetRequest.url + '&dwvar_25604455_size=155', 'Actual product.attributes[1].values[2].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 155
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[2].url, myGetRequest.url + '&dwvar_25604455_size=155', 'Actual product.variationAttributes[1].values[2].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 160
-            assert.equal(bodyAsJson.product.attributes[1].values[3].url, myGetRequest.url + '&dwvar_25604455_size=160', 'Actual product.attributes[1].values[3].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 160
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[3].url, myGetRequest.url + '&dwvar_25604455_size=160', 'Actual product.variationAttributes[1].values[3].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 165
-            assert.equal(bodyAsJson.product.attributes[1].values[4].url, myGetRequest.url + '&dwvar_25604455_size=165', 'Actual product.attributes[1].values[4].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 165
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[4].url, myGetRequest.url + '&dwvar_25604455_size=165', 'Actual product.variationAttributes[1].values[4].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 170
-            assert.equal(bodyAsJson.product.attributes[1].values[5].url, myGetRequest.url + '&dwvar_25604455_size=170', 'Actual product.attributes[1].values[5].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 170
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[5].url, myGetRequest.url + '&dwvar_25604455_size=170', 'Actual product.variationAttributes[1].values[5].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 175
-            assert.equal(bodyAsJson.product.attributes[1].values[6].url, myGetRequest.url + '&dwvar_25604455_size=175', 'Actual product.attributes[1].values[6].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 175
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[6].url, myGetRequest.url + '&dwvar_25604455_size=175', 'Actual product.variationAttributes[1].values[6].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 180
-            assert.equal(bodyAsJson.product.attributes[1].values[7].url, myGetRequest.url + '&dwvar_25604455_size=180', 'Actual product.attributes[1].values[7].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 180
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[7].url, myGetRequest.url + '&dwvar_25604455_size=180', 'Actual product.variationAttributes[1].values[7].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 185
-            assert.equal(bodyAsJson.product.attributes[1].values[8].url, myGetRequest.url + '&dwvar_25604455_size=185', 'Actual product.attributes[1].values[8].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 185
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[8].url, myGetRequest.url + '&dwvar_25604455_size=185', 'Actual product.variationAttributes[1].values[8].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 190
-            assert.equal(bodyAsJson.product.attributes[1].values[9].url, myGetRequest.url + '&dwvar_25604455_size=190', 'Actual product.attributes[1].values[9].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 190
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[9].url, myGetRequest.url + '&dwvar_25604455_size=190', 'Actual product.variationAttributes[1].values[9].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 200
-            assert.equal(bodyAsJson.product.attributes[1].values[10].url, myGetRequest.url + '&dwvar_25604455_size=200', 'Actual product.attributes[1].values[10].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 200
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[10].url, myGetRequest.url + '&dwvar_25604455_size=200', 'Actual product.variationAttributes[1].values[10].url not as expected.');
 
-            // Verify URL for product.attributes of Size of id = 220
-            assert.equal(bodyAsJson.product.attributes[1].values[11].url, myGetRequest.url + '&dwvar_25604455_size=220', 'Actual product.attributes[1].values[11].url not as expected.');
+            // Verify URL for product.variationAttributes of Size of id = 220
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[11].url, myGetRequest.url + '&dwvar_25604455_size=220', 'Actual product.variationAttributes[1].values[11].url not as expected.');
 
-            // Verify URL for product.attributes of width = A (32/33)
-            assert.equal(bodyAsJson.product.attributes[2].values[0].url, myGetRequest.url + '&dwvar_25604455_width=A', 'Actual product.attributes[2].values[0].url not as expected.');
+            // Verify URL for product.variationAttributes of width = A (32/33)
+            assert.equal(bodyAsJson.product.variationAttributes[2].values[0].url, myGetRequest.url + '&dwvar_25604455_width=A', 'Actual product.variationAttributes[2].values[0].url not as expected.');
 
-            // Verify URL for product.attributes of width = B (34/35)
-            assert.equal(bodyAsJson.product.attributes[2].values[1].url, myGetRequest.url + '&dwvar_25604455_width=B', 'Actual product.attributes[2].values[1].url not as expected.');
+            // Verify URL for product.variationAttributes of width = B (34/35)
+            assert.equal(bodyAsJson.product.variationAttributes[2].values[1].url, myGetRequest.url + '&dwvar_25604455_width=B', 'Actual product.variationAttributes[2].values[1].url not as expected.');
 
-            // Verify URL for product.attributes of images
+            // Verify URL for product.variationAttributes of images
             var prodImages = bodyAsJson.product.images;
             assert.isTrue(prodImages.large[0].url.endsWith('WHITEFB.PZ.jpg'), 'product image large[0]: url not ended with WHITEFB.PZ.jpg');
             assert.isTrue(prodImages.large[1].url.endsWith('WHITEFB.BZ.jpg'), 'product image large[1]: url not ended with WHITEFB.BZ.jpg');

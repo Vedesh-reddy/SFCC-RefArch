@@ -100,7 +100,7 @@ function getAttrResetUrl(values, attrID) {
  * @param {string} attrConfig.endPoint - the endpoint to use when generating urls for
  *                                       product attributes
  */
-function AttributesModel(variationModel, attrConfig) {
+function VariationAttributesModel(variationModel, attrConfig) {
     var allAttributes = variationModel.productVariationAttributes;
     var result = [];
     dwHelpers.forEach(allAttributes, function (attr) {
@@ -133,6 +133,6 @@ function AttributesModel(variationModel, attrConfig) {
     }, this);
 }
 
-AttributesModel.prototype = [];
+VariationAttributesModel.prototype = [];
 
-module.exports = AttributesModel;
+module.exports = VariationAttributesModel;

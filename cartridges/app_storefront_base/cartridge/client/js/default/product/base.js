@@ -206,7 +206,7 @@ module.exports = {
      * @param {Object} response - response from Ajax call
      * @param {Object} response.product - Product object
      * @param {string} response.product.id - Product ID
-     * @param {Object[]} response.product.attributes - Product attributes
+     * @param {Object[]} response.product.variationAttributes - Product attributes
      * @param {Object[]} response.product.images - Product images
      * @param {boolean} response.product.hasRequiredAttrsSelected - Flag as to whether all required
      *     attributes have been selected.  Used partially to
@@ -224,7 +224,7 @@ module.exports = {
             $('.product-id').text(response.product.id);
         }
 
-        updateAttrs(response.product.attributes);
+        updateAttrs(response.product.variationAttributes);
 
         // Enable "Add to Cart" button if all required attributes have been selected
         $('button.add-to-cart').attr('disabled', !response.product.readyToOrder);

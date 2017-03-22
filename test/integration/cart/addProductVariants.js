@@ -250,7 +250,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'rating': 1,
                                 'renderedPromotions': '',
-                                'attributes': [
+                                'variationAttributes': [
                                     {
                                         'attributeId': 'color',
                                         'displayName': 'Color',
@@ -276,6 +276,7 @@ describe('Add Product variants to cart', function () {
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
+                                'attributes': null,
                                 'quantity': qty1,
                                 'isOrderable': true
                             },
@@ -300,7 +301,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'rating': 3,
                                 'renderedPromotions': '',
-                                'attributes': [
+                                'variationAttributes': [
                                     {
                                         'attributeId': 'color',
                                         'displayName': 'Color',
@@ -326,6 +327,7 @@ describe('Add Product variants to cart', function () {
                                 'promotions': null,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
+                                'attributes': null,
                                 'quantity': qty2,
                                 'isOrderable': true
                             },
@@ -350,7 +352,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'rating': 2,
                                 'renderedPromotions': '',
-                                'attributes': [
+                                'variationAttributes': [
                                     {
                                         'attributeId': 'color',
                                         'displayName': 'Color',
@@ -370,6 +372,7 @@ describe('Add Product variants to cart', function () {
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
+                                'attributes': null,
                                 'quantity': qty3,
                                 'isOrderable': true
                             },
@@ -398,7 +401,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'rating': 0,
                                 'renderedPromotions': '',
-                                'attributes': [
+                                'variationAttributes': [
                                     {
                                         'attributeId': 'color',
                                         'displayName': 'Color',
@@ -418,6 +421,7 @@ describe('Add Product variants to cart', function () {
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
+                                'attributes': null,
                                 'quantity': qty4,
                                 'isOrderable': true
                             }

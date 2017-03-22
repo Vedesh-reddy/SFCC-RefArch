@@ -16,30 +16,32 @@
     </div>
     <div class="tile-body">
         <isif condition="${pdict.display.swatches}">
-            <div class="color-swatches">
-                <div class="swatches">
-                    <isloop items="${pdict.product.attributes[0].values}" var="swatch" status="loopstate">
-                        <isif condition="${loopstate.count < 4
-                            && swatch.images != null
-                            && swatch.images.swatch[0] != null
-                            && swatch.images.swatch[0].url != null}">
-                            <a href="${swatch.url}">
+            <isif condition="${pdict.product.variationAttributes}">
+                <div class="color-swatches">
+                    <div class="swatches">
+                        <isloop items="${pdict.product.variationAttributes[0].values}" var="swatch" status="loopstate">
+                            <isif condition="${loopstate.count < 4
+                                && swatch.images != null
+                                && swatch.images.swatch[0] != null
+                                && swatch.images.swatch[0].url != null}">
+                                <a href="${swatch.url}">
+                                    <span>
+                                        <img class="swatch swatch-circle"
+                                             data-index="${loopstate.count-1}"
+                                             style="background-image: url(${swatch.images.swatch[0].url})"
+                                             src="${swatch.images.swatch[0].url}" />
+                                    </span>
+                                </a>
+                            <iselse/>
                                 <span>
-                                    <img class="swatch swatch-circle"
-                                         data-index="${loopstate.count-1}"
-                                         style="background-image: url(${swatch.images.swatch[0].url})"
-                                         src="${swatch.images.swatch[0].url}" />
+                                    <a href="${pdict.urls.product}">...</a>
                                 </span>
-                            </a>
-                        <iselse/>
-                            <span>
-                                <a href="${pdict.urls.product}">...</a>
-                            </span>
-                            <isbreak>
-                        </isif>
-                    </isloop>
+                                <isbreak>
+                            </isif>
+                        </isloop>
+                    </div>
                 </div>
-            </div>
+            </isif>
         </isif>
 
         <div class="pdp-link">

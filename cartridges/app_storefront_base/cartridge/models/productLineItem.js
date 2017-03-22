@@ -156,9 +156,10 @@ function ProductWrapper(product, productVariables, quantity, lineItem, promotion
         lineItem,
         promotions
     );
-    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes',
-        'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift', 'UUID', 'quantity',
-        'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions'];
+    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
+        'variationAttributes', 'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift',
+        'UUID', 'quantity', 'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions',
+        'attributes'];
     items.forEach(function (item) {
         this[item] = productLineItem[item];
     }, this);

@@ -192,7 +192,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'rating': 1,
                     'renderedPromotions': '',
-                    'attributes': [
+                    'variationAttributes': [
                         {
                             'attributeId': 'color',
                             'displayName': 'Color',
@@ -218,6 +218,7 @@ describe('Update quantity for product variant', function () {
                     'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid1,
+                    'attributes': null,
                     'quantity': expectQty1,
                     'isOrderable': true
                 },
@@ -242,7 +243,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'rating': 3,
                     'renderedPromotions': '',
-                    'attributes': [
+                    'variationAttributes': [
                         {
                             'attributeId': 'color',
                             'displayName': 'Color',
@@ -268,6 +269,7 @@ describe('Update quantity for product variant', function () {
                     'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid2,
+                    'attributes': null,
                     'quantity': expectQty2,
                     'isOrderable': true
                 },
@@ -296,7 +298,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'rating': 0,
                     'renderedPromotions': '',
-                    'attributes': [
+                    'variationAttributes': [
                         {
                             'attributeId': 'color',
                             'displayName': 'Color',
@@ -317,6 +319,7 @@ describe('Update quantity for product variant', function () {
                     'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid3,
+                    'attributes': null,
                     'quantity': expectQty3,
                     'isOrderable': true
                 }
