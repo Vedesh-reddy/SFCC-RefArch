@@ -19,10 +19,13 @@ describe('Approaching order level promotion', function () {
     var qty = 2;
     var cookieString;
     var cookieJar = request.jar();
+    var UUID;
     var myShippingMethodForm = {
         methodID: '001'
     };
-
+    var myNewShippingMethodForm = {
+        methodID: '021'
+    };
     var myRequest = {
         url: '',
         method: 'GET',
@@ -30,7 +33,13 @@ describe('Approaching order level promotion', function () {
         resolveWithFullResponse: true,
         jar: cookieJar
     };
-
+    var myNewRequest = {
+        url: '',
+        method: 'GET',
+        rejectUnauthorized: false,
+        resolveWithFullResponse: true,
+        jar: cookieJar
+    };
     var orderDiscountMsg = 'Purchase $24.00 or more and receive 20% off on your order';
     var shippingDiscountMsg = 'Purchase $24.00 or more and receive Free Shipping with USPS (7-10 Business Days)';
 
@@ -69,16 +78,11 @@ describe('Approaching order level promotion', function () {
             .then(function (response) {
                 assert.equal(response.statusCode, 200, 'expected add shipping method to return status code 200');
             })
-            // go to Cart needs to update the URL to use pretty url
+            // go to Cart
             .then(function () {
+                // needs to update the URL to use pretty url
                 var NewUrl = config.baseUrl.replace('on/demandware.store/Sites-SiteGenesis-Site/', 's/SiteGenesis/cart?lang=');
-                var myNewRequest = {
-                    url: NewUrl,
-                    method: 'GET',
-                    rejectUnauthorized: false,
-                    resolveWithFullResponse: true,
-                    jar: cookieJar
-                };
+                myNewRequest.url = NewUrl;
                 var cookie = request.cookie(cookieString);
                 cookieJar.setCookie(cookie, myNewRequest.url);
                 return request(myNewRequest);
@@ -87,9 +91,37 @@ describe('Approaching order level promotion', function () {
                 assert.equal(response.statusCode, 200, 'expected cart page to return status code 200');
                 var $ = cheerio.load(response.body);
                 var discount = $('.single-approaching-discount');
+                UUID = $('.custom-select.quantity').attr('data-uuid');
                 assert.equal(discount.get(0).children[0].data.trim(), orderDiscountMsg);
                 assert.equal(discount.get(1).children[0].data.trim(), shippingDiscountMsg);
                 done();
             });
     });
+    it('3. should return a response containing actual order level discount in Cart', function(done) {
+        // update the quantity to 4 to trigger the order level discount
+        myNewRequest.url = config.baseUrl + '/Cart-UpdateQuantity?pid=' + variantPid + '&quantity=4&uuid='+ UUID;
+        return request(myNewRequest)
+            .then(function(response) {
+                assert.equal(response.statusCode, 200, 'expected update quantity call to return status code 200');
+                var bodyAsJson = JSON.parse(response.body);
+                assert.equal(bodyAsJson.totals.orderLevelDiscountTotal.formatted, '$30.40');
+                assert.equal(bodyAsJson.totals.discounts[0].lineItemText, 'Approaching Order Discount Test');
+                assert.equal(bodyAsJson.totals.discounts[0].price, '-$30.40');
+                assert.equal(bodyAsJson.totals.discounts[0].type, 'promotion');
+                done();
+            })
+    })
+    it('4. should return a response containing actual shipping order discount in Cart', function(done) {
+        // update the shipping methods to be USPS to meet the promotion requirement
+        myNewRequest.form = myNewShippingMethodForm; // Ground Shipping method
+        myNewRequest.method = 'POST';
+        myNewRequest.url = config.baseUrl + '/Cart-SelectShippingMethod';
+        return request(myRequest)
+            .then(function(response) {
+                assert.equal(response.statusCode, 200, 'expected selectShippingMethod call to return status code 200');
+                var bodyAsJson = JSON.parse(response.body);
+                console.log('bodyAsJson is ', bodyAsJson.totals);
+                done();
+            })
+    })
 });
