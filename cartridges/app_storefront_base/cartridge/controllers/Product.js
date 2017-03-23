@@ -20,13 +20,13 @@ function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
     var product;
     if (pid) {
         product = ProductMgr.getProduct(pid);
-        primaryCategory = product.master ?
-            product.primaryCategory :
-            product.masterProduct.primaryCategory;
+        primaryCategory = product.variant
+            ? product.masterProduct.primaryCategory
+            : product.primaryCategory;
     }
-    var category = cgid && cgid !== 'root' ?
-            CatalogMgr.getCategory(cgid) :
-            primaryCategory;
+    var category = cgid && cgid !== 'root'
+        ? CatalogMgr.getCategory(cgid)
+        : primaryCategory;
     breadcrumbs.push({
         htmlValue: category.displayName,
         url: URLUtils.url('Search-Show', 'cgid', category.ID)

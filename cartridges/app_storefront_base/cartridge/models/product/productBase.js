@@ -78,8 +78,9 @@ function getPromotions(promotions) {
  */
 function getVariationModel(product, productVariables) {
     var variationModel = product.variationModel;
-
-    if (productVariables) {
+    if (!variationModel.master && !variationModel.selectedVariant) {
+        variationModel = null;
+    } else if (productVariables) {
         var variationAttrs = variationModel.productVariationAttributes;
         Object.keys(productVariables).forEach(function (attr) {
             if (attr && productVariables[attr].value) {
@@ -94,7 +95,6 @@ function getVariationModel(product, productVariables) {
             }
         });
     }
-
     return variationModel;
 }
 
@@ -110,7 +110,11 @@ function getVariationModel(product, productVariables) {
  */
 function ProductBase(product, productVariables, quantity, promotions) {
     this.variationModel = this.getVariationModel(product, productVariables);
-    this.product = this.variationModel.selectedVariant || product;
+    if (this.variationModel) {
+        this.product = this.variationModel.selectedVariant || product;
+    } else {
+        this.product = product;
+    }
     this.imageConfig = {
         types: ['medium'],
         quantity: 'single'
@@ -133,9 +137,11 @@ ProductBase.prototype = {
         this.price = priceFactory.getPrice(this.product, null, this.useSimplePrice,
             this.apiPromotions);
         this.productType = getProductType(this.product);
-        this.images = new ImageModel(this.variationModel, this.imageConfig);
+        this.images = this.variationModel ? new ImageModel(this.variationModel, this.imageConfig) :
+            new ImageModel(this.product, this.imageConfig);
         this.rating = getRating(this.id);
-        this.attributes = (new AttributesModel(this.variationModel, this.attributeConfig)).slice(0);
+        this.attributes = this.variationModel ?
+            (new AttributesModel(this.variationModel, this.attributeConfig)).slice(0) : null;
         this.promotions = this.apiPromotions ? getPromotions(this.apiPromotions) : null;
     },
     /**
