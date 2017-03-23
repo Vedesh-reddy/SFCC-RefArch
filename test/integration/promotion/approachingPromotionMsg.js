@@ -40,6 +40,13 @@ describe('Approaching order level promotion', function () {
         resolveWithFullResponse: true,
         jar: cookieJar
     };
+    var myShippingRequest = {
+        url: '',
+        method: 'POST',
+        rejectUnauthorized: false,
+        resolveWithFullResponse: true,
+        jar: cookieJar
+    };
     var orderDiscountMsg = 'Purchase $24.00 or more and receive 20% off on your order';
     var shippingDiscountMsg = 'Purchase $24.00 or more and receive Free Shipping with USPS (7-10 Business Days)';
 
@@ -97,31 +104,35 @@ describe('Approaching order level promotion', function () {
                 done();
             });
     });
-    it('3. should return a response containing actual order level discount in Cart', function(done) {
+    it('3. should return a response with Approaching Order Discount -$30.40 in Cart', function (done) {
         // update the quantity to 4 to trigger the order level discount
-        myNewRequest.url = config.baseUrl + '/Cart-UpdateQuantity?pid=' + variantPid + '&quantity=4&uuid='+ UUID;
+        myNewRequest.url = config.baseUrl + '/Cart-UpdateQuantity?pid=' + variantPid + '&quantity=4&uuid=' + UUID;
         return request(myNewRequest)
-            .then(function(response) {
+            .then(function (response) {
                 assert.equal(response.statusCode, 200, 'expected update quantity call to return status code 200');
                 var bodyAsJson = JSON.parse(response.body);
+                var discounts = bodyAsJson.totals.discounts[0];
                 assert.equal(bodyAsJson.totals.orderLevelDiscountTotal.formatted, '$30.40');
-                assert.equal(bodyAsJson.totals.discounts[0].lineItemText, 'Approaching Order Discount Test');
-                assert.equal(bodyAsJson.totals.discounts[0].price, '-$30.40');
-                assert.equal(bodyAsJson.totals.discounts[0].type, 'promotion');
+                assert.equal(discounts.lineItemText, 'Approaching Order Discount Test');
+                assert.equal(discounts.price, '-$30.40');
+                assert.equal(discounts.type, 'promotion');
                 done();
-            })
-    })
-    it('4. should return a response containing actual shipping order discount in Cart', function(done) {
+            });
+    });
+    it('4. should return a response with Approaching Shipping Discount -$7.99 in Cart', function (done) {
         // update the shipping methods to be USPS to meet the promotion requirement
-        myNewRequest.form = myNewShippingMethodForm; // Ground Shipping method
-        myNewRequest.method = 'POST';
-        myNewRequest.url = config.baseUrl + '/Cart-SelectShippingMethod';
-        return request(myRequest)
-            .then(function(response) {
+        myShippingRequest.form = myNewShippingMethodForm; // Ground Shipping method
+        myShippingRequest.url = config.baseUrl + '/Cart-SelectShippingMethod';
+        return request(myShippingRequest)
+            .then(function (response) {
                 assert.equal(response.statusCode, 200, 'expected selectShippingMethod call to return status code 200');
                 var bodyAsJson = JSON.parse(response.body);
-                console.log('bodyAsJson is ', bodyAsJson.totals);
+                var discounts = bodyAsJson.totals.discounts[1];
+                assert.equal(bodyAsJson.totals.shippingLevelDiscountTotal.formatted, '$7.99');
+                assert.equal(discounts.lineItemText, 'Approaching Shipping Discount Test');
+                assert.equal(discounts.price, '-$7.99');
+                assert.equal(discounts.type, 'promotion');
                 done();
-            })
-    })
+            });
+    });
 });
