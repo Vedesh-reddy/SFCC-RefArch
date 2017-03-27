@@ -10,7 +10,7 @@
 					<fieldset>
 					    <div class="form-check">
 					        <label for="usesMultiShip" class="form-check-label checkout-checkbox">
-					            <input name="usesMultiShip" class="form-check-input" type="checkbox" <isif condition="${pdict.CurrentSession.privacy.usingMultiShipping}">checked</isif>>
+					            <input name="usesMultiShip" class="form-check-input" type="checkbox" <isif condition="${pdict.multishipEnabled}">checked</isif>>
 					            ${Resource.msg('check.shipping.multiship', 'checkout', null)}
 					        </label>
 					    </div>
@@ -30,7 +30,7 @@
 		<div class="container single-shipping">
 		    <div class="tab-content">
 		        <!--- Shipping Address Form--->
-		        <div class="tab-pane active card-block" id="shipping-address" role="tabpanel">
+		        <div class="tab-pane active card-block" id="shipping-address" class="shipping-address" role="tabpanel">
 		            <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
 		            <!--<form action="${URLUtils.url('Checkout-Shipping')}" class="shipping" method="post" name="shipping">-->
 		                <fieldset>
@@ -87,7 +87,7 @@
 				            			Enter Address
 				            		</a>
 			            		</div>
-				               	<div class="tab-pane card-block" id="edit-address-${shipmentLoopState.index}${loopState.index}" role="tabpanel">
+				               	<div class="tab-pane card-block" id="edit-address-${shipmentLoopState.index}${loopState.index}" class="shipping-address" role="tabpanel">
 						            <form id="edit-address-form-${shipmentLoopState.index}${loopState.index}" autocomplete="on" method="POST" action="${URLUtils.url('Checkout-AddNewAddress')}" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
 										<input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
 										<input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
@@ -99,7 +99,7 @@
 												    <label class="form-control-label" for="shipmentSelector">
 												        Ship To Address
 												    </label>
-												    <a class="btn float-right toggle-shipping-address-form">Toggle Details</a>
+												    <a class="btn float-right toggle-shipping-address-form">Edit</a>
 												    
                 									<isinclude template="checkout/shipping/shipmentSelector" />
 												    <div class="form-control-feedback"></div>

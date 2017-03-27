@@ -24,6 +24,7 @@ var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 var COHelpers = require('~/cartridge/scripts/checkout/checkoutHelpers');
 
+var Collections = require('~/cartridge/scripts/util/collections');
 
 /**
  * Main entry point for Checkout
@@ -74,12 +75,44 @@ server.get('Test', server.middleware.https, function (req, res, next) {
 
 
 server.post('ToggleMultiShip', server.middleware.https, function (req, res, next) {
-    var privacyCache = req.privacyCache;
+    /** vvv Extract to server.middleware for all Checkout / Ajax functions **/
+	var currentBasket = BasketMgr.getCurrentBasket();
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return;
+    }
+    /** ^^^ Extract to middleware for all Checkout / Ajax functinos **/
+    
+    var shipments = currentBasket.shipments;
+    var defaultShipment = currentBasket.defaultShipment;
+    var usingMultiShipping = !req.privacyCache.get('usingMultiShipping');
 
-    privacyCache.usingMultiShipping = !privacyCache.usingMultiShipping;
+    req.privacyCache.set('usingMultiShipping', usingMultiShipping);
 
+    if (!usingMultiShipping && shipments.length > 1) {
+    	// Make sure we move all product line items back to the default shipment
+        Transaction.wrap(function () {
+	    	Collections.forEach(shipments, function (shipment, index) {
+	    		if (index > 0) {
+		    		Collections.forEach(shipment.productLineItems, function (pli) {
+		    			pli.setShipment(defaultShipment);
+		    		});
+		    		currentBasket.removeShipment(shipment);
+	    		}
+	    	});
+
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        });
+    }
+    
     res.json({
-        usingMultiShipping: privacyCache.usingMultiShipping
+        usingMultiShipping: usingMultiShipping
     });
 
     next();
@@ -88,7 +121,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
 server.post('AddNewAddress', server.middleware.https, function (req, res, next) {
     var pliUUID = req.form.productLineItemUUID;
-    var shipmentUUID = req.form.shipmentUUID;
+    var shipmentUUID = req.form.shipmentSelector || req.form.shipmentUUID;
     var origUUID = req.form.originalShipmentUUID;
 
     var form = server.forms.getForm('shipping');
@@ -197,10 +230,6 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var hasEquivalentAddress = true;
 
     var currentCustomer = req.currentCustomer.raw;
-//    var preferredAddress = currentCustomer.addressBook ?
-//        currentCustomer.addressBook.preferredAddress : null;
-//    var customerAddresses = currentCustomer.addressBook ?
-//        currentCustomer.addressBook.addresses : null;
 
     if (billingAddress && shippingAddress) {
         hasEquivalentAddress = billingAddress.isEquivalentAddress(shippingAddress);
@@ -258,7 +287,8 @@ server.get('Start', server.middleware.https, function (req, res, next) {
         },
         expirationYears: creditCardExpirationYears,
         currentStage: currentStage,
-        isEquivalentAddress: hasEquivalentAddress
+        isEquivalentAddress: hasEquivalentAddress,
+        multishipEnabled: req.privacyCache.get('usingMultiShipping')
     });
     return next();
 });
@@ -561,7 +591,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
 });
 
 
-server.get('UpdateShippingMethodsList', server.middleware.https, function (req, res, next) {
+server.post('UpdateShippingMethodsList', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -575,11 +605,19 @@ server.get('UpdateShippingMethodsList', server.middleware.https, function (req, 
         return next();
     }
 
+    var shipUUID = req.querystring.shipmentUUID || req.form.shipmentUUID;
+    var shipment;
+    if (shipUUID) {
+        shipment = ShippingHelper.getShipmentByUUID(currentBasket, shipUUID);
+    } else {
+        shipment = currentBasket.defaultShipment;
+    }
+
     var address = {
-        postalCode: req.querystring.postal,
-        stateCode: req.querystring.state
+        postalCode: req.querystring.postal || req.form.postal,
+        stateCode: req.querystring.state || req.form.state
     };
-    var shipment = currentBasket.defaultShipment;
+    
     var shippingMethodID;
 
     if (shipment.shippingMethod) {

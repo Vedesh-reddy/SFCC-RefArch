@@ -4,7 +4,7 @@
     <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod" status="loopSate">
         <div class="form-check col-8 start-lines">
             <label class="form-check-label shipping-method-option">
-                <isif condition="${shippingMethod.ID === shippingModel.selectedShippingMethod.ID}">
+                <isif condition="${shippingModel.selectedShippingMethod && shippingMethod.ID === shippingModel.selectedShippingMethod.ID}">
                     <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" class="form-check-input" value="${shippingMethod.ID}" checked>
                 <iselse/>
                     <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input">

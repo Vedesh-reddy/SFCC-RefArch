@@ -37,4 +37,19 @@ jsonUtils.removeProps = function (obj, keys) {
     }
 };
 
+/**
+ * Return pretty-print JSON string
+ *
+ * @param {JSON} obj
+ */
+jsonUtils.toPrettyString = function (obj) {
+    var prettyString;
+
+    if (obj) {
+        prettyString = JSON.stringify(obj, null, '\t');
+    }
+
+    return prettyString;
+};
+
 module.exports = jsonUtils;

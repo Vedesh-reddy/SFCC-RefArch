@@ -210,19 +210,23 @@
                     var formSelector = isMultiShip ?
                             '.multi-shipping .active form' : '.single-shipping .active form';
                     var form = $(formSelector);
-                    $.ajax({
-                        url: form.attr('action'),
-                        method: 'POST',
-                        data: form.serialize(),
-                        success: function (data) {
-                            shippingFormResponse(defer, data);
-                        },
-                        error: function () {
-                            // Server error submitting form
-                            defer.reject();
-                        }
-                    });
-
+                    if( isMultiShip && form.length === 0 ) {
+                    	// in case the multi ship form is already submitted
+                    	defer.resolve();
+                    } else {
+	                    $.ajax({
+	                        url: form.attr('action'),
+	                        method: 'POST',
+	                        data: form.serialize(),
+	                        success: function (data) {
+	                            shippingFormResponse(defer, data);
+	                        },
+	                        error: function () {
+	                            // Server error submitting form
+	                            defer.reject();
+	                        }
+	                    });
+	                }
                     return defer;
                 } else if (stage === 'payment') {
                     //
@@ -327,25 +331,24 @@
                 return p; // eslint-disable-line
             },
 
-            updateShippingMethodList: function () {
-                var $shippingMethodList = $('.shipping-method-list');
-                var state = $('.shippingState').val();
-                var postal = $('.shippingZipCode').val();
+            updateShippingMethodList: function (event) {
+            	var $shippingForm = $(event.currentTarget.form);
+                var $shippingMethodList = $shippingForm.find('.shipping-method-list');
+                var state = $shippingForm.find('.shippingState').val();
+                var postal = $shippingForm.find('.shippingZipCode').val();
+                var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
                 var url = $shippingMethodList.data('action');
                 var urlParams = {
                     state: state,
-                    postal: postal
+                    postal: postal,
+                    shipmentUUID: shipmentUUID
                 };
-
-                url += (url.indexOf('?') !== -1 ? '&' : '?') +
-                    Object.keys(urlParams).map(function (key) {
-                        return key + '=' + encodeURIComponent(urlParams[key]);
-                    }).join('&');
 
                 $.ajax({
                     url: url,
-                    type: 'get',
+                    type: 'post',
                     dataType: 'json',
+                    data: urlParams,
                     success: function (data) {
                         if (data.error) {
                             window.location.href = data.redirectUrl;
@@ -431,6 +434,7 @@
 
                 var toggleMultiShip = function (checked) {
                     var url = $('.shipping-nav form').attr('action');
+                    $.spinner().start();
                     $.ajax({
                         url: url,
                         type: 'post',
@@ -441,9 +445,16 @@
                         success: function (data) {
                             if (data.error) {
                                 window.location.href = data.redirectUrl;
+                            } else if (data.usingMultiShipping) {
+                                toggleMultiShipForm(true);
                             } else {
-                                toggleMultiShipForm(data.usingMultiShipping);
+                            	// Switching back to single ship forces reload
+                            	var urlParts = window.location.href.split('#');
+                            	window.location.href = urlParts[0];
                             }
+                            $.spinner().stop();
+                        },
+                        error: function(err) {
                             $.spinner().stop();
                         }
                     });
@@ -478,17 +489,22 @@
                     var selectedOption = $('option:selected', this);
                     var attrs = selectedOption.data();
                     var shipmentUUID = selectedOption[0].value;
-                    $('input[name=shipmentUUID]', form).val(shipmentUUID);
+                    var originalUUID = $('input[name=shipmentUUID]', form).val();
+                    
                     Object.keys(attrs).forEach(function (attr) {
                         $('[name$=' + attr + ']', form).val(attrs[attr]);
                     });
 
                     if (shipmentUUID === 'new') {
+                        $(form).removeClass('hide-details');
                         $('.toggle-shipping-address-form', form).hide();
-                    } else {
+                    } else if(shipmentUUID === originalUUID) {
+                        $(form).addClass('hide-details');
                         $('.toggle-shipping-address-form', form).show();
+                    } else {
+                        $(form).addClass('hide-details');
+                        $('.toggle-shipping-address-form', form).hide();
                     }
-                    $(form).removeClass('hide-details');
                 });
 
                 $('.product-shipping-block [data-toggle="tab1"]').on('click', function (e) {
@@ -504,6 +520,7 @@
                     switch (testTarget) {
                         case '#edit-address':
                         // do nothing special, just show the edit address view
+                            $('.toggle-shipping-address-form', form).hide();
                             if (action === 'enter') {
                                 $('form .shipping-address-block input', rootPanel).val('');
                             } else {
@@ -635,15 +652,17 @@
                     }
                 });
 
-                $('#shipping-address .address').on('change',
-                    'select[name$="shippingAddress_addressFields_states_stateCode"]',
+                $('select[name$="shippingAddress_addressFields_states_stateCode"]').on('change',
                     members.updateShippingMethodList
                 );
 
                 $('.shipping-method-list').change(function () {
+                	var $shippingForm = $(this.form);
+                    var methodID = $(':checked', this).val();
+                    var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
                     var url = $(this).data('select-shipping-method-url');
                     var urlParams = {
-                        methodID: $(':checked', this).val(),
+                        methodID: methodID,
                         shipmentUUID: $('[name$=shipmentUUID]', this).val()
                     };
 
