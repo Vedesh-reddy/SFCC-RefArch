@@ -109,7 +109,7 @@
             $.each(fieldErrors, function (attr) {
                 $('*[name=' + attr + ']', parentSelector)
                     .parents('.form-group').first()
-                    .toggleClass('has-danger')
+                    .addClass('has-danger')
                     .find('.form-control-feedback')
                     .html(fieldErrors[attr]);
             });
