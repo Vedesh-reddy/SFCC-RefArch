@@ -27,7 +27,26 @@ ProductFactory.get = function (params) {
     promotions = promotions.length ? promotions : null;
     var productType = Product.getProductType(product);
 
-    if (productType === 'variant' || productType === 'master' || productType === 'variationGroup') {
+    if (productType === 'set') {
+        // TODO: Add ProductSet factory
+    } else if (productType === 'optionProduct') {
+        // TODO: Add option product
+    } else if (productType === 'bundle') {
+        switch (params.pview) {
+            case 'tile':
+                product = new ProductTile(product, params.variables, promotions);
+                break;
+            default:
+                var productFactory = this;
+                product = new ProductBundle(
+                    product,
+                    params.quantity,
+                    promotions,
+                    productFactory
+                );
+                break;
+        }
+    } else {
         switch (params.pview) {
             case 'tile':
                 product = new ProductTile(product, params.variables, promotions);
@@ -45,25 +64,6 @@ ProductFactory.get = function (params) {
                 product = new Product(product, params.variables, params.quantity, promotions);
                 break;
         }
-    } else if (productType === 'set') {
-        // TODO: Add ProductSet factory
-    } else if (productType === 'bundle') {
-        switch (params.pview) {
-            case 'tile':
-                product = new ProductTile(product, params.variables, promotions);
-                break;
-            default:
-                var productFactory = this;
-                product = new ProductBundle(
-                    product,
-                    params.quantity,
-                    promotions,
-                    productFactory
-                );
-                break;
-        }
-    } else {
-        throw new TypeError('Invalid Product Type');
     }
 
     return product;

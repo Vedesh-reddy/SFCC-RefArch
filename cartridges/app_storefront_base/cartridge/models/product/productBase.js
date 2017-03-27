@@ -11,8 +11,10 @@ var priceFactory = require('../../scripts/factories/price');
  * @return {string} type of the current product
  */
 function getProductType(product) {
-    var result = 'master';
-    if (product.variant) {
+    var result;
+    if (product.master) {
+        result = 'master';
+    } else if (product.variant) {
         result = 'variant';
     } else if (product.variationGroup) {
         result = 'variationGroup';
@@ -20,6 +22,10 @@ function getProductType(product) {
         result = 'set';
     } else if (product.bundle) {
         result = 'bundle';
+    } else if (product.optionProduct) {
+        result = 'optionProduct';
+    } else {
+        result = 'standard';
     }
     return result;
 }

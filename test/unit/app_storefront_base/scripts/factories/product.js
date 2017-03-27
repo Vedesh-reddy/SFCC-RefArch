@@ -56,10 +56,18 @@ describe('productFactory', function () {
         });
         assert.equal(product.message, 'product base');
     });
+
     it('should return product bundle model', function () {
         productModel.getProductType = function () { return 'bundle'; };
 
         var product = productFactory.get({ pid: 1234 });
         assert.equal(product.message, 'productBundle');
+    });
+
+    it('should return product bundle model', function () {
+        productModel.getProductType = function () { return 'bundle'; };
+
+        var product = productFactory.get({ pid: 1234, pview: 'tile' });
+        assert.equal(product.message, 'product base');
     });
 });
