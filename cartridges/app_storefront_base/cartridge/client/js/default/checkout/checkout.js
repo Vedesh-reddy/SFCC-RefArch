@@ -540,6 +540,7 @@
                                 data: data
                             })
                             .done(function (response) {
+                                clearPreviousErrors(form);
                                 if (response.error) {
                                     loadFormErrors(form, response.fieldErrors);
                                 } else {
