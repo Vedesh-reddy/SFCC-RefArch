@@ -108,7 +108,7 @@ describe('Select different State in Shipping Form', function () {
             };
             var myRequest = {
                 url: '',
-                method: 'GET',
+                method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
@@ -223,7 +223,7 @@ describe('Select different State in Shipping Form', function () {
             };
             var myRequest = {
                 url: '',
-                method: 'GET',
+                method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
@@ -324,7 +324,7 @@ describe('Select different State in Shipping Form', function () {
             };
             var myRequest = {
                 url: '',
-                method: 'GET',
+                method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
@@ -439,7 +439,7 @@ describe('Select different State in Shipping Form', function () {
             };
             var myRequest = {
                 url: '',
-                method: 'GET',
+                method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
@@ -550,7 +550,7 @@ describe('Select different State in Shipping Form', function () {
             };
             var myRequest = {
                 url: '',
-                method: 'GET',
+                method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
@@ -650,7 +650,7 @@ describe('Select different State in Shipping Form', function () {
             };
             var myRequest = {
                 url: '',
-                method: 'GET',
+                method: 'POST',
                 rejectUnauthorized: false,
                 resolveWithFullResponse: true,
                 jar: cookieJar
