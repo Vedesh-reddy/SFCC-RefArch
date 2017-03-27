@@ -112,6 +112,7 @@ server.get('ShowTile', function (req, res, next) {
     // have the following:
     // pid - the Product ID
     // compare - boolean to determine if the compare feature should be shown in the tile.
+    // comparisonPage - boolean to determine if this tile will be rendered for product comparison
     // reviews - boolean to determine if the reviews should be shown in the tile.
     // swatches - boolean to determine if the swatches should be shown in the tile.
     //
@@ -120,6 +121,7 @@ server.get('ShowTile', function (req, res, next) {
     var productTileParams = {
         pid: req.querystring.pid,
         compare: req.querystring.compare,
+        comparisonPage: req.querystring.comparisonPage,
         reviews: req.querystring.reviews,
         swatches: req.querystring.swatches,
         pview: 'tile'
@@ -156,7 +158,8 @@ server.get('ShowTile', function (req, res, next) {
         display: {
             swatches: req.querystring.swatches,
             reviews: req.querystring.reviews,
-            compare: req.querystring.compare === 'true'
+            compare: req.querystring.compare === 'true',
+            comparisonPage: !!productTileParams.comparisonPage
         }
     });
 

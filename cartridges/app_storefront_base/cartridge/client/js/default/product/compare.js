@@ -184,8 +184,8 @@ module.exports = {
             });
 
             productsForComparison = [];
-            // Uncheck any checked "Compare" checkboxes
             $('.compare input').prop('checked', false);
+            $('.compare input[type=checkbox]:not(:checked)').removeAttr('disabled');
             $compareBar.hide();
         });
     },
