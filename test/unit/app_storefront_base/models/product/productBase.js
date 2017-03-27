@@ -63,7 +63,18 @@ describe('productBase', function () {
 
     it('should create a product with query string params', function () {
         var tempMock = Object.assign({}, productMock);
+        var tempVariationAttributes = new ArrayList([{
+            attributeID: 'color'
+        }]);
+        var tempGetAllValues = {
+            return: new ArrayList([{
+                value: 123
+            }]),
+            type: 'function'
+        };
         tempMock.variationModel.selectedVariant.variant = true;
+        tempMock.variationModel.productVariationAttributes = tempVariationAttributes;
+        tempMock.variationModel.getAllValues = tempGetAllValues;
         var mock = toProductMock(tempMock);
         var product = new ProductBase(mock, { color: { value: 123 } });
 
@@ -112,5 +123,30 @@ describe('productBase', function () {
         var product = new ProductBase(toProductMock(tempMock), null);
 
         assert.equal(product.promotions, null);
+    });
+    it('should create a product which is not a master and not a variant ', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel.selectedVariant = null;
+        tempMock.variant = false;
+        tempMock.variationModel.master = false;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new ProductBase(toProductMock(tempMock));
+
+        assert.equal(product.productName, 'test product');
+        assert.equal(product.id, 1234567);
+        assert.equal(product.rating, 4);
+    });
+
+    it('should create a master product', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel.selectedVariant = null;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        tempMock.variant = false;
+        tempMock.variationModel.master = true;
+        var product = new ProductBase(toProductMock(tempMock));
+
+        assert.equal(product.productName, 'test product');
+        assert.equal(product.id, 1234567);
+        assert.equal(product.rating, 4);
     });
 });

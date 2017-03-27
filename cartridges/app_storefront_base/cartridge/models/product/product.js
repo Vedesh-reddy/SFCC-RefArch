@@ -42,7 +42,11 @@ function hasRequiredAttrsSelected(variationModel) {
  */
 function FullProduct(product, productVariables, quantity, promotions) {
     this.variationModel = this.getVariationModel(product, productVariables);
-    this.product = this.variationModel.selectedVariant || product;
+    if (this.variationModel) {
+        this.product = this.variationModel.selectedVariant || product;
+    } else {
+        this.product = product;
+    }
     this.imageConfig = {
         types: ['large', 'small'],
         quantity: 'all'
@@ -64,12 +68,14 @@ FullProduct.prototype.initialize = function () {
     ProductBase.prototype.initialize.call(this);
     this.available = isAvailable(this.quantity, this.product);
     this.shortDescription = this.product.shortDescription.markup;
-    this.longDescription = this.product.longDescription.markup;
+    this.longDescription = this.product.longDescription ? this.product.longDescription.markup : '';
     this.online = this.product.online;
     this.searchable = this.product.searchable;
     this.minOrderQuantity = this.product.minOrderQuantity.value || 1;
     this.maxOrderQuantity = DEFAULT_MAX_ORDER_QUANTITY;
-    this.readyToOrder = hasRequiredAttrsSelected(this.variationModel);
+    this.readyToOrder = this.variationModel
+        ? hasRequiredAttrsSelected(this.variationModel)
+        : true;
 };
 
 /**

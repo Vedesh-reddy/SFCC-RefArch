@@ -121,4 +121,16 @@ describe('fullProduct', function () {
 
         assert.deepEqual(product.promotions, null);
     });
+
+    it('should create a master product', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel.selectedVariant = null;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        tempMock.variationModel.master = true;
+        var product = new FullProduct(toProductMock(tempMock));
+
+        assert.equal(product.productName, 'test product');
+        assert.equal(product.id, 1234567);
+        assert.equal(product.rating, 4);
+    });
 });
