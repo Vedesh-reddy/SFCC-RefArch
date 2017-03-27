@@ -76,7 +76,7 @@ server.get('Test', server.middleware.https, function (req, res, next) {
 
 server.post('ToggleMultiShip', server.middleware.https, function (req, res, next) {
     /** vvv Extract to server.middleware for all Checkout / Ajax functions **/
-	var currentBasket = BasketMgr.getCurrentBasket();
+    var currentBasket = BasketMgr.getCurrentBasket();
     if (!currentBasket) {
         res.json({
             error: true,
@@ -88,7 +88,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
         return;
     }
     /** ^^^ Extract to middleware for all Checkout / Ajax functinos **/
-    
+
     var shipments = currentBasket.shipments;
     var defaultShipment = currentBasket.defaultShipment;
     var usingMultiShipping = !req.privacyCache.get('usingMultiShipping');
@@ -96,21 +96,21 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
     req.privacyCache.set('usingMultiShipping', usingMultiShipping);
 
     if (!usingMultiShipping && shipments.length > 1) {
-    	// Make sure we move all product line items back to the default shipment
+        // Make sure we move all product line items back to the default shipment
         Transaction.wrap(function () {
-	    	Collections.forEach(shipments, function (shipment, index) {
-	    		if (index > 0) {
-		    		Collections.forEach(shipment.productLineItems, function (pli) {
-		    			pli.setShipment(defaultShipment);
-		    		});
-		    		currentBasket.removeShipment(shipment);
-	    		}
-	    	});
+            Collections.forEach(shipments, function (shipment, index) {
+                if (index > 0) {
+                    Collections.forEach(shipment.productLineItems, function (pli) {
+                        pli.setShipment(defaultShipment);
+                    });
+                    currentBasket.removeShipment(shipment);
+                }
+            });
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
-    
+
     res.json({
         usingMultiShipping: usingMultiShipping
     });
@@ -617,7 +617,7 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
         postalCode: req.querystring.postal || req.form.postal,
         stateCode: req.querystring.state || req.form.state
     };
-    
+
     var shippingMethodID;
 
     if (shipment.shippingMethod) {
