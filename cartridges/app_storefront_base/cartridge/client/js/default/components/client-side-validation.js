@@ -14,8 +14,9 @@ function validateForm(event) {
         if (event) {
             event.preventDefault();
             event.stopPropagation();
+            event.stopImmediatePropagation();
         }
-        $(this).find('input').each(function () {
+        $(this).find('input, select').each(function () {
             if (!this.validity.valid) {
                 $(this).trigger('invalid', this.validity);
             }
@@ -39,7 +40,7 @@ function clearForm(form) {
 
 module.exports = {
     invalid: function () {
-        $('form input').on('invalid', function (e) {
+        $('form input, form select').on('invalid', function (e) {
             e.preventDefault();
             this.setCustomValidity('');
             if (!this.validity.valid) {
@@ -67,7 +68,7 @@ module.exports = {
 
     submit: function () {
         $('form').on('submit', function (e) {
-            validateForm.call(this, e);
+            return validateForm.call(this, e);
         });
     },
 
