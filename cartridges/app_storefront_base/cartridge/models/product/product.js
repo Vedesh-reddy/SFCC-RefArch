@@ -89,9 +89,10 @@ FullProduct.prototype.initialize = function () {
  */
 function ProductWrapper(product, productVariables, quantity, promotions) {
     var fullProduct = new FullProduct(product, productVariables, quantity, promotions);
-    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes',
-        'available', 'shortDescription', 'longDescription', 'online', 'searchable',
-        'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions'];
+    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
+        'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
+        'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
+        'attributes'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

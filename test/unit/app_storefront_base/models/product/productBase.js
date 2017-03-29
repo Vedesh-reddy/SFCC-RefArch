@@ -15,6 +15,38 @@ describe('productBase', function () {
         '../../scripts/factories/price': { getPrice: function () {} }
     });
 
+    var attributeModel = {
+        visibleAttributeGroups: new ArrayList([{
+            ID: 'some ID',
+            displayName: 'some name'
+        }]),
+        getVisibleAttributeDefinitions: function () {
+            return new ArrayList([{
+                multiValueType: false,
+                displayName: 'some name'
+            }]);
+        },
+        getDisplayValue: function () {
+            return 'some value';
+        }
+    };
+
+    var multiValueTypeAttribute = {
+        visibleAttributeGroups: new ArrayList([{
+            ID: 'some ID',
+            displayName: 'some name'
+        }]),
+        getVisibleAttributeDefinitions: function () {
+            return new ArrayList([{
+                multiValueType: true,
+                displayName: 'some name'
+            }]);
+        },
+        getDisplayValue: function () {
+            return [1, 2, 3];
+        }
+    };
+
     var promotions = new ArrayList([{
         calloutMsg: { markup: 'Super duper promotion discount' },
         details: { markup: 'Some Details' },
@@ -32,7 +64,8 @@ describe('productBase', function () {
         variationGroup: false,
         productSet: false,
         bundle: false,
-        master: true
+        master: true,
+        attributeModel: attributeModel
     };
 
     var productMock = {
@@ -51,6 +84,7 @@ describe('productBase', function () {
                 type: 'function'
             }
         },
+        attributeModel: attributeModel,
         master: false,
         variant: false,
         variationGroup: false,
@@ -130,6 +164,40 @@ describe('productBase', function () {
         var product = new ProductBase(toProductMock(tempMock), null);
 
         assert.equal(product.promotions, null);
+    });
+
+    it('should handle visible attribute groups', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.attributes.length, 1);
+        assert.equal(product.attributes[0].ID, 'some ID');
+        assert.equal(product.attributes[0].name, 'some name');
+        assert.equal(product.attributes[0].attributes.length, 1);
+    });
+
+    it('should handle multi value type attribute definition', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.attributeModel = multiValueTypeAttribute;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.attributes.length, 1);
+        assert.equal(product.attributes[0].ID, 'some ID');
+        assert.equal(product.attributes[0].name, 'some name');
+        assert.equal(product.attributes[0].attributes.length, 1);
+        assert.equal(product.attributes[0].attributes[0].label, 'some name');
+        assert.equal(product.attributes[0].attributes[0].value.length, 3);
+    });
+
+    it('should handle no visible attribute groups', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.attributeModel.visibleAttributeGroups = new ArrayList([]);
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.attributes, null);
     });
 
     it('should create a product which is not a master and not a variant ', function () {

@@ -190,7 +190,7 @@ describe('Remove product variant from line item', function () {
                     },
                     'rating': 1,
                     'renderedPromotions': '',
-                    'attributes': [
+                    'variationAttributes': [
                         {
                             'attributeId': 'color',
                             'displayName': 'Color',
@@ -216,6 +216,7 @@ describe('Remove product variant from line item', function () {
                     'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid1,
+                    'attributes': null,
                     'quantity': expectQty1,
                     'isOrderable': true
                 },
@@ -244,7 +245,7 @@ describe('Remove product variant from line item', function () {
                     },
                     'rating': 0,
                     'renderedPromotions': '',
-                    'attributes': [
+                    'variationAttributes': [
                         {
                             'attributeId': 'color',
                             'displayName': 'Color',
@@ -264,6 +265,7 @@ describe('Remove product variant from line item', function () {
                     'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid3,
+                    'attributes': null,
                     'quantity': expectQty3,
                     'isOrderable': true
                 }

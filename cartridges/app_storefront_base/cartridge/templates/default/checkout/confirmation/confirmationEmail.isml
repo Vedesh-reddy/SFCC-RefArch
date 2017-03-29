@@ -20,7 +20,7 @@
     <isloop items="${pdict.order.shipping}" var="shippingModel" status="shippingLoop">
 	    <isset name="address" value="${shippingModel.shippingAddress}" scope="page"/>
 	    <isinclude template="checkout/addressSummary" />
-	
+
 	    <br/>
 	    <p>
 	        <strong>${Resource.msg('label.order.shipping.method', 'confirmation', null)}</strong>
@@ -71,7 +71,8 @@
         <p>
             ${Resource.msg('label.order.product.name', 'confirmation', null)}: ${lineItem.productName}
             <br/>
-            <isloop items="${lineItem.attributes}" var="attribute">
+
+            <isloop items="${lineItem.variationAttributes}" var="attribute">
                 ${attribute.displayName}: ${attribute.displayValue}
                 <br/>
             </isloop>

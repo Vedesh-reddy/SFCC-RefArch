@@ -17,6 +17,22 @@ describe('fullProduct', function () {
         })
     });
 
+    var attributeModel = {
+        visibleAttributeGroups: new ArrayList([{
+            ID: 'some ID',
+            displayName: 'some name'
+        }]),
+        getVisibleAttributeDefinitions: function () {
+            return new ArrayList([{
+                multiValueType: false,
+                displayName: 'some name'
+            }]);
+        },
+        getDisplayValue: function () {
+            return 'some value';
+        }
+    };
+
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
@@ -38,7 +54,8 @@ describe('fullProduct', function () {
         },
         minOrderQuantity: {
             value: 2
-        }
+        },
+        attributeModel: attributeModel
     };
 
     var productMock = {
@@ -56,7 +73,8 @@ describe('fullProduct', function () {
                 return: new ArrayList([]),
                 type: 'function'
             }
-        }
+        },
+        attributeModel: attributeModel
     };
 
     var promotions = new ArrayList([{

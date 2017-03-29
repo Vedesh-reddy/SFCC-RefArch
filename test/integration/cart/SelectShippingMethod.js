@@ -107,7 +107,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 },
                 'rating': 1,
                 'renderedPromotions': '',
-                'attributes': [
+                'variationAttributes': [
                     {
                         'attributeId': 'color',
                         'displayName': 'Color',
@@ -140,6 +140,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isBonusProductLineItem': false,
                 'isGift': false,
                 'UUID': '',
+                'attributes': null,
                 'quantity': 1,
                 'isOrderable': true
             },
@@ -164,7 +165,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 },
                 'rating': 0,
                 'renderedPromotions': '',
-                'attributes': [
+                'variationAttributes': [
                     {
                         'attributeId': 'color',
                         'displayName': 'Color',
@@ -184,6 +185,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isBonusProductLineItem': false,
                 'isGift': false,
                 'UUID': '',
+                'attributes': null,
                 'quantity': 1,
                 'isOrderable': true
             }

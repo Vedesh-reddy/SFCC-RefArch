@@ -20,6 +20,22 @@ describe('bundleProduct', function () {
         })
     });
 
+    var attributeModel = {
+        visibleAttributeGroups: new ArrayList([{
+            ID: 'some ID',
+            displayName: 'some name'
+        }]),
+        getVisibleAttributeDefinitions: function () {
+            return new ArrayList([{
+                multiValueType: false,
+                displayName: 'some name'
+            }]);
+        },
+        getDisplayValue: function () {
+            return 'some value';
+        }
+    };
+
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
@@ -76,7 +92,8 @@ describe('bundleProduct', function () {
         },
         minOrderQuantity: {
             value: 2
-        }
+        },
+        attributeModel: attributeModel
     };
 
     var promotionsMock = new ArrayList([{

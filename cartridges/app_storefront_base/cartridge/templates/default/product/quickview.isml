@@ -14,7 +14,7 @@
                 <!-- Attributes -->
                 <section class="attributes">
                     <div class="col-12">
-                        <isloop items="${pdict.product.attributes}" var="attr" status="attributeStatus">
+                        <isloop items="${pdict.product.variationAttributes}" var="attr" status="attributeStatus">
                             <isinclude template="/product/components/attributes" />
                         </isloop>
                     </div>
