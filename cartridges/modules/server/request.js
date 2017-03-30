@@ -1,39 +1,7 @@
 'use strict';
 
+var QueryString = require('./querystring');
 var SimpleCache = require('./simpleCache');
-
-/**
- * Parse querystring into an object
- * @param {string} querystring - String representing querystring
- * @returns {Object} parsed querystring object
- */
-function parseQueryString(querystring) {
-    var result = {};
-    var pair;
-    var left;
-    if (querystring && querystring.length > 0) {
-        var qs = querystring.substring(querystring.indexOf('?') + 1).split('&');
-        for (var i = qs.length - 1; i >= 0; i--) {
-            pair = qs[i].split('=');
-            left = decodeURIComponent(pair[0]);
-            if (left.indexOf('dwvar_') === 0) {
-                var variableParts = left.split('_');
-                if (variableParts.length === 3) {
-                    if (!result.variables) {
-                        result.variables = {};
-                    }
-                    result.variables[variableParts[2]] = {
-                        id: variableParts[1],
-                        value: decodeURIComponent(pair[1])
-                    };
-                    continue; // eslint-disable-line no-continue
-                }
-            }
-            result[left] = decodeURIComponent(pair[1]);
-        }
-    }
-    return result;
-}
 
 /**
  *
@@ -153,7 +121,7 @@ function Request(request, customer, session) {
     this.host = request.httpHost;
     this.path = request.httpPath;
     this.httpHeaders = request.httpHeaders;
-    this.querystring = parseQueryString(request.httpQueryString);
+    this.querystring = new QueryString(request.httpQueryString);
     this.form = getFormData(request.httpParameterMap, this.querystring);
     this.https = request.isHttpSecure();
     this.locale = getCurrentLocale(request.locale, session.currency);
