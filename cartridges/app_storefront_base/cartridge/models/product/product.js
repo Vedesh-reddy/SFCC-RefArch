@@ -1,7 +1,7 @@
 'use strict';
 
-var ProductBase = require('./productBase').productBase;
-var productBase = require('./productBase');
+var base = require('./productBase');
+var ProductBase = base.productBase;
 var URLUtils = require('dw/web/URLUtils');
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;
@@ -140,5 +140,5 @@ function ProductWrapper(product, productVariables, quantity, promotions) {
 }
 
 module.exports = ProductWrapper;
-module.exports.getProductType = productBase.getProductType;
-module.exports.getVariationModel = productBase.getVariationModel;
+module.exports.getProductType = base.getProductType;
+module.exports.getVariationModel = base.getVariationModel;

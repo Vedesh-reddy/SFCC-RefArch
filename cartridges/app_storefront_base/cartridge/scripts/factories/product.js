@@ -3,7 +3,6 @@
 var ProductMgr = require('dw/catalog/ProductMgr');
 var ProductTile = require('./../../models/product/productBase');
 var Product = require('./../../models/product/product');
-var ProductBundle = require('./../../models/product/productBundle');
 var ProductLineItemModel = require('./../../models/productLineItem');
 var PromotionMgr = require('dw/campaign/PromotionMgr');
 
@@ -17,6 +16,10 @@ ProductFactory.get = function (params) {
     var productId = params.pid;
     var apiProduct = ProductMgr.getProduct(productId);
     var variationModel = Product.getVariationModel(apiProduct, params.variables);
+    var productFactory = this;
+    var ProductSetTile;
+    var ProductSet;
+    var ProductBundle;
     var product;
     if (variationModel) {
         product = variationModel.getSelectedVariant() || apiProduct;
@@ -28,7 +31,21 @@ ProductFactory.get = function (params) {
     var productType = Product.getProductType(product);
 
     if (productType === 'set') {
-        // TODO: Add ProductSet factory
+        switch (params.pview) {
+            case 'tile':
+                ProductSetTile = require('./../../models/product/productSetBase');
+                product = new ProductSetTile(product, params.variables, promotions, productFactory);
+                break;
+            default:
+                ProductSet = require('./../../models/product/productSet');
+                product = new ProductSet(
+                    product,
+                    params.quantity,
+                    promotions,
+                    productFactory
+                );
+                break;
+        }
     } else if (productType === 'optionProduct') {
         // TODO: Add option product
     } else if (productType === 'bundle') {
@@ -37,7 +54,7 @@ ProductFactory.get = function (params) {
                 product = new ProductTile(product, params.variables, promotions);
                 break;
             default:
-                var productFactory = this;
+                ProductBundle = require('./../../models/product/productBundle');
                 product = new ProductBundle(
                     product,
                     params.quantity,
