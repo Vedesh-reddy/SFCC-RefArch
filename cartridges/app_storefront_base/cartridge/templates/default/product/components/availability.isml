@@ -4,14 +4,9 @@
             ${Resource.msg('label.availability', 'common', null)}:
         </label>
         <span class="availability-msg">
-            <isif condition="${pdict.product.readyToOrder && pdict.product.available}">
-                ${pdict.resources.label_instock}
-            <iselseif condition="${pdict.product.readyToOrder && !pdict.product.available}">
-                ${pdict.resources.label_allnotavailable}
-            </iselseif>
-            <iselse>
-                ${pdict.resources.info_selectforstock}
-            </isif>
+            <isloop items="${pdict.product.availability.messages}" var="messages">
+                <div>${messages}</div>
+            </isloop>
         </span>
     </span>
 </div>

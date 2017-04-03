@@ -51,7 +51,7 @@ function FullProduct(product, productVariables, quantity, promotions) {
         types: ['large', 'small'],
         quantity: 'all'
     };
-    this.selectedQuantity = quantity;
+    this.quantity = quantity;
     this.productVariables = productVariables;
     this.variationAttributeConfig = {
         attributes: '*',
@@ -96,7 +96,7 @@ function ProductWrapper(product, productVariables, quantity, promotions) {
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
-        'attributes'];
+        'attributes', 'availability'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

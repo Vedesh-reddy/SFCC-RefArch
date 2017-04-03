@@ -6,21 +6,7 @@ module.exports = {
         $('select[class*="select-"]').on('change', function (e) {
             e.preventDefault();
             var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
-
-            if (selectedValueUrl) {
-                $.spinner().start();
-                $.ajax({
-                    url: selectedValueUrl,
-                    method: 'GET',
-                    success: function (data) {
-                        base.parseJsonResponse(data, 'details');
-                        $.spinner().stop();
-                    },
-                    error: function () {
-                        $.spinner().stop();
-                    }
-                });
-            }
+            base.attributeSelect(selectedValueUrl);
         });
     },
 
@@ -28,19 +14,7 @@ module.exports = {
         $('[data-attr="color"] a').on('click', function (e) {
             e.preventDefault();
             var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
-
-            $.spinner().start();
-            $.ajax({
-                url: selectedValueUrl,
-                method: 'GET',
-                success: function (data) {
-                    base.parseJsonResponse(data, 'details');
-                    $.spinner().stop();
-                },
-                error: function () {
-                    $.spinner().stop();
-                }
-            });
+            base.attributeSelect(selectedValueUrl);
         });
     },
 
@@ -63,6 +37,18 @@ module.exports = {
                     }
                 });
             }
+        });
+    },
+
+    availibility: function () {
+        $('.quantity select').on('change', function (e) {
+            e.preventDefault();
+            var pid = $('.product-id').text();
+            var quantity = $('.quantity select').val();
+            var params = ['pid=' + pid, 'quantity=' + quantity].join('&');
+            var url = $('.quantity select').data('action') + '?' + params;
+
+            base.attributeSelect(url);
         });
     },
 

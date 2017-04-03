@@ -113,24 +113,18 @@ function updateAttrs(attrs) {
  *                            attribute value has been [de]selected
  */
 function updateAvailability(response) {
-    var resources = {
-        instock: response.resources.label_instock,
-        allnotavailable: response.resources.label_allnotavailable,
-        selectforstock: response.resources.info_selectforstock
-    };
+    var availabilityValue = '';
+    var availabilityMessages = response.product.availability.messages;
     var hasRequiredAttrsSelected = response.product.readyToOrder;
-    var isAvailable = response.product.available;
-    var availabilityValue;
-
-    if (hasRequiredAttrsSelected && isAvailable) {
-        availabilityValue = resources.instock;
-    } else if (hasRequiredAttrsSelected && !isAvailable) {
-        availabilityValue = resources.allnotavailable;
+    if (!hasRequiredAttrsSelected) {
+        availabilityValue = '<p>' + response.resources.info_selectforstock + '</p>';
     } else {
-        availabilityValue = resources.selectforstock;
+        availabilityMessages.forEach(function (message) {
+            availabilityValue += '<p>' + message + '</p>';
+        });
     }
 
-    $('.availability-msg').empty().text(availabilityValue);
+    $('.availability-msg').empty().html(availabilityValue);
 }
 
 /**
@@ -177,6 +171,59 @@ function getAttributesHtml(attributes) {
     });
 
     return html;
+}
+
+/**
+ * Parses JSON from Ajax call made whenever an attribute value is [de]selected
+ * @param {Object} response - response from Ajax call
+ * @param {Object} response.product - Product object
+ * @param {string} response.product.id - Product ID
+ * @param {Object[]} response.product.variationAttributes - Product attributes
+ * @param {Object[]} response.product.images - Product images
+ * @param {boolean} response.product.hasRequiredAttrsSelected - Flag as to whether all required
+ *     attributes have been selected.  Used partially to
+ *     determine whether the Add to Cart button can be enabled
+ * @param {string} caller - identifying the calling element
+ *                          (a product tile or the product details page)
+ */
+function parseJsonResponse(response, caller) {
+    $('.quantity select').data('action', response.variationUrl);
+    // Update Item No.
+    if (caller === 'tile') {
+        $('.product-quickview').data('pid', response.product.id);
+    }
+
+    if (caller === 'details') {
+        $('.product-id').text(response.product.id);
+    }
+
+    updateAttrs(response.product.variationAttributes);
+
+    // Enable "Add to Cart" button if all required attributes have been selected
+    $('button.add-to-cart').attr('disabled', !response.product.readyToOrder);
+
+    $('button.add-to-cart').trigger('product:statusUpdate', response.product);
+
+
+    // Update primary images
+    var primaryImageUrls = response.product.images;
+    primaryImageUrls.large.forEach(function (imageUrl, idx) {
+        $('.primary-images').find('img').eq(idx)
+            .attr('src', imageUrl.url);
+    });
+
+    // Update pricing
+    $('.prices .price').replaceWith(response.product.price.html);
+
+    // Update promotions
+    $('.promotions').empty().html(getPromotionsHtml(response.product.promotions));
+
+    updateAvailability(response);
+
+    // Update attributes
+    $('.main-attributes').empty().html(getAttributesHtml(response.product.attributes));
+
+    updateAvailability(response);
 }
 
 module.exports = {
@@ -226,54 +273,23 @@ module.exports = {
         return null;
     },
 
-    /**
-     * Parses JSON from Ajax call made whenever an attribute value is [de]selected
-     * @param {Object} response - response from Ajax call
-     * @param {Object} response.product - Product object
-     * @param {string} response.product.id - Product ID
-     * @param {Object[]} response.product.variationAttributes - Product attributes
-     * @param {Object[]} response.product.images - Product images
-     * @param {boolean} response.product.hasRequiredAttrsSelected - Flag as to whether all required
-     *     attributes have been selected.  Used partially to
-     *     determine whether the Add to Cart button can be enabled
-     * @param {string} caller - identifying the calling element
-     *                          (a product tile or the product details page)
-     */
-    parseJsonResponse: function (response, caller) {
-        // Update Item No.
-        if (caller === 'tile') {
-            $('.product-quickview').data('pid', response.product.id);
+    parseJsonResponse: parseJsonResponse,
+
+    attributeSelect: function (selectedValueUrl) {
+        if (selectedValueUrl) {
+            $.spinner().start();
+            $.ajax({
+                url: selectedValueUrl,
+                method: 'GET',
+                success: function (data) {
+                    parseJsonResponse(data, 'details');
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
+                }
+            });
         }
-
-        if (caller === 'details') {
-            $('.product-id').text(response.product.id);
-        }
-
-        updateAttrs(response.product.variationAttributes);
-
-        // Enable "Add to Cart" button if all required attributes have been selected
-        $('button.add-to-cart').attr('disabled', !response.product.readyToOrder);
-
-        $('button.add-to-cart').trigger('product:statusUpdate', response.product);
-
-
-        // Update primary images
-        var primaryImageUrls = response.product.images;
-        primaryImageUrls.large.forEach(function (imageUrl, idx) {
-            $('.primary-images').find('img').eq(idx)
-                .attr('src', imageUrl.url);
-        });
-
-        // Update pricing
-        $('.prices .price').replaceWith(response.product.price.html);
-
-        // Update promotions
-        $('.promotions').empty().html(getPromotionsHtml(response.product.promotions));
-
-        // Update attributes
-        $('.main-attributes').empty().html(getAttributesHtml(response.product.attributes));
-
-        updateAvailability(response);
     }
 
 };
