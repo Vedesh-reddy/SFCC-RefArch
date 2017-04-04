@@ -7,6 +7,7 @@ var ProductFactory = require('../scripts/factories/product');
 var Resource = require('dw/web/Resource');
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var ProductMgr = require('dw/catalog/ProductMgr');
+var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
 
 /**
  * Creates the breadcrumbs object
@@ -98,6 +99,13 @@ server.get('Variation', function (req, res, next) {
     var product = ProductFactory.get(params);
 
     product.price.html = priceHelper.renderHtml(priceHelper.getHtmlContext(product.price));
+
+    var attributeContext = { product: { attributes: product.attributes } };
+    var attributeTemplate = 'product/components/attributes';
+    product.attributesHtml = renderTemplateHelper.getRenderedHtml(
+        attributeContext,
+        attributeTemplate
+    );
 
     res.json({
         product: product,

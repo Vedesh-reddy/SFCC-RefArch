@@ -16,9 +16,9 @@
     </div>
     <div class="tile-body">
         <isif condition="${pdict.display.swatches}">
-            <isif condition="${pdict.product.variationAttributes}">
-                <div class="color-swatches">
-                    <div class="swatches">
+            <div class="color-swatches">
+                <div class="swatches">
+                    <isif condition="${pdict.product.variationAttributes && pdict.product.variationAttributes.length > 0}">
                         <isloop items="${pdict.product.variationAttributes[0].values}" var="swatch" status="loopstate">
                             <isif condition="${loopstate.count < 4
                                 && swatch.images != null
@@ -39,9 +39,9 @@
                                 <isbreak>
                             </isif>
                         </isloop>
-                    </div>
+                    </isif>
                 </div>
-            </isif>
+            </div>
         </isif>
 
         <div class="pdp-link">

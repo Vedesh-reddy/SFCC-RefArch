@@ -53,7 +53,7 @@ function FullProduct(product, productVariables, quantity, promotions) {
     };
     this.selectedQuantity = quantity;
     this.productVariables = productVariables;
-    this.attributeConfig = {
+    this.variationAttributeConfig = {
         attributes: '*',
         endPoint: 'Variation'
     };
@@ -67,8 +67,12 @@ FullProduct.prototype = Object.create(ProductBase.prototype);
 FullProduct.prototype.initialize = function () {
     ProductBase.prototype.initialize.call(this);
     this.available = isAvailable(this.quantity, this.product);
-    this.shortDescription = this.product.shortDescription.markup;
-    this.longDescription = this.product.longDescription ? this.product.longDescription.markup : '';
+    this.shortDescription = this.product.shortDescription
+        ? this.product.shortDescription.markup
+        : null;
+    this.longDescription = this.product.longDescription
+        ? this.product.longDescription.markup
+        : null;
     this.online = this.product.online;
     this.searchable = this.product.searchable;
     this.minOrderQuantity = this.product.minOrderQuantity.value || 1;

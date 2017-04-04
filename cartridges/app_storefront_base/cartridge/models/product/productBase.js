@@ -169,7 +169,7 @@ function ProductBase(product, productVariables, quantity, promotions) {
     };
     this.quantity = quantity;
 
-    this.attributeConfig = {
+    this.variationAttributeConfig = {
         attributes: ['color'],
         endPoint: 'Show'
     };
@@ -190,7 +190,8 @@ ProductBase.prototype = {
             : new ImageModel(this.product, this.imageConfig);
         this.rating = getRating(this.id);
         this.variationAttributes = this.variationModel
-            ? (new VariationAttributesModel(this.variationModel, this.attributeConfig)).slice(0)
+            ? (new VariationAttributesModel(
+                this.variationModel, this.variationAttributeConfig)).slice(0)
             : null;
         this.promotions = this.apiPromotions ? getPromotions(this.apiPromotions) : null;
         this.attributes = getAttributes(this.product);

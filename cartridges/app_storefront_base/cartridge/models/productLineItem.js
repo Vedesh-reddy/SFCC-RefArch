@@ -106,7 +106,7 @@ function ProductLineItem(product, productVariables, quantity, lineItem, promotio
     };
     this.quantity = quantity;
 
-    this.attributeConfig = {
+    this.variationAttributeConfig = {
         attributes: 'selected'
     };
     this.useSimplePrice = false;

@@ -26,6 +26,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
         var expectedResBody = {
             'product': {
                 'attributes': null,
+                'attributesHtml': '\n',
                 'id': variantPid,
                 'productName': 'No-Iron Textured Dress Shirt',
                 'shortDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',

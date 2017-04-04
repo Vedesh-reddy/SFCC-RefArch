@@ -1,0 +1,3 @@
+<div class="size-chart col-md-10 col-12">
+    <a href="${"#"}" class="size-chart">${Resource.msg('link.size_chart', 'product', null)}</a>
+</div>
