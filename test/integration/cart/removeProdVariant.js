@@ -219,6 +219,10 @@ describe('Remove product variant from line item', function () {
                     'isGift': false,
                     'UUID': variantUuid1,
                     'attributes': null,
+                    'availability': {
+                        'inStockDate': null,
+                        'messages': ['In Stock']
+                    },
                     'quantity': expectQty1,
                     'isOrderable': true
                 },
@@ -268,6 +272,10 @@ describe('Remove product variant from line item', function () {
                     'isGift': false,
                     'UUID': variantUuid3,
                     'attributes': null,
+                    'availability': {
+                        'inStockDate': null,
+                        'messages': ['In Stock']
+                    },
                     'quantity': expectQty3,
                     'isOrderable': true
                 }

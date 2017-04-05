@@ -28,7 +28,7 @@ describe('Approaching order level promotion', function () {
     };
     var myRequest = {
         url: '',
-        method: 'GET',
+        method: 'POST',
         rejectUnauthorized: false,
         resolveWithFullResponse: true,
         jar: cookieJar

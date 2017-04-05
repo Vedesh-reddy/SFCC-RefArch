@@ -9,7 +9,7 @@ describe('ProductVariation - Get product variation with only master product ID',
     var masterPid = '25604455';
     var myGetRequest = {
         url: '',
-        method: 'GET',
+        method: 'POST',
         rejectUnauthorized: false
     };
 
@@ -21,12 +21,17 @@ describe('ProductVariation - Get product variation with only master product ID',
             'product': {
                 'attributes': null,
                 'attributesHtml': '\n',
+                'availability': {
+                    'inStockDate': null,
+                    'messages': ['In Stock']
+                },
                 'id': masterPid,
                 'productName': 'No-Iron Textured Dress Shirt',
                 'shortDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
                 'longDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
                 'online': true,
                 'searchable': true,
+                'selectedVariantUrl': 'https://dev08.sitegenesis.dw.demandware.net/on/demandware.store/Sites-SiteGenesis-Site/en_US/Product-Variation?pid=25604455',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
                 'variationAttributes': [
