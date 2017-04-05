@@ -103,9 +103,6 @@ describe('productAttributes', function () {
             endPoint: 'Show'
         };
         var attrs = new ProductAttributes(mock, attributeConfig);
-        console.log(attrs[0].values[0]);
-        console.log(attrs[0].values[1].displayValue);
-
 
         assert.equal(attrs.length, 1);
         assert.equal(attrs[0].displayName, 'color');

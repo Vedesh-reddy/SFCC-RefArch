@@ -104,10 +104,10 @@ function updateAvailability(response) {
     var availabilityMessages = response.product.availability.messages;
     var hasRequiredAttrsSelected = response.product.readyToOrder;
     if (!hasRequiredAttrsSelected) {
-        availabilityValue = '<p>' + response.resources.info_selectforstock + '</p>';
+        availabilityValue = '<div>' + response.resources.info_selectforstock + '</div>';
     } else {
         availabilityMessages.forEach(function (message) {
-            availabilityValue += '<p>' + message + '</p>';
+            availabilityValue += '<div>' + message + '</div>';
         });
     }
 
@@ -173,8 +173,7 @@ function getAttributesHtml(attributes) {
  * @param {string} caller - identifying the calling element
  *                          (a product tile or the product details page)
  */
-function parseJsonResponse(response, caller) {
-    $('.quantity select').data('action', response.variationUrl);
+function handleVariantResponse(response, caller) {
     // Update Item No.
     if (caller === 'tile') {
         $('.product-quickview').data('pid', response.product.id);
@@ -214,15 +213,13 @@ function parseJsonResponse(response, caller) {
 
     // Update attributes
     $('.main-attributes').empty().html(getAttributesHtml(response.product.attributes));
-
-    updateAvailability(response);
 }
 
 /**
  * Retrieves url to use when updating a product view
  * @param {string} selectedValueUrl - string The url used to indicate the product variation
  * @param {string} selectedInput - the option value of a select tag or a swatch link
- * @return {string} - the Url for the selected variation value including quantity, or null
+ * @return {string|null} - the Url for the selected variation value
  */
 function getSelectedValueUrl(selectedValueUrl, selectedInput) {
     if (selectedValueUrl && selectedValueUrl !== 'null') {
@@ -233,6 +230,11 @@ function getSelectedValueUrl(selectedValueUrl, selectedInput) {
     return null;
 }
 
+/**
+ * updates the product view when a product attribute is selected or deselected or when
+ *         changing quantity
+ * @param {string} selectedValueUrl - the Url for the selected variation value
+ */
 function attributeSelect(selectedValueUrl) {
     var productUrl;
     var view;
@@ -255,7 +257,7 @@ function attributeSelect(selectedValueUrl) {
             dataType: 'json',
             data: { quantity: getQuantitySelected() },
             success: function (data) {
-                parseJsonResponse(data, view);
+                handleVariantResponse(data, view);
                 $('.quantity-select').data('action', selectedValueUrl);
                 $.spinner().stop();
             },

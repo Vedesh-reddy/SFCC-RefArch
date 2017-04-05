@@ -72,7 +72,6 @@ function showProductPage(querystring, res) {
     var params = querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
-    var variationUrl = URLUtils.url('Product-Variation', 'pid', product.id, 'quantity', '$$');
     var breadcrumbs = getAllBreadcrumbs(querystring.cgid, product.id, []).reverse();
     res.render('product/detail.isml', {
         CurrentPageMetaData: {
@@ -80,7 +79,6 @@ function showProductPage(querystring, res) {
         },
         product: product,
         addToCartUrl: addToCartUrl,
-        variationUrl: variationUrl,
         resources: getResources(),
         breadcrumbs: breadcrumbs
     });
@@ -181,12 +179,10 @@ server.get('ShowQuickView', function (req, res, next) {
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
-    var variationUrl = URLUtils.url('Product-Variation', 'pid', product.id, 'quantity', '$$');
 
     res.render('product/quickview.isml', {
         product: product,
         addToCartUrl: addToCartUrl,
-        variationUrl: variationUrl,
         resources: getResources()
     });
 

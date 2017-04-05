@@ -31,7 +31,15 @@ function hasRequiredAttrsSelected(variationModel) {
     return !!variationModel.selectedVariant;
 }
 
-function getUrl(variationModel, allAttributes, attrConfig, id) {
+/**
+ * creates a url of the product's selected attributes
+ * @param {dw.catalog.ProductVariationModel} variationModel - The product's variation model
+ * @param {Array} allAttributes - a list of the product's available attributes
+ * @param {string} endPoint - the endpoint to use when generating urls for product attributes
+ * @param {string} id - the current product's id
+ * @returns {string} a url of the product's selected attributes
+ */
+function getUrl(variationModel, allAttributes, endPoint, id) {
     var params = {};
     var url;
 
@@ -44,9 +52,9 @@ function getUrl(variationModel, allAttributes, attrConfig, id) {
             });
         });
 
-        url = variationModel.url('Product-' + attrConfig.endPoint, params).toString();
+        url = variationModel.url('Product-' + endPoint, params).toString();
     } else {
-        url = URLUtils.url('Product-' + attrConfig.endPoint, 'pid', id).toString();
+        url = URLUtils.url('Product-' + endPoint, 'pid', id).toString();
     }
 
     return url;
@@ -105,7 +113,7 @@ FullProduct.prototype.initialize = function () {
     this.selectedVariantUrl = getUrl(
         this.variationModel,
         this.variationAttributes,
-        this.variationAttributeConfig,
+        this.variationAttributeConfig.endPoint,
         this.id
     );
 };

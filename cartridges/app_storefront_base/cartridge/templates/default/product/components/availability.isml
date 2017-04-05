@@ -1,12 +1,10 @@
 <div class="availability col-md-10 col-12">
-    <span>
-        <label class="availability">
-            ${Resource.msg('label.availability', 'common', null)}:
-        </label>
-        <span class="availability-msg">
-            <isloop items="${pdict.product.availability.messages}" var="messages">
-                <div>${messages}</div>
-            </isloop>
-        </span>
-    </span>
+    <div class="availability-label">
+        ${Resource.msg('label.availability', 'common', null)}:
+    </div>
+    <div class="availability-msg">
+        <isloop items="${pdict.product.availability.messages}" var="messages">
+            <div>${messages}</div>
+        </isloop>
+    </div>
 </div>

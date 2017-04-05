@@ -147,12 +147,18 @@ function getAttributes(product) {
     return attributes;
 }
 
+/**
+ * Creates an object containing an array of availability messages and an in stock date
+ * @param {number} quantity - quantity of products selected
+ * @param {dw.catalog.Product} product - Product instance returned from the API
+ * @return {Object} an object containing the product availability.
+ */
 function getProductAvailability(quantity, product) {
     var availability = {};
     availability.messages = [];
-    var quantity2 = quantity ? parseInt(quantity, 10) : product.minOrderQuantity.value;
+    var productQuantity = quantity ? parseInt(quantity, 10) : product.minOrderQuantity.value;
     var availabilityModel = product.availabilityModel;
-    var availabilityModelLevels = availabilityModel.getAvailabilityLevels(quantity2);
+    var availabilityModelLevels = availabilityModel.getAvailabilityLevels(productQuantity);
     var inventoryRecord = availabilityModel.inventoryRecord;
 
     if (inventoryRecord && inventoryRecord.inStockDate) {
@@ -162,7 +168,7 @@ function getProductAvailability(quantity, product) {
     }
 
     if (availabilityModelLevels.inStock.value > 0) {
-        if (availabilityModelLevels.inStock.value === quantity2) {
+        if (availabilityModelLevels.inStock.value === productQuantity) {
             availability.messages.push(Resource.msg('label.instock', 'common', null));
         } else {
             availability.messages.push(
@@ -177,7 +183,7 @@ function getProductAvailability(quantity, product) {
     }
 
     if (availabilityModelLevels.preorder.value > 0) {
-        if (availabilityModelLevels.preorder.value === quantity2) {
+        if (availabilityModelLevels.preorder.value === productQuantity) {
             availability.messages.push(Resource.msg('label.preorder', 'common', null));
         } else {
             availability.messages.push(
@@ -192,7 +198,7 @@ function getProductAvailability(quantity, product) {
     }
 
     if (availabilityModelLevels.backorder.value > 0) {
-        if (availabilityModelLevels.backorder.value === quantity2) {
+        if (availabilityModelLevels.backorder.value === productQuantity) {
             availability.messages.push(Resource.msg('label.back.order', 'common', null));
         } else {
             availability.messages.push(
@@ -207,7 +213,7 @@ function getProductAvailability(quantity, product) {
     }
 
     if (availabilityModelLevels.notAvailable.value > 0) {
-        if (availabilityModelLevels.notAvailable.value === quantity2) {
+        if (availabilityModelLevels.notAvailable.value === productQuantity) {
             availability.messages.push(Resource.msg('label.not.available', 'common', null));
         } else {
             availability.messages.push(Resource.msg('label.not.available.items', 'common', null));
