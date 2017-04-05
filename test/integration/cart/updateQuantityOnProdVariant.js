@@ -51,23 +51,24 @@ describe('Update quantity for product variant', function () {
                 return request(myRequest);
             })
 
-            // ----- select a shipping method in order to get cart content to obtain UUID of the product line item:
-           .then(function () {
-               var shipMethodId = '001';   // 001 = Ground
+            // ----- select a shipping method. Need to have shipping method so that shipping cost, sales tax,
+            //       and grand total can be calculated
+            .then(function () {
+                var shipMethodId = '001';   // 001 = Ground
 
-               myRequest.method = 'POST';
-               myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
-               return request(myRequest);
-           })
+                myRequest.method = 'POST';
+                myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
+                return request(myRequest);
+            })
 
-           // ----- Get UUID information
-           .then(function (response4) {
-               var bodyAsJson = JSON.parse(response4.body);
+            // ----- Get UUID for each product line items
+            .then(function (response4) {
+                var bodyAsJson = JSON.parse(response4.body);
 
-               prodIdUuidMap[bodyAsJson.items[0].id] = bodyAsJson.items[0].UUID;
-               prodIdUuidMap[bodyAsJson.items[1].id] = bodyAsJson.items[1].UUID;
-               prodIdUuidMap[bodyAsJson.items[2].id] = bodyAsJson.items[2].UUID;
-           });
+                prodIdUuidMap[bodyAsJson.items[0].id] = bodyAsJson.items[0].UUID;
+                prodIdUuidMap[bodyAsJson.items[1].id] = bodyAsJson.items[1].UUID;
+                prodIdUuidMap[bodyAsJson.items[2].id] = bodyAsJson.items[2].UUID;
+            });
     });
 
     it('should update line item quantity', function () {

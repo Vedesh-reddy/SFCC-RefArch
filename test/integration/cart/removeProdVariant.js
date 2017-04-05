@@ -51,7 +51,8 @@ describe('Remove product variant from line item', function () {
                 return request(myRequest);
             })
 
-            // ----- select a shipping method in order to get cart content to obtain UUID of the product line item:
+            // ----- select a shipping method. Need shipping method so that shipping cost, sales tax,
+            //       and grand total can be calculated.
             .then(function () {
                 var shipMethodId = '001';   // 001 = Ground
 
@@ -60,7 +61,7 @@ describe('Remove product variant from line item', function () {
                 return request(myRequest);
             })
 
-            // ----- Get UUID information
+            // ----- Get UUID for each product line items
             .then(function (response4) {
                 var bodyAsJson = JSON.parse(response4.body);
 

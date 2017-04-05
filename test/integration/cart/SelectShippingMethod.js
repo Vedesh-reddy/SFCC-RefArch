@@ -26,7 +26,7 @@ describe('Cart: Selecting Shipping Methods', function () {
     // values depending on on the selected shipping method and thus they are not included here.
     // Leaving the commented out 'src' property here for reference because it should be included in the
     // 'image' property in the response but the string can not be used for comparison as it because
-    // the path has radomly generated code.
+    // the path has randomly generated code.
     var expectedResponseCommon = {
         'action': 'Cart-SelectShippingMethod',
         'actionUrls': {
@@ -217,21 +217,12 @@ describe('Cart: Selecting Shipping Methods', function () {
                 return request(myRequest);
             })
 
-            // ----- select a shipping method in order to get cart content to obtain UUID of the product line item:
-            .then(function () {
-                var shipMethodId = '001';   // 001 = Ground
-
-                myRequest.method = 'POST';
-                myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
-                return request(myRequest);
-            })
-
             // ----- Get UUID information
-            .then(function (response4) {
-                var bodyAsJson = JSON.parse(response4.body);
+            .then(function (response) {
+                var bodyAsJson = JSON.parse(response.body);
 
-                expectedResponseCommon.items[0].UUID = bodyAsJson.items[0].UUID;
-                expectedResponseCommon.items[1].UUID = bodyAsJson.items[1].UUID;
+                expectedResponseCommon.items[0].UUID = bodyAsJson.cart.items[0].UUID;
+                expectedResponseCommon.items[1].UUID = bodyAsJson.cart.items[1].UUID;
             });
     });
 

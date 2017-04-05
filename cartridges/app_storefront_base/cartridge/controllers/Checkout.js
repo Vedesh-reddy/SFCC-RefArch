@@ -63,7 +63,7 @@ server.get('Login', server.middleware.https, function (req, res, next) {
 });
 
 
-server.get('Test', server.middleware.https, function (req, res, next) {
+server.get('Get', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var basketModel = new OrderModel(currentBasket);
 

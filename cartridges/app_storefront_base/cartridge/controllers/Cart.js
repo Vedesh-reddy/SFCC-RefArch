@@ -33,16 +33,19 @@ server.post('AddProduct', function (req, res, next) {
     if (currentBasket) {
         Transaction.wrap(function () {
             CartHelper.addProductToCart(currentBasket, productId, quantity);
+            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
 
     var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems);
+    var cartModel = new CartModel(currentBasket);
 
     res.json({
         quantityTotal: quantityTotal,
-        message: Resource.msg('text.alert.addedtobasket', 'product', null)
+        message: Resource.msg('text.alert.addedtobasket', 'product', null),
+        cart: cartModel
     });
     next();
 });
@@ -67,7 +70,7 @@ server.get('Show', server.middleware.https, function (req, res, next) {
     next();
 });
 
-server.get('Test', function (req, res, next) {
+server.get('Get', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (currentBasket) {
