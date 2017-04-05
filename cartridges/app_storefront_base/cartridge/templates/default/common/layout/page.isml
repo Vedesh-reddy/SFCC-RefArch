@@ -9,7 +9,7 @@
         <isactivedatahead/>
     </head>
     <body>
-        <div class="page">
+        <div class="page" data-action="${pdict.action}" data-querystring="${pdict.queryString}" >
             <isinclude template="/components/header/pageheader" />
             <isreplace/>
             <isinclude template="/components/footer/pagefooter" />

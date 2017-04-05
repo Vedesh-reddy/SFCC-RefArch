@@ -74,7 +74,7 @@ server.get('Test', server.middleware.https, function (req, res, next) {
 
 
 server.post('ToggleMultiShip', server.middleware.https, function (req, res, next) {
-    var privacyCache = req.privacyCache;
+    var privacyCache = req.session.privacyCache;
 
     privacyCache.usingMultiShipping = !privacyCache.usingMultiShipping;
 

@@ -84,6 +84,7 @@ describe('Update quantity for product variant', function () {
         var variantUuid3 = prodIdUuidMap[variantPid3];
 
         var expectedUpdateRep = {
+            'action': 'Cart-UpdateQuantity',
             'actionUrls': {
                 'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
@@ -341,8 +342,7 @@ describe('Update quantity for product variant', function () {
             .then(function (updateRsp) {
                 assert.equal(updateRsp.statusCode, 200, 'Expected statusCode to be 200.');
 
-                var bodyAsJson = JSON.parse(updateRsp.body);
-
+                var bodyAsJson = jsonHelpers.deleteProperties(JSON.parse(updateRsp.body), ['queryString']);
                 // ----- strip out all 'src' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src']);
 

@@ -17,6 +17,7 @@ describe('ProductVariation - Get product variation with only master product ID',
         myGetRequest.url = config.baseUrl + '/Product-Variation?pid=' + masterPid;
 
         var expectedResBody = {
+            'action': 'Product-Variation',
             'product': {
                 'attributes': null,
                 'attributesHtml': '\n',
@@ -259,6 +260,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                 'rating': 0,
                 'productType': 'master'
             },
+            'queryString': 'pid=25604455',
             'resources': {
                 'label_instock': 'In Stock',
                 'label_allnotavailable': 'This item is currently not available.',

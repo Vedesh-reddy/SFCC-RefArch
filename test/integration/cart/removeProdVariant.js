@@ -82,6 +82,7 @@ describe('Remove product variant from line item', function () {
         var variantUuid3 = prodIdUuidMap[variantPid3];
 
         var expectedResponse = {
+            'action': 'Cart-RemoveProductLineItem',
             'actionUrls': {
                 'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
@@ -290,7 +291,7 @@ describe('Remove product variant from line item', function () {
                 var bodyAsJson = JSON.parse(removedItemResponse.body);
 
                 // ----- strip out all 'src' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src']);
+                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'queryString']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedRespStripped, 'Actual response not as expected.');
 
@@ -325,6 +326,7 @@ describe('Remove product variant from line item', function () {
 
     it('should remove all line items', function () {
         var expectedRemoveAllResp = {
+            'action': 'Cart-RemoveProductLineItem',
             'actionUrls': {
                 'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
@@ -444,7 +446,7 @@ describe('Remove product variant from line item', function () {
             .then(function (response2) {
                 assert.equal(response2.statusCode, 200, 'Expected statusCode from remove all product line item to be 200.');
 
-                var bodyAsJson2 = JSON.parse(response2.body);
+                var bodyAsJson2 = jsonHelpers.deleteProperties(JSON.parse(response2.body), ['queryString']);
                 assert.deepEqual(bodyAsJson2, expectedRemoveAllResp, 'Actual response from removing all items not as expected.');
             });
     });

@@ -134,7 +134,22 @@ function Request(request, customer, session) {
         };
     }
     this.currentCustomer = getCustomerObject(customer);
-    this.privacyCache = new SimpleCache(session.privacy);
-}
+    this.setLocale = function (localeID) {
+        return request.setLocale(localeID);
+    };
 
+    this.session = {
+        pricacyCache: new SimpleCache(session.privacy),
+        raw: session,
+        currency: {
+            currencyCode: session.currency.currencyCode,
+            defaultFractionDigits: session.currency.defaultFractionDigits,
+            name: session.currency.name,
+            symbol: session.currency.symbol
+        },
+        setCurrency: function (value) {
+            session.setCurrency(value);
+        }
+    };
+}
 module.exports = Request;

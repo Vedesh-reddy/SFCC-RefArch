@@ -24,6 +24,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
         myGetRequest.url = urlWithVpid;
 
         var expectedResBody = {
+            'action': 'Product-Variation',
             'product': {
                 'attributes': null,
                 'attributesHtml': '\n',
@@ -261,6 +262,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                 'promotions': null,
                 'rating': 0
             },
+            'queryString': 'pid=708141676220',
             'resources': {
                 'label_instock': 'In Stock',
                 'label_allnotavailable': 'This item is currently not available.',

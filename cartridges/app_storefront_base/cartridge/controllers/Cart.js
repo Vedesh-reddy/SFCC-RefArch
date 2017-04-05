@@ -52,6 +52,9 @@ server.get('Show', server.middleware.https, function (req, res, next) {
 
     if (currentBasket) {
         Transaction.wrap(function () {
+            if (currentBasket.currencyCode !== req.session.currency.currencyCode) {
+                currentBasket.updateCurrency();
+            }
             CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
@@ -207,8 +210,10 @@ server.get('MiniCartShow', function (req, res, next) {
 
     if (currentBasket) {
         Transaction.wrap(function () {
+            if (currentBasket.currencyCode !== req.session.currency.currencyCode) {
+                currentBasket.updateCurrency();
+            }
             CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }

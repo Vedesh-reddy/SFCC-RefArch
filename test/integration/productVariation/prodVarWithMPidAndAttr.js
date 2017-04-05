@@ -21,6 +21,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
 
 
         var expectedResBody = {
+            'action': 'Product-Variation',
             'product': {
                 'attributes': null,
                 'attributesHtml': '\n',
@@ -262,6 +263,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                 'promotions': null,
                 'rating': 0
             },
+            'queryString': 'dwvar_25604455_color=SLABLFB&dwvar_25604455_size=155&pid=25604455',
             'resources': {
                 'label_instock': 'In Stock',
                 'label_allnotavailable': 'This item is currently not available.',

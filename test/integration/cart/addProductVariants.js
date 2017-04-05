@@ -44,7 +44,9 @@ describe('Add Product variants to cart', function () {
 
         var expectedResBody = {
             'quantityTotal': totalQty,
-            'message': 'Product added to basket'
+            'action': 'Cart-AddProduct',
+            'message': 'Product added to basket',
+            'queryString': 'pid=701643421084&quantity=2'
         };
 
         return request(myRequest)
@@ -74,8 +76,11 @@ describe('Add Product variants to cart', function () {
                 assert.equal(response2.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var expectedResBody2 = {
+                    'action': 'Cart-AddProduct',
                     'quantityTotal': totalQty,
-                    'message': 'Product added to basket'
+                    'message': 'Product added to basket',
+                    'queryString': 'pid=701642923459&quantity=1'
+
                 };
 
                 var bodyAsJson2 = JSON.parse(response2.body);
@@ -94,8 +99,10 @@ describe('Add Product variants to cart', function () {
                 assert.equal(response3.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var expectedResBody3 = {
+                    'action': 'Cart-AddProduct',
                     'quantityTotal': totalQty,
-                    'message': 'Product added to basket'
+                    'message': 'Product added to basket',
+                    'queryString': 'pid=013742000252&quantity=11'
                 };
 
                 var bodyAsJson3 = JSON.parse(response3.body);
@@ -114,8 +121,10 @@ describe('Add Product variants to cart', function () {
                 assert.equal(response4.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var expectedResBody4 = {
+                    'action': 'Cart-AddProduct',
                     'quantityTotal': totalQty,
-                    'message': 'Product added to basket'
+                    'message': 'Product added to basket',
+                    'queryString': 'pid=029407331258&quantity=3'
                 };
 
                 var bodyAsJson4 = JSON.parse(response4.body);
@@ -142,6 +151,7 @@ describe('Add Product variants to cart', function () {
                     // be includedin the response but the string can not be used for comparison as it because
                     // the path has radomly generated code.
                     var expectedResponse = {
+                        'action': 'Cart-SelectShippingMethod',
                         'actionUrls': {
                             'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                             'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
@@ -427,6 +437,7 @@ describe('Add Product variants to cart', function () {
                             }
                         ],
                         'numItems': 17,
+                        'queryString': 'methodID=001',
                         'resources': {
                             'numberOfItems': '17 Items',
                             'emptyCartMsg': 'Your Shopping Cart is Empty'

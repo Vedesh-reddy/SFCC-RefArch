@@ -2,7 +2,6 @@
 
 var Request = require('../../../../cartridges/modules/server/request');
 var assert = require('chai').assert;
-
 var ArrayList = require('../../../mocks/dw.util.Collection');
 
 function createFakeRequest(overrides) {
@@ -69,7 +68,13 @@ function createFakeRequest(overrides) {
             custom: {
                 rememberMe: true
             },
-            privacy: {
+            privacyCache: {
+                get: function (key) { // eslint-disable-line no-unused-vars
+                    return this.key;
+                },
+                set: function (value) { // eslint-disable-line no-unused-vars
+                    this.key = value;
+                },
                 key: 'value'
             }
         }
@@ -252,7 +257,7 @@ describe('request', function () {
     });
     it('should contain session privacy', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
-        var expectedResult = req.privacyCache.get('key');
+        var expectedResult = req.session.raw.privacyCache.get('key');
         assert.equal(expectedResult, 'value');
     });
 });
