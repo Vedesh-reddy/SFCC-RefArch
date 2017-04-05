@@ -5,16 +5,35 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../../util');
 
+var variationAttrsMock = [{
+    attributeId: 'color',
+    displayName: 'color',
+    id: 'COLOR_ID',
+    swatchable: true,
+    values: [{ id: 'asdfa9s87sad',
+        description: '',
+        displayValue: 'blue',
+        value: 'asdfa9s87sad',
+        selected: true,
+        selectable: false
+    }]
+}];
+
 describe('fullProduct', function () {
     var FullProduct = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/product', {
         './productBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
             './productImages': function () {},
-            './productAttributes': function () { return []; },
+            './productAttributes': function () { return variationAttrsMock; },
             '../../scripts/dwHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
                 'dw/util/ArrayList': ArrayList
             }),
-            '../../scripts/factories/price': { getPrice: function () {} }
-        })
+            '../../scripts/factories/price': { getPrice: function () {} },
+            'dw/web/Resource': {
+                msgf: function () { return 'some string with param'; },
+                msg: function () { return 'some string'; }
+            }
+        }),
+        'dw/web/URLUtils': { url: function () { return 'some url'; } }
     });
 
     var attributeModel = {
@@ -33,6 +52,36 @@ describe('fullProduct', function () {
         }
     };
 
+    var availabilityModelMock = {
+        isOrderable: {
+            return: true,
+            type: 'function'
+        },
+        getAvailabilityLevels: function () {
+            return {
+                inStock: {
+                    value: 1
+                },
+                preorder: {
+                    value: 0
+                },
+                backorder: {
+                    value: 0
+                },
+                notAvailable: {
+                    value: 0
+                }
+            };
+        },
+        inventoryRecord: {
+            inStockDate: {
+                toDateString: function () {
+                    return 'some date';
+                }
+            }
+        }
+    };
+
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
@@ -40,12 +89,7 @@ describe('fullProduct', function () {
         variationGroup: false,
         productSet: false,
         bundle: false,
-        availabilityModel: {
-            isOrderable: {
-                return: true,
-                type: 'function'
-            }
-        },
+        availabilityModel: availabilityModelMock,
         shortDescription: {
             markup: 'Hello World'
         },
@@ -72,7 +116,8 @@ describe('fullProduct', function () {
             getAllValues: {
                 return: new ArrayList([]),
                 type: 'function'
-            }
+            },
+            url: function () { return 'some url'; }
         },
         attributeModel: attributeModel
     };
@@ -150,5 +195,13 @@ describe('fullProduct', function () {
         assert.equal(product.productName, 'test product');
         assert.equal(product.id, 1234567);
         assert.equal(product.rating, 4);
+    });
+
+    it('should create a url form the selected attributes', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new FullProduct(toProductMock(tempMock), null, null);
+
+        assert.equal(product.selectedVariantUrl, 'some url');
     });
 });

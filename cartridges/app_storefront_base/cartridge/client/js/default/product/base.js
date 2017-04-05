@@ -1,7 +1,5 @@
 'use strict';
 
-var lastUrl;
-
 /**
  * Retrieves the value associated with the Quantity pull-down menu
  * @return {string} - value found in the quantity input
@@ -235,18 +233,6 @@ function getSelectedValueUrl(selectedValueUrl, selectedInput) {
     return null;
 }
 
-function getUrl() {
-    var result;
-
-    if (lastUrl) {
-        result = lastUrl;
-    } else {
-        result = $('.quantity-select').data('action');
-    }
-
-    return result;
-}
-
 function attributeSelect(selectedValueUrl) {
     var productUrl;
     var view;
@@ -270,7 +256,7 @@ function attributeSelect(selectedValueUrl) {
             data: { quantity: getQuantitySelected() },
             success: function (data) {
                 parseJsonResponse(data, view);
-                lastUrl = selectedValueUrl;
+                $('.quantity-select').data('action', selectedValueUrl);
                 $.spinner().stop();
             },
             error: function () {
@@ -335,8 +321,7 @@ module.exports = {
     availability: function () {
         $(document).on('change', '.quantity-select', function (e) {
             e.preventDefault();
-            var url = getUrl();
-            attributeSelect(url);
+            attributeSelect($('.quantity-select').data('action'));
         });
     },
 

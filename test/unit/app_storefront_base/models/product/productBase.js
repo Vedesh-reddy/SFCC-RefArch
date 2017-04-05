@@ -12,7 +12,11 @@ describe('productBase', function () {
         '../../scripts/dwHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
             'dw/util/ArrayList': ArrayList
         }),
-        '../../scripts/factories/price': { getPrice: function () {} }
+        '../../scripts/factories/price': { getPrice: function () {} },
+        'dw/web/Resource': {
+            msgf: function (params) { return params; },
+            msg: function (params) { return params; }
+        }
     });
 
     var attributeModel = {
@@ -28,6 +32,35 @@ describe('productBase', function () {
         },
         getDisplayValue: function () {
             return 'some value';
+        }
+    };
+
+    var stockLevels = {
+        inStock: {
+            value: 2
+        },
+        preorder: {
+            value: 0
+        },
+        backorder: {
+            value: 0
+        },
+        notAvailable: {
+            value: 0
+        }
+    };
+
+    var availabilityModelMock = {
+        getAvailabilityLevels: {
+            return: stockLevels,
+            type: 'function'
+        },
+        inventoryRecord: {
+            inStockDate: {
+                toDateString: function () {
+                    return 'some date';
+                }
+            }
         }
     };
 
@@ -65,7 +98,11 @@ describe('productBase', function () {
         productSet: false,
         bundle: false,
         master: true,
-        attributeModel: attributeModel
+        attributeModel: attributeModel,
+        availabilityModel: availabilityModelMock,
+        minOrderQuantity: {
+            value: 2
+        }
     };
 
     var productMock = {
@@ -90,7 +127,11 @@ describe('productBase', function () {
         variationGroup: false,
         productSet: false,
         bundle: false,
-        optionProduct: false
+        optionProduct: false,
+        availabilityModel: availabilityModelMock,
+        minOrderQuantity: {
+            value: 2
+        }
     };
 
     it('should create a simple product with no query string params', function () {
@@ -283,5 +324,110 @@ describe('productBase', function () {
 
         var product = new ProductBase(toProductMock(tempMock), null);
         assert.equal(product.productType, 'variationGroup');
+    });
+
+    it('should receive product in stock availability message', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.availability.messages.length, 1);
+        assert.equal(product.availability.messages[0], 'label.instock');
+        assert.equal(product.availability.inStockDate, 'some date');
+    });
+
+    it('should receive product pre order stock availability message', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.availabilityModel.getAvailabilityLevels.return.inStock.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.preorder.value = 2;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.availability.messages.length, 1);
+        assert.equal(product.availability.messages[0], 'label.preorder');
+    });
+
+    it('should receive product back order stock availability message', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.availabilityModel.getAvailabilityLevels.return.inStock.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.preorder.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.backorder.value = 2;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.availability.messages.length, 1);
+        assert.equal(product.availability.messages[0], 'label.back.order');
+    });
+
+    it('should receive product not available message', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.availabilityModel.getAvailabilityLevels.return.inStock.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.preorder.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.backorder.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.notAvailable.value = 2;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.availability.messages.length, 1);
+        assert.equal(product.availability.messages[0], 'label.not.available');
+    });
+
+    it('should receive in stock and not available messages', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.availabilityModel.getAvailabilityLevels.return.inStock.value = 1;
+        tempMock.availabilityModel.getAvailabilityLevels.return.preorder.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.backorder.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.notAvailable.value = 1;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.availability.messages.length, 2);
+        assert.equal(product.availability.messages[0], 'label.quantity.in.stock');
+        assert.equal(product.availability.messages[1], 'label.not.available.items');
+    });
+
+    it('should receive in stock and pre order messages', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.availabilityModel.getAvailabilityLevels.return.inStock.value = 1;
+        tempMock.availabilityModel.getAvailabilityLevels.return.preorder.value = 1;
+        tempMock.availabilityModel.getAvailabilityLevels.return.backorder.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.notAvailable.value = 0;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.availability.messages.length, 2);
+        assert.equal(product.availability.messages[0], 'label.quantity.in.stock');
+        assert.equal(product.availability.messages[1], 'label.preorder.items');
+    });
+
+    it('should receive in stock and back order messages', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.availabilityModel.getAvailabilityLevels.return.inStock.value = 1;
+        tempMock.availabilityModel.getAvailabilityLevels.return.preorder.value = 0;
+        tempMock.availabilityModel.getAvailabilityLevels.return.backorder.value = 1;
+        tempMock.availabilityModel.getAvailabilityLevels.return.notAvailable.value = 0;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.availability.messages.length, 2);
+        assert.equal(product.availability.messages[0], 'label.quantity.in.stock');
+        assert.equal(product.availability.messages[1], 'label.back.order.items');
+    });
+
+    it('should receive in stock date null', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.availabilityModel.inventoryRecord = null;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.availability.inStockDate, null);
     });
 });
