@@ -96,10 +96,10 @@ server.get('ShowInCategory', function (req, res, next) {
     next();
 });
 
-server.get('Variation', function (req, res, next) {
+server.post('Variation', function (req, res, next) {
     var params = req.querystring;
+    params.quantity = req.form.quantity;
     var product = ProductFactory.get(params);
-    var variationUrl = URLUtils.url('Product-Variation', 'pid', product.id, 'quantity', '$$');
 
     product.price.html = priceHelper.renderHtml(priceHelper.getHtmlContext(product.price));
 
@@ -112,8 +112,7 @@ server.get('Variation', function (req, res, next) {
 
     res.json({
         product: product,
-        resources: getResources(),
-        variationUrl: variationUrl
+        resources: getResources()
     });
 
     next();

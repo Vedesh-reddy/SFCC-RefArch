@@ -2,6 +2,7 @@
 
 var ProductBase = require('./productBase').productBase;
 var productBase = require('./productBase');
+var URLUtils = require('dw/web/URLUtils');
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;
 
@@ -28,6 +29,27 @@ function isAvailable(quantity, product) {
  */
 function hasRequiredAttrsSelected(variationModel) {
     return !!variationModel.selectedVariant;
+}
+
+function getUrl(variationModel, allAttributes, attrConfig, id) {
+    var params = {};
+    var url;
+
+    if (allAttributes && variationModel) {
+        allAttributes.forEach(function (attribute) {
+            attribute.values.forEach(function (value) {
+                if (value.selected) {
+                    params[attribute.id] = attribute.value;
+                }
+            });
+        });
+
+        url = variationModel.url('Product-' + attrConfig.endPoint, params).toString();
+    } else {
+        url = URLUtils.url('Product-' + attrConfig.endPoint, 'pid', id).toString();
+    }
+
+    return url;
 }
 
 /**
@@ -80,6 +102,12 @@ FullProduct.prototype.initialize = function () {
     this.readyToOrder = this.variationModel
         ? hasRequiredAttrsSelected(this.variationModel)
         : true;
+    this.selectedVariantUrl = getUrl(
+        this.variationModel,
+        this.variationAttributes,
+        this.variationAttributeConfig,
+        this.id
+    );
 };
 
 /**
@@ -96,7 +124,7 @@ function ProductWrapper(product, productVariables, quantity, promotions) {
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
-        'attributes', 'availability'];
+        'attributes', 'availability', 'selectedVariantUrl'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

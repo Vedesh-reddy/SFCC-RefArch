@@ -64,80 +64,11 @@ module.exports = {
         });
     },
 
-    colorAttribute: function () {
-        $(document).on('click', '[data-attr="color"] a', function (e) {
-            e.preventDefault();
+    colorAttribute: base.colorAttribute,
 
-            var productUrl;
-            var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.href, $(this));
+    selectAttribute: base.selectAttribute,
 
-            if (selectedValueUrl) {
-                productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
-                $('.modal-body').spinner().start();
-                $.ajax({
-                    url: selectedValueUrl,
-                    method: 'GET',
-                    success: function (data) {
-                        base.parseJsonResponse(data, 'tile');
-                        $.spinner().stop();
-                    },
-                    error: function () {
-                        $.spinner().stop();
-                    }
-                });
-                $('.full-pdp-link').attr('href', productUrl);
-                $('.product-quickview .size-chart a').attr('href', productUrl);
-            }
-        });
-    },
+    availability: base.availability,
 
-    selectAttribute: function () {
-        $(document).on('change', 'select[class*="select-"]', function (e) {
-            e.preventDefault();
-
-            var productUrl;
-            var selectedValueUrl = base.getSelectedValueUrl(e.currentTarget.value, $(this));
-
-            if (selectedValueUrl) {
-                productUrl = selectedValueUrl.replace('Product-Variation', 'Product-Show');
-                $('.modal-body').spinner().start();
-                $.ajax({
-                    url: selectedValueUrl,
-                    method: 'GET',
-                    success: function (data) {
-                        base.parseJsonResponse(data, 'tile');
-                        $.spinner().stop();
-                    },
-                    error: function () {
-                        $.spinner().stop();
-                    }
-                });
-                $('.full-pdp-link').attr('href', productUrl);
-                $('.product-quickview .size-chart a').attr('href', productUrl);
-            }
-        });
-    },
-
-    addToCart: function () {
-        $(document).on('click', 'button.add-to-cart', function () {
-            var pid = $(this).closest('.product-quickview').data('pid');
-            var addToCartUrl = base.getAddToCartUrl(pid);
-
-            if (addToCartUrl) {
-                $('.modal-body').spinner().start();
-                $.ajax({
-                    url: addToCartUrl,
-                    method: 'POST',
-                    success: function (data) {
-                        base.handlePostCartAdd(data);
-                        $('#quickViewModal').modal('hide');
-                        $.spinner().stop();
-                    },
-                    error: function () {
-                        $.spinner().stop();
-                    }
-                });
-            }
-        });
-    }
+    addToCart: base.addToCart
 };

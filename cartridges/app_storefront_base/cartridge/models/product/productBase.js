@@ -150,7 +150,7 @@ function getAttributes(product) {
 function getProductAvailability(quantity, product) {
     var availability = {};
     availability.messages = [];
-    var quantity2 = quantity ? parseInt(quantity) : product.minOrderQuantity.value;
+    var quantity2 = quantity ? parseInt(quantity, 10) : product.minOrderQuantity.value;
     var availabilityModel = product.availabilityModel;
     var availabilityModelLevels = availabilityModel.getAvailabilityLevels(quantity2);
     var inventoryRecord = availabilityModel.inventoryRecord;
