@@ -1,0 +1,45 @@
+<div class="container single-shipping">
+    <div class="tab-content">
+        <!--- Shipping Address Form--->
+        <div class="tab-pane active card-block" id="shipping-address" class="shipping-address" role="tabpanel">
+            <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
+                <input name="shipmentUUID" type="hidden" value="${pdict.order.shipping[0].UUID}" />
+            <!--<form action="${URLUtils.url('Checkout-Shipping')}" class="shipping" method="post" name="shipping">-->
+                <fieldset>
+                    <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
+                    <isinclude template="checkout/shipping/shippingAddress" />
+                </fieldset>
+
+                <fieldset>
+                    <legend class="shipping-methods">
+                        ${Resource.msg('label.order.shipping.method', 'confirmation', null)}
+                    </legend>
+                    <isinclude template="checkout/shipping/shippingMethod" />
+                </fieldset>
+
+                <fieldset>
+                    <div class="form-check">
+                        <label for="shippingAddressUseAsBillingAddress" class="form-check-label checkout-checkbox">
+                            <input class="form-check-input" type="checkbox"
+                                   value="true" id="shippingAddressUseAsBillingAddress"
+                                   name="${pdict.forms.shippingForm.shippingAddress.shippingAddressUseAsBillingAddress.htmlName}" <isif condition=${pdict.isEquivalentAddress}>checked</isif>>
+                            ${Resource.msg('check.shipping.billing.same', 'checkout', null)}
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <label for="isGift" class="form-check-label checkout-checkbox">
+                            <input class="form-check-input" type="checkbox" value="" id="isGift" name="isGift">
+                            ${Resource.msg('check.gift', 'checkout', null)}
+                        </label>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        <!--- In Store Pick up--->
+        <div class="tab-pane" id="pick-up-in-store" role="tabpanel">
+            <div class="card-block">
+                ${Resource.msg('error.not.implemented', 'common', null)}
+            </div>
+        </div>
+    </div>
+</div>

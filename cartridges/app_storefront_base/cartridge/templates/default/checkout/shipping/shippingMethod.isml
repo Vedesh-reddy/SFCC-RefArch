@@ -1,5 +1,5 @@
 <isset name="shippingAddress" value="${pdict.forms.shippingForm.shippingAddress}" scope="page"/>
-<div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.https('Cart-SelectShippingMethod')}" data-action="${URLUtils.https('Checkout-UpdateShippingMethodsList')}">
+<div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.https('Checkout-SelectShippingMethod')}" data-action-url="${URLUtils.https('Checkout-UpdateShippingMethodsList')}">
 	<input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
     <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod" status="loopSate">
         <div class="form-check col-8 start-lines">
@@ -9,14 +9,14 @@
                 <iselse/>
                     <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input">
                 </isif>
-                <span>${shippingMethod.displayName}</span>
+                <span class="display-name">${shippingMethod.displayName}</span>
                 <isif condition="${shippingMethod.estimatedArrivalTime}">
                     <span class="text-muted arrival-time">(${shippingMethod.estimatedArrivalTime})</span>
                 </isif>
             </label>
         </div>
         <div class="col-4 text-right shipping-method-pricing end-lines">
-            <span>${shippingMethod.shippingCost}</span>
+            <span class="shipping-cost">${shippingMethod.shippingCost}</span>
         </div>
     </isloop>
 </div>

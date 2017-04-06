@@ -1,18 +1,19 @@
 <isif condition="${shippingModel.shippingAddress}">
 	<h5>Shipping To</h5>
 	<p>
-		${shippingModel.shippingAddress.firstName} ${shippingModel.shippingAddress.lastName}<br/>
-		${shippingModel.shippingAddress.address1}<br/>
-		<isif condition="${shippingModel.shippingAddress.address2}">${shippingModel.shippingAddress.address2}<br/></isif>
-		${shippingModel.shippingAddress.city}, ${shippingModel.shippingAddress.stateCode} ${shippingModel.shippingAddress.postalCode}<br/>
+		<span class="ship-to-name">${shippingModel.shippingAddress.firstName} ${shippingModel.shippingAddress.lastName}</span>
+		<span class="ship-to-address1">${shippingModel.shippingAddress.address1}</span>
+		<isif condition="${shippingModel.shippingAddress.address2}"><span class="ship-to-address2">${shippingModel.shippingAddress.address2}</span></isif>
+		<span class="ship-to-city-st-zip">${shippingModel.shippingAddress.city}, ${shippingModel.shippingAddress.stateCode} ${shippingModel.shippingAddress.postalCode}</span>
 	</p>
 </isif>
 <isif condition="${shippingModel.selectedShippingMethod}">
 	<h5>Shipping Method</h5>
 	<p>
-		<span>${shippingModel.selectedShippingMethod.displayName}</span>
+		<span class="display-name">${shippingModel.selectedShippingMethod.displayName}</span>
 		<isif condition="${shippingModel.selectedShippingMethod.estimatedArrivalTime}">
 		    <span class="text-muted arrival-time">(${shippingModel.selectedShippingMethod.estimatedArrivalTime})</span>
 		</isif>
 	</p>
 </isif>
+

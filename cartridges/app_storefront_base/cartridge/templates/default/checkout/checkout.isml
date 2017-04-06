@@ -12,7 +12,7 @@
     <h1 class="page-title">
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>
-    <div id="checkout-main" class="container data-checkout-stage<isif condition="${pdict.CurrentSession.privacy.usingMultiShipping}"> multi-ship</isif>" data-checkout-stage="${pdict.currentStage}">
+    <div id="checkout-main" class="container data-checkout-stage<isif condition="${pdict.order.usingMultiShipping}"> multi-ship</isif>" data-checkout-stage="${pdict.currentStage}">
         <!----------------------------------------------------------------------------------->
         <!-- Help and Phone -->
         <!----------------------------------------------------------------------------------->
@@ -112,4 +112,21 @@
             </div>
         </div>
     </div>
+    <!---------------------------------------------------------------------------------->
+	<!-- Template used by client to redraw shipping methods                           -->
+	<!---------------------------------------------------------------------------------->
+	<div id="pli-shipping-summary-template" style="display:none;" >
+	    <h5>Shipping To</h5>
+	    <p>
+	        <span class="ship-to-name"></span>
+	        <span class="ship-to-address1"></span>
+	        <span class="ship-to-address2"></span>
+	        <span class="ship-to-city-st-zip"></span>
+	    </p>
+	    <h5>Shipping Method</h5>
+	    <p>
+	        <span class="display-name"></span>
+	        <span class="text-muted arrival-time"></span>
+	    </p>
+	</div>
 </isdecorate>

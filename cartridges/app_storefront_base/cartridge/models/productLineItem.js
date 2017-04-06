@@ -128,8 +128,8 @@ ProductLineItem.prototype.initialize = function (lineItem) {
 
     // TODO: Pull out this constant to top
     this.isAvailableForInStorePickup = (this.product.custom
-        && Object.prototype.hasOwnProperty.call(this.product.custom, 'isAvailableForInStorePickup')
-        && !!this.product.custom.isAvailableForInStorePickup);
+        && Object.prototype.hasOwnProperty.call(this.product.custom, 'availableForInStorePickup')
+        && !!this.product.custom.availableForInStorePickup);
     this.isInStorePickup = (lineItem.custom
         && Object.prototype.hasOwnProperty.call(lineItem.custom, 'fromStoreId')
         && !!lineItem.custom.fromStoreId);
@@ -158,7 +158,8 @@ function ProductWrapper(product, productVariables, quantity, lineItem, promotion
     );
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes',
         'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift', 'UUID', 'quantity',
-        'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions'];
+        'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions',
+        'isAvailableForInStorePickup'];
     items.forEach(function (item) {
         this[item] = productLineItem[item];
     }, this);

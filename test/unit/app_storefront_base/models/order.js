@@ -37,6 +37,9 @@ var createApiBasket = function () {
             value: 20.00,
             available: true
         },
+        shipments: [{
+            id: 'me'
+        }],
 
         getAdjustedMerchandizeTotalPrice: function () {
             return {
@@ -84,6 +87,8 @@ describe('Order', function () {
         assert.equal(result.orderEmail, 'some Email');
     });
 
+    // !!! NOT APPLICABLE
+    //  ... every lineItemContainer (basket/order) has a defaultShipment
     it('should handle a basket that does not have a defaultShipment', function () {
         var basket = createApiBasket();
         basket.billingAddress = true;

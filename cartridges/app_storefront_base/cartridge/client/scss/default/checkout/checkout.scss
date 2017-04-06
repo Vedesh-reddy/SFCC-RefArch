@@ -128,8 +128,30 @@ $checkout-font-weight: 600;
             display: none;
         }
 
-        .hide-details .shipping-address-form {
+        [data-view-mode] .view-address-block,
+        [data-view-mode] .edit-address-block,
+        [data-view-mode] [data-action] {
             display: none;
+        }
+
+        [data-view-mode=view] .view-address-block,
+        [data-view-mode=view] [data-action=edit] {
+            display: block;
+        }
+        [data-view-mode=edit] .edit-address-block,
+        [data-view-mode=edit] [data-action=save] {
+            display: block;
+        }
+        [data-view-mode=enter] [data-action=enter] {
+            display: block;
+        }
+        .view-address-block p {
+            span.ship-to-name,
+            span.ship-to-address1,
+            span.ship-to-address2,
+            span.ship-to-city-st-zip {
+                display: block
+            }
         }
     }
 

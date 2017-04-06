@@ -60,12 +60,15 @@ function OrderModel(lineItemContainer, options) {
         this.creationDate = null;
         this.orderEmail = null;
         this.orderStatus = null;
+        this.usingMultiShipping = null;
     } else {
         var safeOptions = options || {};
 
         var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
         var customer = safeOptions.customer || lineItemContainer.customer;
         var currencyCode = safeOptions.currencyCode || lineItemContainer.currencyCode;
+        var usingMultiShipping = safeOptions.usingMultiShipping
+            || (lineItemContainer.shipments.length > 1);
 
         var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer);
 
@@ -77,6 +80,7 @@ function OrderModel(lineItemContainer, options) {
         var productLineItemsModel = new ProductLineItemsModel(lineItemContainer);
         var totalsModel = new TotalsModel(lineItemContainer);
 
+        this.usingMultiShipping = usingMultiShipping;
         this.orderNumber = Object.hasOwnProperty.call(lineItemContainer, 'orderNo')
             ? lineItemContainer.orderNo
             : null;

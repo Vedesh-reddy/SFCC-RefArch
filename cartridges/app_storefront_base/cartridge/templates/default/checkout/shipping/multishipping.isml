@@ -1,0 +1,61 @@
+<div class="multi-shipping">
+    <div class="order-shipping-summary">
+        <div class="product-shipping-block">
+            <isloop items="${pdict.order.shipping}" var="shippingModel" status="shipmentLoopState">
+                <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
+                    <div class="card product-shipment" data-view-mode="${ shippingModel.shippingAddress ? 'view' : 'enter' }">
+                        <div class="card-header">
+                            <isinclude template="checkout/productCard/productShippingCard" />
+                        </div>
+                        <div class="card-block">
+	                        <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-AddNewAddress')}" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
+	                            <input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
+	                            <input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
+	                            <input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
+	
+	                            <div class="edit-address-block shipping-address">
+	                                <isif condition="${pdict.order.items.items.length>1}">
+	                                    <fieldset class="shipment-selector-block">
+	                                        <div class="form-group">
+	                                            <label class="form-control-label" for="shipmentSelector">
+	                                                Ship To Address
+	                                            </label>
+	                                            <a class="btn float-right toggle-shipping-address-form">Edit</a>
+	                                            
+	                                            <isinclude template="checkout/shipping/shipmentSelector" />
+	                                            <div class="form-control-feedback"></div>
+	                                        </div>
+	                                    </fieldset>
+	                                </isif>
+	                                
+	                                <div class="shipping-address-form">
+	                                    <fieldset class="shipping-address-block">
+	                                        <isinclude template="checkout/shipping/shippingAddress" />
+	                                    </fieldset>
+	                                    <fieldset class="shipping-method-block">
+	                                        <h5>Shipping Method</h5>
+	                                    
+	                                        <isinclude template="checkout/shipping/shippingMethod" />
+	                                    </fieldset>
+	                                </div>
+	                            </div>
+	                            <div class="view-address-block">
+	                                <isinclude template="checkout/shipping/shippingCard" />
+	                            </div>
+                                <a class="btn btn-outline-primary col-12" data-action="enter">
+                                    Enter Address
+                                </a>
+                                <a class="btn btn-outline-primary col-12" data-action="save">
+                                    Save
+                                </a>
+                                <a class="btn btn-outline-primary col-12" data-action="edit">
+                                    Edit
+                                </a> 
+	                        </form>
+                        </div>
+                    </div>
+                </isloop>
+            </isloop>
+        </div>
+    </div>
+</div>

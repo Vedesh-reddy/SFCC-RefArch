@@ -84,6 +84,329 @@
         }
 
         /**
+         * returns a formed <option /> element
+         * @param {Object} shipping - the shipping object (shipment model)
+         * @returns {Object} - the jQuery / DOMElement
+         */
+        function optionValueForAddress(shipping) {
+            var safeShipping = shipping || {};
+            var hasShippingAddress = !!safeShipping.shippingAddress;
+            var shippingAddress = safeShipping.shippingAddress || {};
+            var uuid = safeShipping ? safeShipping.UUID : 'new';
+            var optionEl = $('<option />');
+            optionEl.val(uuid);
+
+            var title;
+
+            if (!hasShippingAddress) {
+                title = 'Add New Address';
+            } else {
+                title = [];
+                if (shippingAddress.firstName) {
+                    title.push(shippingAddress.firstName);
+                }
+                if (shippingAddress.lastName) {
+                    title.push(shippingAddress.lastName);
+                }
+//                if (shippingAddress.firstName||shippingAddress.lastName) {
+//                    title.push('-');
+//                }
+                if (shippingAddress.address1) {
+                    title.push(shippingAddress.address1);
+                }
+                if (shippingAddress.city) {
+                    if (shippingAddress.state) {
+                        title.push(shippingAddress.city + ',');
+                    } else {
+                        title.push(shippingAddress.city);
+                    }
+                }
+                if (shippingAddress.stateCode) {
+                    title.push(shippingAddress.stateCode);
+                }
+                if (shippingAddress.postalCode) {
+                    title.push(shippingAddress.postalCode);
+                }
+                title = title.join(' ');
+            }
+            optionEl.text(title);
+
+            var keyMap = {
+                'data-first-name': 'firstName',
+                'data-last-name': 'lastName',
+                'data-address1': 'address1',
+                'data-address2': 'address2',
+                'data-city': 'city',
+                'data-state-code': 'stateCode',
+                'data-postal-code': 'postalCode',
+                'data-country-code': 'countryCode',
+                'data-phone': 'phone'
+            };
+            $.each(keyMap, function (key) {
+                var mappedKey = keyMap[key];
+
+                optionEl.attr(key, shippingAddress[mappedKey] || '');
+            });
+
+            return optionEl;
+        }
+
+        /**
+         * updates the shipping address selector within shipping forms
+         * @param {Object} productLineItem - the productLineItem model
+         * @param {Object} shipping - the shipping (shipment model) model
+         * @param {Array} shippings - array of all shipping (shipment model) for an order
+         */
+        function updateShippingAddressSelector(productLineItem, shipping, shippings) {
+            var uuidEl = $('[value=' + productLineItem.UUID + ']');
+
+            var form;
+            var $shippingAddressSelector;
+            if (uuidEl && uuidEl.length > 0) {
+                form = uuidEl[0].form;
+                $shippingAddressSelector = $('.addressSelector', form);
+            }
+
+            if ($shippingAddressSelector && $shippingAddressSelector.length === 1) {
+                $shippingAddressSelector.empty();
+                $shippingAddressSelector.append(optionValueForAddress(null));
+                shippings.forEach(function (ship) {
+                    $shippingAddressSelector.append(optionValueForAddress(ship));
+                });
+            }
+        }
+
+        /**
+         * updates the shipping address form values within shipping forms
+         * @param {Object} shipping - the shipping (shipment model) model
+         */
+        function updateShippingAddressFormValues(shipping) {
+            if (!shipping.shippingAddress) return;
+
+            $('[value=' + shipping.UUID + ']').each(function (formIndex, el) {
+                var form = el.form;
+                if (!form) return;
+
+                if (shipping.shippingAddress.firstName) {
+                    $('input[name$=_firstName]', form).val(shipping.shippingAddress.firstName);
+                }
+                if (shipping.shippingAddress.lastName) {
+                    $('input[name$=_lastName]', form).val(shipping.shippingAddress.lastName);
+                }
+                if (shipping.shippingAddress.address1) {
+                    $('input[name$=_address1]', form).val(shipping.shippingAddress.address1);
+                }
+                if (shipping.shippingAddress.address2) {
+                    $('input[name$=_address2]', form).val(shipping.shippingAddress.address2);
+                }
+                if (shipping.shippingAddress.city) {
+                    $('input[name$=_city]', form).val(shipping.shippingAddress.city);
+                }
+                if (shipping.shippingAddress.postalCode) {
+                    $('input[name$=_postalCode]', form).val(shipping.shippingAddress.postalCode);
+                }
+                if (shipping.shippingAddress.stateCode) {
+                    $('select[name$=_stateCode]', form).val(shipping.shippingAddress.stateCode);
+                }
+                if (shipping.shippingAddress.countryCode) {
+                    $('select[name$=_countryCode]', form).val(shipping.shippingAddress.countryCode);
+                }
+            });
+        }
+
+        /**
+         * updates the shipping method radio buttons within shipping forms
+         * @param {Object} shipping - the shipping (shipment model) model
+         */
+        function updateShippingMethods(shipping) {
+            var uuidEl = $('[value=' + shipping.UUID + ']');
+            if (uuidEl && uuidEl.length > 0) {
+                $.each(uuidEl, function (shipmentIndex, el) {
+                    var form = el.form;
+                    if (!form) return;
+
+                    var $shippingMethodList = $('.shipping-method-list', form);
+
+                    if ($shippingMethodList && $shippingMethodList.length > 0) {
+                        $shippingMethodList.empty();
+
+                        var shippingMethods = shipping.applicableShippingMethods;
+                        var shippingMethodFormID = form.name + '_shippingAddress_shippingMethodID';
+                        var selected = shipping.selectedShippingMethod || {};
+
+                        //
+                        // Create the new rows for each shipping method
+                        //
+                        $.each(shippingMethods, function (methodIndex, shippingMethod) {
+                            var tmpl = $('#shipping-method-template').clone();
+                            // set input
+                            $('input', tmpl)
+                                .prop('id', 'shippingMethod-' + shippingMethod.ID)
+                                .prop('name', shippingMethodFormID)
+                                .prop('value', shippingMethod.ID)
+                                .attr('checked', shippingMethod.ID === selected.ID);
+
+                            // set shipping method name
+                            $('.display-name', tmpl).text(shippingMethod.displayName);
+
+                            // set or hide arrival time
+                            if (shippingMethod.estimatedArrivalTime) {
+                                $('.arrival-time', tmpl)
+                                    .text('(' + shippingMethod.estimatedArrivalTime + ')')
+                                    .show();
+                            }
+
+                            // set shipping cost
+                            $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
+
+                            $shippingMethodList.append(tmpl.html());
+                        });
+                    }
+                });
+            }
+        }
+
+        /**
+         * updates the order shipping summary for an order shipment model
+         * @param {Object} shipping - the shipping (shipment model) model
+         */
+        function updateShippingSummaryInformation(shipping) {
+            // console.log('trying to update ShippingSummaryInformation');
+            if (shipping) ;
+        }
+
+        /**
+         * Update the read-only portion of the shipment display (per PLI)
+         * @param {Object} productLineItem - the productLineItem model
+         * @param {Object} shipping - the shipping (shipment model) model
+         * @param {Object} [options] - options for updating PLI summary info
+         * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
+         */
+        function updatePLIShippingSummaryInformation(productLineItem, shipping, options) {
+            var keepOpen = options && options.keepOpen;
+
+            var $pli = $('[value=' + productLineItem.UUID + ']');
+            var form = $pli && $pli.length > 0 ? $pli[0].form : null;
+
+            if (!form) return;
+
+            var $viewBlock = $('.view-address-block', form);
+
+            var hasAddress = !!shipping.shippingAddress;
+            var address = shipping.shippingAddress || {};
+            var selectedMethod = shipping.selectedShippingMethod;
+
+            var nameLine = address.firstName ? address.firstName + ' ' : '';
+            if (address.lastName) nameLine += address.lastName;
+
+            var address1Line = address.address1;
+            var address2Line = address.address2;
+
+            var cityStZipLine = address.city ? address.city + ', ' : '';
+            if (address.stateCode) cityStZipLine += address.stateCode + ' ';
+            if (address.postalCode) cityStZipLine += address.postalCode;
+
+            var methodNameLine = selectedMethod ? selectedMethod.displayName : '';
+            var methodArrivalTime = selectedMethod
+                ? '(' + selectedMethod.estimatedArrivalTime + ')'
+                : '';
+
+            var tmpl = $('#pli-shipping-summary-template').clone();
+
+            $('.ship-to-name', tmpl).text(nameLine);
+            $('.ship-to-address1', tmpl).text(address1Line);
+            $('.ship-to-address2', tmpl).text(address2Line);
+            $('.ship-to-city-st-zip', tmpl).text(cityStZipLine);
+
+            if (!address2Line) {
+                $('.ship-to-address2', tmpl).hide();
+            }
+
+            if (shipping.selectedShippingMethod) {
+                $('.display-name', tmpl).text(methodNameLine);
+                $('.arrival-time', tmpl).text(methodArrivalTime);
+            }
+
+            $viewBlock.html(tmpl.html());
+
+            if (!keepOpen) {
+                if (hasAddress) {
+                    $viewBlock.parents('[data-view-mode]').attr('data-view-mode', 'view');
+                } else {
+                    $viewBlock.parents('[data-view-mode]').attr('data-view-mode', 'enter');
+                }
+            }
+        }
+
+        /**
+         * Update the hidden form values that associate shipping info with product line items
+         * @param {Object} productLineItem - the productLineItem model
+         * @param {Object} shipping - the shipping (shipment model) model
+         */
+        function updateProductLineItemShipmentUUIDs(productLineItem, shipping) {
+            $('[value=' + productLineItem.UUID + ']').each(function (key, pli) {
+                var form = pli.form;
+                $('[name=shipmentUUID]', form).val(shipping.UUID);
+            });
+        }
+
+        /**
+         * Update the shipping UI for a single shipping info (shipment model)
+         * @param {Object} shipping - the shipping (shipment model) model
+         * @param {Object} shippings - all shipment models of an order/basket model
+         * @param {Object} [options] - options for updating PLI summary info
+         * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
+         */
+        function updateShippingInformation(shipping, shippings, options) {
+            // First copy over shipmentUUIDs from response
+            shipping.productLineItems.items.forEach(function (productLineItem) {
+                updateProductLineItemShipmentUUIDs(productLineItem, shipping);
+            });
+
+            // Now copy over shipping information, based on those associations
+            updateShippingMethods(shipping);
+            updateShippingAddressFormValues(shipping);
+            updateShippingSummaryInformation(shipping);
+
+            // And update the PLI-based summary information as well
+            shipping.productLineItems.items.forEach(function (productLineItem) {
+                updateShippingAddressSelector(productLineItem, shipping, shippings);
+                updatePLIShippingSummaryInformation(productLineItem, shipping, options);
+            });
+        }
+
+        /**
+         * Update the checkout state (single vs. multi-ship) via Session.privacy cache
+         * @param {Object} order - checkout model to use as basis of new truth
+         */
+        function updateMultiShipInformation(order) {
+            var $checkoutMain = $('#checkout-main');
+            var $checkbox = $('[name=usingMultiShipping]');
+
+            if (order.usingMultiShipping) {
+                $checkoutMain.addClass('multi-ship');
+                $checkbox.attr('checked', 'checked');
+            } else {
+                $checkoutMain.removeClass('multi-ship');
+                $checkbox.attr('checked', null);
+            }
+        }
+
+        /**
+         * Update the entire Checkout UI, based on current state (order model)
+         * @param {Object} order - checkout model to use as basis of new truth
+         * @param {Object} [options] - options for updating PLI summary info
+         * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
+         */
+        function updateCheckoutView(order, options) {
+            updateMultiShipInformation(order);
+            updateTotals(order.totals);
+            order.shipping.forEach(function (shipping) {
+                updateShippingInformation(shipping, order.shipping, options);
+            });
+        }
+
+        /**
          * Updates the shipping method in the shipping summary
          * @param {Object} shippingMethod - the selected shipping method data
          * @param {Array} totals - the totals data
@@ -337,13 +660,14 @@
                 var state = $shippingForm.find('.shippingState').val();
                 var postal = $shippingForm.find('.shippingZipCode').val();
                 var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
-                var url = $shippingMethodList.data('action');
+                var url = $shippingMethodList.data('actionUrl');
                 var urlParams = {
                     state: state,
                     postal: postal,
                     shipmentUUID: shipmentUUID
                 };
 
+                $shippingMethodList.spinner().start();
                 $.ajax({
                     url: url,
                     type: 'post',
@@ -353,40 +677,9 @@
                         if (data.error) {
                             window.location.href = data.redirectUrl;
                         } else {
-                            $shippingMethodList.empty();
-                            var shippingMethods = data.shipping.applicableShippingMethods;
-                            var address = data.shippingForm.shippingAddress;
-                            var selected = data.shipping.selectedShippingMethod;
+                            updateCheckoutView(data.order, { keepOpen: true });
 
-                            //
-                            // Create the new rows for each shipping method
-                            //
-                            $.each(shippingMethods, function (key, shippingMethod) {
-                                var tmpl = $('#shipping-method-template').clone();
-                                // set input
-                                $('input', tmpl)
-                                    .prop('id', 'shippingMethod-' + shippingMethod.ID)
-                                    .prop('name', address.shippingMethodID.htmlName)
-                                    .prop('value', shippingMethod.ID)
-                                    .attr('checked', shippingMethod.ID === selected.ID);
-
-                                // set shipping method name
-                                $('.display-name', tmpl).text(shippingMethod.displayName);
-
-                                // set or hide arrival time
-                                if (shippingMethod.estimatedArrivalTime) {
-                                    $('.arrival-time', tmpl)
-                                        .text('(' + shippingMethod.estimatedArrivalTime + ')')
-                                        .show();
-                                }
-
-                                // set shipping cost
-                                $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
-
-                                $shippingMethodList.append(tmpl.html());
-                            });
-
-                            updateTotals(data.totals);
+                            $shippingMethodList.spinner().stop();
                         }
                     }
                 });
@@ -424,14 +717,6 @@
                     $('.billing-address').toggleClass('same-as-shipping', checked);
                 };
 
-                var toggleMultiShipForm = function (usingMultiShip) {
-                    if (usingMultiShip) {
-                        $('#checkout-main').addClass('multi-ship');
-                    } else {
-                        $('#checkout-main').removeClass('multi-ship');
-                    }
-                };
-
                 var toggleMultiShip = function (checked) {
                     var url = $('.shipping-nav form').attr('action');
                     $.spinner().start();
@@ -445,12 +730,8 @@
                         success: function (data) {
                             if (data.error) {
                                 window.location.href = data.redirectUrl;
-                            } else if (data.usingMultiShipping) {
-                                toggleMultiShipForm(true);
                             } else {
-                                // Switching back to single ship forces reload
-                                var urlParts = window.location.href.split('#');
-                                window.location.href = urlParts[0];
+                                updateCheckoutView(data.order);
                             }
                             $.spinner().stop();
                         },
@@ -458,13 +739,6 @@
                             $.spinner().stop();
                         }
                     });
-                };
-
-                var toggleMultiShipStep = function (tabPanel, rootPanel) {
-                    if (tabPanel) {
-                        $('.active', rootPanel).removeClass('active');
-                        tabPanel.tab('show');
-                    }
                 };
 
                 //
@@ -475,7 +749,7 @@
                     toggleBillingForm(checked);
                 });
 
-                $('input[name="usesMultiShip"]').on('change', function () {
+                $('input[name="usingMultiShipping"]').on('change', function () {
                     var checked = this.checked;
                     toggleMultiShip(checked);
                 });
@@ -484,20 +758,58 @@
                     $(this).parents('form').toggleClass('hide-details');
                 });
 
+                /**
+                 * Does Ajax call to create a server-side shipment w/ pliUUID & URL
+                 * @param {string} url - string representation of endpoint URL
+                 * @param {Object} pliUUID - product line item UUID
+                 * @returns {Object} - promise value for async call
+                 */
+                function createNewShipment(url, pliUUID) {
+                    $.spinner().start();
+                    return $.ajax({
+                        url: url,
+                        type: 'post',
+                        dataType: 'json',
+                        data: {
+                            productLineItemUUID: pliUUID
+                        }
+                    });
+                }
+
+
                 $('.product-shipping-block .addressSelector').on('change', function () {
                     var form = $(this).parents('form')[0];
                     var selectedOption = $('option:selected', this);
                     var attrs = selectedOption.data();
                     var shipmentUUID = selectedOption[0].value;
                     var originalUUID = $('input[name=shipmentUUID]', form).val();
+                    var pliUUID = $('input[name=productLineItemUUID]', form).val();
 
                     Object.keys(attrs).forEach(function (attr) {
                         $('[name$=' + attr + ']', form).val(attrs[attr]);
                     });
 
-                    if (shipmentUUID === 'new') {
-                        $(form).removeClass('hide-details');
-                        $('.toggle-shipping-address-form', form).hide();
+                    if (shipmentUUID === 'new' && pliUUID) {
+                        var url = $(this).attr('data-create-shipment-url');
+                        createNewShipment(url, pliUUID)
+                        .done(function (response) {
+                            $.spinner().stop();
+                            if (response.error) {
+                                if (response.redirectUrl) {
+                                    window.location.href = response.redirectUrl;
+                                }
+                                return;
+                            }
+                            var uuid = response.uuid;
+                            // replace the 'new' with returned UUID
+                            selectedOption.val(uuid);
+
+                            $(form).removeClass('hide-details');
+                            $('.toggle-shipping-address-form', form).hide();
+                        })
+                        .fail(function () {
+                            $.spinner().stop();
+                        });
                     } else if (shipmentUUID === originalUUID) {
                         $(form).addClass('hide-details');
                         $('.toggle-shipping-address-form', form).show();
@@ -507,32 +819,40 @@
                     }
                 });
 
-                $('.product-shipping-block [data-toggle="tab1"]').on('click', function (e) {
+                $('.product-shipping-block [data-action]').on('click', function (e) {
                     e.preventDefault();
 
-                    var target = this.hash;
                     var action = $(this).data('action');
-                    var testTarget = target.replace(/-[0-9]+$/g, '');
-                    var rootPanel = $(this).parents('.tab-content')[0];
+                    var $rootEl = $(this).parents('[data-view-mode]');
                     var form = $(this).parents('form')[0];
-                    var tabPanel = $(target);
 
-                    switch (testTarget) {
-                        case '#edit-address':
+                    switch (action) {
+                        case 'enter':
+                        case 'edit':
                         // do nothing special, just show the edit address view
                             $('.toggle-shipping-address-form', form).hide();
                             if (action === 'enter') {
-                                $('form .shipping-address-block input', rootPanel).val('');
+                                // copy all form values from single ship form
+                                // more complicated than just this
+                                // commenting until this is really asked for
+                                // or thought out better
+
+//                                $('.single-shipping input').each(function () {
+//                                    if (this.name && this.name !== '') {
+//                                        $('[name=' + this.name + ']', form).val(this.value);
+//                                    }
+//                                });
                             } else {
-                                $(form).removeClass('hide-details');
+                                // copy form values from source, if necessary
                             }
-                            toggleMultiShipStep(tabPanel, rootPanel);
+
+                            $rootEl.attr('data-view-mode', 'edit');
                             break;
-                        case '#view-address':
+                        case 'save':
                         // Save address to checkoutAddressBook
                             var data = $(form).serialize();
                             var url = form.action;
-                            $.spinner().start();
+                            $rootEl.spinner().start();
                             $.ajax({
                                 url: url,
                                 type: 'post',
@@ -544,39 +864,21 @@
                                 if (response.error) {
                                     loadFormErrors(form, response.fieldErrors);
                                 } else {
-                                    window.location.href = window.location.href.replace(/#.+/g, '');
-                                    // toggleMultiShipStep(tabPanel, rootPanel);
+                                    // Update UI from response
+                                    updateCheckoutView(response.order);
+
+                                    $rootEl.attr('data-view-mode', 'view');
                                 }
-                                $.spinner().stop();
+                                $rootEl.spinner().stop();
                             })
                             .fail(function () {
                                 // console.error('error saving address!');
                                 // console.dir(err);
-                                $.spinner().stop();
+                                // $rootEl.attr('data-view-mode','edit');
+                                $rootEl.spinner().stop();
                             });
 
                             // pull down applicable shipping methods
-                            break;
-                        case '#save-shipping-method':
-                        // Save shipping method to PLI / checkoutAddressBook
-                        // just show static info view
-                            var shippingData = $(form).serialize();
-                            var saveShippingMethodurl = form.action;
-                            $.ajax({
-                                url: saveShippingMethodurl,
-                                type: 'post',
-                                dataType: 'json',
-                                data: shippingData
-                            })
-                            .done(function () {
-                                toggleMultiShipStep(tabPanel, rootPanel);
-                                $.spinner().stop();
-                            })
-                            .fail(function () {
-                                // console.error('error saving address!');
-                                // console.dir(err);
-                                $.spinner().stop();
-                            });
                             break;
                         default:
                             // console.error('unhandled tab target: ' + testTarget);
@@ -678,7 +980,7 @@
                          if (data.error) {
                              window.location.href = data.redirectUrl;
                          } else {
-                             updateTotals(data.totals);
+                             updateCheckoutView(data.order, { keepOpen: true });
                          }
                          $.spinner().stop();
                      })
