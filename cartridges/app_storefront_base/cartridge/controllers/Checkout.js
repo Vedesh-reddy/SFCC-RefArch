@@ -228,7 +228,7 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
         uuid: uuid,
         order: new OrderModel(basket)
     });
-    next();
+    return next();
 });
 
 server.post('AddNewAddress', server.middleware.https, function (req, res, next) {
