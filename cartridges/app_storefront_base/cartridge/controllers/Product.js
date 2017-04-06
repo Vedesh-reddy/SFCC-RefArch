@@ -94,9 +94,8 @@ server.get('ShowInCategory', function (req, res, next) {
     next();
 });
 
-server.post('Variation', function (req, res, next) {
+server.get('Variation', function (req, res, next) {
     var params = req.querystring;
-    params.quantity = req.form.quantity;
     var product = ProductFactory.get(params);
 
     product.price.html = priceHelper.renderHtml(priceHelper.getHtmlContext(product.price));

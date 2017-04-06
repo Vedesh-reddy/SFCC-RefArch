@@ -10,7 +10,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
     var masterPid = '25604455';
     var myGetRequest = {
         url: '',
-        method: 'POST',
+        method: 'GET',
         rejectUnauthorized: false
     };
 

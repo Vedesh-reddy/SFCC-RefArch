@@ -15,7 +15,7 @@ describe('ProductVariation - Get product variation with master product ID and al
 
     var myGetRequest = {
         url: '',
-        method: 'POST',
+        method: 'GET',
         rejectUnauthorized: false
     };
 

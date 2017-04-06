@@ -12,7 +12,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
 
     var myGetRequest = {
         url: '',
-        method: 'POST',
+        method: 'GET',
         rejectUnauthorized: false
     };
 

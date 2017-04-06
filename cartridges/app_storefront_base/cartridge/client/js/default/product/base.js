@@ -74,6 +74,19 @@ function processNonSwatchValues(attr) {
 }
 
 /**
+ * Appends the quantity selected to the Ajax URL.  Used to determine product availability, which is
+ * one criteria used to enable the "Add to Cart" button
+ *
+ * @param {string} url - Attribute value onClick URL used to [de]select an attribute value
+ * @return {string} - The provided URL appended with the quantity selected in the query params or
+ *     the original provided URL if no quantity selected
+ */
+function appendQuantityToUrl(url) {
+    var quantitySelected = getQuantitySelected();
+    return !quantitySelected ? url : url + '&quantity=' + quantitySelected;
+}
+
+/**
  * Routes the handling of attribute processing depending on whether the attribute has image
  *     swatches or not
  *
@@ -223,7 +236,7 @@ function handleVariantResponse(response, caller) {
  */
 function getSelectedValueUrl(selectedValueUrl, selectedInput) {
     if (selectedValueUrl && selectedValueUrl !== 'null') {
-        return selectedValueUrl;
+        return appendQuantityToUrl(selectedValueUrl);
     }
 
     selectedInput.closest('.attributes').find('.add-to-cart').attr('disabled', true);
@@ -253,12 +266,10 @@ function attributeSelect(selectedValueUrl) {
 
         $.ajax({
             url: selectedValueUrl,
-            method: 'POST',
-            dataType: 'json',
-            data: { quantity: getQuantitySelected() },
+            method: 'GET',
             success: function (data) {
                 handleVariantResponse(data, view);
-                $('.quantity-select').data('action', selectedValueUrl);
+                $('.quantity-select').data('action', data.product.selectedVariantUrl);
                 $.spinner().stop();
             },
             error: function () {
@@ -323,7 +334,8 @@ module.exports = {
     availability: function () {
         $(document).on('change', '.quantity-select', function (e) {
             e.preventDefault();
-            attributeSelect($('.quantity-select').data('action'));
+            var quantity = getQuantitySelected();
+            attributeSelect($('.quantity-select').data('action') + '&quantity=' + quantity);
         });
     },
 

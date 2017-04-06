@@ -14,7 +14,7 @@ describe('Product Variant Promotion on Product Details Page', function () {
     var masterPid = '25752986';
     var myGetRequest = {
         url: '',
-        method: 'POST',
+        method: 'GET',
         rejectUnauthorized: false
     };
 
