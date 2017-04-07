@@ -16,7 +16,7 @@
 			data-city="${aShippingModel.shippingAddress.city}" data-state-code="${aShippingModel.shippingAddress.stateCode}"
 			data-country-code="${aShippingModel.shippingAddress.countryCode}" data-postal-code="${aShippingModel.shippingAddress.postalCode}"
 			data-phone="${aShippingModel.shippingAddress.phone}">
-			 ${aShippingModel.shippingAddress.address1 || ''} ${aShippingModel.shippingAddress.city || ''}${!aShippingModel.shippingAddress.city || ','} ${aShippingModel.shippingAddress.stateCode||''} ${aShippingModel.shippingAddress.postalCode||''} ${!aShippingModel.selectedShippingMethod.displayName||'-'} ${aShippingModel.selectedShippingMethod.displayName||''}</option>
+			 ${aShippingModel.shippingAddress.firstName || ''} ${aShippingModel.shippingAddress.lastName || ''} ${aShippingModel.shippingAddress.address1 || ''} ${aShippingModel.shippingAddress.city || ''}${!aShippingModel.shippingAddress.city || ','} ${aShippingModel.shippingAddress.stateCode||''} ${aShippingModel.shippingAddress.postalCode||''} ${!aShippingModel.selectedShippingMethod.displayName||'-'} ${aShippingModel.selectedShippingMethod.displayName||''}</option>
 		</isloop>
 	</isif>
 	<isif condition="${lineItem.isAvailableForInStorePickup}">

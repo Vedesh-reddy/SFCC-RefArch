@@ -86,13 +86,17 @@
         /**
          * returns a formed <option /> element
          * @param {Object} shipping - the shipping object (shipment model)
+         * @param {boolean} selected - current shipping is selected (for PLI)
          * @returns {Object} - the jQuery / DOMElement
          */
-        function optionValueForAddress(shipping) {
+        function optionValueForAddress(shipping, selected) {
+            if (shipping === '-') {
+                return $('<option disabled>-</option>');
+            }
             var safeShipping = shipping || {};
             var hasShippingAddress = !!safeShipping.shippingAddress;
             var shippingAddress = safeShipping.shippingAddress || {};
-            var uuid = safeShipping ? safeShipping.UUID : 'new';
+            var uuid = safeShipping.UUID ? safeShipping.UUID : 'new';
             var optionEl = $('<option />');
             optionEl.val(uuid);
 
@@ -127,7 +131,11 @@
                 if (shippingAddress.postalCode) {
                     title.push(shippingAddress.postalCode);
                 }
-                title = title.join(' ');
+                if (title.length > 0) {
+                    title = title.join(' ');
+                } else {
+                    title = 'New Address';
+                }
             }
             optionEl.text(title);
 
@@ -148,6 +156,10 @@
                 optionEl.attr(key, shippingAddress[mappedKey] || '');
             });
 
+            if (selected) {
+                optionEl.attr('selected', true);
+            }
+
             return optionEl;
         }
 
@@ -158,7 +170,7 @@
          * @param {Array} shippings - array of all shipping (shipment model) for an order
          */
         function updateShippingAddressSelector(productLineItem, shipping, shippings) {
-            var uuidEl = $('[value=' + productLineItem.UUID + ']');
+            var uuidEl = $('input[value=' + productLineItem.UUID + ']');
 
             var form;
             var $shippingAddressSelector;
@@ -170,10 +182,32 @@
             if ($shippingAddressSelector && $shippingAddressSelector.length === 1) {
                 $shippingAddressSelector.empty();
                 $shippingAddressSelector.append(optionValueForAddress(null));
-                shippings.forEach(function (ship) {
-                    $shippingAddressSelector.append(optionValueForAddress(ship));
+                shippings.forEach(function (aShipping) {
+                    $shippingAddressSelector.append(
+                        optionValueForAddress(aShipping, shipping.UUID === aShipping.UUID)
+                    );
                 });
             }
+        }
+
+        /**
+         * returns address properties from a UI form
+         * @param {Form} form - the Form element
+         * @returns {Object} - a JSON object with all values
+         */
+        function getAddressFieldsFromUI(form) {
+            var address = {
+                firstName: $('input[name$=_firstName]', form).val(),
+                lastName: $('input[name$=_lastName]', form).val(),
+                address1: $('input[name$=_address1]', form).val(),
+                address2: $('input[name$=_address2]', form).val(),
+                city: $('input[name$=_city]', form).val(),
+                postalCode: $('input[name$=_postalCode]', form).val(),
+                stateCode: $('select[name$=_stateCode]', form).val(),
+                countryCode: $('select[name$=_countryCode]', form).val(),
+                phone: $('select[name$=_phone]', form).val()
+            };
+            return address;
         }
 
         /**
@@ -183,34 +217,19 @@
         function updateShippingAddressFormValues(shipping) {
             if (!shipping.shippingAddress) return;
 
-            $('[value=' + shipping.UUID + ']').each(function (formIndex, el) {
+            $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
                 var form = el.form;
                 if (!form) return;
 
-                if (shipping.shippingAddress.firstName) {
-                    $('input[name$=_firstName]', form).val(shipping.shippingAddress.firstName);
-                }
-                if (shipping.shippingAddress.lastName) {
-                    $('input[name$=_lastName]', form).val(shipping.shippingAddress.lastName);
-                }
-                if (shipping.shippingAddress.address1) {
-                    $('input[name$=_address1]', form).val(shipping.shippingAddress.address1);
-                }
-                if (shipping.shippingAddress.address2) {
-                    $('input[name$=_address2]', form).val(shipping.shippingAddress.address2);
-                }
-                if (shipping.shippingAddress.city) {
-                    $('input[name$=_city]', form).val(shipping.shippingAddress.city);
-                }
-                if (shipping.shippingAddress.postalCode) {
-                    $('input[name$=_postalCode]', form).val(shipping.shippingAddress.postalCode);
-                }
-                if (shipping.shippingAddress.stateCode) {
-                    $('select[name$=_stateCode]', form).val(shipping.shippingAddress.stateCode);
-                }
-                if (shipping.shippingAddress.countryCode) {
-                    $('select[name$=_countryCode]', form).val(shipping.shippingAddress.countryCode);
-                }
+                $('input[name$=_firstName]', form).val(shipping.shippingAddress.firstName);
+                $('input[name$=_lastName]', form).val(shipping.shippingAddress.lastName);
+                $('input[name$=_address1]', form).val(shipping.shippingAddress.address1);
+                $('input[name$=_address2]', form).val(shipping.shippingAddress.address2);
+                $('input[name$=_city]', form).val(shipping.shippingAddress.city);
+                $('input[name$=_postalCode]', form).val(shipping.shippingAddress.postalCode);
+                $('select[name$=_stateCode]', form).val(shipping.shippingAddress.stateCode);
+                $('select[name$=_countryCode]', form).val(shipping.shippingAddress.countryCode);
+                $('select[name$=_phone]', form).val(shipping.shippingAddress.phone);
             });
         }
 
@@ -219,7 +238,7 @@
          * @param {Object} shipping - the shipping (shipment model) model
          */
         function updateShippingMethods(shipping) {
-            var uuidEl = $('[value=' + shipping.UUID + ']');
+            var uuidEl = $('input[value=' + shipping.UUID + ']');
             if (uuidEl && uuidEl.length > 0) {
                 $.each(uuidEl, function (shipmentIndex, el) {
                     var form = el.form;
@@ -285,7 +304,7 @@
         function updatePLIShippingSummaryInformation(productLineItem, shipping, options) {
             var keepOpen = options && options.keepOpen;
 
-            var $pli = $('[value=' + productLineItem.UUID + ']');
+            var $pli = $('input[value=' + productLineItem.UUID + ']');
             var form = $pli && $pli.length > 0 ? $pli[0].form : null;
 
             if (!form) return;
@@ -307,7 +326,7 @@
             if (address.postalCode) cityStZipLine += address.postalCode;
 
             var methodNameLine = selectedMethod ? selectedMethod.displayName : '';
-            var methodArrivalTime = selectedMethod
+            var methodArrivalTime = selectedMethod && selectedMethod.estimatedArrivalTime
                 ? '(' + selectedMethod.estimatedArrivalTime + ')'
                 : '';
 
@@ -344,7 +363,7 @@
          * @param {Object} shipping - the shipping (shipment model) model
          */
         function updateProductLineItemShipmentUUIDs(productLineItem, shipping) {
-            $('[value=' + productLineItem.UUID + ']').each(function (key, pli) {
+            $('input[value=' + productLineItem.UUID + ']').each(function (key, pli) {
                 var form = pli.form;
                 $('[name=shipmentUUID]', form).val(shipping.UUID);
             });
@@ -657,15 +676,10 @@
             updateShippingMethodList: function (event) {
                 var $shippingForm = $(event.currentTarget.form);
                 var $shippingMethodList = $shippingForm.find('.shipping-method-list');
-                var state = $shippingForm.find('.shippingState').val();
-                var postal = $shippingForm.find('.shippingZipCode').val();
+                var urlParams = getAddressFieldsFromUI($shippingForm);
                 var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
                 var url = $shippingMethodList.data('actionUrl');
-                var urlParams = {
-                    state: state,
-                    postal: postal,
-                    shipmentUUID: shipmentUUID
-                };
+                urlParams.shipmentUUID = shipmentUUID;
 
                 $shippingMethodList.spinner().start();
                 $.ajax({
@@ -800,12 +814,8 @@
                                 }
                                 return;
                             }
-                            var uuid = response.uuid;
-                            // replace the 'new' with returned UUID
-                            selectedOption.val(uuid);
 
-                            $(form).removeClass('hide-details');
-                            $('.toggle-shipping-address-form', form).hide();
+                            updateCheckoutView(response.order, { keepOpen: true });
                         })
                         .fail(function () {
                             $.spinner().stop();
@@ -830,6 +840,7 @@
                         case 'enter':
                         case 'edit':
                         // do nothing special, just show the edit address view
+                            $(form).removeClass('hide-details');
                             $('.toggle-shipping-address-form', form).hide();
                             if (action === 'enter') {
                                 // copy all form values from single ship form
@@ -960,15 +971,14 @@
                 );
 
                 $('.shipping-method-list').change(function () {
-                    var $shippingForm = $(this.form);
+                    var $shippingForm = $(this).parents('form');
                     var methodID = $(':checked', this).val();
                     var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
-                    var url = $(this).data('select-shipping-method-url');
-                    var urlParams = {
-                        methodID: methodID,
-                        shipmentUUID: shipmentUUID
-                    };
+                    var urlParams = getAddressFieldsFromUI($shippingForm);
+                    urlParams.shipmentUUID = shipmentUUID;
+                    urlParams.methodID = methodID;
 
+                    var url = $(this).data('select-shipping-method-url');
                     $.spinner().start();
                     $.ajax({
                         url: url,
