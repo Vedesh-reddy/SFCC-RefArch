@@ -90,9 +90,9 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
     var shipments = currentBasket.shipments;
     var defaultShipment = currentBasket.defaultShipment;
-    var usingMultiShipping = !req.privacyCache.get('usingMultiShipping');
+    var usingMultiShipping = !req.session.privacyCache.get('usingMultiShipping');
 
-    req.privacyCache.set('usingMultiShipping', usingMultiShipping);
+    req.session.privacyCache.set('usingMultiShipping', usingMultiShipping);
 
     if (!usingMultiShipping && shipments.length > 1) {
         // Make sure we move all product line items back to the default shipment
@@ -181,7 +181,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     });
 
     if (!error) {
-        var usingMultiShipping = req.privacyCache.get('usingMultiShipping');
+        var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
         var basketModel = new OrderModel(currentBasket, {
             usingMultiShipping: usingMultiShipping
         });
@@ -260,7 +260,7 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
         HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
     });
 
-    var usingMultiShipping = req.privacyCache.get('usingMultiShipping');
+    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
     var basketModel = new OrderModel(currentBasket, {
         usingMultiShipping: usingMultiShipping
     });
@@ -343,7 +343,7 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
     var basket = BasketMgr.getCurrentBasket();
     var result = {};
 
-    var usingMultiShipping = req.privacyCache.get('usingMultiShipping');
+    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
 
     if (Object.keys(shippingFormErrors).length > 0) {
         res.json({
@@ -448,7 +448,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var hasEquivalentAddress = true;
 
     var currentCustomer = req.currentCustomer.raw;
-    var usingMultiShipping = req.privacyCache.get('usingMultiShipping');
+    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
 
     if (billingAddress && shippingAddress) {
         hasEquivalentAddress = billingAddress.isEquivalentAddress(shippingAddress);

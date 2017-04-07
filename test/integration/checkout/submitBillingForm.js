@@ -88,7 +88,7 @@ describe('billingForm', function () {
                 }
                 // This will fail without SEO urls turned on
                 var bodyAsJson = JSON.parse(httpResponse.body);
-                var strippedBody = jsonHelpers.deleteProperties(bodyAsJson, ['redirectUrl']);
+                var strippedBody = jsonHelpers.deleteProperties(bodyAsJson, ['redirectUrl', 'action', 'queryString']);
                 assert.equal(httpResponse.statusCode, 200, 'Expected Checkout-SubmitPayment statusCode to be 200.');
                 assert.deepEqual(strippedBody, ExpectedResBody, 'Expecting actual response to be equal match expected response');
                 return done();

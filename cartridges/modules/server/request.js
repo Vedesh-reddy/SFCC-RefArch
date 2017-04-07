@@ -139,7 +139,7 @@ function Request(request, customer, session) {
     };
 
     this.session = {
-        pricacyCache: new SimpleCache(session.privacy),
+        privacyCache: new SimpleCache(session.privacy),
         raw: session,
         currency: {
             currencyCode: session.currency.currencyCode,

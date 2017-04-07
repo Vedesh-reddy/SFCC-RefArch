@@ -97,7 +97,17 @@ describe('Select different State in Shipping Form', function () {
                     'shippingAddress': {
                         'ID': null,
                         'postalCode': '09876',
-                        'stateCode': 'MA'
+                        'stateCode': 'MA',
+                        'firstName': null,
+                        'lastName': null,
+                        'address1': null,
+                        'address2': null,
+                        'city': null,
+                        'phone': null,
+                        'countryCode': {
+                            'displayValue': '',
+                            'value': ''
+                        }
                     },
                     'selectedShippingMethod': {
                         'ID': '001',
@@ -115,7 +125,7 @@ describe('Select different State in Shipping Form', function () {
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876';
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?stateCode=MA&postalCode=09876';
             return request(myRequest)
             // Handle response from request
                 .then(function (response) {
@@ -125,9 +135,9 @@ describe('Select different State in Shipping Form', function () {
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
                     assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
-                    assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
                     done();
                 });
         });
@@ -214,7 +224,17 @@ describe('Select different State in Shipping Form', function () {
                     'shippingAddress': {
                         'ID': null,
                         'postalCode': '09876',
-                        'stateCode': 'MA'
+                        'stateCode': 'MA',
+                        'firstName': null,
+                        'lastName': null,
+                        'address1': null,
+                        'address2': null,
+                        'city': null,
+                        'phone': null,
+                        'countryCode': {
+                            'displayValue': '',
+                            'value': ''
+                        }
                     },
                     'selectedShippingMethod': {
                         'ID': '001',
@@ -232,7 +252,7 @@ describe('Select different State in Shipping Form', function () {
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876';
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?stateCode=MA&postalCode=09876';
             return request(myRequest)
             // Handle response from request
                 .then(function (response) {
@@ -242,9 +262,9 @@ describe('Select different State in Shipping Form', function () {
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
                     assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
-                    assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
                     done();
                 });
         });
@@ -317,7 +337,17 @@ describe('Select different State in Shipping Form', function () {
                     'shippingAddress': {
                         'ID': null,
                         'postalCode': '09876',
-                        'stateCode': 'AK'
+                        'stateCode': 'AK',
+                        'firstName': null,
+                        'lastName': null,
+                        'address1': null,
+                        'address2': null,
+                        'city': null,
+                        'phone': null,
+                        'countryCode': {
+                            'displayValue': '',
+                            'value': ''
+                        }
                     },
                     'selectedShippingMethod': {
                         'ID': '005',
@@ -335,7 +365,7 @@ describe('Select different State in Shipping Form', function () {
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=AK&postal=09876';
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?stateCode=AK&postalCode=09876';
             return request(myRequest)
             // Handle response from request
                 .then(function (response) {
@@ -344,9 +374,9 @@ describe('Select different State in Shipping Form', function () {
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
                     assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
-                    assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
                     done();
                 });
         });
@@ -434,7 +464,17 @@ describe('Select different State in Shipping Form', function () {
                     'shippingAddress': {
                         'ID': null,
                         'postalCode': '09876',
-                        'stateCode': 'MA'
+                        'stateCode': 'MA',
+                        'firstName': null,
+                        'lastName': null,
+                        'address1': null,
+                        'address2': null,
+                        'city': null,
+                        'phone': null,
+                        'countryCode': {
+                            'displayValue': '',
+                            'value': ''
+                        }
                     },
                     'selectedShippingMethod': {
                         'ID': '001',
@@ -452,7 +492,7 @@ describe('Select different State in Shipping Form', function () {
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876';
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?stateCode=MA&postalCode=09876';
             return request(myRequest)
             // Handle response from request
                 .then(function (response) {
@@ -461,9 +501,9 @@ describe('Select different State in Shipping Form', function () {
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
                     assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
-                    assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
                     done();
                 });
         });
@@ -547,7 +587,17 @@ describe('Select different State in Shipping Form', function () {
                     'shippingAddress': {
                         'ID': null,
                         'postalCode': '09876',
-                        'stateCode': 'MA'
+                        'stateCode': 'MA',
+                        'firstName': null,
+                        'lastName': null,
+                        'address1': null,
+                        'address2': null,
+                        'city': null,
+                        'phone': null,
+                        'countryCode': {
+                            'displayValue': '',
+                            'value': ''
+                        }
                     },
                     'selectedShippingMethod': {
                         'ID': '001',
@@ -565,7 +615,7 @@ describe('Select different State in Shipping Form', function () {
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=MA&postal=09876';
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?stateCode=MA&postalCode=09876';
             return request(myRequest)
             // Handle response from request
                 .then(function (response) {
@@ -574,9 +624,9 @@ describe('Select different State in Shipping Form', function () {
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
                     assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
-                    assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
                     done();
                 });
         });
@@ -649,7 +699,17 @@ describe('Select different State in Shipping Form', function () {
                     'shippingAddress': {
                         'ID': null,
                         'postalCode': '09876',
-                        'stateCode': 'AP'
+                        'stateCode': 'AP',
+                        'firstName': null,
+                        'lastName': null,
+                        'address1': null,
+                        'address2': null,
+                        'city': null,
+                        'phone': null,
+                        'countryCode': {
+                            'displayValue': '',
+                            'value': ''
+                        }
                     },
                     'selectedShippingMethod': {
                         'ID': '005',
@@ -667,7 +727,7 @@ describe('Select different State in Shipping Form', function () {
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?state=AP&postal=09876';
+            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList?stateCode=AP&postalCode=09876';
             return request(myRequest)
             // Handle response from request
                 .then(function (response) {
@@ -676,9 +736,9 @@ describe('Select different State in Shipping Form', function () {
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
                     assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                    assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
-                    assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
+                    assert.deepEqual(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
                     done();
                 });
         });
