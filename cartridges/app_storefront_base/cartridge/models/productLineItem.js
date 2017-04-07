@@ -106,7 +106,7 @@ function ProductLineItem(product, productVariables, quantity, lineItem, promotio
     };
     this.quantity = quantity;
 
-    this.attributeConfig = {
+    this.variationAttributeConfig = {
         attributes: 'selected'
     };
     this.useSimplePrice = false;
@@ -156,10 +156,12 @@ function ProductWrapper(product, productVariables, quantity, lineItem, promotion
         lineItem,
         promotions
     );
-    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'attributes',
-        'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift', 'UUID', 'quantity',
-        'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions',
-        'isAvailableForInStorePickup'];
+
+    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
+        'variationAttributes', 'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift',
+        'UUID', 'quantity', 'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions',
+        'attributes', 'isAvailableForInStorePickup'];
+
     items.forEach(function (item) {
         this[item] = productLineItem[item];
     }, this);

@@ -51,23 +51,24 @@ describe('Update quantity for product variant', function () {
                 return request(myRequest);
             })
 
-            // ----- select a shipping method in order to get cart content to obtain UUID of the product line item:
-           .then(function () {
-               var shipMethodId = '001';   // 001 = Ground
+            // ----- select a shipping method. Need to have shipping method so that shipping cost, sales tax,
+            //       and grand total can be calculated
+            .then(function () {
+                var shipMethodId = '001';   // 001 = Ground
 
-               myRequest.method = 'POST';
-               myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
-               return request(myRequest);
-           })
+                myRequest.method = 'POST';
+                myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
+                return request(myRequest);
+            })
 
-           // ----- Get UUID information
-           .then(function (response4) {
-               var bodyAsJson = JSON.parse(response4.body);
+            // ----- Get UUID for each product line items
+            .then(function (response4) {
+                var bodyAsJson = JSON.parse(response4.body);
 
-               prodIdUuidMap[bodyAsJson.items[0].id] = bodyAsJson.items[0].UUID;
-               prodIdUuidMap[bodyAsJson.items[1].id] = bodyAsJson.items[1].UUID;
-               prodIdUuidMap[bodyAsJson.items[2].id] = bodyAsJson.items[2].UUID;
-           });
+                prodIdUuidMap[bodyAsJson.items[0].id] = bodyAsJson.items[0].UUID;
+                prodIdUuidMap[bodyAsJson.items[1].id] = bodyAsJson.items[1].UUID;
+                prodIdUuidMap[bodyAsJson.items[2].id] = bodyAsJson.items[2].UUID;
+            });
     });
 
     it('should update line item quantity', function () {
@@ -84,6 +85,7 @@ describe('Update quantity for product variant', function () {
         var variantUuid3 = prodIdUuidMap[variantPid3];
 
         var expectedUpdateRep = {
+            'action': 'Cart-UpdateQuantity',
             'actionUrls': {
                 'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
@@ -192,7 +194,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'rating': 1,
                     'renderedPromotions': '',
-                    'attributes': [
+                    'variationAttributes': [
                         {
                             'attributeId': 'color',
                             'displayName': 'Color',
@@ -218,6 +220,7 @@ describe('Update quantity for product variant', function () {
                     'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid1,
+                    'attributes': null,
                     'quantity': expectQty1,
                     'isOrderable': true,
                     'isAvailableForInStorePickup': false
@@ -243,7 +246,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'rating': 3,
                     'renderedPromotions': '',
-                    'attributes': [
+                    'variationAttributes': [
                         {
                             'attributeId': 'color',
                             'displayName': 'Color',
@@ -269,6 +272,7 @@ describe('Update quantity for product variant', function () {
                     'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid2,
+                    'attributes': null,
                     'quantity': expectQty2,
                     'isOrderable': true,
                     'isAvailableForInStorePickup': false
@@ -298,7 +302,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'rating': 0,
                     'renderedPromotions': '',
-                    'attributes': [
+                    'variationAttributes': [
                         {
                             'attributeId': 'color',
                             'displayName': 'Color',
@@ -319,6 +323,7 @@ describe('Update quantity for product variant', function () {
                     'promotions': null,
                     'isGift': false,
                     'UUID': variantUuid3,
+                    'attributes': null,
                     'quantity': expectQty3,
                     'isOrderable': true,
                     'isAvailableForInStorePickup': false
@@ -341,8 +346,7 @@ describe('Update quantity for product variant', function () {
             .then(function (updateRsp) {
                 assert.equal(updateRsp.statusCode, 200, 'Expected statusCode to be 200.');
 
-                var bodyAsJson = JSON.parse(updateRsp.body);
-
+                var bodyAsJson = jsonHelpers.deleteProperties(JSON.parse(updateRsp.body), ['queryString']);
                 // ----- strip out all 'src' properties from the actual response
                 var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src']);
 

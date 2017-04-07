@@ -22,7 +22,6 @@ describe('productFactory', function () {
 
     var productModel = function () { this.message = 'full product model'; };
     productModel.getVariationModel = getVariationModel;
-    productModel.getProductType = function () { return 'variant'; };
     var productFactory = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/product', {
         'dw/catalog/ProductMgr': toProductMock(productMgrMock),
         'dw/campaign/PromotionMgr': {
@@ -30,15 +29,18 @@ describe('productFactory', function () {
         },
         './../../models/product/product': productModel,
         './../../models/product/productBase': function () { return { message: 'product base' }; },
-        './../../models/productLineItem': function () { return { message: 'productLineItem' }; }
+        './../../models/productLineItem': function () { return { message: 'productLineItem' }; },
+        './../../models/product/productBundle': function () { return { message: 'productBundle' }; }
     });
 
     it('should return full product model', function () {
+        productModel.getProductType = function () { return 'variant'; };
         var product = productFactory.get({ pid: 1234 });
         assert.equal(product.message, 'full product model');
     });
 
     it('should return productLineItem model', function () {
+        productModel.getProductType = function () { return 'variant'; };
         var product = productFactory.get({
             pid: 1234,
             pview: 'productLineItem'
@@ -47,10 +49,25 @@ describe('productFactory', function () {
     });
 
     it('should return product base', function () {
+        productModel.getProductType = function () { return 'variant'; };
         var product = productFactory.get({
             pid: 1234,
             pview: 'tile'
         });
+        assert.equal(product.message, 'product base');
+    });
+
+    it('should return product bundle model', function () {
+        productModel.getProductType = function () { return 'bundle'; };
+
+        var product = productFactory.get({ pid: 1234 });
+        assert.equal(product.message, 'productBundle');
+    });
+
+    it('should return product bundle model', function () {
+        productModel.getProductType = function () { return 'bundle'; };
+
+        var product = productFactory.get({ pid: 1234, pview: 'tile' });
         assert.equal(product.message, 'product base');
     });
 });

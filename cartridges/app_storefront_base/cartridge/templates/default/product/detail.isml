@@ -56,15 +56,23 @@
                 <section class="attributes container">
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-12">
-                            <isloop items="${pdict.product.attributes}" var="attr" status="attributeStatus">
-                                <isinclude template="/product/components/attributes" />
+                            <isinclude template="/product/components/mainAttributes" />
+
+                            <isloop items="${pdict.product.variationAttributes}" var="attr" status="attributeStatus">
+                                <isinclude template="/product/components/variationAttributes" />
                             </isloop>
+
+                            <isif condition="${!pdict.product.variationAttributes}">
+                                <div class="simple-quantity">
+                                    <isinclude template="/product/components/quantity" />
+                                </div>
+                            </isif>
                         </div>
 
                         <!-- Size Chart -->
-                        <div class="size-chart col-md-10 col-12">
-                            <a href="${"#"}" class="size-chart">${Resource.msg('link.size_chart', 'product', null)}</a>
-                        </div>
+                        <isif condition="${pdict.product.variationAttributes}">
+                            <isinclude template="/product/components/sizeChart" />
+                        </isif>
 
                         <!-- Availability -->
                         <isinclude template="/product/components/availability" />
@@ -103,20 +111,26 @@
         </div>
 
         <div class="description-and-detail">
-            <div class="row description collapsable-xs">
-                <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.description', 'product', null)}</h2>
-                <div class="col-sm-12 col-md-8 col-lg-9 value content">
-                    <isprint value="${pdict.product.shortDescription}" encoding="off" />
-                </div>
+            <div class="row product-attributes collapsable-xs">
+                <isinclude template="/product/components/attributes" />
             </div>
 
-            <hr class="hidden-sm-up">
+            <isif condition="${pdict.product.attributes && pdict.product.attributes.length}">
+                <hr class="hidden-sm-up">
+            </isif>
 
-            <div class="row details collapsable-xs">
+            <div class="row description collapsable-xs <isif condition="${!pdict.product.shortDescription}">hidden-xl-down</isif>">
+                <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.description', 'product', null)}</h2>
+                <isinclude template="/product/components/description" />
+            </div>
+
+            <isif condition="${pdict.product.longDescription}">
+                <hr class="hidden-sm-up">
+            </isif>
+
+            <div class="row details collapsable-xs <isif condition="${!pdict.product.longDescription}">hidden-xl-down</isif>">
                 <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.details', 'product', null)}</h2>
-                <div class="col-sm-12 col-md-8 col-lg-9 value content">
-                    <isprint value="${pdict.product.longDescription}" encoding="off" />
-                </div>
+                <isinclude template="/product/components/details" />
             </div>
         </div>
     </div>

@@ -14,15 +14,23 @@
                 <!-- Attributes -->
                 <section class="attributes">
                     <div class="col-12">
-                        <isloop items="${pdict.product.attributes}" var="attr" status="attributeStatus">
-                            <isinclude template="/product/components/attributes" />
+                        <isinclude template="/product/components/mainAttributes" />
+
+                        <isloop items="${pdict.product.variationAttributes}" var="attr" status="attributeStatus">
+                            <isinclude template="/product/components/variationAttributes" />
                         </isloop>
+
+                        <isif condition="${!pdict.product.variationAttributes}">
+                            <div class="simple-quantity">
+                                <isinclude template="/product/components/quantity" />
+                            </div>
+                        </isif>
                     </div>
 
                     <!-- Size Chart -->
-                    <div class="size-chart col-12">
-                        <a href="${pdict.product.id}" class="size-chart normal">${Resource.msg('link.size_chart', 'product', null)}</a>
-                    </div>
+                    <isif condition="${pdict.product.variationAttributes}">
+                        <isinclude template="/product/components/sizeChart" />
+                    </isif>
 
                     <isinclude template="/product/components/availability" />
 

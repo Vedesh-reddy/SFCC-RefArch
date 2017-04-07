@@ -5,8 +5,8 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../../util');
 
-describe('fullProduct', function () {
-    var FullProduct = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/product', {
+describe('bundleProduct', function () {
+    var ProductBundle = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBundle', {
         './productBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
             './productImages': function () {},
             './productAttributes': function () { return []; },
@@ -14,6 +14,9 @@ describe('fullProduct', function () {
                 'dw/util/ArrayList': ArrayList
             }),
             '../../scripts/factories/price': { getPrice: function () {} }
+        }),
+        '../../scripts/dwHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
+            'dw/util/ArrayList': ArrayList
         })
     });
 
@@ -36,8 +39,8 @@ describe('fullProduct', function () {
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
-        variant: false,
-        variationGroup: false,
+        variant: true,
+        master: false,
         productSet: false,
         bundle: false,
         availabilityModel: {
@@ -54,8 +57,7 @@ describe('fullProduct', function () {
         },
         minOrderQuantity: {
             value: 2
-        },
-        attributeModel: attributeModel
+        }
     };
 
     var productMock = {
@@ -73,11 +75,28 @@ describe('fullProduct', function () {
                 return: new ArrayList([]),
                 type: 'function'
             }
+        }
+    };
+
+    var bundleProductMock = {
+        ID: 'bundle-product',
+        name: 'aBundleProduct',
+        bundle: true,
+        bundledProducts: new ArrayList([productMock]),
+        variationModel: {},
+        availabilityModel: {
+            isOrderable: {
+                return: true,
+                type: 'function'
+            }
+        },
+        minOrderQuantity: {
+            value: 2
         },
         attributeModel: attributeModel
     };
 
-    var promotions = new ArrayList([{
+    var promotionsMock = new ArrayList([{
         calloutMsg: { markup: 'Super duper promotion discount' },
         details: { markup: 'Some Details' },
         enabled: true,
@@ -87,30 +106,25 @@ describe('fullProduct', function () {
         rank: null
     }]);
 
-    it('should load simple full product', function () {
-        var mock = toProductMock(productMock);
-        var product = new FullProduct(mock, null, null, promotions);
+    var productFactoryMock = {
+        get: function () {
+            return 'some product';
+        }
+    };
 
-        assert.equal(product.productName, 'test product');
-        assert.equal(product.id, 1234567);
-        assert.equal(product.rating, 4);
-        assert.equal(product.minOrderQuantity, 2);
-        assert.equal(product.shortDescription, 'Hello World');
-        assert.equal(product.longDescription, 'Hello World Long');
+    it('should load bundle product with one variant', function () {
+        var mock = toProductMock(bundleProductMock);
+        var bundleProduct = new ProductBundle(mock, null, null, productFactoryMock);
+
+        assert.equal(bundleProduct.productName, 'aBundleProduct');
+        assert.equal(bundleProduct.id, 'bundle-product');
+        assert.equal(bundleProduct.productType, 'bundle');
+        assert.equal(bundleProduct.promotions, null);
+        assert.deepEqual(bundleProduct.bundledProducts, ['some product']);
     });
 
-    it('should load simple full product without minOrder', function () {
-        var tempMock = Object.assign({}, productMock);
-        tempMock.variationModel.selectedVariant = null;
-        tempMock = Object.assign({}, productVariantMock, tempMock);
-        tempMock.minOrderQuantity.value = null;
-        var product = new FullProduct(toProductMock(tempMock), null, null, promotions);
-
-        assert.equal(product.minOrderQuantity, 1);
-        assert.equal(product.maxOrderQuantity, 9);
-    });
-
-    it('should have an array of Promotions when provided', function () {
+    it('should load bundle product with promotion', function () {
+        var mock = toProductMock(bundleProductMock);
         var expectedPromotions = [{
             calloutMsg: 'Super duper promotion discount',
             details: 'Some Details',
@@ -120,35 +134,17 @@ describe('fullProduct', function () {
             promotionClass: 'Some Class',
             rank: null
         }];
+        var bundleProduct = new ProductBundle(mock, null, promotionsMock, productFactoryMock);
 
-        var tempMock = Object.assign({}, productMock);
-        tempMock.variationModel.selectedVariant = null;
-        tempMock = Object.assign({}, productVariantMock, tempMock);
-        tempMock.minOrderQuantity.value = null;
-        var product = new FullProduct(toProductMock(tempMock), null, null, promotions);
-
-        assert.deepEqual(product.promotions, expectedPromotions);
+        assert.deepEqual(bundleProduct.promotions, expectedPromotions);
     });
 
-    it('should handle no promotions', function () {
-        var tempMock = Object.assign({}, productMock);
-        tempMock.variationModel.selectedVariant = null;
-        tempMock = Object.assign({}, productVariantMock, tempMock);
+    it('should load bundle product without minOrder', function () {
+        var tempMock = bundleProductMock;
         tempMock.minOrderQuantity.value = null;
-        var product = new FullProduct(toProductMock(tempMock), null, null);
-
-        assert.deepEqual(product.promotions, null);
-    });
-
-    it('should create a master product', function () {
-        var tempMock = Object.assign({}, productMock);
-        tempMock.variationModel.selectedVariant = null;
-        tempMock = Object.assign({}, productVariantMock, tempMock);
-        tempMock.variationModel.master = true;
-        var product = new FullProduct(toProductMock(tempMock));
-
-        assert.equal(product.productName, 'test product');
-        assert.equal(product.id, 1234567);
-        assert.equal(product.rating, 4);
+        var mock = toProductMock(tempMock);
+        var bundleProduct = new ProductBundle(mock, null, null, productFactoryMock);
+        assert.equal(bundleProduct.minOrderQuantity, 1);
+        assert.equal(bundleProduct.maxOrderQuantity, 9);
     });
 });

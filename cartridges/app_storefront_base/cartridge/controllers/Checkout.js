@@ -63,7 +63,7 @@ server.get('Login', server.middleware.https, function (req, res, next) {
 });
 
 
-server.get('Test', server.middleware.https, function (req, res, next) {
+server.get('Get', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var basketModel = new OrderModel(currentBasket);
 
@@ -459,31 +459,6 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     var shippingForm = COHelpers.prepareShippingForm(currentBasket);
     var billingForm = COHelpers.prepareBillingForm(currentBasket);
-//     This now belongs to ShippingModels class (or should)
-//    shippingAddressModel = new AddressModel(shippingAddress);
-//
-//    if (shippingAddress && shippingAddressModel.address) {
-//        shippingForm.copyFrom(shippingAddressModel.address);
-//    }
-//
-//    // This is all form related and should go into prepareBillilngForm()
-//    if (!hasEquivalentAddress && billingAddress && billingAddressModel.address) {
-//        billingForm.copyFrom(billingAddressModel.address);
-//    }
-//
-//    if (paymentModel.selectedPaymentInstruments) {
-//        paymentModel.selectedPaymentInstruments.forEach(function (item) {
-//            billingForm.copyFrom(item);
-//        });
-//    }
-//
-//    if (billingAddressModel.address) {
-//        billingForm.creditCardFields.phone.value = billingAddressModel.address.phone;
-//    }
-//
-//    if (currentBasket.customerEmail) {
-//        billingForm.creditCardFields.email.value = currentBasket.customerEmail;
-//    }
 
     var orderModel = new OrderModel(currentBasket, {
         customer: currentCustomer,

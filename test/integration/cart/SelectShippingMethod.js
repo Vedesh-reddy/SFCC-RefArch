@@ -26,8 +26,9 @@ describe('Cart: Selecting Shipping Methods', function () {
     // values depending on on the selected shipping method and thus they are not included here.
     // Leaving the commented out 'src' property here for reference because it should be included in the
     // 'image' property in the response but the string can not be used for comparison as it because
-    // the path has radomly generated code.
+    // the path has randomly generated code.
     var expectedResponseCommon = {
+        'action': 'Cart-SelectShippingMethod',
         'actionUrls': {
             'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
             'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
@@ -107,7 +108,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 },
                 'rating': 1,
                 'renderedPromotions': '',
-                'attributes': [
+                'variationAttributes': [
                     {
                         'attributeId': 'color',
                         'displayName': 'Color',
@@ -140,6 +141,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isBonusProductLineItem': false,
                 'isGift': false,
                 'UUID': '',
+                'attributes': null,
                 'quantity': 1,
                 'isOrderable': true,
                 'isAvailableForInStorePickup': false
@@ -165,7 +167,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 },
                 'rating': 0,
                 'renderedPromotions': '',
-                'attributes': [
+                'variationAttributes': [
                     {
                         'attributeId': 'color',
                         'displayName': 'Color',
@@ -185,6 +187,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isBonusProductLineItem': false,
                 'isGift': false,
                 'UUID': '',
+                'attributes': null,
                 'quantity': 1,
                 'isOrderable': true,
                 'isAvailableForInStorePickup': false
@@ -216,21 +219,12 @@ describe('Cart: Selecting Shipping Methods', function () {
                 return request(myRequest);
             })
 
-            // ----- select a shipping method in order to get cart content to obtain UUID of the product line item:
-            .then(function () {
-                var shipMethodId = '001';   // 001 = Ground
-
-                myRequest.method = 'POST';
-                myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
-                return request(myRequest);
-            })
-
             // ----- Get UUID information
-            .then(function (response4) {
-                var bodyAsJson = JSON.parse(response4.body);
+            .then(function (response) {
+                var bodyAsJson = JSON.parse(response.body);
 
-                expectedResponseCommon.items[0].UUID = bodyAsJson.items[0].UUID;
-                expectedResponseCommon.items[1].UUID = bodyAsJson.items[1].UUID;
+                expectedResponseCommon.items[0].UUID = bodyAsJson.cart.items[0].UUID;
+                expectedResponseCommon.items[1].UUID = bodyAsJson.cart.items[1].UUID;
             });
     });
 
@@ -264,7 +258,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 var bodyAsJson = JSON.parse(response.body);
 
                 // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default']);
+                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
                 assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
@@ -302,7 +296,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 var bodyAsJson = JSON.parse(response.body);
 
                 // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default']);
+                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default'. 'queryString']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
                 assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
@@ -375,7 +369,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 var bodyAsJson = JSON.parse(response.body);
 
                 // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default']);
+                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
                 assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
@@ -413,7 +407,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 var bodyAsJson = JSON.parse(response.body);
 
                 // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default']);
+                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
                 assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
@@ -451,7 +445,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 var bodyAsJson = JSON.parse(response.body);
 
                 // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default']);
+                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
                 assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
@@ -490,7 +484,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 var bodyAsJson = JSON.parse(response.body);
 
                 // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default']);
+                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
                 assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
@@ -529,7 +523,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 var bodyAsJson = JSON.parse(response.body);
 
                 // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default']);
+                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
 
                 assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
                 assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');

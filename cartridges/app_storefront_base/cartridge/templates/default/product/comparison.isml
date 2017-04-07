@@ -1,19 +1,28 @@
-<!--- Page Stub until RAP-5832 (Add Controller and template to handle Compare Products) is completed --->
-
 <isdecorate template="common/layout/page">
-    <div align="center">
-        <h1>Product Comparison Feature</h1>
-        <h2>Under Construction</h2>
-        <br />
-        <br />
+    <isscript>
+        var assets = require('~/cartridge/scripts/assets');
+        assets.addJs('/js/productTile.js');
+        assets.addCss('/css/product/comparison.css');
+    </isscript>
 
-        <h3>Category:  ${pdict.category}</h3>
-        <br />
-        <br />
+    <div class="hero slant-down search-banner"
+        <isif condition="${pdict.category.imgUrl}">
+            style="background-image: url(${pdict.category.imgUrl})"
+        </isif>
+    >
+        <h1 class="header page-title">${pdict.category.name}</h1>
+    </div>
 
-        <h3>Product IDs:</h3>
-        <isloop items="${pdict.pids}" var="pid">
-            <h3>${pid}</h3>
-        </isloop>
+    <div class="container product-comparison">
+        <div class="row">
+            <div class="col-3 back-to-results">
+                <button class="btn btn-outline-primary" onclick="history.back();">Back to results</button>
+            </div>
+        </div>
+        <div class="row">
+            <isloop items="${pdict.pids}" var="productId">
+                <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true', 'reviews', 'true', 'compare', 'false', 'comparisonPage', 'true')}" />
+            </isloop>
+        </div>
     </div>
 </isdecorate>

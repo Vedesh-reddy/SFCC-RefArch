@@ -8,6 +8,7 @@ $(document).ready(function () {
     processInclude(require('./components/collapsable-item'));
     processInclude(require('./components/search'));
     processInclude(require('./components/client-side-validation'));
+    processInclude(require('./components/countryselector'));
 });
 
 require('./thirdparty/bootstrap');

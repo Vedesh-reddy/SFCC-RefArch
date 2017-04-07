@@ -5,7 +5,7 @@
  * @return {string} - value found in the quantity input
  */
 function getQuantitySelected() {
-    return $('.quantity select').val();
+    return $('.quantity-select').val();
 }
 
 /**
@@ -154,6 +154,31 @@ function getPromotionsHtml(promotions) {
     return html;
 }
 
+/**
+ * Generates html for product attributes section
+ *
+ * @param {array} attributes - list of attributes
+ * @return {string} - Compiled HTML
+ */
+function getAttributesHtml(attributes) {
+    if (!attributes) {
+        return '';
+    }
+
+    var html = '';
+
+    attributes.forEach(function (attributeGroup) {
+        if (attributeGroup.ID === 'mainAttributes') {
+            attributeGroup.attributes.forEach(function (attribute) {
+                html += '<div class="attribute-values">' + attribute.label + ': '
+                    + attribute.value + '</div>';
+            });
+        }
+    });
+
+    return html;
+}
+
 module.exports = {
     /**
      * Updates the Mini-Cart quantity value after the customer has pressed the "Add to Cart" button
@@ -206,7 +231,7 @@ module.exports = {
      * @param {Object} response - response from Ajax call
      * @param {Object} response.product - Product object
      * @param {string} response.product.id - Product ID
-     * @param {Object[]} response.product.attributes - Product attributes
+     * @param {Object[]} response.product.variationAttributes - Product attributes
      * @param {Object[]} response.product.images - Product images
      * @param {boolean} response.product.hasRequiredAttrsSelected - Flag as to whether all required
      *     attributes have been selected.  Used partially to
@@ -224,7 +249,7 @@ module.exports = {
             $('.product-id').text(response.product.id);
         }
 
-        updateAttrs(response.product.attributes);
+        updateAttrs(response.product.variationAttributes);
 
         // Enable "Add to Cart" button if all required attributes have been selected
         $('button.add-to-cart').attr('disabled', !response.product.readyToOrder);
@@ -244,6 +269,9 @@ module.exports = {
 
         // Update promotions
         $('.promotions').empty().html(getPromotionsHtml(response.product.promotions));
+
+        // Update attributes
+        $('.main-attributes').empty().html(getAttributesHtml(response.product.attributes));
 
         updateAvailability(response);
     }

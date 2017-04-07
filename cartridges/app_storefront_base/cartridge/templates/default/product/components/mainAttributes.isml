@@ -1,0 +1,14 @@
+<div class="main-attributes">
+    <isloop items="${pdict.product.attributes}" var="attributeGroup" status="loopstate">
+        <isif condition="${attributeGroup.ID === 'mainAttributes'}">
+            <isloop items="${attributeGroup.attributes}" var="attributes" status="loopstate">
+                <div class="attribute-values">
+                    ${attributes.label}:
+                    <isloop items="${attributes.value}" var="value" status="loopstate">
+                        ${value}
+                    </isloop>
+                </div>
+            </isloop>
+        </isif>
+    </isloop>
+</div>

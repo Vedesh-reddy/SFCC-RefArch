@@ -3,6 +3,7 @@
 var ProductMgr = require('dw/catalog/ProductMgr');
 var ProductTile = require('./../../models/product/productBase');
 var Product = require('./../../models/product/product');
+var ProductBundle = require('./../../models/product/productBundle');
 var ProductLineItemModel = require('./../../models/productLineItem');
 var PromotionMgr = require('dw/campaign/PromotionMgr');
 
@@ -16,12 +17,36 @@ ProductFactory.get = function (params) {
     var productId = params.pid;
     var apiProduct = ProductMgr.getProduct(productId);
     var variationModel = Product.getVariationModel(apiProduct, params.variables);
-    var product = variationModel.getSelectedVariant() || apiProduct;
+    var product;
+    if (variationModel) {
+        product = variationModel.getSelectedVariant() || apiProduct;
+    } else {
+        product = apiProduct;
+    }
     var promotions = PromotionMgr.activeCustomerPromotions.getProductPromotions(product);
     promotions = promotions.length ? promotions : null;
     var productType = Product.getProductType(product);
 
-    if (productType === 'variant' || productType === 'master' || productType === 'variationGroup') {
+    if (productType === 'set') {
+        // TODO: Add ProductSet factory
+    } else if (productType === 'optionProduct') {
+        // TODO: Add option product
+    } else if (productType === 'bundle') {
+        switch (params.pview) {
+            case 'tile':
+                product = new ProductTile(product, params.variables, promotions);
+                break;
+            default:
+                var productFactory = this;
+                product = new ProductBundle(
+                    product,
+                    params.quantity,
+                    promotions,
+                    productFactory
+                );
+                break;
+        }
+    } else {
         switch (params.pview) {
             case 'tile':
                 product = new ProductTile(product, params.variables, promotions);
@@ -39,12 +64,6 @@ ProductFactory.get = function (params) {
                 product = new Product(product, params.variables, params.quantity, promotions);
                 break;
         }
-    } else if (productType === 'set') {
-        // TODO: Add ProductSet factory
-    } else if (productType === 'bundle') {
-        // TODO: Add ProductBundle factory
-    } else {
-        throw new TypeError('Invalid Product Type');
     }
 
     return product;

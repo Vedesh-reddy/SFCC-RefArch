@@ -1,7 +1,7 @@
 'use strict';
 
 var dwHelpers = require('../../scripts/dwHelpers');
-var AttributesModel = require('./productAttributes');
+var VariationAttributesModel = require('./productAttributes');
 var ImageModel = require('./productImages');
 var priceFactory = require('../../scripts/factories/price');
 
@@ -11,8 +11,10 @@ var priceFactory = require('../../scripts/factories/price');
  * @return {string} type of the current product
  */
 function getProductType(product) {
-    var result = 'master';
-    if (product.variant) {
+    var result;
+    if (product.master) {
+        result = 'master';
+    } else if (product.variant) {
         result = 'variant';
     } else if (product.variationGroup) {
         result = 'variationGroup';
@@ -20,6 +22,10 @@ function getProductType(product) {
         result = 'set';
     } else if (product.bundle) {
         result = 'bundle';
+    } else if (product.optionProduct) {
+        result = 'optionProduct';
+    } else {
+        result = 'standard';
     }
     return result;
 }
@@ -99,6 +105,48 @@ function getVariationModel(product, productVariables) {
 }
 
 /**
+ * Creates an object of the visible attributes for a product
+ * @param {dw.catalog.Product|dw.catalog.Variant} product - Product instance returned from the API
+ * @return {Object|null} an object containing the visible attributes for a product.
+ */
+function getAttributes(product) {
+    var attributes;
+    var attributeModel = product.attributeModel;
+    var visibleAttributeGroups = attributeModel.visibleAttributeGroups;
+
+    if (visibleAttributeGroups.getLength() > 0) {
+        attributes = dwHelpers.map(attributeModel.visibleAttributeGroups, function (group) {
+            var visibleAttributeDef = attributeModel.getVisibleAttributeDefinitions(group);
+            var attributeResult = {};
+
+            attributeResult.ID = group.ID;
+            attributeResult.name = group.displayName;
+            attributeResult.attributes = dwHelpers.map(visibleAttributeDef, function (definition) {
+                var definitionResult = {};
+                definitionResult.label = definition.displayName;
+
+                if (definition.multiValueType) {
+                    definitionResult.value = attributeModel.getDisplayValue(definition).map(
+                        function (item) {
+                            return item;
+                        });
+                } else {
+                    definitionResult.value = [attributeModel.getDisplayValue(definition)];
+                }
+
+                return definitionResult;
+            });
+
+            return attributeResult;
+        });
+    } else {
+        attributes = null;
+    }
+
+    return attributes;
+}
+
+/**
  * @constructor
  * @classdesc Base product class. Used for product tiles
  * @param {dw.catalog.Product} product - Product instance returned from the API
@@ -121,7 +169,7 @@ function ProductBase(product, productVariables, quantity, promotions) {
     };
     this.quantity = quantity;
 
-    this.attributeConfig = {
+    this.variationAttributeConfig = {
         attributes: ['color'],
         endPoint: 'Show'
     };
@@ -137,12 +185,16 @@ ProductBase.prototype = {
         this.price = priceFactory.getPrice(this.product, null, this.useSimplePrice,
             this.apiPromotions);
         this.productType = getProductType(this.product);
-        this.images = this.variationModel ? new ImageModel(this.variationModel, this.imageConfig) :
-            new ImageModel(this.product, this.imageConfig);
+        this.images = this.variationModel
+            ? new ImageModel(this.variationModel, this.imageConfig)
+            : new ImageModel(this.product, this.imageConfig);
         this.rating = getRating(this.id);
-        this.attributes = this.variationModel ?
-            (new AttributesModel(this.variationModel, this.attributeConfig)).slice(0) : null;
+        this.variationAttributes = this.variationModel
+            ? (new VariationAttributesModel(
+                this.variationModel, this.variationAttributeConfig)).slice(0)
+            : null;
         this.promotions = this.apiPromotions ? getPromotions(this.apiPromotions) : null;
+        this.attributes = getAttributes(this.product);
     },
     /**
      * Normalize product and return Product variation model
@@ -175,8 +227,9 @@ function ProductWrapper(product, productVariables, promotions) {
         'productType',
         'images',
         'rating',
-        'attributes',
-        'promotions'
+        'variationAttributes',
+        'promotions',
+        'attributes'
     ];
 
     items.forEach(function (item) {

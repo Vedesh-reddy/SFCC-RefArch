@@ -1,16 +1,10 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
-var jsonHelpers = require('../helpers/jsonUtils');
 
 describe('Add Product variants to cart', function () {
     this.timeout(5000);
 
-    // Currently the Cart-AddProduct service call only returns 'quantityTotal' property
-    // and there is no service call to get cart that returns JSON. In the future when
-    // Cart-AddProduct is enhanced to return mini-cart, this test will need to be enhanced
-    // to accomodate the change.
-    // For now, use Cart-SelectShippingMethod te the cart content back.
     it('should add variants of different and same products, returns total quantity of added items', function () {
         var cookieJar = request.jar();
 
@@ -42,18 +36,19 @@ describe('Add Product variants to cart', function () {
         totalQty = qty1;
         myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
 
-        var expectedResBody = {
-            'quantityTotal': totalQty,
-            'message': 'Product added to basket'
-        };
-
         return request(myRequest)
             .then(function (response) {
-                assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                assert.equal(response.statusCode, 200);
+
+                var expectedResBody = {
+                    'quantityTotal': totalQty,
+                    'action': 'Cart-AddProduct',
+                    'message': 'Product added to basket',
+                    'queryString': 'pid=' + variantPid1 + '&quantity=' + qty1
+                };
 
                 var bodyAsJson = JSON.parse(response.body);
-
-                assert.deepEqual(bodyAsJson, expectedResBody, 'Actual response body from adding product 1 not as expected.');
+                assert.equal(bodyAsJson.quantityTotal, expectedResBody.quantityTotal);
 
                 cookieString = cookieJar.getCookieString(myRequest.url);
             })
@@ -71,15 +66,18 @@ describe('Add Product variants to cart', function () {
 
             // Handle response from request #2
             .then(function (response2) {
-                assert.equal(response2.statusCode, 200, 'Expected statusCode to be 200.');
+                assert.equal(response2.statusCode, 200);
 
                 var expectedResBody2 = {
+                    'action': 'Cart-AddProduct',
                     'quantityTotal': totalQty,
-                    'message': 'Product added to basket'
+                    'message': 'Product added to basket',
+                    'queryString': 'pid=' + variantPid2 + '&quantity=' + qty2
+
                 };
 
                 var bodyAsJson2 = JSON.parse(response2.body);
-                assert.deepEqual(bodyAsJson2, expectedResBody2, 'Actual response body from adding product 2 not as expected.');
+                assert.equal(bodyAsJson2.quantityTotal, expectedResBody2.quantityTotal);
             })
 
             // ----- adding product #3:
@@ -91,15 +89,17 @@ describe('Add Product variants to cart', function () {
 
             // Handle response from request #3
             .then(function (response3) {
-                assert.equal(response3.statusCode, 200, 'Expected statusCode to be 200.');
+                assert.equal(response3.statusCode, 200);
 
                 var expectedResBody3 = {
+                    'action': 'Cart-AddProduct',
                     'quantityTotal': totalQty,
-                    'message': 'Product added to basket'
+                    'message': 'Product added to basket',
+                    'queryString': 'pid=' + variantPid3 + '&quantity=' + qty3
                 };
 
                 var bodyAsJson3 = JSON.parse(response3.body);
-                assert.deepEqual(bodyAsJson3, expectedResBody3, 'Actual response body from adding product 3 not as expected.');
+                assert.equal(bodyAsJson3.quantityTotal, expectedResBody3.quantityTotal);
             })
 
             // ----- adding product #4:
@@ -111,37 +111,19 @@ describe('Add Product variants to cart', function () {
 
             // Handle response from request #4
             .then(function (response4) {
-                assert.equal(response4.statusCode, 200, 'Expected statusCode to be 200.');
+                assert.equal(response4.statusCode, 200);
 
-                var expectedResBody4 = {
+                var bodyAsJson = JSON.parse(response4.body);
+
+                // Leaving the commented out 'UUID' properties here for reference because it should
+                // be including the response but the string can not be used for comparison as it because
+                // the path has randomly generated code.
+                var expectedResponse = {
                     'quantityTotal': totalQty,
-                    'message': 'Product added to basket'
-                };
-
-                var bodyAsJson4 = JSON.parse(response4.body);
-                assert.deepEqual(bodyAsJson4, expectedResBody4, 'Actual response body from adding product 4 not as expected.');
-            })
-
-            // ----- select a shipping method in order to verify cart content. Currently this is no direct way
-            // ----- to get cart content.
-            .then(function () {
-                var shipMethodId = '001';   // 001 = Ground
-
-                myRequest.method = 'POST';
-                myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
-                return request(myRequest);
-            })
-
-            // ----- Verify cart content
-                .then(function (response5) {
-                    assert.equal(response5.statusCode, 200, 'Expected statusCode to be 200 for getting cart content.');
-
-                    var bodyAsJson = JSON.parse(response5.body);
-
-                    // Leaving the commented out 'src' and 'UUID' properties here for reference because it should
-                    // be includedin the response but the string can not be used for comparison as it because
-                    // the path has radomly generated code.
-                    var expectedResponse = {
+                    'message': 'Product added to basket',
+                    'action': 'Cart-AddProduct',
+                    'queryString': 'pid=' + variantPid4 + '&quantity=' + qty4,
+                    'cart': {
                         'actionUrls': {
                             'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                             'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
@@ -250,7 +232,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'rating': 1,
                                 'renderedPromotions': '',
-                                'attributes': [
+                                'variationAttributes': [
                                     {
                                         'attributeId': 'color',
                                         'displayName': 'Color',
@@ -276,6 +258,7 @@ describe('Add Product variants to cart', function () {
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
+                                'attributes': null,
                                 'quantity': qty1,
                                 'isOrderable': true,
                                 'isAvailableForInStorePickup': false
@@ -301,7 +284,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'rating': 3,
                                 'renderedPromotions': '',
-                                'attributes': [
+                                'variationAttributes': [
                                     {
                                         'attributeId': 'color',
                                         'displayName': 'Color',
@@ -327,6 +310,7 @@ describe('Add Product variants to cart', function () {
                                 'promotions': null,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
+                                'attributes': null,
                                 'quantity': qty2,
                                 'isOrderable': true,
                                 'isAvailableForInStorePickup': false
@@ -352,7 +336,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'rating': 2,
                                 'renderedPromotions': '',
-                                'attributes': [
+                                'variationAttributes': [
                                     {
                                         'attributeId': 'color',
                                         'displayName': 'Color',
@@ -372,6 +356,7 @@ describe('Add Product variants to cart', function () {
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
+                                'attributes': null,
                                 'quantity': qty3,
                                 'isOrderable': true,
                                 'isAvailableForInStorePickup': false
@@ -401,7 +386,7 @@ describe('Add Product variants to cart', function () {
                                 },
                                 'rating': 0,
                                 'renderedPromotions': '',
-                                'attributes': [
+                                'variationAttributes': [
                                     {
                                         'attributeId': 'color',
                                         'displayName': 'Color',
@@ -421,6 +406,7 @@ describe('Add Product variants to cart', function () {
                                 'isBonusProductLineItem': false,
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
+                                'attributes': null,
                                 'quantity': qty4,
                                 'isOrderable': true,
                                 'isAvailableForInStorePickup': false
@@ -431,27 +417,148 @@ describe('Add Product variants to cart', function () {
                             'numberOfItems': '17 Items',
                             'emptyCartMsg': 'Your Shopping Cart is Empty'
                         }
-                    };
+                    }
+                };
 
-                    // ----- strip out all 'UUID', 'src' & 'resetUrl' properties from the actual response
-                    var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'UUID', 'resetUrl']);
-                    assert.deepEqual(actualRespBodyStripped, expectedResponse, 'Actual response not as expected.');
+                function verifyShippingMethods(shipMethod, ExpectedShipMethod) {
+                    assert.equal(shipMethod.description, ExpectedShipMethod.description);
+                    assert.equal(shipMethod.displayName, ExpectedShipMethod.displayName);
+                    assert.equal(shipMethod.ID, ExpectedShipMethod.ID);
+                    assert.equal(shipMethod.estimatedArrivalTime, ExpectedShipMethod.estimatedArrivalTime);
+                    assert.equal(shipMethod.isDefault, ExpectedShipMethod.isDefault);
+                    assert.equal(shipMethod.isSelected, ExpectedShipMethod.isSelected);
+                    assert.equal(shipMethod.shippingCost, ExpectedShipMethod.shippingCost);
+                }
 
-                    // verify UUID exist
-                    assert.isNotNull(bodyAsJson.items[0].UUID, 'product 1 does not have UUID in response');
-                    assert.isNotNull(bodyAsJson.items[1].UUID, 'product 2 does not have UUID in response');
-                    assert.isNotNull(bodyAsJson.items[2].UUID, 'product 3 does not have UUID in response');
-                    assert.isNotNull(bodyAsJson.items[3].UUID, 'product 4 does not have UUID in response');
+                function verifyItemCommonProperties(item, expectedItem) {
+                    assert.equal(item.id, expectedItem.id);
+                    assert.equal(item.productName, expectedItem.productName);
+                    assert.equal(item.price.sales.value, expectedItem.price.sales.value);
+                    assert.equal(item.price.sales.currency, expectedItem.price.sales.currency);
+                    assert.equal(item.price.sales.formatted, expectedItem.price.sales.formatted);
 
-                    // Verify path to image source
-                    var prodImageSrc1 = bodyAsJson.items[0].images.small[0].url;
-                    var prodImageSrc2 = bodyAsJson.items[1].images.small[0].url;
-                    var prodImageSrc3 = bodyAsJson.items[2].images.small[0].url;
-                    var prodImageSrc4 = bodyAsJson.items[3].images.small[0].url;
-                    assert.isTrue(prodImageSrc1.endsWith('/images/small/PG.10221714.JJ8UTXX.PZ.jpg'), 'product 1 item image: src not end with /images/small/PG.10221714.JJ8UTXX.PZ.jpg.');
-                    assert.isTrue(prodImageSrc2.endsWith('/images/small/PG.10221714.JJ370XX.PZ.jpg'), 'product 2 item image: src not end with /images/small/PG.10221714.JJ370XX.PZ.jpg.');
-                    assert.isTrue(prodImageSrc3.endsWith('/images/small/PG.60108563.JJNY2XX.PZ.jpg'), 'product 3 item image: src not end with /images/small/PG.60108563.JJNY2XX.PZ.jpg.');
-                    assert.isTrue(prodImageSrc4.endsWith('/images/small/PG.949432114S.REDSI.PZ.jpg'), 'product 4 item image: src not end with /images/small/PG.949432114S.REDSI.PZ.jpg.');
-                });
+                    assert.equal(item.productType, expectedItem.productType);
+                    assert.equal(item.images.small[0].alt, expectedItem.images.small[0].alt);
+                    assert.isTrue(item.images.small[0].url.endsWith(expectedItem.images.small[0].url));
+                    assert.equal(item.images.small[0].title, expectedItem.images.small[0].title);
+                    assert.equal(item.rating, expectedItem.rating);
+                    assert.equal(item.variationAttributes[0].displayName, expectedItem.variationAttributes[0].displayName);
+                    assert.equal(item.variationAttributes[0].displayValue, expectedItem.variationAttributes[0].displayValue);
+                    assert.equal(item.variationAttributes[0].attributeId, expectedItem.variationAttributes[0].attributeId);
+                    assert.equal(item.variationAttributes[0].id, expectedItem.variationAttributes[0].id);
+
+                    assert.equal(item.quantityOptions.minOrderQuantity, expectedItem.quantityOptions.minOrderQuantity);
+                    assert.equal(item.quantityOptions.maxOrderQuantity, expectedItem.quantityOptions.maxOrderQuantity);
+                    assert.equal(item.priceTotal.price, expectedItem.priceTotal.price);
+                    assert.equal(item.priceTotal.renderedPrice, expectedItem.priceTotal.renderedPrice);
+                    assert.equal(item.isBonusProductLineItem, expectedItem.isBonusProductLineItem);
+                    assert.equal(item.isGift, expectedItem.isGift);
+                    assert.isNotNull(item.UUID);
+                    assert.equal(item.quantity, expectedItem.quantity);
+                    assert.equal(item.isOrderable, expectedItem.isOrderable);
+                    assert.equal(item.promotions, expectedItem.promotions);
+                    assert.equal(item.renderedPromotions, expectedItem.renderedPromotions);
+                    assert.equal(item.attributes, expectedItem.attributes);
+                }
+
+                // ----- Verify quantityTotal, message, action, queryString
+                assert.equal(bodyAsJson.quantityTotal, expectedResponse.quantityTotal);
+                assert.equal(bodyAsJson.message, expectedResponse.message);
+                assert.equal(bodyAsJson.action, expectedResponse.action);
+                assert.equal(bodyAsJson.queryString, expectedResponse.queryString);
+
+                // ----- Verify actionUrls
+                var actionUrls = bodyAsJson.cart.actionUrls;
+                var expectedActionUrls = expectedResponse.cart.actionUrls;
+                assert.equal(actionUrls.removeProductLineItemUrl, expectedActionUrls.removeProductLineItemUrl);
+                assert.equal(actionUrls.updateQuantityUrl, expectedActionUrls.updateQuantityUrl);
+                assert.equal(actionUrls.selectShippingUrl, expectedActionUrls.selectShippingUrl);
+                assert.equal(actionUrls.submitCouponCodeUrl, expectedActionUrls.submitCouponCodeUrl);
+                assert.equal(actionUrls.removeCouponLineItem, expectedActionUrls.removeCouponLineItem);
+
+                // ----- Verify approaching discounts
+                assert.lengthOf(bodyAsJson.cart.approachingDiscounts, 0);
+
+                // ----- Verify numOfShipments
+                assert.equal(bodyAsJson.cart.numOfShipments, expectedResponse.cart.numOfShipments);
+
+                // ----- Verify totals
+                var totals = bodyAsJson.cart.totals;
+                var expectedTotals = expectedResponse.cart.totals;
+                assert.equal(totals.subTotal, expectedTotals.subTotal);
+                assert.equal(totals.grandTotal, expectedTotals.grandTotal);
+                assert.equal(totals.totalTax, expectedTotals.totalTax);
+                assert.equal(totals.totalShippingCost, expectedTotals.totalShippingCost);
+                assert.equal(totals.orderLevelDiscountTotal.value, expectedTotals.orderLevelDiscountTotal.value);
+                assert.equal(totals.orderLevelDiscountTotal.formatted, expectedTotals.orderLevelDiscountTotal.formatted);
+                assert.equal(totals.shippingLevelDiscountTotal.value, expectedTotals.shippingLevelDiscountTotal.value);
+                assert.equal(totals.shippingLevelDiscountTotal.formatted, expectedTotals.shippingLevelDiscountTotal.formatted);
+                assert.lengthOf(totals.discounts, 0);
+
+                // ----- Verify Shipments
+                var shipMethods = bodyAsJson.cart.shipments[0].shippingMethods;
+                var ExpectedShipMethods = expectedResponse.cart.shipments[0].shippingMethods;
+                for (var i = 0; i < ExpectedShipMethods.length; i++) {
+                    verifyShippingMethods(shipMethods[i], ExpectedShipMethods[i]);
+                }
+
+                assert.equal(bodyAsJson.cart.shipments[0].selectedShippingMethod, expectedResponse.cart.shipments[0].selectedShippingMethod);
+
+                // ----- Verify product line items in cart
+                assert.lengthOf(bodyAsJson.cart.items, 4);
+
+                // Verify items in cart - item 1
+                var itemIdx = 0;
+                var item = bodyAsJson.cart.items[itemIdx];
+                var expectedItem = expectedResponse.cart.items[itemIdx];
+
+                verifyItemCommonProperties(item, expectedItem);
+
+                assert.equal(item.price.list, expectedItem.price.list);
+                assert.equal(item.variationAttributes[1].displayName, expectedItem.variationAttributes[1].displayName);
+                assert.equal(item.variationAttributes[1].displayValue, expectedItem.variationAttributes[1].displayValue);
+                assert.equal(item.variationAttributes[1].attributeId, expectedItem.variationAttributes[1].attributeId);
+                assert.equal(item.variationAttributes[1].id, expectedItem.variationAttributes[1].id);
+
+                // Verify items in cart - item 2
+                itemIdx = 1;
+                item = bodyAsJson.cart.items[itemIdx];
+                expectedItem = expectedResponse.cart.items[itemIdx];
+
+                verifyItemCommonProperties(item, expectedItem);
+
+                assert.equal(item.price.list, expectedItem.price.list);
+                assert.equal(item.variationAttributes[1].displayName, expectedItem.variationAttributes[1].displayName);
+                assert.equal(item.variationAttributes[1].displayValue, expectedItem.variationAttributes[1].displayValue);
+                assert.equal(item.variationAttributes[1].attributeId, expectedItem.variationAttributes[1].attributeId);
+                assert.equal(item.variationAttributes[1].id, expectedItem.variationAttributes[1].id);
+
+                // Verify items in cart - item 3
+                itemIdx = 2;
+                item = bodyAsJson.cart.items[itemIdx];
+                expectedItem = expectedResponse.cart.items[itemIdx];
+
+                verifyItemCommonProperties(item, expectedItem);
+
+                assert.equal(item.price.list, expectedItem.price.list);
+
+                // Verify items in cart - item 4
+                itemIdx = 3;
+                item = bodyAsJson.cart.items[itemIdx];
+                expectedItem = expectedResponse.cart.items[itemIdx];
+
+                verifyItemCommonProperties(item, expectedItem);
+
+                assert.equal(item.price.list.value, expectedItem.price.list.value);
+                assert.equal(item.price.list.currency, expectedItem.price.list.currency);
+                assert.equal(item.price.list.formatted, expectedItem.price.list.formatted);
+
+                // ----- Verify number of items
+                assert.equal(bodyAsJson.cart.numItems, expectedResponse.cart.numItems);
+
+                // ----- Verify resource
+                assert.equal(bodyAsJson.cart.resources.numberOfItems, expectedResponse.cart.resources.numberOfItems);
+                assert.equal(bodyAsJson.cart.resources.emptyCartMsg, expectedResponse.cart.resources.emptyCartMsg);
+            });
     });
 });

@@ -1,14 +1,14 @@
 <nav class="navbar bg-inverse col-12">
     <div class="close-menu clearfix">
         <div class="back pull-left" role="button">
-            <a href="#">
+            <a href="${'#'}">
                 <span class="caret-left"></span>
-                Back
+                ${Resource.msg('link.header.menu.back', 'common', null)}
             </a>
         </div>
         <div class="close-button pull-right" role="button">
-            <a href="#">
-                Close
+            <a href="${'#'}">
+                ${Resource.msg('link.header.menu.close', 'common', null)}
                 <span aria-hidden="true">&times;</span>
             </a>
         </div>
@@ -31,6 +31,7 @@
                 </isloop>
             </isif>
             <isinclude url="${URLUtils.url('Account-Menu')}" />
+            <isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', true)}" />
         </ul>
     </div>
 </nav>

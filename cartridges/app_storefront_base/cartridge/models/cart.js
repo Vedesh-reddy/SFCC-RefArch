@@ -100,10 +100,13 @@ function CartModel(basket) {
 
         if (shippingModels) {
             this.shipments = shippingModels.map(function (shippingModel) {
-                return {
-                    shippingMethods: shippingModel.applicableShippingMethods,
-                    selectedShippingMethod: shippingModel.selectedShippingMethod.ID
-                };
+                var result = {};
+                result.shippingMethods = shippingModel.applicableShippingMethods;
+                if (shippingModel.selectedShippingMethod) {
+                    result.selectedShippingMethod = shippingModel.selectedShippingMethod.ID;
+                }
+
+                return result;
             });
         }
         var discountPlan = PromotionMgr.getDiscounts(basket);

@@ -106,7 +106,7 @@
         </label>
     </div>
 
-    <button class="btn btn-block btn-primary">
+    <button type="submit" class="btn btn-block btn-primary">
         ${Resource.msg('button.createaccount.registration', 'registration', null)}
     </button>
     <div class="privacy-policy">

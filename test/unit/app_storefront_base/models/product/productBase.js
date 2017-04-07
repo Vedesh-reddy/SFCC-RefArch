@@ -15,6 +15,38 @@ describe('productBase', function () {
         '../../scripts/factories/price': { getPrice: function () {} }
     });
 
+    var attributeModel = {
+        visibleAttributeGroups: new ArrayList([{
+            ID: 'some ID',
+            displayName: 'some name'
+        }]),
+        getVisibleAttributeDefinitions: function () {
+            return new ArrayList([{
+                multiValueType: false,
+                displayName: 'some name'
+            }]);
+        },
+        getDisplayValue: function () {
+            return 'some value';
+        }
+    };
+
+    var multiValueTypeAttribute = {
+        visibleAttributeGroups: new ArrayList([{
+            ID: 'some ID',
+            displayName: 'some name'
+        }]),
+        getVisibleAttributeDefinitions: function () {
+            return new ArrayList([{
+                multiValueType: true,
+                displayName: 'some name'
+            }]);
+        },
+        getDisplayValue: function () {
+            return [1, 2, 3];
+        }
+    };
+
     var promotions = new ArrayList([{
         calloutMsg: { markup: 'Super duper promotion discount' },
         details: { markup: 'Some Details' },
@@ -31,7 +63,9 @@ describe('productBase', function () {
         variant: false,
         variationGroup: false,
         productSet: false,
-        bundle: false
+        bundle: false,
+        master: true,
+        attributeModel: attributeModel
     };
 
     var productMock = {
@@ -49,7 +83,14 @@ describe('productBase', function () {
                 return: new ArrayList([]),
                 type: 'function'
             }
-        }
+        },
+        attributeModel: attributeModel,
+        master: false,
+        variant: false,
+        variationGroup: false,
+        productSet: false,
+        bundle: false,
+        optionProduct: false
     };
 
     it('should create a simple product with no query string params', function () {
@@ -124,6 +165,41 @@ describe('productBase', function () {
 
         assert.equal(product.promotions, null);
     });
+
+    it('should handle visible attribute groups', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.attributes.length, 1);
+        assert.equal(product.attributes[0].ID, 'some ID');
+        assert.equal(product.attributes[0].name, 'some name');
+        assert.equal(product.attributes[0].attributes.length, 1);
+    });
+
+    it('should handle multi value type attribute definition', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.attributeModel = multiValueTypeAttribute;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.attributes.length, 1);
+        assert.equal(product.attributes[0].ID, 'some ID');
+        assert.equal(product.attributes[0].name, 'some name');
+        assert.equal(product.attributes[0].attributes.length, 1);
+        assert.equal(product.attributes[0].attributes[0].label, 'some name');
+        assert.equal(product.attributes[0].attributes[0].value.length, 3);
+    });
+
+    it('should handle no visible attribute groups', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.attributeModel.visibleAttributeGroups = new ArrayList([]);
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new ProductBase(toProductMock(tempMock), null);
+
+        assert.equal(product.attributes, null);
+    });
+
     it('should create a product which is not a master and not a variant ', function () {
         var tempMock = Object.assign({}, productMock);
         tempMock.variationModel.selectedVariant = null;
@@ -148,5 +224,64 @@ describe('productBase', function () {
         assert.equal(product.productName, 'test product');
         assert.equal(product.id, 1234567);
         assert.equal(product.rating, 4);
+    });
+
+    it('should create a product of type standard', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel = {};
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+        assert.equal(product.productType, 'standard');
+    });
+
+    it('should create a product of type master', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel = {};
+        tempMock.master = true;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+        assert.equal(product.productType, 'master');
+    });
+
+    it('should create a product of type bundle', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel = {};
+        tempMock.bundle = true;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+        assert.equal(product.productType, 'bundle');
+    });
+
+    it('should create a product of type productSet', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel = {};
+        tempMock.productSet = true;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+        assert.equal(product.productType, 'set');
+    });
+
+    it('should create a product of type optionProduct', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel = {};
+        tempMock.optionProduct = true;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+        assert.equal(product.productType, 'optionProduct');
+    });
+
+    it('should create a product of type variationGroup', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel = {};
+        tempMock.variationGroup = true;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+
+        var product = new ProductBase(toProductMock(tempMock), null);
+        assert.equal(product.productType, 'variationGroup');
     });
 });
