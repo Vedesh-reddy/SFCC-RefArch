@@ -133,6 +133,10 @@ $checkout-font-weight: 600;
         [data-view-mode] [data-action] {
             display: none;
         }
+        
+        .hide-details .shipping-address-form {
+            display: none;
+        }
 
         [data-view-mode=view] .view-address-block,
         [data-view-mode=view] [data-action=edit] {
