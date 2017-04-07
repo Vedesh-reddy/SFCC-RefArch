@@ -116,6 +116,7 @@ FullProduct.prototype.initialize = function () {
         this.variationAttributeConfig.endPoint,
         this.id
     );
+    this.selectedQuantity = this.quantity ? parseInt(this.quantity, 10) : this.minOrderQuantity;
 };
 
 /**
@@ -132,7 +133,7 @@ function ProductWrapper(product, productVariables, quantity, promotions) {
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
-        'attributes', 'availability', 'selectedVariantUrl'];
+        'attributes', 'availability', 'selectedVariantUrl', 'selectedQuantity'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

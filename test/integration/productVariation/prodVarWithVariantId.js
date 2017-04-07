@@ -41,6 +41,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                 'selectedVariantUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Product-Variation?pid=25604455&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A&dwvar_25604455_size=160',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
+                'selectedQuantity': 1,
                 'variationAttributes': [
                     {
                         'attributeId': 'color',

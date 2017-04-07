@@ -3,8 +3,12 @@
         ${Resource.msg('label.availability', 'common', null)}:
     </div>
     <div class="availability-msg">
-        <isloop items="${pdict.product.availability.messages}" var="messages">
-            <div>${messages}</div>
-        </isloop>
+        <isif condition="${pdict.product.productType === 'master'}">
+            ${Resource.msg('info.selectforstock', 'product', null)}
+        <iselse/>
+            <isloop items="${pdict.product.availability.messages}" var="message">
+                <div>${message}</div>
+            </isloop>
+        </isif>
     </div>
 </div>

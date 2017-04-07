@@ -3,6 +3,10 @@
     <isloop begin="${pdict.product.minOrderQuantity}"
             end="${pdict.product.maxOrderQuantity}"
             status="status">
-        <option value="${status.index}">${status.index}</option>
+        <isif condition="${pdict.product.selectedQuantity === status.index}">
+            <option selected value="${status.index}">${status.index}</option>
+        <iselse/>
+            <option value="${status.index}">${status.index}</option>
+        </isif>
     </isloop>
 </select>

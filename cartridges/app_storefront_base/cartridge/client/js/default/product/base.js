@@ -229,17 +229,15 @@ function handleVariantResponse(response, caller) {
 }
 
 /**
- * Retrieves url to use when updating a product view
+ * Retrieves url to use when updating a product view and appends the quantity
  * @param {string} selectedValueUrl - string The url used to indicate the product variation
- * @param {string} selectedInput - the option value of a select tag or a swatch link
  * @return {string|null} - the Url for the selected variation value
  */
-function getSelectedValueUrl(selectedValueUrl, selectedInput) {
+function createSelectedValueUrl(selectedValueUrl) {
     if (selectedValueUrl && selectedValueUrl !== 'null') {
         return appendQuantityToUrl(selectedValueUrl);
     }
 
-    selectedInput.closest('.attributes').find('.add-to-cart').attr('disabled', true);
     return null;
 }
 
@@ -317,7 +315,7 @@ module.exports = {
         $(document).on('click', '[data-attr="color"] a', function (e) {
             e.preventDefault();
 
-            var selectedValueUrl = getSelectedValueUrl(e.currentTarget.href, $(this));
+            var selectedValueUrl = createSelectedValueUrl(e.currentTarget.href);
             attributeSelect(selectedValueUrl);
         });
     },
@@ -326,7 +324,7 @@ module.exports = {
         $(document).on('change', 'select[class*="select-"]', function (e) {
             e.preventDefault();
 
-            var selectedValueUrl = getSelectedValueUrl(e.currentTarget.value, $(this));
+            var selectedValueUrl = createSelectedValueUrl(e.currentTarget.value);
             attributeSelect(selectedValueUrl);
         });
     },

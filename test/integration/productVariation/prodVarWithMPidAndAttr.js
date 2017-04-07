@@ -38,6 +38,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                 'selectedVariantUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Product-Variation?pid=25604455&dwvar_25604455_color=SLABLFB&dwvar_25604455_size=155',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
+                'selectedQuantity': 1,
                 'variationAttributes': [
                     {
                         'attributeId': 'color',
