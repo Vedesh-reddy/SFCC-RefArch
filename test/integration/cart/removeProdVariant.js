@@ -217,7 +217,8 @@ describe('Remove product variant from line item', function () {
                     'isGift': false,
                     'UUID': variantUuid1,
                     'quantity': expectQty1,
-                    'isOrderable': true
+                    'isOrderable': true,
+                    'isAvailableForInStorePickup': false
                 },
                 {
                     'id': variantPid3,
@@ -265,7 +266,8 @@ describe('Remove product variant from line item', function () {
                     'isGift': false,
                     'UUID': variantUuid3,
                     'quantity': expectQty3,
-                    'isOrderable': true
+                    'isOrderable': true,
+                    'isAvailableForInStorePickup': false
                 }
             ],
             'numItems': newTotal,

@@ -219,7 +219,8 @@ describe('Update quantity for product variant', function () {
                     'isGift': false,
                     'UUID': variantUuid1,
                     'quantity': expectQty1,
-                    'isOrderable': true
+                    'isOrderable': true,
+                    'isAvailableForInStorePickup': false
                 },
                 {
                     'id': variantPid2,
@@ -269,7 +270,8 @@ describe('Update quantity for product variant', function () {
                     'isGift': false,
                     'UUID': variantUuid2,
                     'quantity': expectQty2,
-                    'isOrderable': true
+                    'isOrderable': true,
+                    'isAvailableForInStorePickup': false
                 },
                 {
                     'id': variantPid3,
@@ -318,7 +320,8 @@ describe('Update quantity for product variant', function () {
                     'isGift': false,
                     'UUID': variantUuid3,
                     'quantity': expectQty3,
-                    'isOrderable': true
+                    'isOrderable': true,
+                    'isAvailableForInStorePickup': false
                 }
             ],
             'numItems': newTotal,

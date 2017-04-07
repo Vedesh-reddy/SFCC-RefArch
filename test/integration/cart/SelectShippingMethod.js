@@ -141,7 +141,8 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isGift': false,
                 'UUID': '',
                 'quantity': 1,
-                'isOrderable': true
+                'isOrderable': true,
+                'isAvailableForInStorePickup': false
             },
             {
                 'id': '013742335538',
@@ -185,7 +186,8 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isGift': false,
                 'UUID': '',
                 'quantity': 1,
-                'isOrderable': true
+                'isOrderable': true,
+                'isAvailableForInStorePickup': false
             }
         ],
         'numItems': 2,

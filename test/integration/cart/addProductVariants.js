@@ -277,7 +277,8 @@ describe('Add Product variants to cart', function () {
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
                                 'quantity': qty1,
-                                'isOrderable': true
+                                'isOrderable': true,
+                                'isAvailableForInStorePickup': false
                             },
                             {
                                 'id': variantPid2,
@@ -327,7 +328,8 @@ describe('Add Product variants to cart', function () {
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
                                 'quantity': qty2,
-                                'isOrderable': true
+                                'isOrderable': true,
+                                'isAvailableForInStorePickup': false
                             },
                             {
                                 'id': variantPid3,
@@ -371,7 +373,8 @@ describe('Add Product variants to cart', function () {
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
                                 'quantity': qty3,
-                                'isOrderable': true
+                                'isOrderable': true,
+                                'isAvailableForInStorePickup': false
                             },
                             {
                                 'id': variantPid4,
@@ -419,7 +422,8 @@ describe('Add Product variants to cart', function () {
                                 'isGift': false,
                                 // 'UUID': 'some UUID',
                                 'quantity': qty4,
-                                'isOrderable': true
+                                'isOrderable': true,
+                                'isAvailableForInStorePickup': false
                             }
                         ],
                         'numItems': 17,

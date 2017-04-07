@@ -45,21 +45,23 @@ describe('Select different State in Shipping Form', function () {
 
         it('should add surcharge to the Ground Shipping cost for jewelery', function (done) {
             var ExpectedResBody = {
-                'totals': {
-                    'subTotal': '$38.00',
-                    'grandTotal': '$56.69',
-                    'totalTax': '$2.70',
-                    'totalShippingCost': '$15.99',
-                    'orderLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'shippingLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'discounts': [],
-                    'discountsHtml': '\n'
+                'order': {
+                    'totals': {
+                        'subTotal': '$38.00',
+                        'grandTotal': '$56.69',
+                        'totalTax': '$2.70',
+                        'totalShippingCost': '$15.99',
+                        'orderLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'shippingLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'discounts': [],
+                        'discountsHtml': '\n'
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -122,7 +124,7 @@ describe('Select different State in Shipping Form', function () {
                     var bodyAsJson = JSON.parse(response.body);
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
-                    assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
+                    assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
                     assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
@@ -160,21 +162,23 @@ describe('Select different State in Shipping Form', function () {
         });
         it('should add surcharge to the Ground Shipping cost for each jewelery item', function (done) {
             var ExpectedResBody = {
-                'totals': {
-                    'subTotal': '$114.00',
-                    'grandTotal': '$159.59',
-                    'totalTax': '$7.60',
-                    'totalShippingCost': '$37.99',
-                    'orderLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'shippingLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'discounts': [],
-                    'discountsHtml': '\n'
+                'order': {
+                    'totals': {
+                        'subTotal': '$114.00',
+                        'grandTotal': '$159.59',
+                        'totalTax': '$7.60',
+                        'totalShippingCost': '$37.99',
+                        'orderLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'shippingLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'discounts': [],
+                        'discountsHtml': '\n'
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -237,7 +241,7 @@ describe('Select different State in Shipping Form', function () {
                     var bodyAsJson = JSON.parse(response.body);
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
-                    assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
+                    assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
                     assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
@@ -275,21 +279,23 @@ describe('Select different State in Shipping Form', function () {
 
         it('should return 2 applicableShippingMethods for AK state', function (done) {
             var ExpectedResBody = {
-                'totals': {
-                    'subTotal': '$49.99',
-                    'grandTotal': '$52.49',
-                    'totalTax': '$2.50',
-                    'totalShippingCost': '$0.00',
-                    'orderLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'shippingLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'discounts': [],
-                    'discountsHtml': '\n'
+                'order': {
+                    'totals': {
+                        'subTotal': '$49.99',
+                        'grandTotal': '$52.49',
+                        'totalTax': '$2.50',
+                        'totalShippingCost': '$0.00',
+                        'orderLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'shippingLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'discounts': [],
+                        'discountsHtml': '\n'
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -337,7 +343,7 @@ describe('Select different State in Shipping Form', function () {
                     var bodyAsJson = JSON.parse(response.body);
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
-                    assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
+                    assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
                     assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
@@ -376,21 +382,23 @@ describe('Select different State in Shipping Form', function () {
 
         it('should return 4 applicableShippingMethods for MA state', function (done) {
             var ExpectedResBody = {
-                'totals': {
-                    'subTotal': '$49.99',
-                    'grandTotal': '$58.78',
-                    'totalTax': '$2.80',
-                    'totalShippingCost': '$5.99',
-                    'orderLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'shippingLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'discounts': [],
-                    'discountsHtml': '\n'
+                'order': {
+                    'totals': {
+                        'subTotal': '$49.99',
+                        'grandTotal': '$58.78',
+                        'totalTax': '$2.80',
+                        'totalShippingCost': '$5.99',
+                        'orderLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'shippingLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'discounts': [],
+                        'discountsHtml': '\n'
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -452,7 +460,7 @@ describe('Select different State in Shipping Form', function () {
                     var bodyAsJson = JSON.parse(response.body);
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
-                    assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
+                    assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
                     assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
@@ -487,21 +495,23 @@ describe('Select different State in Shipping Form', function () {
         });
         it('shipping cost should be increased for State=MA', function (done) {
             var ExpectedResBody = {
-                'totals': {
-                    'subTotal': '$149.97',
-                    'grandTotal': '$165.86',
-                    'totalTax': '$7.90',
-                    'totalShippingCost': '$7.99',
-                    'orderLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'shippingLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'discounts': [],
-                    'discountsHtml': '\n'
+                'order': {
+                    'totals': {
+                        'subTotal': '$149.97',
+                        'grandTotal': '$165.86',
+                        'totalTax': '$7.90',
+                        'totalShippingCost': '$7.99',
+                        'orderLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'shippingLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'discounts': [],
+                        'discountsHtml': '\n'
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -563,7 +573,7 @@ describe('Select different State in Shipping Form', function () {
                     var bodyAsJson = JSON.parse(response.body);
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
-                    assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
+                    assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
                     assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
@@ -601,21 +611,23 @@ describe('Select different State in Shipping Form', function () {
         });
         it('should include UPS as an applicable shipping methods for AP state', function (done) {
             var ExpectedResBody = {
-                'totals': {
-                    'subTotal': '$49.99',
-                    'grandTotal': '$52.49',
-                    'totalTax': '$2.50',
-                    'totalShippingCost': '$0.00',
-                    'orderLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'shippingLevelDiscountTotal': {
-                        'formatted': '$0.00',
-                        'value': 0
-                    },
-                    'discounts': [],
-                    'discountsHtml': '\n'
+                'order': {
+                    'totals': {
+                        'subTotal': '$49.99',
+                        'grandTotal': '$52.49',
+                        'totalTax': '$2.50',
+                        'totalShippingCost': '$0.00',
+                        'orderLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'shippingLevelDiscountTotal': {
+                            'formatted': '$0.00',
+                            'value': 0
+                        },
+                        'discounts': [],
+                        'discountsHtml': '\n'
+                    }
                 },
                 'shipping': {
                     'applicableShippingMethods': [
@@ -663,7 +675,7 @@ describe('Select different State in Shipping Form', function () {
                     var bodyAsJson = JSON.parse(response.body);
                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default']);
 
-                    assert.deepEqual(bodyAsJson.totals, ExpectedResBody.totals, 'Actual response.totals not as expected.');
+                    assert.deepEqual(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.applicableShippingMethods, ExpectedResBody.shipping.applicableShippingMethods, 'applicableShippingMethods not as expected.');
                     assert.deepEqual(actualRespBodyStripped.shipping.shippingAddress, ExpectedResBody.shipping.shippingAddress, 'shippingAddress is not as expected');
                     assert.deepEqual(actualRespBodyStripped.shipping.selectedShippingMethod, ExpectedResBody.shipping.selectedShippingMethod, 'selectedShippingMethod is not as expected');
