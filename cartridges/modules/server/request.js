@@ -51,6 +51,32 @@ function getCurrentLocale(locale, currency) {
 }
 
 /**
+ * Translates global customer's preferredAddress into local object
+ * @param {Object} address - a CustomerAddress or OrderAddress
+ * @returns {Object} local instance of address object
+ */
+function getAddressObject(address) {
+    if (address) {
+        return {
+            address1: address.address1,
+            address2: address.address2,
+            city: address.city,
+            countryCode: {
+                displayValue: address.countryCode.displayValue,
+                value: address.countryCode.value
+            },
+            firstName: address.firstName,
+            lastName: address.lastName,
+            ID: address.ID,
+            phone: address.phone,
+            postalCode: address.postalCode,
+            stateCode: address.stateCode
+        };
+    }
+    return null;
+}
+
+/**
  * Translates global customer object into local object
  * @param {dw.customer.Customer} customer - Global customer object
  * @returns {Object} local instance of customer object
@@ -81,28 +107,17 @@ function getCustomerObject(customer) {
             customerNo: customer.profile.customerNo
         },
         addressBook: {
-            preferredAddress: null
+            preferredAddress: getAddressObject(preferredAddress),
+            addresses: []
         },
         wallet: {
             paymentInstruments: customer.profile.wallet.paymentInstruments
         }
     };
-    if (preferredAddress) {
-        result.addressBook.preferredAddress = {
-            address1: preferredAddress.address1,
-            address2: preferredAddress.address2,
-            city: preferredAddress.city,
-            countryCode: {
-                displayValue: preferredAddress.countryCode.displayValue,
-                value: preferredAddress.countryCode.value
-            },
-            firstName: preferredAddress.firstName,
-            lastName: preferredAddress.lastName,
-            ID: preferredAddress.ID,
-            phone: preferredAddress.phone,
-            postalCode: preferredAddress.postalCode,
-            stateCode: preferredAddress.stateCode
-        };
+    if (customer.addressBook.addresses && customer.addressBook.addresses.length > 0) {
+        for (var i = 0, ii = customer.addressBook.addresses.length; i < ii; i++) {
+            result.addressBook.addresses.push(getAddressObject(customer.addressBook.addresses[i]));
+        }
     }
     return result;
 }

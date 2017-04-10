@@ -2,6 +2,8 @@
 
 var helper = require('~/cartridge/scripts/dwHelpers');
 
+var AddressModel = require('~/cartridge/models/address');
+
 /**
  * Creates a plain object that contains profile information
  * @param {Object} profile - current customer's profile
@@ -20,6 +22,36 @@ function getProfile(profile) {
     } else {
         result = null;
     }
+    return result;
+}
+
+/**
+ * Creates an array of plain object that contains address book addresses, if any exist
+ * @param {dw.customer.Customer} addressBook - target customer
+ * @returns {Array<Object>} an array of customer addresses
+ */
+function getAddresses(addressBook) {
+    var result = [];
+    if (addressBook) {
+        for (var i = 0, ii = addressBook.addresses.length; i < ii; i++) {
+            result.push(new AddressModel(addressBook.addresses[i]).address);
+        }
+    }
+
+    return result;
+}
+
+/**
+ * Creates a plain object that contains the customer's preferred address
+ * @param {dw.customer.Customer} addressBook - target customer
+ * @returns {Object} an object that contains information about current customer's preferred address
+ */
+function getPreferredAddress(addressBook) {
+    var result = null;
+    if (addressBook && addressBook.preferredAddress) {
+        result = new AddressModel(addressBook.preferredAddress).address;
+    }
+
     return result;
 }
 
@@ -54,7 +86,8 @@ function getPayment(wallet) {
  */
 function account(currentCustomer, addressModel, orderModel) {
     this.profile = getProfile(currentCustomer.profile);
-    this.preferredAddress = addressModel;
+    this.addresses = getAddresses(currentCustomer.addressBook);
+    this.preferredAddress = addressModel || getPreferredAddress(currentCustomer.addressBook);
     this.orderHistory = orderModel;
     this.payment = getPayment(currentCustomer.wallet);
 }

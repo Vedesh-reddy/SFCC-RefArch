@@ -8,6 +8,7 @@ var Resource = require('dw/web/Resource');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 
+var AccountModel = require('~/cartridge/models/account');
 var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
@@ -115,6 +116,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
     });
 
     res.json({
+        customer: new AccountModel(req.currentCustomer),
         order: basketModel
     });
 
@@ -187,6 +189,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
         });
 
         res.json({
+            customer: new AccountModel(req.currentCustomer),
             order: basketModel
         });
     } else {
@@ -266,6 +269,7 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
     });
 
     res.json({
+        customer: new AccountModel(req.currentCustomer),
         order: basketModel,
         shippingForm: server.forms.getForm('shipping')
     });
@@ -327,6 +331,7 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
 
     res.json({
         uuid: uuid,
+        customer: new AccountModel(req.currentCustomer),
         order: new OrderModel(basket)
     });
     return next();
@@ -419,11 +424,14 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
             usingMultiShipping: usingMultiShipping
         });
 
+        var accountModel = new AccountModel(req.currentCustomer);
+
         res.json({
             form: form,
             data: result,
             order: basketModel,
-
+            customer: accountModel,
+            
             fieldErrors: [],
             serverErrors: [],
             error: false
@@ -474,8 +482,11 @@ server.get('Start', server.middleware.https, function (req, res, next) {
         creditCardExpirationYears.push(currentYear + i);
     }
 
+    var accountModel = new AccountModel(req.currentCustomer);
+
     res.render('checkout/checkout', {
         order: orderModel,
+        customer: accountModel,
         forms: {
             shippingForm: shippingForm,
             billingForm: billingForm

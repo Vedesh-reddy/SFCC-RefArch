@@ -91,7 +91,7 @@
          */
         function optionValueForAddress(shipping, selected) {
             if (shipping === '-') {
-                return $('<option disabled>-</option>');
+                return $('<option disabled>- Shipping Addresses -</option>');
             }
             var safeShipping = shipping || {};
             var hasShippingAddress = !!safeShipping.shippingAddress;
@@ -181,7 +181,10 @@
 
             if ($shippingAddressSelector && $shippingAddressSelector.length === 1) {
                 $shippingAddressSelector.empty();
+                // Add New Address option
                 $shippingAddressSelector.append(optionValueForAddress(null));
+                // Separator -
+                $shippingAddressSelector.append(optionValueForAddress('-'));
                 shippings.forEach(function (aShipping) {
                     $shippingAddressSelector.append(
                         optionValueForAddress(aShipping, shipping.UUID === aShipping.UUID)
@@ -205,7 +208,7 @@
                 postalCode: $('input[name$=_postalCode]', form).val(),
                 stateCode: $('select[name$=_stateCode]', form).val(),
                 countryCode: $('select[name$=_countryCode]', form).val(),
-                phone: $('select[name$=_phone]', form).val()
+                phone: $('input[name$=_phone]', form).val()
             };
             return address;
         }
@@ -229,7 +232,7 @@
                 $('input[name$=_postalCode]', form).val(shipping.shippingAddress.postalCode);
                 $('select[name$=_stateCode]', form).val(shipping.shippingAddress.stateCode);
                 $('select[name$=_countryCode]', form).val(shipping.shippingAddress.countryCode);
-                $('select[name$=_phone]', form).val(shipping.shippingAddress.phone);
+                $('input[name$=_phone]', form).val(shipping.shippingAddress.phone);
             });
         }
 
@@ -377,12 +380,14 @@
          * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
          */
         function updateShippingInformation(shipping, shippings, options) {
-            // First copy over shipmentUUIDs from response
-            shipping.productLineItems.items.forEach(function (productLineItem) {
-                updateProductLineItemShipmentUUIDs(productLineItem, shipping);
-            });
+            // First copy over shipmentUUIDs from response, to each PLI form
+        	shippings.forEach(function (aShipping) {
+	            aShipping.productLineItems.items.forEach(function (productLineItem) {
+	                updateProductLineItemShipmentUUIDs(productLineItem, aShipping);
+	            });
+        	});
 
-            // Now copy over shipping information, based on those associations
+            // Now update shipping information, based on those associations
             updateShippingMethods(shipping);
             updateShippingAddressFormValues(shipping);
             updateShippingSummaryInformation(shipping);
@@ -790,7 +795,28 @@
                     });
                 }
 
+                $('.single-shipping .addressSelector').on('change', function () {
+                    var form = $(this).parents('form')[0];
+                    var selectedOption = $('option:selected', this);
+                    var attrs = selectedOption.data();
+                    var shipmentUUID = selectedOption[0].value;
+                    var originalUUID = $('input[name=shipmentUUID]', form).val();
 
+                    Object.keys(attrs).forEach(function (attr) {
+                        $('[name$=' + attr + ']', form).val(attrs[attr]);
+                    });
+                    
+                    if (shipmentUUID === 'new') {
+                        $(form).removeClass('hide-details');
+                        $('.toggle-shipping-address-form', form).hide();
+                    } else if (shipmentUUID === originalUUID) {
+                        $(form).addClass('hide-details');
+                        $('.toggle-shipping-address-form', form).show();
+                    } else {
+                        $(form).addClass('hide-details');
+                        $('.toggle-shipping-address-form', form).hide();
+                    }
+                });
                 $('.product-shipping-block .addressSelector').on('change', function () {
                     var form = $(this).parents('form')[0];
                     var selectedOption = $('option:selected', this);
