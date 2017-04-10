@@ -94,7 +94,6 @@
                 return $('<option disabled>- Shipping Addresses -</option>');
             }
             var safeShipping = shipping || {};
-            var hasShippingAddress = !!safeShipping.shippingAddress;
             var shippingAddress = safeShipping.shippingAddress || {};
             var uuid = safeShipping.UUID ? safeShipping.UUID : 'new';
             var optionEl = $('<option />');
@@ -112,9 +111,6 @@
                 if (shippingAddress.lastName) {
                     title.push(shippingAddress.lastName);
                 }
-//                if (shippingAddress.firstName||shippingAddress.lastName) {
-//                    title.push('-');
-//                }
                 if (shippingAddress.address1) {
                     title.push(shippingAddress.address1);
                 }
@@ -135,8 +131,8 @@
                     title.push(shippingAddress.postalCode);
                 }
                 if (safeShipping.selectedShippingMethod) {
-                	title.push('-');
-                	title.push(safeShipping.selectedShippingMethod.displayName);
+                    title.push('-');
+                    title.push(safeShipping.selectedShippingMethod.displayName);
                 }
 
                 if (title.length > 2) {
@@ -331,13 +327,13 @@
 
             var address1Line = address.address1;
             var address2Line = address.address2;
-            
+
             var cityStZipLine = address.city ? address.city + ', ' : '';
             if (address.stateCode) cityStZipLine += address.stateCode + ' ';
             if (address.postalCode) cityStZipLine += address.postalCode;
 
             var phoneLine = address.phone;
-            
+
             var methodNameLine = selectedMethod ? selectedMethod.displayName : '';
             var methodArrivalTime = selectedMethod && selectedMethod.estimatedArrivalTime
                 ? '(' + selectedMethod.estimatedArrivalTime + ')'
@@ -350,11 +346,11 @@
             $('.ship-to-address2', tmpl).text(address2Line);
             $('.ship-to-city-st-zip', tmpl).text(cityStZipLine);
             $('.ship-to-phone', tmpl).text(phoneLine);
-            
+
             if (!address2Line) {
                 $('.ship-to-address2', tmpl).hide();
             }
-            
+
             if (!phoneLine) {
                 $('.ship-to-phone', tmpl).hide();
             }
@@ -397,11 +393,11 @@
          */
         function updateShippingInformation(shipping, shippings, options) {
             // First copy over shipmentUUIDs from response, to each PLI form
-        	shippings.forEach(function (aShipping) {
-	            aShipping.productLineItems.items.forEach(function (productLineItem) {
-	                updateProductLineItemShipmentUUIDs(productLineItem, aShipping);
-	            });
-        	});
+            shippings.forEach(function (aShipping) {
+                aShipping.productLineItems.items.forEach(function (productLineItem) {
+                    updateProductLineItemShipmentUUIDs(productLineItem, aShipping);
+                });
+            });
 
             // Now update shipping information, based on those associations
             updateShippingMethods(shipping);
@@ -821,7 +817,7 @@
                     Object.keys(attrs).forEach(function (attr) {
                         $('[name$=' + attr + ']', form).val(attrs[attr]);
                     });
-                    
+
                     if (shipmentUUID === 'new') {
                         $(form).removeClass('hide-details');
                         $('.toggle-shipping-address-form', form).hide();

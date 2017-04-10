@@ -292,8 +292,9 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     var productLineItem = COHelpers.getProductLineItem(basket, pliUUID);
     var uuid = UUIDUtils.createUUID();
     var shipment;
-    var result = {};
-    var form = server.forms.getForm('shipping');
+// TODO: This is basis for copy shipping address for new shipment w/ same address
+//    var result = {};
+//    var form = server.forms.getForm('shipping');
 
     try {
 //        result.address = {
@@ -308,7 +309,6 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
 //            phone: form.shippingAddress.addressFields.phone.value
 //        };
 //
-//        result.shippingBillingSame = form.shippingAddress.shippingAddressUseAsBillingAddress.value;
 //        result.shippingMethod = form.shippingAddress.shippingMethodID.value ?
 //            '' + form.shippingAddress.shippingMethodID.value : null;
 
@@ -431,7 +431,7 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
             data: result,
             order: basketModel,
             customer: accountModel,
-            
+
             fieldErrors: [],
             serverErrors: [],
             error: false
