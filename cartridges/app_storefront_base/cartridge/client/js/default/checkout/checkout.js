@@ -139,7 +139,7 @@
                 	title.push(safeShipping.selectedShippingMethod.displayName);
                 }
 
-                if (title.length > 1) {
+                if (title.length > 2) {
                     title = title.join(' ');
                 } else {
                     title = 'New Address';
@@ -384,6 +384,7 @@
             $('input[value=' + productLineItem.UUID + ']').each(function (key, pli) {
                 var form = pli.form;
                 $('[name=shipmentUUID]', form).val(shipping.UUID);
+                $('[name=originalShipmentUUID]', form).val(shipping.UUID);
             });
         }
 
