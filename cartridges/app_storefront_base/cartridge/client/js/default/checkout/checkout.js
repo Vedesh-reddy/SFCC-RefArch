@@ -102,7 +102,7 @@
 
             var title;
 
-            if (!hasShippingAddress) {
+            if (!shipping) {
                 title = 'Add New Address';
             } else {
                 title = [];
