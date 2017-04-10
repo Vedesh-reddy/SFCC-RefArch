@@ -331,11 +331,13 @@
 
             var address1Line = address.address1;
             var address2Line = address.address2;
-
+            
             var cityStZipLine = address.city ? address.city + ', ' : '';
             if (address.stateCode) cityStZipLine += address.stateCode + ' ';
             if (address.postalCode) cityStZipLine += address.postalCode;
 
+            var phoneLine = address.phone;
+            
             var methodNameLine = selectedMethod ? selectedMethod.displayName : '';
             var methodArrivalTime = selectedMethod && selectedMethod.estimatedArrivalTime
                 ? '(' + selectedMethod.estimatedArrivalTime + ')'
@@ -347,9 +349,14 @@
             $('.ship-to-address1', tmpl).text(address1Line);
             $('.ship-to-address2', tmpl).text(address2Line);
             $('.ship-to-city-st-zip', tmpl).text(cityStZipLine);
-
+            $('.ship-to-phone', tmpl).text(phoneLine);
+            
             if (!address2Line) {
                 $('.ship-to-address2', tmpl).hide();
+            }
+            
+            if (!phoneLine) {
+                $('.ship-to-phone', tmpl).hide();
             }
 
             if (shipping.selectedShippingMethod) {

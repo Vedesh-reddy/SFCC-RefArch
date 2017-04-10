@@ -121,7 +121,8 @@
 	        <span class="ship-to-name"></span>
 	        <span class="ship-to-address1"></span>
 	        <span class="ship-to-address2"></span>
-	        <span class="ship-to-city-st-zip"></span>
+            <span class="ship-to-city-st-zip"></span>
+            <span class="ship-to-phone"></span>
 	    </p>
 	    <h5>Shipping Method</h5>
 	    <p>
