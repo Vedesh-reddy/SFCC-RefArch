@@ -339,6 +339,7 @@ describe('Update quantity for product variant', function () {
                 }
             ],
             'numItems': newTotal,
+            'locale': 'en_US',
             'resources': {
                 'numberOfItems': newTotal + ' Items',
                 'emptyCartMsg': 'Your Shopping Cart is Empty'

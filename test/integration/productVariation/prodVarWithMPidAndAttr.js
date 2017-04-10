@@ -270,6 +270,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                 'rating': 0
             },
             'queryString': 'dwvar_25604455_color=SLABLFB&dwvar_25604455_size=155&pid=25604455',
+            'locale': 'en_US',
             'resources': {
                 'label_instock': 'In Stock',
                 'label_allnotavailable': 'This item is currently not available.',

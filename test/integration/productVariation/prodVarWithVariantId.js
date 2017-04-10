@@ -269,6 +269,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                 'rating': 0
             },
             'queryString': 'pid=708141676220',
+            'locale': 'en_US',
             'resources': {
                 'label_instock': 'In Stock',
                 'label_allnotavailable': 'This item is currently not available.',

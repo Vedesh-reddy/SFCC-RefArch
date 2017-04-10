@@ -200,6 +200,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             }
         ],
         'numItems': 2,
+        'locale': 'en_US',
         'resources': {
             'numberOfItems': '2 Items',
             'emptyCartMsg': 'Your Shopping Cart is Empty'

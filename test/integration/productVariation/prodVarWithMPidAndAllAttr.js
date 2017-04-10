@@ -270,6 +270,7 @@ describe('ProductVariation - Get product variation with master product ID and al
                 'rating': 0
             },
             'queryString': 'dwvar_25604455_color=WHITEFB&dwvar_25604455_size=160&dwvar_25604455_width=A&pid=25604455',
+            'locale': 'en_US',
             'resources': {
                 'label_instock': 'In Stock',
                 'label_allnotavailable': 'This item is currently not available.',

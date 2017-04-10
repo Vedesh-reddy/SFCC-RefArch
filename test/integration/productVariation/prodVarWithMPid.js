@@ -267,6 +267,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                 'productType': 'master'
             },
             'queryString': 'pid=25604455',
+            'locale': 'en_US',
             'resources': {
                 'label_instock': 'In Stock',
                 'label_allnotavailable': 'This item is currently not available.',

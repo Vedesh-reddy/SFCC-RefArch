@@ -281,6 +281,7 @@ describe('Remove product variant from line item', function () {
                 }
             ],
             'numItems': newTotal,
+            'locale': 'en_US',
             'resources': {
                 'numberOfItems': newTotal + ' Items',
                 'emptyCartMsg': 'Your Shopping Cart is Empty'
@@ -433,6 +434,7 @@ describe('Remove product variant from line item', function () {
             ],
             'items': [],
             'numItems': 0,
+            'locale': 'en_US',
             'resources': {
                 'numberOfItems': '0 Items',
                 'emptyCartMsg': 'Your Shopping Cart is Empty'
