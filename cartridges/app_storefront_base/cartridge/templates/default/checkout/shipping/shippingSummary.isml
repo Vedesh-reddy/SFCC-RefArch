@@ -34,5 +34,7 @@
 	</isif>
 </isloop>
 <isif condition="${pdict.order.shipping.length > 1}">
-    Addresses & shipping methods are listed under your items.
+    <span class="summary-section-label shipping-addr-label">
+        Addresses & shipping methods are listed under your items.
+    </span>
 </isif>
