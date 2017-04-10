@@ -116,16 +116,16 @@ $checkout-font-weight: 600;
 
     // Shipping ------------------------------
     &[data-checkout-stage=shipping] {
+        &.multi-ship .order-product-summary {
+            display: none;
+        }
+
         .card.payment-form {
             display: none;
         }
 
         button.submit-shipping {
             display: block;
-        }
-
-        .multi-ship .order-product-summary {
-            display: none;
         }
 
         [data-view-mode] .view-address-block,

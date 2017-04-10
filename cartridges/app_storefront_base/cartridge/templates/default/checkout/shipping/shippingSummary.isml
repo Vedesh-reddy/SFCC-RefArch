@@ -31,7 +31,8 @@
 		        </p>
 		    </div>
 		</div>
-	<iselse/>
-		Multiship shipping summary
 	</isif>
 </isloop>
+<isif condition="${pdict.order.shipping.length > 1}">
+    Addresses & shipping methods are listed under your items.
+</isif>
