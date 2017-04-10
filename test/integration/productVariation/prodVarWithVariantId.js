@@ -28,14 +28,20 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             'product': {
                 'attributes': null,
                 'attributesHtml': '\n',
+                'availability': {
+                    'inStockDate': 'Sun Jul 15 2012',
+                    'messages': ['Back Order']
+                },
                 'id': variantPid,
                 'productName': 'No-Iron Textured Dress Shirt',
                 'shortDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
                 'longDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
                 'online': true,
                 'searchable': true,
+                'selectedVariantUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Product-Variation?pid=25604455&dwvar_25604455_color=WHITEFB&dwvar_25604455_width=A&dwvar_25604455_size=160',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
+                'selectedQuantity': 1,
                 'variationAttributes': [
                     {
                         'attributeId': 'color',
@@ -272,7 +278,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
         };
 
         // strip out all "url" properties from the expected response
-        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url', 'resetUrl']);
+        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url', 'resetUrl', 'selectedVariantUrl']);
 
         request(myGetRequest, function (error, response) {
             assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
@@ -280,7 +286,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             var bodyAsJson = JSON.parse(response.body);
 
             // strip out all "url" properties from the actual response
-            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl']);
+            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedVariantUrl']);
 
             assert.deepEqual(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
 

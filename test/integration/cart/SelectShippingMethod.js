@@ -142,6 +142,10 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isGift': false,
                 'UUID': '',
                 'attributes': null,
+                'availability': {
+                    'inStockDate': null,
+                    'messages': ['In Stock']
+                },
                 'quantity': 1,
                 'isOrderable': true
             },
@@ -187,6 +191,10 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isGift': false,
                 'UUID': '',
                 'attributes': null,
+                'availability': {
+                    'inStockDate': null,
+                    'messages': ['In Stock']
+                },
                 'quantity': 1,
                 'isOrderable': true
             }

@@ -50,7 +50,7 @@ function ProductBundle(product, quantity, promotions, productFactory) {
         types: ['large', 'small'],
         quantity: 'all'
     };
-    this.selectedQuantity = quantity;
+    this.quantity = quantity;
     this.useSimplePrice = false;
     this.apiPromotions = promotions;
     this.initialize();

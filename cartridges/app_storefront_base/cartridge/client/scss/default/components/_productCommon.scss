@@ -101,11 +101,26 @@ div.quantity {
     margin-top: 1em;
 }
 
-div.availability,
 .size-chart {
+    margin-top: 1.071em;
+}
+
+div.availability {
+    display: flex;
+    flex-direction: row;
     margin-top: 1.071em;
 }
 
 .attribute-values {
     margin-top: 0.313em;
+}
+
+.availability-msg {
+    display: flex;
+    flex-direction: column;
+    margin-left: 1rem;
+}
+
+.availability-label {
+    flex-shrink: 0;
 }

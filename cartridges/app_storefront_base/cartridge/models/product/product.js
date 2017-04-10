@@ -2,6 +2,7 @@
 
 var ProductBase = require('./productBase').productBase;
 var productBase = require('./productBase');
+var URLUtils = require('dw/web/URLUtils');
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;
 
@@ -31,6 +32,35 @@ function hasRequiredAttrsSelected(variationModel) {
 }
 
 /**
+ * creates a url of the product's selected attributes
+ * @param {dw.catalog.ProductVariationModel} variationModel - The product's variation model
+ * @param {Array} allAttributes - a list of the product's available attributes
+ * @param {string} endPoint - the endpoint to use when generating urls for product attributes
+ * @param {string} id - the current product's id
+ * @returns {string} a url of the product's selected attributes
+ */
+function getUrl(variationModel, allAttributes, endPoint, id) {
+    var params = {};
+    var url;
+
+    if (allAttributes && variationModel) {
+        allAttributes.forEach(function (attribute) {
+            attribute.values.forEach(function (value) {
+                if (value.selected) {
+                    params[attribute.id] = attribute.value;
+                }
+            });
+        });
+
+        url = variationModel.url('Product-' + endPoint, params).toString();
+    } else {
+        url = URLUtils.url('Product-' + endPoint, 'pid', id).toString();
+    }
+
+    return url;
+}
+
+/**
  * @constructor
  * @classdesc Base product class. Used for product tiles
  * @param {dw.catalog.Product} product - Product instance returned from the API
@@ -51,7 +81,7 @@ function FullProduct(product, productVariables, quantity, promotions) {
         types: ['large', 'small'],
         quantity: 'all'
     };
-    this.selectedQuantity = quantity;
+    this.quantity = quantity;
     this.productVariables = productVariables;
     this.variationAttributeConfig = {
         attributes: '*',
@@ -80,6 +110,13 @@ FullProduct.prototype.initialize = function () {
     this.readyToOrder = this.variationModel
         ? hasRequiredAttrsSelected(this.variationModel)
         : true;
+    this.selectedVariantUrl = getUrl(
+        this.variationModel,
+        this.variationAttributes,
+        this.variationAttributeConfig.endPoint,
+        this.id
+    );
+    this.selectedQuantity = this.quantity ? parseInt(this.quantity, 10) : this.minOrderQuantity;
 };
 
 /**
@@ -96,7 +133,7 @@ function ProductWrapper(product, productVariables, quantity, promotions) {
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
-        'attributes'];
+        'attributes', 'availability', 'selectedVariantUrl', 'selectedQuantity'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

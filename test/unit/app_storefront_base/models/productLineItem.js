@@ -13,7 +13,11 @@ describe('Product Line Item', function () {
             '../../scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
                 'dw/util/ArrayList': ArrayList
             }),
-            '../../scripts/factories/price': { getPrice: function () {} }
+            '../../scripts/factories/price': { getPrice: function () {} },
+            'dw/web/Resource': {
+                msgf: function () { return 'some string with param'; },
+                msg: function () { return 'some string'; }
+            }
         }),
         'dw/util/StringUtils': {
             formatMoney: function () {
@@ -45,21 +49,44 @@ describe('Product Line Item', function () {
         }
     };
 
+    var availabilityModelMock = {
+        isOrderable: {
+            return: true,
+            type: 'function'
+        },
+        getAvailabilityLevels: function () {
+            return {
+                inStock: {
+                    value: 1
+                },
+                preorder: {
+                    value: 0
+                },
+                backorder: {
+                    value: 0
+                },
+                notAvailable: {
+                    value: 0
+                }
+            };
+        },
+        inventoryRecord: {
+            inStockDate: {
+                toDateString: function () {
+                    return 'some date';
+                }
+            },
+            ATS: {
+                value: 100
+            }
+        }
+    };
+
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
         variant: true,
-        availabilityModel: {
-            isOrderable: {
-                return: true,
-                type: 'function'
-            },
-            inventoryRecord: {
-                ATS: {
-                    value: 100
-                }
-            }
-        },
+        availabilityModel: availabilityModelMock,
         minOrderQuantity: {
             value: 2
         },
