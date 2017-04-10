@@ -118,6 +118,9 @@
                 if (shippingAddress.address1) {
                     title.push(shippingAddress.address1);
                 }
+                if (shippingAddress.address2) {
+                    title.push(shippingAddress.address2);
+                }
                 if (shippingAddress.city) {
                     if (shippingAddress.state) {
                         title.push(shippingAddress.city + ',');
@@ -131,7 +134,12 @@
                 if (shippingAddress.postalCode) {
                     title.push(shippingAddress.postalCode);
                 }
-                if (title.length > 0) {
+                if (safeShipping.selectedShippingMethod) {
+                	title.push('-');
+                	title.push(safeShipping.selectedShippingMethod.displayName);
+                }
+
+                if (title.length > 1) {
                     title = title.join(' ');
                 } else {
                     title = 'New Address';
