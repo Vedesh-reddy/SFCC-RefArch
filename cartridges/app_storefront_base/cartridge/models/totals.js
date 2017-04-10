@@ -129,9 +129,14 @@ function getDiscountsHtml(discounts) {
 function totals(lineItemContainer) {
     if (lineItemContainer) {
         this.subTotal = getTotals(lineItemContainer.getAdjustedMerchandizeTotalPrice(false));
-        this.grandTotal = getTotals(lineItemContainer.totalGrossPrice);
-        this.totalTax = getTotals(lineItemContainer.totalTax);
         this.totalShippingCost = getTotals(lineItemContainer.shippingTotalPrice);
+        if (this.totalShippingCost === '-') {
+            this.totalTax = '-';
+            this.grandTotal = '-';
+        } else {
+            this.grandTotal = getTotals(lineItemContainer.totalGrossPrice);
+            this.totalTax = getTotals(lineItemContainer.totalTax);
+        }
         this.orderLevelDiscountTotal = getOrderLevelDiscountTotal(lineItemContainer);
         this.shippingLevelDiscountTotal = getShippingLevelDiscountTotal(lineItemContainer);
         this.discounts = getDiscounts(lineItemContainer);
