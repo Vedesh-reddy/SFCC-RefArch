@@ -8,7 +8,7 @@
         Add New Address
     </option>
 	<isif condition="${pdict.order.shipping[0].shippingAddress}">
-		<option disabled>- Shipping Addresses -</option>
+		<option disabled>${Resource.msg('msg.shipping.addresses', 'checkout', null)}</option>
 		<isloop items="${pdict.order.shipping}" var="aShippingModel">
 			<option value="${aShippingModel.UUID}" <isif condition="${!pdict.customer.preferredAddress && aShippingModel.UUID === shippingModel.UUID}">selected="selected"</isif>
 			data-first-name="${aShippingModel.shippingAddress.firstName||''}" data-last-name="${aShippingModel.shippingAddress.lastName||''}"
@@ -20,8 +20,8 @@
 			</option>
 		</isloop>
 	</isif>
-    <isif condition="${pdict.customer.addresses}">
-        <option disabled>- Account Addresses -</option>
+    <isif condition="${pdict.customer.addresses && pdict.customer.addresses.length > 1}">
+        <option disabled>${Resource.msg('msg.account.addresses', 'checkout', null)}</option>
         <isloop items="${pdict.customer.addresses}" var="address">
             <option value="${address.ID}"
             <isif condition="${pdict.customer.preferredAddress && pdict.customer.preferredAddress.ID === address.ID}">selected</isif>

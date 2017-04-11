@@ -1,5 +1,5 @@
 <isif condition="${shippingModel.shippingAddress}">
-	<h5>Shipping To</h5>
+	<h5>${Resource.msg('msg.shipping.to', 'checkout', null)}</h5>
 	<p>
 		<span class="ship-to-name">${shippingModel.shippingAddress.firstName} ${shippingModel.shippingAddress.lastName}</span>
 		<span class="ship-to-address1">${shippingModel.shippingAddress.address1}</span>
@@ -9,7 +9,7 @@
 	</p>
 </isif>
 <isif condition="${shippingModel.selectedShippingMethod}">
-	<h5>${pdict.order.resources.shippingMethodTitle}</h5>
+	<h5>${pdict.order.resources.shippingMethod}</h5>
 	<p>
 		<span class="display-name">${shippingModel.selectedShippingMethod.displayName}</span>
 		<isif condition="${shippingModel.selectedShippingMethod.estimatedArrivalTime}">

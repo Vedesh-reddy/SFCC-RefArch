@@ -10,7 +10,7 @@
 				    <fieldset class="shipment-selector-block">
 				        <div class="form-group">
 				            <label class="form-control-label" for="shipmentSelector">
-				                Ship To Address
+				                ${Resource.msg('msg.ship.to.address', 'checkout', null)}
 				            </label>
 				            <a class="btn float-right toggle-shipping-address-form">Edit</a>
 				            

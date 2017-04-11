@@ -5,10 +5,10 @@
 		data-city="" data-state-code=""
 		data-country-code="" data-postal-code=""
 		data-phone="">
-        Add New Address
+        ${Resource.msg('msg.add.new.address', 'checkout', null)}
     </option>
 	<isif condition="${pdict.order.shipping[0].shippingAddress}">
-		<option disabled>- Shipping Addresses -</option>
+		<option disabled>${Resource.msg('msg.shipping.addresses', 'checkout', null)}</option>
 		<isloop items="${pdict.order.shipping}" var="aShippingModel">
 			<option value="${aShippingModel.UUID}" <isif condition="${aShippingModel.UUID==shippingModel.UUID}">selected="selected"</isif>
 			data-first-name="${aShippingModel.shippingAddress.firstName||''}" data-last-name="${aShippingModel.shippingAddress.lastName||''}"
@@ -32,13 +32,13 @@
 			 ${!aShippingModel.selectedShippingMethod.displayName||'-'}
 			 ${aShippingModel.selectedShippingMethod.displayName||''}
 			 <iselse/>
-			     New Address
+                ${Resource.msg('msg.new.address', 'checkout', null)}
 			 </isif>
 			</option>
 		</isloop>
 	</isif>
     <isif condition="${pdict.customer.addresses && pdict.customer.addresses.length > 0}">
-        <option disabled>- Account Addresses -</option>
+        <option disabled>${Resource.msg('msg.account.addresses', 'checkout', null)}</option>
         <isloop items="${pdict.customer.addresses}" var="address">
             <option value="${'ab_'+address.ID}"
             data-first-name="${address.firstName||''}" data-last-name="${address.lastName||''}"
@@ -51,7 +51,7 @@
         </isloop>
     </isif>
 	<isif condition="${lineItem.isAvailableForInStorePickup}">
-		<option disabled>- Pickup In Store -</option>
+		<option disabled>${Resource.msg('msg.pickup.in.store', 'checkout', null)}</option>
 		<option <isif condition="${lineItem.fromStoreId}">selected="selected"</isif>>In Store Pickup</option>
 	</isif>			               					
 </select>

@@ -89,9 +89,9 @@
          * @param {boolean} selected - current shipping is selected (for PLI)
          * @returns {Object} - the jQuery / DOMElement
          */
-        function optionValueForAddress(shipping, selected) {
+        function optionValueForAddress(shipping, selected, order) {
             if (shipping === '-') {
-                return $('<option disabled>- Shipping Addresses -</option>');
+                return $('<option disabled>'+order.resources.shippingAddresses+'</option>');
             }
             var safeShipping = shipping || {};
             var shippingAddress = safeShipping.shippingAddress || {};
@@ -102,7 +102,7 @@
             var title;
 
             if (!shipping) {
-                title = 'Add New Address';
+                title = order.resources.addNewAddress;
             } else {
                 title = [];
                 if (shippingAddress.firstName) {
@@ -138,7 +138,7 @@
                 if (title.length > 2) {
                     title = title.join(' ');
                 } else {
-                    title = 'New Address';
+                    title = order.resources.newAddress;
                 }
             }
             optionEl.text(title);
@@ -173,11 +173,14 @@
          * @param {Object} shipping - the shipping (shipment model) model
          * @param {Array} shippings - array of all shipping (shipment model) for an order
          */
-        function updateShippingAddressSelector(productLineItem, shipping, shippings) {
+        function updateShippingAddressSelector(productLineItem, shipping, order) {
             var uuidEl = $('input[value=' + productLineItem.UUID + ']');
+            var shippings = order.shipping;
 
             var form;
             var $shippingAddressSelector;
+            var hasSelectedAddress = false;
+            
             if (uuidEl && uuidEl.length > 0) {
                 form = uuidEl[0].form;
                 $shippingAddressSelector = $('.addressSelector', form);
@@ -186,14 +189,23 @@
             if ($shippingAddressSelector && $shippingAddressSelector.length === 1) {
                 $shippingAddressSelector.empty();
                 // Add New Address option
-                $shippingAddressSelector.append(optionValueForAddress(null));
+                $shippingAddressSelector.append(optionValueForAddress(null, false, order));
                 // Separator -
-                $shippingAddressSelector.append(optionValueForAddress('-'));
+                $shippingAddressSelector.append(optionValueForAddress('-', false, order));
                 shippings.forEach(function (aShipping) {
+                	var isSelected = shipping.UUID === aShipping.UUID;
+                	hasSelectedAddress = hasSelectedAddress || isSelected;
                     $shippingAddressSelector.append(
-                        optionValueForAddress(aShipping, shipping.UUID === aShipping.UUID)
+                        optionValueForAddress(aShipping, isSelected, order)
                     );
                 });
+            }
+            
+            if (!hasSelectedAddress) {
+            	// show
+                $(form).addClass('hide-details');
+            } else {
+                $(form).removeClass('hide-details');
             }
         }
 
@@ -466,7 +478,7 @@
 
             // And update the PLI-based summary information as well
             shipping.productLineItems.items.forEach(function (productLineItem) {
-                updateShippingAddressSelector(productLineItem, shipping, order.shipping);
+                updateShippingAddressSelector(productLineItem, shipping, order);
                 updatePLIShippingSummaryInformation(productLineItem, shipping, options);
             });
         }
@@ -613,12 +625,7 @@
                 // Populate the Address Summary
                 //
             	updateCheckoutView(data.order);
-//                var address = data.order.shipping[0].shippingAddress;
-//                var selectedShippingMethod = data.order.shipping[0].selectedShippingMethod;
-//                populateSummary('.shipping .address-summary', address);
-//                $('.shipping-phone').text(address.phone);
-//                updateShippingSummary(selectedShippingMethod, data.totals);
-//                updateTotals(data.totals);
+
                 defer.resolve(data);
             }
         }
@@ -738,24 +745,6 @@
                                 //
                             	updateCheckoutView(data.order);
                             	
-//                                var address = data.billingData.billingAddress.address;
-//                                populateSummary('.billing .address-summary', address);
-//                                $('.order-summary-email').text(data.orderEmail);
-//                                $('.order-summary-phone').text(address.phone);
-//                                updateTotals(data.totals);
-//                                var $paymentSummary = $('.payment-details');
-//                                var htmlToAppend = '<span> ' + data.resource.cardType + ' ' +
-//                                    data.billingData.payment.selectedPaymentInstruments[0].type +
-//                                    '</span> <div>' +
-//                                    data.billingData.payment.selectedPaymentInstruments[0]
-//                                        .maskedCreditCardNumber +
-//                                    '</div> <div>' +
-//                                    '<span>' + data.resource.cardEnding + ' ' +
-//                                    data.billingData.payment
-//                                        .selectedPaymentInstruments[0].expirationMonth +
-//                                    '/' + data.billingData.payment.selectedPaymentInstruments[0]
-//                                        .expirationYear + '</span>';
-//                                $paymentSummary.empty().append(htmlToAppend);
                                 defer.resolve(data);
                             }
                         },
