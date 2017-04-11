@@ -52,7 +52,7 @@
             $.each(address, function (attr) {
                 var val = address[attr];
                 if (val) {
-                    $('.' + attr, parentSelector).text(val);
+                    $('[name$='+attr+']', parentSelector).text(val);
                 }
             });
         }
@@ -239,6 +239,37 @@
                 $('input[name$=_phone]', form).val(shipping.shippingAddress.phone);
             });
         }
+        
+        /**
+         * updates the shipping address form values within shipping forms
+         * @param {Object} shipping - the shipping (shipment model) model
+         */
+        function updateBillingAddressFormValues(billing) {
+            if (!billing.billingAddress || !billing.billingAddress.address) return;
+
+            var form = $('form[name=dwfrm_billing]');
+            if (!form) return;
+
+            $('input[name$=_firstName]', form).val(billing.billingAddress.address.firstName);
+            $('input[name$=_lastName]', form).val(billing.billingAddress.address.lastName);
+            $('input[name$=_address1]', form).val(billing.billingAddress.address.address1);
+            $('input[name$=_address2]', form).val(billing.billingAddress.address.address2);
+            $('input[name$=_city]', form).val(billing.billingAddress.address.city);
+            $('input[name$=_postalCode]', form).val(billing.billingAddress.address.postalCode);
+            $('select[name$=_stateCode]', form).val(billing.billingAddress.address.stateCode);
+            $('select[name$=_countryCode]', form).val(billing.billingAddress.address.countryCode);
+            $('input[name$=_phone]', form).val(billing.billingAddress.address.phone);
+            
+            if (billing.payment && billing.payment.selectedPaymentInstruments 
+            		&& billing.payment.selectedPaymentInstruments.length > 0) {
+            	var instrument = billing.payment.selectedPaymentInstruments[0];
+	            $('input[name$=cardNumber]', form).val(instrument.maskedCreditCardNumber);
+	            $('select[name$=expirationMonth]', form).val(instrument.expirationMonth);
+	            $('select[name$=expirationYear]', form).val(instrument.expirationYear);
+	            // Force security code clear
+	            $('input[name$=securityCode]', form).val('');
+            }
+        }
 
         /**
          * updates the shipping method radio buttons within shipping forms
@@ -296,9 +327,30 @@
          * updates the order shipping summary for an order shipment model
          * @param {Object} shipping - the shipping (shipment model) model
          */
-        function updateShippingSummaryInformation(shipping) {
-            // console.log('trying to update ShippingSummaryInformation');
-            if (shipping) ;
+        function updateShippingSummaryInformation(shipping, totals) {
+        	var $container = $('[data-shipment-summary='+shipping.UUID+']');
+        	var $addressContainer = $container.find('.address-summary');
+        	var $shippingPhone = $container.find('.shipping-phone');
+        	var $methodTitle = $container.find('.shipping-method-title');
+        	var $methodArrivalTime = $container.find('.shipping-method-arrival-time');
+        	var $methodPrice = $container.find('.shipping-method-price');
+
+        	var address = shipping.shippingAddress;
+			var selectedShippingMethod = shipping.selectedShippingMethod;
+
+			populateSummary($addressContainer, address);
+
+			if (address && address.phone) {
+				$shippingPhone.text(address.phone);
+			}
+
+            $methodTitle.text(selectedShippingMethod.displayName);
+            if (selectedShippingMethod.estimatedArrivalTime) {
+            	$methodTitle.text('(' + selectedShippingMethod.estimatedArrivalTime + ')');
+            } else {
+            	$methodTitle.empty();
+            }
+            $methodPrice.text(selectedShippingMethod.shippingCost);
         }
 
         /**
@@ -334,11 +386,18 @@
 
             var phoneLine = address.phone;
 
+            var shippingCost = selectedMethod ? selectedMethod.shippingCost : '';
             var methodNameLine = selectedMethod ? selectedMethod.displayName : '';
             var methodArrivalTime = selectedMethod && selectedMethod.estimatedArrivalTime
                 ? '(' + selectedMethod.estimatedArrivalTime + ')'
                 : '';
+            
+            var shippingDescription = shipping.productLineItems.items && shipping.productLineItems.items.length > 1
+            	? '-' + shipping.productLineItems.items.length + ' items'
+            	: '';
 
+            shippingCost += shippingDescription;
+            
             var tmpl = $('#pli-shipping-summary-template').clone();
 
             $('.ship-to-name', tmpl).text(nameLine);
@@ -358,6 +417,7 @@
             if (shipping.selectedShippingMethod) {
                 $('.display-name', tmpl).text(methodNameLine);
                 $('.arrival-time', tmpl).text(methodArrivalTime);
+        		$('.price', tmpl).text(shippingCost);
             }
 
             $viewBlock.html(tmpl.html());
@@ -391,9 +451,9 @@
          * @param {Object} [options] - options for updating PLI summary info
          * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
          */
-        function updateShippingInformation(shipping, shippings, options) {
+        function updateShippingInformation(shipping, order, options) {
             // First copy over shipmentUUIDs from response, to each PLI form
-            shippings.forEach(function (aShipping) {
+        	order.shipping.forEach(function (aShipping) {
                 aShipping.productLineItems.items.forEach(function (productLineItem) {
                     updateProductLineItemShipmentUUIDs(productLineItem, aShipping);
                 });
@@ -402,11 +462,11 @@
             // Now update shipping information, based on those associations
             updateShippingMethods(shipping);
             updateShippingAddressFormValues(shipping);
-            updateShippingSummaryInformation(shipping);
+            updateShippingSummaryInformation(shipping, order.totals);
 
             // And update the PLI-based summary information as well
             shipping.productLineItems.items.forEach(function (productLineItem) {
-                updateShippingAddressSelector(productLineItem, shipping, shippings);
+                updateShippingAddressSelector(productLineItem, shipping, order.shipping);
                 updatePLIShippingSummaryInformation(productLineItem, shipping, options);
             });
         }
@@ -428,6 +488,42 @@
             }
         }
 
+        function updateBillingInformation(order, options) { 
+        	// update billing address form
+        	updateBillingAddressFormValues(order.billing);
+        	
+            // update billing address summary
+            populateSummary('.billing .address-summary', order.billing.billingAddress.address);
+
+            // update billing parts of order summary
+            $('.order-summary-email').text(order.orderEmail);
+
+            if (order.billing.billingAddress.address) {
+                $('.order-summary-phone').text(order.billing.billingAddress.address.phone);
+            }
+        }
+
+        function updatePaymentInformation(order, options) {
+            // update payment details
+            var $paymentSummary = $('.payment-details');
+            var htmlToAppend = '';
+
+            if (order.billing.payment && order.billing.payment.selectedPaymentInstruments
+            		&& order.billing.payment.selectedPaymentInstruments.length > 0) {
+                htmlToAppend += '<span>' + order.resources.cardType + ' '
+                	+ order.billing.payment.selectedPaymentInstruments[0].type
+                	+ '</span><div>'
+                	+ order.billing.payment.selectedPaymentInstruments[0].maskedCreditCardNumber
+                    + '</div><div><span>'
+                    +  order.resources.cardEnding + ' '
+                    + order.billing.payment.selectedPaymentInstruments[0].expirationMonth
+                    + '/' + order.billing.payment.selectedPaymentInstruments[0].expirationYear
+                    + '</span></div>';
+            }
+
+            $paymentSummary.empty().append(htmlToAppend);
+        }
+        
         /**
          * Update the entire Checkout UI, based on current state (order model)
          * @param {Object} order - checkout model to use as basis of new truth
@@ -438,8 +534,10 @@
             updateMultiShipInformation(order);
             updateTotals(order.totals);
             order.shipping.forEach(function (shipping) {
-                updateShippingInformation(shipping, order.shipping, options);
+                updateShippingInformation(shipping, order, options);
             });
+            updateBillingInformation(order, options);
+            updatePaymentInformation(order, options);
         }
 
         /**
@@ -514,12 +612,13 @@
                 //
                 // Populate the Address Summary
                 //
-                var address = data.shippingData.shippingAddress;
-                var selectedShippingMethod = data.shippingData.selectedShippingMethod;
-                populateSummary('.shipping .address-summary', address);
-                $('.shipping-phone').text(address.phone);
-                updateShippingSummary(selectedShippingMethod, data.totals);
-                updateTotals(data.totals);
+            	updateCheckoutView(data.order);
+//                var address = data.order.shipping[0].shippingAddress;
+//                var selectedShippingMethod = data.order.shipping[0].selectedShippingMethod;
+//                populateSummary('.shipping .address-summary', address);
+//                $('.shipping-phone').text(address.phone);
+//                updateShippingSummary(selectedShippingMethod, data.totals);
+//                updateTotals(data.totals);
                 defer.resolve(data);
             }
         }
@@ -571,7 +670,19 @@
                     var form = $(formSelector);
                     if (isMultiShip && form.length === 0) {
                         // in case the multi ship form is already submitted
-                        defer.resolve();
+                    	var url = $('#checkout-main').attr('data-checkout-get-url');
+                        $.ajax({
+                            url: url,
+                            method: 'GET',
+                            success: function (order) {
+                                updateCheckoutView(order);
+                                defer.resolve();
+                            },
+                            error: function () {
+                                // Server error submitting form
+                                defer.reject();
+                            }
+                        });
                     } else {
                         $.ajax({
                             url: form.attr('action'),
@@ -625,24 +736,26 @@
                                 //
                                 // Populate the Address Summary
                                 //
-                                var address = data.billingData.billingAddress.address;
-                                populateSummary('.billing .address-summary', address);
-                                $('.order-summary-email').text(data.orderEmail);
-                                $('.order-summary-phone').text(address.phone);
-                                updateTotals(data.totals);
-                                var $paymentSummary = $('.payment-details');
-                                var htmlToAppend = '<span> ' + data.resource.cardType + ' ' +
-                                    data.billingData.payment.selectedPaymentInstruments[0].type +
-                                    '</span> <div>' +
-                                    data.billingData.payment.selectedPaymentInstruments[0]
-                                        .maskedCreditCardNumber +
-                                    '</div> <div>' +
-                                    '<span>' + data.resource.cardEnding + ' ' +
-                                    data.billingData.payment
-                                        .selectedPaymentInstruments[0].expirationMonth +
-                                    '/' + data.billingData.payment.selectedPaymentInstruments[0]
-                                        .expirationYear + '</span>';
-                                $paymentSummary.empty().append(htmlToAppend);
+                            	updateCheckoutView(data.order);
+                            	
+//                                var address = data.billingData.billingAddress.address;
+//                                populateSummary('.billing .address-summary', address);
+//                                $('.order-summary-email').text(data.orderEmail);
+//                                $('.order-summary-phone').text(address.phone);
+//                                updateTotals(data.totals);
+//                                var $paymentSummary = $('.payment-details');
+//                                var htmlToAppend = '<span> ' + data.resource.cardType + ' ' +
+//                                    data.billingData.payment.selectedPaymentInstruments[0].type +
+//                                    '</span> <div>' +
+//                                    data.billingData.payment.selectedPaymentInstruments[0]
+//                                        .maskedCreditCardNumber +
+//                                    '</div> <div>' +
+//                                    '<span>' + data.resource.cardEnding + ' ' +
+//                                    data.billingData.payment
+//                                        .selectedPaymentInstruments[0].expirationMonth +
+//                                    '/' + data.billingData.payment.selectedPaymentInstruments[0]
+//                                        .expirationYear + '</span>';
+//                                $paymentSummary.empty().append(htmlToAppend);
                                 defer.resolve(data);
                             }
                         },

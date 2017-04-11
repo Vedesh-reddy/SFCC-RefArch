@@ -12,12 +12,12 @@
     <h1 class="page-title">
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>
-    <div id="checkout-main" class="container data-checkout-stage<isif condition="${pdict.order.usingMultiShipping}"> multi-ship</isif>" data-checkout-stage="${pdict.currentStage}">
+    <div id="checkout-main" class="container data-checkout-stage<isif condition="${pdict.order.usingMultiShipping}"> multi-ship</isif>" data-checkout-stage="${pdict.currentStage}" data-checkout-get-url="${URLUtils.https('Checkout-Get')}">
         <!----------------------------------------------------------------------------------->
         <!-- Help and Phone -->
         <!----------------------------------------------------------------------------------->
         <div class="row hidden-xs-down">
-            <div class="col-12 col-sm-5 offset-sm-7 col-md-4 offset-md-8">
+            <div class="col-12 col-sm-5 offset-sm-7 col-md-5 offset-md-7">
                 <div class="text-center">
                     <span>${Resource.msg('info.need.help','cart',null)}</span>
                     <span><a href="tel:${Resource.msg('info.phone.number','common',null)}">${Resource.msg('info.phone.number','common',null)}</a></span>
@@ -129,5 +129,8 @@
 	        <span class="display-name"></span>
 	        <span class="text-muted arrival-time"></span>
 	    </p>
+        <p>
+            <span class="price"></span>
+        </p>
 	</div>
 </isdecorate>

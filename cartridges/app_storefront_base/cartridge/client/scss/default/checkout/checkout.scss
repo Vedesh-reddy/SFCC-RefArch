@@ -101,6 +101,14 @@ $checkout-font-weight: 600;
     display: block;
 }
 
+span.ship-to-name,
+span.ship-to-address1,
+span.ship-to-address2,
+span.ship-to-phone,
+span.ship-to-city-st-zip {
+    display: block
+}
+
 .data-checkout-stage {
     // Initial states ------------------------
     &[data-checkout-stage] {
@@ -149,15 +157,6 @@ $checkout-font-weight: 600;
         [data-view-mode=enter] [data-action=enter] {
             display: block;
         }
-        .view-address-block p {
-            span.ship-to-name,
-            span.ship-to-address1,
-            span.ship-to-address2,
-            span.ship-to-phone,
-            span.ship-to-city-st-zip {
-                display: block
-            }
-        }
     }
 
     // Payment -------------------------------
@@ -199,6 +198,10 @@ $checkout-font-weight: 600;
         .shipping-form,
         .card.payment-form,
         .card.ghost {
+            display: none;
+        }
+
+        .summary-section-label.shipping-addr-label {
             display: none;
         }
 

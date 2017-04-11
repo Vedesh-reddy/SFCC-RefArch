@@ -453,7 +453,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     var billingAddress = currentBasket.billingAddress;
     var shippingAddress = currentBasket.defaultShipment.shippingAddress;
-    var hasEquivalentAddress = true;
+    var hasEquivalentAddress = false;
 
     var currentCustomer = req.currentCustomer.raw;
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
@@ -554,13 +554,13 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
             COHelpers.copyShippingAddressToShipment(shippingData, currentBasket.defaultShipment);
             COHelpers.recalculateBasket(currentBasket);
 
-            var shippingModel = new ShippingModel(currentBasket.defaultShipment);
-
-            var totalsModel = new TotalsModel(currentBasket);
+            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+            var basketModel = new OrderModel(currentBasket, {
+                usingMultiShipping: usingMultiShipping
+            });
 
             res.json({
-                totals: totalsModel,
-                shippingData: shippingModel,
+                order: basketModel,
                 form: server.forms.getForm('shipping')
             });
         });
@@ -710,6 +710,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             // if there is no selected payment option and balance is greater than zero
             if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
                 var noPaymentMethod = {};
+                
                 noPaymentMethod[billingData.paymentMethod.htmlName] =
                     Resource.msg('error.no.selected.payment.method', 'creditCard', null);
 
@@ -768,26 +769,14 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
                 return;
             }
 
-            var totalsModel = new TotalsModel(currentBasket);
-
-            var countryCode = req.geolocation.countryCode;
-            var currentCustomer = req.currentCustomer.raw;
-            var paymentModel = new PaymentModel(currentBasket, currentCustomer, countryCode);
-
-            var billingAddressModel = new AddressModel(billingAddress);
-            var billingModel = new BillingModel(billingAddressModel, paymentModel);
-
-            var resource = {
-                cardType: Resource.msg('msg.payment.type.credit', 'confirmation', null),
-                cardEnding: Resource.msg('msg.card.type.ending', 'confirmation', null)
-            };
+            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+            var basketModel = new OrderModel(currentBasket, {
+                usingMultiShipping: usingMultiShipping
+            });
 
             res.json({
-                billingData: billingModel,
-                orderEmail: currentBasket.customerEmail,
-                totals: totalsModel,
+                order: basketModel,
                 form: server.forms.getForm('billing'),
-                resource: resource,
                 error: false
             });
         });
@@ -906,6 +895,9 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
 
     COHelpers.sendConfirmationEmail(order);
 
+    // TODO: Exposing a direct route to an Order, without at least encoding the orderID
+    //  is a serious PII violation.  It enables looking up every customers orders, one at a
+    //  time.
     res.json({
         error: false,
         orderID: order.orderNo,

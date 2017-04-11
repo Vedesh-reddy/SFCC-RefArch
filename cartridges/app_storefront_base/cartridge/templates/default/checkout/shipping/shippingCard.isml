@@ -9,12 +9,20 @@
 	</p>
 </isif>
 <isif condition="${shippingModel.selectedShippingMethod}">
-	<h5>Shipping Method</h5>
+	<h5>${pdict.order.resources.shippingMethodTitle}</h5>
 	<p>
 		<span class="display-name">${shippingModel.selectedShippingMethod.displayName}</span>
 		<isif condition="${shippingModel.selectedShippingMethod.estimatedArrivalTime}">
 		    <span class="text-muted arrival-time">(${shippingModel.selectedShippingMethod.estimatedArrivalTime})</span>
 		</isif>
 	</p>
+    <p>
+        <span class="price">
+            ${shippingModel.selectedShippingMethod.shippingCost}
+            <isif condition="${shippingModel.productLineItems.items && shippingModel.productLineItems.items.length > 1}">
+            - ${shippingModel.productLineItems.items.length.toFixed(0)} ${pdict.order.resources.items}
+            </isif>
+        </span>
+    </p>
 </isif>
 

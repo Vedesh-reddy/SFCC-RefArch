@@ -1,5 +1,7 @@
 'use strict';
 
+var Resource = require('dw/web/Resource');
+
 var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
 var PaymentModel = require('~/cartridge/models/payment');
@@ -10,6 +12,15 @@ var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 var DEFAULT_MODEL_CONFIG = {
     numberOfLineItems: '*'
+};
+
+var RESOURCES = {
+    noSelectedPaymentMethod: Resource.msg('error.no.selected.payment.method', 'creditCard', null),
+    cardType: Resource.msg('msg.payment.type.credit', 'confirmation', null),
+    cardEnding: Resource.msg('msg.card.type.ending', 'confirmation', null),
+    shippingMethodTitle: 'Shipping Method',
+    costTitle: 'Cost',
+    items: 'items'
 };
 
 /**
@@ -55,6 +66,8 @@ function getFirstProductLineItem(productLineItemsModel) {
  * @constructor
  */
 function OrderModel(lineItemContainer, options) {
+	this.resources = RESOURCES;
+
     if (!lineItemContainer) {
         this.orderNumber = null;
         this.creationDate = null;
