@@ -1,6 +1,6 @@
 <!--- Shipping Address --->
 <isloop var="shippingModel" items="${pdict.order.shipping}" status="shippingLoop">
-    <div class="single-shipping" data-shipment-summary="${shippingModel.UUID}">
+    <div data-shipment-summary="${shippingModel.UUID}">
 		<isif condition="${pdict.order.shipping.length==1}">
 			<p class="summary-section-label shipping-addr-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</p>
 			<isif condition="${shippingModel.shippingAddress !== null}">

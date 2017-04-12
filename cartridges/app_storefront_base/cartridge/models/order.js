@@ -20,6 +20,7 @@ var RESOURCES = {
     cardEnding: Resource.msg('msg.card.type.ending', 'confirmation', null),
     shippingMethod: Resource.msg('Shipping Method', 'checkout', null),
     items: Resource.msg('msg.items', 'checkout', null),
+    item: Resource.msg('msg.item', 'checkout', null),
     addNewAddress: Resource.msg('msg.add.new.address', 'checkout', null),
     newAddress: Resource.msg('msg.new.address', 'checkout', null),
     shipToAddress: Resource.msg('msg.ship.to.address', 'checkout', null),
@@ -80,6 +81,7 @@ function OrderModel(lineItemContainer, options) {
         this.orderEmail = null;
         this.orderStatus = null;
         this.usingMultiShipping = null;
+        this.shippable = null;
     } else {
         var safeOptions = options || {};
 
@@ -99,6 +101,7 @@ function OrderModel(lineItemContainer, options) {
         var productLineItemsModel = new ProductLineItemsModel(lineItemContainer);
         var totalsModel = new TotalsModel(lineItemContainer);
 
+        this.shippable = safeOptions.shippable || false;
         this.usingMultiShipping = usingMultiShipping;
         this.orderNumber = Object.hasOwnProperty.call(lineItemContainer, 'orderNo')
             ? lineItemContainer.orderNo

@@ -1,3 +1,4 @@
+
 <isif condition="${shippingModel.shippingAddress}">
 	<h5>${Resource.msg('msg.shipping.to', 'checkout', null)}</h5>
 	<p>
@@ -25,4 +26,3 @@
         </span>
     </p>
 </isif>
-

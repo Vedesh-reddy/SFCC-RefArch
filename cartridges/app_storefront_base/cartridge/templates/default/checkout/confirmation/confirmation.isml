@@ -9,7 +9,7 @@
     <div class="hero slant-down hero-confirmation">
         <h1 class="page-title">${Resource.msg('title.thank.you.page','confirmation',null)}</h1>
     </div>
-    <div class="container receipt">
+    <div class="container receipt <isif condition="${pdict.order.shipping.length > 1}">multi-ship</isif>">
         <div class="row">
             <div class="${pdict.returningCustomer ? 'col-sm-6 offset-sm-3' : 'col-sm-6 offset-sm-3 offset-md-0'}">
                 <h2 class="order-thank-you-msg">${Resource.msg('msg.placed.order.thank.you','confirmation',null)}</h2>

@@ -11,14 +11,14 @@
         </div>
         <div class="product-summary-block">
             <isloop items="${pdict.order.shipping}" var="shippingModel" status="shipmentLoopState">
-	            <isif condition="${pdict.order.shipping.length>1}"><div class="shipment-block"></isif>
-	            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
-	               <isinclude template="checkout/productCard/productCard" />
-	            </isloop>
-	            <isif condition="${pdict.order.shipping.length>1}">
-	            	<isinclude template="checkout/shipping/shippingCard" />
-	            	</div>
-	            </isif>
+	            <div class="shipment-block">
+		            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
+		               <isinclude template="checkout/productCard/productCard" />
+		            </isloop>
+		            <div class="multi-shipping">
+		            	<isinclude template="checkout/shipping/shippingCard" />
+		            </div>
+		        </div>
             </isloop>
         </div>
     </div>

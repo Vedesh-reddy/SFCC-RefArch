@@ -90,8 +90,8 @@
          * @returns {Object} - the jQuery / DOMElement
          */
         function optionValueForAddress(shipping, selected, order) {
-            if (shipping === '-') {
-                return $('<option disabled>'+order.resources.shippingAddresses+'</option>');
+            if (typeof shipping === 'string') {
+                return $('<option disabled>'+shipping+'</option>');
             }
             var safeShipping = shipping || {};
             var shippingAddress = safeShipping.shippingAddress || {};
@@ -173,7 +173,7 @@
          * @param {Object} shipping - the shipping (shipment model) model
          * @param {Array} shippings - array of all shipping (shipment model) for an order
          */
-        function updateShippingAddressSelector(productLineItem, shipping, order) {
+        function updateShippingAddressSelector(productLineItem, shipping, order, customer) {
             var uuidEl = $('input[value=' + productLineItem.UUID + ']');
             var shippings = order.shipping;
 
@@ -191,7 +191,7 @@
                 // Add New Address option
                 $shippingAddressSelector.append(optionValueForAddress(null, false, order));
                 // Separator -
-                $shippingAddressSelector.append(optionValueForAddress('-', false, order));
+                $shippingAddressSelector.append(optionValueForAddress(order.resources.shippingAddresses, false, order));
                 shippings.forEach(function (aShipping) {
                 	var isSelected = shipping.UUID === aShipping.UUID;
                 	hasSelectedAddress = hasSelectedAddress || isSelected;
@@ -199,6 +199,14 @@
                         optionValueForAddress(aShipping, isSelected, order)
                     );
                 });
+                if (customer.addresses && customer.addresses.length > 0) {
+                    $shippingAddressSelector.append(optionValueForAddress(order.resources.accountAddresses, false, order));
+                    customer.addresses.forEach(function (address) {
+                        $shippingAddressSelector.append(
+                            optionValueForAddress({ UUID: 'ab_'+address.ID, shippingAddress: address }, false, order)
+                        );
+                    });
+                }
             }
             
             if (!hasSelectedAddress) {
@@ -339,7 +347,7 @@
          * updates the order shipping summary for an order shipment model
          * @param {Object} shipping - the shipping (shipment model) model
          */
-        function updateShippingSummaryInformation(shipping, totals) {
+        function updateShippingSummaryInformation(shipping, order) {
         	var $container = $('[data-shipment-summary='+shipping.UUID+']');
         	var $addressContainer = $container.find('.address-summary');
         	var $shippingPhone = $container.find('.shipping-phone');
@@ -369,10 +377,11 @@
          * Update the read-only portion of the shipment display (per PLI)
          * @param {Object} productLineItem - the productLineItem model
          * @param {Object} shipping - the shipping (shipment model) model
+         * @param {Object} order - the order model
          * @param {Object} [options] - options for updating PLI summary info
          * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
          */
-        function updatePLIShippingSummaryInformation(productLineItem, shipping, options) {
+        function updatePLIShippingSummaryInformation(productLineItem, shipping, order, options) {
             var keepOpen = options && options.keepOpen;
 
             var $pli = $('input[value=' + productLineItem.UUID + ']');
@@ -405,7 +414,7 @@
                 : '';
             
             var shippingDescription = shipping.productLineItems.items && shipping.productLineItems.items.length > 1
-            	? '-' + shipping.productLineItems.items.length + ' items'
+            	? ' - ' + shipping.productLineItems.items.length + ' ' + order.resources.items
             	: '';
 
             shippingCost += shippingDescription;
@@ -459,11 +468,12 @@
         /**
          * Update the shipping UI for a single shipping info (shipment model)
          * @param {Object} shipping - the shipping (shipment model) model
-         * @param {Object} shippings - all shipment models of an order/basket model
+         * @param {Object} order - the order/basket model
+         * @param {Object} customer - the customer model
          * @param {Object} [options] - options for updating PLI summary info
          * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
          */
-        function updateShippingInformation(shipping, order, options) {
+        function updateShippingInformation(shipping, order, customer, options) {
             // First copy over shipmentUUIDs from response, to each PLI form
         	order.shipping.forEach(function (aShipping) {
                 aShipping.productLineItems.items.forEach(function (productLineItem) {
@@ -474,12 +484,12 @@
             // Now update shipping information, based on those associations
             updateShippingMethods(shipping);
             updateShippingAddressFormValues(shipping);
-            updateShippingSummaryInformation(shipping, order.totals);
+            updateShippingSummaryInformation(shipping, order);
 
             // And update the PLI-based summary information as well
             shipping.productLineItems.items.forEach(function (productLineItem) {
-                updateShippingAddressSelector(productLineItem, shipping, order);
-                updatePLIShippingSummaryInformation(productLineItem, shipping, options);
+                updateShippingAddressSelector(productLineItem, shipping, order, customer);
+                updatePLIShippingSummaryInformation(productLineItem, shipping, order, options);
             });
         }
 
@@ -542,11 +552,11 @@
          * @param {Object} [options] - options for updating PLI summary info
          * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
          */
-        function updateCheckoutView(order, options) {
+        function updateCheckoutView(order, customer, options) {
             updateMultiShipInformation(order);
             updateTotals(order.totals);
             order.shipping.forEach(function (shipping) {
-                updateShippingInformation(shipping, order, options);
+                updateShippingInformation(shipping, order, customer, options);
             });
             updateBillingInformation(order, options);
             updatePaymentInformation(order, options);
@@ -624,7 +634,7 @@
                 //
                 // Populate the Address Summary
                 //
-            	updateCheckoutView(data.order);
+            	updateCheckoutView(data.order, data.customer);
 
                 defer.resolve(data);
             }
@@ -681,8 +691,8 @@
                         $.ajax({
                             url: url,
                             method: 'GET',
-                            success: function (order) {
-                                updateCheckoutView(order);
+                            success: function (data) {
+                                updateCheckoutView(data.order, data.customer);
                                 defer.resolve();
                             },
                             error: function () {
@@ -743,7 +753,7 @@
                                 //
                                 // Populate the Address Summary
                                 //
-                            	updateCheckoutView(data.order);
+                            	updateCheckoutView(data.order, data.customer);
                             	
                                 defer.resolve(data);
                             }
@@ -810,7 +820,7 @@
                         if (data.error) {
                             window.location.href = data.redirectUrl;
                         } else {
-                            updateCheckoutView(data.order, { keepOpen: true });
+                            updateCheckoutView(data.order, data.customer, { keepOpen: true });
 
                             $shippingMethodList.spinner().stop();
                         }
@@ -864,7 +874,7 @@
                             if (data.error) {
                                 window.location.href = data.redirectUrl;
                             } else {
-                                updateCheckoutView(data.order);
+                                updateCheckoutView(data.order, data.customer);
                             }
                             $.spinner().stop();
                         },
@@ -897,15 +907,13 @@
                  * @param {Object} pliUUID - product line item UUID
                  * @returns {Object} - promise value for async call
                  */
-                function createNewShipment(url, pliUUID) {
+                function createNewShipment(url, shipmentData) {
                     $.spinner().start();
                     return $.ajax({
                         url: url,
                         type: 'post',
                         dataType: 'json',
-                        data: {
-                            productLineItemUUID: pliUUID
-                        }
+                        data: shipmentData
                     });
                 }
 
@@ -926,6 +934,9 @@
                     } else if (shipmentUUID === originalUUID) {
                         $(form).addClass('hide-details');
                         $('.toggle-shipping-address-form', form).show();
+                    } else if (shipmentUUID.indexOf('ab_') === 0) {
+                        $(form).removeClass('hide-details');
+                        $('.toggle-shipping-address-form', form).hide();
                     } else {
                         $(form).addClass('hide-details');
                         $('.toggle-shipping-address-form', form).hide();
@@ -945,7 +956,7 @@
 
                     if (shipmentUUID === 'new' && pliUUID) {
                         var url = $(this).attr('data-create-shipment-url');
-                        createNewShipment(url, pliUUID)
+                        createNewShipment(url, {productLineItemUUID:pliUUID})
                         .done(function (response) {
                             $.spinner().stop();
                             if (response.error) {
@@ -955,7 +966,7 @@
                                 return;
                             }
 
-                            updateCheckoutView(response.order, { keepOpen: true });
+                            updateCheckoutView(response.order, response.customer, { keepOpen: true });
                         })
                         .fail(function () {
                             $.spinner().stop();
@@ -963,6 +974,26 @@
                     } else if (shipmentUUID === originalUUID) {
                         $(form).addClass('hide-details');
                         $('.toggle-shipping-address-form', form).show();
+                    } else if (shipmentUUID.indexOf('ab_') === 0) {
+                        var url = $(this).attr('data-create-shipment-url');
+                        var formData = $(form).serialize();
+                        createNewShipment(url, formData)
+                        .done(function (response) {
+                            $.spinner().stop();
+                            if (response.error) {
+                                if (response.redirectUrl) {
+                                    window.location.href = response.redirectUrl;
+                                }
+                                return;
+                            }
+
+                            updateCheckoutView(response.order, response.customer, { keepOpen: true });
+                        })
+                        .fail(function () {
+                            $.spinner().stop();
+                        });
+//                        $(form).removeClass('hide-details');
+//                        $('.toggle-shipping-address-form', form).hide();
                     } else {
                         $(form).addClass('hide-details');
                         $('.toggle-shipping-address-form', form).hide();
@@ -1016,9 +1047,15 @@
                                     loadFormErrors(form, response.fieldErrors);
                                 } else {
                                     // Update UI from response
-                                    updateCheckoutView(response.order);
-
+                                    updateCheckoutView(response.order, response.customer);
+                                    
                                     $rootEl.attr('data-view-mode', 'view');
+                                }
+                                
+                                if (response.order && response.order.shippable) {
+                                	$('button.submit-shipping').attr('disabled', null);
+                                } else {
+                                	$('button.submit-shipping').attr('disabled', 'disabled');
                                 }
                                 $rootEl.spinner().stop();
                             })
@@ -1130,7 +1167,7 @@
                          if (data.error) {
                              window.location.href = data.redirectUrl;
                          } else {
-                             updateCheckoutView(data.order, { keepOpen: true });
+                             updateCheckoutView(data.order, data.customer, { keepOpen: true });
                          }
                          $.spinner().stop();
                      })
