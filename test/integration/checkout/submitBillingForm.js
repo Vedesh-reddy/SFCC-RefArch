@@ -34,6 +34,7 @@ describe('billingForm', function () {
             };
 
             var ExpectedResBody = {
+                locale: 'en_US',
                 address: {
                     firstName: { value: 'John' },
                     lastName: { value: 'Smith' },
