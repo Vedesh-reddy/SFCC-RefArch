@@ -15,7 +15,7 @@
 		            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
 		               <isinclude template="checkout/productCard/productCard" />
 		            </isloop>
-		            <div class="multi-shipping">
+		            <div class="multi-shipping" data-shipment-summary="${shippingModel.UUID}">
 		            	<isinclude template="checkout/shipping/shippingCard" />
 		            </div>
 		        </div>

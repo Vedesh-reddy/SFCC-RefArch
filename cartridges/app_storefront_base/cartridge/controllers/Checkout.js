@@ -296,31 +296,31 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     var uuid = UUIDUtils.createUUID();
     var shipment;
 // TODO: This is basis for copy shipping address for new shipment w/ same address
-    var result = {};
-    var form = server.forms.getForm('shipping');
+//    var result = {};
+//    var form = server.forms.getForm('shipping');
 
     try {
-        result.address = {
-            firstName: form.shippingAddress.addressFields.firstName.value,
-            lastName: form.shippingAddress.addressFields.lastName.value,
-            address1: form.shippingAddress.addressFields.address1.value,
-            address2: form.shippingAddress.addressFields.address2.value,
-            city: form.shippingAddress.addressFields.city.value,
-            stateCode: form.shippingAddress.addressFields.states.stateCode.value,
-            postalCode: form.shippingAddress.addressFields.postalCode.value,
-            countryCode: form.shippingAddress.addressFields.country.value,
-            phone: form.shippingAddress.addressFields.phone.value
-        };
-
-        result.shippingMethod = form.shippingAddress.shippingMethodID.value ?
-            '' + form.shippingAddress.shippingMethodID.value : null;
+//        result.address = {
+//            firstName: form.shippingAddress.addressFields.firstName.value,
+//            lastName: form.shippingAddress.addressFields.lastName.value,
+//            address1: form.shippingAddress.addressFields.address1.value,
+//            address2: form.shippingAddress.addressFields.address2.value,
+//            city: form.shippingAddress.addressFields.city.value,
+//            stateCode: form.shippingAddress.addressFields.states.stateCode.value,
+//            postalCode: form.shippingAddress.addressFields.postalCode.value,
+//            countryCode: form.shippingAddress.addressFields.country.value,
+//            phone: form.shippingAddress.addressFields.phone.value
+//        };
+//
+//        result.shippingMethod = form.shippingAddress.shippingMethodID.value ?
+//            '' + form.shippingAddress.shippingMethodID.value : null;
 
         Transaction.wrap(function () {
             shipment = basket.createShipment(uuid);
 
             // No need to do form validation for shipment creation yet
             // Validate on nextStage() trigger or save()
-            COHelpers.copyShippingAddressToShipment(result, shipment);
+//            COHelpers.copyShippingAddressToShipment(result, shipment);
             productLineItem.setShipment(shipment);
             ShippingHelper.ensureShipmentHasMethod(shipment);
         });
@@ -570,7 +570,7 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
     var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
 
     if (Object.keys(shippingFormErrors).length > 0) {
-    	req.session.privacyCache.set(basket.defaultShipment.UUID, 'invalid');
+    	req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'invalid');
 
     	res.json({
             form: form,
@@ -579,7 +579,7 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
             error: true
         });
     } else {
-    	req.session.privacyCache.set(basket.defaultShipment.UUID, 'valid');
+    	req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
 
         result.address = {
             firstName: form.shippingAddress.addressFields.firstName.value,
