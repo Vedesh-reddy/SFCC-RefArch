@@ -73,7 +73,7 @@ function getFirstProductLineItem(productLineItemsModel) {
  * @constructor
  */
 function OrderModel(lineItemContainer, options) {
-	this.resources = RESOURCES;
+    this.resources = RESOURCES;
 
     if (!lineItemContainer) {
         this.orderNumber = null;

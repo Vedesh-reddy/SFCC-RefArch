@@ -9,11 +9,11 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 
 var AccountModel = require('~/cartridge/models/account');
-var AddressModel = require('~/cartridge/models/address');
-var BillingModel = require('~/cartridge/models/billing');
+// var AddressModel = require('~/cartridge/models/address');
+// var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
-var PaymentModel = require('~/cartridge/models/payment');
-var ShippingModel = require('~/cartridge/models/shipping');
+// var PaymentModel = require('~/cartridge/models/payment');
+// var ShippingModel = require('~/cartridge/models/shipping');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var TotalsModel = require('~/cartridge/models/totals');
 
@@ -69,8 +69,8 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     var basketModel = new OrderModel(currentBasket);
 
     res.json({
-    	order: basketModel,
-    	customer: new AccountModel(req.currentCustomer)
+        order: basketModel,
+        customer: new AccountModel(req.currentCustomer)
     });
 
     next();
@@ -354,11 +354,11 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
 
     if (Object.keys(shippingFormErrors).length > 0) {
-    	if (shipmentUUID === 'new') {
-    		req.session.privacyCache.set(origUUID, 'invalid');
-    	} else {
-    		req.session.privacyCache.set(shipmentUUID, 'invalid');
-    	}
+        if (shipmentUUID === 'new') {
+            req.session.privacyCache.set(origUUID, 'invalid');
+        } else {
+            req.session.privacyCache.set(shipmentUUID, 'invalid');
+        }
         res.json({
             form: form,
             fieldErrors: shippingFormErrors,
@@ -421,17 +421,19 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
 
                         // remove any
                         if (removeOriginal && removeOriginal.productLineItems.length === 0) {
-                        	if (removeOriginal.default) {
-                        		// Cant delete the defaultShipment
-                        		// Copy all line items from 2nd to first
-                        		Collections.forEach(basket.shipments[1].productLineItems, function (lineItem){
-                        			lineItem.setShipment(basket.defaultShipment);
-                        		});
-                        		// then delete 2nd one
-                        		basket.removeShipment(basket.shipments[1]);
-                        	} else {
-                        		basket.removeShipment(removeOriginal);
-                        	}
+                            if (removeOriginal.default) {
+                                // Cant delete the defaultShipment
+                                // Copy all line items from 2nd to first
+                                Collections.forEach(basket.shipments[1].productLineItems,
+                                    function (lineItem) {
+                                        lineItem.setShipment(basket.defaultShipment);
+                                    });
+
+                                // then delete 2nd one
+                                basket.removeShipment(basket.shipments[1]);
+                            } else {
+                                basket.removeShipment(removeOriginal);
+                            }
                         }
                     }
                 });
@@ -439,26 +441,26 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
                 result.error = e;
             }
         }
-        
-    	req.session.privacyCache.set(shipment.UUID, 'valid');
 
-    	// Loop through all shipments and make sure all are valid
-    	var isValid;
-    	var allValid = true;
-    	for (var i=0, ii=basket.shipments.length; i<ii; i++) {
-    		isValid = req.session.privacyCache.get(basket.shipments[i].UUID);
-    		if (isValid !== 'valid') {
-    			allValid = false;
-    			break;
-    		}
-    	}
-    	
+        req.session.privacyCache.set(shipment.UUID, 'valid');
+
+        // Loop through all shipments and make sure all are valid
+        var isValid;
+        var allValid = true;
+        for (var i = 0, ii = basket.shipments.length; i < ii; i++) {
+            isValid = req.session.privacyCache.get(basket.shipments[i].UUID);
+            if (isValid !== 'valid') {
+                allValid = false;
+                break;
+            }
+        }
+
         COHelpers.recalculateBasket(basket);
         var basketModel = new OrderModel(basket, {
             usingMultiShipping: usingMultiShipping,
             shippable: allValid
         });
-        
+
         var accountModel = new AccountModel(req.currentCustomer);
 
         res.json({
@@ -503,18 +505,18 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var shippingForm = COHelpers.prepareShippingForm(currentBasket);
     var billingForm = COHelpers.prepareBillingForm(currentBasket);
 
-	// Loop through all shipments and make sure all are valid
-	var isValid;
-	var allValid = true;
-	for (var i=0, ii=currentBasket.shipments.length; i<ii; i++) {
-		isValid = req.session.privacyCache.get(currentBasket.shipments[i].UUID);
-		if (isValid !== 'valid') {
-			allValid = false;
-			break;
-		}
-	}
+    // Loop through all shipments and make sure all are valid
+    var isValid;
+    var allValid = true;
+    for (var i = 0, ii = currentBasket.shipments.length; i < ii; i++) {
+        isValid = req.session.privacyCache.get(currentBasket.shipments[i].UUID);
+        if (isValid !== 'valid') {
+            allValid = false;
+            break;
+        }
+    }
 
-	var orderModel = new OrderModel(currentBasket, {
+    var orderModel = new OrderModel(currentBasket, {
         customer: currentCustomer,
         currencyCode: req.geolocation.countryCode,
         usingMultiShipping: usingMultiShipping,
@@ -525,8 +527,8 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     var currentYear = new Date().getFullYear();
     var creditCardExpirationYears = [];
 
-    for (var i = 0; i < 10; i++) {
-        creditCardExpirationYears.push(currentYear + i);
+    for (var j = 0; j < 10; j++) {
+        creditCardExpirationYears.push(currentYear + j);
     }
 
     var accountModel = new AccountModel(req.currentCustomer);
@@ -570,16 +572,16 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
     var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
 
     if (Object.keys(shippingFormErrors).length > 0) {
-    	req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'invalid');
+        req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'invalid');
 
-    	res.json({
+        res.json({
             form: form,
             fieldErrors: [shippingFormErrors],
             serverErrors: [],
             error: true
         });
     } else {
-    	req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
+        req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
 
         result.address = {
             firstName: form.shippingAddress.addressFields.firstName.value,
@@ -762,7 +764,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             // if there is no selected payment option and balance is greater than zero
             if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
                 var noPaymentMethod = {};
-                
+
                 noPaymentMethod[billingData.paymentMethod.htmlName] =
                     Resource.msg('error.no.selected.payment.method', 'creditCard', null);
 
