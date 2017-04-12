@@ -106,7 +106,7 @@ span.ship-to-address1,
 span.ship-to-address2,
 span.ship-to-phone,
 span.ship-to-city-st-zip {
-    display: block
+    display: block;
 }
 
 .data-checkout-stage {
@@ -141,7 +141,7 @@ span.ship-to-city-st-zip {
         [data-view-mode] [data-action] {
             display: none;
         }
-        
+
         .hide-details .shipping-address-form {
             display: none;
         }
@@ -150,10 +150,12 @@ span.ship-to-city-st-zip {
         [data-view-mode=view] [data-action=edit] {
             display: block;
         }
+
         [data-view-mode=edit] .edit-address-block,
         [data-view-mode=edit] [data-action=save] {
             display: block;
         }
+
         [data-view-mode=enter] [data-action=enter] {
             display: block;
         }
