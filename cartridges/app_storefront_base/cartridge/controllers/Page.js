@@ -68,9 +68,11 @@ server.get('SetLocale', function (req, res, next) {
         }
 
         var redirectUrl = URLUtils.url(req.querystring.action).toString();
+        var qsConnector = redirectUrl.indexOf('?') >= 0 ? '&' : '?';
+
         redirectUrl = Object.keys(queryStringObj).length === 0
             ? redirectUrl += queryStringObj.toString()
-            : redirectUrl += '?' + queryStringObj.toString();
+            : redirectUrl += qsConnector + queryStringObj.toString();
 
         res.json({
             success: true,

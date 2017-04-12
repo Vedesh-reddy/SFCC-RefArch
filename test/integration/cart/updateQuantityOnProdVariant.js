@@ -221,6 +221,10 @@ describe('Update quantity for product variant', function () {
                     'isGift': false,
                     'UUID': variantUuid1,
                     'attributes': null,
+                    'availability': {
+                        'inStockDate': null,
+                        'messages': ['In Stock']
+                    },
                     'quantity': expectQty1,
                     'isOrderable': true,
                     'isAvailableForInStorePickup': false
@@ -273,6 +277,10 @@ describe('Update quantity for product variant', function () {
                     'isGift': false,
                     'UUID': variantUuid2,
                     'attributes': null,
+                    'availability': {
+                        'inStockDate': null,
+                        'messages': ['In Stock']
+                    },
                     'quantity': expectQty2,
                     'isOrderable': true,
                     'isAvailableForInStorePickup': false
@@ -324,12 +332,17 @@ describe('Update quantity for product variant', function () {
                     'isGift': false,
                     'UUID': variantUuid3,
                     'attributes': null,
+                    'availability': {
+                        'inStockDate': null,
+                        'messages': ['In Stock']
+                    },
                     'quantity': expectQty3,
                     'isOrderable': true,
                     'isAvailableForInStorePickup': false
                 }
             ],
             'numItems': newTotal,
+            'locale': 'en_US',
             'resources': {
                 'numberOfItems': newTotal + ' Items',
                 'emptyCartMsg': 'Your Shopping Cart is Empty'

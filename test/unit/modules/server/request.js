@@ -76,6 +76,25 @@ function createFakeRequest(overrides) {
                     this.key = value;
                 },
                 key: 'value'
+            },
+            clickStream: {
+                clicks: {
+                    toArray: function () {
+                        return [{
+                            host: 'clickObj.host',
+                            locale: 'clickObj.locale',
+                            path: 'clickObj.path',
+                            pipelineName: 'clickObj-pipelineName',
+                            queryString: 'clickObj.queryString',
+                            referer: 'clickObj.referer',
+                            remoteAddress: 'clickObj.remoteAddress',
+                            timestamp: 'clickObj.timestamp',
+                            url: 'clickObj.url',
+                            userAgent: 'clickObj.userAgent'
+                        }];
+                    }
+                },
+                partial: false
             }
         }
     };
@@ -259,5 +278,29 @@ describe('request', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         var expectedResult = req.session.raw.privacyCache.get('key');
         assert.equal(expectedResult, 'value');
+    });
+    it('should contain session clickStream', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        var expectedClick = {
+            host: 'clickObj.host',
+            locale: 'clickObj.locale',
+            path: 'clickObj.path',
+            pipelineName: 'clickObj-pipelineName',
+            queryString: 'clickObj.queryString',
+            referer: 'clickObj.referer',
+            remoteAddress: 'clickObj.remoteAddress',
+            timestamp: 'clickObj.timestamp',
+            url: 'clickObj.url',
+            userAgent: 'clickObj.userAgent'
+        };
+
+        var expectedResult = {
+            clicks: [expectedClick],
+            first: expectedClick,
+            last: expectedClick,
+            partial: false
+        };
+
+        assert.deepEqual(req.session.clickStream, expectedResult);
     });
 });

@@ -152,10 +152,31 @@ function Request(request, customer, session) {
     this.setLocale = function (localeID) {
         return request.setLocale(localeID);
     };
+    var clickStreamEntries = session.clickStream.clicks.toArray();
+    var clicks = clickStreamEntries.map(function (clickObj) {
+        return {
+            host: clickObj.host,
+            locale: clickObj.locale,
+            path: clickObj.path,
+            pipelineName: clickObj.pipelineName,
+            queryString: clickObj.queryString,
+            referer: clickObj.referer,
+            remoteAddress: clickObj.remoteAddress,
+            timestamp: clickObj.timestamp,
+            url: clickObj.url,
+            userAgent: clickObj.userAgent
+        };
+    });
 
     this.session = {
         privacyCache: new SimpleCache(session.privacy),
         raw: session,
+        clickStream: {
+            clicks: clicks,
+            first: clicks[0],
+            last: clicks[clicks.length - 1],
+            partial: session.clickStream.partial
+        },
         currency: {
             currencyCode: session.currency.currencyCode,
             defaultFractionDigits: session.currency.defaultFractionDigits,

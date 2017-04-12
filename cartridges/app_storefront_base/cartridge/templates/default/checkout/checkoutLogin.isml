@@ -1,4 +1,4 @@
-<isdecorate template="common/layout/page">
+<isdecorate template="common/layout/checkout">
     <isscript>
         var assets = require('~/cartridge/scripts/assets.js');
         assets.addCss('/css/checkout/checkoutLogin.css');

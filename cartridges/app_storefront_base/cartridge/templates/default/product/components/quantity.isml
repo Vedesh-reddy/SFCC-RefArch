@@ -1,8 +1,12 @@
 <label>${Resource.msg('label.quantity', 'common', null)}</label>
-<select class="quantity-select custom-select form-control">
+<select class="quantity-select custom-select form-control" data-action="${pdict.product.selectedVariantUrl}">
     <isloop begin="${pdict.product.minOrderQuantity}"
             end="${pdict.product.maxOrderQuantity}"
             status="status">
-        <option value="${status.index}">${status.index}</option>
+        <isif condition="${pdict.product.selectedQuantity === status.index}">
+            <option selected value="${status.index}">${status.index}</option>
+        <iselse/>
+            <option value="${status.index}">${status.index}</option>
+        </isif>
     </isloop>
 </select>

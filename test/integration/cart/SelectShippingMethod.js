@@ -142,6 +142,10 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isGift': false,
                 'UUID': '',
                 'attributes': null,
+                'availability': {
+                    'inStockDate': null,
+                    'messages': ['In Stock']
+                },
                 'quantity': 1,
                 'isOrderable': true,
                 'isAvailableForInStorePickup': false
@@ -188,12 +192,17 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'isGift': false,
                 'UUID': '',
                 'attributes': null,
+                'availability': {
+                    'inStockDate': null,
+                    'messages': ['In Stock']
+                },
                 'quantity': 1,
                 'isOrderable': true,
                 'isAvailableForInStorePickup': false
             }
         ],
         'numItems': 2,
+        'locale': 'en_US',
         'resources': {
             'numberOfItems': '2 Items',
             'emptyCartMsg': 'Your Shopping Cart is Empty'

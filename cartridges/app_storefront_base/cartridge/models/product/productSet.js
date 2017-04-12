@@ -1,7 +1,6 @@
 'use strict';
 
-var ProductBase = require('./productBase').productBase;
-var helper = require('../../scripts/dwHelpers');
+var ProductSetBase = require('./productSetBase').productSetBase;
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;
 
@@ -20,31 +19,16 @@ function isAvailable(quantity, product) {
 }
 
 /**
- * Returns the products in the bundle
- *
- * @param {dw.util.Collection} bundledProducts - Collection of products in the bundle
- * @param {Object} productFactory - product factory utilitiy to get product model based on
- *                                  product type
- * @returns {Array} Array of products in a bundle
- */
-function getBundledProducts(bundledProducts, productFactory) {
-    var products = helper.map(bundledProducts, function (bundledProduct) {
-        return productFactory.get({ pid: bundledProduct.ID });
-    });
-    return products;
-}
-
-/**
  * @constructor
- * @classdesc Bundle product class
+ * @classdesc Set product class
  * @param {dw.catalog.Product} product - Product instance returned from the API
  * @param {number} quantity - quantity of products selected
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
  *                                                                 product
  * @param {Object} productFactory - Factory utility that returns a ProductModel instance
  */
-function ProductBundle(product, quantity, promotions, productFactory) {
-    this.bundledProducts = getBundledProducts(product.bundledProducts, productFactory);
+function ProductSet(product, quantity, promotions, productFactory) {
+    this.productFactory = productFactory;
     this.product = product;
     this.imageConfig = {
         types: ['large', 'small'],
@@ -56,10 +40,10 @@ function ProductBundle(product, quantity, promotions, productFactory) {
     this.initialize();
 }
 
-ProductBundle.prototype = Object.create(ProductBase.prototype);
+ProductSet.prototype = Object.create(ProductSetBase.prototype);
 
-ProductBundle.prototype.initialize = function () {
-    ProductBase.prototype.initialize.call(this);
+ProductSet.prototype.initialize = function () {
+    ProductSetBase.prototype.initialize.call(this);
     this.available = isAvailable(this.quantity, this.product);
     this.online = this.product.online;
     this.searchable = this.product.searchable;
@@ -70,24 +54,24 @@ ProductBundle.prototype.initialize = function () {
 
 /**
  * @constructor
- * @classdesc Bundle product class.
+ * @classdesc Set product class.
  * @param {dw.catalog.Product} product - Product instance returned from the API
  * @param {number} quantity - quantity of products selected
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
  * @param {Object} productFactory - Factory utility that returns a ProductModel instance
  */
 function ProductWrapper(product, quantity, promotions, productFactory) {
-    var productBundle = new ProductBundle(
+    var productSet = new ProductSet(
         product,
         quantity,
         promotions,
         productFactory
     );
-    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'bundledProducts',
-        'available', 'online', 'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder',
-        'promotions'];
+    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
+        'individualProducts', 'available', 'online', 'searchable', 'minOrderQuantity',
+        'maxOrderQuantity', 'readyToOrder', 'promotions'];
     items.forEach(function (item) {
-        this[item] = productBundle[item];
+        this[item] = productSet[item];
     }, this);
 }
 

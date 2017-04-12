@@ -12,6 +12,7 @@ function getPageMetadata(req) {
 
     pageMetadata.action = action[action.length - 1];
     pageMetadata.queryString = req.querystring.toString();
+    pageMetadata.locale = req.locale.id;
 
     return pageMetadata;
 }

@@ -219,6 +219,10 @@ describe('Remove product variant from line item', function () {
                     'isGift': false,
                     'UUID': variantUuid1,
                     'attributes': null,
+                    'availability': {
+                        'inStockDate': null,
+                        'messages': ['In Stock']
+                    },
                     'quantity': expectQty1,
                     'isOrderable': true,
                     'isAvailableForInStorePickup': false
@@ -269,12 +273,17 @@ describe('Remove product variant from line item', function () {
                     'isGift': false,
                     'UUID': variantUuid3,
                     'attributes': null,
+                    'availability': {
+                        'inStockDate': null,
+                        'messages': ['In Stock']
+                    },
                     'quantity': expectQty3,
                     'isOrderable': true,
                     'isAvailableForInStorePickup': false
                 }
             ],
             'numItems': newTotal,
+            'locale': 'en_US',
             'resources': {
                 'numberOfItems': newTotal + ' Items',
                 'emptyCartMsg': 'Your Shopping Cart is Empty'
@@ -427,6 +436,7 @@ describe('Remove product variant from line item', function () {
             ],
             'items': [],
             'numItems': 0,
+            'locale': 'en_US',
             'resources': {
                 'numberOfItems': '0 Items',
                 'emptyCartMsg': 'Your Shopping Cart is Empty'

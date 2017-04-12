@@ -9,6 +9,7 @@
                autocomplete="off"
                aria-label="${Resource.msg('label.header.searchwatermark', 'common', null)}" />
         <div class="suggestions-wrapper" data-url="${URLUtils.url('Search-GetSuggestions', 'q')}"></div>
+        <input type="hidden" value="${pdict.locale}" name="lang">
     </form>
 </div>
 <div class="search-button">

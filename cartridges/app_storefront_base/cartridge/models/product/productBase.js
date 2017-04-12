@@ -4,6 +4,7 @@ var dwHelpers = require('../../scripts/dwHelpers');
 var VariationAttributesModel = require('./productAttributes');
 var ImageModel = require('./productImages');
 var priceFactory = require('../../scripts/factories/price');
+var Resource = require('dw/web/Resource');
 
 /**
  * Return type of the current product
@@ -147,6 +148,82 @@ function getAttributes(product) {
 }
 
 /**
+ * Creates an object containing an array of availability messages and an in stock date
+ * @param {number} quantity - quantity of products selected
+ * @param {dw.catalog.Product} product - Product instance returned from the API
+ * @return {Object} an object containing the product availability.
+ */
+function getProductAvailability(quantity, product) {
+    var availability = {};
+    availability.messages = [];
+    var productQuantity = quantity ? parseInt(quantity, 10) : product.minOrderQuantity.value;
+    var availabilityModel = product.availabilityModel;
+    var availabilityModelLevels = availabilityModel.getAvailabilityLevels(productQuantity);
+    var inventoryRecord = availabilityModel.inventoryRecord;
+
+    if (inventoryRecord && inventoryRecord.inStockDate) {
+        availability.inStockDate = inventoryRecord.inStockDate.toDateString();
+    } else {
+        availability.inStockDate = null;
+    }
+
+    if (availabilityModelLevels.inStock.value > 0) {
+        if (availabilityModelLevels.inStock.value === productQuantity) {
+            availability.messages.push(Resource.msg('label.instock', 'common', null));
+        } else {
+            availability.messages.push(
+                Resource.msgf(
+                    'label.quantity.in.stock',
+                    'common',
+                    null,
+                    availabilityModelLevels.inStock.value
+                )
+            );
+        }
+    }
+
+    if (availabilityModelLevels.preorder.value > 0) {
+        if (availabilityModelLevels.preorder.value === productQuantity) {
+            availability.messages.push(Resource.msg('label.preorder', 'common', null));
+        } else {
+            availability.messages.push(
+                Resource.msgf(
+                    'label.preorder.items',
+                    'common',
+                    null,
+                    availabilityModelLevels.preorder.value
+                )
+            );
+        }
+    }
+
+    if (availabilityModelLevels.backorder.value > 0) {
+        if (availabilityModelLevels.backorder.value === productQuantity) {
+            availability.messages.push(Resource.msg('label.back.order', 'common', null));
+        } else {
+            availability.messages.push(
+                Resource.msgf(
+                    'label.back.order.items',
+                    'common',
+                    null,
+                    availabilityModelLevels.backorder.value
+                )
+            );
+        }
+    }
+
+    if (availabilityModelLevels.notAvailable.value > 0) {
+        if (availabilityModelLevels.notAvailable.value === productQuantity) {
+            availability.messages.push(Resource.msg('label.not.available', 'common', null));
+        } else {
+            availability.messages.push(Resource.msg('label.not.available.items', 'common', null));
+        }
+    }
+
+    return availability;
+}
+
+/**
  * @constructor
  * @classdesc Base product class. Used for product tiles
  * @param {dw.catalog.Product} product - Product instance returned from the API
@@ -195,6 +272,7 @@ ProductBase.prototype = {
             : null;
         this.promotions = this.apiPromotions ? getPromotions(this.apiPromotions) : null;
         this.attributes = getAttributes(this.product);
+        this.availability = getProductAvailability(this.quantity, this.product);
     },
     /**
      * Normalize product and return Product variation model
@@ -229,7 +307,8 @@ function ProductWrapper(product, productVariables, promotions) {
         'rating',
         'variationAttributes',
         'promotions',
-        'attributes'
+        'attributes',
+        'availability'
     ];
 
     items.forEach(function (item) {
@@ -241,3 +320,4 @@ module.exports = ProductWrapper;
 module.exports.productBase = ProductBase;
 module.exports.getProductType = getProductType;
 module.exports.getVariationModel = getVariationModel;
+module.exports.getProductAvailability = getProductAvailability;

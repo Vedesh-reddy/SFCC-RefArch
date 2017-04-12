@@ -5,7 +5,8 @@ var Route = require('../../../../cartridges/modules/server/route');
 var assert = require('chai').assert;
 var mockReq = {
     path: '',
-    querystring: {}
+    querystring: {},
+    locale: ''
 };
 var mockRes = {
     setViewData: function () {}
@@ -82,7 +83,8 @@ describe('route', function () {
         }
         var req = {
             path: mockReq.path,
-            querystring: mockReq.querystring
+            querystring: mockReq.querystring,
+            locale: mockReq.locale
         };
         var route = new Route('test', [tempFunc], req, mockRes);
         route.getRoute()({ ErrorText: 'hello' });
