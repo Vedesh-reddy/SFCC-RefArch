@@ -161,7 +161,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     var error;
 
     try {
-    	Transaction.wrap(function () {
+        Transaction.wrap(function () {
             var shippingAddress = shipment.shippingAddress;
 
             if (!shippingAddress) {
@@ -180,7 +180,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
             ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-    	});
+        });
     } catch (err) {
         error = err;
     }
@@ -188,7 +188,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     if (error) {
         res.setStatusCode(500);
         res.json({
-        	error: true,
+            error: true,
             errorMessage: Resource.msg('error.cannot.select.shipping.method', 'cart', null)
         });
     } else {

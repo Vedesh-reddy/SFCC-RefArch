@@ -126,9 +126,9 @@ function isShippingAddressInitialized(shipment) {
 
     if (currentBasket) {
         if (shipment) {
-        	initialized = !!shipment.shippingAddress;
+            initialized = !!shipment.shippingAddress;
         } else {
-        	initialized = !!currentBasket.defaultShipment.shippingAddress;
+            initialized = !!currentBasket.defaultShipment.shippingAddress;
         }
     }
 
