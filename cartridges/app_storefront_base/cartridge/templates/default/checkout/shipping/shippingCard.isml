@@ -1,6 +1,6 @@
 
 <isif condition="${shippingModel.shippingAddress}">
-	<h5>${Resource.msg('msg.shipping.to', 'checkout', null)}</h5>
+	<h5>${Resource.msg('heading.shipping.to', 'checkout', null)}</h5>
 	<p>
 		<span class="ship-to-name">${shippingModel.shippingAddress.firstName} ${shippingModel.shippingAddress.lastName}</span>
 		<span class="ship-to-address1">${shippingModel.shippingAddress.address1}</span>

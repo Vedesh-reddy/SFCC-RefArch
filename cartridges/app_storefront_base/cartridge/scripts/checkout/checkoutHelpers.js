@@ -122,17 +122,17 @@ function validateShippingForm(form) {
  */
 function isShippingAddressInitialized(shipment) {
     var currentBasket = BasketMgr.getCurrentBasket();
-    var isInit = false;
+    var initialized = false;
 
     if (currentBasket) {
         if (shipment) {
-            isInit = !!shipment.shippingAddress;
+        	initialized = !!shipment.shippingAddress;
         } else {
-            isInit = !!currentBasket.defaultShipment.shippingAddress;
+        	initialized = !!currentBasket.defaultShipment.shippingAddress;
         }
     }
 
-    return isInit;
+    return initialized;
 }
 
 /**

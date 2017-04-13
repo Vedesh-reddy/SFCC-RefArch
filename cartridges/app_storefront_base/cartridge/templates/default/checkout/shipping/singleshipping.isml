@@ -4,13 +4,12 @@
         <div class="tab-pane active card-block" id="shipping-address" class="shipping-address" role="tabpanel">
             <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
                 <input name="shipmentUUID" type="hidden" value="${pdict.order.shipping[0].UUID}" />
-            <!--<form action="${URLUtils.url('Checkout-Shipping')}" class="shipping" method="post" name="shipping">-->
 
 				<isif condition="${pdict.customer.addresses && pdict.customer.addresses.length > 0}">
 				    <fieldset class="shipment-selector-block">
 				        <div class="form-group">
 				            <label class="form-control-label" for="shipmentSelector">
-				                ${Resource.msg('msg.ship.to.address', 'checkout', null)}
+				                ${Resource.msg('heading.ship.to.address', 'checkout', null)}
 				            </label>
 				            <a class="btn float-right toggle-shipping-address-form">Edit</a>
 				            

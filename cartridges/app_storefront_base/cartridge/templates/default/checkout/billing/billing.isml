@@ -17,9 +17,9 @@
             <fieldset class="address-selector-block">
                 <div class="form-group">
                     <label class="form-control-label" for="shipmentSelector">
-                        Billing Address
+                        ${Resource.msg('heading.billing.address', 'checkout', null)}
                     </label>
-                    <a class="btn float-right toggle-shipping-address-form">Edit</a>
+                    <a class="btn float-right toggle-shipping-address-form">${Resource.msg('button.edit', 'checkout', null)}</a>
                     
                     <isinclude template="checkout/billing/addressSelector" />
                     <div class="form-control-feedback"></div>

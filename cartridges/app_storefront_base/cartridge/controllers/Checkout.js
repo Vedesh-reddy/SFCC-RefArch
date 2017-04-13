@@ -158,10 +158,10 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
         phone: req.querystring.phone || req.form.phone
     };
 
-    var error = false;
+    var error;
 
-    Transaction.wrap(function () {
-        try {
+    try {
+    	Transaction.wrap(function () {
             var shippingAddress = shipment.shippingAddress;
 
             if (!shippingAddress) {
@@ -180,12 +180,18 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
             ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-        } catch (err) {
-            error = err;
-        }
-    });
+    	});
+    } catch (err) {
+        error = err;
+    }
 
-    if (!error) {
+    if (error) {
+        res.setStatusCode(500);
+        res.json({
+        	error: true,
+            errorMessage: Resource.msg('error.cannot.select.shipping.method', 'cart', null)
+        });
+    } else {
         var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
         var basketModel = new OrderModel(currentBasket, {
             usingMultiShipping: usingMultiShipping
@@ -194,11 +200,6 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
         res.json({
             customer: new AccountModel(req.currentCustomer),
             order: basketModel
-        });
-    } else {
-        res.setStatusCode(500);
-        res.json({
-            errorMessage: Resource.msg('error.cannot.select.shipping.method', 'cart', null)
         });
     }
     return next();
