@@ -17,7 +17,7 @@
                                  <fieldset class="shipment-selector-block">
                                      <div class="form-group">
                                          <label class="form-control-label" for="shipmentSelector">
-                                             ${Resource.msg('msg.ship.to.address', 'checkout', null)}
+                                             ${Resource.msg('heading.ship.to.address', 'checkout', null)}
                                          </label>
                                          <a class="btn float-right toggle-shipping-address-form">${Resource('msg.edit', 'checkout', null)}</a>
                                          
@@ -32,7 +32,7 @@
                                      <isinclude template="checkout/shipping/shippingAddress" />
                                  </fieldset>
                                  <fieldset class="shipping-method-block">
-                                     <h5>${Resource.msg('msg.shipping.method', 'checkout', null)}</h5>
+                                     <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
                                  
                                      <isinclude template="checkout/shipping/shippingMethod" />
                                  </fieldset>
@@ -42,13 +42,13 @@
                              <isinclude template="checkout/shipping/shippingCard" />
                          </div>
                             <a class="btn btn-outline-primary col-12" data-action="enter">
-                                ${Resource.msg('msg.enter.address', 'checkout', null)}
+                                ${Resource.msg('button.enter.address', 'checkout', null)}
                             </a>
                             <a class="btn btn-outline-primary col-12" data-action="save">
-                                ${Resource.msg('msg.save', 'checkout', null)}
+                                ${Resource.msg('button.save', 'checkout', null)}
                             </a>
                             <a class="btn btn-outline-primary col-12" data-action="edit">
-                                ${Resource.msg('msg.edit', 'checkout', null)}
+                                ${Resource.msg('button.edit', 'checkout', null)}
                             </a> 
                      </form>
                     </div>
