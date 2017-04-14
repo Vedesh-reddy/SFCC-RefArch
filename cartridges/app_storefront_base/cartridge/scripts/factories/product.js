@@ -3,7 +3,7 @@
 var ProductMgr = require('dw/catalog/ProductMgr');
 var ProductTile = require('./../../models/product/productBase');
 var Product = require('./../../models/product/product');
-var ProductLineItemModel = require('./../../models/productLineItem');
+var ProductLineItemModel = require('./../../models/productLineItem/productLineItem');
 var PromotionMgr = require('dw/campaign/PromotionMgr');
 
 /**
@@ -52,6 +52,18 @@ ProductFactory.get = function (params) {
         switch (params.pview) {
             case 'tile':
                 product = new ProductTile(product, params.variables, promotions);
+                break;
+            case 'productLineItem':
+                var ProductLineItemBundleModel = require(
+                    './../../models/productLineItem/bundleLineItem'
+                );
+                product = new ProductLineItemBundleModel(
+                    product,
+                    params.quantity,
+                    params.lineItem,
+                    promotions,
+                    productFactory
+                );
                 break;
             default:
                 ProductBundle = require('./../../models/product/productBundle');

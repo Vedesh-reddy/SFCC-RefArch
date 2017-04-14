@@ -91,7 +91,7 @@ function getCartActionUrls() {
 function CartModel(basket) {
     if (basket !== null) {
         var shippingModels = ShippingHelpers.getShippingModels(basket);
-        var productLineItemsModel = new ProductLineItemsModel(basket);
+        var productLineItemsModel = new ProductLineItemsModel(basket.productLineItems);
         var totalsModel = new TotalsModel(basket);
 
         this.actionUrls = getCartActionUrls();

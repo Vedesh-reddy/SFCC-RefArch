@@ -74,7 +74,7 @@ function OrderModel(lineItemContainer, options) {
         var billingAddressModel = new AddressModel(lineItemContainer.billingAddress);
         var billingModel = new BillingModel(billingAddressModel, paymentModel);
 
-        var productLineItemsModel = new ProductLineItemsModel(lineItemContainer);
+        var productLineItemsModel = new ProductLineItemsModel(lineItemContainer.productLineItems);
         var totalsModel = new TotalsModel(lineItemContainer);
 
         this.orderNumber = Object.hasOwnProperty.call(lineItemContainer, 'orderNo')

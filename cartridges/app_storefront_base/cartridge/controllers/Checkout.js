@@ -45,7 +45,7 @@ server.get('Login', server.middleware.https, function (req, res, next) {
         var totalsModel = new TotalsModel(currentBasket);
         var details = {
             subTotal: totalsModel.subTotal,
-            totalQuantity: ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems)
+            totalQuantity: ProductLineItemsModel.getTotalQuantity(currentBasket.productLineItems)
         };
 
         if (req.currentCustomer.credentials) {
