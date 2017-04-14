@@ -37,7 +37,7 @@ var productMock = {
 };
 
 var apiBasket = {
-    allProductLineItems: new ArrayList([{
+    productLineItems: new ArrayList([{
         bonusProductLineItem: false,
         gift: false,
         UUID: 'some UUID',

@@ -46,20 +46,17 @@ function getTotalQuantity(items) {
  * @classdesc class that represents a collection of line items and total quantity of
  * items in current basket or per shipment
  *
- * @param {Object} shipment - the target Shipment or Basket object
+ * @param {Object} container - the target Shipment or Basket object
  */
-function ProductLineItems(shipment) {
-    var plis;
-    if (shipment) {
-        if ('allProductLineItems' in shipment) {
-            plis = shipment.allProductLineItems;
-        } else {
-            plis = shipment.productLineItems;
-        }
+function ProductLineItems(container) {
+    var productLineItems;
+    if (container) {
+        productLineItems = container.productLineItems;
     }
-    if (plis) {
-        this.items = createProductLineItemsObject(plis);
-        this.totalQuantity = getTotalQuantity(plis);
+
+    if (productLineItems) {
+        this.items = createProductLineItemsObject(productLineItems);
+        this.totalQuantity = getTotalQuantity(productLineItems);
     } else {
         this.items = [];
         this.totalQuantity = 0;
