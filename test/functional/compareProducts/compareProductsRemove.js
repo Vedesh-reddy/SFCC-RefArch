@@ -5,7 +5,7 @@
  * - Navigate to Women->Clothing->tops
  * - select 4 products to compare
  * - Verify we can remove one of the product and add a new product to compare
- * - Verify compare return a grid of products.
+ * - Verify compare return the products expected.
  */
 
 import { assert } from 'chai';
@@ -32,7 +32,7 @@ describe('Remove and Add product for compare', () => {
     const selector4 = productTile.getProductTileById(productMasterId4) + ' ' + compareProducts.compareCheckbox;
     const selector5 = productTile.getProductTileById(productMasterId5) + ' ' + compareProducts.compareCheckbox;
     const selectorProdToRemove = productTile.getProductTileById(productMasterId1) + ' ' + compareProducts.selectorRemoveProduct;
-
+    const selectorProdToRemove_ipad = '.slot[data-pid="25502240"] .fa-close';
     before(() => testDataMgr.load()
         .then(() => homePage.navigateTo())
         .then(() => browser.waitForExist(search.searchForm))
@@ -50,7 +50,15 @@ describe('Remove and Add product for compare', () => {
                     .waitForExist(homePage.navBarButton)
                     .pause(1000)
                     .getText(topTitle)
-                    .then(title => assert.equal(title, 'Tops'));
+                    .then(title => assert.equal(title, 'Tops'))
+                    .then(() => browser.click(selector1))
+                    .then(() => browser.click(selector2))
+                    .then(() => browser.click(selector3))
+                    .then(() => browser.click(selector4))
+                    .then(() => browser.elements(compareProducts.selectedProduct))
+                    .then(selectedProducts => assert.isTrue(selectedProducts.value.length === 4, 'there should be 4 products in compare bar'))
+                    .then(() => browser.waitForVisible(selectorProdToRemove_ipad))
+                    .then(() => browser.click(selectorProdToRemove_ipad))
             }
             //  Access desktop or laptop browsers
             return browser.click(search.searchForm)
@@ -69,12 +77,12 @@ describe('Remove and Add product for compare', () => {
                 .then(() => browser.scroll(selector4))
                 .then(() => browser.click(selector4))
                 .then(() => browser.elements(compareProducts.selectedProduct))
-                .then(selectedProducts => assert.isTrue(selectedProducts.value.length === 4, 'there should be 4 products in compare bar'));
+                .then(selectedProducts => assert.isTrue(selectedProducts.value.length === 4, 'there should be 4 products in compare bar'))
+                .then(() => browser.click(selectorProdToRemove))
         })
     );
     it('should be able to remove a product from compare table and add a new product', () => {
-        return browser.click(selectorProdToRemove)
-            .then(() => browser.elements(compareProducts.selectedProduct))
+        return browser.elements(compareProducts.selectedProduct)
             .then(selectedProducts => assert.isTrue(selectedProducts.value.length === 3, 'there should be 3 products in compare bar'))
             .then(() => browser.click(selector5))
             .then(() => browser.elements(compareProducts.selectedProduct))

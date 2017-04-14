@@ -5,7 +5,7 @@
  * - Navigate to Women->Clothing->tops
  * - select 4 products to compare
  * - Verify the compare bar at the bottom of the page contains the 4 products
- * - Verify compare return a grid of products.
+ * - Verify compare return the products expected.
  */
 
 import { assert } from 'chai';
@@ -25,6 +25,10 @@ describe('Select products for Compare', () => {
     const productMasterId2 = '25503045';
     const productMasterId3 = '25564740';
     const productMasterId4 = '25589220';
+    const selector1 = productTile.getProductTileById(productMasterId1) + ' ' + compareProducts.compareCheckbox;
+    const selector2 = productTile.getProductTileById(productMasterId2) + ' ' + compareProducts.compareCheckbox;
+    const selector3 = productTile.getProductTileById(productMasterId3) + ' ' + compareProducts.compareCheckbox;
+    const selector4 = productTile.getProductTileById(productMasterId4) + ' ' + compareProducts.compareCheckbox;
 
     before(() => testDataMgr.load()
         .then(() => homePage.navigateTo())
@@ -43,7 +47,11 @@ describe('Select products for Compare', () => {
                     .waitForExist(homePage.navBarButton)
                     .pause(1000)
                     .getText(topTitle)
-                    .then(title => assert.equal(title, 'Tops'));
+                    .then(title => assert.equal(title, 'Tops'))
+                    .then(() => browser.click(selector1))
+                    .click(selector2)
+                    .click(selector3)
+                    .click(selector4)
             }
             //  Access desktop or laptop browsers
             return browser.click(search.searchForm)
@@ -55,20 +63,17 @@ describe('Select products for Compare', () => {
                 .keys(keyboard.DOWN)
                 .keys(keyboard.ENTER)
                 .getText(topTitle)
-                .then(title => assert.equal(title, 'Tops'));
+                .then(title => assert.equal(title, 'Tops'))
+                .then(() => browser.click(selector1))
+                .click(selector2)
+                .click(selector3)
+                .scroll(selector4)
+                .click(selector4)
         })
     );
     it('should be able to select 4 products for compare', () => {
-        const selector1 = productTile.getProductTileById(productMasterId1) + ' ' + compareProducts.compareCheckbox;
-        const selector2 = productTile.getProductTileById(productMasterId2) + ' ' + compareProducts.compareCheckbox;
-        const selector3 = productTile.getProductTileById(productMasterId3) + ' ' + compareProducts.compareCheckbox;
-        const selector4 = productTile.getProductTileById(productMasterId4) + ' ' + compareProducts.compareCheckbox;
-        return browser.click(selector1)
-            .then(() => browser.click(selector2))
-            .then(() => browser.click(selector3))
-            .then(() => browser.scroll(selector4))
-            .then(() => browser.click(selector4))
-            .then(() => browser.elements(compareProducts.selectedProduct))
+
+        return browser.elements(compareProducts.selectedProduct)
             .then(selectedProducts => assert.isTrue(selectedProducts.value.length === 4, 'there are 4 products in compare bar'));
     });
 
