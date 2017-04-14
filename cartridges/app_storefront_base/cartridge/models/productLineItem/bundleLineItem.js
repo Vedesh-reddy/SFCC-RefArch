@@ -33,8 +33,7 @@ function getBundledProductLineItems(bundledProductLineItems, productFactory) {
  * @param {Object} productFactory - Factory utility that returns a ProductModel instance
  */
 function BundleLineItem(product, quantity, lineItem, promotions, productFactory) {
-    var safeProduct = product || {};
-    this.product = safeProduct;
+    this.product = product || {};
     this.imageConfig = {
         types: ['small'],
         quantity: 'single'
@@ -58,7 +57,7 @@ BundleLineItem.prototype.initialize = function (productFactory) {
 
 /**
  * @constructor
- * @classdesc Wrapper around productLineItemBundle model
+ * @classdesc Wrapper around BundleLineItem model
  *
  * @param {dw.catalog.Product} product - The Product instance from the line item
  * @param {number} quantity - The quantity of this product line item currently in the baskets
@@ -66,7 +65,7 @@ BundleLineItem.prototype.initialize = function (productFactory) {
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - a collection of promotions
  * @param {Object} productFactory - Factory utility that returns a ProductModel instance
  */
-function ProductWrapper(product, quantity, lineItem, promotions, productFactory) {
+function BundleLineItemWrapper(product, quantity, lineItem, promotions, productFactory) {
     var bundleLineItem = new BundleLineItem(
         product,
         quantity,
@@ -83,4 +82,4 @@ function ProductWrapper(product, quantity, lineItem, promotions, productFactory)
     }, this);
 }
 
-module.exports = ProductWrapper;
+module.exports = BundleLineItemWrapper;

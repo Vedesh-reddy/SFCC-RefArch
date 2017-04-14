@@ -46,14 +46,10 @@ function getTotalQuantity(items) {
  * @classdesc class that represents a collection of line items and total quantity of
  * items in current basket or per shipment
  *
- * @param {Object} container - the target Shipment or Basket object
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - the product line items
+ *                                                       of the current line item container
  */
-function ProductLineItems(container) {
-    var productLineItems;
-    if (container) {
-        productLineItems = container.productLineItems;
-    }
-
+function ProductLineItems(productLineItems) {
     if (productLineItems) {
         this.items = createProductLineItemsObject(productLineItems);
         this.totalQuantity = getTotalQuantity(productLineItems);
