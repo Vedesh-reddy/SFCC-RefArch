@@ -18,7 +18,7 @@ import * as compareProducts from '../../mocks/testDataMgr/pageObjects/comparePro
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 import * as productTile from '../../mocks/testDataMgr/pageObjects/productTile';
 
-describe('Select products for Compare', () => {
+describe('Select 4 products for Compare', () => {
     const topTitle = '.page-title';
     const locale = config.locale;
     const productMasterId1 = '25502240';
@@ -51,7 +51,7 @@ describe('Select products for Compare', () => {
                     .then(() => browser.click(selector1))
                     .click(selector2)
                     .click(selector3)
-                    .click(selector4)
+                    .click(selector4);
             }
             //  Access desktop or laptop browsers
             return browser.click(search.searchForm)
@@ -65,14 +65,15 @@ describe('Select products for Compare', () => {
                 .getText(topTitle)
                 .then(title => assert.equal(title, 'Tops'))
                 .then(() => browser.click(selector1))
+                .scroll(selector2)
                 .click(selector2)
                 .click(selector3)
                 .scroll(selector4)
-                .click(selector4)
+                .click(selector4);
         })
     );
-    it('should be able to select 4 products for compare', () => {
 
+    it('should be able to select 4 products for compare', () => {
         return browser.elements(compareProducts.selectedProduct)
             .then(selectedProducts => assert.isTrue(selectedProducts.value.length === 4, 'there are 4 products in compare bar'));
     });
