@@ -8,13 +8,13 @@ var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
 
-var Collections = require('~/cartridge/scripts/util/collections');
-
 var CartModel = require('~/cartridge/models/cart');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 
+var Collections = require('~/cartridge/scripts/util/collections');
 var CartHelper = require('~/cartridge/scripts/cart/cartHelpers');
 var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
+
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
@@ -24,15 +24,17 @@ server.get('MiniCart', server.middleware.include, function (req, res, next) {
     next();
 });
 
-// FIXME: This is just a temporary endpoint to add a simple variant from the Product Detail Page.
 server.post('AddProduct', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
-    var productId = req.querystring.pid;
-    var quantity = parseInt(req.querystring.quantity, 10);
+    var productId = req.form.pid;
+    var childPids = Object.hasOwnProperty.call(req.form, 'childPids')
+        ? decodeURIComponent(req.form.childPids).split(',')
+        : [];
+    var quantity = parseInt(req.form.quantity, 10);
 
     if (currentBasket) {
         Transaction.wrap(function () {
-            CartHelper.addProductToCart(currentBasket, productId, quantity);
+            CartHelper.addProductToCart(currentBasket, productId, quantity, childPids);
             CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);

@@ -1,51 +1,56 @@
-<div class="product-quickview" data-pid="${pdict.product.id}">
+<isset name="product" value="${pdict.product}" scope="page"/>
+<div class="product-quickview" data-pid="${product.id}">
 
     <div class="row">
         <!-- Product Images Carousel -->
-        <isinclude template="/product/components/image_carousel" />
+        <isinclude template="product/components/image_carousel" />
 
         <!-- Product Name and Number -->
         <div class="col-sm-6">
             <section>
-                <h1 class="product-name">${pdict.product.productName}</h1>
+                <h1 class="product-name">${product.productName}</h1>
             </section>
 
             <div class="detail-panel">
                 <!-- Attributes -->
                 <section class="attributes">
                     <div class="col-12">
-                        <isinclude template="/product/components/mainAttributes" />
+                        <isinclude template="product/components/mainAttributes" />
 
-                        <isloop items="${pdict.product.variationAttributes}" var="attr" status="attributeStatus">
-                            <isinclude template="/product/components/variationAttributes" />
+                        <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
+                            <isinclude template="product/components/variationAttributes" />
                         </isloop>
 
-                        <isif condition="${!pdict.product.variationAttributes}">
+                        <isif condition="${!product.variationAttributes}">
                             <div class="simple-quantity">
-                                <isinclude template="/product/components/quantity" />
+                                <isinclude template="product/components/quantity" />
                             </div>
                         </isif>
                     </div>
 
                     <!-- Size Chart -->
-                    <isif condition="${pdict.product.variationAttributes}">
-                        <isinclude template="/product/components/sizeChart" />
+                    <isif condition="${product.variationAttributes}">
+                        <div class="col-md-10 col-12 size-chart">
+                            <isinclude template="product/components/sizeChart" />
+                        </div>
                     </isif>
 
-                    <isinclude template="/product/components/availability" />
+                    <div class="col-md-10 col-12 availability">
+                        <isinclude template="product/components/availability" />
+                    </div>
 
                     <hr>
 
                     <!-- Prices -->
                     <div class="prices">
                         <div class="col-12">
-                            <isset name="price" value="${pdict.product.price}" scope="page" />
-                            <isinclude template="/product/components/pricing/main" />
+                            <isset name="price" value="${product.price}" scope="page" />
+                            <isinclude template="product/components/pricing/main" />
                         </div>
                     </div>
 
                     <!-- Cart and [Optionally] Apple Pay -->
-                    <isinclude template="/product/components/addtocart" />
+                    <isinclude template="product/components/addtocart" />
                 </section>
             </div>
         </div>

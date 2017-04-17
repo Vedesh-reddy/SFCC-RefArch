@@ -7,14 +7,15 @@ describe('Cart: Selecting Shipping Methods', function () {
     this.timeout(5000);
 
     var variantPid1 = '740357440196';
-    var qty1 = 1;
+    var qty1 = '1';
     var variantPid2 = '013742335538';
-    var qty2 = 1;
+    var qty2 = '1';
 
     var cookieJar = request.jar();
     var myRequest = {
         url: '',
         method: 'POST',
+        form: {},
         rejectUnauthorized: false,
         resolveWithFullResponse: true,
         jar: cookieJar
@@ -211,7 +212,12 @@ describe('Cart: Selecting Shipping Methods', function () {
 
     before(function () {
         // ----- adding product #1:
-        myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
+        myRequest.url = config.baseUrl + '/Cart-AddProduct';
+        myRequest.form = {
+            pid: variantPid1,
+            childPids: [],
+            quantity: qty1
+        };
 
         return request(myRequest)
             .then(function () {
@@ -220,7 +226,11 @@ describe('Cart: Selecting Shipping Methods', function () {
 
             // ----- adding product #2, a different variant of same product 1:
             .then(function () {
-                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid2 + '&quantity=' + qty2;
+                myRequest.form = {
+                    pid: variantPid2,
+                    childPids: [],
+                    quantity: qty2
+                };
 
                 var cookie = request.cookie(cookieString);
                 cookieJar.setCookie(cookie, myRequest.url);

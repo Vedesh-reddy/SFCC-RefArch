@@ -1,14 +1,18 @@
-<div class="availability col-md-10 col-12">
-    <div class="availability-label">
+<div class="pull-left">
+    <label class="availability">
         ${Resource.msg('label.availability', 'common', null)}:
-    </div>
-    <div class="availability-msg">
-        <isif condition="${pdict.product.productType === 'master'}">
-            ${Resource.msg('info.selectforstock', 'product', null)}
-        <iselse/>
-            <isloop items="${pdict.product.availability.messages}" var="message">
-                <div>${message}</div>
-            </isloop>
-        </isif>
-    </div>
+    </label>
+</div>
+<div class="pull-left">
+    <ul class="list-unstyled availability-msg">
+        <li>
+            <isif condition="${product.readyToOrder && product.available}">
+                ${pdict.resources.label_instock}
+            <iselseif condition="${product.readyToOrder && !product.available}">
+                ${pdict.resources.label_allnotavailable}
+            <iselse>
+                ${pdict.resources.info_selectforstock}
+            </isif>
+        </li>
+    </ul>
 </div>

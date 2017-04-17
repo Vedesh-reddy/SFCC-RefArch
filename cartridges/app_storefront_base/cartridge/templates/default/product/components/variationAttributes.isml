@@ -10,7 +10,7 @@ Template Notes:
 </iscomment>
 
 <div data-attr="${attr.id}" class="swatch">
-    <isif condition="${attributeStatus.last}">
+    <isif condition="${attributeStatus.last && isBundleOrSet !== 'true'}">
         <!-- Quantity Drop Down Menu -->
         <div class="quantity col-sm-6">
             <isinclude template="/product/components/quantity" />

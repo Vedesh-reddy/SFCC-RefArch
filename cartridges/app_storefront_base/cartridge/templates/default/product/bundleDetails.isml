@@ -1,0 +1,141 @@
+<isdecorate template="common/layout/page">
+
+    <isscript>
+        var assets = require('~/cartridge/scripts/assets');
+        assets.addJs('/js/productDetail.js');
+        assets.addCss('/css/product/detail.css');
+    </isscript>
+
+    <iscomment>
+        It is necessary to set both "bundle" and "product" to pdict.product here as the downstream,
+        reusable templates expect "product" for certain properties.  "product" can be the "bundle"
+        or a bundle product item.  We need to set "product" back to equal "bundle" in the
+        .bundle-footer section below.
+    </iscomment>
+    <isset name="bundle" value="${pdict.product}" scope="page" />
+    <isset name="product" value="${pdict.product}" scope="page" />
+
+    <div class="container product-detail" data-pid="${product.id}">
+        <div class="row">
+            <div class="col-12">
+                <!---Breadcrumbs--->
+                <div class="product-breadcrumb">
+                    <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                </div>
+
+                <!-- Product Name -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="product-name">${product.productName}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row product-bundle">
+            <!-- Product Images Carousel -->
+            <isinclude template="product/components/image_carousel" />
+
+            <div class="col-12 col-sm-6">
+                <div class="row">
+                    <div class="col-12">
+                        <isinclude template="product/components/pidRating" />
+                    </div>
+                </div>
+
+                <!-- Applicable Promotions -->
+                <div class="row" style="height: 85%;">
+                    <div class="col-12 promotions align-self-center">
+                        <isinclude template="product/components/promotions" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <hr>
+
+        <div class="row">
+            <div class="col-12">
+                <h2>${Resource.msg('label.bundle.contains', 'product', null)}</h2>
+            </div>
+        </div>
+
+        <div class="bundle-items">
+            <isloop items="${product.bundledProducts}" var="productItem" status="loopState">
+                <isset name="product" value="${productItem}" scope="page" />
+                <isset name="isBundleOrSet" value="true" scope="page" />
+                <div>
+                    <isinclude template="product/components/bundleItem" />
+                </div>
+
+                <isif condition="${loopState.last === false}">
+                    <hr>
+                </isif>
+            </isloop>
+        </div>
+
+        <hr>
+
+        <div class="col-12 col-sm-6 offset-sm-6 bundle-footer">
+            <!-- Quantity -->
+            <isset name="product" value="${bundle}" scope="page" />
+            <isinclude template="product/components/quantity" />
+
+            <!-- Availability -->
+            <div class="availability clearfix" data-ready-to-order="${bundle.readyToOrder}">
+                <isinclude template="product/components/availability" />
+            </div>
+
+            <div class="col-12 prices-add-to-cart-actions">
+                <!-- Prices -->
+                <div class="prices">
+                    <isset name="price" value="${product.price}" scope="page" />
+                    <isinclude template="product/components/pricing/main.isml" />
+                </div>
+
+                <!-- Cart and [Optionally] Apple Pay -->
+                <isinclude template="product/components/addtocart" />
+            </div>
+
+            <!-- Add to Wishlist and Social Sharing Icons -->
+            <div class="col-12 wishlist-social hidden-sm-down">
+                <a href="${"#"}" class="add-to-wish-list col-md-6">
+                    ${Resource.msg('button.add_to_wishlist', 'common', null)}
+                </a>
+                <span class="social-icons col-md-6">
+                    <i class="fa fa-pinterest" alt="Pinterest"></i>
+                    <i class="fa fa-instagram" alt="Instagram"></i>
+                    <i class="fa fa-facebook-official" alt="Facebook"></i>
+                    <i class="fa fa-twitter" alt="Twitter"></i>
+                </span>
+            </div>
+        </div>
+
+        <div class="description-and-detail">
+            <div class="row product-attributes collapsable-xs">
+                <isinclude template="product/components/attributes" />
+            </div>
+
+            <isif condition="${product.attributes && product.attributes.length}">
+                <hr class="hidden-sm-up">
+            </isif>
+
+            <div class="row description collapsable-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
+                <h2 class="col-sm-12 col-md-4 col-lg-3 title">
+                    ${Resource.msg('label.description', 'product', null)}
+                </h2>
+                <isinclude template="product/components/description" />
+            </div>
+
+            <isif condition="${product.longDescription}">
+                <hr class="hidden-sm-up">
+            </isif>
+
+            <div class="row details collapsable-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
+                <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.details', 'product', null)}</h2>
+                <isinclude template="product/components/details" />
+            </div>
+        </div>
+    </div>
+</isdecorate>

@@ -117,7 +117,8 @@ describe('bundleProduct', function () {
         minOrderQuantity: {
             value: 2
         },
-        attributeModel: attributeModel
+        attributeModel: attributeModel,
+        getBundledProductQuantity: function () { return { value: 5 }; }
     };
 
     var promotionsMock = new ArrayList([{

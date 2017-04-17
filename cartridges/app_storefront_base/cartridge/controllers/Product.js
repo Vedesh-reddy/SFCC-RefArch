@@ -73,7 +73,15 @@ function showProductPage(querystring, res) {
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
     var breadcrumbs = getAllBreadcrumbs(querystring.cgid, product.id, []).reverse();
-    res.render('product/detail.isml', {
+    var template = 'product/productDetails.isml';
+
+    if (product.productType === 'bundle') {
+        template = 'product/bundleDetails.isml';
+    } else if (product.productType === 'set') {
+        template = 'product/setDetails.isml';
+    }
+
+    res.render(template, {
         CurrentPageMetaData: {
             title: product.productName
         },

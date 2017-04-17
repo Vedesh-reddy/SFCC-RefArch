@@ -1,0 +1,60 @@
+<div class="container product-detail bundle-item" data-pid="${product.id}">
+    <div class="row">
+        <div class="col-12">
+            <!---Breadcrumbs--->
+            <div class="product-breadcrumb hidden-md-up">
+                <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+            </div>
+
+            <!-- Product Name -->
+            <div class="row">
+                <div class="hidden-md-up col-sm-12">
+                    <h1 class="product-name">${product.productName}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Product Images Carousel -->
+        <isinclude template="product/components/image_carousel" />
+
+        <div class="col-12 col-sm-6">
+            <!-- Product Name -->
+            <h1 class="product-name hidden-sm-down">${product.productName}</h1>
+
+            <isinclude template="product/components/pidRating" />
+
+            <div class="row justify-content-center">
+                <!-- Attributes and Quantity -->
+                <div class="col-md-10 col-12">
+                    <isinclude template="product/components/mainAttributes" />
+
+                    <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
+                        <isinclude template="product/components/variationAttributes" />
+                    </isloop>
+                </div>
+
+                <!-- Size Chart -->
+                <isif condition="${product.variationAttributes}">
+                    <span class="col-12 col-md-10 size-chart">
+                        <isinclude template="product/components/sizeChart" />
+                    </span>
+                </isif>
+
+                <!-- Availability -->
+                <div class="col-12 col-md-10 availability" data-ready-to-order="${product.readyToOrder}">
+                    <isinclude template="/product/components/availability" />
+                </div>
+
+                <div class="col-md-10 col-12">
+                    <hr>
+                </div>
+
+                <div class="col-md-10 col-12">
+                    <isinclude template="product/components/quantity_static">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

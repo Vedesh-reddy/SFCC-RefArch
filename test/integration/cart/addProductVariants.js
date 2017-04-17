@@ -34,7 +34,11 @@ describe('Add Product variants to cart', function () {
 
         // ----- adding product #1:
         totalQty = qty1;
-        myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
+        myRequest.url = config.baseUrl + '/Cart-AddProduct';
+        myRequest.form = {
+            pid: variantPid1,
+            quantity: qty1
+        };
 
         return request(myRequest)
             .then(function (response) {
@@ -43,8 +47,7 @@ describe('Add Product variants to cart', function () {
                 var expectedResBody = {
                     'quantityTotal': totalQty,
                     'action': 'Cart-AddProduct',
-                    'message': 'Product added to basket',
-                    'queryString': 'pid=' + variantPid1 + '&quantity=' + qty1
+                    'message': 'Product added to basket'
                 };
 
                 var bodyAsJson = JSON.parse(response.body);
@@ -56,7 +59,11 @@ describe('Add Product variants to cart', function () {
             // ----- adding product #2, a different variant of same product 1:
             .then(function () {
                 totalQty += qty2;
-                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid2 + '&quantity=' + qty2;
+                myRequest.url = config.baseUrl + '/Cart-AddProduct';
+                myRequest.form = {
+                    pid: variantPid2,
+                    quantity: qty2
+                };
 
                 var cookie = request.cookie(cookieString);
                 cookieJar.setCookie(cookie, myRequest.url);
@@ -71,8 +78,7 @@ describe('Add Product variants to cart', function () {
                 var expectedResBody2 = {
                     'action': 'Cart-AddProduct',
                     'quantityTotal': totalQty,
-                    'message': 'Product added to basket',
-                    'queryString': 'pid=' + variantPid2 + '&quantity=' + qty2
+                    'message': 'Product added to basket'
 
                 };
 
@@ -83,7 +89,11 @@ describe('Add Product variants to cart', function () {
             // ----- adding product #3:
             .then(function () {
                 totalQty += qty3;
-                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid3 + '&quantity=' + qty3;
+                myRequest.url = config.baseUrl + '/Cart-AddProduct';
+                myRequest.form = {
+                    pid: variantPid3,
+                    quantity: qty3
+                };
                 return request(myRequest);
             })
 
@@ -94,8 +104,7 @@ describe('Add Product variants to cart', function () {
                 var expectedResBody3 = {
                     'action': 'Cart-AddProduct',
                     'quantityTotal': totalQty,
-                    'message': 'Product added to basket',
-                    'queryString': 'pid=' + variantPid3 + '&quantity=' + qty3
+                    'message': 'Product added to basket'
                 };
 
                 var bodyAsJson3 = JSON.parse(response3.body);
@@ -105,7 +114,11 @@ describe('Add Product variants to cart', function () {
             // ----- adding product #4:
             .then(function () {
                 totalQty += qty4;
-                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid4 + '&quantity=' + qty4;
+                myRequest.url = config.baseUrl + '/Cart-AddProduct';
+                myRequest.form = {
+                    pid: variantPid4,
+                    quantity: qty4
+                };
                 return request(myRequest);
             })
 
@@ -122,7 +135,6 @@ describe('Add Product variants to cart', function () {
                     'quantityTotal': totalQty,
                     'message': 'Product added to basket',
                     'action': 'Cart-AddProduct',
-                    'queryString': 'pid=' + variantPid4 + '&quantity=' + qty4,
                     'cart': {
                         'actionUrls': {
                             'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
@@ -465,7 +477,6 @@ describe('Add Product variants to cart', function () {
                 assert.equal(bodyAsJson.quantityTotal, expectedResponse.quantityTotal);
                 assert.equal(bodyAsJson.message, expectedResponse.message);
                 assert.equal(bodyAsJson.action, expectedResponse.action);
-                assert.equal(bodyAsJson.queryString, expectedResponse.queryString);
 
                 // ----- Verify actionUrls
                 var actionUrls = bodyAsJson.cart.actionUrls;

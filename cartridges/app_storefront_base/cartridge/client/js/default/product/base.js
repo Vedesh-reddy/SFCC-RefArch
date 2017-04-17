@@ -1,11 +1,26 @@
 'use strict';
 
+
+/**
+ * Determines whether this is a Bundle PDP
+ * @return {boolean} - Whether this is a Bundle PDP
+ */
+function isBundle() {
+    return !!$('.product-bundle').length;
+}
+
 /**
  * Retrieves the value associated with the Quantity pull-down menu
+ *
+ * @param {JQuery} $el - DOM element representing bundle item whose quantity selection has changed
  * @return {string} - value found in the quantity input
  */
-function getQuantitySelected() {
-    return $('.quantity-select').val();
+function getQuantitySelected($el) {
+    return !isBundle()
+        ? $('.quantity-select').val()
+        : $el.closest('.prices-add-to-cart-actions')
+            .siblings('.quantity-select')
+            .val();
 }
 
 /**
@@ -78,11 +93,12 @@ function processNonSwatchValues(attr) {
  * one criteria used to enable the "Add to Cart" button
  *
  * @param {string} url - Attribute value onClick URL used to [de]select an attribute value
+ * @param {JQuery} $productContainer - DOM element containing a product
  * @return {string} - The provided URL appended with the quantity selected in the query params or
  *     the original provided URL if no quantity selected
  */
-function appendQuantityToUrl(url) {
-    var quantitySelected = getQuantitySelected();
+function appendQuantityToUrl(url, $productContainer) {
+    var quantitySelected = $productContainer.find('.quantity-select').val();
     return !quantitySelected ? url : url + '&quantity=' + quantitySelected;
 }
 
@@ -107,24 +123,62 @@ function updateAttrs(attrs) {
 }
 
 /**
+ * Determines whether the main bundle product can be ordered
+ *
+ * @return {boolean} - Whether the main bundle product can be ordered
+ */
+function isBundleOrderable() {
+    return !$('.bundle-item div.availability[data-ready-to-order=false]').length;
+}
+
+/**
+ * Retrieves Bundle's Add to Cart Button jQuery object
+ *
+ * @return {JQuery} - Bundle's Add to Cart Button
+ */
+function getBundleAddToCartButton() {
+    var bundlePid = $('.product-bundle').parents().data('pid');
+    return $(['button.add-to-cart', '[data-pid="', bundlePid, '"]'].join(''));
+}
+
+/**
  * Updates the availability status in the Product Detail Page
  *
- * @param {Object} response - Ajax response object after an
- *                            attribute value has been [de]selected
+ * @param {Object} response - Ajax response object after an attribute value has been [de]selected
+ * @param {jQuery} $productContainer - DOM element containing a product
  */
-function updateAvailability(response) {
+function updateAvailability(response, $productContainer) {
     var availabilityValue = '';
     var availabilityMessages = response.product.availability.messages;
     var hasRequiredAttrsSelected = response.product.readyToOrder;
+    var bundleAvailability;
+
+    $productContainer.find('div.availability')
+        .attr('data-ready-to-order', response.product.readyToOrder);
+
     if (!hasRequiredAttrsSelected) {
-        availabilityValue = '<div>' + response.resources.info_selectforstock + '</div>';
+        availabilityValue = '<li>' + response.resources.info_selectforstock + '</li>';
     } else {
         availabilityMessages.forEach(function (message) {
-            availabilityValue += '<div>' + message + '</div>';
+            availabilityValue += '<li>' + message + '</li>';
         });
     }
 
-    $('.availability-msg').empty().html(availabilityValue);
+    $productContainer.find('.availability-msg')
+        .eq(0)
+        .empty()
+        .html(availabilityValue);
+
+    if (isBundle()) {
+        // Update bundle
+        $('.bundle-footer div.availability').attr('data-ready-to-order', isBundleOrderable());
+
+        bundleAvailability = isBundleOrderable()
+            ? response.resources.label_instock
+            : response.resources.info_selectforstock;
+
+        $('.bundle-footer ul.availability-msg').html('<li>' + bundleAvailability + '</li>');
+    }
 }
 
 /**
@@ -174,6 +228,28 @@ function getAttributesHtml(attributes) {
 }
 
 /**
+ * Enables/disables Add to Cart button for a bundle or specific product item
+ *
+ * @param {Object} response - response from Ajax call
+ * @param {JQuery} $productContainer - Product item object
+ */
+function updateAddToCartButton(response, $productContainer) {
+    var disableButton = false;
+
+    $productContainer.find('button.add-to-cart')
+        .eq(0)
+        .attr('disabled', (!response.product.readyToOrder || !response.product.available))
+        .trigger('product:statusUpdate', response.product);
+
+    if (isBundle()) {
+        disableButton = !isBundleOrderable();
+        getBundleAddToCartButton()
+            .attr('disabled', disableButton)
+            .trigger('product:statusUpdate', response.product);
+    }
+}
+
+/**
  * Parses JSON from Ajax call made whenever an attribute value is [de]selected
  * @param {Object} response - response from Ajax call
  * @param {Object} response.product - Product object
@@ -185,57 +261,62 @@ function getAttributesHtml(attributes) {
  *     determine whether the Add to Cart button can be enabled
  * @param {string} caller - identifying the calling element
  *                          (a product tile or the product details page)
+ * @param {JQuery} $productContainer - Product item object
  */
-function handleVariantResponse(response, caller) {
+function handleVariantResponse(response, caller, $productContainer) {
     // Update Item No.
     if (caller === 'tile') {
-        $('.product-quickview').data('pid', response.product.id);
+        $productContainer.find('.product-quickview').eq(0).data('pid', response.product.id);
     }
 
     if (caller === 'details') {
-        $('.product-id').text(response.product.id);
+        $productContainer.find('.product-id')
+            .eq(0)
+            .text(response.product.id);
+        $productContainer.attr('data-pid', response.product.id);
     }
 
     if (response.product.variationAttributes) {
         updateAttrs(response.product.variationAttributes);
     }
 
-    // Enable "Add to Cart" button if all required attributes have been selected
-    $('button.add-to-cart').attr(
-        'disabled',
-        (!response.product.readyToOrder || !response.product.available)
-    );
-
-    $('button.add-to-cart').trigger('product:statusUpdate', response.product);
-
-
     // Update primary images
     var primaryImageUrls = response.product.images;
     primaryImageUrls.large.forEach(function (imageUrl, idx) {
-        $('.primary-images').find('img').eq(idx)
+        $productContainer.find('.primary-images').eq(0).find('img').eq(idx)
             .attr('src', imageUrl.url);
     });
 
     // Update pricing
-    $('.prices .price').replaceWith(response.product.price.html);
+    $productContainer.find('.prices .price').eq(0).replaceWith(response.product.price.html);
 
     // Update promotions
-    $('.promotions').empty().html(getPromotionsHtml(response.product.promotions));
+    $productContainer.find('.promotions')
+        .eq(0)
+        .empty()
+        .html(getPromotionsHtml(response.product.promotions));
 
-    updateAvailability(response);
+    updateAvailability(response, $productContainer);
+
+    // Enable "Add to Cart" button if all required attributes have been selected
+    updateAddToCartButton(response, $productContainer);
 
     // Update attributes
-    $('.main-attributes').empty().html(getAttributesHtml(response.product.attributes));
+    $productContainer.find('.main-attributes')
+        .eq(0)
+        .empty()
+        .html(getAttributesHtml(response.product.attributes));
 }
 
 /**
  * Retrieves url to use when updating a product view and appends the quantity
  * @param {string} selectedValueUrl - string The url used to indicate the product variation
+ * @param {JQuery} $productContainer - Product item object
  * @return {string|null} - the Url for the selected variation value
  */
-function createSelectedValueUrl(selectedValueUrl) {
+function createSelectedValueUrl(selectedValueUrl, $productContainer) {
     if (selectedValueUrl && selectedValueUrl !== 'null') {
-        return appendQuantityToUrl(selectedValueUrl);
+        return appendQuantityToUrl(selectedValueUrl, $productContainer);
     }
 
     return null;
@@ -245,8 +326,9 @@ function createSelectedValueUrl(selectedValueUrl) {
  * updates the product view when a product attribute is selected or deselected or when
  *         changing quantity
  * @param {string} selectedValueUrl - the Url for the selected variation value
+ * @param {JQuery} $productContainer - Product item object
  */
-function attributeSelect(selectedValueUrl) {
+function attributeSelect(selectedValueUrl, $productContainer) {
     var productUrl;
     var view;
 
@@ -266,8 +348,9 @@ function attributeSelect(selectedValueUrl) {
             url: selectedValueUrl,
             method: 'GET',
             success: function (data) {
-                handleVariantResponse(data, view);
-                $('.quantity-select').data('action', data.product.selectedVariantUrl);
+                handleVariantResponse(data, view, $productContainer);
+                $productContainer.find('.quantity-select')
+                    .data('action', data.product.selectedVariantUrl);
                 $.spinner().stop();
             },
             error: function () {
@@ -279,13 +362,11 @@ function attributeSelect(selectedValueUrl) {
 
 /**
  * Retrieves url to use when adding a product to the cart
- * @param {string} pid - product id
+ *
  * @return {string} - The provided URL to use when adding a product to the cart
  */
-function getAddToCartUrl(pid) {
-    var quantity = getQuantitySelected();
-    var queryParams = ['pid=' + pid, 'quantity=' + quantity].join('&');
-    return $('input[name="addToCartUrl"]').val() + '?' + queryParams;
+function getAddToCartUrl() {
+    return $('input[name="addToCartUrl"]').val();
 }
 
 /**
@@ -308,6 +389,21 @@ function handlePostCartAdd(response) {
     }, 10000);
 }
 
+/**
+ * Retrieves the bundle product item ID's for the Controller to replace bundle master product
+ * items with their selected variants
+ *
+ * @return {string[]} - List of selected bundle product item ID's
+ */
+function getChildPids() {
+    if (isBundle()) {
+        return $('.bundle-item .product-id').map(function () {
+            return $(this).text();
+        }).get().join(',');
+    }
+    return [];
+}
+
 module.exports = {
     attributeSelect: attributeSelect,
 
@@ -315,8 +411,9 @@ module.exports = {
         $(document).on('click', '[data-attr="color"] a', function (e) {
             e.preventDefault();
 
-            var selectedValueUrl = createSelectedValueUrl(e.currentTarget.href);
-            attributeSelect(selectedValueUrl);
+            var $productContainer = $(this).closest('.product-detail');
+            var selectedValueUrl = createSelectedValueUrl(e.currentTarget.href, $productContainer);
+            attributeSelect(selectedValueUrl, $productContainer);
         });
     },
 
@@ -324,22 +421,26 @@ module.exports = {
         $(document).on('change', 'select[class*="select-"]', function (e) {
             e.preventDefault();
 
-            var selectedValueUrl = createSelectedValueUrl(e.currentTarget.value);
-            attributeSelect(selectedValueUrl);
+            var $productContainer = $(this).closest('.product-detail');
+            var selectedValueUrl = createSelectedValueUrl(e.currentTarget.value, $productContainer);
+            attributeSelect(selectedValueUrl, $productContainer);
         });
     },
 
     availability: function () {
         $(document).on('change', '.quantity-select', function (e) {
             e.preventDefault();
-            var quantity = getQuantitySelected();
-            attributeSelect($('.quantity-select').data('action') + '&quantity=' + quantity);
+            var quantity = getQuantitySelected($(this));
+            var $productContainer = $(this).closest('.product-detail');
+            if (!isBundle) {
+                attributeSelect($('.quantity-select').data('action') + '&quantity=' + quantity,
+                    $productContainer);
+            }
         });
     },
 
     addToCart: function () {
         $(document).on('click', 'button.add-to-cart', function () {
-            var addToCartUrl;
             var view;
             var pid;
 
@@ -348,33 +449,36 @@ module.exports = {
                 pid = $(this).closest('.product-quickview').data('pid');
             } else {
                 view = 'details';
-                pid = $('.product-id').text();
+                pid = isBundle()
+                    ? $('.product-bundle .product-id').eq(0).text()
+                    : $('.product-id').text();
             }
 
-            addToCartUrl = getAddToCartUrl(pid);
+            if (view === 'tile') {
+                $('.modal-body').spinner().start();
+            } else {
+                $.spinner().start();
+            }
 
-            if (addToCartUrl) {
-                if (view === 'tile') {
-                    $('.modal-body').spinner().start();
-                } else {
-                    $.spinner().start();
-                }
-
-                $.ajax({
-                    url: addToCartUrl,
-                    method: 'POST',
-                    success: function (data) {
-                        handlePostCartAdd(data);
-                        if (view === 'tile') {
-                            $('#quickViewModal').modal('hide');
-                        }
-                        $.spinner().stop();
-                    },
-                    error: function () {
-                        $.spinner().stop();
+            $.ajax({
+                url: getAddToCartUrl(),
+                method: 'POST',
+                data: {
+                    pid: pid,
+                    childPids: getChildPids(),
+                    quantity: getQuantitySelected($(this))
+                },
+                success: function (data) {
+                    handlePostCartAdd(data);
+                    if (view === 'tile') {
+                        $('#quickViewModal').modal('hide');
                     }
-                });
-            }
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
+                }
+            });
         });
     }
 };
