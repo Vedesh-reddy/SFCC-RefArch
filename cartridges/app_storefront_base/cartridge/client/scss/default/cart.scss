@@ -143,9 +143,9 @@ $negative-spacer: -0.625rem;
         padding: 0;
         position: absolute;
         top: $negative-spacer;
-        right: 1.25rem;
-        border: none;
-        background-color: $white;
+        right: 0.25rem;
+        //border: none;
+        //background-color: $white;
 
         @include media-breakpoint-up(lg) {
             top: 0;
@@ -232,4 +232,54 @@ $negative-spacer: -0.625rem;
 .promotion-information {
     margin-bottom: 0.625rem;
     margin-top: 0.625rem;
+}
+
+.line-item-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.bundle-includes {
+    font-size: 0.813em;
+    margin-bottom: 0.625em;
+}
+
+.bundled-line-item + .bundled-line-item::before {
+    content: "";
+    display: block;
+    border-bottom: 0.063em dashed $horizontal-rule-grey;
+    margin: 0.625em -0.625em;
+}
+
+.bundle-line-item-price-and-quantity {
+    display: flex;
+    flex-direction: row;
+    flex-grow: 1;
+    justify-content: space-around;
+}
+
+.bundle-edit-or-wishlist {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    font-size: 0.813em;
+    justify-content: space-around;
+}
+
+//.bundle-card-footer {
+//    content: "";
+//    display: block;
+//    border-top: 0.065em solid $horizontal-rule-grey;
+//    margin-top: 0.625em;
+//    margin-bottom: 0.625em;
+//    margin: 0.625em -0.625em;
+//}
+
+.quantity-label {
+    font-size: 0.813em;
+}
+
+.quantity {
+    width: 100%;
 }
