@@ -26,6 +26,8 @@ export const dropdownMenu = '.dropdown-menu';
 export const navWomenClothingButton = '#womens-clothing';
 export const navWomenClothingTopsButton = '#womens-clothing-tops';
 export const navBar = '#sg-navbar-collapse';
+export const signInButton = '.fa-sign-in';
+export const signInButtonIpad = '.hidden-md-up .fa-sign-in';
 
 const basePath = '/home';
 
