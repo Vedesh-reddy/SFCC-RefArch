@@ -58,6 +58,20 @@
         }
 
         /**
+         * Populate the Billing Address Summary View
+         * @param {string} parentSelector - the top level DOM selector for a unique address summary
+         * @param {Object} address - the address data
+         */
+        function populateBillingSummary(parentSelector, address) {
+            $.each(address, function (attr) {
+                var val = address[attr];
+                if (val) {
+                    $('.' + attr, parentSelector).text(val);
+                }
+            });
+        }
+
+        /**
          * updates the totals summary
          * @param {Array} totals - the totals data
          */
@@ -609,7 +623,8 @@
             updateBillingAddressFormValues(order.billing);
 
             // update billing address summary
-            populateSummary('.billing .address-summary', order.billing.billingAddress.address);
+            populateBillingSummary('.billing .address-summary',
+                order.billing.billingAddress.address);
 
             // update billing parts of order summary
             $('.order-summary-email').text(order.orderEmail);

@@ -5,7 +5,7 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../util');
 
-describe('Product Line Item', function () {
+describe('Bundle Product Line Item', function () {
     var ProductLineItem = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/productLineItem/productLineItem', {
         './../product/productBase': proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
             './productImages': function () {},
@@ -32,6 +32,19 @@ describe('Product Line Item', function () {
             'dw/util/ArrayList': ArrayList
         })
     });
+
+    var ProductLineItemBundle = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/productLineItem/bundleLineItem', {
+        '~/cartridge/scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
+            'dw/util/ArrayList': ArrayList
+        }),
+        './productLineItem': ProductLineItem
+    });
+
+    var productFactoryMock = {
+        get: function () {
+            return 'some product';
+        }
+    };
 
     var attributeModel = {
         visibleAttributeGroups: new ArrayList([{
@@ -94,6 +107,7 @@ describe('Product Line Item', function () {
     };
 
     var productMock = {
+        ID: '12345679',
         variationModel: {
             productVariationAttributes: new ArrayList([{
                 attributeID: '',
@@ -101,7 +115,11 @@ describe('Product Line Item', function () {
             }]),
             selectedVariant: productVariantMock
         },
-        attributeModel: attributeModel
+        attributeModel: attributeModel,
+        availabilityModel: availabilityModelMock,
+        minOrderQuantity: {
+            value: 2
+        }
     };
 
     var priceAdjustments = new ArrayList([
@@ -127,28 +145,19 @@ describe('Product Line Item', function () {
         product: toProductMock(productMock),
         shipment: {
             UUID: 'shipment UUID'
-        }
+        },
+        bundledProductLineItems: new ArrayList([{ product: productMock, quantity: { value: 1 } }])
     };
 
-    it('should load productLineItem', function () {
-        var productLineItem = new ProductLineItem(lineItem.product, null, 1, lineItem);
+    it('should load bundled product line item', function () {
+        var productLineItemBundle = new ProductLineItemBundle(
+            lineItem.product,
+            1,
+            lineItem,
+            null,
+            productFactoryMock
+        );
 
-        assert.equal(productLineItem.productName, 'test product');
-        assert.equal(productLineItem.id, 1234567);
-        assert.equal(productLineItem.rating, 4);
-        assert.equal(productLineItem.isBonusProductLineItem, false);
-        assert.equal(productLineItem.isGift, false);
-        assert.equal(productLineItem.UUID, 'some UUID');
-        assert.equal(productLineItem.isOrderable, true);
-        assert.deepEqual(productLineItem.priceTotal, {
-            nonAdjustedPrice: 'formattedMoney',
-            price: 'formattedMoney',
-            renderedPrice: 'string'
-        });
-        assert.equal(productLineItem.quantity, 1);
-        assert.equal(productLineItem.appliedPromotions.length, 1);
-        assert.deepEqual(productLineItem.appliedPromotions,
-            [{ callOutMsg: 'string', name: 'some name', details: 'string' }]);
-        assert.equal(productLineItem.renderedPromotions, 'string');
+        assert.equal(productLineItemBundle.bundledProductLineItems.length, 1);
     });
 });

@@ -19,6 +19,7 @@ function addProductToCart(currentBasket, productId, quantity) {
     var productLineItems = currentBasket.productLineItems;
     var productQuantityInCart;
     var quantityToSet;
+    var productLineItem;
 
     var optionModel = product.optionModel;
 
@@ -34,7 +35,7 @@ function addProductToCart(currentBasket, productId, quantity) {
         quantityToSet = quantity ? quantity + productQuantityInCart : productQuantityInCart + 1;
         productInCart.setQuantityValue(quantityToSet);
     } else {
-        var productLineItem = currentBasket.createProductLineItem(
+        productLineItem = currentBasket.createProductLineItem(
             product,
             optionModel,
             defaultShipment

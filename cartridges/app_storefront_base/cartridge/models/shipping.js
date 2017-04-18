@@ -40,7 +40,7 @@ function getApplicableShippingMethods(shipment, address) {
 function getProductLineItemsModel(shipment) {
     if (!shipment) return null;
 
-    return new ProductLineItemsModel(shipment);
+    return new ProductLineItemsModel(shipment.productLineItems);
 }
 
 /**

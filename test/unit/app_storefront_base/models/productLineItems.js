@@ -37,7 +37,7 @@ var productMock = {
 };
 
 var apiBasket = {
-    allProductLineItems: new ArrayList([{
+    productLineItems: new ArrayList([{
         bonusProductLineItem: false,
         gift: false,
         UUID: 'some UUID',
@@ -54,14 +54,14 @@ var apiBasket = {
 
 describe('ProductLineItems model', function () {
     it('should accept/process a null Basket object', function () {
-        var nullBasket = null;
-        var result = new ProductLineItemsModel(nullBasket);
+        var lineItems = null;
+        var result = new ProductLineItemsModel(lineItems);
         assert.equal(result.items.length, 0);
         assert.equal(result.totalQuantity, 0);
     });
 
     it('should create product line items and get total quantity', function () {
-        var result = new ProductLineItemsModel(apiBasket);
+        var result = new ProductLineItemsModel(apiBasket.productLineItems);
         assert.equal(result.items.length, 1);
         assert.equal(result.totalQuantity, 1);
     });

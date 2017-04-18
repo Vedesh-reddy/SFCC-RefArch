@@ -29,7 +29,8 @@ describe('productFactory', function () {
         },
         './../../models/product/product': productModel,
         './../../models/product/productBase': function () { return { message: 'product base' }; },
-        './../../models/productLineItem': function () { return { message: 'productLineItem' }; },
+        './../../models/productLineItem/productLineItem': function () { return { message: 'productLineItem' }; },
+        './../../models/productLineItem/bundleLineItem': function () { return { message: 'bundleLineItem' }; },
         './../../models/product/productBundle': function () { return { message: 'productBundle' }; },
         './../../models/product/productSet': function () { return { message: 'productSet' }; },
         './../../models/product/productSetBase': function () { return { message: 'productSetBase' }; }
@@ -48,6 +49,15 @@ describe('productFactory', function () {
             pview: 'productLineItem'
         });
         assert.equal(product.message, 'productLineItem');
+    });
+
+    it('should return productLineItem model', function () {
+        productModel.getProductType = function () { return 'bundle'; };
+        var product = productFactory.get({
+            pid: 1234,
+            pview: 'productLineItem'
+        });
+        assert.equal(product.message, 'bundleLineItem');
     });
 
     it('should return product base', function () {

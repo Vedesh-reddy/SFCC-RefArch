@@ -1,7 +1,7 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var ProductBase = require('./product/productBase').productBase;
+var ProductBase = require('./../product/productBase').productBase;
 var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
 var helper = require('~/cartridge/scripts/dwHelpers');
 
@@ -111,30 +111,31 @@ function ProductLineItem(product, productVariables, quantity, lineItem, promotio
     };
     this.useSimplePrice = false;
     this.apiPromotions = promotions;
-    this.initialize(lineItem);
+    this.lineItem = lineItem;
+    this.initialize();
 }
 
 ProductLineItem.prototype = Object.create(ProductBase.prototype);
 
-ProductLineItem.prototype.initialize = function (lineItem) {
+ProductLineItem.prototype.initialize = function () {
     ProductBase.prototype.initialize.call(this);
     this.quantityOptions = getMinMaxQuantityOptions(this.product, this.quantity);
-    this.priceTotal = getTotalPrice(lineItem);
-    this.isBonusProductLineItem = lineItem.bonusProductLineItem;
-    this.isGift = lineItem.gift;
-    this.UUID = lineItem.UUID;
-    this.shipmentUUID = lineItem.shipment.UUID;
+    this.priceTotal = getTotalPrice(this.lineItem);
+    this.isBonusProductLineItem = this.lineItem.bonusProductLineItem;
+    this.isGift = this.lineItem.gift;
+    this.UUID = this.lineItem.UUID;
+    this.shipmentUUID = this.lineItem.shipment.UUID;
     this.isOrderable = this.product.availabilityModel.isOrderable(this.quantity);
 
     // TODO: Pull out this constant to top
     this.isAvailableForInStorePickup = (this.product.custom
-        && Object.prototype.hasOwnProperty.call(this.product.custom, 'availableForInStorePickup')
-        && !!this.product.custom.availableForInStorePickup);
-    this.isInStorePickup = (lineItem.custom
-        && Object.prototype.hasOwnProperty.call(lineItem.custom, 'fromStoreId')
-        && !!lineItem.custom.fromStoreId);
+        && Object.prototype.hasOwnProperty.call(this.product.custom, 'isAvailableForInStorePickup')
+        && !!this.product.custom.isAvailableForInStorePickup);
+    this.isInStorePickup = (this.lineItem.custom
+        && Object.prototype.hasOwnProperty.call(this.lineItem.custom, 'fromStoreId')
+        && !!this.lineItem.custom.fromStoreId);
 
-    this.appliedPromotions = getAppliedPromotions(lineItem);
+    this.appliedPromotions = getAppliedPromotions(this.lineItem);
     this.renderedPromotions = getRenderedPromotions(this.appliedPromotions);
 };
 
@@ -168,3 +169,4 @@ function ProductWrapper(product, productVariables, quantity, lineItem, promotion
 }
 
 module.exports = ProductWrapper;
+module.exports.productLineItem = ProductLineItem;

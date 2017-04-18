@@ -18,7 +18,7 @@ var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
-    var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems);
+    var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.productLineItems);
 
     res.render('/components/header/minicart', { quantityTotal: quantityTotal });
     next();
@@ -39,7 +39,7 @@ server.post('AddProduct', function (req, res, next) {
         });
     }
 
-    var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.allProductLineItems);
+    var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.productLineItems);
     var cartModel = new CartModel(currentBasket);
 
     res.json({
