@@ -50,9 +50,9 @@
         top: 100%;
         left: auto;
         right: 0;
-        min-width: 350px;
-        max-width: 350px;
-        min-height: 100px;
+        min-width: 23.44rem;
+        max-width: 23.44rem;
+        min-height: 6.25rem;
         display: none;
 
         &::before {
@@ -86,5 +86,13 @@
     .sub-total {
         font-size: 1em;
         font-weight: 600;
+    }
+
+    .line-item-divider {
+        margin: 0.625em -0.625em 0.625em -1.325em;
+    }
+
+    .line-item-name {
+        width: 90%;
     }
 }

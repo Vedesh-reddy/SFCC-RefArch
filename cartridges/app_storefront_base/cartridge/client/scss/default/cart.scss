@@ -39,8 +39,7 @@ $negative-spacer: -0.625rem;
 }
 
 .edit-add-to-wishlist {
-    position: absolute;
-    bottom: 0;
+    margin-top: auto;
 
     a {
         font-size: 0.813em;
@@ -50,7 +49,6 @@ $negative-spacer: -0.625rem;
 .line-item-attributes {
     font-size: 0.813em;
     margin: 0;
-    height: 100%;
 }
 
 .item-attributes {
@@ -60,8 +58,7 @@ $negative-spacer: -0.625rem;
 }
 
 .line-item-divider {
-    margin-top: $spacer;
-    margin-bottom: $spacer;
+    margin: $spacer $negative-spacer $spacer $negative-spacer;
 }
 
 .line-item-name {
@@ -72,6 +69,7 @@ $negative-spacer: -0.625rem;
     color: $darker-gray;
     font-weight: bold;
     margin-bottom: $spacer;
+    width: 90%;
 }
 
 .line-item-price {
@@ -144,8 +142,8 @@ $negative-spacer: -0.625rem;
         position: absolute;
         top: $negative-spacer;
         right: 0.25rem;
-        //border: none;
-        //background-color: $white;
+        border: none;
+        background-color: $white;
 
         @include media-breakpoint-up(lg) {
             top: 0;
@@ -245,36 +243,28 @@ $negative-spacer: -0.625rem;
     margin-bottom: 0.625em;
 }
 
-.bundled-line-item + .bundled-line-item::before {
+.cart-page .bundled-line-item + .bundled-line-item::before {
     content: "";
     display: block;
     border-bottom: 0.063em dashed $horizontal-rule-grey;
     margin: 0.625em -0.625em;
 }
 
-.bundle-line-item-price-and-quantity {
-    display: flex;
-    flex-direction: row;
-    flex-grow: 1;
-    justify-content: space-around;
-}
-
 .bundle-edit-or-wishlist {
     display: flex;
-    flex-grow: 1;
-    align-items: center;
+    justify-content: flex-start;
     font-size: 0.813em;
-    justify-content: space-around;
-}
 
-//.bundle-card-footer {
-//    content: "";
-//    display: block;
-//    border-top: 0.065em solid $horizontal-rule-grey;
-//    margin-top: 0.625em;
-//    margin-bottom: 0.625em;
-//    margin: 0.625em -0.625em;
-//}
+    @include media-breakpoint-down(md) {
+        margin-bottom: 0.625em;
+    }
+
+    @include media-breakpoint-up(lg) {
+        flex-grow: 1;
+        align-items: center;
+        justify-content: space-around;
+    }
+}
 
 .quantity-label {
     font-size: 0.813em;

@@ -34,7 +34,7 @@
             </div>
         </div>
     <iselse/>
-        <div class="container cart">
+        <div class="container cart cart-page">
             <div class="row">
                 <!---product cards--->
                 <div class="col-sm-7 col-md-8">
@@ -45,7 +45,6 @@
                             <isinclude template="cart/productCard/cartProductCard" />
                         </isif>
                     </isloop>
-
 
                     <isinclude template="cart/cartApproachingDiscount" />
                 </div>

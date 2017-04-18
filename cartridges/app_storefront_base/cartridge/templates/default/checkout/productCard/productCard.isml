@@ -1,13 +1,18 @@
 <div class="product-line-item">
-    <div class="row product-line-item-name">
+    <div class="line-item-header">
         <isif condition=${miniCart}>
             <isinclude template="checkout/productCard/productCardProductNameAndRemove" />
         <iselse>
             <isinclude template="checkout/productCard/productCardProductName" />
         </isif>
     </div>
-    <div class="row product-line-item-details">
-        <div class="col-lg-12">
+
+    <isif condition="${lineItem.productType === 'bundle'}">
+        <div class="bundle-includes">${Resource.msg('msg.bundle.includes','cart',null)}</div>
+        <!--- individual bundled line items --->
+        <isinclude template="cart/productCard/cartProductCardBundledItems" />
+    <iselse/>
+        <div class="product-line-item-details">
             <img class="product-image" src="${lineItem.images.small[0].url}" alt="${lineItem.images.small[0].alt}" title="${lineItem.images.small[0].title}">
             <div class="item-attributes">
                 <isloop items="${lineItem.variationAttributes}" var="attribute">
@@ -15,8 +20,10 @@
                 </isloop>
             </div>
         </div>
-    </div>
-    <div class="row line-item-price-quantity-info align-items-start">
+    </isif>
+
+    <div><hr class="line-item-divider"></div>
+    <div class="row align-items-start">
         <!--- item price --->
         <div class="col-4 line-item-unit-price">
             <p class="line-item-pricing-info">

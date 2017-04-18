@@ -5,28 +5,9 @@
     <div class="bundle-includes">${Resource.msg('msg.bundle.includes','cart',null)}</div>
 
     <!--- individual bundled line items --->
-    <isloop items="${lineItem.bundledProductLineItems}" var="bundledLineItem">
-        <div class="bundled-line-item">
-            <div class="line-item-name">
-                <span>${bundledLineItem.productName}</span>
-            </div>
-            <div>
-                <img class="product-image"
-                     src="${bundledLineItem.images.small[0].url}"
-                     alt="${bundledLineItem.images.small[0].alt}"
-                     title="${bundledLineItem.images.small[0].title}"
-                >
-                <div class="item-attributes">
-                    <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
-                        <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
-                    </isloop>
-                </div>
-            </div>
-        </div>
-    </isloop>
+    <isinclude template="cart/productCard/cartProductCardBundledItems" />
 
-    <!--- ========================================= --->
-    <hr class="line-item-divider">
+    <div><hr class="line-item-divider"></div>
     <div class="row bundle-card-footer">
         <div class="hidden-xs-down col-lg-5 bundle-edit-or-wishlist">
             <a href="${"#"}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
