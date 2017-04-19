@@ -117,13 +117,22 @@ function validateShippingForm(form) {
 
 /**
  * Checks to see if the shipping address is initialized
+ * @param {dw.order.Shipment} [shipment] - Script API Shipment object
  * @returns {boolean} returns true if defaulShipment.shippingAddress is not null
  */
-function isShippingAddressInitialized() {
+function isShippingAddressInitialized(shipment) {
     var currentBasket = BasketMgr.getCurrentBasket();
+    var initialized = false;
 
-    return (currentBasket && currentBasket.defaultShipment
-        && currentBasket.defaultShipment.shippingAddress);
+    if (currentBasket) {
+        if (shipment) {
+            initialized = !!shipment.shippingAddress;
+        } else {
+            initialized = !!currentBasket.defaultShipment.shippingAddress;
+        }
+    }
+
+    return initialized;
 }
 
 /**

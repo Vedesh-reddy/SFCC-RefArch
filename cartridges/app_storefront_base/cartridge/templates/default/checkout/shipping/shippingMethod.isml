@@ -1,22 +1,22 @@
 <isset name="shippingAddress" value="${pdict.forms.shippingForm.shippingAddress}" scope="page"/>
-<div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.https('Cart-SelectShippingMethod')}" data-action="${URLUtils.https('Checkout-UpdateShippingMethodsList')}">
+<div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.https('Checkout-SelectShippingMethod')}" data-action-url="${URLUtils.https('Checkout-UpdateShippingMethodsList')}">
 	<input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
     <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod" status="loopSate">
-        <div class="form-check col-8 start-lines">
+        <div class="form-check col-9 start-lines">
             <label class="form-check-label shipping-method-option">
-                <isif condition="${shippingMethod.ID === shippingModel.selectedShippingMethod.ID}">
+                <isif condition="${shippingModel.selectedShippingMethod && shippingMethod.ID === shippingModel.selectedShippingMethod.ID}">
                     <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" class="form-check-input" value="${shippingMethod.ID}" checked>
                 <iselse/>
                     <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input">
                 </isif>
-                <span>${shippingMethod.displayName}</span>
+                <span class="display-name">${shippingMethod.displayName}</span>
                 <isif condition="${shippingMethod.estimatedArrivalTime}">
                     <span class="text-muted arrival-time">(${shippingMethod.estimatedArrivalTime})</span>
                 </isif>
             </label>
         </div>
-        <div class="col-4 text-right shipping-method-pricing end-lines">
-            <span>${shippingMethod.shippingCost}</span>
+        <div class="col-3 text-right shipping-method-pricing end-lines">
+            <span class="shipping-cost">${shippingMethod.shippingCost}</span>
         </div>
     </isloop>
 </div>
@@ -25,14 +25,14 @@
 <!-- Template used by client to redraw shipping methods                           -->
 <!---------------------------------------------------------------------------------->
 <div id="shipping-method-template" style="display:none;" >
-    <div class="form-check col-8 start-lines">
+    <div class="form-check col-9 start-lines">
         <label class="form-check-label shipping-method-option">
             <input type="radio" class="form-check-input">
             <span class="display-name"></span>
             <span class="text-muted arrival-time" style="display:none"></span>
         </label>
     </div>
-    <div class="col-4 text-right shipping-method-pricing end-lines">
+    <div class="col-3 text-right shipping-method-pricing end-lines">
         <span class="shipping-cost"></span>
     </div>
 </div>

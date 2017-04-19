@@ -1,5 +1,7 @@
 'use strict';
 
+var Resource = require('dw/web/Resource');
+
 var AddressModel = require('~/cartridge/models/address');
 var BillingModel = require('~/cartridge/models/billing');
 var PaymentModel = require('~/cartridge/models/payment');
@@ -10,6 +12,22 @@ var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 var DEFAULT_MODEL_CONFIG = {
     numberOfLineItems: '*'
+};
+
+var RESOURCES = {
+    noSelectedPaymentMethod: Resource.msg('error.no.selected.payment.method', 'creditCard', null),
+    cardType: Resource.msg('msg.payment.type.credit', 'confirmation', null),
+    cardEnding: Resource.msg('msg.card.type.ending', 'confirmation', null),
+    shippingMethod: Resource.msg('Shipping Method', 'checkout', null),
+    items: Resource.msg('msg.items', 'checkout', null),
+    item: Resource.msg('msg.item', 'checkout', null),
+    addNewAddress: Resource.msg('msg.add.new.address', 'checkout', null),
+    newAddress: Resource.msg('msg.new.address', 'checkout', null),
+    shipToAddress: Resource.msg('msg.ship.to.address', 'checkout', null),
+    shippingAddresses: Resource.msg('msg.shipping.addresses', 'checkout', null),
+    accountAddresses: Resource.msg('msg.account.addresses', 'checkout', null),
+    shippingTo: Resource.msg('msg.shipping.to', 'checkout', null),
+    pickupInStore: Resource.msg('msg.pickup.in.store', 'checkout', null)
 };
 
 /**
@@ -55,17 +73,23 @@ function getFirstProductLineItem(productLineItemsModel) {
  * @constructor
  */
 function OrderModel(lineItemContainer, options) {
+    this.resources = RESOURCES;
+
     if (!lineItemContainer) {
         this.orderNumber = null;
         this.creationDate = null;
         this.orderEmail = null;
         this.orderStatus = null;
+        this.usingMultiShipping = null;
+        this.shippable = null;
     } else {
         var safeOptions = options || {};
 
         var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
         var customer = safeOptions.customer || lineItemContainer.customer;
         var currencyCode = safeOptions.currencyCode || lineItemContainer.currencyCode;
+        var usingMultiShipping = safeOptions.usingMultiShipping
+            || (lineItemContainer.shipments.length > 1);
 
         var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer);
 
@@ -77,6 +101,8 @@ function OrderModel(lineItemContainer, options) {
         var productLineItemsModel = new ProductLineItemsModel(lineItemContainer.productLineItems);
         var totalsModel = new TotalsModel(lineItemContainer);
 
+        this.shippable = safeOptions.shippable || false;
+        this.usingMultiShipping = usingMultiShipping;
         this.orderNumber = Object.hasOwnProperty.call(lineItemContainer, 'orderNo')
             ? lineItemContainer.orderNo
             : null;

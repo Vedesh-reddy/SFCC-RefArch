@@ -43,7 +43,7 @@ describe('ShippingMethod', function () {
             description: 'a description',
             defaultMethod: true
         }, null);
-        assert.isTrue(result.isDefault);
+        assert.isTrue(result.default);
     });
 
     it('should set cost with shipment parameter ', function () {
@@ -54,7 +54,7 @@ describe('ShippingMethod', function () {
         }, {});
 
         assert.isDefined(result.shippingCost);
-        assert.isDefined(result.isSelected);
+        assert.isDefined(result.selected);
     });
 
     it('should set isSelected shipment parameter with selected method', function () {
@@ -68,6 +68,6 @@ describe('ShippingMethod', function () {
             }
         });
 
-        assert.isTrue(result.isSelected);
+        assert.isTrue(result.selected);
     });
 });

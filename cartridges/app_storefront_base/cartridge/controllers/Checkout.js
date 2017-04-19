@@ -5,15 +5,15 @@ var server = require('server');
 var BasketMgr = require('dw/order/BasketMgr');
 var HookMgr = require('dw/system/HookMgr');
 var Resource = require('dw/web/Resource');
-var ShippingMgr = require('dw/order/ShippingMgr');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 
-var AddressModel = require('~/cartridge/models/address');
-var BillingModel = require('~/cartridge/models/billing');
+var AccountModel = require('~/cartridge/models/account');
+// var AddressModel = require('~/cartridge/models/address');
+// var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
-var PaymentModel = require('~/cartridge/models/payment');
-var ShippingModel = require('~/cartridge/models/shipping');
+// var PaymentModel = require('~/cartridge/models/payment');
+// var ShippingModel = require('~/cartridge/models/shipping');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var TotalsModel = require('~/cartridge/models/totals');
 
@@ -24,6 +24,7 @@ var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 var COHelpers = require('~/cartridge/scripts/checkout/checkoutHelpers');
 
+var Collections = require('~/cartridge/scripts/util/collections');
 
 /**
  * Main entry point for Checkout
@@ -67,28 +68,283 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var basketModel = new OrderModel(currentBasket);
 
-    res.json(basketModel);
-
-    next();
-});
-
-
-server.post('ToggleMultiShip', server.middleware.https, function (req, res, next) {
-    var privacyCache = req.session.privacyCache;
-
-    privacyCache.usingMultiShipping = !privacyCache.usingMultiShipping;
-
     res.json({
-        usingMultiShipping: privacyCache.usingMultiShipping
+        order: basketModel,
+        customer: new AccountModel(req.currentCustomer)
     });
 
     next();
 });
 
 
+server.post('ToggleMultiShip', server.middleware.https, function (req, res, next) {
+    /** vvv Extract to server.middleware for all Checkout / Ajax functions **/
+    var currentBasket = BasketMgr.getCurrentBasket();
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return;
+    }
+    /** ^^^ Extract to middleware for all Checkout / Ajax functinos **/
+
+    var shipments = currentBasket.shipments;
+    var defaultShipment = currentBasket.defaultShipment;
+    var usingMultiShipping = !req.session.privacyCache.get('usingMultiShipping');
+
+    req.session.privacyCache.set('usingMultiShipping', usingMultiShipping);
+
+    if (!usingMultiShipping && shipments.length > 1) {
+        // Make sure we move all product line items back to the default shipment
+        Transaction.wrap(function () {
+            Collections.forEach(shipments, function (shipment) {
+                if (!shipment.default) {
+                    Collections.forEach(shipment.productLineItems, function (pli) {
+                        pli.setShipment(defaultShipment);
+                    });
+                    currentBasket.removeShipment(shipment);
+                }
+            });
+
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        });
+    }
+
+    var basketModel = new OrderModel(currentBasket, {
+        usingMultiShipping: usingMultiShipping
+    });
+
+    res.json({
+        customer: new AccountModel(req.currentCustomer),
+        order: basketModel
+    });
+
+    next();
+});
+
+server.post('SelectShippingMethod', server.middleware.https, function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return next();
+    }
+
+    var shipmentUUID = req.querystring.shipmentUUID || req.form.shipmentUUID;
+    var shippingMethodID = req.querystring.methodID || req.form.methodID;
+    var shipment;
+    if (shipmentUUID) {
+        shipment = ShippingHelper.getShipmentByUUID(currentBasket, shipmentUUID);
+    } else {
+        shipment = currentBasket.defaultShipment;
+    }
+
+    var address = {
+        firstName: req.querystring.firstName || req.form.firstName,
+        lastName: req.querystring.lastName || req.form.lastName,
+        address1: req.querystring.address1 || req.form.address1,
+        address2: req.querystring.address2 || req.form.address2,
+        city: req.querystring.city || req.form.city,
+        stateCode: req.querystring.stateCode || req.form.stateCode,
+        postalCode: req.querystring.postalCode || req.form.postalCode,
+        countryCode: req.querystring.countryCode || req.form.stateCode,
+        phone: req.querystring.phone || req.form.phone
+    };
+
+    var error;
+
+    try {
+        Transaction.wrap(function () {
+            var shippingAddress = shipment.shippingAddress;
+
+            if (!shippingAddress) {
+                shippingAddress = shipment.createShippingAddress();
+            }
+
+            Object.keys(address).forEach(function (key) {
+                var value = address[key];
+                if (value) {
+                    shippingAddress[key] = value;
+                } else {
+                    shippingAddress[key] = null;
+                }
+            });
+
+            ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
+
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        });
+    } catch (err) {
+        error = err;
+    }
+
+    if (error) {
+        res.setStatusCode(500);
+        res.json({
+            error: true,
+            errorMessage: Resource.msg('error.cannot.select.shipping.method', 'cart', null)
+        });
+    } else {
+        var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+        var basketModel = new OrderModel(currentBasket, {
+            usingMultiShipping: usingMultiShipping
+        });
+
+        res.json({
+            customer: new AccountModel(req.currentCustomer),
+            order: basketModel
+        });
+    }
+    return next();
+});
+
+
+server.post('UpdateShippingMethodsList', server.middleware.https, function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return next();
+    }
+
+    var shipmentUUID = req.querystring.shipmentUUID || req.form.shipmentUUID;
+    var shipment;
+    if (shipmentUUID) {
+        shipment = ShippingHelper.getShipmentByUUID(currentBasket, shipmentUUID);
+    } else {
+        shipment = currentBasket.defaultShipment;
+    }
+
+    var address = {
+        firstName: req.querystring.firstName || req.form.firstName,
+        lastName: req.querystring.lastName || req.form.lastName,
+        address1: req.querystring.address1 || req.form.address1,
+        address2: req.querystring.address2 || req.form.address2,
+        city: req.querystring.city || req.form.city,
+        stateCode: req.querystring.stateCode || req.form.stateCode,
+        postalCode: req.querystring.postalCode || req.form.postalCode,
+        countryCode: req.querystring.countryCode || req.form.countryCode,
+        phone: req.querystring.phone || req.form.phone
+    };
+
+    var shippingMethodID;
+
+    if (shipment.shippingMethod) {
+        shippingMethodID = shipment.shippingMethod.ID;
+    }
+
+    Transaction.wrap(function () {
+        var shippingAddress = shipment.shippingAddress;
+
+        if (!shippingAddress) {
+            shippingAddress = shipment.createShippingAddress();
+        }
+
+        Object.keys(address).forEach(function (key) {
+            var value = address[key];
+            if (value) {
+                shippingAddress[key] = value;
+            } else {
+                shippingAddress[key] = null;
+            }
+        });
+
+        ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
+
+        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+    });
+
+    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+    var basketModel = new OrderModel(currentBasket, {
+        usingMultiShipping: usingMultiShipping
+    });
+
+    res.json({
+        customer: new AccountModel(req.currentCustomer),
+        order: basketModel,
+        shippingForm: server.forms.getForm('shipping')
+    });
+
+    return next();
+});
+
+
+server.post('CreateNewAddress', server.middleware.https, function (req, res, next) {
+    var basket = BasketMgr.getCurrentBasket();
+    if (!basket) {
+        res.json({
+            redirectUrl: URLUtils.url('Cart-Show').toString(),
+            error: true
+        });
+        return next();
+    }
+
+    var pliUUID = req.form.productLineItemUUID || req.querystring.productLineItemUUID;
+    var productLineItem = COHelpers.getProductLineItem(basket, pliUUID);
+    var uuid = UUIDUtils.createUUID();
+    var shipment;
+// TODO: This is basis for copy shipping address for new shipment w/ same address
+//    var result = {};
+//    var form = server.forms.getForm('shipping');
+
+    try {
+//        result.address = {
+//            firstName: form.shippingAddress.addressFields.firstName.value,
+//            lastName: form.shippingAddress.addressFields.lastName.value,
+//            address1: form.shippingAddress.addressFields.address1.value,
+//            address2: form.shippingAddress.addressFields.address2.value,
+//            city: form.shippingAddress.addressFields.city.value,
+//            stateCode: form.shippingAddress.addressFields.states.stateCode.value,
+//            postalCode: form.shippingAddress.addressFields.postalCode.value,
+//            countryCode: form.shippingAddress.addressFields.country.value,
+//            phone: form.shippingAddress.addressFields.phone.value
+//        };
+//
+//        result.shippingMethod = form.shippingAddress.shippingMethodID.value ?
+//            '' + form.shippingAddress.shippingMethodID.value : null;
+
+        Transaction.wrap(function () {
+            shipment = basket.createShipment(uuid);
+
+            // No need to do form validation for shipment creation yet
+            // Validate on nextStage() trigger or save()
+//            COHelpers.copyShippingAddressToShipment(result, shipment);
+            productLineItem.setShipment(shipment);
+            ShippingHelper.ensureShipmentHasMethod(shipment);
+        });
+    } catch (err) {
+        res.json({
+            redirectUrl: URLUtils.url('Checkout-Start').toString(),
+            error: true
+        });
+        return next();
+    }
+
+    res.json({
+        uuid: uuid,
+        customer: new AccountModel(req.currentCustomer),
+        order: new OrderModel(basket)
+    });
+    return next();
+});
+
+
 server.post('AddNewAddress', server.middleware.https, function (req, res, next) {
     var pliUUID = req.form.productLineItemUUID;
-    var shipmentUUID = req.form.shipmentUUID;
+    var shipmentUUID = req.form.shipmentSelector || req.form.shipmentUUID;
     var origUUID = req.form.originalShipmentUUID;
 
     var form = server.forms.getForm('shipping');
@@ -96,7 +352,14 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
     var basket = BasketMgr.getCurrentBasket();
     var result = {};
 
+    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+
     if (Object.keys(shippingFormErrors).length > 0) {
+        if (shipmentUUID === 'new') {
+            req.session.privacyCache.set(origUUID, 'invalid');
+        } else {
+            req.session.privacyCache.set(shipmentUUID, 'invalid');
+        }
         res.json({
             form: form,
             fieldErrors: shippingFormErrors,
@@ -120,13 +383,14 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
         result.shippingMethod = form.shippingAddress.shippingMethodID.value ?
             '' + form.shippingAddress.shippingMethodID.value : null;
 
+        var shipment;
+
         if (!COHelpers.isShippingAddressInitialized()) {
             // First use always applies to defaultShipment
             COHelpers.copyShippingAddressToShipment(result, basket.defaultShipment);
         } else {
             try {
                 Transaction.wrap(function () {
-                    var shipment;
                     var removeOriginal = false;
 
                     if (origUUID === shipmentUUID) {
@@ -146,6 +410,8 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
                                 shipment = basket.createShipment(UUIDUtils.createUUID());
                                 removeOriginal = productLineItem.shipment;
                             }
+                        } else if (shipmentUUID.indexOf('ab_') === 0) {
+                            shipment = ShippingHelper.getShipmentByUUID(basket, origUUID);
                         } else {
                             // Choose an existing shipment for this PLI
                             shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
@@ -156,7 +422,19 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
 
                         // remove any
                         if (removeOriginal && removeOriginal.productLineItems.length === 0) {
-                            basket.removeShipment(removeOriginal);
+                            if (removeOriginal.default) {
+                                // Cant delete the defaultShipment
+                                // Copy all line items from 2nd to first
+                                Collections.forEach(basket.shipments[1].productLineItems,
+                                    function (lineItem) {
+                                        lineItem.setShipment(basket.defaultShipment);
+                                    });
+
+                                // then delete 2nd one
+                                basket.removeShipment(basket.shipments[1]);
+                            } else {
+                                basket.removeShipment(removeOriginal);
+                            }
                         }
                     }
                 });
@@ -165,13 +443,32 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
             }
         }
 
+        req.session.privacyCache.set(shipment.UUID, 'valid');
+
+        // Loop through all shipments and make sure all are valid
+        var isValid;
+        var allValid = true;
+        for (var i = 0, ii = basket.shipments.length; i < ii; i++) {
+            isValid = req.session.privacyCache.get(basket.shipments[i].UUID);
+            if (isValid !== 'valid') {
+                allValid = false;
+                break;
+            }
+        }
+
         COHelpers.recalculateBasket(basket);
-        var basketModel = new OrderModel(basket);
+        var basketModel = new OrderModel(basket, {
+            usingMultiShipping: usingMultiShipping,
+            shippable: allValid
+        });
+
+        var accountModel = new AccountModel(req.currentCustomer);
 
         res.json({
             form: form,
             data: result,
             order: basketModel,
+            customer: accountModel,
 
             fieldErrors: [],
             serverErrors: [],
@@ -194,13 +491,10 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     var billingAddress = currentBasket.billingAddress;
     var shippingAddress = currentBasket.defaultShipment.shippingAddress;
-    var hasEquivalentAddress = true;
+    var hasEquivalentAddress = false;
 
     var currentCustomer = req.currentCustomer.raw;
-//    var preferredAddress = currentCustomer.addressBook ?
-//        currentCustomer.addressBook.preferredAddress : null;
-//    var customerAddresses = currentCustomer.addressBook ?
-//        currentCustomer.addressBook.addresses : null;
+    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
 
     if (billingAddress && shippingAddress) {
         hasEquivalentAddress = billingAddress.isEquivalentAddress(shippingAddress);
@@ -211,47 +505,38 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     var shippingForm = COHelpers.prepareShippingForm(currentBasket);
     var billingForm = COHelpers.prepareBillingForm(currentBasket);
-//     This now belongs to ShippingModels class (or should)
-//    shippingAddressModel = new AddressModel(shippingAddress);
-//
-//    if (shippingAddress && shippingAddressModel.address) {
-//        shippingForm.copyFrom(shippingAddressModel.address);
-//    }
-//
-//    // This is all form related and should go into prepareBillilngForm()
-//    if (!hasEquivalentAddress && billingAddress && billingAddressModel.address) {
-//        billingForm.copyFrom(billingAddressModel.address);
-//    }
-//
-//    if (paymentModel.selectedPaymentInstruments) {
-//        paymentModel.selectedPaymentInstruments.forEach(function (item) {
-//            billingForm.copyFrom(item);
-//        });
-//    }
-//
-//    if (billingAddressModel.address) {
-//        billingForm.creditCardFields.phone.value = billingAddressModel.address.phone;
-//    }
-//
-//    if (currentBasket.customerEmail) {
-//        billingForm.creditCardFields.email.value = currentBasket.customerEmail;
-//    }
+
+    // Loop through all shipments and make sure all are valid
+    var isValid;
+    var allValid = true;
+    for (var i = 0, ii = currentBasket.shipments.length; i < ii; i++) {
+        isValid = req.session.privacyCache.get(currentBasket.shipments[i].UUID);
+        if (isValid !== 'valid') {
+            allValid = false;
+            break;
+        }
+    }
 
     var orderModel = new OrderModel(currentBasket, {
         customer: currentCustomer,
-        currencyCode: req.geolocation.countryCode
+        currencyCode: req.geolocation.countryCode,
+        usingMultiShipping: usingMultiShipping,
+        shippable: allValid
     });
 
     // Get rid of this from top-level ... should be part of OrderModel???
     var currentYear = new Date().getFullYear();
     var creditCardExpirationYears = [];
 
-    for (var i = 0; i < 10; i++) {
-        creditCardExpirationYears.push(currentYear + i);
+    for (var j = 0; j < 10; j++) {
+        creditCardExpirationYears.push(currentYear + j);
     }
+
+    var accountModel = new AccountModel(req.currentCustomer);
 
     res.render('checkout/checkout', {
         order: orderModel,
+        customer: accountModel,
         forms: {
             shippingForm: shippingForm,
             billingForm: billingForm
@@ -268,14 +553,28 @@ server.get('Start', server.middleware.https, function (req, res, next) {
  * Handle Ajax shipping form submit
  */
 server.post('SubmitShipping', server.middleware.https, function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return;
+    }
+
     var form = server.forms.getForm('shipping');
-    var shippingFormErrors;
     var result = {};
 
     // verify shipping form data
-    shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
+    var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
 
     if (Object.keys(shippingFormErrors).length > 0) {
+        req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'invalid');
+
         res.json({
             form: form,
             fieldErrors: [shippingFormErrors],
@@ -283,6 +582,8 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
             error: true
         });
     } else {
+        req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
+
         result.address = {
             firstName: form.shippingAddress.addressFields.firstName.value,
             lastName: form.shippingAddress.addressFields.lastName.value,
@@ -303,29 +604,18 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var shippingData = res.getViewData();
 
-            var currentBasket = BasketMgr.getCurrentBasket();
-
-            if (!currentBasket) {
-                res.json({
-                    error: true,
-                    cartError: true,
-                    fieldErrors: [],
-                    serverErrors: [],
-                    redirectUrl: URLUtils.url('Cart-Show').toString()
-                });
-                return;
-            }
-
             COHelpers.copyShippingAddressToShipment(shippingData, currentBasket.defaultShipment);
             COHelpers.recalculateBasket(currentBasket);
 
-            var shippingModel = new ShippingModel(currentBasket.defaultShipment);
-
-            var totalsModel = new TotalsModel(currentBasket);
+            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+            var basketModel = new OrderModel(currentBasket, {
+                usingMultiShipping: usingMultiShipping,
+                shippable: true
+            });
 
             res.json({
-                totals: totalsModel,
-                shippingData: shippingModel,
+                customer: new AccountModel(req.currentCustomer),
+                order: basketModel,
                 form: server.forms.getForm('shipping')
             });
         });
@@ -475,6 +765,7 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             // if there is no selected payment option and balance is greater than zero
             if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
                 var noPaymentMethod = {};
+
                 noPaymentMethod[billingData.paymentMethod.htmlName] =
                     Resource.msg('error.no.selected.payment.method', 'creditCard', null);
 
@@ -533,85 +824,20 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
                 return;
             }
 
-            var totalsModel = new TotalsModel(currentBasket);
-
-            var countryCode = req.geolocation.countryCode;
-            var currentCustomer = req.currentCustomer.raw;
-            var paymentModel = new PaymentModel(currentBasket, currentCustomer, countryCode);
-
-            var billingAddressModel = new AddressModel(billingAddress);
-            var billingModel = new BillingModel(billingAddressModel, paymentModel);
-
-            var resource = {
-                cardType: Resource.msg('msg.payment.type.credit', 'confirmation', null),
-                cardEnding: Resource.msg('msg.card.type.ending', 'confirmation', null)
-            };
+            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+            var basketModel = new OrderModel(currentBasket, {
+                usingMultiShipping: usingMultiShipping
+            });
 
             res.json({
-                billingData: billingModel,
-                orderEmail: currentBasket.customerEmail,
-                totals: totalsModel,
+                customer: new AccountModel(req.currentCustomer),
+                order: basketModel,
                 form: server.forms.getForm('billing'),
-                resource: resource,
                 error: false
             });
         });
     }
     next();
-});
-
-
-server.get('UpdateShippingMethodsList', server.middleware.https, function (req, res, next) {
-    var currentBasket = BasketMgr.getCurrentBasket();
-
-    if (!currentBasket) {
-        res.json({
-            error: true,
-            cartError: true,
-            fieldErrors: [],
-            serverErrors: [],
-            redirectUrl: URLUtils.url('Cart-Show').toString()
-        });
-        return next();
-    }
-
-    var address = {
-        postalCode: req.querystring.postal,
-        stateCode: req.querystring.state
-    };
-    var shipment = currentBasket.defaultShipment;
-    var shippingMethodID;
-
-    if (shipment.shippingMethod) {
-        shippingMethodID = shipment.shippingMethod.ID;
-    }
-
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
-    var applicableShippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
-
-    Transaction.wrap(function () {
-        ShippingHelper.selectShippingMethod(
-            shipment,
-            shippingMethodID,
-            applicableShippingMethods,
-            address
-        );
-
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-    });
-
-    var totalsModel = new TotalsModel(currentBasket);
-
-    var shippingAddressModel = new AddressModel(address);
-    var shippingModel = new ShippingModel(shipment, shippingAddressModel.address);
-
-    res.json({
-        totals: totalsModel,
-        shipping: shippingModel,
-        shippingForm: server.forms.getForm('shipping')
-    });
-
-    return next();
 });
 
 
@@ -725,6 +951,9 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
 
     COHelpers.sendConfirmationEmail(order);
 
+    // TODO: Exposing a direct route to an Order, without at least encoding the orderID
+    //  is a serious PII violation.  It enables looking up every customers orders, one at a
+    //  time.
     res.json({
         error: false,
         orderID: order.orderNo,

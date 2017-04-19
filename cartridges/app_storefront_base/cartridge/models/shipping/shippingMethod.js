@@ -42,13 +42,13 @@ function ShippingMethodModel(shippingMethod, shipment) {
     this.description = shippingMethod ? shippingMethod.description : null;
     this.estimatedArrivalTime = shippingMethod && shippingMethod.custom
         ? shippingMethod.custom.estimatedArrivalTime : null;
-    this.isDefault = shippingMethod ? shippingMethod.defaultMethod : null;
+    this.default = shippingMethod ? shippingMethod.defaultMethod : null;
 
-	// Mix in dynamically transformed properties
+    // Mix in dynamically transformed properties
     if (shipment) {
-		// Optional model information available with 'shipment' parameter
+        // Optional model information available with 'shipment' parameter
         this.shippingCost = getShippingCost(shippingMethod, shipment);
-        this.isSelected = getIsSelected(shippingMethod, shipment);
+        this.selected = getIsSelected(shippingMethod, shipment);
     }
 }
 

@@ -9,8 +9,8 @@
 				<form action="${URLUtils.url('Checkout-ToggleMultiShip')}">
 					<fieldset>
 					    <div class="form-check">
-					        <label for="usesMultiShip" class="form-check-label checkout-checkbox">
-					            <input name="usesMultiShip" class="form-check-input" type="checkbox" <isif condition="${pdict.CurrentSession.privacy.usingMultiShipping}">checked</isif>>
+					        <label for="usingMultiShipping" class="form-check-label checkout-checkbox">
+					            <input name="usingMultiShipping" class="form-check-input" type="checkbox" <isif condition="${pdict.order.usingMultiShipping}">checked</isif>>
 					            ${Resource.msg('check.shipping.multiship', 'checkout', null)}
 					        </label>
 					    </div>
@@ -27,112 +27,7 @@
 	        </ul>
 	    </div>
 
-		<div class="container single-shipping">
-		    <div class="tab-content">
-		        <!--- Shipping Address Form--->
-		        <div class="tab-pane active card-block" id="shipping-address" role="tabpanel">
-		            <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
-		            <!--<form action="${URLUtils.url('Checkout-Shipping')}" class="shipping" method="post" name="shipping">-->
-		                <fieldset>
-		                	<isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
-		                    <isinclude template="checkout/shipping/shippingAddress" />
-		                </fieldset>
-		
-		                <fieldset>
-		                    <legend class="shipping-methods">
-		                        ${Resource.msg('label.order.shipping.method', 'confirmation', null)}
-		                    </legend>
-		                    <isinclude template="checkout/shipping/shippingMethod" />
-		                </fieldset>
-		
-		                <fieldset>
-		                    <div class="form-check">
-		                        <label for="shippingAddressUseAsBillingAddress" class="form-check-label checkout-checkbox">
-		                            <input class="form-check-input" type="checkbox"
-		                                   value="true" id="shippingAddressUseAsBillingAddress"
-		                                   name="${pdict.forms.shippingForm.shippingAddress.shippingAddressUseAsBillingAddress.htmlName}" <isif condition=${pdict.isEquivalentAddress}>checked</isif>>
-		                            ${Resource.msg('check.shipping.billing.same', 'checkout', null)}
-		                        </label>
-		                    </div>
-		                    <div class="form-check">
-		                        <label for="isGift" class="form-check-label checkout-checkbox">
-		                            <input class="form-check-input" type="checkbox" value="" id="isGift" name="isGift">
-		                            ${Resource.msg('check.gift', 'checkout', null)}
-		                        </label>
-		                    </div>
-		                </fieldset>
-		            </form>
-		        </div>
-		        <!--- In Store Pick up--->
-		        <div class="tab-pane" id="pick-up-in-store" role="tabpanel">
-		            <div class="card-block">
-		                ${Resource.msg('error.not.implemented', 'common', null)}
-		            </div>
-		        </div>
-		    </div>
-		</div>
+        <isinclude template="checkout/shipping/singleshipping" />
 	</div>
-    <div class="multi-shipping">
-		<div class="order-shipping-summary">
-	        <div class="product-shipping-block">
-		        <isloop items="${pdict.order.shipping}" var="shippingModel" status="shipmentLoopState">
-		            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
-        				<div class="card product-shipment">
-							<div class="card-header">
-		            			<isinclude template="checkout/productCard/productShippingCard" />
-		            		</div>
-			               	<div class="tab-content">
-			            		<div class="tab-pane card-block <isif condition="${!shippingModel.shippingAddress}">active</isif>">
-				            		<a class="btn btn-outline-primary col-12" data-action="enter" data-toggle="tab1" href="${'#'}edit-address-${shipmentLoopState.index}${loopState.index}" role="tab">
-				            			Enter Address
-				            		</a>
-			            		</div>
-				               	<div class="tab-pane card-block" id="edit-address-${shipmentLoopState.index}${loopState.index}" role="tabpanel">
-						            <form id="edit-address-form-${shipmentLoopState.index}${loopState.index}" autocomplete="on" method="POST" action="${URLUtils.url('Checkout-AddNewAddress')}" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
-										<input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
-										<input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
-										<input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
-										
-										<isif condition="${pdict.order.items.items.length>1}">
-											<fieldset class="shipment-selector-block">
-												<div class="form-group">
-												    <label class="form-control-label" for="shipmentSelector">
-												        Ship To Address
-												    </label>
-												    <a class="btn float-right toggle-shipping-address-form">Toggle Details</a>
-												    
-                									<isinclude template="checkout/shipping/shipmentSelector" />
-												    <div class="form-control-feedback"></div>
-												</div>
-											</fieldset>
-										</isif>
-										
-										<div class="shipping-address-form">
-											<fieldset class="shipping-address-block">
-						                    	<isinclude template="checkout/shipping/shippingAddress" />
-							   				</fieldset>
-							   				<fieldset class="shipping-method-block">
-							   					<h5>Shipping Method</h5>
-							   				
-						                    	<isinclude template="checkout/shipping/shippingMethod" />
-						                    </fieldset>
-				            				<a href="${'#'}view-address-${shipmentLoopState.index}${loopState.index}" data-action="save" class="btn btn-outline-primary save-address col-12" data-toggle="tab1" role="tab">
-				            					Save
-				            				</a>
-			            				</div>
-									</form>
-								</div>
-				               	<div class="tab-pane card-block <isif condition="${shippingModel.shippingAddress}">active</isif>" id="view-address-${shipmentLoopState.index}${loopState.index}">
-		            				<isinclude template="checkout/shipping/shippingCard" />
-	   								<a class="btn btn-outline-primary col-12" data-action="edit" href="${'#'}edit-address-${shipmentLoopState.index}${loopState.index}" data-toggle="tab1" role="tab">
-										Edit
-									</a> 
-								</div>
-			            	</div>
-	            		</div>
-				    </isloop>
-		    	</isloop>
-	        </div>
-		</div>
-	</div>
+    <isinclude template="checkout/shipping/multishipping" />
 </div>

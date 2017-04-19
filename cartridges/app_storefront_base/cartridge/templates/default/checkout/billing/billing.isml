@@ -12,15 +12,19 @@
         <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitPayment')}" <isprint value=${pdict.forms.billingForm.attributes} encoding="off" /> >
 
             <!-------------------------------------------------------------------------->
-            <!-- Is Billing Address Same as Shipping Address                          -->
+            <!-- Billing Address Selector                                             -->
             <!-------------------------------------------------------------------------->
-            <div class="form-check">
-                <label class="form-check-label checkout-checkbox">
-                    <input class="form-check-input billing-same-as-shipping" name="${pdict.forms.billingForm.shippingAddressUseAsBillingAddress.htmlName}" type="checkbox"
-                        value="true" <isif condition=${pdict.isEquivalentAddress}>checked</isif> >
-                    <span>${Resource.msg('check.shipping.billing.same', 'checkout', null)}</span>
-                </label>
-            </div>
+            <fieldset class="address-selector-block">
+                <div class="form-group">
+                    <label class="form-control-label" for="shipmentSelector">
+                        ${Resource.msg('heading.billing.address', 'checkout', null)}
+                    </label>
+                    <a class="btn float-right toggle-shipping-address-form">${Resource.msg('button.edit', 'checkout', null)}</a>
+                    
+                    <isinclude template="checkout/billing/addressSelector" />
+                    <div class="form-control-feedback"></div>
+                </div>
+            </fieldset>
 
             <!-------------------------------------------------------------------------->
             <!-- Billing Address                                                      -->

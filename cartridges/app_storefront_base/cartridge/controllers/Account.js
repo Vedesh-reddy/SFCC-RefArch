@@ -40,28 +40,9 @@ function getModel(req) {
     var order = customerOrders.first();
 
     if (order) {
-//        var defaultShipment = order.defaultShipment;
-//        var ordershippingAdress = defaultShipment.shippingAddress;
-//        var shippingAddressModel = new AddressModel(ordershippingAdress);
-//        var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(defaultShipment);
-//        var shippingModels = new ShippingModels(
-//            defaultShipment,
-//            shipmentShippingModel,
-//            shippingAddressModel
-//        );
-//        var shippingModels = new ShippingModels(order);
-//        var productLineItemsModel = new ProductLineItemsModel(order);
-//        var totalsModel = new TotalsModel(order);
         var config = {
             numberOfLineItems: 'single'
         };
-//
-//        var modelsObject = {
-//            billingModel: null,
-//            shippingModels: shippingModels,
-//            totalsModel: totalsModel,
-//            productLineItemsModel: productLineItemsModel
-//        };
 
         orderModel = new OrderModel(order, { config: config });
     } else {

@@ -40,10 +40,10 @@ function selectShippingMethod(shipment, shippingMethodID, shippingMethods, addre
         shippingAddress = shipment.shippingAddress;
 
         if (shippingAddress) {
-            if (shippingAddress.stateCode !== address.stateCode) {
+            if (address.stateCode && shippingAddress.stateCode !== address.stateCode) {
                 shippingAddress.stateCode = address.stateCode;
             }
-            if (shippingAddress.postalCode !== address.postalCode) {
+            if (address.postalCode && shippingAddress.postalCode !== address.postalCode) {
                 shippingAddress.postalCode = address.postalCode;
             }
         }

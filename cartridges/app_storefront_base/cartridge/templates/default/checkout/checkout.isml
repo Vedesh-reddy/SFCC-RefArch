@@ -12,12 +12,12 @@
     <h1 class="page-title">
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>
-    <div id="checkout-main" class="container data-checkout-stage<isif condition="${pdict.CurrentSession.privacy.usingMultiShipping}"> multi-ship</isif>" data-checkout-stage="${pdict.currentStage}">
+    <div id="checkout-main" class="container data-checkout-stage <isif condition="${pdict.order.usingMultiShipping}">multi-ship</isif>" data-checkout-stage="${pdict.currentStage}" data-checkout-get-url="${URLUtils.https('Checkout-Get')}">
         <!----------------------------------------------------------------------------------->
         <!-- Help and Phone -->
         <!----------------------------------------------------------------------------------->
         <div class="row hidden-xs-down">
-            <div class="col-12 col-sm-5 offset-sm-7 col-md-4 offset-md-8">
+            <div class="col-12 col-sm-5 offset-sm-7 col-md-5 offset-md-7">
                 <div class="text-center">
                     <span>${Resource.msg('info.need.help','cart',null)}</span>
                     <span><a href="tel:${Resource.msg('info.phone.number','common',null)}">${Resource.msg('info.phone.number','common',null)}</a></span>
@@ -51,7 +51,7 @@
                 <div class="card shipping-summary">
                     <div class="card-header clearfix">
                         <h4 class="pull-left">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
-                        <span class="edit-button pull-right">Edit</span>
+                        <span class="edit-button pull-right">${Resource.msg('action.edit.step', 'checkout', null)}</span>
                     </div>
                     <div class="card-block">
                         <isinclude template="checkout/shipping/shippingSummary" />
@@ -77,7 +77,7 @@
                 <div class="row">
                     <div class="col-12 next-step-button">
                         <div>
-                            <button class="btn btn-primary btn-block submit-shipping" type="submit" name="submit" value="submit-shipping">
+                            <button class="btn btn-primary btn-block submit-shipping" type="submit" name="submit" value="submit-shipping" <isif condition="${pdict.order.usingMultiShipping && !pdict.order.shippable}">disabled</isif>>
                                 ${Resource.msg('button.next.payment', 'checkout', null)}
                             </button>
 
@@ -112,4 +112,25 @@
             </div>
         </div>
     </div>
+    <!---------------------------------------------------------------------------------->
+	<!-- Template used by client to redraw shipping methods                           -->
+	<!---------------------------------------------------------------------------------->
+	<div id="pli-shipping-summary-template" style="display:none;" >
+	    <h5>${Resource.msg('heading.shipping.to', 'checkout', null)}</h5>
+	    <p>
+	        <span class="ship-to-name"></span>
+	        <span class="ship-to-address1"></span>
+	        <span class="ship-to-address2"></span>
+            <span class="ship-to-city-st-zip"></span>
+            <span class="ship-to-phone"></span>
+	    </p>
+	    <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
+	    <p>
+	        <span class="display-name"></span>
+	        <span class="text-muted arrival-time"></span>
+	    </p>
+        <p>
+            <span class="price"></span>
+        </p>
+	</div>
 </isdecorate>
