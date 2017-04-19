@@ -27,7 +27,7 @@ describe('Login Page Create Account Form', () => {
                         .then(elements => {
                             assert.equal(elements.value.length, 3, 'there should be 3 fields to fill');
                             return elements.value.forEach(ele => browser.elementIdText(ele.ELEMENT)
-                                .then(msg => assert.equal(msg.value, 'value missing', 'expected error return to be value missing')));
+                                .then(msg => assert.isTrue(msg.value.isString, 'expected error return to be value missing')));
                         });
                 }
                 // access desktop browser
@@ -38,7 +38,7 @@ describe('Login Page Create Account Form', () => {
                     .then(elements => {
                         assert.equal(elements.value.length, 7, 'there should be 7 fields to fill');
                         return elements.value.forEach(ele => browser.elementIdText(ele.ELEMENT)
-                            .then(msg => assert.equal(msg.value, 'Please fill out this field.', 'expected erro return to be Please fill out this field.')));
+                            .then(msg => assert.isTrue(msg.value.isString, 'expected error return to be Please fill out this field.')));
                     });
             });
     });
