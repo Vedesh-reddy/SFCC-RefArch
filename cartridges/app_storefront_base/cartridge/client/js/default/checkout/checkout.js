@@ -1012,8 +1012,12 @@
                     toggleMultiShip(checked);
                 });
 
-                $('.toggle-shipping-address-form').on('click', function () {
-                    $(this).parents('form').toggleClass('hide-details');
+                $('.btn-show-details').on('click', function () {
+                    $(this).parents('[data-address-mode]').attr('data-address-mode', 'details');
+                });
+
+                $('.btn-hide-details').on('click', function () {
+                    $(this).parents('[data-address-mode]').attr('data-address-mode', 'edit');
                 });
 
                 /**
@@ -1056,17 +1060,13 @@
                     $('[name$=stateCode]', form).trigger('change');
 
                     if (shipmentUUID === 'new') {
-                        $(form).removeClass('hide-details');
-                        $('.toggle-shipping-address-form', form).hide();
+                        $(form).attr('data-address-mode', 'new');
                     } else if (shipmentUUID === originalUUID) {
-                        $(form).addClass('hide-details');
-                        $('.toggle-shipping-address-form', form).show();
+                        $(form).attr('data-address-mode', 'shipment');
                     } else if (shipmentUUID.indexOf('ab_') === 0) {
-                        $(form).removeClass('hide-details');
-                        $('.toggle-shipping-address-form', form).hide();
+                        $(form).attr('data-address-mode', 'customer');
                     } else {
-                        $(form).addClass('hide-details');
-                        $('.toggle-shipping-address-form', form).hide();
+                        $(form).attr('data-address-mode', 'edit');
                     }
                 });
 
@@ -1097,13 +1097,13 @@
                             updateCheckoutView(response.order, response.customer,
                                 { keepOpen: true }
                             );
+                            $(form).attr('data-address-mode', 'new');
                         })
                         .fail(function () {
                             $.spinner().stop();
                         });
                     } else if (shipmentUUID === originalUUID) {
-                        $(form).addClass('hide-details');
-                        $('.toggle-shipping-address-form', form).show();
+                        $(form).attr('data-address-mode', 'shipment');
                     } else if (shipmentUUID.indexOf('ab_') === 0) {
                         var url = $(this).attr('data-create-shipment-url');
                         var serializedData = $(form).serialize();
@@ -1120,13 +1120,13 @@
                             updateCheckoutView(response.order, response.customer,
                                 { keepOpen: true }
                             );
+                            $(form).attr('data-address-mode', 'customer');
                         })
                         .fail(function () {
                             $.spinner().stop();
                         });
                     } else {
-                        $(form).addClass('hide-details');
-                        $('.toggle-shipping-address-form', form).hide();
+                        $(form).attr('data-address-mode', 'edit');
                     }
                 });
 
@@ -1141,21 +1141,10 @@
                         case 'enter':
                         case 'edit':
                         // do nothing special, just show the edit address view
-                            $(form).removeClass('hide-details');
-                            $('.toggle-shipping-address-form', form).hide();
                             if (action === 'enter') {
-                                // copy all form values from single ship form
-                                // more complicated than just this
-                                // commenting until this is really asked for
-                                // or thought out better
-
-//                                $('.single-shipping input').each(function () {
-//                                    if (this.name && this.name !== '') {
-//                                        $('[name=' + this.name + ']', form).val(this.value);
-//                                    }
-//                                });
+                                $(form).attr('data-address-mode', 'new');
                             } else {
-                                // copy form values from source, if necessary
+                                $(form).attr('data-address-mode', 'edit');
                             }
 
                             $rootEl.attr('data-view-mode', 'edit');

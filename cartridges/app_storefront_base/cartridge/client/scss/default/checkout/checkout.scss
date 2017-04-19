@@ -142,10 +142,6 @@ span.ship-to-city-st-zip {
             display: none;
         }
 
-        .hide-details .shipping-address-form {
-            display: none;
-        }
-
         [data-view-mode=view] .view-address-block,
         [data-view-mode=view] [data-action=edit] {
             display: block;
@@ -158,6 +154,54 @@ span.ship-to-city-st-zip {
 
         [data-view-mode=enter] [data-action=enter] {
             display: block;
+        }
+
+        .btn-show-details,
+        .btn-hide-details {
+            padding-top: 0;
+        }
+
+        [data-address-mode=customer] {
+            .shipping-address-block {
+                display: none;
+            }
+
+            .btn-hide-details {
+                display: none;
+            }
+        }
+
+        [data-address-mode=shipment] {
+            .shipping-address-form {
+                display: none;
+            }
+
+            .btn-hide-details {
+                display: none;
+            }
+        }
+
+        [data-address-mode=edit] {
+            .shipping-address-block {
+                display: none;
+            }
+
+            .btn-hide-details {
+                display: none;
+            }
+        }
+
+        [data-address-mode=new] {
+            .btn-hide-details,
+            .btn-show-details {
+                display: none;
+            }
+        }
+
+        [data-address-mode=details] {
+            .btn-show-details {
+                display: none;
+            }
         }
     }
 
