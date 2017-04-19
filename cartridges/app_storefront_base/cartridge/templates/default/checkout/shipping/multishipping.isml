@@ -7,39 +7,39 @@
                         <isinclude template="checkout/productCard/productShippingCard" />
                     </div>
                     <div class="card-block">
-                     <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-AddNewAddress')}" data-address-mode="new" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
-                         <input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
-                         <input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
-                         <input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
+                        <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-AddNewAddress')}" data-address-mode="new" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
+                            <input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
+                            <input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
+                            <input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
 
-                         <div class="edit-address-block shipping-address">
-                             <fieldset class="shipment-selector-block">
-                                 <div class="form-group">
-                                     <label class="form-control-label" for="shipmentSelector">
-                                         ${Resource.msg('heading.ship.to.address', 'checkout', null)}
-                                     </label>
-                                     <a class="btn float-right btn-show-details">${Resource.msg('action.show.details', 'checkout', null)}</a>
-                                     <a class="btn float-right btn-hide-details">${Resource.msg('action.hide.details', 'checkout', null)}</a>
-                                     
-                                     <isinclude template="checkout/shipping/shipmentSelector" />
-                                     <div class="form-control-feedback"></div>
-                                 </div>
-                             </fieldset>
-                             
-                             <div class="shipping-address-form">
-                                 <fieldset class="shipping-address-block">
-                                     <isinclude template="checkout/shipping/shippingAddress" />
-                                 </fieldset>
-                                 <fieldset class="shipping-method-block">
-                                     <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
-                                 
-                                     <isinclude template="checkout/shipping/shippingMethod" />
-                                 </fieldset>
-                             </div>
-                         </div>
-                         <div class="view-address-block">
-                             <isinclude template="checkout/shipping/shippingCard" />
-                         </div>
+                            <div class="edit-address-block shipping-address">
+                                <fieldset class="shipment-selector-block">
+                                    <div class="form-group">
+                                        <label class="form-control-label" for="shipmentSelector">
+                                            ${Resource.msg('heading.ship.to.address', 'checkout', null)}
+                                        </label>
+                                        <a class="btn float-right btn-show-details">${Resource.msg('action.show.details', 'checkout', null)}</a>
+                                        <a class="btn float-right btn-hide-details">${Resource.msg('action.hide.details', 'checkout', null)}</a>
+                                        
+                                        <isinclude template="checkout/shipping/shipmentSelector" />
+                                        <div class="form-control-feedback"></div>
+                                    </div>
+                                </fieldset>
+                                
+                                <div class="shipping-address-form">
+                                    <fieldset class="shipping-address-block">
+                                        <isinclude template="checkout/shipping/shippingAddress" />
+                                    </fieldset>
+                                    <fieldset class="shipping-method-block">
+                                        <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
+                                    
+                                        <isinclude template="checkout/shipping/shippingMethod" />
+                                    </fieldset>
+                                </div>
+                            </div>
+                            <div class="view-address-block">
+                                <isinclude template="checkout/shipping/shippingCard" />
+                            </div>
                             <a class="btn btn-outline-primary col-12" data-action="enter">
                                 ${Resource.msg('button.enter.address', 'checkout', null)}
                             </a>
@@ -49,7 +49,7 @@
                             <a class="btn btn-outline-primary col-12" data-action="edit">
                                 ${Resource.msg('button.edit', 'checkout', null)}
                             </a> 
-                     </form>
+                        </form>
                     </div>
                 </div>
             </isloop>

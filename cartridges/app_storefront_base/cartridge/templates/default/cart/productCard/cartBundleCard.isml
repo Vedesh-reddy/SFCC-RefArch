@@ -1,0 +1,20 @@
+<div class="card product-info uuid-${lineItem.UUID}">
+    <!--- name and remove buttons --->
+    <isinclude template="cart/productCard/cartProductCardHeader" />
+
+    <div class="bundle-includes">${Resource.msg('msg.bundle.includes','cart',null)}</div>
+
+    <!--- individual bundled line items --->
+    <isinclude template="cart/productCard/cartProductCardBundledItems" />
+
+    <div><hr class="line-item-divider"></div>
+    <div class="row bundle-card-footer">
+        <div class="hidden-xs-down col-lg-5 bundle-edit-or-wishlist">
+            <a href="${"#"}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
+            <a href="${"#"}" class="add-to-wishlist" title="${Resource.msg('link.add.to.wishlist','cart',null)}">${Resource.msg('link.add.to.wishlist','cart',null)}</a>
+        </div>
+
+        <isinclude template="cart/productCard/cartProductCardProductPrice" />
+    </div>
+
+</div>
