@@ -62,3 +62,22 @@
     color: $brand-success;
     font-size: 0.813em;
 }
+
+.line-item-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.bundled-line-item + .bundled-line-item {
+    margin-top: 0.625em;
+}
+
+.bundle-includes {
+    font-size: 0.813em;
+    margin-bottom: 0.625em;
+}
+
+.line-item-divider {
+    margin: 0.625em -1.225em 0.625em -1.325em;
+}
