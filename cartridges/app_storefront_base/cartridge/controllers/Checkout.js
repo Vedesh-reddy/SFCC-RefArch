@@ -404,7 +404,9 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
             }
         }
 
-        req.session.privacyCache.set(shipment.UUID, 'valid');
+        if (shipment && shipment.UUID) {
+            req.session.privacyCache.set(shipment.UUID, 'valid');
+        }
 
         // Loop through all shipments and make sure all are valid
         var isValid;

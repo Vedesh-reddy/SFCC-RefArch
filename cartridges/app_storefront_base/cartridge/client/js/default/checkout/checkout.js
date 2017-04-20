@@ -942,11 +942,6 @@
                     .indexOf($('.data-checkout-stage').data('checkout-stage'));
                 $(plugin).attr('data-checkout-stage', checkoutStages[members.currentStage]);
 
-                $('.billing-address').toggleClass(
-                    'same-as-shipping',
-                    $('input[name$="_shippingAddressUseAsBillingAddress"]').is(':checked')
-                );
-
                 /**
                  * Toggle "billing same as shipping"
                  * There are two input checkboxes to keep in sync here and one billing form.
@@ -960,7 +955,6 @@
                         'checked',
                         checked
                     );
-                    $('.billing-address').toggleClass('same-as-shipping', checked);
                 };
 
                 var toggleMultiShip = function (checked) {
@@ -1353,7 +1347,8 @@
                                 );
                                 if ($billingAddressSameAsShipping.is(':checked')) {
                                     $billingAddressSameAsShipping.prop('checked', false);
-                                    $('.billing-address').toggleClass('same-as-shipping', false);
+
+//                                    $('.billing-address').toggleClass('same-as-shipping', false);
                                 }
                             }
                         }

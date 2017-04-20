@@ -42,11 +42,11 @@
         <isloop items="${pdict.customer.addresses}" var="address">
             <option value="${'ab_'+address.ID}"
             data-first-name="${address.firstName||''}" data-last-name="${address.lastName||''}"
-            data-address1="${address.address1||''}" data-address2="${address2||''}"
+            data-address1="${address.address1||''}" data-address2="${address.address2||''}"
             data-city="${address.city||''}" data-state-code="${address.stateCode||''}"
             data-country-code="${address.countryCode||''}" data-postal-code="${address.postalCode||''}"
             data-phone="${address.phone||''}">
-             ${address.ID || ''} - ${address.firstName || ''} ${address.lastName || ''} ${address.address1 || ''} ${address.city || ''}${!address.city || ','} ${address.stateCode||''} ${address.postalCode||''}
+             ${address.ID || ''} - ${address.firstName || ''} ${address.lastName || ''} ${address.address1 || ''} ${address.address2 || ''} ${address.city || ''}${!address.city || ','} ${address.stateCode||''} ${address.postalCode||''}
             </option>
         </isloop>
     </isif>
