@@ -318,7 +318,7 @@ describe('forms', function () {
         var session = { forms: {
             shippingaddress: {
                 valid: true,
-                error: null,
+                error: 'null',
                 htmlName: 'dwfrm_shippingaddress',
                 dynamicHtmlName: 'dwfrm_shippingaddress_a98dfa9sd8',
                 intField: new FormField({
@@ -372,6 +372,60 @@ describe('forms', function () {
         currentForm.intField.value = 22;
         assert.equal(currentForm.intField.value, 22);
     });
+
+    it('should copy the values of a form to an object', function () {
+        var session = { forms: {
+            shippingaddress: {
+                valid: true,
+                error: null,
+                htmlName: 'dwfrm_shippingaddress',
+                dynamicHtmlName: 'dwfrm_shippingaddress_a98dfa9sd8',
+                intField: new FormField({
+                    value: 10,
+                    htmlValue: 10,
+                    mandatory: true,
+                    htmlName: 'dwfrm_shippingaddress_intField',
+                    dynamicHtmlName: 'dwfrm_shippingaddress_intField_as8df7asd98',
+                    type: 3,
+                    FIELD_TYPE_INTEGER: 3,
+                    maxValue: 999,
+                    minValue: 1,
+                    valid: true
+                }),
+                innerForm: new FormGroup({
+                    valid: true,
+                    error: null,
+                    htmlName: 'dwfrm_address_innerForm',
+                    dynamicHtmlName: 'dwfrm_address_innerForm_a90a9s8fasd',
+                    firstName: new FormField({
+                        value: 'Jon',
+                        htmlValue: 'Jon',
+                        valid: true,
+                        mandatory: true,
+                        htmlName: 'dwfrm_address_innerForm_firstName',
+                        dynamicHtmlName: 'dwfrm_address_innerForm_firstName_asdf8979asd8f',
+                        type: 1,
+                        FIELD_TYPE_STRING: 1,
+                        label: 'hello',
+                        regEx: '/[a-zA-Z]*/',
+                        maxLength: 50,
+                        minLength: 1
+                    })
+                })
+            }
+        } };
+        var expectedObject = {
+            intField: 10,
+            innerForm: {
+                firstName: 'Jon'
+            }
+        };
+        var forms = formsRequire(session);
+        var currentForm = forms.getForm('shippingaddress');
+        var result = currentForm.toObject();
+        assert.deepEqual(expectedObject, result);
+    });
+
     it('should copy the values of an object to a form', function () {
         var session = { forms: {
             shippingaddress: {

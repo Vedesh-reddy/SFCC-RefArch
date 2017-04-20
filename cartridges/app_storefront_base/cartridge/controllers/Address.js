@@ -24,27 +24,6 @@ function getList(customerNo) {
     return addressBook;
 }
 
-/**
- * Creates an object from form values
- * @param {Object} addressForm - form object
- * @returns {Object} a plain object of address
- */
-function getDetailsObject(addressForm) {
-    return {
-        address1: addressForm.address1.value,
-        address2: addressForm.address2.value,
-        addressId: addressForm.addressId.value,
-        city: addressForm.city.value,
-        countryCode: addressForm.country.value,
-        firstName: addressForm.firstName.value,
-        lastName: addressForm.lastName.value,
-        phone: addressForm.phone.value,
-        postalCode: addressForm.postalCode.value,
-        stateCode: addressForm.states.stateCode.value,
-        addressForm: addressForm
-    };
-}
-
 server.get('List', function (req, res, next) {
     if (!req.currentCustomer.profile) {
         res.redirect(URLUtils.url('Login-Show'));
@@ -74,10 +53,6 @@ server.get('List', function (req, res, next) {
 server.get('AddAddress', function (req, res, next) {
     var addressForm = server.forms.getForm('address');
     addressForm.clear();
-    var states = addressForm.states.stateCode.options;
-    for (var i = 0, j = states.length; i < j; i++) {
-        states[i].selected = false;
-    }
     res.render('account/editaddaddress', {
         addressForm: addressForm,
         breadcrumbs: [
@@ -99,8 +74,6 @@ server.get('AddAddress', function (req, res, next) {
 });
 
 server.get('EditAddress', function (req, res, next) {
-    var addressForm = server.forms.getForm('address');
-    addressForm.clear();
     var addressId = req.querystring.addressId;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo
@@ -108,22 +81,11 @@ server.get('EditAddress', function (req, res, next) {
     var addressBook = customer.getProfile().getAddressBook();
     var rawAddress = addressBook.getAddress(addressId);
     var addressModel = new AddressModel(rawAddress);
-    addressForm.address1.value = addressModel.address.address1;
-    addressForm.address2.value = addressModel.address.address2;
-    addressForm.addressId.value = addressModel.address.ID;
-    addressForm.city.value = addressModel.address.city;
-    addressForm.country.value = addressModel.address.countryCode.displayValue;
-    addressForm.firstName.value = addressModel.address.firstName;
-    addressForm.lastName.value = addressModel.address.lastName;
-    addressForm.phone.value = addressModel.address.phone;
-    addressForm.postalCode.value = addressModel.address.postalCode;
-    var states = addressForm.states.stateCode.options;
-    for (var i = 0, j = states.length; i < j; i++) {
-        states[i].selected = false;
-        if (states[i].htmlValue === addressModel.address.stateCode) {
-            states[i].selected = true;
-        }
-    }
+    var addressForm = server.forms.getForm('address');
+    addressForm.clear();
+
+    addressForm.copyFrom(addressModel.address);
+
     res.render('account/editaddaddress', {
         addressForm: addressForm,
         addressId: addressId,
@@ -150,58 +112,56 @@ server.post('SaveAddress', function (req, res, next) {
     var formErrors = require('~/cartridge/scripts/formErrors');
 
     var addressForm = server.forms.getForm('address');
-    var result = getDetailsObject(addressForm);
+    var addressFormObj = addressForm.toObject();
+    addressFormObj.addressForm = addressForm;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo
     );
     var addressBook = customer.getProfile().getAddressBook();
     if (addressForm.valid) {
-        res.setViewData(result);
+        res.setViewData(addressFormObj);
         this.on('route:BeforeComplete', function () { // eslint-disable-line no-shadow
             var formInfo = res.getViewData();
             Transaction.wrap(function () {
-                if (req.querystring.addressId) {
-                    var address = addressBook.getAddress(req.querystring.addressId);
-                    address.setID(formInfo.addressId);
+                var address = req.querystring.addressId
+                    ? addressBook.getAddress(req.querystring.addressId)
+                    : addressBook.createAddress(formInfo.addressId);
+                if (address) {
+                    if (req.querystring.addressId) {
+                        address.setID(formInfo.addressId);
+                    }
                     address.setAddress1(formInfo.address1);
                     address.setAddress2(formInfo.address2);
                     address.setCity(formInfo.city);
-                    address.setCountryCode(formInfo.countryCode);
                     address.setFirstName(formInfo.firstName);
                     address.setLastName(formInfo.lastName);
                     address.setPhone(formInfo.phone);
                     address.setPostalCode(formInfo.postalCode);
-                    address.setStateCode(formInfo.stateCode);
+                    if (formInfo.states && formInfo.states.stateCode) {
+                        address.setStateCode(formInfo.states.stateCode);
+                    }
+                    address.setCountryCode(formInfo.country);
+                    address.setJobTitle(formInfo.jobTitle);
+                    address.setPostBox(formInfo.postBox);
+                    address.setSalutation(formInfo.salutation);
+                    address.setSecondName(formInfo.secondName);
+                    address.setCompanyName(formInfo.companyName);
+                    address.setSuffix(formInfo.suffix);
+                    address.setSuite(formInfo.suite);
+                    address.setJobTitle(formInfo.title);
                     res.json({
                         success: true,
                         redirectUrl: URLUtils.url('Address-List').toString()
                     });
                 } else {
-                    var newAddress = addressBook.createAddress(formInfo.addressId);
-                    if (newAddress) {
-                        newAddress.setAddress1(formInfo.address1);
-                        newAddress.setAddress2(formInfo.address2);
-                        newAddress.setCity(formInfo.city);
-                        newAddress.setCountryCode(formInfo.countryCode);
-                        newAddress.setFirstName(formInfo.firstName);
-                        newAddress.setLastName(formInfo.lastName);
-                        newAddress.setPhone(formInfo.phone);
-                        newAddress.setPostalCode(formInfo.postalCode);
-                        newAddress.setStateCode(formInfo.stateCode);
-                        res.json({
-                            success: true,
-                            redirectUrl: URLUtils.url('Address-List').toString()
-                        });
-                    } else {
-                        formInfo.addressForm.valid = false;
-                        formInfo.addressForm.addressId.valid = false;
-                        formInfo.addressForm.addressId.error =
-                            Resource.msg('error.message.idalreadyexists', 'forms', null);
-                        res.json({
-                            success: false,
-                            fields: formErrors(addressForm)
-                        });
-                    }
+                    formInfo.addressForm.valid = false;
+                    formInfo.addressForm.addressId.valid = false;
+                    formInfo.addressForm.addressId.error =
+                        Resource.msg('error.message.idalreadyexists', 'forms', null);
+                    res.json({
+                        success: false,
+                        fields: formErrors(addressForm)
+                    });
                 }
             });
         });

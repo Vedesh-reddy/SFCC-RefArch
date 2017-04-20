@@ -14,10 +14,21 @@ function createAddressObject(addressObject) {
             city: addressObject.city,
             firstName: addressObject.firstName,
             lastName: addressObject.lastName,
-            ID: Object.hasOwnProperty.call(addressObject, 'ID') ? addressObject.ID : null,
+            ID: Object.hasOwnProperty.call(addressObject, 'ID')
+                ? addressObject.ID : null,
+            addressId: Object.hasOwnProperty.call(addressObject, 'ID')
+                ? addressObject.ID : null,
             phone: addressObject.phone,
             postalCode: addressObject.postalCode,
-            stateCode: addressObject.stateCode
+            stateCode: addressObject.stateCode,
+            jobTitle: addressObject.jobTitle,
+            postBox: addressObject.postBox,
+            salutation: addressObject.salutation,
+            secondName: addressObject.secondName,
+            companyName: addressObject.companyName,
+            suffix: addressObject.suffix,
+            suite: addressObject.suite,
+            title: addressObject.title
         };
         if (Object.hasOwnProperty.call(addressObject, 'countryCode')) {
             result.countryCode = {
@@ -28,7 +39,6 @@ function createAddressObject(addressObject) {
     } else {
         result = null;
     }
-
     return result;
 }
 
