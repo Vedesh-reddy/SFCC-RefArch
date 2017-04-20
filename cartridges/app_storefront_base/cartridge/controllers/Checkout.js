@@ -282,7 +282,9 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
             shipment = basket.createShipment(uuid);
 
             productLineItem.setShipment(shipment);
+            COHelpers.ensureNoEmptyShipments();
             ShippingHelper.ensureShipmentHasMethod(shipment);
+            COHelpers.recalculateBasket(basket);
         });
     } catch (err) {
         res.json({

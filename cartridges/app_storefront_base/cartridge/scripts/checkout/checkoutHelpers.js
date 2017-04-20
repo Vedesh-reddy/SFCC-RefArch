@@ -212,6 +212,34 @@ function copyBillingAddressToBasket(address) {
 }
 
 /**
+ * Copies a raw address object to the baasket billing address
+ * @param {Object} address - an address-similar Object (firstName, ...)
+ */
+function ensureNoEmptyShipments() {
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    Transaction.wrap(function () {
+        Collections.forEach(currentBasket.shipments, function (shipment) {
+            if (shipment.productLineItems.length < 1) {
+                if (shipment.default) {
+                    // Cant delete the defaultShipment
+                    // Copy all line items from 2nd to first
+                    Collections.forEach(currentBasket.shipments[1].productLineItems,
+                        function (lineItem) {
+                            lineItem.setShipment(currentBasket.defaultShipment);
+                        });
+
+                    // then delete 2nd one
+                    currentBasket.removeShipment(currentBasket.shipments[1]);
+                } else {
+                    currentBasket.removeShipment(shipment);
+                }
+            }
+        });
+    });
+}
+
+/**
  * Recalculates the currentBasket
  * @param {dw.order.Basket} currentBasket - the target Basket
  */
@@ -563,6 +591,7 @@ function placeOrder(order) {
 }
 
 module.exports = {
+    ensureNoEmptyShipments: ensureNoEmptyShipments,
     getShippingFormKeys: getShippingFormKeys,
     getProductLineItem: getProductLineItem,
     isShippingAddressInitialized: isShippingAddressInitialized,
