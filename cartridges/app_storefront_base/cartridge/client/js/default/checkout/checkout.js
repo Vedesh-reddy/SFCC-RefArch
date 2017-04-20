@@ -1347,8 +1347,6 @@
                                 );
                                 if ($billingAddressSameAsShipping.is(':checked')) {
                                     $billingAddressSameAsShipping.prop('checked', false);
-
-//                                    $('.billing-address').toggleClass('same-as-shipping', false);
                                 }
                             }
                         }
