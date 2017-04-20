@@ -185,6 +185,33 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
 }
 
 /**
+ * Copies a raw address object to the baasket billing address
+ * @param {Object} address - an address-similar Object (firstName, ...)
+ */
+function copyBillingAddressToBasket(address) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var billingAddress = currentBasket.billingAddress;
+
+    Transaction.wrap(function () {
+        if (!billingAddress) {
+            billingAddress = currentBasket.createBillingAddress();
+        }
+
+        billingAddress.setFirstName(address.firstName);
+        billingAddress.setLastName(address.lastName);
+        billingAddress.setAddress1(address.address1);
+        billingAddress.setAddress2(address.address2);
+        billingAddress.setCity(address.city);
+        billingAddress.setPostalCode(address.postalCode);
+        billingAddress.setStateCode(address.stateCode);
+        billingAddress.setCountryCode(address.countryCode);
+        if (!billingAddress.phone) {
+            billingAddress.setPhone(address.phone);
+        }
+    });
+}
+
+/**
  * Recalculates the currentBasket
  * @param {dw.order.Basket} currentBasket - the target Basket
  */
@@ -542,6 +569,7 @@ module.exports = {
     prepareShippingForm: prepareShippingForm,
     prepareBillingForm: prepareBillingForm,
     copyShippingAddressToShipment: copyShippingAddressToShipment,
+    copyBillingAddressToBasket: copyBillingAddressToBasket,
     validateFields: validateFields,
     validateShippingForm: validateShippingForm,
     validateBillingForm: validateBillingForm,

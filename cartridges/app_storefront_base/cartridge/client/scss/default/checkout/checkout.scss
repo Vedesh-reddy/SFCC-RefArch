@@ -220,6 +220,54 @@ span.ship-to-city-st-zip {
         button.submit-payment {
             display: block;
         }
+        
+        .btn-show-details,
+        .btn-hide-details {
+            padding-top: 0;
+        }
+
+        [data-address-mode=customer] {
+            .billing-address {
+                display: none;
+            }
+
+            .btn-hide-details {
+                display: none;
+            }
+        }
+
+        [data-address-mode=shipment] {
+            .billing-address {
+                display: none;
+            }
+
+            .btn-hide-details {
+                display: none;
+            }
+        }
+
+        [data-address-mode=edit] {
+            .billing-address {
+                display: none;
+            }
+
+            .btn-hide-details {
+                display: none;
+            }
+        }
+
+        [data-address-mode=new] {
+            .btn-hide-details,
+            .btn-show-details {
+                display: none;
+            }
+        }
+
+        [data-address-mode=details] {
+            .btn-show-details {
+                display: none;
+            }
+        }
     }
 
     // Place Order -----------------------------
