@@ -25,6 +25,25 @@ function getShippingModels(currentBasket) {
 }
 
 /**
+ * Retrieve raw address JSON object from request.form
+ * @param {Request} req - the DW Request object
+ * @returns {Object} - raw JSON representing address form data
+ */
+function getAddressFromRequest(req) {
+    return {
+        firstName: req.form.firstName,
+        lastName: req.form.lastName,
+        address1: req.form.address1,
+        address2: req.form.address2,
+        city: req.form.city,
+        stateCode: req.form.stateCode,
+        postalCode: req.form.postalCode,
+        countryCode: req.form.stateCode,
+        phone: req.form.phone
+    };
+}
+
+/**
  * Sets the shipping method of the basket's default shipment
  * @param {dw.order.Shipment} shipment - Any shipment for the current basket
  * @param {string} shippingMethodID - The shipping method ID of the desired shipping method
@@ -130,5 +149,6 @@ module.exports = {
     getShippingModels: getShippingModels,
     selectShippingMethod: selectShippingMethod,
     ensureShipmentHasMethod: ensureShipmentHasMethod,
-    getShipmentByUUID: getShipmentByUUID
+    getShipmentByUUID: getShipmentByUUID,
+    getAddressFromRequest: getAddressFromRequest
 };

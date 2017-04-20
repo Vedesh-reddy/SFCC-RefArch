@@ -603,6 +603,7 @@
         function updateMultiShipInformation(order) {
             var $checkoutMain = $('#checkout-main');
             var $checkbox = $('[name=usingMultiShipping]');
+            var $submitShippingBtn = $('button.submit-shipping');
 
             if (order.usingMultiShipping) {
                 $checkoutMain.addClass('multi-ship');
@@ -610,6 +611,7 @@
             } else {
                 $checkoutMain.removeClass('multi-ship');
                 $checkbox.attr('checked', null);
+                $submitShippingBtn.attr('disabled', null);
             }
         }
 
@@ -1020,6 +1022,14 @@
                     $(this).parents('[data-address-mode]').attr('data-address-mode', 'edit');
                 });
 
+                $('.btn-show-billing-details').on('click', function () {
+                    $(this).parents('[data-address-mode]').attr('data-address-mode', 'edit');
+                });
+
+                $('.btn-hide-billing-details').on('click', function () {
+                    $(this).parents('[data-address-mode]').attr('data-address-mode', 'shipment');
+                });
+
                 /**
                  * Does Ajax call to create a server-side shipment w/ pliUUID & URL
                  * @param {string} url - string representation of endpoint URL
@@ -1039,6 +1049,17 @@
                 $('.payment-form .addressSelector').on('change', function () {
                     var form = $(this).parents('form')[0];
                     var selectedOption = $('option:selected', this);
+                    var optionID = selectedOption[0].value;
+
+                    if (optionID === 'new') {
+                        // Show Address
+                        $(form).attr('data-address-mode', 'new');
+                    } else {
+                        // Hide Address
+                        $(form).attr('data-address-mode', 'shipment');
+                    }
+
+                    // Copy fields
                     var attrs = selectedOption.data();
 
                     Object.keys(attrs).forEach(function (attr) {
@@ -1103,6 +1124,7 @@
                             $.spinner().stop();
                         });
                     } else if (shipmentUUID === originalUUID) {
+                        $('select[name$=stateCode]', form).trigger('change');
                         $(form).attr('data-address-mode', 'shipment');
                     } else if (shipmentUUID.indexOf('ab_') === 0) {
                         var url = $(this).attr('data-create-shipment-url');
@@ -1120,13 +1142,34 @@
                             updateCheckoutView(response.order, response.customer,
                                 { keepOpen: true }
                             );
+                            $('select[name$=stateCode]', form).trigger('change');
                             $(form).attr('data-address-mode', 'customer');
                         })
                         .fail(function () {
                             $.spinner().stop();
                         });
                     } else {
-                        $(form).attr('data-address-mode', 'edit');
+                        var updatePLIShipmentUrl = $(form).attr('action');
+                        var serializedAddress = $(form).serialize();
+                        createNewShipment(updatePLIShipmentUrl, serializedAddress)
+                        .done(function (response) {
+                            $.spinner().stop();
+                            if (response.error) {
+                                if (response.redirectUrl) {
+                                    window.location.href = response.redirectUrl;
+                                }
+                                return;
+                            }
+
+                            updateCheckoutView(response.order, response.customer,
+                                { keepOpen: true }
+                            );
+                            // $('select[name$=stateCode]', form).trigger('change');
+                            $(form).attr('data-address-mode', 'edit');
+                        })
+                        .fail(function () {
+                            $.spinner().stop();
+                        });
                     }
                 });
 

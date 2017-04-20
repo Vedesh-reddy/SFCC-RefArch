@@ -185,6 +185,61 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
 }
 
 /**
+ * Copies a raw address object to the baasket billing address
+ * @param {Object} address - an address-similar Object (firstName, ...)
+ */
+function copyBillingAddressToBasket(address) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var billingAddress = currentBasket.billingAddress;
+
+    Transaction.wrap(function () {
+        if (!billingAddress) {
+            billingAddress = currentBasket.createBillingAddress();
+        }
+
+        billingAddress.setFirstName(address.firstName);
+        billingAddress.setLastName(address.lastName);
+        billingAddress.setAddress1(address.address1);
+        billingAddress.setAddress2(address.address2);
+        billingAddress.setCity(address.city);
+        billingAddress.setPostalCode(address.postalCode);
+        billingAddress.setStateCode(address.stateCode);
+        billingAddress.setCountryCode(address.countryCode);
+        if (!billingAddress.phone) {
+            billingAddress.setPhone(address.phone);
+        }
+    });
+}
+
+/**
+ * Copies a raw address object to the baasket billing address
+ * @param {Object} address - an address-similar Object (firstName, ...)
+ */
+function ensureNoEmptyShipments() {
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    Transaction.wrap(function () {
+        Collections.forEach(currentBasket.shipments, function (shipment) {
+            if (shipment.productLineItems.length < 1) {
+                if (shipment.default) {
+                    // Cant delete the defaultShipment
+                    // Copy all line items from 2nd to first
+                    Collections.forEach(currentBasket.shipments[1].productLineItems,
+                        function (lineItem) {
+                            lineItem.setShipment(currentBasket.defaultShipment);
+                        });
+
+                    // then delete 2nd one
+                    currentBasket.removeShipment(currentBasket.shipments[1]);
+                } else {
+                    currentBasket.removeShipment(shipment);
+                }
+            }
+        });
+    });
+}
+
+/**
  * Recalculates the currentBasket
  * @param {dw.order.Basket} currentBasket - the target Basket
  */
@@ -536,12 +591,14 @@ function placeOrder(order) {
 }
 
 module.exports = {
+    ensureNoEmptyShipments: ensureNoEmptyShipments,
     getShippingFormKeys: getShippingFormKeys,
     getProductLineItem: getProductLineItem,
     isShippingAddressInitialized: isShippingAddressInitialized,
     prepareShippingForm: prepareShippingForm,
     prepareBillingForm: prepareBillingForm,
     copyShippingAddressToShipment: copyShippingAddressToShipment,
+    copyBillingAddressToBasket: copyBillingAddressToBasket,
     validateFields: validateFields,
     validateShippingForm: validateShippingForm,
     validateBillingForm: validateBillingForm,

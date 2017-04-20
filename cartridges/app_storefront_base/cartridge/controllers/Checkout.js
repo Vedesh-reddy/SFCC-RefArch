@@ -146,17 +146,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
         shipment = currentBasket.defaultShipment;
     }
 
-    var address = {
-        firstName: req.querystring.firstName || req.form.firstName,
-        lastName: req.querystring.lastName || req.form.lastName,
-        address1: req.querystring.address1 || req.form.address1,
-        address2: req.querystring.address2 || req.form.address2,
-        city: req.querystring.city || req.form.city,
-        stateCode: req.querystring.stateCode || req.form.stateCode,
-        postalCode: req.querystring.postalCode || req.form.postalCode,
-        countryCode: req.querystring.countryCode || req.form.stateCode,
-        phone: req.querystring.phone || req.form.phone
-    };
+    var address = ShippingHelper.getAddressFromRequest(req);
 
     var error;
 
@@ -228,17 +218,7 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
         shipment = currentBasket.defaultShipment;
     }
 
-    var address = {
-        firstName: req.querystring.firstName || req.form.firstName,
-        lastName: req.querystring.lastName || req.form.lastName,
-        address1: req.querystring.address1 || req.form.address1,
-        address2: req.querystring.address2 || req.form.address2,
-        city: req.querystring.city || req.form.city,
-        stateCode: req.querystring.stateCode || req.form.stateCode,
-        postalCode: req.querystring.postalCode || req.form.postalCode,
-        countryCode: req.querystring.countryCode || req.form.countryCode,
-        phone: req.querystring.phone || req.form.phone
-    };
+    var address = ShippingHelper.getAddressFromRequest(req);
 
     var shippingMethodID;
 
@@ -296,34 +276,15 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     var productLineItem = COHelpers.getProductLineItem(basket, pliUUID);
     var uuid = UUIDUtils.createUUID();
     var shipment;
-// TODO: This is basis for copy shipping address for new shipment w/ same address
-//    var result = {};
-//    var form = server.forms.getForm('shipping');
 
     try {
-//        result.address = {
-//            firstName: form.shippingAddress.addressFields.firstName.value,
-//            lastName: form.shippingAddress.addressFields.lastName.value,
-//            address1: form.shippingAddress.addressFields.address1.value,
-//            address2: form.shippingAddress.addressFields.address2.value,
-//            city: form.shippingAddress.addressFields.city.value,
-//            stateCode: form.shippingAddress.addressFields.states.stateCode.value,
-//            postalCode: form.shippingAddress.addressFields.postalCode.value,
-//            countryCode: form.shippingAddress.addressFields.country.value,
-//            phone: form.shippingAddress.addressFields.phone.value
-//        };
-//
-//        result.shippingMethod = form.shippingAddress.shippingMethodID.value ?
-//            '' + form.shippingAddress.shippingMethodID.value : null;
-
         Transaction.wrap(function () {
             shipment = basket.createShipment(uuid);
 
-            // No need to do form validation for shipment creation yet
-            // Validate on nextStage() trigger or save()
-//            COHelpers.copyShippingAddressToShipment(result, shipment);
             productLineItem.setShipment(shipment);
+            COHelpers.ensureNoEmptyShipments();
             ShippingHelper.ensureShipmentHasMethod(shipment);
+            COHelpers.recalculateBasket(basket);
         });
     } catch (err) {
         res.json({
@@ -453,6 +414,18 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
             if (isValid !== 'valid') {
                 allValid = false;
                 break;
+            }
+        }
+
+        if (!basket.billingAddress) {
+            if (req.currentCustomer.addressBook
+                && req.currentCustomer.addressBook.preferredAddress) {
+                // Copy over preferredAddress (use addressUUID for matching)
+                COHelpers.copyBillingAddressToBasket(
+                    req.currentCustomer.addressBook.preferredAddress);
+            } else {
+                // Copy over first shipping address (use shipmentUUID for matching)
+                COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress);
             }
         }
 
@@ -604,6 +577,18 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var shippingData = res.getViewData();
 
+            if (!currentBasket.billingAddress) {
+                if (req.currentCustomer.addressBook
+                    && req.currentCustomer.addressBook.preferredAddress) {
+                    // Copy over preferredAddress (use addressUUID for matching)
+                    COHelpers.copyBillingAddressToBasket(
+                        req.currentCustomer.addressBook.preferredAddress);
+                } else {
+                    // Copy over first shipping address (use shipmentUUID for matching)
+                    COHelpers.copyBillingAddressToBasket(
+                        currentBasket.defaultShipment.shippingAddress);
+                }
+            }
             COHelpers.copyShippingAddressToShipment(shippingData, currentBasket.defaultShipment);
             COHelpers.recalculateBasket(currentBasket);
 

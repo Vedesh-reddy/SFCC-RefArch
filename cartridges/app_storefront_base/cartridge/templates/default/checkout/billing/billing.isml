@@ -9,7 +9,7 @@
         <h4>${Resource.msg('heading.payment', 'checkout', null)}</h4>
     </div>
     <div class="card-block">
-        <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitPayment')}" <isprint value=${pdict.forms.billingForm.attributes} encoding="off" /> >
+        <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitPayment')}" data-address-mode="edit" <isprint value=${pdict.forms.billingForm.attributes} encoding="off" /> >
 
             <!-------------------------------------------------------------------------->
             <!-- Billing Address Selector                                             -->
@@ -19,7 +19,8 @@
                     <label class="form-control-label" for="shipmentSelector">
                         ${Resource.msg('heading.billing.address', 'checkout', null)}
                     </label>
-                    <a class="btn float-right toggle-shipping-address-form">${Resource.msg('button.edit', 'checkout', null)}</a>
+                    <a class="btn float-right btn-show-details">${Resource.msg('action.show.details', 'checkout', null)}</a>
+                    <a class="btn float-right btn-hide-details">${Resource.msg('action.hide.details', 'checkout', null)}</a>
                     
                     <isinclude template="checkout/billing/addressSelector" />
                     <div class="form-control-feedback"></div>
@@ -29,7 +30,7 @@
             <!-------------------------------------------------------------------------->
             <!-- Billing Address                                                      -->
             <!-------------------------------------------------------------------------->
-            <fieldset class="billing-address same-as-shipping">
+            <fieldset class="billing-address">
                 <isinclude template="checkout/billing/billingAddress" />
             </fieldset>
 
