@@ -41,6 +41,7 @@ function updateBundleProducts(apiLineItem, childPids) {
  * @param {string[]} childPids - the number of products to the cart
  */
 function addProductToCart(currentBasket, productId, quantity, childPids) {
+    var availableToSell;
     var defaultShipment = currentBasket.defaultShipment;
     var product = ProductMgr.getProduct(productId);
     var productInCart;
@@ -60,7 +61,13 @@ function addProductToCart(currentBasket, productId, quantity, childPids) {
     if (productInCart) {
         productQuantityInCart = productInCart.quantity;
         quantityToSet = quantity ? quantity + productQuantityInCart : productQuantityInCart + 1;
-        productInCart.setQuantityValue(quantityToSet);
+        availableToSell = productInCart.product.availabilityModel.inventoryRecord.ATS.value;
+
+        if (availableToSell >= quantityToSet) {
+            productInCart.setQuantityValue(quantityToSet);
+        } else {
+            return;
+        }
     } else {
         productLineItem = currentBasket.createProductLineItem(
             product,

@@ -11,6 +11,9 @@
                         <isloop items="${lineItem.variationAttributes}" var="attribute">
                             <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                         </isloop>
+
+                        <isinclude template="cart/productCard/cartProductCardAvailability" />
+
                         <div class="hidden-xs-down edit-add-to-wishlist">
                             <a href="${"#"}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
                             <a href="${"#"}" class="add-to-wishlist" title="${Resource.msg('link.add.to.wishlist','cart',null)}">${Resource.msg('link.add.to.wishlist','cart',null)}</a>

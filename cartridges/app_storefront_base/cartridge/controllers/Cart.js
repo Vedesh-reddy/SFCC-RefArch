@@ -134,7 +134,7 @@ server.get('UpdateQuantity', function (req, res, next) {
                     var updatedQuantity = parseInt(req.querystring.quantity, 10);
 
                     if (updatedQuantity >= item.product.minOrderQuantity.value &&
-                        updatedQuantity < item.product.availabilityModel.inventoryRecord.ATS.value
+                        updatedQuantity <= item.product.availabilityModel.inventoryRecord.ATS.value
                     ) {
                         item.setQuantityValue(updatedQuantity);
                         isProductLineItemFound = true;

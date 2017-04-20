@@ -80,6 +80,25 @@ function updateApproachingDiscounts(approachingDiscounts) {
     $('.approaching-discounts').append(html);
 }
 
+function updateAvailability(data, uuid) {
+    var lineItem;
+    var messages = '';
+
+    for (var i = 0; i < data.items.length; i++) {
+        if (data.items[i].UUID === uuid) {
+            lineItem = data.items[i];
+            break;
+        }
+    }
+
+    $('.availability-' + lineItem.UUID).empty();
+    lineItem.availability.messages.forEach(function (message) {
+        messages += '<p class="line-item-attributes">' + message + '</p>';
+    });
+
+    $('.availability-' + lineItem.UUID).html(messages);
+}
+
 module.exports = function () {
     $('body').on('click', '.remove-product', function (e) {
         e.preventDefault();
@@ -177,6 +196,7 @@ module.exports = function () {
                 $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                 updateCartTotals(data);
                 updateApproachingDiscounts(data.approachingDiscounts);
+                updateAvailability(data, uuid);
                 $.spinner().stop();
             },
             error: function (err) {
