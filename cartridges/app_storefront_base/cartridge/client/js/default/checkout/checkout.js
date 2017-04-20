@@ -44,25 +44,11 @@
         ];
 
         /**
-         * Populate the Address Summary View
-         * @param {string} parentSelector - the top level DOM selector for a unique address summary
-         * @param {Object} address - the address data
-         */
-        function populateSummary(parentSelector, address) {
-            $.each(address, function (attr) {
-                var val = address[attr];
-                if (val) {
-                    $('[name$=' + attr + ']', parentSelector).text(val);
-                }
-            });
-        }
-
-        /**
          * Populate the Billing Address Summary View
          * @param {string} parentSelector - the top level DOM selector for a unique address summary
          * @param {Object} address - the address data
          */
-        function populateBillingSummary(parentSelector, address) {
+        function populateAddressSummary(parentSelector, address) {
             $.each(address, function (attr) {
                 var val = address[attr];
                 if (val) {
@@ -386,7 +372,7 @@
                 var address = shipping.shippingAddress;
                 var selectedShippingMethod = shipping.selectedShippingMethod;
 
-                populateSummary($addressContainer, address);
+                populateAddressSummary($addressContainer, address);
 
                 if (address && address.phone) {
                     $shippingPhone.text(address.phone);
@@ -625,7 +611,7 @@
             updateBillingAddressFormValues(order.billing);
 
             // update billing address summary
-            populateBillingSummary('.billing .address-summary',
+            populateAddressSummary('.billing .address-summary',
                 order.billing.billingAddress.address);
 
             // update billing parts of order summary
