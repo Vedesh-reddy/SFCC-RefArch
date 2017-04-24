@@ -936,6 +936,9 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
 
     COHelpers.sendConfirmationEmail(order);
 
+    // Reset usingMultiShip after successful Order placement
+    req.session.privacyCache.set('usingMultiShipping', false);
+
     // TODO: Exposing a direct route to an Order, without at least encoding the orderID
     //  is a serious PII violation.  It enables looking up every customers orders, one at a
     //  time.
