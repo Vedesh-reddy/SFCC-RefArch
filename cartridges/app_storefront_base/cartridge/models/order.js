@@ -65,6 +65,44 @@ function getFirstProductLineItem(productLineItemsModel) {
 }
 
 /**
+ * Returns the matching address ID or UUID for a billing address
+ * @param {dw.order.Basket} basket - line items model
+ * @param {Object} customer - customer model
+ * @return {string|boolean} returns matching ID or false
+*/
+function getAssociatedAddress(basket, customer) {
+    var address = basket.billingAddress;
+    var matchingId;
+    var anAddress;
+
+    if (!address) return false;
+
+    // First loop through all shipping addresses
+    for (var i = 0, ii = basket.shipments.length; i < ii; i++) {
+        anAddress = basket.shipments[i].shippingAddress;
+
+        if (anAddress && anAddress.isEquivalentAddress(address)) {
+            matchingId = basket.shipments[i].UUID;
+            break;
+        }
+    }
+
+    // If we still haven't found a match, then loop through customer addresses to find a match
+    if (!matchingId && customer && customer.addressBook && customer.addressBook.addresses) {
+        for (var j = 0, jj = customer.addressBook.addresses.length; j < jj; j++) {
+            anAddress = customer.addressBook.addresses[j];
+
+            if (anAddress && anAddress.isEquivalentAddress(address)) {
+                matchingId = anAddress.ID;
+                break;
+            }
+        }
+    }
+
+    return matchingId;
+}
+
+/**
  * Order class that represents the current order
  * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket/order
  * @param {Object} options - The current order's line items
@@ -96,7 +134,10 @@ function OrderModel(lineItemContainer, options) {
         var paymentModel = new PaymentModel(lineItemContainer, customer, currencyCode);
 
         var billingAddressModel = new AddressModel(lineItemContainer.billingAddress);
-        var billingModel = new BillingModel(billingAddressModel, paymentModel);
+
+        var associatedAddress = getAssociatedAddress(lineItemContainer, customer);
+
+        var billingModel = new BillingModel(billingAddressModel, paymentModel, associatedAddress);
 
         var productLineItemsModel = new ProductLineItemsModel(lineItemContainer.productLineItems);
         var totalsModel = new TotalsModel(lineItemContainer);
