@@ -126,8 +126,9 @@ function OrderModel(lineItemContainer, options) {
         var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
         var customer = safeOptions.customer || lineItemContainer.customer;
         var currencyCode = safeOptions.currencyCode || lineItemContainer.currencyCode;
-        var usingMultiShipping = safeOptions.usingMultiShipping
-            || (lineItemContainer.shipments.length > 1);
+        var usingMultiShipping = (safeOptions.usingMultiShipping
+            || lineItemContainer.shipments.length > 1)
+            && (lineItemContainer.productLineItems.length > 1);
 
         var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer);
 
