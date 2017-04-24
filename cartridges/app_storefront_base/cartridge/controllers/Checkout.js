@@ -577,6 +577,7 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var shippingData = res.getViewData();
 
+            COHelpers.copyShippingAddressToShipment(shippingData, currentBasket.defaultShipment);
             if (!currentBasket.billingAddress) {
                 if (req.currentCustomer.addressBook
                     && req.currentCustomer.addressBook.preferredAddress) {
@@ -589,7 +590,6 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
                         currentBasket.defaultShipment.shippingAddress);
                 }
             }
-            COHelpers.copyShippingAddressToShipment(shippingData, currentBasket.defaultShipment);
             COHelpers.recalculateBasket(currentBasket);
 
             var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
