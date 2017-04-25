@@ -8,19 +8,20 @@ var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
 
 /**
  * Replaces Bundle master product items with their selected variants
- * @param {dw.order.ProductLineItem} apiLineItem - Cart line item
- * @param {dw.catalog.Product} apiProduct - Bundle product
+ *
+ * @param {dw.order.ProductLineItem} apiLineItem - Cart line item containing Bundle
  * @param {string[]} childPids - List of bundle product item ID's with chosen product variant ID's
  */
-function processBundle(apiLineItem, apiProduct, childPids) {
-    var bundleProducts = apiProduct.getBundledProducts();
+function updateBundleProducts(apiLineItem, childPids) {
+    var bundle = apiLineItem.product;
+    var bundleProducts = bundle.getBundledProducts();
     var bundlePids = Collections.map(bundleProducts, function (product) { return product.ID; });
     var selectedPids = childPids.filter(function (pid) {
         return bundlePids.indexOf(pid) === -1;
     });
+    var bundleLineItems = apiLineItem.getBundledProductLineItems();
 
     selectedPids.forEach(function (productId) {
-        var bundleLineItems = apiLineItem.getBundledProductLineItems();
         var variant = ProductMgr.getProduct(productId);
 
         Collections.forEach(bundleLineItems, function (item) {
@@ -68,7 +69,7 @@ function addProductToCart(currentBasket, productId, quantity, childPids) {
         );
 
         if (product.bundle && childPids.length) {
-            processBundle(productLineItem, product, childPids);
+            updateBundleProducts(productLineItem, childPids);
         }
 
         productLineItem.setQuantityValue(quantity);

@@ -13,7 +13,7 @@ Template Notes:
     <isif condition="${attributeStatus.last && isBundleOrSet !== 'true'}">
         <!-- Quantity Drop Down Menu -->
         <div class="quantity col-sm-6">
-            <isinclude template="/product/components/quantity" />
+            <isinclude template="product/components/quantity" />
         </div>
     </isif>
 

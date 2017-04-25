@@ -44,14 +44,13 @@
                 </div>
 
                 <!-- Applicable Promotions -->
-                <div class="row" style="height: 85%;">
-                    <div class="col-12 promotions align-self-center">
+                <div class="row promotions">
+                    <div class="col-12 align-self-center">
                         <isinclude template="product/components/promotions" />
                     </div>
                 </div>
             </div>
         </div>
-
 
         <hr>
 
@@ -65,13 +64,8 @@
             <isloop items="${product.bundledProducts}" var="productItem" status="loopState">
                 <isset name="product" value="${productItem}" scope="page" />
                 <isset name="isBundleOrSet" value="true" scope="page" />
-                <div>
-                    <isinclude template="product/components/bundleItem" />
-                </div>
 
-                <isif condition="${loopState.last === false}">
-                    <hr>
-                </isif>
+                <isinclude template="product/components/bundleItem" />
             </isloop>
         </div>
 
@@ -91,7 +85,7 @@
                 <!-- Prices -->
                 <div class="prices">
                     <isset name="price" value="${product.price}" scope="page" />
-                    <isinclude template="product/components/pricing/main.isml" />
+                    <isinclude template="product/components/pricing/main" />
                 </div>
 
                 <!-- Cart and [Optionally] Apple Pay -->
@@ -99,43 +93,9 @@
             </div>
 
             <!-- Add to Wishlist and Social Sharing Icons -->
-            <div class="col-12 wishlist-social hidden-sm-down">
-                <a href="${"#"}" class="add-to-wish-list col-md-6">
-                    ${Resource.msg('button.add_to_wishlist', 'common', null)}
-                </a>
-                <span class="social-icons col-md-6">
-                    <i class="fa fa-pinterest" alt="Pinterest"></i>
-                    <i class="fa fa-instagram" alt="Instagram"></i>
-                    <i class="fa fa-facebook-official" alt="Facebook"></i>
-                    <i class="fa fa-twitter" alt="Twitter"></i>
-                </span>
-            </div>
+            <isinclude template="product/components/wishlistSocial" />
         </div>
 
-        <div class="description-and-detail">
-            <div class="row product-attributes collapsable-xs">
-                <isinclude template="product/components/attributes" />
-            </div>
-
-            <isif condition="${product.attributes && product.attributes.length}">
-                <hr class="hidden-sm-up">
-            </isif>
-
-            <div class="row description collapsable-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
-                <h2 class="col-sm-12 col-md-4 col-lg-3 title">
-                    ${Resource.msg('label.description', 'product', null)}
-                </h2>
-                <isinclude template="product/components/description" />
-            </div>
-
-            <isif condition="${product.longDescription}">
-                <hr class="hidden-sm-up">
-            </isif>
-
-            <div class="row details collapsable-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
-                <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.details', 'product', null)}</h2>
-                <isinclude template="product/components/details" />
-            </div>
-        </div>
+        <isinclude template="product/components/descriptionAndDetails" />
     </div>
 </isdecorate>

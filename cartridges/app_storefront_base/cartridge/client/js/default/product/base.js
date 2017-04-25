@@ -6,13 +6,13 @@
  * @return {boolean} - Whether this is a Bundle PDP
  */
 function isBundle() {
-    return !!$('.product-bundle').length;
+    return !!$('.product-detail .product-bundle').length;
 }
 
 /**
  * Retrieves the value associated with the Quantity pull-down menu
  *
- * @param {JQuery} $el - DOM element representing bundle item whose quantity selection has changed
+ * @param {JQuery} $el - DOM element representing product whose quantity selection has changed
  * @return {string} - value found in the quantity input
  */
 function getQuantitySelected($el) {
@@ -123,12 +123,32 @@ function updateAttrs(attrs) {
 }
 
 /**
+ * Determines bundle availability status
+ *
+ * @param {Object} response - JSON response from Ajax call
+ * @param {string[]} response.resources - List of availability statuses
+ * @return {string} - Bundle availability status
+ */
+function getBundleAvailability(response) {
+    var availability = response.resources.label_instock;
+
+    if ($('.bundle-item div.availability[data-available=false]').length) {
+        availability = response.resources.label_outofstock;
+    } else if ($('.bundle-item div.availability[data-ready-to-order=false]').length) {
+        availability = response.resources.info_selectforstock;
+    }
+
+    return availability;
+}
+
+/**
  * Determines whether the main bundle product can be ordered
  *
  * @return {boolean} - Whether the main bundle product can be ordered
  */
 function isBundleOrderable() {
-    return !$('.bundle-item div.availability[data-ready-to-order=false]').length;
+    return !$('.bundle-item div.availability[data-ready-to-order=false]').length &&
+        !$('.bundle-item div.availability[data-available=false]').length;
 }
 
 /**
@@ -154,7 +174,8 @@ function updateAvailability(response, $productContainer) {
     var bundleAvailability;
 
     $productContainer.find('div.availability')
-        .attr('data-ready-to-order', response.product.readyToOrder);
+        .attr('data-ready-to-order', response.product.readyToOrder)
+        .attr('data-available', response.product.available);
 
     if (!hasRequiredAttrsSelected) {
         availabilityValue = '<li>' + response.resources.info_selectforstock + '</li>';
@@ -173,9 +194,7 @@ function updateAvailability(response, $productContainer) {
         // Update bundle
         $('.bundle-footer div.availability').attr('data-ready-to-order', isBundleOrderable());
 
-        bundleAvailability = isBundleOrderable()
-            ? response.resources.label_instock
-            : response.resources.info_selectforstock;
+        bundleAvailability = getBundleAvailability(response);
 
         $('.bundle-footer ul.availability-msg').html('<li>' + bundleAvailability + '</li>');
     }

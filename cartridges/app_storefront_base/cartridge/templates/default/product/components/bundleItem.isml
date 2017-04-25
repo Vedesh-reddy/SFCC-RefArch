@@ -43,8 +43,8 @@
                 </isif>
 
                 <!-- Availability -->
-                <div class="col-12 col-md-10 availability" data-ready-to-order="${product.readyToOrder}">
-                    <isinclude template="/product/components/availability" />
+                <div class="col-12 col-md-10 availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
+                    <isinclude template="product/components/availability" />
                 </div>
 
                 <div class="col-md-10 col-12">

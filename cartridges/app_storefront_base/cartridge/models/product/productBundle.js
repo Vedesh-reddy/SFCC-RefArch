@@ -81,6 +81,8 @@ ProductBundle.prototype.initialize = function () {
     this.minOrderQuantity = this.product.minOrderQuantity.value || 1;
     this.maxOrderQuantity = DEFAULT_MAX_ORDER_QUANTITY;
     this.readyToOrder = isReadyToOrder(this.bundledProducts);
+    this.longDescription = this.product.longDescription;
+    this.shortDescription = this.product.shortDescription;
 };
 
 /**
@@ -100,7 +102,7 @@ function ProductWrapper(product, quantity, promotions, productFactory) {
     );
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'bundledProducts',
         'available', 'online', 'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder',
-        'promotions'];
+        'promotions', 'longDescription', 'shortDescription'];
     items.forEach(function (item) {
         this[item] = productBundle[item];
     }, this);
