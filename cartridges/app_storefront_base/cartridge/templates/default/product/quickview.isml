@@ -17,12 +17,13 @@
                     <div class="col-12">
                         <isinclude template="product/components/mainAttributes" />
 
+                        <isset name="isBundleOrSet" value="false" scope="page" />
                         <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
                             <isinclude template="product/components/variationAttributes" />
                         </isloop>
 
                         <isif condition="${!product.variationAttributes}">
-                            <div class="simple-quantity">
+                            <div class="simple-quantity col-sm-6">
                                 <isinclude template="product/components/quantity" />
                             </div>
                         </isif>
@@ -35,7 +36,7 @@
                         </div>
                     </isif>
 
-                    <div class="col-md-10 col-12 availability">
+                    <div class="col-md-10 col-12 availability clearfix">
                         <isinclude template="product/components/availability" />
                     </div>
 
