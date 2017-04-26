@@ -65,8 +65,8 @@ function getRating(id) {
 function getPromotions(promotions) {
     return dwHelpers.map(promotions, function (promotion) {
         return {
-            calloutMsg: promotion.calloutMsg.markup,
-            details: promotion.details.markup,
+            calloutMsg: promotion.calloutMsg ? promotion.calloutMsg.markup : null,
+            details: promotion.details ? promotion.details.markup : null,
             enabled: promotion.enabled,
             id: promotion.ID,
             name: promotion.name,

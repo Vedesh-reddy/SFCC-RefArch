@@ -55,9 +55,11 @@ function getAppliedPromotions(lineItem) {
     if (lineItem.priceAdjustments.getLength() > 0) {
         priceAdjustments = helper.map(lineItem.priceAdjustments, function (priceAdjustment) {
             return {
-                callOutMsg: priceAdjustment.promotion.calloutMsg.markup,
+                callOutMsg: priceAdjustment.promotion.calloutMsg ?
+                    priceAdjustment.promotion.calloutMsg.markup : null,
                 name: priceAdjustment.promotion.name,
-                details: priceAdjustment.promotion.details.markup
+                details: priceAdjustment.promotion.details ?
+                    priceAdjustment.promotion.details.markup : null
             };
         });
     }

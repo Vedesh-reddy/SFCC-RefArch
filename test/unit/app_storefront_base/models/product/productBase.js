@@ -90,6 +90,27 @@ describe('productBase', function () {
         rank: null
     }]);
 
+    var promotionsNull = new ArrayList([{
+        calloutMsg: { markup: 'Super duper promotion discount' },
+        details: null,
+        enabled: true,
+        ID: 'SuperDuperPromo',
+        name: 'Super Duper Promo',
+        promotionClass: 'Some Class',
+        rank: null
+    }]);
+
+    var promotionsCallOutMsgNull = new ArrayList([{
+        calloutMsg: null,
+        details: null,
+        enabled: true,
+        ID: 'SuperDuperPromo',
+        name: 'Super Duper Promo',
+        promotionClass: 'Some Class',
+        rank: null
+    }]);
+
+
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
@@ -195,6 +216,48 @@ describe('productBase', function () {
         tempMock.variant = false;
         tempMock.variationGroup = true;
         var product = new ProductBase(toProductMock(tempMock), null, promotions);
+
+        assert.deepEqual(product.promotions, expectedPromotions);
+    });
+
+    it('should handle null value for promotion.details', function () {
+        var expectedPromotions = [{
+            calloutMsg: 'Super duper promotion discount',
+            details: null,
+            enabled: true,
+            id: 'SuperDuperPromo',
+            name: 'Super Duper Promo',
+            promotionClass: 'Some Class',
+            rank: null
+        }];
+
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel.selectedVariant = null;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        tempMock.variant = false;
+        tempMock.variationGroup = true;
+        var product = new ProductBase(toProductMock(tempMock), null, promotionsNull);
+
+        assert.deepEqual(product.promotions, expectedPromotions);
+    });
+
+    it('should handle null value for promotion.calloutMsg', function () {
+        var expectedPromotions = [{
+            calloutMsg: null,
+            details: null,
+            enabled: true,
+            id: 'SuperDuperPromo',
+            name: 'Super Duper Promo',
+            promotionClass: 'Some Class',
+            rank: null
+        }];
+
+        var tempMock = Object.assign({}, productMock);
+        tempMock.variationModel.selectedVariant = null;
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        tempMock.variant = false;
+        tempMock.variationGroup = true;
+        var product = new ProductBase(toProductMock(tempMock), null, promotionsCallOutMsgNull);
 
         assert.deepEqual(product.promotions, expectedPromotions);
     });
