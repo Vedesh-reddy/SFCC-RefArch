@@ -66,7 +66,7 @@ function addProductToCart(currentBasket, productId, quantity, childPids) {
         if (availableToSell >= quantityToSet) {
             productInCart.setQuantityValue(quantityToSet);
         } else {
-            return;
+            return { error: true };
         }
     } else {
         productLineItem = currentBasket.createProductLineItem(
@@ -81,6 +81,8 @@ function addProductToCart(currentBasket, productId, quantity, childPids) {
 
         productLineItem.setQuantityValue(quantity);
     }
+
+    return { error: false };
 }
 
 /**

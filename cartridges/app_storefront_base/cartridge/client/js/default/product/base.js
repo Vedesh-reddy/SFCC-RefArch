@@ -394,14 +394,19 @@ function getAddToCartUrl() {
  */
 function handlePostCartAdd(response) {
     $('.mini-cart').trigger('count:update', response);
+    var messageType = 'alert-success';
     // show add to cart toast
     if ($('.add-to-basket-alert').length === 0) {
+        if (response.error) {
+            messageType = 'alert-danger';
+        }
         $('body').append(
-            '<div class="alert alert-success add-to-basket-alert" role="alert">'
-            + response.message
+            '<div class="alert ' + messageType + ' add-to-basket-alert" role="alert">'
+            + response.message + response.error
             + '</div>'
         );
     }
+
     $('.add-to-basket-alert').addClass('show');
     setTimeout(function () {
         $('.add-to-basket-alert').removeClass('show');

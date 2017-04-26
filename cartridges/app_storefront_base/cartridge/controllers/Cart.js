@@ -31,24 +31,33 @@ server.post('AddProduct', function (req, res, next) {
         ? decodeURIComponent(req.form.childPids).split(',')
         : [];
     var quantity = parseInt(req.form.quantity, 10);
+    var result;
+    var message = Resource.msg('text.alert.addedtobasket', 'product', null);
 
     if (currentBasket) {
         Transaction.wrap(function () {
-            CartHelper.addProductToCart(currentBasket, productId, quantity, childPids);
-            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            result = CartHelper.addProductToCart(currentBasket, productId, quantity, childPids);
+            if (!result.error) {
+                CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
+                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            }
         });
     }
 
     var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.productLineItems);
     var cartModel = new CartModel(currentBasket);
 
+    if (result.error) {
+        message = Resource.msg('error.alert.addedtobasket', 'product', null);
+    }
+
     res.json({
         quantityTotal: quantityTotal,
-        message: Resource.msg('text.alert.addedtobasket', 'product', null),
-        cart: cartModel
+        message: message,
+        cart: cartModel,
+        error: result.error
     });
+
     next();
 });
 

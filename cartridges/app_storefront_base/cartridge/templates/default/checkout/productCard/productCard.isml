@@ -18,11 +18,17 @@
                 <isloop items="${lineItem.variationAttributes}" var="attribute">
                     <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                 </isloop>
+
+                <isinclude template="cart/productCard/cartProductCardAvailability" />
+
             </div>
         </div>
     </isif>
 
     <div><hr class="line-item-divider"></div>
+    <isif condition="${lineItem.productType === 'bundle'}">
+        <isinclude template="cart/productCard/cartProductCardAvailability" />
+    </isif>
     <div class="row align-items-start">
         <!--- item price --->
         <div class="col-4 line-item-unit-price">
