@@ -451,7 +451,7 @@ module.exports = {
             e.preventDefault();
             var quantity = getQuantitySelected($(this));
             var $productContainer = $(this).closest('.product-detail');
-            if (!isBundle) {
+            if (!isBundle()) {
                 attributeSelect($('.quantity-select').data('action') + '&quantity=' + quantity,
                     $productContainer);
             }
