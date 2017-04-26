@@ -1,18 +1,20 @@
-<div class="pull-left">
-    <label class="availability">
-        ${Resource.msg('label.availability', 'common', null)}:
-    </label>
-</div>
-<div class="pull-left">
-    <ul class="list-unstyled availability-msg">
-        <li>
-            <isif condition="${product.readyToOrder && product.available}">
-                ${pdict.resources.label_instock}
-            <iselseif condition="${product.readyToOrder && !product.available}">
-                ${pdict.resources.label_allnotavailable}
-            <iselse>
-                ${pdict.resources.info_selectforstock}
-            </isif>
-        </li>
-    </ul>
+<div class="row">
+    <div class="col-12 col-sm-3">
+        <label class="availability">
+            ${Resource.msg('label.availability', 'common', null)}:
+        </label>
+    </div>
+    <div class="col-12 col-sm-9">
+        <ul class="list-unstyled availability-msg">
+            <li>
+                <isif condition="${product.readyToOrder && product.available}">
+                    ${pdict.resources.label_instock}
+                <iselseif condition="${product.readyToOrder && !product.available}">
+                    ${pdict.resources.label_allnotavailable}
+                <iselse>
+                    ${pdict.resources.info_selectforstock}
+                </isif>
+            </li>
+        </ul>
+    </div>
 </div>
