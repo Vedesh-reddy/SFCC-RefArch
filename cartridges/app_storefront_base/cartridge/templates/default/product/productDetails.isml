@@ -48,6 +48,12 @@
                         <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
                             <isinclude template="product/components/variationAttributes" />
                         </isloop>
+
+                        <isif condition="${!pdict.product.variationAttributes}">
+                            <div class="simple-quantity">
+                                <isinclude template="/product/components/quantity" />
+                            </div>
+                        </isif>
                     </div>
 
                     <!-- Size Chart -->
