@@ -35,7 +35,7 @@
                         </div>
                     </isif>
 
-                    <div class="col-md-10 col-12 availability">
+                    <div class="col-md-10 col-12 availability clearfix">
                         <isinclude template="product/components/availability" />
                     </div>
 
