@@ -1,9 +1,7 @@
-<div class="promotions col-md-10 col-12">
-    <isif condition="${pdict.product.promotions}">
-        <isloop items="${pdict.product.promotions}" var="promotion">
-            <div class="callout" title="${promotion.details}">
-                ${promotion.calloutMsg}
-            </div>
-        </isloop>
-    </isif>
-</div>
+<isif condition="${product.promotions}">
+    <isloop items="${product.promotions}" var="promotion">
+        <div class="callout" title="${promotion.details}">
+            ${promotion.calloutMsg}
+        </div>
+    </isloop>
+</isif>

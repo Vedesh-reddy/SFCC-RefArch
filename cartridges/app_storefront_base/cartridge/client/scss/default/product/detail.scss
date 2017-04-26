@@ -86,6 +86,7 @@ label.availability {
     font-weight: normal;
     text-align: center;
     color: $brand-danger;
+    height: 85%;
 
     .callout {
         font-size: 1.25em;
@@ -105,5 +106,14 @@ label.availability {
 
     @include media-breakpoint-down(md) {
         border-top: 1px solid $grey3;
+    }
+}
+
+.bundle-item {
+    padding-bottom: 1em;
+    border-bottom: 1px solid $hr-border-color;
+
+    &:last-child {
+        border-bottom: none;
     }
 }

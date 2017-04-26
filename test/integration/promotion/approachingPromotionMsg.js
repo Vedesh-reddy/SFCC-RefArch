@@ -63,7 +63,11 @@ describe('Approaching order level promotion', function () {
     });
     it('2. should return a response containing approaching promotional call out messages', function (done) {
         // add 2 product to Cart
-        myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid + '&quantity=' + qty;
+        myRequest.url = config.baseUrl + '/Cart-AddProduct';
+        myRequest.form = {
+            pid: variantPid,
+            quantity: qty
+        };
         myRequest.method = 'POST';
         return request(myRequest)
             .then(function (response) {

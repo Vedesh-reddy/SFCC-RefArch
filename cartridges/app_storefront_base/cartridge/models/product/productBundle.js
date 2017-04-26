@@ -20,18 +20,33 @@ function isAvailable(quantity, product) {
 }
 
 /**
+ * Determines whether bundle is ready to order
+ *
+ * @param {Object[]} bundledProducts - List of products that comprise this bundle
+ * @return {boolean} - Whether bundle is ready to order
+ */
+function isReadyToOrder(bundledProducts) {
+    return !bundledProducts.some(function (product) {
+        return !(product.available && product.readyToOrder);
+    });
+}
+
+/**
  * Returns the products in the bundle
  *
+ * @param {dw.catalog.Product} apiBundle - Bundle product object
  * @param {dw.util.Collection} bundledProducts - Collection of products in the bundle
  * @param {Object} productFactory - product factory utilitiy to get product model based on
  *                                  product type
  * @returns {Array} Array of products in a bundle
  */
-function getBundledProducts(bundledProducts, productFactory) {
-    var products = helper.map(bundledProducts, function (bundledProduct) {
-        return productFactory.get({ pid: bundledProduct.ID });
+function getBundledProducts(apiBundle, bundledProducts, productFactory) {
+    return helper.map(bundledProducts, function (bundledProduct) {
+        return productFactory.get({
+            pid: bundledProduct.ID,
+            quantity: apiBundle.getBundledProductQuantity(bundledProduct).value
+        });
     });
-    return products;
 }
 
 /**
@@ -44,7 +59,7 @@ function getBundledProducts(bundledProducts, productFactory) {
  * @param {Object} productFactory - Factory utility that returns a ProductModel instance
  */
 function ProductBundle(product, quantity, promotions, productFactory) {
-    this.bundledProducts = getBundledProducts(product.bundledProducts, productFactory);
+    this.bundledProducts = getBundledProducts(product, product.bundledProducts, productFactory);
     this.product = product;
     this.imageConfig = {
         types: ['large', 'small'],
@@ -65,7 +80,9 @@ ProductBundle.prototype.initialize = function () {
     this.searchable = this.product.searchable;
     this.minOrderQuantity = this.product.minOrderQuantity.value || 1;
     this.maxOrderQuantity = DEFAULT_MAX_ORDER_QUANTITY;
-    this.readyToOrder = true;
+    this.readyToOrder = isReadyToOrder(this.bundledProducts);
+    this.longDescription = this.product.longDescription;
+    this.shortDescription = this.product.shortDescription;
 };
 
 /**
@@ -85,7 +102,7 @@ function ProductWrapper(product, quantity, promotions, productFactory) {
     );
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'bundledProducts',
         'available', 'online', 'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder',
-        'promotions'];
+        'promotions', 'longDescription', 'shortDescription'];
     items.forEach(function (item) {
         this[item] = productBundle[item];
     }, this);

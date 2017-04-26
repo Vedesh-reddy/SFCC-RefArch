@@ -3,7 +3,7 @@ var request = require('request-promise');
 var config = require('../it.config');
 
 describe('Shipping Level Coupon - add coupon', function () {
-    this.timeout(5000);
+    this.timeout(25000);
 
     var variantId = '740357377119';
     var quantity = 5;
@@ -19,7 +19,11 @@ describe('Shipping Level Coupon - add coupon', function () {
         jar: cookieJar
     };
 
-    myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantId + '&quantity=' + quantity;
+    myRequest.url = config.baseUrl + '/Cart-AddProduct';
+    myRequest.form = {
+        pid: variantId,
+        quantity: quantity
+    };
 
     before(function () {
         // adding 5 products to Cart

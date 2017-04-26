@@ -272,6 +272,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             'locale': 'en_US',
             'resources': {
                 'label_instock': 'In Stock',
+                'label_outofstock': 'Out of Stock',
                 'label_allnotavailable': 'This item is currently not available.',
                 'info_selectforstock': 'Select Styles for Availability'
             }

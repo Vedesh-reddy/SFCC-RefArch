@@ -2,9 +2,9 @@
     <div class="image-container">
         <a href="${pdict.urls.product}">
             <img class="tile-image"
-                 src="${pdict.product.images.medium[0].url}"
-                 alt="${pdict.product.productName}"
-                 title="${pdict.product.images.medium[0].title}" />
+                 src="${product.images.medium[0].url}"
+                 alt="${product.productName}"
+                 title="${product.images.medium[0].title}" />
         </a>
         <isif condition="${showQuickView}">
             <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}">
@@ -18,8 +18,8 @@
         <isif condition="${pdict.display.swatches}">
             <div class="color-swatches">
                 <div class="swatches">
-                    <isif condition="${pdict.product.variationAttributes && pdict.product.variationAttributes.length > 0}">
-                        <isloop items="${pdict.product.variationAttributes[0].values}" var="swatch" status="loopstate">
+                    <isif condition="${product.variationAttributes && product.variationAttributes.length > 0}">
+                        <isloop items="${product.variationAttributes[0].values}" var="swatch" status="loopstate">
                             <isif condition="${loopstate.count < 4
                                 && swatch.images != null
                                 && swatch.images.swatch[0] != null
@@ -45,9 +45,9 @@
         </isif>
 
         <div class="pdp-link">
-            <a class="link" href="${pdict.urls.product}">${pdict.product.productName}</a>
+            <a class="link" href="${pdict.urls.product}">${product.productName}</a>
         </div>
-        <isset name="price" value="${pdict.product.price}" scope="page" />
+        <isset name="price" value="${product.price}" scope="page" />
         <isinclude template="/product/components/pricing/main" />
         <div class="reviews-compare">
             <div class="col-12">
@@ -56,9 +56,9 @@
                         <isif condition="${pdict.display.reviews}">
                             <isloop items="${[1, 2, 3, 4, 5]}" var="star">
                                 <i class="fa
-                                    <isif condition="${pdict.product.rating >= star}">
+                                    <isif condition="${product.rating >= star}">
                                         fa-star
-                                    <iselseif condition="${parseInt(pdict.product.rating) < star}">
+                                    <iselseif condition="${parseInt(product.rating) < star}">
                                         fa-star-o
                                     <iselse>
                                         fa-star-half-o
@@ -70,8 +70,8 @@
                     </div>
                     <div class="compare col-md-6 hidden-xs-down">
                         <isif condition="${pdict.display.compare}">
-                            <input type="checkbox" id="${pdict.product.id}" value="true" />
-                            <label for="${pdict.product.id}">${Resource.msg('checkbox.tile.compare', 'product', null)}</label>
+                            <input type="checkbox" id="${product.id}" value="true" />
+                            <label for="${product.id}">${Resource.msg('checkbox.tile.compare', 'product', null)}</label>
                         </isif>
                     </div>
                 </div>

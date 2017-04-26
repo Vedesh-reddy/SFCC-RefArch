@@ -1,0 +1,93 @@
+<isdecorate template="common/layout/page">
+
+    <isscript>
+        var assets = require('~/cartridge/scripts/assets');
+        assets.addJs('/js/productDetail.js');
+        assets.addCss('/css/product/detail.css');
+    </isscript>
+
+    <isset name="product" value="${pdict.product}" scope="page" />
+    <div class="container product-detail">
+        <div class="row">
+            <div class="col-12">
+                <!---Breadcrumbs--->
+                <div class="product-breadcrumb hidden-md-up">
+                    <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                </div>
+
+                <!-- Product Name -->
+                <div class="row">
+                    <div class="hidden-md-up col-sm-12">
+                        <h1 class="product-name">${product.productName}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Product Images Carousel -->
+            <isinclude template="product/components/image_carousel" />
+
+            <div class="col-12 col-sm-6">
+                <!---Breadcrumbs--->
+                <div class="product-breadcrumb hidden-sm-down">
+                    <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                </div>
+
+                <!-- Product Name -->
+                <h1 class="product-name hidden-sm-down">${product.productName}</h1>
+
+                <isinclude template="product/components/pidRating" />
+
+                <div class="row justify-content-center">
+                    <!-- Attributes and Quantity -->
+                    <div class="col-md-10 col-12">
+                        <isinclude template="product/components/mainAttributes" />
+
+                        <isset name="isBundleOrSet" value="false" scope="page" />
+                        <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
+                            <isinclude template="product/components/variationAttributes" />
+                        </isloop>
+                    </div>
+
+                    <!-- Size Chart -->
+                    <isif condition="${product.variationAttributes}">
+                        <div class="size-chart col-md-10 col-12">
+                            <isinclude template="product/components/sizeChart" />
+                        </div>
+                    </isif>
+
+                    <!-- Availability -->
+                    <div class="availability col-md-10 col-12">
+                        <isinclude template="product/components/availability" />
+                    </div>
+
+                    <!-- Applicable Promotions -->
+                    <div class="col-md-10 col-12 promotions">
+                        <isinclude template="product/components/promotions" />
+                    </div>
+
+                    <div class="col-md-10 col-12">
+                        <hr>
+                    </div>
+
+                    <div class="col-12 prices-add-to-cart-actions">
+                        <!-- Prices -->
+                        <div class="prices">
+                            <isset name="price" value="${product.price}" scope="page" />
+                            <isinclude template="product/components/pricing/main" />
+                        </div>
+
+                        <!-- Cart and [Optionally] Apple Pay -->
+                        <isinclude template="product/components/addtocart" />
+                    </div>
+
+                    <!-- Add to Wishlist and Social Sharing Icons -->
+                    <isinclude template="product/components/wishlistSocial" />
+                </div>
+            </div>
+        </div>
+
+        <isinclude template="product/components/descriptionAndDetails" />
+    </div>
+</isdecorate>

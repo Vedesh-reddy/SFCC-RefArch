@@ -56,6 +56,7 @@ function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
 function getResources() {
     return {
         label_instock: Resource.msg('label.instock', 'common', 'In Stock'),
+        label_outofstock: Resource.msg('label.outofstock', 'common', 'Out of Stock'),
         label_allnotavailable: Resource.msg('label.allnotavailable', 'common',
             'This item is currently not available'),
         info_selectforstock: Resource.msg('info.selectforstock', 'product',
@@ -73,7 +74,15 @@ function showProductPage(querystring, res) {
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
     var breadcrumbs = getAllBreadcrumbs(querystring.cgid, product.id, []).reverse();
-    res.render('product/detail.isml', {
+    var template = 'product/productDetails';
+
+    if (product.productType === 'bundle') {
+        template = 'product/bundleDetails';
+    } else if (product.productType === 'set') {
+        template = 'product/setDetails';
+    }
+
+    res.render(template, {
         CurrentPageMetaData: {
             title: product.productName
         },

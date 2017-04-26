@@ -4,7 +4,7 @@ var config = require('../it.config');
 var jsonHelpers = require('../helpers/jsonUtils');
 
 describe('Update quantity for product variant', function () {
-    this.timeout(5000);
+    this.timeout(45000);
 
     var variantPid1 = '701643421084';
     var qty1 = 2;
@@ -28,7 +28,11 @@ describe('Update quantity for product variant', function () {
 
     before(function () {
         // ----- adding product #1:
-        myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid1 + '&quantity=' + qty1;
+        myRequest.url = config.baseUrl + '/Cart-AddProduct';
+        myRequest.form = {
+            pid: variantPid1,
+            quantity: qty1
+        };
 
         return request(myRequest)
             .then(function () {
@@ -37,7 +41,11 @@ describe('Update quantity for product variant', function () {
 
             // ----- adding product #2, a different variant of same product 1:
             .then(function () {
-                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid2 + '&quantity=' + qty2;
+                myRequest.url = config.baseUrl + '/Cart-AddProduct';
+                myRequest.form = {
+                    pid: variantPid2,
+                    quantity: qty2
+                };
 
                 var cookie = request.cookie(cookieString);
                 cookieJar.setCookie(cookie, myRequest.url);
@@ -47,7 +55,11 @@ describe('Update quantity for product variant', function () {
 
             // ----- adding product #3:
             .then(function () {
-                myRequest.url = config.baseUrl + '/Cart-AddProduct?pid=' + variantPid3 + '&quantity=' + qty3;
+                myRequest.url = config.baseUrl + '/Cart-AddProduct';
+                myRequest.form = {
+                    pid: variantPid3,
+                    quantity: qty3
+                };
                 return request(myRequest);
             })
 
