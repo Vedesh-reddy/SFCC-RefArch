@@ -32,7 +32,6 @@ server.post('AddProduct', function (req, res, next) {
         : [];
     var quantity = parseInt(req.form.quantity, 10);
     var result;
-    var message = Resource.msg('text.alert.addedtobasket', 'product', null);
 
     if (currentBasket) {
         Transaction.wrap(function () {
@@ -47,13 +46,9 @@ server.post('AddProduct', function (req, res, next) {
     var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.productLineItems);
     var cartModel = new CartModel(currentBasket);
 
-    if (result.error) {
-        message = Resource.msg('error.alert.addedtobasket', 'product', null);
-    }
-
     res.json({
         quantityTotal: quantityTotal,
-        message: message,
+        message: result.message,
         cart: cartModel,
         error: result.error
     });

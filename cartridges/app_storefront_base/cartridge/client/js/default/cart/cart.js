@@ -80,6 +80,11 @@ function updateApproachingDiscounts(approachingDiscounts) {
     $('.approaching-discounts').append(html);
 }
 
+/**
+ * Updates the availability of a product line item
+ * @param {Object} data - AJAX response from the server
+ * @param {string} uuid - The uuid of the product line item to update
+ */
 function updateAvailability(data, uuid) {
     var lineItem;
     var messages = '';
@@ -92,9 +97,20 @@ function updateAvailability(data, uuid) {
     }
 
     $('.availability-' + lineItem.UUID).empty();
-    lineItem.availability.messages.forEach(function (message) {
-        messages += '<p class="line-item-attributes">' + message + '</p>';
-    });
+
+    if (lineItem.availability) {
+        if (lineItem.availability.messages) {
+            lineItem.availability.messages.forEach(function (message) {
+                messages += '<p class="line-item-attributes">' + message + '</p>';
+            });
+        }
+
+        if (lineItem.availability.inStockDate) {
+            messages += '<p class="line-item-attributes line-item-instock-date">'
+                + lineItem.availability.inStockDate
+                + '</p>';
+        }
+    }
 
     $('.availability-' + lineItem.UUID).html(messages);
 }

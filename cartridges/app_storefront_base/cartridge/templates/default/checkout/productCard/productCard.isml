@@ -19,14 +19,15 @@
                     <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                 </isloop>
 
-                <isinclude template="cart/productCard/cartProductCardAvailability" />
-
+                <isif condition="${(pdict.order && !pdict.order.orderStatus) || miniCart}">
+                    <isinclude template="cart/productCard/cartProductCardAvailability" />
+                </isif>
             </div>
         </div>
     </isif>
 
     <div><hr class="line-item-divider"></div>
-    <isif condition="${lineItem.productType === 'bundle'}">
+    <isif condition="${lineItem.productType === 'bundle' && ((pdict.order && !pdict.order.orderStatus) || miniCart)}">
         <isinclude template="cart/productCard/cartProductCardAvailability" />
     </isif>
     <div class="row align-items-start">
