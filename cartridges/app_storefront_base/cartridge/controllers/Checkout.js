@@ -476,6 +476,9 @@ server.get('Start', server.middleware.https, function (req, res, next) {
     }
 
     // Calculate the basket
+    Transaction.wrap(function () {
+        COHelpers.ensureNoEmptyShipments();
+    });
     COHelpers.recalculateBasket(currentBasket);
 
     var shippingForm = COHelpers.prepareShippingForm(currentBasket);
