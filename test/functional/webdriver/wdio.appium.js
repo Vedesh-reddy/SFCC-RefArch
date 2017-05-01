@@ -47,10 +47,10 @@ exports.config = _.assign({
     port: '4723',
     capabilities: [{
         browserName: 'safari',
-        appiumVersion: '1.6.3',
-        deviceName: 'iPad Retina',
+        appiumVersion: '1.6.4',
+        deviceName: 'iPad Air',
         orientation: 'PORTRAIT',
-        platformVersion: '10.1',
+        platformVersion: '10.3',
         platformName: 'iOS',
         app: ''
     }],
