@@ -310,6 +310,10 @@ span.ship-to-city-st-zip {
     }
 }
 
+[data-customer-type=guest] .shipment-selector-block {
+    display: none;
+}
+
 .credit-card-selection {
     display: none;
 
