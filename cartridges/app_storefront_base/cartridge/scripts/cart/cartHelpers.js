@@ -1,6 +1,7 @@
 'use strict';
 
 var ProductMgr = require('dw/catalog/ProductMgr');
+var Resource = require('dw/web/Resource');
 
 var Collections = require('~/cartridge/scripts/util/collections');
 var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
@@ -39,16 +40,22 @@ function updateBundleProducts(apiLineItem, childPids) {
  * @param {string} productId - the productId of the product being added to the cart
  * @param {number} quantity - the number of products to the cart
  * @param {string[]} childPids - the number of products to the cart
+ *  @return {Object} returns an error object
  */
 function addProductToCart(currentBasket, productId, quantity, childPids) {
+    var availableToSell;
     var defaultShipment = currentBasket.defaultShipment;
     var product = ProductMgr.getProduct(productId);
     var productInCart;
+    var productLineItem;
     var productLineItems = currentBasket.productLineItems;
     var productQuantityInCart;
     var quantityToSet;
-    var productLineItem;
     var optionModel = product.optionModel;
+    var result = {
+        error: false,
+        message: Resource.msg('text.alert.addedtobasket', 'product', null)
+    };
 
     for (var i = 0; i < currentBasket.productLineItems.length; i++) {
         if (productLineItems[i].productID === productId) {
@@ -58,9 +65,25 @@ function addProductToCart(currentBasket, productId, quantity, childPids) {
     }
 
     if (productInCart) {
-        productQuantityInCart = productInCart.quantity;
+        productQuantityInCart = productInCart.quantity.value;
         quantityToSet = quantity ? quantity + productQuantityInCart : productQuantityInCart + 1;
-        productInCart.setQuantityValue(quantityToSet);
+        availableToSell = productInCart.product.availabilityModel.inventoryRecord.ATS.value;
+
+        if (availableToSell >= quantityToSet) {
+            productInCart.setQuantityValue(quantityToSet);
+        } else {
+            if (availableToSell === productQuantityInCart) {
+                result.message = Resource.msg('error.alert.max.quantity.in.cart', 'product', null);
+            } else {
+                result.message = Resource.msg(
+                    'error.alert.selected.quantity.cannot.be.added',
+                    'product',
+                    null
+                );
+            }
+
+            result.error = true;
+        }
     } else {
         productLineItem = currentBasket.createProductLineItem(
             product,
@@ -74,6 +97,8 @@ function addProductToCart(currentBasket, productId, quantity, childPids) {
 
         productLineItem.setQuantityValue(quantity);
     }
+
+    return result;
 }
 
 /**

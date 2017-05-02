@@ -4,7 +4,7 @@
         <div class="col-4">
             <p class="line-item-price-info">${Resource.msg('label.each.item.price','cart',null)}</p>
             <isset name="price" value="${lineItem.price}" scope="page"/>
-            <isinclude template="/product/components/pricing/main.isml" />
+            <isinclude template="/product/components/pricing/main" />
         </div>
 
         <!--- quantity --->

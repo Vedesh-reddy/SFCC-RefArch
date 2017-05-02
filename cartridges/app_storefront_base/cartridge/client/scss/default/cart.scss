@@ -47,7 +47,7 @@ $negative-spacer: -0.625rem;
 }
 
 .line-item-attributes {
-    font-size: 0.813em;
+    font-size: 0.813rem;
     margin: 0;
 }
 
@@ -250,26 +250,18 @@ $negative-spacer: -0.625rem;
     margin: 0.625em -0.625em;
 }
 
-.bundle-edit-or-wishlist {
-    display: flex;
-    justify-content: flex-start;
-    font-size: 0.813em;
-
-    @include media-breakpoint-down(md) {
-        margin-bottom: 0.625em;
-    }
-
-    @include media-breakpoint-up(lg) {
-        flex-grow: 1;
-        align-items: center;
-        justify-content: space-around;
-    }
-}
-
 .quantity-label {
     font-size: 0.813em;
 }
 
 .quantity {
     width: 100%;
+}
+
+.bundle-misc {
+    font-size: 0.813rem;
+
+    @include media-breakpoint-down(md) {
+        margin-bottom: 0.625em;
+    }
 }

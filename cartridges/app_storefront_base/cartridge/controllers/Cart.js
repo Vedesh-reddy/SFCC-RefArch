@@ -31,13 +31,15 @@ server.post('AddProduct', function (req, res, next) {
         ? decodeURIComponent(req.form.childPids).split(',')
         : [];
     var quantity = parseInt(req.form.quantity, 10);
+    var result;
 
     if (currentBasket) {
         Transaction.wrap(function () {
-            CartHelper.addProductToCart(currentBasket, productId, quantity, childPids);
-            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            result = CartHelper.addProductToCart(currentBasket, productId, quantity, childPids);
+            if (!result.error) {
+                CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
+                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            }
         });
     }
 
@@ -46,9 +48,11 @@ server.post('AddProduct', function (req, res, next) {
 
     res.json({
         quantityTotal: quantityTotal,
-        message: Resource.msg('text.alert.addedtobasket', 'product', null),
-        cart: cartModel
+        message: result.message,
+        cart: cartModel,
+        error: result.error
     });
+
     next();
 });
 
@@ -134,7 +138,7 @@ server.get('UpdateQuantity', function (req, res, next) {
                     var updatedQuantity = parseInt(req.querystring.quantity, 10);
 
                     if (updatedQuantity >= item.product.minOrderQuantity.value &&
-                        updatedQuantity < item.product.availabilityModel.inventoryRecord.ATS.value
+                        updatedQuantity <= item.product.availabilityModel.inventoryRecord.ATS.value
                     ) {
                         item.setQuantityValue(updatedQuantity);
                         isProductLineItemFound = true;

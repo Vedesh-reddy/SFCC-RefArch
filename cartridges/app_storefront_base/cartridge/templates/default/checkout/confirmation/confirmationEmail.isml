@@ -28,43 +28,43 @@
             ${shippingModel.selectedShippingMethod.displayName} (${shippingModel.selectedShippingMethod.estimatedArrivalTime}):
         </p>
         <isif condition="${pdict.order.shipping.length > 1}">
-	        <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>
-	        <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopSate">
-	            <p>
-	                ${Resource.msg('label.order.product.name', 'confirmation', null)}: ${lineItem.productName}
-	                <br/>
-	    
-	                <isif condition="${lineItem.productType === 'bundle'}">
-	                    <isloop items="${lineItem.bundledProductLineItems}" var="bundledLineItem">
-	                        ${Resource.msg('label.order.bundled.item.name', 'confirmation', null)}: ${bundledLineItem.productName}
-	                            <br/>
-	                            <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
-	                                ${attribute.displayName}: ${attribute.displayValue}
-	                                <br/>
-	                            </isloop>
-	                    </isloop>
-	                <iselse/>
-	                    <isloop items="${lineItem.variationAttributes}" var="attribute">
-	                        ${attribute.displayName}: ${attribute.displayValue}
-	                        <br/>
-	                    </isloop>
-	                </isif>
-	    
-	                <!--- item price --->
-	                ${Resource.msg('label.each.item.price','cart',null)} - 
-	                ${lineItem.price.formatted || lineItem.price.sales.formatted}
-	                <br/>
-	                <!--- quantity --->
-	                ${Resource.msg('field.selectquantity','cart',null)}
-	                - <isprint value="${lineItem.quantity}" formatter="##" />
-	                <br/>
-	    
-	                <!--- line item total price --->
-	                ${Resource.msg('label.total.price','cart',null)}
-	                - ${lineItem.priceTotal.price}
-	                <br/>
-	            </p>
-	        </isloop>
+            <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>
+            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopSate">
+                <p>
+                    ${Resource.msg('label.order.product.name', 'confirmation', null)}: ${lineItem.productName}
+                    <br/>
+
+                    <isif condition="${lineItem.productType === 'bundle'}">
+                        <isloop items="${lineItem.bundledProductLineItems}" var="bundledLineItem">
+                            ${Resource.msg('label.order.bundled.item.name', 'confirmation', null)}: ${bundledLineItem.productName}
+                                <br/>
+                                <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
+                                    ${attribute.displayName}: ${attribute.displayValue}
+                                    <br/>
+                                </isloop>
+                        </isloop>
+                    <iselse/>
+                        <isloop items="${lineItem.variationAttributes}" var="attribute">
+                            ${attribute.displayName}: ${attribute.displayValue}
+                            <br/>
+                        </isloop>
+                    </isif>
+
+                    <!--- item price --->
+                    ${Resource.msg('label.each.item.price','cart',null)} -
+                    ${lineItem.price.formatted || lineItem.price.sales.formatted}
+                    <br/>
+                    <!--- quantity --->
+                    ${Resource.msg('field.selectquantity','cart',null)}
+                    - <isprint value="${lineItem.quantity}" formatter="##" />
+                    <br/>
+
+                    <!--- line item total price --->
+                    ${Resource.msg('label.total.price','cart',null)}
+                    - ${lineItem.priceTotal.price}
+                    <br/>
+                </p>
+            </isloop>
         </isif>
     </isloop>
     <p>${pdict.order.totals.totalShippingCost}</p>
@@ -106,43 +106,43 @@
 
     <br/>
     <isif condition="${pdict.order.shipping.length === 1}">
-	    <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>
-	    <isloop items="${pdict.order.items.items}" var="lineItem" status="loopSate">
-	        <p>
-	            ${Resource.msg('label.order.product.name', 'confirmation', null)}: ${lineItem.productName}
-	            <br/>
-	
-	            <isif condition="${lineItem.productType === 'bundle'}">
-	                <isloop items="${lineItem.bundledProductLineItems}" var="bundledLineItem">
-	                    ${Resource.msg('label.order.bundled.item.name', 'confirmation', null)}: ${bundledLineItem.productName}
-	                        <br/>
-	                        <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
-	                            ${attribute.displayName}: ${attribute.displayValue}
-	                            <br/>
-	                        </isloop>
-	                </isloop>
-	            <iselse/>
-	                <isloop items="${lineItem.variationAttributes}" var="attribute">
-	                    ${attribute.displayName}: ${attribute.displayValue}
-	                    <br/>
-	                </isloop>
-	            </isif>
-	
-	            <!--- item price --->
-	            ${Resource.msg('label.each.item.price','cart',null)} - 
-	            ${lineItem.price.formatted || lineItem.price.sales.formatted}
-	            <br/>
-	            <!--- quantity --->
-	            ${Resource.msg('field.selectquantity','cart',null)}
-	            - <isprint value="${lineItem.quantity}" formatter="##" />
-	            <br/>
-	
-	            <!--- line item total price --->
-	            ${Resource.msg('label.total.price','cart',null)}
-	            - ${lineItem.priceTotal.price}
-	            <br/>
-	        </p>
-	    </isloop>
+        <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>
+        <isloop items="${pdict.order.items.items}" var="lineItem" status="loopSate">
+            <p>
+                ${Resource.msg('label.order.product.name', 'confirmation', null)}: ${lineItem.productName}
+                <br/>
+
+                <isif condition="${lineItem.productType === 'bundle'}">
+                    <isloop items="${lineItem.bundledProductLineItems}" var="bundledLineItem">
+                        ${Resource.msg('label.order.bundled.item.name', 'confirmation', null)}: ${bundledLineItem.productName}
+                            <br/>
+                            <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
+                                ${attribute.displayName}: ${attribute.displayValue}
+                                <br/>
+                            </isloop>
+                    </isloop>
+                <iselse/>
+                    <isloop items="${lineItem.variationAttributes}" var="attribute">
+                        ${attribute.displayName}: ${attribute.displayValue}
+                        <br/>
+                    </isloop>
+                </isif>
+
+                <!--- item price --->
+                ${Resource.msg('label.each.item.price','cart',null)} -
+                ${lineItem.price.formatted || lineItem.price.sales.formatted}
+                <br/>
+                <!--- quantity --->
+                ${Resource.msg('field.selectquantity','cart',null)}
+                - <isprint value="${lineItem.quantity}" formatter="##" />
+                <br/>
+
+                <!--- line item total price --->
+                ${Resource.msg('label.total.price','cart',null)}
+                - ${lineItem.priceTotal.price}
+                <br/>
+            </p>
+        </isloop>
     </isif>
 
     <strong>${Resource.msg('label.order.totals', 'confirmation', null)}:</strong> <br/>

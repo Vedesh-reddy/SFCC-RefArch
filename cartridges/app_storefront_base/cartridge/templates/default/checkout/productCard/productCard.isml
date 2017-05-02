@@ -18,11 +18,18 @@
                 <isloop items="${lineItem.variationAttributes}" var="attribute">
                     <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                 </isloop>
+
+                <isif condition="${(pdict.order && !pdict.order.orderStatus) || miniCart}">
+                    <isinclude template="cart/productCard/cartProductCardAvailability" />
+                </isif>
             </div>
         </div>
     </isif>
 
     <div><hr class="line-item-divider"></div>
+    <isif condition="${lineItem.productType === 'bundle' && ((pdict.order && !pdict.order.orderStatus) || miniCart)}">
+        <isinclude template="cart/productCard/cartProductCardAvailability" />
+    </isif>
     <div class="row align-items-start">
         <!--- item price --->
         <div class="col-4 line-item-unit-price">

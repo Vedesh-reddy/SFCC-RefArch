@@ -394,17 +394,22 @@ function getAddToCartUrl() {
  */
 function handlePostCartAdd(response) {
     $('.mini-cart').trigger('count:update', response);
+    var messageType = response.error ? 'alert-danger' : 'alert-success';
     // show add to cart toast
-    if ($('.add-to-basket-alert').length === 0) {
+    if ($('.add-to-cart-messages').length === 0) {
         $('body').append(
-            '<div class="alert alert-success add-to-basket-alert" role="alert">'
-            + response.message
-            + '</div>'
+            '<div class="add-to-cart-messages"></div>'
         );
     }
-    $('.add-to-basket-alert').addClass('show');
+
+    $('.add-to-cart-messages').append(
+        '<div class="alert ' + messageType + ' add-to-basket-alert text-center" role="alert">'
+        + response.message
+        + '</div>'
+    );
+
     setTimeout(function () {
-        $('.add-to-basket-alert').removeClass('show');
+        $('.add-to-basket-alert').remove();
     }, 10000);
 }
 

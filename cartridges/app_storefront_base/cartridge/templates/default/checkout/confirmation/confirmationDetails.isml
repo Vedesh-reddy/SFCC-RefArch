@@ -20,7 +20,6 @@
 
 <isinclude template="checkout/orderProductSummary" />
 
-
 <div class="card checkout-order-total-summary">
     <div class="card-block order-total-summary">
         <isinclude template="checkout/orderTotalSummary" />

@@ -4,7 +4,6 @@
         assets.addCss('/css/checkout/checkout.css');
         assets.addJs('/js/checkoutRegistration.js');
     </isscript>
-
     <!--- Replace image once UX has given images --->
     <div class="hero slant-down hero-confirmation">
         <h1 class="page-title">${Resource.msg('title.thank.you.page','confirmation',null)}</h1>
