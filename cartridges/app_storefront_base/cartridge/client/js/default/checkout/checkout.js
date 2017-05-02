@@ -330,7 +330,7 @@
 
         /**
          * updates the billing address form values within payment forms
-         * @param {Object} billing - the billing model
+         * @param {Object} order - the order model
          */
         function updateBillingAddressFormValues(order) {
             var billing = order.billing;
@@ -348,7 +348,7 @@
             $('select[name$=_stateCode]', form).val(billing.billingAddress.address.stateCode);
             $('select[name$=_countryCode]', form).val(billing.billingAddress.address.countryCode);
             $('input[name$=_phone]', form).val(billing.billingAddress.address.phone);
-            $('input[name$=_email]', form).val(order.orderEmail); 
+            $('input[name$=_email]', form).val(order.orderEmail);
 
             if (billing.payment && billing.payment.selectedPaymentInstruments
                     && billing.payment.selectedPaymentInstruments.length > 0) {
