@@ -95,5 +95,9 @@
         </div>
 
         <isinclude template="product/components/descriptionAndDetails" />
+
+        <div class="recommendations">
+            <isslot id="product-recommendations" description="Recommended products" context="global" />
+        </div>
     </div>
 </isdecorate>
