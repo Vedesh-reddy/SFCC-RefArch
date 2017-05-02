@@ -231,6 +231,61 @@
         }
 
         /**
+         * updates the billing address selector within billing forms
+         * @param {Object} order - the order model
+         * @param {Object} customer - the customer model
+         */
+        function updateBillingAddressSelector(order, customer) {
+            var shippings = order.shipping;
+
+            var form = $('form[name$=billing]')[0];
+            var $billingAddressSelector = $('.addressSelector', form);
+            var hasSelectedAddress = false;
+
+            if ($billingAddressSelector && $billingAddressSelector.length === 1) {
+                $billingAddressSelector.empty();
+                // Add New Address option
+                $billingAddressSelector.append(optionValueForAddress(null, false, order));
+                // Separator -
+                $billingAddressSelector.append(optionValueForAddress(
+                    order.resources.shippingAddresses, false, order, { className: 'multi-shipping' }
+                ));
+                shippings.forEach(function (aShipping) {
+                    var isSelected = order.billing.matchingAddressId === aShipping.UUID;
+                    hasSelectedAddress = hasSelectedAddress || isSelected;
+                    // Shipping Address option
+                    $billingAddressSelector.append(
+                        optionValueForAddress(aShipping, isSelected, order,
+                                { className: 'multi-shipping' }
+                        )
+                    );
+                });
+                if (customer.addresses && customer.addresses.length > 0) {
+                    $billingAddressSelector.append(optionValueForAddress(
+                            order.resources.accountAddresses, false, order));
+                    customer.addresses.forEach(function (address) {
+                        var isSelected = order.billing.matchingAddressId === address.ID;
+                        hasSelectedAddress = hasSelectedAddress || isSelected;
+                        // Customer Address option
+                        $billingAddressSelector.append(
+                            optionValueForAddress({
+                                UUID: 'ab_' + address.ID,
+                                shippingAddress: address
+                            }, isSelected, order)
+                        );
+                    });
+                }
+            }
+
+            if (!hasSelectedAddress) {
+                // show
+                $(form).addClass('hide-details');
+            } else {
+                $(form).removeClass('hide-details');
+            }
+        }
+
+        /**
          * returns address properties from a UI form
          * @param {Form} form - the Form element
          * @returns {Object} - a JSON object with all values
@@ -275,9 +330,10 @@
 
         /**
          * updates the billing address form values within payment forms
-         * @param {Object} billing - the billing model
+         * @param {Object} order - the order model
          */
-        function updateBillingAddressFormValues(billing) {
+        function updateBillingAddressFormValues(order) {
+            var billing = order.billing;
             if (!billing.billingAddress || !billing.billingAddress.address) return;
 
             var form = $('form[name=dwfrm_billing]');
@@ -292,6 +348,7 @@
             $('select[name$=_stateCode]', form).val(billing.billingAddress.address.stateCode);
             $('select[name$=_countryCode]', form).val(billing.billingAddress.address.countryCode);
             $('input[name$=_phone]', form).val(billing.billingAddress.address.phone);
+            $('input[name$=_email]', form).val(order.orderEmail);
 
             if (billing.payment && billing.payment.selectedPaymentInstruments
                     && billing.payment.selectedPaymentInstruments.length > 0) {
@@ -604,11 +661,14 @@
         /**
          * Updates the billing information in checkout, based on the supplied order model
          * @param {Object} order - checkout model to use as basis of new truth
+         * @param {Object} customer - customer model to use as basis of new truth
          * @param {Object} [options] - options
          */
-        function updateBillingInformation(order) {
+        function updateBillingInformation(order, customer) {
+            updateBillingAddressSelector(order, customer);
+
             // update billing address form
-            updateBillingAddressFormValues(order.billing);
+            updateBillingAddressFormValues(order);
 
             // update billing address summary
             populateAddressSummary('.billing .address-summary',
@@ -660,7 +720,7 @@
             order.shipping.forEach(function (shipping) {
                 updateShippingInformation(shipping, order, customer, options);
             });
-            updateBillingInformation(order, options);
+            updateBillingInformation(order, customer, options);
             updatePaymentInformation(order, options);
             updateOrderProductSummaryInformation(order, options);
         }
