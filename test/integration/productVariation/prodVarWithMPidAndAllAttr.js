@@ -28,7 +28,7 @@ describe('ProductVariation - Get product variation with master product ID and al
             'action': 'Product-Variation',
             'product': {
                 'attributes': null,
-                'attributesHtml': '\n',
+                'attributesHtml': '\n\n\n',
                 'availability': {
                     'inStockDate': 'Sun Jul 15 2012',
                     'messages': ['Back Order']

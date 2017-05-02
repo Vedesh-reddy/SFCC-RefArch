@@ -24,7 +24,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
             'action': 'Product-Variation',
             'product': {
                 'attributes': null,
-                'attributesHtml': '\n',
+                'attributesHtml': '\n\n\n',
                 'availability': {
                     'inStockDate': null,
                     'messages': ['In Stock']

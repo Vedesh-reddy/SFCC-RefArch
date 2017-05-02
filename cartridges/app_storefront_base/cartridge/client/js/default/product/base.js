@@ -6,7 +6,16 @@
  * @return {boolean} - Whether this is a Bundle PDP
  */
 function isBundle() {
-    return !!$('.product-detail .product-bundle').length;
+    return !!$('.product-detail .product-bundle').length ||
+        !!$('.product-quickview.product-bundle').length;
+}
+
+/**
+ * Determines whether this is inside a Quick View modal dialog
+ * @return {boolean} - Whether this is inside a Quick View modal dialog
+ */
+function isQuickViewModal() {
+    return !!$('.quick-view-dialog').length;
 }
 
 /**
@@ -16,11 +25,18 @@ function isBundle() {
  * @return {string} - value found in the quantity input
  */
 function getQuantitySelected($el) {
-    return !isBundle()
-        ? $('.quantity-select').val()
-        : $el.closest('.prices-add-to-cart-actions')
+    var quantity = 1;
+
+    if (isQuickViewModal()) {
+        quantity = $('.modal-footer .quantity-select').val();
+    } else if (isBundle()) {
+        quantity = $el.closest('.prices-add-to-cart-actions')
             .siblings('.quantity-select')
             .val();
+    } else {
+        quantity = $('.quantity-select').val();
+    }
+    return quantity;
 }
 
 /**
@@ -157,7 +173,9 @@ function isBundleOrderable() {
  * @return {JQuery} - Bundle's Add to Cart Button
  */
 function getBundleAddToCartButton() {
-    var bundlePid = $('.product-bundle').parents().data('pid');
+    var bundlePid = isQuickViewModal()
+        ? $('.product-bundle').data('pid')
+        : $('.product-bundle').parents().data('pid');
     return $(['button.add-to-cart', '[data-pid="', bundlePid, '"]'].join(''));
 }
 
@@ -171,7 +189,6 @@ function updateAvailability(response, $productContainer) {
     var availabilityValue = '';
     var availabilityMessages = response.product.availability.messages;
     var hasRequiredAttrsSelected = response.product.readyToOrder;
-    var bundleAvailability;
 
     $productContainer.find('div.availability')
         .attr('data-ready-to-order', response.product.readyToOrder)
@@ -190,13 +207,16 @@ function updateAvailability(response, $productContainer) {
         .empty()
         .html(availabilityValue);
 
-    if (isBundle()) {
+    if (isQuickViewModal()) {
+        // Update bundle
+        $('.modal-footer div.availability').attr('data-ready-to-order', isBundleOrderable());
+        $('.modal-footer ul.availability-msg').html('<li>' + getBundleAvailability(response) +
+            '</li>');
+    } else if (isBundle()) {
         // Update bundle
         $('.bundle-footer div.availability').attr('data-ready-to-order', isBundleOrderable());
-
-        bundleAvailability = getBundleAvailability(response);
-
-        $('.bundle-footer ul.availability-msg').html('<li>' + bundleAvailability + '</li>');
+        $('.bundle-footer ul.availability-msg').html('<li>' + getBundleAvailability(response) +
+            '</li>');
     }
 }
 
@@ -285,7 +305,10 @@ function updateAddToCartButton(response, $productContainer) {
 function handleVariantResponse(response, caller, $productContainer) {
     // Update Item No.
     if (caller === 'tile') {
-        $productContainer.find('.product-quickview').eq(0).data('pid', response.product.id);
+        $productContainer.find('.product-id')
+            .eq(0)
+            .text(response.product.id);
+        $productContainer.find('.product-quickview').eq(0).attr('data-pid', response.product.id);
     }
 
     if (caller === 'details') {
@@ -470,7 +493,12 @@ module.exports = {
 
             if ($('#quickViewModal').hasClass('show')) {
                 view = 'tile';
-                pid = $(this).closest('.product-quickview').data('pid');
+                pid = isQuickViewModal()
+                    ? $(this).closest('.modal-footer')
+                        .siblings('.modal-body')
+                        .find('.product-quickview')
+                        .data('pid')
+                    : $(this).closest('.product-quickview').data('pid');
             } else {
                 view = 'details';
                 pid = isBundle()

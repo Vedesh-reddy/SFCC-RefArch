@@ -27,7 +27,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             'action': 'Product-Variation',
             'product': {
                 'attributes': null,
-                'attributesHtml': '\n',
+                'attributesHtml': '\n\n\n',
                 'availability': {
                     'inStockDate': 'Sun Jul 15 2012',
                     'messages': ['Back Order']

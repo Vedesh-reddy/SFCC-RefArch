@@ -104,3 +104,54 @@ div.quantity {
 div.availability {
     margin-top: 1.071em;
 }
+
+#quickViewModal {
+    .modal-content {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-header {
+        background-color: $grey2;
+        border-bottom: 2px solid #ccc;
+        border-top-left-radius: 0.1875rem;
+        border-top-right-radius: 0.1875rem;
+        margin-left: 0.063em;
+        padding: 0.938em;
+    }
+
+    .modal-body {
+        max-height: 23.125em;
+        overflow-y: auto;
+    }
+
+    button.close {
+        font-size: 1.25em;
+    }
+}
+
+.modal-footer {
+    background-color: $white;
+    border: none;
+    border-bottom-right-radius: 0.1875rem;
+    border-bottom-left-radius: 0.1875rem;
+    flex: 0 0 100%;
+    max-width: 100%;
+
+    .availability {
+        align-self: flex-end;
+    }
+}
+
+.bundle-item {
+    padding-bottom: 1em;
+    border-bottom: 1px solid $hr-border-color;
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.container.product-detail {
+    margin-top: 2em;
+    margin-bottom: 2em;
+}

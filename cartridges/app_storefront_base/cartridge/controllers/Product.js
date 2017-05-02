@@ -110,7 +110,7 @@ server.get('Variation', function (req, res, next) {
     product.price.html = priceHelper.renderHtml(priceHelper.getHtmlContext(product.price));
 
     var attributeContext = { product: { attributes: product.attributes } };
-    var attributeTemplate = 'product/components/attributes';
+    var attributeTemplate = 'product/components/attributesPre';
     product.attributesHtml = renderTemplateHelper.getRenderedHtml(
         attributeContext,
         attributeTemplate

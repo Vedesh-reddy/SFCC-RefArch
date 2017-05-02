@@ -5,11 +5,6 @@
 @import "../utilities/responsiveUtils";
 @import "../utilities/swatch";
 
-.container.product-detail {
-    margin-top: 2em;
-    margin-bottom: 2em;
-}
-
 .product-detail .swatch-circle {
     // $white will be replaced by color image background in ISML
     @include swatch(2.5em, $white);
@@ -106,15 +101,6 @@ label.availability {
 
     @include media-breakpoint-down(md) {
         border-top: 1px solid $grey3;
-    }
-}
-
-.bundle-item {
-    padding-bottom: 1em;
-    border-bottom: 1px solid $hr-border-color;
-
-    &:last-child {
-        border-bottom: none;
     }
 }
 

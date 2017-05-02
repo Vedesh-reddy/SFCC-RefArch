@@ -1,5 +1,6 @@
+<isset name="bundle" value="${pdict.product}" scope="page"/>
 <isset name="product" value="${pdict.product}" scope="page"/>
-<div class="product-quickview" data-pid="${product.id}">
+<div class="product-quickview product-${product.productType}" data-pid="${product.id}">
 
     <div class="row">
         <!-- Product Images Carousel -->
@@ -21,12 +22,6 @@
                         <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
                             <isinclude template="product/components/variationAttributes" />
                         </isloop>
-
-                        <isif condition="${!product.variationAttributes}">
-                            <div class="simple-quantity col-sm-6">
-                                <isinclude template="product/components/quantity" />
-                            </div>
-                        </isif>
                     </div>
 
                     <!-- Size Chart -->
@@ -42,17 +37,46 @@
 
                     <hr>
 
-                    <!-- Prices -->
-                    <div class="prices">
-                        <div class="col-12">
-                            <isset name="price" value="${product.price}" scope="page" />
-                            <isinclude template="product/components/pricing/main" />
+                    <!-- Applicable Promotions -->
+                    <div class="row promotions">
+                        <div class="col-12 align-self-center">
+                            <isinclude template="product/components/promotions" />
                         </div>
                     </div>
-
-                    <!-- Cart and [Optionally] Apple Pay -->
-                    <isinclude template="product/components/addtocart" />
                 </section>
+            </div>
+        </div>
+    </div>
+
+    <isif condition="${product.productType === 'bundle'}">
+        <hr>
+        <isinclude template="product/components/bundleItems" />
+    </isif>
+
+    <isset name="product" value="${bundle}" scope="page"/>
+</div>
+<div class="row modal-footer">
+    <div class="col-6 availability" data-ready-to-order="${product.readyToOrder}">
+        <isinclude template="product/components/availability" />
+    </div>
+    <div class="col-6">
+        <div class="row">
+            <!-- Quantity -->
+            <isif condition="${product.productType === 'bundle'}">
+                <div class="col-4">
+                    <isinclude template="product/components/quantity" />
+                </div>
+            </isif>
+
+            <div class="col-8">
+                <!-- Prices -->
+                <div class="prices">
+                    <isset name="price" value="${product.price}" scope="page" />
+                    <isinclude template="product/components/pricing/main" />
+                </div>
+
+                <!-- Cart and [Optionally] Apple Pay -->
+                <isinclude template="product/components/addtocart" />
             </div>
         </div>
     </div>
