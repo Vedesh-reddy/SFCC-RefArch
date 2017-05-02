@@ -12,7 +12,7 @@
     <h1 class="page-title">
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>
-    <div id="checkout-main" class="container data-checkout-stage <isif condition="${pdict.order.usingMultiShipping}">multi-ship</isif>" data-checkout-stage="${pdict.currentStage}" data-checkout-get-url="${URLUtils.https('Checkout-Get')}">
+    <div id="checkout-main" class="container data-checkout-stage <isif condition="${pdict.order.usingMultiShipping}">multi-ship</isif>" data-customer-type="${pdict.customer.profile ? 'registered' : 'guest'}" data-checkout-stage="${pdict.currentStage}" data-checkout-get-url="${URLUtils.https('Checkout-Get')}">
         <!----------------------------------------------------------------------------------->
         <!-- Help and Phone -->
         <!----------------------------------------------------------------------------------->
@@ -31,7 +31,6 @@
                 <span class="grand-total-price">${pdict.order.totals.subTotal}</span>
             </div>
         </div>
-
         <div class="row">
             <div class="col-sm-7">
 
