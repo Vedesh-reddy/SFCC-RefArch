@@ -90,6 +90,7 @@ function account(currentCustomer, addressModel, orderModel) {
     this.preferredAddress = addressModel || getPreferredAddress(currentCustomer.addressBook);
     this.orderHistory = orderModel;
     this.payment = getPayment(currentCustomer.wallet);
+    this.registeredUser = currentCustomer.authenticated && currentCustomer.registered;
 }
 
 module.exports = account;

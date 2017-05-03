@@ -117,7 +117,15 @@ span.ship-to-city-st-zip {
             display: none;
         }
 
-        button {
+        button.place-order {
+            display: none;
+        }
+
+        button.submit-payment {
+            display: none;
+        }
+
+        button.submit-shipping {
             display: none;
         }
     }
@@ -377,4 +385,8 @@ span.ship-to-city-st-zip {
     background-repeat: no-repeat;
     width: 48px;
     height: 33px;
+}
+
+.add-payment {
+    display: block;
 }

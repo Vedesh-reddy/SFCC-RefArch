@@ -1,23 +1,72 @@
-<div class="row">
-    <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
-        <div class="form-check form-group col-12 ${pdict.forms.billingForm.paymentMethod.htmlName}">
-            <label for="paymentOption-${paymentOption.ID}" class="form-check-label">
-                <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
-                    <input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-                           type="radio" class="form-check-input" value="${paymentOption.ID}" checked>
-                    <img class="credit-option"
-                         src="${URLUtils.staticURL('/images/credit.png')}"
-                         height="32"
-                         alt="${paymentOption.name}"
-                         title="${paymentOption.name}">
-                    <span class="credit-card-selection" style="background-image: url('${URLUtils.staticURL('/images/payment-types.png')}')" ></span>
-                <iselse/>
-                    <input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"
-                           type="radio" class="form-check-input" value="${paymentOption.ID}">
-                    <span>${paymentOption.name}</span>
-                </isif>
-            </label>
-            <div class="form-control-feedback"></div>
-        </div>
-    </isloop>
+<div class="form-nav billing-nav">
+    <ul class="nav nav-tabs nav-fill payment-options" role="tablist">
+        <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
+            <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
+                <li class="nav-item">
+                    <a class="nav-link credit-card-tab active" data-toggle="tab" href="#credit-card-content" role="tab">
+                        <img class="credit-card-option"
+                             src="${URLUtils.staticURL('/images/credit.png')}"
+                             height="32"
+                             alt="${paymentOption.name}"
+                             title="${paymentOption.name}"
+                        >
+                    </a>
+                </li>
+            <iselse/>
+                <!--- apple pay needs to go here --->
+                <li class="nav-item disable">
+                    <a class="nav-link shipping-tab" data-toggle="tab" href="#apple-pay-content" role="tab">${Resource.msg('action.in.store.pick.up', 'checkout', null)}</a>
+                </li>
+            </isif>
+        </isloop>
+    </ul>
 </div>
+
+
+
+<div class="credit-card-selection-new">
+    <div class="tab-content">
+        <!--- applicable credit cards--->
+        <div class="tab-pane active" id="credit-card-content" class="credit-card-content" role="tabpanel">
+            <!--- register/authenticated user--->
+            <isif condition="${pdict.customer.registeredUser}">
+                <button class="btn btn-secondary btn-block add-payment btn-outline-primary" type="button">${Resource.msg('button.add.payment', 'checkout', null)}</button>
+            </isif>
+
+            <fieldset class="credit-card-form">
+                <isinclude template="checkout/billing/creditCardForm" />
+            </fieldset>
+        </div>
+
+        <!--- Apple pay / other payments --->
+        <div class="tab-pane" id="apple-pay-content" role="tabpanel">
+            <div>
+                ${Resource.msg('error.not.implemented', 'common', null)}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="row">-->
+    <!--<isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">-->
+        <!--<div class="form-check form-group col-12 ${pdict.forms.billingForm.paymentMethod.htmlName}">-->
+            <!--<label for="paymentOption-${paymentOption.ID}" class="form-check-label">-->
+                <!--<isif condition="${paymentOption.ID === 'CREDIT_CARD'}">-->
+                    <!--<input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"-->
+                           <!--type="radio" class="form-check-input" value="${paymentOption.ID}" checked>-->
+                    <!--<img class="credit-option"-->
+                         <!--src="${URLUtils.staticURL('/images/credit.png')}"-->
+                         <!--height="32"-->
+                         <!--alt="${paymentOption.name}"-->
+                         <!--title="${paymentOption.name}">-->
+                    <!--<span class="credit-card-selection" style="background-image: url('${URLUtils.staticURL('/images/payment-types.png')}')" ></span>-->
+                <!--<iselse/>-->
+                    <!--<input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"-->
+                           <!--type="radio" class="form-check-input" value="${paymentOption.ID}">-->
+                    <!--<span>${paymentOption.name}</span>-->
+                <!--</isif>-->
+            <!--</label>-->
+            <!--<div class="form-control-feedback"></div>-->
+        <!--</div>-->
+    <!--</isloop>-->
+<!--</div>-->
