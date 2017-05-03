@@ -11,6 +11,16 @@
                 </a>
             </div>
         </div>
+        <div class="mini-cart-error cart-error">
+            <isif condition="${pdict.valid.error}">
+                <div class="alert alert-danger alert-dismissible valid-cart-error fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    ${pdict.valid.message}
+                </div>
+            </isif>
+        </div>
         <div class="product-summary">
             <isloop items="${pdict.items}" var="lineItem">
                 <div class="row">

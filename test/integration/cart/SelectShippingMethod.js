@@ -30,6 +30,10 @@ describe('Cart: Selecting Shipping Methods', function () {
     // the path has randomly generated code.
     var expectedResponseCommon = {
         'action': 'Cart-SelectShippingMethod',
+        'valid': {
+            'error': false,
+            'message': null
+        },
         'actionUrls': {
             'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
             'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',

@@ -74,7 +74,11 @@ function proxyModel() {
                 return 'someString';
             }
         },
-        'dw/system/HookMgr': function () {}
+        'dw/system/HookMgr': {
+            callHook: function () {
+                return { error: false, message: 'some message' };
+            }
+        }
     });
 }
 

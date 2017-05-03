@@ -3,6 +3,7 @@
 var formatMoney = require('dw/util/StringUtils').formatMoney;
 var Collections = require('~/cartridge/scripts/util/collections');
 
+var HookMgr = require('dw/system/HookMgr');
 var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 var PromotionMgr = require('dw/campaign/PromotionMgr');
@@ -115,6 +116,12 @@ function CartModel(basket) {
         }
         this.items = productLineItemsModel.items;
         this.numItems = productLineItemsModel.totalQuantity;
+        this.valid = HookMgr.callHook(
+            'app.validate.basket',
+            'validateBasket',
+            basket,
+            false
+        );
     } else {
         this.items = [];
         this.numItems = 0;

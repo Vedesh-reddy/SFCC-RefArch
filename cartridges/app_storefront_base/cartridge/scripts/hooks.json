@@ -2,15 +2,19 @@
     "hooks": [
         {
             "name": "dw.ocapi.shop.basket.calculate",
-            "script": "./cart/calculate.js"
+            "script": "./hooks/cart/calculate.js"
         },
         {
             "name": "app.payment.processor.default",
-            "script": "./payment/processor/default"
+            "script": "./hooks/payment/processor/default"
         },
         {
             "name": "app.payment.processor.basic_credit",
-            "script": "./payment/processor/basic_credit"
+            "script": "./hooks/payment/processor/basic_credit"
+        },
+        {
+            "name": "app.validate.basket",
+            "script": "./hooks/validateBasket"
         }
     ]
 }

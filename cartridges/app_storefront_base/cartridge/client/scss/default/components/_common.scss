@@ -32,3 +32,10 @@ header ~ .container a:not(.btn-primary) {
 .shipping-discount {
     color: $brand-success;
 }
+
+.error-messaging {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}

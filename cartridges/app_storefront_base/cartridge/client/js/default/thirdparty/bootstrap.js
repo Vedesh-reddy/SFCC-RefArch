@@ -1,4 +1,4 @@
-// import '../../../../../../../node_modules/bootstrap/js/src/alert';
+import '../../../../../../../node_modules/bootstrap/js/src/alert';
 // import '../../../../../../../node_modules/bootstrap/js/src/button';
 import '../../../../../../../node_modules/bootstrap/js/src/carousel';
 import '../../../../../../../node_modules/bootstrap/js/src/collapse';

@@ -16,6 +16,29 @@ function appendToUrl(url, params) {
 }
 
 /**
+ * Checks whether the basket is valid. if invalid displays error message and disables
+ * checkout button
+ * @param {Object} data - AJAX response from the server
+ */
+function validateBasket(data) {
+    if (data.valid.error === true) {
+        if (data.valid.message) {
+            var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
+                'fade show" role="alert">' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                '<span aria-hidden="true">&times;</span>' +
+                '</button>' + data.valid.message + '</div>';
+
+            $('.cart-error').append(errorHtml);
+        }
+
+        $('.checkout-btn').addClass('disabled');
+    } else {
+        $('.checkout-btn').removeClass('disabled');
+    }
+}
+
+/**
  * re-renders the order totals and the number of items in the cart
  * @param {Object} data - AJAX response from the server
  */
@@ -54,14 +77,13 @@ function updateCartTotals(data) {
  * @param {Object} message - Error message to display
  */
 function createErrorNotification(message) {
-    $('<div class="alert alert-danger alert-dismissible fade show col-12 ' +
-        'text-center notify" role="alert"> ' +
-        '<button type="button" class="close" data-dismiss="alert" ' +
-        'aria-label="Close"> ' +
-        '<span aria-hidden="true">&times;</span> ' +
-        '</button> ' + message +
-        '</div>'
-    ).appendTo('.page');
+    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
+        'fade show" role="alert">' +
+        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+        '<span aria-hidden="true">&times;</span>' +
+        '</button>' + message + '</div>';
+
+    $('.cart-error').append(errorHtml);
 }
 
 /**
@@ -178,6 +200,7 @@ module.exports = function () {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
                     updateApproachingDiscounts(data.approachingDiscounts);
+                    validateBasket(data);
                 }
                 $.spinner().stop();
             },
@@ -213,6 +236,7 @@ module.exports = function () {
                 updateCartTotals(data);
                 updateApproachingDiscounts(data.approachingDiscounts);
                 updateAvailability(data, uuid);
+                validateBasket(data);
                 $.spinner().stop();
             },
             error: function (err) {
@@ -242,6 +266,7 @@ module.exports = function () {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
                     updateApproachingDiscounts(data.approachingDiscounts);
+                    validateBasket(data);
                 }
                 $.spinner().stop();
             },
@@ -280,6 +305,7 @@ module.exports = function () {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
                     updateApproachingDiscounts(data.approachingDiscounts);
+                    validateBasket(data);
                 }
                 $('.coupon-code-field').val('');
                 $.spinner().stop();
@@ -330,6 +356,7 @@ module.exports = function () {
                 $('.coupon-uuid-' + uuid).remove();
                 updateCartTotals(data);
                 updateApproachingDiscounts(data.approachingDiscounts);
+                validateBasket(data);
                 $.spinner().stop();
             },
             error: function (err) {

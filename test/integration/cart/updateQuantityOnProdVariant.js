@@ -98,6 +98,10 @@ describe('Update quantity for product variant', function () {
 
         var expectedUpdateRep = {
             'action': 'Cart-UpdateQuantity',
+            'valid': {
+                'error': false,
+                'message': null
+            },
             'actionUrls': {
                 'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',

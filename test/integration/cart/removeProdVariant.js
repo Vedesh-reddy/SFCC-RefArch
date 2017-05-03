@@ -96,6 +96,10 @@ describe('Remove product variant from line item', function () {
 
         var expectedResponse = {
             'action': 'Cart-RemoveProductLineItem',
+            'valid': {
+                'error': false,
+                'message': null
+            },
             'actionUrls': {
                 'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
@@ -351,6 +355,10 @@ describe('Remove product variant from line item', function () {
     it('should remove all line items', function () {
         var expectedRemoveAllResp = {
             'action': 'Cart-RemoveProductLineItem',
+            'valid': {
+                'error': true,
+                'message': null
+            },
             'actionUrls': {
                 'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
                 'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',

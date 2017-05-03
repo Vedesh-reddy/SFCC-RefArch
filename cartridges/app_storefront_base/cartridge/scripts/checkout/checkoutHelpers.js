@@ -14,10 +14,8 @@ var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Order = require('dw/order/Order');
 var Status = require('dw/system/Status');
-var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
 var Resource = require('dw/web/Resource');
 var Site = require('dw/system/Site');
-var StoreMgr = require('dw/catalog/StoreMgr');
 var Template = require('dw/util/Template');
 var Transaction = require('dw/system/Transaction');
 
@@ -548,63 +546,6 @@ function handlePayments(order, orderNumber) {
 }
 
 /**
- * validates that the product line items are exist, are online, and have available inventory.
- * @param {dw.order.Basket} basket - The current user's basket
- * @returns {Object} an error object
- */
-function validateProducts(basket) {
-    var result = {
-        error: false,
-        hasInventory: true
-    };
-    var productLineItems = basket.productLineItems;
-
-    Collections.forEach(productLineItems, function (item) {
-        if (item.product === null || !item.product.online) {
-            result.error = true;
-            return;
-        }
-
-        if (Object.hasOwnProperty.call(item.custom, 'fromStoreId')
-            && item.custom.fromStoreId.length) {
-            var store = StoreMgr.getStore(item.custom.fromStoreId);
-            var storeInventory = ProductInventoryMgr.getInventoryList(store.custom.inventoryListId);
-
-            result.hasInventory = result.hasInventory
-                && (!storeInventory.getRecord(item.productID).length
-                && storeInventory.getRecord(item.productID).ATS.value >= item.quantityValue);
-        } else {
-            var availabilityLevels = item.product.availabilityModel
-                .getAvailabilityLevels(item.quantityValue);
-            result.hasInventory = result.hasInventory
-                && (availabilityLevels.notAvailable.value === 0);
-        }
-    });
-
-    return result;
-}
-
-/**
- * validates the current users basket
- * @param {dw.order.Basket} basket - The current user's basket
- * @returns {Object} an error object
- */
-function validateBasket(basket) {
-    var result = { error: false };
-
-    var productExistence = validateProducts(basket);
-    if (productExistence.error || !productExistence.hasInventory) {
-        result.error = true;
-    } else if (!basket.productLineItems.length) {
-        result.error = true;
-    } else if (!basket.merchandizeTotalPrice.available) {
-        result.error = true;
-    }
-
-    return result;
-}
-
-/**
  * Sends a confirmation to the current user
  * @param {dw.order.Order} order - The current user's order
  * @returns {void}
@@ -673,8 +614,6 @@ module.exports = {
     validateBillingForm: validateBillingForm,
     validatePayment: validatePayment,
     validateCreditCard: validateCreditCard,
-    validateBasket: validateBasket,
-    validateProducts: validateProducts,
     calculatePaymentTransaction: calculatePaymentTransaction,
     recalculateBasket: recalculateBasket,
     handlePayments: handlePayments,

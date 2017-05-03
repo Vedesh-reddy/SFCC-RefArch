@@ -133,6 +133,10 @@ describe('Add Product variants to cart', function () {
                 // the path has randomly generated code.
                 var expectedResponse = {
                     'quantityTotal': totalQty,
+                    'valid': {
+                        'error': false,
+                        'message': null
+                    },
                     'message': 'Product added to basket',
                     'action': 'Cart-AddProduct',
                     'cart': {

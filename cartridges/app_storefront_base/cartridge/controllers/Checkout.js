@@ -850,11 +850,16 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
         return next();
     }
 
-    var isValidBasket = COHelpers.validateBasket(currentBasket);
-    if (isValidBasket.error) {
+    var validationBasketStatus = HookMgr.callHook(
+        'app.validate.basket',
+        'validateBasket',
+        currentBasket,
+        false
+    );
+    if (validationBasketStatus.error) {
         res.json({
             error: true,
-            errorMessage: Resource.msg('error.technical', 'checkout', null)
+            errorMessage: validationBasketStatus.message
         });
         return next();
     }

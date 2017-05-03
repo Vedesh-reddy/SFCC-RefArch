@@ -265,3 +265,10 @@ $negative-spacer: -0.625rem;
         margin-bottom: 0.625em;
     }
 }
+
+.cart-error-messaging.cart-error {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}

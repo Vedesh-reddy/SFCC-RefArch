@@ -15,6 +15,7 @@
             <isinclude template="/components/footer/pagefooter" />
         </div>
         <isinclude template="/common/scripts" />
+        <div class="error-messaging"></div>
         <div class="modal-background"></div>
     </body>
 </html>
