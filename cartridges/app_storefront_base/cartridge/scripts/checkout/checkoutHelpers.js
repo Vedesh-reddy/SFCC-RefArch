@@ -157,7 +157,7 @@ function copyCustomerAddressToShipment(address, shipmentOrNull) {
         shippingAddress.setCity(address.city);
         shippingAddress.setPostalCode(address.postalCode);
         shippingAddress.setStateCode(address.stateCode);
-        shippingAddress.setCountryCode(address.countryCode);
+        shippingAddress.setCountryCode(address.countryCode.value);
         shippingAddress.setPhone(address.phone);
     });
 }
@@ -182,7 +182,7 @@ function copyCustomerAddressToBilling(address) {
         billingAddress.setCity(address.city);
         billingAddress.setPostalCode(address.postalCode);
         billingAddress.setStateCode(address.stateCode);
-        billingAddress.setCountryCode(address.countryCode);
+        billingAddress.setCountryCode(address.countryCode.value);
         if (!billingAddress.phone) {
             billingAddress.setPhone(address.phone);
         }
@@ -212,7 +212,7 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
         shippingAddress.setCity(shippingData.address.city);
         shippingAddress.setPostalCode(shippingData.address.postalCode);
         shippingAddress.setStateCode(shippingData.address.stateCode);
-        shippingAddress.setCountryCode(shippingData.address.countryCode);
+        shippingAddress.setCountryCode(shippingData.address.countryCode.value);
         shippingAddress.setPhone(shippingData.address.phone);
 
         ShippingHelper.selectShippingMethod(shipment, shippingData.shippingMethod);
@@ -239,7 +239,7 @@ function copyBillingAddressToBasket(address) {
         billingAddress.setCity(address.city);
         billingAddress.setPostalCode(address.postalCode);
         billingAddress.setStateCode(address.stateCode);
-        billingAddress.setCountryCode(address.countryCode);
+        billingAddress.setCountryCode(address.countryCode.value);
         if (!billingAddress.phone) {
             billingAddress.setPhone(address.phone);
         }
