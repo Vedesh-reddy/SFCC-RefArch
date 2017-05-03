@@ -466,13 +466,18 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     var billingAddress = currentBasket.billingAddress;
     var shippingAddress = currentBasket.defaultShipment.shippingAddress;
-    var hasEquivalentAddress = false;
 
     var currentCustomer = req.currentCustomer.raw;
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
 
-    if (billingAddress && shippingAddress) {
-        hasEquivalentAddress = billingAddress.isEquivalentAddress(shippingAddress);
+    // only true if customer is registered
+    if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+        if (!shippingAddress) {
+            COHelpers.copyCustomerAddressToShipment(req.currentCustomer.addressBook.preferredAddress);
+        }
+        if (!billingAddress) {
+            COHelpers.copyCustomerAddressToBilling(req.currentCustomer.addressBook.preferredAddress);
+        }
     }
 
     // Calculate the basket
@@ -520,8 +525,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
             billingForm: billingForm
         },
         expirationYears: creditCardExpirationYears,
-        currentStage: currentStage,
-        isEquivalentAddress: hasEquivalentAddress
+        currentStage: currentStage
     });
     return next();
 });

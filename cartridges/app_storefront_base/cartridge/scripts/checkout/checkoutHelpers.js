@@ -135,6 +135,51 @@ function isShippingAddressInitialized(shipment) {
     return initialized;
 }
 
+function copyCustomerAddressToShipment(address, shipmentOrNull) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var shipment = shipmentOrNull || currentBasket.defaultShipment;
+    var shippingAddress = shipment.shippingAddress;
+
+    Transaction.wrap(function () {
+        if (shippingAddress === null) {
+            shippingAddress = shipment.createShippingAddress();
+        }
+
+        shippingAddress.setFirstName(address.firstName);
+        shippingAddress.setLastName(address.lastName);
+        shippingAddress.setAddress1(address.address1);
+        shippingAddress.setAddress2(address.address2);
+        shippingAddress.setCity(address.city);
+        shippingAddress.setPostalCode(address.postalCode);
+        shippingAddress.setStateCode(address.stateCode);
+        shippingAddress.setCountryCode(address.countryCode);
+        shippingAddress.setPhone(address.phone);
+    });
+}
+
+function copyCustomerAddressToBilling(address) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var billingAddress = currentBasket.billingAddress;
+
+    Transaction.wrap(function () {
+        if (!billingAddress) {
+            billingAddress = currentBasket.createBillingAddress();
+        }
+
+        billingAddress.setFirstName(address.firstName);
+        billingAddress.setLastName(address.lastName);
+        billingAddress.setAddress1(address.address1);
+        billingAddress.setAddress2(address.address2);
+        billingAddress.setCity(address.city);
+        billingAddress.setPostalCode(address.postalCode);
+        billingAddress.setStateCode(address.stateCode);
+        billingAddress.setCountryCode(address.countryCode);
+        if (!billingAddress.phone) {
+            billingAddress.setPhone(address.phone);
+        }
+    });
+}
+
 /**
  * Copies information from the shipping form to the associated shipping address
  * @param {Object} shippingData - the shipping data
@@ -144,7 +189,6 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var shipment = shipmentOrNull || currentBasket.defaultShipment;
 
-    var billingAddress = currentBasket.billingAddress;
     var shippingAddress = shipment.shippingAddress;
 
     Transaction.wrap(function () {
@@ -163,24 +207,6 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
         shippingAddress.setPhone(shippingData.address.phone);
 
         ShippingHelper.selectShippingMethod(shipment, shippingData.shippingMethod);
-
-        if (shippingData.shippingBillingSame === true) {
-            if (!billingAddress) {
-                billingAddress = currentBasket.createBillingAddress();
-            }
-
-            billingAddress.setFirstName(shippingData.address.firstName);
-            billingAddress.setLastName(shippingData.address.lastName);
-            billingAddress.setAddress1(shippingData.address.address1);
-            billingAddress.setAddress2(shippingData.address.address2);
-            billingAddress.setCity(shippingData.address.city);
-            billingAddress.setPostalCode(shippingData.address.postalCode);
-            billingAddress.setStateCode(shippingData.address.stateCode);
-            billingAddress.setCountryCode(shippingData.address.countryCode);
-            if (!billingAddress.phone) {
-                billingAddress.setPhone(shippingData.address.phone);
-            }
-        }
     });
 }
 
@@ -219,24 +245,51 @@ function ensureNoEmptyShipments() {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     Transaction.wrap(function () {
-        Collections.forEach(currentBasket.shipments, function (shipment) {
-            if (shipment.productLineItems.length < 1) {
+    	var iter = currentBasket.shipments.iterator();
+    	var shipment;
+    	var shipmentsToDelete = [];
+    	
+    	while (iter.hasNext()) {
+    		shipment = iter.next();
+            if (shipment.productLineItems.length < 1 && shipmentsToDelete.indexOf(shipment) < 0) {
                 if (shipment.default) {
                     // Cant delete the defaultShipment
                     // Copy all line items from 2nd to first
-                    Collections.forEach(currentBasket.shipments[1].productLineItems,
+                	var altShipment = getFirstNonDefaultShipmentWithProductLineItems(currentBasket);
+                    if (!altShipment) return;
+                    
+                	Collections.forEach(altShipment.productLineItems,
                         function (lineItem) {
                             lineItem.setShipment(currentBasket.defaultShipment);
                         });
 
                     // then delete 2nd one
-                    currentBasket.removeShipment(currentBasket.shipments[1]);
+                    shipmentsToDelete.push(altShipment);
                 } else {
-                    currentBasket.removeShipment(shipment);
+                	shipmentsToDelete.push(shipment);
                 }
             }
-        });
+        }
+    	
+    	for (var j=0, jj=shipmentsToDelete.length; j<jj; j++) {
+    		currentBasket.removeShipment(shipmentsToDelete[j]);
+    	}
     });
+}
+
+function getFirstNonDefaultShipmentWithProductLineItems(currentBasket) {
+	var shipment;
+	var match;
+	
+	for (var i=0, ii=currentBasket.shipments.length; i<ii; i++) {
+		shipment = currentBasket.shipments[i];
+		if (!shipment.default && shipment.productLineItems.length > 0) {
+			match = shipment;
+			break;
+		}
+	}
+	
+	return match;
 }
 
 /**
@@ -597,6 +650,8 @@ module.exports = {
     isShippingAddressInitialized: isShippingAddressInitialized,
     prepareShippingForm: prepareShippingForm,
     prepareBillingForm: prepareBillingForm,
+    copyCustomerAddressToShipment: copyCustomerAddressToShipment,
+    copyCustomerAddressToBilling: copyCustomerAddressToBilling,
     copyShippingAddressToShipment: copyShippingAddressToShipment,
     copyBillingAddressToBasket: copyBillingAddressToBasket,
     validateFields: validateFields,
