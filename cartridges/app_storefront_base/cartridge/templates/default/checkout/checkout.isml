@@ -124,11 +124,12 @@
             <span class="ship-to-phone"></span>
 	    </p>
 	    <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
-	    <p>
+        <div class="row leading-lines">
+	    <p class="col-8 start-lines">
 	        <span class="display-name"></span>
 	        <span class="text-muted arrival-time"></span>
 	    </p>
-        <p>
+        <p class="col-4 end-lines text-right">
             <span class="price"></span>
         </p>
 	</div>

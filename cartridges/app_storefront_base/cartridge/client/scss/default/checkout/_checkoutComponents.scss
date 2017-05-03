@@ -67,6 +67,17 @@ $receipt-spacing: 0.625em;
     }
 }
 
+.shipment-block + .shipment-block::before {
+    content: "";
+    display: block;
+    border-bottom: 0.063em dashed $horizontal-rule-grey;
+    margin: $receipt-spacing -0.625em;
+
+    @include media-breakpoint-up(lg) {
+        margin: $receipt-spacing -1.225em;
+    }
+}
+
 .shipping-method {
     text-overflow: ellipsis;
     white-space: nowrap;
