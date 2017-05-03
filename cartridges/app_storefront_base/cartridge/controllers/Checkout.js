@@ -472,11 +472,12 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     // only true if customer is registered
     if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+        var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
         if (!shippingAddress) {
-            COHelpers.copyCustomerAddressToShipment(req.currentCustomer.addressBook.preferredAddress);
+            COHelpers.copyCustomerAddressToShipment(preferredAddress);
         }
         if (!billingAddress) {
-            COHelpers.copyCustomerAddressToBilling(req.currentCustomer.addressBook.preferredAddress);
+            COHelpers.copyCustomerAddressToBilling(preferredAddress);
         }
     }
 

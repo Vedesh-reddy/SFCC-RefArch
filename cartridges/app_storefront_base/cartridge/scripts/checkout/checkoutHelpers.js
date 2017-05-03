@@ -135,6 +135,11 @@ function isShippingAddressInitialized(shipment) {
     return initialized;
 }
 
+/**
+ * Copies a CustomerAddress to a Shipment as its Shipping Address
+ * @param {dw.customer.CustomerAddress} address - The customer address
+ * @param {dw.order.Shipment} [shipmentOrNull] - The target shipment
+ */
 function copyCustomerAddressToShipment(address, shipmentOrNull) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var shipment = shipmentOrNull || currentBasket.defaultShipment;
@@ -157,6 +162,10 @@ function copyCustomerAddressToShipment(address, shipmentOrNull) {
     });
 }
 
+/**
+ * Copies a CustomerAddress to a Basket as its Billing Address
+ * @param {dw.customer.CustomerAddress} address - The customer address
+ */
 function copyCustomerAddressToBilling(address) {
     var currentBasket = BasketMgr.getCurrentBasket();
     var billingAddress = currentBasket.billingAddress;
@@ -238,6 +247,26 @@ function copyBillingAddressToBasket(address) {
 }
 
 /**
+ * Returns the first non-default shipment with more than one product line item
+ * @param {dw.order.Basket} currentBasket - The current Basket
+ * @returns {dw.order.Shipment} - the shipment
+ */
+function getFirstNonDefaultShipmentWithProductLineItems(currentBasket) {
+    var shipment;
+    var match;
+
+    for (var i = 0, ii = currentBasket.shipments.length; i < ii; i++) {
+        shipment = currentBasket.shipments[i];
+        if (!shipment.default && shipment.productLineItems.length > 0) {
+            match = shipment;
+            break;
+        }
+    }
+
+    return match;
+}
+
+/**
  * Copies a raw address object to the baasket billing address
  * @param {Object} address - an address-similar Object (firstName, ...)
  */
@@ -245,20 +274,20 @@ function ensureNoEmptyShipments() {
     var currentBasket = BasketMgr.getCurrentBasket();
 
     Transaction.wrap(function () {
-    	var iter = currentBasket.shipments.iterator();
-    	var shipment;
-    	var shipmentsToDelete = [];
-    	
-    	while (iter.hasNext()) {
-    		shipment = iter.next();
+        var iter = currentBasket.shipments.iterator();
+        var shipment;
+        var shipmentsToDelete = [];
+
+        while (iter.hasNext()) {
+            shipment = iter.next();
             if (shipment.productLineItems.length < 1 && shipmentsToDelete.indexOf(shipment) < 0) {
                 if (shipment.default) {
                     // Cant delete the defaultShipment
                     // Copy all line items from 2nd to first
-                	var altShipment = getFirstNonDefaultShipmentWithProductLineItems(currentBasket);
+                    var altShipment = getFirstNonDefaultShipmentWithProductLineItems(currentBasket);
                     if (!altShipment) return;
-                    
-                	Collections.forEach(altShipment.productLineItems,
+
+                    Collections.forEach(altShipment.productLineItems,
                         function (lineItem) {
                             lineItem.setShipment(currentBasket.defaultShipment);
                         });
@@ -266,30 +295,15 @@ function ensureNoEmptyShipments() {
                     // then delete 2nd one
                     shipmentsToDelete.push(altShipment);
                 } else {
-                	shipmentsToDelete.push(shipment);
+                    shipmentsToDelete.push(shipment);
                 }
             }
         }
-    	
-    	for (var j=0, jj=shipmentsToDelete.length; j<jj; j++) {
-    		currentBasket.removeShipment(shipmentsToDelete[j]);
-    	}
-    });
-}
 
-function getFirstNonDefaultShipmentWithProductLineItems(currentBasket) {
-	var shipment;
-	var match;
-	
-	for (var i=0, ii=currentBasket.shipments.length; i<ii; i++) {
-		shipment = currentBasket.shipments[i];
-		if (!shipment.default && shipment.productLineItems.length > 0) {
-			match = shipment;
-			break;
-		}
-	}
-	
-	return match;
+        for (var j = 0, jj = shipmentsToDelete.length; j < jj; j++) {
+            currentBasket.removeShipment(shipmentsToDelete[j]);
+        }
+    });
 }
 
 /**
