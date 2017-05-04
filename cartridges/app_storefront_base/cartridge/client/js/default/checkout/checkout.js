@@ -1066,7 +1066,7 @@
 
                 $('.btn-add-new').on('click', function () {
                     var $newEl = $(this).parents('form').find('.addressSelector option[value=new]');
-                    $newEl.attr('selected','selected');
+                    $newEl.attr('selected', 'selected');
                     $newEl.parent().trigger('change');
                 });
 

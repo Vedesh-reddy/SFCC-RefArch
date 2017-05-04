@@ -292,16 +292,16 @@ function ensureNoEmptyShipments() {
                         function (lineItem) {
                             lineItem.setShipment(currentBasket.defaultShipment);
                         });
-                    
+
                     if (altShipment.shippingAddress) {
-                    	// Copy from other address
-	                    var addressModel = new AddressModel(altShipment.shippingAddress);
-	                    copyShippingAddressToShipment(addressModel, currentBasket.defaultShipment);
+                        // Copy from other address
+                        var addressModel = new AddressModel(altShipment.shippingAddress);
+                        copyShippingAddressToShipment(addressModel, currentBasket.defaultShipment);
                     } else {
-                    	// Or clear it out
-                    	currentBasket.defaultShipment.createShippingAddress();
+                        // Or clear it out
+                        currentBasket.defaultShipment.createShippingAddress();
                     }
-                    
+
                     currentBasket.defaultShipment.setShippingMethod(altShipment.shippingMethod);
                     // then delete 2nd one
                     shipmentsToDelete.push(altShipment);

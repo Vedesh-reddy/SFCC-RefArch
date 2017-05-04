@@ -93,7 +93,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
     var shipments = currentBasket.shipments;
     var defaultShipment = currentBasket.defaultShipment;
-    var usingMultiShipping = req.form.usingMultiShip === 'true';//!req.session.privacyCache.get('usingMultiShipping');
+    var usingMultiShipping = req.form.usingMultiShip === 'true';
 
     req.session.privacyCache.set('usingMultiShipping', usingMultiShipping);
 
@@ -109,7 +109,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                 }
             });
             COHelpers.ensureNoEmptyShipments();
-            
+
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
@@ -288,7 +288,6 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
             COHelpers.recalculateBasket(basket);
         });
     } catch (err) {
-    	var theError = err;
         res.json({
             redirectUrl: URLUtils.url('Checkout-Start').toString(),
             error: true
