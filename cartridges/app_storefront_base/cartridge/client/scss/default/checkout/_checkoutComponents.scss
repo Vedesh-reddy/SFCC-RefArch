@@ -56,7 +56,8 @@ $receipt-spacing: 0.625em;
     }
 }
 
-.product-line-item + .product-line-item::before {
+.product-line-item + .product-line-item::before,
+.multi-shipping + .product-line-item::before {
     content: "";
     display: block;
     border-bottom: 0.063em dashed $horizontal-rule-grey;

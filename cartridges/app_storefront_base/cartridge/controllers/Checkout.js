@@ -9,7 +9,6 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 
 var AccountModel = require('~/cartridge/models/account');
-// var AddressModel = require('~/cartridge/models/address');
 // var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
 // var PaymentModel = require('~/cartridge/models/payment');
@@ -94,7 +93,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
     var shipments = currentBasket.shipments;
     var defaultShipment = currentBasket.defaultShipment;
-    var usingMultiShipping = !req.session.privacyCache.get('usingMultiShipping');
+    var usingMultiShipping = req.form.usingMultiShip === 'true';
 
     req.session.privacyCache.set('usingMultiShipping', usingMultiShipping);
 
@@ -109,6 +108,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     currentBasket.removeShipment(shipment);
                 }
             });
+            COHelpers.ensureNoEmptyShipments();
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
@@ -280,10 +280,11 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     try {
         Transaction.wrap(function () {
             shipment = basket.createShipment(uuid);
-
             productLineItem.setShipment(shipment);
-            COHelpers.ensureNoEmptyShipments();
             ShippingHelper.ensureShipmentHasMethod(shipment);
+        });
+        Transaction.wrap(function () {
+            COHelpers.ensureNoEmptyShipments();
             COHelpers.recalculateBasket(basket);
         });
     } catch (err) {
@@ -352,8 +353,6 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
         } else {
             try {
                 Transaction.wrap(function () {
-                    var removeOriginal = false;
-
                     if (origUUID === shipmentUUID) {
                         // An edit to the address or shipping method
                         shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
@@ -369,34 +368,17 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
                             } else {
                                 // or create a new shipment and associate the current pli (later)
                                 shipment = basket.createShipment(UUIDUtils.createUUID());
-                                removeOriginal = productLineItem.shipment;
                             }
                         } else if (shipmentUUID.indexOf('ab_') === 0) {
                             shipment = ShippingHelper.getShipmentByUUID(basket, origUUID);
                         } else {
                             // Choose an existing shipment for this PLI
                             shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
-                            removeOriginal = productLineItem.shipment;
                         }
                         COHelpers.copyShippingAddressToShipment(result, shipment);
                         productLineItem.setShipment(shipment);
 
-                        // remove any
-                        if (removeOriginal && removeOriginal.productLineItems.length === 0) {
-                            if (removeOriginal.default) {
-                                // Cant delete the defaultShipment
-                                // Copy all line items from 2nd to first
-                                Collections.forEach(basket.shipments[1].productLineItems,
-                                    function (lineItem) {
-                                        lineItem.setShipment(basket.defaultShipment);
-                                    });
-
-                                // then delete 2nd one
-                                basket.removeShipment(basket.shipments[1]);
-                            } else {
-                                basket.removeShipment(removeOriginal);
-                            }
-                        }
+                        COHelpers.ensureNoEmptyShipments();
                     }
                 });
             } catch (e) {

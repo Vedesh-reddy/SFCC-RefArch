@@ -18,11 +18,13 @@
                                         <label class="form-control-label" for="shipmentSelector">
                                             ${Resource.msg('heading.ship.to.address', 'checkout', null)}
                                         </label>
-                                        <a class="btn float-right btn-show-details">${Resource.msg('action.show.details', 'checkout', null)}</a>
-                                        <a class="btn float-right btn-hide-details">${Resource.msg('action.hide.details', 'checkout', null)}</a>
-                                        
+
                                         <isinclude template="checkout/shipping/shipmentSelector" />
                                         <div class="form-control-feedback"></div>
+                                        <div class="row">
+                                            <a class="col-6 text-center btn-show-details">${Resource.msg('action.update.address', 'checkout', null)}</a>
+                                            <a class="col-6 text-center btn-add-new">${Resource.msg('action.add.new', 'checkout', null)}</a>
+                                        </div>
                                     </div>
                                 </fieldset>
                                 
@@ -43,6 +45,14 @@
                             <a class="btn btn-outline-primary col-12" data-action="enter">
                                 ${Resource.msg('button.enter.address', 'checkout', null)}
                             </a>
+                            <div class="row">
+                                <a class="btn btn-outline-primary offset-1 col-5" data-action="cancel">
+                                    ${Resource.msg('button.cancel', 'checkout', null)}
+                                </a>
+                                <a class="btn btn-outline-primary col-5" data-action="save">
+                                    ${Resource.msg('button.save', 'checkout', null)}
+                                </a>
+                            </div>
                             <a class="btn btn-outline-primary col-12" data-action="save">
                                 ${Resource.msg('button.save', 'checkout', null)}
                             </a>

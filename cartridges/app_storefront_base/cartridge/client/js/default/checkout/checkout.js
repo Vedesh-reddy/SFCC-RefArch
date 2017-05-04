@@ -1064,6 +1064,12 @@
                     $(this).parents('[data-address-mode]').attr('data-address-mode', 'edit');
                 });
 
+                $('.btn-add-new').on('click', function () {
+                    var $newEl = $(this).parents('form').find('.addressSelector option[value=new]');
+                    $newEl.attr('selected', 'selected');
+                    $newEl.parent().trigger('change');
+                });
+
                 $('.btn-show-billing-details').on('click', function () {
                     $(this).parents('[data-address-mode]').attr('data-address-mode', 'edit');
                 });
@@ -1233,6 +1239,10 @@
                             }
 
                             $rootEl.attr('data-view-mode', 'edit');
+                            break;
+                        case 'cancel':
+                            // Should clear out changes / restore previous state
+                            $(form).attr('data-address-mode', 'edit');
                             break;
                         case 'save':
                         // Save address to checkoutAddressBook
