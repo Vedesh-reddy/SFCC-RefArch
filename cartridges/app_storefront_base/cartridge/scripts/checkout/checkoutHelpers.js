@@ -19,6 +19,7 @@ var Site = require('dw/system/Site');
 var Template = require('dw/util/Template');
 var Transaction = require('dw/system/Transaction');
 
+var AddressModel = require('~/cartridge/models/address');
 var OrderModel = require('~/cartridge/models/order');
 
 var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
@@ -155,7 +156,8 @@ function copyCustomerAddressToShipment(address, shipmentOrNull) {
         shippingAddress.setCity(address.city);
         shippingAddress.setPostalCode(address.postalCode);
         shippingAddress.setStateCode(address.stateCode);
-        shippingAddress.setCountryCode(address.countryCode.value);
+        var countryCode = address.countryCode;
+        shippingAddress.setCountryCode(countryCode.value);
         shippingAddress.setPhone(address.phone);
     });
 }
@@ -180,7 +182,8 @@ function copyCustomerAddressToBilling(address) {
         billingAddress.setCity(address.city);
         billingAddress.setPostalCode(address.postalCode);
         billingAddress.setStateCode(address.stateCode);
-        billingAddress.setCountryCode(address.countryCode.value);
+        var countryCode = address.countryCode;
+        billingAddress.setCountryCode(countryCode.value);
         if (!billingAddress.phone) {
             billingAddress.setPhone(address.phone);
         }
@@ -210,7 +213,7 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
         shippingAddress.setCity(shippingData.address.city);
         shippingAddress.setPostalCode(shippingData.address.postalCode);
         shippingAddress.setStateCode(shippingData.address.stateCode);
-        shippingAddress.setCountryCode(shippingData.address.countryCode.value);
+        shippingAddress.setCountryCode(shippingData.address.countryCode);
         shippingAddress.setPhone(shippingData.address.phone);
 
         ShippingHelper.selectShippingMethod(shipment, shippingData.shippingMethod);
@@ -269,9 +272,9 @@ function getFirstNonDefaultShipmentWithProductLineItems(currentBasket) {
  * @param {Object} address - an address-similar Object (firstName, ...)
  */
 function ensureNoEmptyShipments() {
-    var currentBasket = BasketMgr.getCurrentBasket();
-
     Transaction.wrap(function () {
+        var currentBasket = BasketMgr.getCurrentBasket();
+
         var iter = currentBasket.shipments.iterator();
         var shipment;
         var shipmentsToDelete = [];
@@ -289,7 +292,17 @@ function ensureNoEmptyShipments() {
                         function (lineItem) {
                             lineItem.setShipment(currentBasket.defaultShipment);
                         });
-
+                    
+                    if (altShipment.shippingAddress) {
+                    	// Copy from other address
+	                    var addressModel = new AddressModel(altShipment.shippingAddress);
+	                    copyShippingAddressToShipment(addressModel, currentBasket.defaultShipment);
+                    } else {
+                    	// Or clear it out
+                    	currentBasket.defaultShipment.createShippingAddress();
+                    }
+                    
+                    currentBasket.defaultShipment.setShippingMethod(altShipment.shippingMethod);
                     // then delete 2nd one
                     shipmentsToDelete.push(altShipment);
                 } else {

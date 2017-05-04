@@ -9,7 +9,6 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 
 var AccountModel = require('~/cartridge/models/account');
-// var AddressModel = require('~/cartridge/models/address');
 // var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
 // var PaymentModel = require('~/cartridge/models/payment');
@@ -94,7 +93,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
     var shipments = currentBasket.shipments;
     var defaultShipment = currentBasket.defaultShipment;
-    var usingMultiShipping = !req.session.privacyCache.get('usingMultiShipping');
+    var usingMultiShipping = req.form.usingMultiShip === 'true';//!req.session.privacyCache.get('usingMultiShipping');
 
     req.session.privacyCache.set('usingMultiShipping', usingMultiShipping);
 
@@ -109,7 +108,8 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     currentBasket.removeShipment(shipment);
                 }
             });
-
+            COHelpers.ensureNoEmptyShipments();
+            
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
@@ -280,13 +280,15 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     try {
         Transaction.wrap(function () {
             shipment = basket.createShipment(uuid);
-
             productLineItem.setShipment(shipment);
-            COHelpers.ensureNoEmptyShipments();
             ShippingHelper.ensureShipmentHasMethod(shipment);
+        });
+        Transaction.wrap(function () {
+            COHelpers.ensureNoEmptyShipments();
             COHelpers.recalculateBasket(basket);
         });
     } catch (err) {
+    	var theError = err;
         res.json({
             redirectUrl: URLUtils.url('Checkout-Start').toString(),
             error: true

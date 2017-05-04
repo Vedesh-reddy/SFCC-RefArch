@@ -148,7 +148,7 @@ span.ship-to-city-st-zip {
         }
 
         [data-view-mode=edit] .edit-address-block,
-        [data-view-mode=edit] [data-action=save] {
+        [data-view-mode=edit] .col-12[data-action=save] {
             display: block;
         }
 
@@ -193,14 +193,39 @@ span.ship-to-city-st-zip {
 
         [data-address-mode=new] {
             .btn-hide-details,
-            .btn-show-details {
+            .btn-show-details,
+            .btn-add-new {
                 display: none;
             }
         }
 
-        [data-address-mode=details] {
-            .btn-show-details {
+        [data-view-mode=edit] [data-address-mode=edit] {
+            .btn-show-details,
+            .btn-add-new,
+            .col-12[data-action=save] {
+                display: block;
+            }
+
+            .row>[data-action=save],
+            .row>[data-action=cancel] {
                 display: none;
+            }
+        }
+
+        [data-view-mode=edit] [data-address-mode=details] {
+            .btn-show-details,
+            .btn-add-new,
+            .col-12[data-action=save] {
+                display: none;
+            }
+
+            .row>[data-action=save],
+            .row>[data-action=cancel] {
+                display: inline-block;
+            }
+
+            .row>[data-action=save] {
+                margin-left: 10px;
             }
         }
     }
@@ -258,13 +283,14 @@ span.ship-to-city-st-zip {
 
         [data-address-mode=new] {
             .btn-hide-details,
-            .btn-show-details {
+            .btn-add-new {
                 display: none;
             }
         }
 
         [data-address-mode=details] {
-            .btn-show-details {
+            .btn-show-details,
+            .btn-add-new {
                 display: none;
             }
         }
