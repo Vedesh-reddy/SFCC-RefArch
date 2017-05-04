@@ -435,15 +435,17 @@
                     $shippingPhone.text(address.phone);
                 }
 
-                $methodTitle.text(selectedShippingMethod.displayName);
-                if (selectedShippingMethod.estimatedArrivalTime) {
-                    $methodArrivalTime.text(
-                        '( ' + selectedShippingMethod.estimatedArrivalTime + ' )'
-                    );
-                } else {
-                    $methodArrivalTime.empty();
+                if (selectedShippingMethod) {
+                    $methodTitle.text(selectedShippingMethod.displayName);
+                    if (selectedShippingMethod.estimatedArrivalTime) {
+                        $methodArrivalTime.text(
+                            '( ' + selectedShippingMethod.estimatedArrivalTime + ' )'
+                        );
+                    } else {
+                        $methodArrivalTime.empty();
+                    }
+                    $methodPrice.text(selectedShippingMethod.shippingCost);
                 }
-                $methodPrice.text(selectedShippingMethod.shippingCost);
             });
         }
 
