@@ -206,8 +206,8 @@ span.ship-to-city-st-zip {
                 display: block;
             }
 
-            .row>[data-action=save],
-            .row>[data-action=cancel] {
+            .row > [data-action=save],
+            .row > [data-action=cancel] {
                 display: none;
             }
         }
@@ -219,12 +219,12 @@ span.ship-to-city-st-zip {
                 display: none;
             }
 
-            .row>[data-action=save],
-            .row>[data-action=cancel] {
+            .row > [data-action=save],
+            .row > [data-action=cancel] {
                 display: inline-block;
             }
 
-            .row>[data-action=save] {
+            .row > [data-action=save] {
                 margin-left: 10px;
             }
         }
