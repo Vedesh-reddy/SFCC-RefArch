@@ -897,10 +897,49 @@
 
                     clearPreviousErrors('.payment-form');
 
+                    var formData = {};
+                    var billingForm = $('[name=dwfrm_billing]');
+                    formData.billingAddressFields = getAddressFieldsFromUI(billingForm);
+
+                    if ($('.data-checkout-stage').data('customer-type') === 'registered') {
+                        // if payment method is credit card
+                        if ($('.payment-information').data('payment-method-id') === 'CREDIT_CARD') {
+                            // is it a stored payment instrument
+                            if ($('.payment-information').data('is-new-payment')) {
+                                // new payment
+                                formData.creditCardFields = {
+                                    paymentMethod: $('input[name$="_paymentMethod"]').val(),
+                                    cardType: $('input[name$="_cardType"]').val(),
+                                    cardNumber: $('input[name$="_cardNumber"]').val(),
+                                    securityCode: $('input[name$="_securityCode"]').val(),
+                                    expirationMonth: $('input[name$="_expirationMonth"]').val(),
+                                    expirationYear: $('input[name$="_expirationYear"]').val()
+                                };
+                            } else {
+                                // stored instrument
+                                var $savedPaymentInstrument = $('.saved-payment-instrument' +
+                                    '.selected-payment');
+                                formData.storedPaymentUUID = $savedPaymentInstrument.data('uuid');
+                            }
+                        }
+                    } else {
+                        // get data from credit card form.
+                        if ($('.payment-information').data('payment-method-id') === 'CREDIT_CARD') {
+                            formData.creditCardFields = {
+                                paymentMethod: $('input[name$="_paymentMethod"]').val(),
+                                cardType: $('input[name$="_cardType"]').val(),
+                                cardNumber: $('input[name$="_cardNumber"]').val(),
+                                securityCode: $('input[name$="_securityCode"]').val(),
+                                expirationMonth: $('input[name$="_expirationMonth"]').val(),
+                                expirationYear: $('input[name$="_expirationYear"]').val()
+                            };
+                        }
+                    }
+
                     $.ajax({
                         url: $('#dwfrm_billing').attr('action'),
                         method: 'POST',
-                        data: $('#dwfrm_billing').serialize(),
+                        data: formData,
                         success: function (data) {
                             // look for field validation errors
                             if (data.error) {
@@ -1401,6 +1440,22 @@
                      .fail(function () {
                          $.spinner().stop();
                      });
+                });
+
+                $('.payment-options .nav-item').on('click', function () {
+                    var methodID = $(this).data('method-id');
+                    $('.payment-information').data('payment-method-id', methodID);
+                });
+
+                $('.saved-payment-instrument').on('click', function () {
+                    $('.saved-payment-instrument').removeClass('selected-payment');
+                    $(this).addClass('selected-payment');
+                });
+
+                $('.btn.add-payment').on('click', function () {
+                    $('.payment-information').data('is-new-payment', true);
+                    $('.credit-card-form').removeClass('hidden-xs-up');
+                    $('.user-payment-instruments').addClass('hidden-xs-up');
                 });
 
                 //

@@ -1,8 +1,12 @@
-<div class="form-nav billing-nav">
+<div class="form-nav billing-nav payment-information"
+     data-payment-method-id="CREDIT_CARD"
+     data-is-new-payment="false"
+     data-edited-payemnt="false"
+>
     <ul class="nav nav-tabs nav-fill payment-options" role="tablist">
         <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
             <isif condition="${paymentOption.ID === 'CREDIT_CARD'}">
-                <li class="nav-item">
+                <li class="nav-item" data-method-id="${paymentOption.ID}">
                     <a class="nav-link credit-card-tab active" data-toggle="tab" href="#credit-card-content" role="tab">
                         <img class="credit-card-option"
                              src="${URLUtils.staticURL('/images/credit.png')}"
@@ -24,10 +28,10 @@
 
 
 
-<div class="credit-card-selection-new">
+<div class="credit-card-selection-new" >
     <div class="tab-content">
         <!--- applicable credit cards--->
-        <div class="tab-pane active" id="credit-card-content" class="credit-card-content" role="tabpanel">
+        <div class="tab-pane active credit-card-content" id="credit-card-content" role="tabpanel">
             <!--- payment method is credit card --->
             <input type="hidden" class="form-control"
                    name="${pdict.forms.billingForm.paymentMethod.htmlName}"
@@ -36,29 +40,31 @@
 
             <!--- register/authenticated user --->
             <isif condition="${pdict.customer.registeredUser}">
-                <!--- Stored user payments --->
-                <isloop items="${pdict.customer.customerPaymentInstruments}" var="paymentInstrument" status="loopSate">
-                    <div class="saved-payment-instrument ${loopSate.first ? 'active-payment' : ''}" data-uuid="${paymentInstrument.UUID}">
-                        <div class="saved-credit-card-type">
+                <div class="user-payment-instruments">
+                    <!--- Stored user payments --->
+                    <isloop items="${pdict.customer.customerPaymentInstruments}" var="paymentInstrument" status="loopSate">
+                        <div class="saved-payment-instrument ${loopSate.first ? 'selected-payment' : ''}" data-uuid="${paymentInstrument.UUID}">
+                            <div class="saved-credit-card-type">
                         <span>
                             ${Resource.msg('msg.payment.type.credit', 'confirmation', null)}
                             ${paymentInstrument.creditCardType}
                         </span>
-                        </div>
-                        <div class="saved-credit-card-number">
-                            ${paymentInstrument.maskedCreditCardNumber}
-                        </div>
-                        <div class="saved-credit-card-expiration-date">
+                            </div>
+                            <div class="saved-credit-card-number">
+                                ${paymentInstrument.maskedCreditCardNumber}
+                            </div>
+                            <div class="saved-credit-card-expiration-date">
                         <span>
                             ${Resource.msg('msg.card.type.ending', 'confirmation', null)}
                             ${paymentInstrument.creditCardExpirationMonth}/${paymentInstrument.creditCardExpirationYear}
                         </span>
+                            </div>
                         </div>
-                    </div>
-                </isloop>
+                    </isloop>
 
-                <!--- Add new credit card --->
-                <button class="btn btn-secondary btn-block add-payment btn-outline-primary" type="button">${Resource.msg('button.add.payment', 'checkout', null)}</button>
+                    <!--- Add new credit card --->
+                    <button class="btn btn-secondary btn-block add-payment btn-outline-primary" type="button">${Resource.msg('button.add.payment', 'checkout', null)}</button>
+                </div>
             </isif>
 
             <fieldset class="credit-card-form ${pdict.customer.registeredUser ? 'hidden-xs-up' : ''}">
