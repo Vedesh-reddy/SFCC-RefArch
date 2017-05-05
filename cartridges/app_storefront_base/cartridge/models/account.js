@@ -63,7 +63,7 @@ function getPreferredAddress(addressBook) {
 function getPayment(wallet) {
     if (wallet) {
         var paymentInstruments = wallet.paymentInstruments;
-        var paymentInstrument = helper.first(paymentInstruments);
+        var paymentInstrument = paymentInstruments[0];
 
         if (paymentInstrument) {
             return {
@@ -75,6 +75,23 @@ function getPayment(wallet) {
         }
     }
     return null;
+}
+
+function getCustomerPaymentInstruments(paymentInstruments) {
+    var reuslt;
+
+    reuslt = paymentInstruments.map(function (paymentInstrument) {
+        return {
+            creditCardHolder: paymentInstrument.creditCardHolder,
+            maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
+            creditCardType: paymentInstrument.creditCardType,
+            creditCardExpirationMonth: paymentInstrument.creditCardExpirationMonth,
+            creditCardExpirationYear: paymentInstrument.creditCardExpirationYear,
+            UUID: paymentInstrument.UUID
+        };
+    });
+
+    return reuslt;
 }
 
 /**
@@ -90,7 +107,13 @@ function account(currentCustomer, addressModel, orderModel) {
     this.preferredAddress = addressModel || getPreferredAddress(currentCustomer.addressBook);
     this.orderHistory = orderModel;
     this.payment = getPayment(currentCustomer.wallet);
-    this.registeredUser = currentCustomer.authenticated && currentCustomer.registered;
+    this.registeredUser = currentCustomer.raw.authenticated && currentCustomer.raw.registered;
+    this.customerPaymentInstruments = currentCustomer.wallet
+        && currentCustomer.wallet.paymentInstruments
+        ? getCustomerPaymentInstruments(currentCustomer.wallet.paymentInstruments)
+        : null;
 }
+
+account.getCustomerPaymentInstruments = getCustomerPaymentInstruments;
 
 module.exports = account;

@@ -390,3 +390,7 @@ span.ship-to-city-st-zip {
 .add-payment {
     display: block;
 }
+
+.active-payment {
+    background-color: $brand-primary;
+}
