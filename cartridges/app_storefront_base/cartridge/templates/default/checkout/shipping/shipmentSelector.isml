@@ -10,30 +10,35 @@
 	<isif condition="${pdict.order.shipping[0].shippingAddress}">
 		<option class="multi-shipping" disabled>${Resource.msg('msg.shipping.addresses', 'checkout', null)}</option>
 		<isloop items="${pdict.order.shipping}" var="aShippingModel">
-			<option class="multi-shipping" value="${aShippingModel.UUID}" <isif condition="${aShippingModel.UUID==shippingModel.UUID}">selected="selected"</isif>
-			data-first-name="${aShippingModel.shippingAddress.firstName||''}" data-last-name="${aShippingModel.shippingAddress.lastName||''}"
-			data-address1="${aShippingModel.shippingAddress.address1||''}" data-address2="${aShippingModel.shippingAddress.address2||''}"
-			data-city="${aShippingModel.shippingAddress.city}" data-state-code="${aShippingModel.shippingAddress.stateCode}"
-			data-country-code="${aShippingModel.shippingAddress.countryCode}" data-postal-code="${aShippingModel.shippingAddress.postalCode}"
-			data-phone="${aShippingModel.shippingAddress.phone}">
-			<isif condition="${aShippingModel.shippingAddress.firstName
-                 && aShippingModel.shippingAddress.lastName
-                 && aShippingModel.shippingAddress.address1
-                 && aShippingModel.shippingAddress.city
-                 && aShippingModel.shippingAddress.stateCode
-                 && aShippingModel.shippingAddress.postalCode}">
-			 ${aShippingModel.shippingAddress.firstName || ''}
-			 ${aShippingModel.shippingAddress.lastName || ''}
-             ${aShippingModel.shippingAddress.address1 || ''}
-             ${aShippingModel.shippingAddress.address2 || ''}
-			 ${aShippingModel.shippingAddress.city || ''}${!aShippingModel.shippingAddress.city || ','}
-			 ${aShippingModel.shippingAddress.stateCode||''}
-			 ${aShippingModel.shippingAddress.postalCode||''}
-			 ${!aShippingModel.selectedShippingMethod.displayName||'-'}
-			 ${aShippingModel.selectedShippingMethod.displayName||''}
-			 <iselse/>
-                ${Resource.msg('msg.new.address', 'checkout', null)}
-			 </isif>
+			<option class="multi-shipping" value="${aShippingModel.UUID}" 
+			
+			    <isif condition="${pdict.order.shipping.length > 1 && aShippingModel.UUID==shippingModel.UUID}">selected="selected"</isif>
+			    			    
+                data-first-name="${aShippingModel.shippingAddress.firstName||''}" data-last-name="${aShippingModel.shippingAddress.lastName||''}"
+                data-address1="${aShippingModel.shippingAddress.address1||''}" data-address2="${aShippingModel.shippingAddress.address2||''}"
+                data-city="${aShippingModel.shippingAddress.city}" data-state-code="${aShippingModel.shippingAddress.stateCode}"
+                data-country-code="${aShippingModel.shippingAddress.countryCode}" data-postal-code="${aShippingModel.shippingAddress.postalCode}"
+                data-phone="${aShippingModel.shippingAddress.phone}"
+			>
+			    <isif condition="${aShippingModel.shippingAddress.firstName
+                    && aShippingModel.shippingAddress.lastName
+                    && aShippingModel.shippingAddress.address1
+                    && aShippingModel.shippingAddress.city
+                    && aShippingModel.shippingAddress.stateCode
+                    && aShippingModel.shippingAddress.postalCode}"
+                >
+			        ${aShippingModel.shippingAddress.firstName || ''}
+			        ${aShippingModel.shippingAddress.lastName || ''}
+			        ${aShippingModel.shippingAddress.address1 || ''}
+			        ${aShippingModel.shippingAddress.address2 || ''}
+			        ${aShippingModel.shippingAddress.city || ''}${!aShippingModel.shippingAddress.city || ','}
+			        ${aShippingModel.shippingAddress.stateCode||''}
+			        ${aShippingModel.shippingAddress.postalCode||''}
+			        ${!aShippingModel.selectedShippingMethod.displayName||'-'}
+			        ${aShippingModel.selectedShippingMethod.displayName||''}
+			    <iselse/>
+                    ${Resource.msg('msg.new.address', 'checkout', null)}
+			    </isif>
 			</option>
 		</isloop>
 	</isif>
@@ -49,10 +54,6 @@
              ${address.ID || ''} - ${address.firstName || ''} ${address.lastName || ''} ${address.address1 || ''} ${address.address2 || ''} ${address.city || ''}${!address.city || ','} ${address.stateCode||''} ${address.postalCode||''}
             </option>
         </isloop>
-    </isif>
-	<isif condition="${lineItem.isAvailableForInStorePickup}">
-		<option disabled>${Resource.msg('msg.pickup.in.store', 'checkout', null)}</option>
-		<option <isif condition="${lineItem.fromStoreId}">selected="selected"</isif>>In Store Pickup</option>
-	</isif>			               					
+    </isif>			               					
 </select>
 

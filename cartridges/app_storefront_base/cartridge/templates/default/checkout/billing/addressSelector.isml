@@ -26,7 +26,7 @@
             <option value="${address.ID}"
             <isif condition="${address.ID === pdict.order.billing.matchingAddressId}">selected</isif>
             data-first-name="${address.firstName||''}" data-last-name="${address.lastName||''}"
-            data-address1="${address.address1||''}" data-address2="${address2||''}"
+            data-address1="${address.address1||''}" data-address2="${address.address2||''}"
             data-city="${address.city||''}" data-state-code="${address.stateCode||''}"
             data-country-code="${address.countryCode.value||''}" data-postal-code="${address.postalCode||''}"
             data-phone="${address.phone||''}">
