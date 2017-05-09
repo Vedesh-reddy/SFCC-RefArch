@@ -282,18 +282,18 @@ span.ship-to-city-st-zip {
         }
 
         [data-address-mode=new] {
-            .btn-hide-details,
-            .btn-add-new {
-                display: none;
-            }
-        }
-
-        [data-address-mode=details] {
             .btn-show-details,
             .btn-add-new {
                 display: none;
             }
         }
+
+        // [data-address-mode=details] {
+        //     .btn-show-details,
+        //     .btn-add-new {
+        //         display: none;
+        //     }
+        // }
     }
 
     // Place Order -----------------------------
@@ -333,6 +333,14 @@ span.ship-to-city-st-zip {
         button.place-order {
             display: none;
         }
+    }
+
+    option[value=new] {
+        display: none;
+    }
+
+    h5 > span {
+        font-size: 0.8em;
     }
 }
 

@@ -65,7 +65,13 @@ server.get('Login', server.middleware.https, function (req, res, next) {
 
 server.get('Get', server.middleware.https, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
-    var basketModel = new OrderModel(currentBasket);
+    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+    if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
+        req.session.privacyCache.set('usingMultiShipping', false);
+        usingMultiShipping = false;
+    }
+
+    var basketModel = new OrderModel(currentBasket, { usingMultiShipping: usingMultiShipping });
 
     res.json({
         order: basketModel,
@@ -582,9 +588,14 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
                         currentBasket.defaultShipment.shippingAddress);
                 }
             }
+            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+            if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
+                req.session.privacyCache.set('usingMultiShipping', false);
+                usingMultiShipping = false;
+            }
+
             COHelpers.recalculateBasket(currentBasket);
 
-            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
             var basketModel = new OrderModel(currentBasket, {
                 usingMultiShipping: usingMultiShipping,
                 shippable: true
@@ -802,6 +813,10 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             }
 
             var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+            if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
+                req.session.privacyCache.set('usingMultiShipping', false);
+                usingMultiShipping = false;
+            }
             var basketModel = new OrderModel(currentBasket, {
                 usingMultiShipping: usingMultiShipping
             });

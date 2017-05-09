@@ -5,7 +5,7 @@
         data-city="" data-state-code=""
         data-country-code="" data-postal-code=""
         data-phone="">
-        Add New Address
+        ${Resource.msg('msg.new.address', 'checkout', null)}
     </option>
     <isif condition="${pdict.order.shipping[0].shippingAddress}">
         <option disabled>${Resource.msg('msg.shipping.addresses', 'checkout', null)}</option>
@@ -16,7 +16,7 @@
             data-city="${aShippingModel.shippingAddress.city}" data-state-code="${aShippingModel.shippingAddress.stateCode}"
             data-country-code="${aShippingModel.shippingAddress.countryCode.value}" data-postal-code="${aShippingModel.shippingAddress.postalCode}"
             data-phone="${aShippingModel.shippingAddress.phone}">
-             ${aShippingModel.shippingAddress.firstName || ''} ${aShippingModel.shippingAddress.lastName || ''} ${aShippingModel.shippingAddress.address1 || ''} ${aShippingModel.shippingAddress.city || ''}${!aShippingModel.shippingAddress.city || ','} ${aShippingModel.shippingAddress.stateCode||''} ${aShippingModel.shippingAddress.postalCode||''} ${!aShippingModel.selectedShippingMethod.displayName||'-'} ${aShippingModel.selectedShippingMethod.displayName||''}
+             ${aShippingModel.shippingAddress.firstName || ''} ${aShippingModel.shippingAddress.lastName || ''} ${aShippingModel.shippingAddress.address1 || ''} ${aShippingModel.shippingAddress.city || ''}${!aShippingModel.shippingAddress.city || ','} ${aShippingModel.shippingAddress.stateCode||''} ${aShippingModel.shippingAddress.postalCode||''}
             </option>
         </isloop>
     </isif>

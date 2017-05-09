@@ -98,7 +98,7 @@
             <label class="form-control-label" for="billingState">${Resource.msg('field.billing.address.state','address',null)}</label>
             <select class="form-control billingState" id="billingState"
                 <isprint value=${billingFields.states.stateCode.attributes} encoding="off"/>
-                autocomplete="billing region">
+                autocomplete="billing address-level1">
                     <isloop items=${billingFields.states.stateCode.options} var="state">
                         <option id="${state.id}"  value="${state.id}"
                             ${pdict.order.billing.billingAddress.address
@@ -127,7 +127,7 @@
                     ? pdict.order.billing.billingAddress.address.city
                     : ''}"
                 <isprint value=${billingFields.city.attributes} encoding="off"/>
-                autocomplete="billing locality">
+                autocomplete="billing address-level2">
             <div class="form-control-feedback"></div>
         </div>
     </div>

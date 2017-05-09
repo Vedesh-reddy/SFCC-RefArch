@@ -23,7 +23,11 @@
 			    <div class="col-8 start-lines">
 			        <p class="shipping-method">
 			            <span class="shipping-method-title">${shippingModel.selectedShippingMethod.displayName}</span>
-			            <span class="shipping-method-arrival-time">( ${shippingModel.selectedShippingMethod.estimatedArrivalTime} )</span>
+			            <span class="shipping-method-arrival-time">
+							<isif condition="${shippingModel.selectedShippingMethod.estimatedArrivalTime}">
+								( ${shippingModel.selectedShippingMethod.estimatedArrivalTime} )
+							</isif>
+						</span>
 			        </p>
 			    </div>
 			    <div class="col-4 end-lines">

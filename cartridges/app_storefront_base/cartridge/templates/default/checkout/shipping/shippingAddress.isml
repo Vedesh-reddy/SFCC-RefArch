@@ -96,7 +96,7 @@
             </label>
             <select class="form-control shippingState" id="shippingState"
                 <isprint value=${addressFields.states.stateCode.attributes} encoding="off"/>
-                autocomplete="shipping region">
+                autocomplete="shipping address-level1">
                 <isloop items=${addressFields.states.stateCode.options} var="state">
                     <option id="${state.id}" <isif condition="${state.id==shippingAddress.stateCode}">selected</isif> >${state.htmlValue}</option>
                 </isloop>
@@ -116,7 +116,7 @@
             </label>
             <input type="text" class="form-control shippingAddressCity" id="shippingAddressCity"
                 value="${shippingAddress.city||''}" <isprint value=${addressFields.city.attributes} encoding="off"/>
-                autocomplete="shipping locality">
+                autocomplete="shipping address-level2">
             <div class="form-control-feedback"><isprint value="${addressFields.city.error}" ></div>
         </div>
     </div>

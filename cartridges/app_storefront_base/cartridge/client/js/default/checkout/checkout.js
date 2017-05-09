@@ -93,6 +93,7 @@
          */
         function optionValueForAddress(shipping, selected, order, options) {
             var safeOptions = options || {};
+            var isBilling = safeOptions.type && safeOptions.type === 'billing';
             var className = safeOptions.className || '';
             if (typeof shipping === 'string') {
                 return $('<option class="' + className + '" disabled>' + shipping + '</option>');
@@ -134,7 +135,7 @@
                 if (shippingAddress.postalCode) {
                     title.push(shippingAddress.postalCode);
                 }
-                if (safeShipping.selectedShippingMethod) {
+                if (!isBilling && safeShipping.selectedShippingMethod) {
                     title.push('-');
                     title.push(safeShipping.selectedShippingMethod.displayName);
                 }
@@ -248,7 +249,10 @@
                 $billingAddressSelector.append(optionValueForAddress(null, false, order));
                 // Separator -
                 $billingAddressSelector.append(optionValueForAddress(
-                    order.resources.shippingAddresses, false, order, { className: 'multi-shipping' }
+                    order.resources.shippingAddresses, false, order, {
+                        className: 'multi-shipping',
+                        type: 'billing'
+                    }
                 ));
                 shippings.forEach(function (aShipping) {
                     var isSelected = order.billing.matchingAddressId === aShipping.UUID;
@@ -256,7 +260,7 @@
                     // Shipping Address option
                     $billingAddressSelector.append(
                         optionValueForAddress(aShipping, isSelected, order,
-                                { className: 'multi-shipping' }
+                                { className: 'multi-shipping', type: 'billing' }
                         )
                     );
                 });
@@ -271,7 +275,7 @@
                             optionValueForAddress({
                                 UUID: 'ab_' + address.ID,
                                 shippingAddress: address
-                            }, isSelected, order)
+                            }, isSelected, order, { type: 'billing' })
                         );
                     });
                 }
@@ -279,9 +283,9 @@
 
             if (!hasSelectedAddress) {
                 // show
-                $(form).addClass('hide-details');
+                $(form).attr('data-address-mode', 'new');
             } else {
-                $(form).removeClass('hide-details');
+                $(form).attr('data-address-mode', 'edit');
             }
         }
 
@@ -482,28 +486,41 @@
                         ? '( ' + selectedMethod.estimatedArrivalTime + ' )'
                         : '';
 
-                var shippingDescription = shipping.productLineItems.items
-                        && shipping.productLineItems.items.length > 1
-                    ? ' - ' + shipping.productLineItems.items.length + ' ' + order.resources.items
-                    : '';
-
-                shippingCost += shippingDescription;
-
                 var tmpl = $('#pli-shipping-summary-template').clone();
 
-                $('.ship-to-name', tmpl).text(nameLine);
-                $('.ship-to-address1', tmpl).text(address1Line);
-                $('.ship-to-address2', tmpl).text(address2Line);
-                $('.ship-to-city-st-zip', tmpl).text(cityStZipLine);
-                $('.ship-to-phone', tmpl).text(phoneLine);
+                if (shipping.productLineItems.items && shipping.productLineItems.items.length > 1) {
+                    $('h5 > span').text(' - ' + shipping.productLineItems.items.length + ' '
+                        + order.resources.items);
+                } else {
+                    $('h5 > span').text('');
+                }
+                if (shipping.shippingAddress
+                        && shipping.shippingAddress.firstName
+                        && shipping.shippingAddress.lastName
+                        && shipping.shippingAddress.address1
+                        && shipping.shippingAddress.city
+                        && shipping.shippingAddress.stateCode
+                        && shipping.shippingAddress.countryCode
+                        && shipping.shippingAddress.phone) {
+                    $('.ship-to-name', tmpl).text(nameLine);
+                    $('.ship-to-address1', tmpl).text(address1Line);
+                    $('.ship-to-address2', tmpl).text(address2Line);
+                    $('.ship-to-city-st-zip', tmpl).text(cityStZipLine);
+                    $('.ship-to-phone', tmpl).text(phoneLine);
 
-                if (!address2Line) {
-                    $('.ship-to-address2', tmpl).hide();
+                    if (!address2Line) {
+                        $('.ship-to-address2', tmpl).hide();
+                    }
+
+                    if (!phoneLine) {
+                        $('.ship-to-phone', tmpl).hide();
+                    }
+
+                    $('.ship-to-message').text('');
+                } else {
+                    $('.ship-to-message').text(order.resources.addressIncomplete);
                 }
 
-                if (!phoneLine) {
-                    $('.ship-to-phone', tmpl).hide();
-                }
 
                 if (shipping.selectedShippingMethod) {
                     $('.display-name', tmpl).text(methodNameLine);
@@ -559,13 +576,6 @@
             var methodArrivalTime = selectedMethod && selectedMethod.estimatedArrivalTime
                 ? '(' + selectedMethod.estimatedArrivalTime + ')'
                 : '';
-
-            var shippingDescription = shipping.productLineItems.items
-                    && shipping.productLineItems.items.length > 1
-                ? ' - ' + shipping.productLineItems.items.length + ' ' + order.resources.items
-                : '';
-
-            shippingCost += shippingDescription;
 
             var tmpl = $('#pli-shipping-summary-template').clone();
 
@@ -652,11 +662,11 @@
 
             if (order.usingMultiShipping) {
                 $checkoutMain.addClass('multi-ship');
-                $checkbox.attr('checked', 'checked');
+                $checkbox.prop('checked', true);
             } else {
                 $checkoutMain.removeClass('multi-ship');
-                $checkbox.attr('checked', null);
-                $submitShippingBtn.attr('disabled', null);
+                $checkbox.prop('checked', null);
+                $submitShippingBtn.prop('disabled', null);
             }
         }
 
@@ -968,29 +978,32 @@
             },
 
             updateShippingMethodList: function (event) {
-                var $shippingForm = $(event.currentTarget.form);
-                var $shippingMethodList = $shippingForm.find('.shipping-method-list');
-                var urlParams = getAddressFieldsFromUI($shippingForm);
-                var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
-                var url = $shippingMethodList.data('actionUrl');
-                urlParams.shipmentUUID = shipmentUUID;
+                // delay for autocomplete!
+                setTimeout(function () {
+                    var $shippingForm = $(event.currentTarget.form);
+                    var $shippingMethodList = $shippingForm.find('.shipping-method-list');
+                    var urlParams = getAddressFieldsFromUI($shippingForm);
+                    var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
+                    var url = $shippingMethodList.data('actionUrl');
+                    urlParams.shipmentUUID = shipmentUUID;
 
-                $shippingMethodList.spinner().start();
-                $.ajax({
-                    url: url,
-                    type: 'post',
-                    dataType: 'json',
-                    data: urlParams,
-                    success: function (data) {
-                        if (data.error) {
-                            window.location.href = data.redirectUrl;
-                        } else {
-                            updateCheckoutView(data.order, data.customer, { keepOpen: true });
+                    $shippingMethodList.spinner().start();
+                    $.ajax({
+                        url: url,
+                        type: 'post',
+                        dataType: 'json',
+                        data: urlParams,
+                        success: function (data) {
+                            if (data.error) {
+                                window.location.href = data.redirectUrl;
+                            } else {
+                                updateCheckoutView(data.order, data.customer, { keepOpen: true });
 
-                            $shippingMethodList.spinner().stop();
+                                $shippingMethodList.spinner().stop();
+                            }
                         }
-                    }
-                });
+                    });
+                }, 300);
             },
 
             /**
@@ -1071,7 +1084,7 @@
                 });
 
                 $('.btn-show-billing-details').on('click', function () {
-                    $(this).parents('[data-address-mode]').attr('data-address-mode', 'edit');
+                    $(this).parents('[data-address-mode]').attr('data-address-mode', 'new');
                 });
 
                 $('.btn-hide-billing-details').on('click', function () {
