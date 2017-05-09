@@ -119,7 +119,9 @@
                 </div>
             </span>
             <input type="tel" class="form-control phone" id="phoneNumber"
-                value="${pdict.order.billing.billingAddress.address.phone||''}" <isprint value=${creditFields.phone.attributes} encoding="off"/> >
+                value="${pdict.order.billing.billingAddress.address
+                ? pdict.order.billing.billingAddress.address.phone||''
+                : ''}" <isprint value=${creditFields.phone.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
         </div>
     </div>
