@@ -897,49 +897,27 @@
 
                     clearPreviousErrors('.payment-form');
 
-                    var formData = {};
-                    var billingForm = $('[name=dwfrm_billing]');
-                    formData.billingAddressFields = getAddressFieldsFromUI(billingForm);
+                    var paymentForm = $('#dwfrm_billing').serialize();
 
                     if ($('.data-checkout-stage').data('customer-type') === 'registered') {
                         // if payment method is credit card
                         if ($('.payment-information').data('payment-method-id') === 'CREDIT_CARD') {
-                            // is it a stored payment instrument
-                            if ($('.payment-information').data('is-new-payment')) {
-                                // new payment
-                                formData.creditCardFields = {
-                                    paymentMethod: $('input[name$="_paymentMethod"]').val(),
-                                    cardType: $('input[name$="_cardType"]').val(),
-                                    cardNumber: $('input[name$="_cardNumber"]').val(),
-                                    securityCode: $('input[name$="_securityCode"]').val(),
-                                    expirationMonth: $('input[name$="_expirationMonth"]').val(),
-                                    expirationYear: $('input[name$="_expirationYear"]').val()
-                                };
-                            } else {
-                                // stored instrument
+                            if (!($('.payment-information').data('is-new-payment'))) {
                                 var $savedPaymentInstrument = $('.saved-payment-instrument' +
-                                    '.selected-payment');
-                                formData.storedPaymentUUID = $savedPaymentInstrument.data('uuid');
+                                    '.selected-payment'
+                                );
+
+                                paymentForm += '&storedPaymentUUID=' + $savedPaymentInstrument.data(
+                                    'uuid'
+                                );
                             }
-                        }
-                    } else {
-                        // get data from credit card form.
-                        if ($('.payment-information').data('payment-method-id') === 'CREDIT_CARD') {
-                            formData.creditCardFields = {
-                                paymentMethod: $('input[name$="_paymentMethod"]').val(),
-                                cardType: $('input[name$="_cardType"]').val(),
-                                cardNumber: $('input[name$="_cardNumber"]').val(),
-                                securityCode: $('input[name$="_securityCode"]').val(),
-                                expirationMonth: $('input[name$="_expirationMonth"]').val(),
-                                expirationYear: $('input[name$="_expirationYear"]').val()
-                            };
                         }
                     }
 
                     $.ajax({
                         url: $('#dwfrm_billing').attr('action'),
                         method: 'POST',
-                        data: formData,
+                        data: paymentForm,
                         success: function (data) {
                             // look for field validation errors
                             if (data.error) {

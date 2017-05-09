@@ -392,5 +392,16 @@ span.ship-to-city-st-zip {
 }
 
 .selected-payment {
-    background-color: $brand-primary;
+    border: 1px solid $brand-primary;
+    //border-color: $brand-primary;
+}
+
+.edit-payment-instrument{
+    color: $brand-color;
+    float: right;
+    cursor: pointer;
+
+    &:hover {
+        text-decoration: underline;
+    }
 }

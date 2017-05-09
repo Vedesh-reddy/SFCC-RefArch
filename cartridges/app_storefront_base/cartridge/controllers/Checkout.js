@@ -25,6 +25,8 @@ var COHelpers = require('~/cartridge/scripts/checkout/checkoutHelpers');
 
 var Collections = require('~/cartridge/scripts/util/collections');
 
+var array = require('~/cartridge/scripts/util/array');
+
 /**
  * Main entry point for Checkout
  */
@@ -620,16 +622,17 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
 server.post('SubmitPayment', server.middleware.https, function (req, res, next) {
     var paymentForm = server.forms.getForm('billing');
     var billingFormErrors = {};
-    var creditCardErrors;
+    var creditCardErrors = {};
     var viewData = {};
 
     // verify billing form data
-    if (!paymentForm.shippingAddressUseAsBillingAddress.value) {
-        billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
+    billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
+
+    if (!req.form.storedPaymentUUID) {
+        // verify credit card form data
+        creditCardErrors = COHelpers.validateCreditCard(paymentForm);
     }
 
-    // verify credit card form data
-    creditCardErrors = COHelpers.validateCreditCard(paymentForm);
 
     if (Object.keys(creditCardErrors).length || Object.keys(billingFormErrors).length) {
         // respond with form data and errors
@@ -649,10 +652,6 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             stateCode: { value: paymentForm.addressFields.states.stateCode.value },
             postalCode: { value: paymentForm.addressFields.postalCode.value },
             countryCode: { value: paymentForm.addressFields.country.value }
-        };
-
-        viewData.shippingAddressUseAsBillingAddress = {
-            value: paymentForm.shippingAddressUseAsBillingAddress.value
         };
 
         viewData.paymentMethod = {
@@ -683,6 +682,10 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             }
         };
 
+        if (req.form.storedPaymentUUID) {
+            viewData.storedPaymentUUID = req.form.storedPaymentUUID;
+        }
+
         viewData.email = {
             value: paymentForm.creditCardFields.email.value
         };
@@ -710,45 +713,28 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
 
             var paymentMethodID = billingData.paymentMethod.value;
             var result;
-            var shippingAddress;
 
             Transaction.wrap(function () {
-                // If checkbox isn't checked set billing address from form
-                if (billingData.shippingAddressUseAsBillingAddress.value !== true) {
-                    if (!billingAddress) {
-                        billingAddress = currentBasket.createBillingAddress();
-                    }
-
-                    billingAddress.setFirstName(billingData.address.firstName.value);
-                    billingAddress.setLastName(billingData.address.lastName.value);
-                    billingAddress.setAddress1(billingData.address.address1.value);
-                    billingAddress.setAddress2(billingData.address.address2.value);
-                    billingAddress.setCity(billingData.address.city.value);
-                    billingAddress.setPostalCode(billingData.address.postalCode.value);
-                    billingAddress.setStateCode(billingData.address.stateCode.value);
-                    billingAddress.setCountryCode(billingData.address.countryCode.value);
-                }
-
-                // if checkbox is not checked on shipping but checked on billing
-                if (billingData.shippingAddressUseAsBillingAddress.value === true &&
-                    (!billingAddress || !billingAddress.isEquivalentAddress(
-                        currentBasket.defaultShipment.shippingAddress
-                    ))) {
-                    shippingAddress = currentBasket.defaultShipment.shippingAddress;
+                if (!billingAddress) {
                     billingAddress = currentBasket.createBillingAddress();
-
-                    billingAddress.setFirstName(shippingAddress.firstName);
-                    billingAddress.setLastName(shippingAddress.lastName);
-                    billingAddress.setAddress1(shippingAddress.address1);
-                    billingAddress.setAddress2(shippingAddress.address2);
-                    billingAddress.setCity(shippingAddress.city);
-                    billingAddress.setPostalCode(shippingAddress.postalCode);
-                    billingAddress.setStateCode(shippingAddress.stateCode);
-                    billingAddress.setCountryCode(shippingAddress.countryCode);
                 }
 
-                billingAddress.setPhone(billingData.phone.value);
-                currentBasket.setCustomerEmail(billingData.email.value);
+                billingAddress.setFirstName(billingData.address.firstName.value);
+                billingAddress.setLastName(billingData.address.lastName.value);
+                billingAddress.setAddress1(billingData.address.address1.value);
+                billingAddress.setAddress2(billingData.address.address2.value);
+                billingAddress.setCity(billingData.address.city.value);
+                billingAddress.setPostalCode(billingData.address.postalCode.value);
+                billingAddress.setStateCode(billingData.address.stateCode.value);
+                billingAddress.setCountryCode(billingData.address.countryCode.value);
+
+                if (billingData.storedPaymentUUID) {
+                    billingAddress.setPhone(req.currentCustomer.profile.phone);
+                    currentBasket.setCustomerEmail(req.currentCustomer.profile.email);
+                } else {
+                    billingAddress.setPhone(billingData.phone.value);
+                    currentBasket.setCustomerEmail(billingData.email.value);
+                }
             });
 
             // if there is no selected payment option and balance is greater than zero
@@ -773,6 +759,19 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
             }
 
             var processor = PaymentMgr.getPaymentMethod(paymentMethodID).getPaymentProcessor();
+
+            if (billingData.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered) {
+                var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
+                var paymentInstrument = array.find(paymentInstruments, function (item) {
+                    return billingData.storedPaymentUUID === item.UUID;
+                });
+
+                billingData.paymentInformation.cardNumber.value = paymentInstrument.creditCardNumber;
+                billingData.paymentInformation.cardType.value = paymentInstrument.creditCardType;
+                billingData.paymentInformation.securityCode.value = 123; // TODO: FIX ME
+                billingData.paymentInformation.expirationMonth.value = paymentInstrument.creditCardExpirationMonth;
+                billingData.paymentInformation.expirationYear.value = paymentInstrument.creditCardExpirationYear;
+            }
 
             if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
                 result = HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
