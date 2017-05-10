@@ -40,5 +40,59 @@ module.exports = {
                     .addClass('hidden-xl-down');
             }
         });
+    },
+
+    showSpinner: function () {
+        $('body').on('product:beforeAddToCart product:beforeAttributeSelect', function () {
+            $.spinner().start();
+        });
+    },
+    updateAttribute: function () {
+        $('body').on('product:afterAttributeSelect', function (e, response) {
+            if ($('.product-detail>.bundle-items').length) {
+                response.container.data('pid', response.data.product.id);
+                response.container.find('.product-id').text(response.data.product.id);
+            } else {
+                $('.product-id').text(response.data.product.id);
+                $('.product-detail:not(".bundle-item")').data('pid', response.data.product.id);
+            }
+        });
+    },
+    updateAddToCart: function () {
+        $('body').on('product:updateAddToCart', function (e, response) {
+            // update local add to cart (for sets)
+            $('button.add-to-cart', response.$productContainer).attr('disabled',
+                (!response.product.readyToOrder || !response.product.available));
+
+            var enable = $('.product-availability').toArray().every(function (item) {
+                return $(item).data('available') && $(item).data('ready-to-order');
+            });
+            $('button.add-to-cart-global').attr('disabled', !enable);
+        });
+    },
+    updateAvailability: function () {
+        $('body').on('product:updateAvailability', function (e, response) {
+            $('div.availability', response.$productContainer)
+                .data('ready-to-order', response.product.readyToOrder)
+                .data('available', response.product.available);
+
+            $('.availability-msg', response.$productContainer)
+                .empty().html(response.message);
+
+            if ($('.global-availability').length) {
+                var allAvailable = $('.product-availability').toArray()
+                    .every(function (item) { return $(item).data('available'); });
+
+                var allReady = $('.product-availability').toArray()
+                    .every(function (item) { return $(item).data('ready-to-order'); });
+
+                $('.global-availability')
+                    .data('ready-to-order', allReady)
+                    .data('available', allAvailable);
+
+                $('.global-availability .availability-msg').empty()
+                    .html(allReady ? response.message : response.resources.info_selectforstock);
+            }
+        });
     }
 };

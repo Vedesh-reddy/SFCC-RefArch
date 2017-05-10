@@ -10,6 +10,14 @@
     @include swatch(2.5em, $white);
 }
 
+.product-detail [disabled] .swatch-circle {
+    cursor: not-allowed;
+
+    &.color-value.selected::after {
+        background-color: $gray-light;
+    }
+}
+
 .description-and-detail {
     margin-top: 2em;
 

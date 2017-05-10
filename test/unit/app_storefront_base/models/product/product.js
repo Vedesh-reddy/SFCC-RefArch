@@ -33,7 +33,7 @@ describe('fullProduct', function () {
                 msg: function () { return 'some string'; }
             }
         }),
-        'dw/web/URLUtils': { url: function () { return 'some url'; } }
+        'dw/web/URLUtils': { url: function () { return { relative: function () { return 'some url'; } }; } }
     });
 
     var attributeModel = {
@@ -117,7 +117,15 @@ describe('fullProduct', function () {
                 return: new ArrayList([]),
                 type: 'function'
             },
-            url: function () { return 'some url'; }
+            url: {
+                return: {
+                    relative: {
+                        return: 'some url',
+                        type: 'function'
+                    }
+                },
+                type: 'function'
+            }
         },
         attributeModel: attributeModel
     };

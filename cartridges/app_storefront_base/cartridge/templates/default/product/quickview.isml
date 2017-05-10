@@ -1,7 +1,7 @@
-<isset name="bundle" value="${pdict.product}" scope="page"/>
+<isset name="productCopy" value="${pdict.product}" scope="page"/>
 <isset name="product" value="${pdict.product}" scope="page"/>
-<div class="product-quickview product-${product.productType}" data-pid="${product.id}">
-
+<isset name="isBundleOrSet" value="false" scope="page"/>
+<div class="product-quickview product-${product.productType} col product-wrapper" data-pid="${product.id}">
     <div class="row">
         <!-- Product Images Carousel -->
         <isinclude template="product/components/image_carousel" />
@@ -18,21 +18,17 @@
                     <div class="col-12">
                         <isinclude template="product/components/mainAttributes" />
 
-                        <isset name="isBundleOrSet" value="false" scope="page" />
                         <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
-                            <isinclude template="product/components/variationAttributes" />
+                            <div data-attr="${attr.id}" class="swatch">
+                                <isif condition="${attributeStatus.last && product.productType === 'set'}">
+                                    <!-- Quantity Drop Down Menu -->
+                                    <div class="quantity col-sm-6">
+                                        <isinclude template="product/components/quantity" />
+                                    </div>
+                                </isif>
+                                <isinclude template="product/components/variationAttribute" />
+                            </div>
                         </isloop>
-                    </div>
-
-                    <!-- Size Chart -->
-                    <isif condition="${product.variationAttributes}">
-                        <div class="col-md-10 col-12 size-chart">
-                            <isinclude template="product/components/sizeChart" />
-                        </div>
-                    </isif>
-
-                    <div class="col-md-10 col-12 availability clearfix">
-                        <isinclude template="product/components/availability" />
                     </div>
 
                     <hr>
@@ -53,20 +49,18 @@
         <isinclude template="product/components/bundleItems" />
     </isif>
 
-    <isset name="product" value="${bundle}" scope="page"/>
+    <isset name="product" value="${productCopy}" scope="page"/>
 </div>
-<div class="row modal-footer">
-    <div class="col-6 availability" data-ready-to-order="${product.readyToOrder}">
+<div class="modal-footer row align-items-end">
+    <div class="col availability align-self-end global-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
         <isinclude template="product/components/availability" />
     </div>
-    <div class="col-6">
-        <div class="row">
+    <div class="col">
+        <div class="row align-items-end">
             <!-- Quantity -->
-            <isif condition="${product.productType === 'bundle'}">
-                <div class="col-4">
-                    <isinclude template="product/components/quantity" />
-                </div>
-            </isif>
+            <div class="col-4">
+                <isinclude template="product/components/quantity" />
+            </div>
 
             <div class="col-8">
                 <!-- Prices -->
@@ -76,7 +70,7 @@
                 </div>
 
                 <!-- Cart and [Optionally] Apple Pay -->
-                <isinclude template="product/components/addtocart" />
+                <isinclude template="product/components/addToCartGlobal" />
             </div>
         </div>
     </div>

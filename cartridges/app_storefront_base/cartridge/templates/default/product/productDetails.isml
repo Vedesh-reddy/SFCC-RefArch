@@ -7,7 +7,7 @@
     </isscript>
 
     <isset name="product" value="${pdict.product}" scope="page" />
-    <div class="container product-detail">
+    <div class="container product-detail product-wrapper" data-pid="${product.id}">
         <div class="row">
             <div class="col-12">
                 <!---Breadcrumbs--->
@@ -46,7 +46,15 @@
 
                         <isset name="isBundleOrSet" value="false" scope="page" />
                         <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
-                            <isinclude template="product/components/variationAttributes" />
+                            <div data-attr="${attr.id}" class="swatch">
+                                <isif condition="${attributeStatus.last && isBundleOrSet !== 'true'}">
+                                    <!-- Quantity Drop Down Menu -->
+                                    <div class="quantity col-sm-6">
+                                        <isinclude template="product/components/quantity" />
+                                    </div>
+                                </isif>
+                                <isinclude template="product/components/variationAttribute" />
+                            </div>
                         </isloop>
 
                         <isif condition="${!pdict.product.variationAttributes}">
@@ -64,7 +72,7 @@
                     </isif>
 
                     <!-- Availability -->
-                    <div class="availability col-md-10 col-12">
+                    <div class="availability col-md-10 col-12 product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}>
                         <isinclude template="product/components/availability" />
                     </div>
 
@@ -85,7 +93,7 @@
                         </div>
 
                         <!-- Cart and [Optionally] Apple Pay -->
-                        <isinclude template="product/components/addtocart" />
+                        <isinclude template="product/components/addToCartProduct" />
                     </div>
 
                     <!-- Add to Wishlist and Social Sharing Icons -->

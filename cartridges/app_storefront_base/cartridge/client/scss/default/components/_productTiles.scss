@@ -139,6 +139,11 @@
     max-width: 56.25em;
 
     .modal-header {
+        background-color: $grey2;
+        border-bottom: 2px solid #ccc;
+        border-top-left-radius: 0.1875rem;
+        border-top-right-radius: 0.1875rem;
+
         .full-pdp-link {
             color: $brand-color;
         }
@@ -166,6 +171,14 @@
         @include swatch(2.5em, $white);
     }
 
+    a[disabled] .swatch-circle {
+        cursor: not-allowed;
+
+        &.color-value.selected::after {
+            background-color: $gray-light;
+        }
+    }
+
     .availablity-container {
         text-align: right;
     }
@@ -173,5 +186,25 @@
     .availablity-container,
     .size-chart {
         margin-top: 0.938em;
+    }
+
+    .modal-content {
+        border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-body {
+        max-height: 28.125em; /* 450/16 */
+        overflow-y: auto;
+    }
+
+    button.close {
+        font-size: 1.25em;
+    }
+
+    .modal-footer {
+        background-color: $white;
+        border: none;
+        border-bottom-right-radius: 0.1875rem;
+        border-bottom-left-radius: 0.1875rem;
     }
 }

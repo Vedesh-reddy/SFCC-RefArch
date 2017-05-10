@@ -52,9 +52,9 @@ function getUrl(variationModel, allAttributes, endPoint, id) {
             });
         });
 
-        url = variationModel.url('Product-' + endPoint, params).toString();
+        url = variationModel.url('Product-' + endPoint, params).relative().toString();
     } else {
-        url = URLUtils.url('Product-' + endPoint, 'pid', id).toString();
+        url = URLUtils.url('Product-' + endPoint, 'pid', id).relative().toString();
     }
 
     return url;
@@ -116,6 +116,12 @@ FullProduct.prototype.initialize = function () {
         this.variationAttributeConfig.endPoint,
         this.id
     );
+    this.selectedProductUrl = getUrl(
+        this.variationModel,
+        this.variationAttributes,
+        'Show',
+        this.id
+    );
     this.selectedQuantity = this.quantity ? parseInt(this.quantity, 10) : this.minOrderQuantity;
 };
 
@@ -133,7 +139,8 @@ function ProductWrapper(product, productVariables, quantity, promotions) {
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
-        'attributes', 'availability', 'selectedVariantUrl', 'selectedQuantity'];
+        'attributes', 'availability', 'selectedVariantUrl', 'selectedProductUrl',
+        'selectedQuantity'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

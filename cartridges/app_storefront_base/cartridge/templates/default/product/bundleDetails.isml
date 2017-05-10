@@ -64,7 +64,7 @@
             <isinclude template="product/components/quantity" />
 
             <!-- Availability -->
-            <div class="availability clearfix" data-ready-to-order="${bundle.readyToOrder}">
+            <div class="availability clearfix global-availability" data-ready-to-order="${bundle.readyToOrder}">
                 <isinclude template="product/components/availability" />
             </div>
 
@@ -76,7 +76,7 @@
                 </div>
 
                 <!-- Cart and [Optionally] Apple Pay -->
-                <isinclude template="product/components/addtocart" />
+                <isinclude template="product/components/addToCartGlobal" />
             </div>
 
             <!-- Add to Wishlist and Social Sharing Icons -->
@@ -84,5 +84,9 @@
         </div>
 
         <isinclude template="product/components/descriptionAndDetails" />
+
+        <div class="recommendations">
+            <isslot id="product-recommendations" description="Recommended products" context="global" />
+        </div>
     </div>
 </isdecorate>

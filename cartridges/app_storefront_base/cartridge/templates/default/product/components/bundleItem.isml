@@ -31,7 +31,9 @@
                     <isinclude template="product/components/mainAttributes" />
 
                     <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
-                        <isinclude template="product/components/variationAttributes" />
+                        <div data-attr="${attr.id}" class="swatch">
+                            <isinclude template="product/components/variationAttribute" />
+                        </div>
                     </isloop>
                 </div>
 
@@ -43,7 +45,7 @@
                 </isif>
 
                 <!-- Availability -->
-                <div class="col-12 col-md-10 availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
+                <div class="col-12 col-md-10 availability product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
                     <isinclude template="product/components/availability" />
                 </div>
 

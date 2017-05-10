@@ -13,15 +13,15 @@ function getModalHtmlElement() {
         + '<div class="modal fade" id="quickViewModal" role="dialog">'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
-        + '<div class="modal-content">'
-        + '<div class="modal-header">'
+        + '<div class="modal-content container">'
+        + '<div class="modal-header row">'
         + '    <a class="full-pdp-link" href="">View Full Details</a>'
         + '    <button type="button" class="close pull-right" data-dismiss="modal">'
         + '        <span>Close</span>&times;'
         + '    </button>'
         + '</div>'
-        + '<div class="modal-body"></div>'
-        + '<div class="modal-footer"></div>'
+        + '<div class="modal-body row"></div>'
+        + '<div class="modal-footer row"></div>'
         + '</div>'
         + '</div>'
         + '</div>';
@@ -88,12 +88,92 @@ module.exports = {
             fillModalElement(productUrl, selectedValueUrl);
         });
     },
-
     colorAttribute: base.colorAttribute,
-
     selectAttribute: base.selectAttribute,
-
     availability: base.availability,
+    addToCart: base.addToCart,
+    showSpinner: function () {
+        $('body').on('product:beforeAddToCart', function (e, data) {
+            $(data).closest('.modal-content').spinner().start();
+        });
+    },
+    hideDialog: function () {
+        $('body').on('product:afterAddToCart', function () {
+            $('#quickViewModal').modal('hide');
+        });
+    },
+    beforeUpdateAttribute: function () {
+        $('body').on('product:beforeAttributeSelect', function () {
+            $('.modal.show .modal-content').spinner().start();
+        });
+    },
+    updateAttribute: function () {
+        $('body').on('product:afterAttributeSelect', function (e, response) {
+            if ($('.modal.show .product-quickview>.bundle-items').length) {
+                $('.modal.show').find(response.container).data('pid', response.data.product.id);
+                $('.modal.show').find(response.container)
+                    .find('.product-id').text(response.data.product.id);
+            } else {
+                $('.modal.show .product-quickview').data('pid', response.data.product.id);
+                $('.modal.show .full-pdp-link')
+                    .attr('href', response.data.product.selectedProductUrl);
+            }
+        });
+    },
+    updateAddToCart: function () {
+        $('body').on('product:updateAddToCart', function (e, response) {
+            // update local add to cart (for sets)
+            $('button.add-to-cart', response.$productContainer).attr('disabled',
+                (!response.product.readyToOrder || !response.product.available));
 
-    addToCart: base.addToCart
+            // update global add to cart (single products, bundles)
+
+            var dialog = $(response.$productContainer)
+                .closest('.quick-view-dialog');
+
+            $('.add-to-cart-global', dialog).attr('disabled',
+                !$('.global-availability', dialog).data('ready-to-order')
+                || !$('.global-availability', dialog).data('available')
+            );
+        });
+    },
+    updateAvailability: function () {
+        $('body').on('product:updateAvailability', function (e, response) {
+            // bundle individual products
+            $('.product-availability', response.$productContainer)
+                .data('ready-to-order', response.product.readyToOrder)
+                .data('available', response.product.available)
+                .find('.availability-msg')
+                .empty()
+                .html(response.message);
+
+
+            var dialog = $(response.$productContainer)
+                .closest('.quick-view-dialog');
+
+            if ($('.product-availability', dialog).length) {
+                // bundle all products
+                var allAvailable = $('.product-availability', dialog).toArray()
+                    .every(function (item) { return $(item).data('available'); });
+
+                var allReady = $('.product-availability', dialog).toArray()
+                    .every(function (item) { return $(item).data('ready-to-order'); });
+
+                $('.global-availability', dialog)
+                    .data('ready-to-order', allReady)
+                    .data('available', allAvailable);
+
+                $('.global-availability .availability-msg', dialog).empty()
+                    .html(allReady ? response.message : response.resources.info_selectforstock);
+            } else {
+                // single product
+                $('.global-availability', dialog)
+                    .data('ready-to-order', response.product.readyToOrder)
+                    .data('available', response.product.available)
+                    .find('.availability-msg')
+                    .empty()
+                    .html(response.message);
+            }
+        });
+    }
 };
