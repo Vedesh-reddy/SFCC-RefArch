@@ -103,6 +103,9 @@ describe('fullProduct', function () {
                     return value.price;
                 }
             };
+        },
+        getSelectedOptionValue: function (option) {
+            return option.optionValues[0];
         }
     };
 
@@ -247,6 +250,7 @@ describe('fullProduct', function () {
         var expected = [{
             htmlName: mockOption1.htmlName,
             name: mockOption1.displayName,
+            selectedValueId: mockOption1.optionValues[0].ID,
             values: [{
                 id: mockOption1.optionValues[0].ID,
                 displayValue: mockOption1.optionValues[0].displayValue,
