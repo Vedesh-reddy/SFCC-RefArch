@@ -81,10 +81,19 @@ server.get('Show', function (req, res, next) {
         && categoryTemplate
         && dwProductSearch.category.parent.ID === 'root'
     ) {
-        res.render(categoryTemplate, {
-            productSearch: productSearch,
-            maxSlots: maxSlots
-        });
+        if (isAjax) {
+            res.render(resultsTemplate, {
+                productSearch: productSearch,
+                maxSlots: maxSlots,
+                productSort: productSort
+            });
+        } else {
+            res.render(categoryTemplate, {
+                productSearch: productSearch,
+                maxSlots: maxSlots,
+                category: dwProductSearch.category
+            });
+        }
     } else {
         res.render(resultsTemplate, {
             productSearch: productSearch,
