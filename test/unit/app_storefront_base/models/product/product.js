@@ -33,7 +33,8 @@ describe('fullProduct', function () {
                 msg: function () { return 'some string'; }
             }
         }),
-        'dw/web/URLUtils': { url: function () { return { relative: function () { return 'some url'; } }; } }
+        'dw/web/URLUtils': { url: function () { return { relative: function () { return 'some url'; } }; } },
+        '../../scripts/util/collections': require('../../../../mocks/dwHelpers.js')
     });
 
     var attributeModel = {
@@ -82,6 +83,29 @@ describe('fullProduct', function () {
         }
     };
 
+    var mockOption1 = {
+        displayName: 'Option 1',
+        htmlName: 'Option 1 HTML',
+        optionValues: [{
+            ID: 'Option 1 ID',
+            displayValue: 'Option 1 Display Value',
+            price: '$9.99'
+        }]
+    };
+
+    var optionModelMock = {
+        getOptions: function () {
+            return new ArrayList([mockOption1]);
+        },
+        getPrice: function (value) {
+            return {
+                toFormattedString: function () {
+                    return value.price;
+                }
+            };
+        }
+    };
+
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
@@ -99,7 +123,8 @@ describe('fullProduct', function () {
         minOrderQuantity: {
             value: 2
         },
-        attributeModel: attributeModel
+        attributeModel: attributeModel,
+        optionModel: optionModelMock
     };
 
     var productMock = {
@@ -127,7 +152,8 @@ describe('fullProduct', function () {
                 type: 'function'
             }
         },
-        attributeModel: attributeModel
+        attributeModel: attributeModel,
+        optionModel: optionModelMock
     };
 
     var promotions = new ArrayList([{
@@ -211,5 +237,23 @@ describe('fullProduct', function () {
         var product = new FullProduct(toProductMock(tempMock), null, null);
 
         assert.equal(product.selectedVariantUrl, 'some url');
+    });
+
+    it('should have options when associated', function () {
+        var tempMock = Object.assign({}, productMock);
+        tempMock = Object.assign({}, productVariantMock, tempMock);
+        var product = new FullProduct(toProductMock(tempMock), null, null);
+
+        var expected = [{
+            htmlName: mockOption1.htmlName,
+            name: mockOption1.displayName,
+            values: [{
+                id: mockOption1.optionValues[0].ID,
+                displayValue: mockOption1.optionValues[0].displayValue,
+                price: mockOption1.optionValues[0].price
+            }]
+        }];
+
+        assert.deepEqual(product.options, expected);
     });
 });

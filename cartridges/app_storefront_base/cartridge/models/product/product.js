@@ -1,6 +1,7 @@
 'use strict';
 
 var base = require('./productBase');
+var Collections = require('../../scripts/util/collections');
 var ProductBase = base.productBase;
 var URLUtils = require('dw/web/URLUtils');
 
@@ -61,6 +62,56 @@ function getUrl(variationModel, allAttributes, endPoint, id) {
 }
 
 /**
+ * @typedef {Object} ProductOptionValues
+ *
+ * @property {string} id - ID
+ * @property {string} displayValue - Display value
+ * @property {string} price: string} - Price
+ */
+
+/**
+ * Get a product option's values
+ *
+ *  @param {dw.catalog.ProductOptionModel} optionModel - A product's option model
+ *  @param {dw.util.Collection <dw.catalog.ProductOptionValue>} optionValues - Product option values
+ *  @return {ProductOptionValues} - View model for a product option's values
+ */
+function getOptionValues(optionModel, optionValues) {
+    return Collections.map(optionValues, function (value) {
+        return {
+            id: value.ID,
+            displayValue: value.displayValue,
+            price: optionModel.getPrice(value).toFormattedString()
+        };
+    });
+}
+
+/**
+ * @typedef {Object} ProductOptions
+ *
+ * @property {string} name - Product option name
+ * @property {string} htmlName - HTML representation of product option name
+ * @property {ProductOptionValues} values - A product option's values
+ */
+
+/**
+ * Retrieve provided product's options
+ *
+ * @param {dw.catalog.Product} product - Product instance returned from the API
+ * @return {ProductOptions} - Product options for this product
+ */
+function getOptions(product) {
+    var optionModel = product.optionModel;
+    return Collections.map(optionModel.getOptions(), function (option) {
+        return {
+            name: option.displayName,
+            htmlName: option.htmlName,
+            values: getOptionValues(optionModel, option.optionValues)
+        };
+    });
+}
+
+/**
  * @constructor
  * @classdesc Base product class. Used for product tiles
  * @param {dw.catalog.Product} product - Product instance returned from the API
@@ -68,7 +119,7 @@ function getUrl(variationModel, allAttributes, endPoint, id) {
  *                                    target product variation group
  * @param {number} quantity - quantity of products selected
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
- *                                                                 product
+ *                                                                  product
  */
 function FullProduct(product, productVariables, quantity, promotions) {
     this.variationModel = this.getVariationModel(product, productVariables);
@@ -123,6 +174,7 @@ FullProduct.prototype.initialize = function () {
         this.id
     );
     this.selectedQuantity = this.quantity ? parseInt(this.quantity, 10) : this.minOrderQuantity;
+    this.options = getOptions(this.product);
 };
 
 /**
@@ -140,7 +192,7 @@ function ProductWrapper(product, productVariables, quantity, promotions) {
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
         'attributes', 'availability', 'selectedVariantUrl', 'selectedProductUrl',
-        'selectedQuantity'];
+        'selectedQuantity', 'options'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

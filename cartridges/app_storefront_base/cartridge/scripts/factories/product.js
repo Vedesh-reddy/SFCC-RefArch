@@ -46,8 +46,6 @@ ProductFactory.get = function (params) {
                 );
                 break;
         }
-    } else if (productType === 'optionProduct') {
-        // TODO: Add option product
     } else if (productType === 'bundle') {
         switch (params.pview) {
             case 'tile':
