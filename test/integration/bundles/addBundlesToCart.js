@@ -7,8 +7,6 @@ describe('Add bundles to cart', function () {
 
     it('should be able to add a bundle to Cart', function () {
         var cookieJar = request.jar();
-        var cookieString;
-        var UUID;
         var myRequest = {
             url: '',
             method: 'POST',
@@ -30,7 +28,7 @@ describe('Add bundles to cart', function () {
         return request(myRequest, function (error, response) {
             var bodyAsJson = JSON.parse(response.body);
             assert.equal(response.statusCode, 200, 'Expected Cart-AddProduct bundles statusCode to be 200.');
-            assert.equal(bodyAsJson.cart.items[0].productName,  'Turquoise Jewelry Bundle');
+            assert.equal(bodyAsJson.cart.items[0].productName, 'Turquoise Jewelry Bundle');
             assert.equal(bodyAsJson.cart.items[0].productType, 'bundle');
             assert.equal(bodyAsJson.cart.items[0].priceTotal.price, '$113.00');
             assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[0].id, '013742002836');
@@ -39,9 +37,6 @@ describe('Add bundles to cart', function () {
             assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[1].productName, 'Turquoise and Gold Necklace');
             assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[2].id, '013742002799');
             assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[2].productName, 'Turquoise and Gold Hoop Earring');
-            UUID = bodyAsJson.cart.items[0].UUID;
-            cookieString = cookieJar.getCookieString(myRequest.url);
-        })
-    })
-})
-
+        });
+    });
+});
