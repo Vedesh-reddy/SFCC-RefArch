@@ -27,16 +27,17 @@ describe('Add bundles to cart', function () {
         };
         return request(myRequest, function (error, response) {
             var bodyAsJson = JSON.parse(response.body);
+            var cartItems = bodyAsJson.cart.items[0];
             assert.equal(response.statusCode, 200, 'Expected Cart-AddProduct bundles statusCode to be 200.');
-            assert.equal(bodyAsJson.cart.items[0].productName, 'Turquoise Jewelry Bundle');
-            assert.equal(bodyAsJson.cart.items[0].productType, 'bundle');
-            assert.equal(bodyAsJson.cart.items[0].priceTotal.price, '$113.00');
-            assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[0].id, '013742002836');
-            assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[0].productName, 'Turquoise and Gold Bracelet');
-            assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[1].id, '013742002805');
-            assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[1].productName, 'Turquoise and Gold Necklace');
-            assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[2].id, '013742002799');
-            assert.equal(bodyAsJson.cart.items[0].bundledProductLineItems[2].productName, 'Turquoise and Gold Hoop Earring');
+            assert.equal(cartItems.productName, 'Turquoise Jewelry Bundle');
+            assert.equal(cartItems.productType, 'bundle');
+            assert.equal(cartItems.priceTotal.price, '$113.00');
+            assert.equal(cartItems.bundledProductLineItems[0].id, '013742002836');
+            assert.equal(cartItems.bundledProductLineItems[0].productName, 'Turquoise and Gold Bracelet');
+            assert.equal(cartItems.bundledProductLineItems[1].id, '013742002805');
+            assert.equal(cartItems.bundledProductLineItems[1].productName, 'Turquoise and Gold Necklace');
+            assert.equal(cartItems.bundledProductLineItems[2].id, '013742002799');
+            assert.equal(cartItems.bundledProductLineItems[2].productName, 'Turquoise and Gold Hoop Earring');
         });
     });
 });

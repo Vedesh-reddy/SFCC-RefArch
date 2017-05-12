@@ -1,12 +1,11 @@
 'use strict';
 
-import path from 'path';
-import properties from 'properties-parser';
-import wdioConfig from '../../../functional/webdriver/wdio.appium.js';
-
+var path = require('path');
+var properties = require('properties-parser');
+var wdioConfig = require('../../../functional/webdriver/wdio.appium');
 const locale = wdioConfig.locale;
 
-export function msg(key, bundleName, defaultValue) {
+function msg(key, bundleName, defaultValue) {
     let bundlePath;
     let props;
     const resourceDirPath = './cartridges/app_storefront_base/cartridge/templates/resources/';
@@ -38,7 +37,7 @@ export function msg(key, bundleName, defaultValue) {
     return defaultValue || key;
 }
 
-export function msgf() {
+function msgf() {
     // pass through to msg if there are no extra format arguments
     if (arguments.length < 4) {
         return msg.apply(null, arguments);
@@ -54,3 +53,9 @@ export function msgf() {
         return match;
     });
 }
+
+module.exports = {
+    msg: msg,
+    msgf: msgf,
+    locale: wdioConfig.locale
+};

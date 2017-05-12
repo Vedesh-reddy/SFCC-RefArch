@@ -1,28 +1,27 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
+var Resource = require('../../mocks/dw/web/Resource');
 
 describe('Remove bundle from product line item', function () {
     this.timeout(50000);
     var cookieJar = request.jar();
     var UUID;
-    var myRequest = {
-        url: '',
-        method: 'POST',
-        rejectUnauthorized: false,
-        resolveWithFullResponse: true,
-        jar: cookieJar
-    };
-
     var bundlePid = 'womens-jewelry-bundle';
     var qty = 1;
     var childPids = '013742002836,013742002805,013742002799';
 
-    myRequest.url = config.baseUrl + '/Cart-AddProduct';
-    myRequest.form = {
-        pid: bundlePid,
-        childPids: childPids,
-        quantity: qty
+    var myRequest = {
+        url: config.baseUrl + '/Cart-AddProduct',
+        method: 'POST',
+        rejectUnauthorized: false,
+        resolveWithFullResponse: true,
+        jar: cookieJar,
+        form: {
+            pid: bundlePid,
+            childPids: childPids,
+            quantity: qty
+        }
     };
 
     before(function () {
@@ -34,13 +33,14 @@ describe('Remove bundle from product line item', function () {
     });
 
     it('should be able to remove a bundle from product line item', function () {
+        var cartEmptyMsg = Resource.msgf('info.cart.empty.msg', 'cart', null);
         myRequest.method = 'GET';
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + bundlePid + '&uuid=' + UUID;
         return request(myRequest)
             .then(function (removedItemResponse) {
                 assert.equal(removedItemResponse.statusCode, 200, 'Expected removeProductLineItem call statusCode to be 200.');
                 var bodyAsJson = JSON.parse(removedItemResponse.body);
-                assert.equal(bodyAsJson.resources.emptyCartMsg, 'Your Shopping Cart is Empty', 'actual response from removing bundles not are expected');
+                assert.equal(bodyAsJson.resources.emptyCartMsg, cartEmptyMsg, 'actual response from removing bundles not are expected');
                 assert.equal(bodyAsJson.resources.numberOfItems, '0 Items', 'should return 0 items in basket');
             });
     });
@@ -50,7 +50,7 @@ describe('Remove bundle from product line item', function () {
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + bundlePid + '&uuid=' + bogusUUID;
         return request(myRequest)
             .then(function (removedItemResponse) {
-                assert.equal(removedItemResponse.statusCode, 500, 'Expected request to fail when UUID is incorrect.');
+                assert.equal(removedItemResponse.statusCode, 500, 'Expected removeProductLineItem request to fail when UUID is incorrect.');
             })
             .catch(function (error) {
                 assert.equal(error.statusCode, 500, 'Expected statusCode to be 500 for removing product item with bogus UUID.');
@@ -67,7 +67,7 @@ describe('Remove bundle from product line item', function () {
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + bogusBundleId + '&uuid=' + UUID;
         return request(myRequest)
             .then(function (removedItemResponse) {
-                assert.equal(removedItemResponse.statusCode, 500, 'Expected request to fail when UUID is incorrect.');
+                assert.equal(removedItemResponse.statusCode, 500, 'Expected removeProductLineItem call to fail when UUID is incorrect.');
             })
             .catch(function (error) {
                 assert.equal(error.statusCode, 500, 'Expected statusCode to be 500 for removing product item with bogus pid.');
