@@ -21,7 +21,7 @@ var RESOURCES = {
     shippingMethod: Resource.msg('Shipping Method', 'checkout', null),
     items: Resource.msg('msg.items', 'checkout', null),
     item: Resource.msg('msg.item', 'checkout', null),
-    addNewAddress: Resource.msg('msg.add.new.address', 'checkout', null),
+    addNewAddress: Resource.msg('msg.new.address', 'checkout', null),
     newAddress: Resource.msg('msg.new.address', 'checkout', null),
     shipToAddress: Resource.msg('msg.ship.to.address', 'checkout', null),
     shippingAddresses: Resource.msg('msg.shipping.addresses', 'checkout', null),
