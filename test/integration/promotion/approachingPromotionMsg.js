@@ -2,7 +2,6 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
-var cheerio = require('cheerio');
 
 // Test Case
 // pid=799927767720
@@ -73,6 +72,7 @@ describe('Approaching order level promotion', function () {
             .then(function (response) {
                 assert.equal(response.statusCode, 200, 'expected add variant to Cart call to return status code 200');
                 var bodyAsJson = JSON.parse(response.body);
+                UUID = bodyAsJson.cart.items[0].UUID;
                 assert.isTrue(bodyAsJson.quantityTotal === 2, 'should have 2 items added to Cart');
                 assert.isTrue(bodyAsJson.message === 'Product added to basket');
                 cookieString = cookieJar.getCookieString(myRequest.url);
@@ -88,23 +88,9 @@ describe('Approaching order level promotion', function () {
             })
             .then(function (response) {
                 assert.equal(response.statusCode, 200, 'expected add shipping method to return status code 200');
-            })
-            // go to Cart
-            .then(function () {
-                // needs to update the URL to use pretty url
-                var NewUrl = config.baseUrl.replace('on/demandware.store/Sites-SiteGenesis-Site/', 's/SiteGenesis/cart?lang=');
-                myNewRequest.url = NewUrl;
-                var cookie = request.cookie(cookieString);
-                cookieJar.setCookie(cookie, myNewRequest.url);
-                return request(myNewRequest);
-            })
-            .then(function (response) {
-                assert.equal(response.statusCode, 200, 'expected cart page to return status code 200');
-                var $ = cheerio.load(response.body);
-                var discount = $('.single-approaching-discount');
-                UUID = $('.custom-select.quantity').attr('data-uuid');
-                assert.equal(discount.get(0).children[0].data.trim(), orderDiscountMsg);
-                assert.equal(discount.get(1).children[0].data.trim(), shippingDiscountMsg);
+                var bodyAsJson = JSON.parse(response.body);
+                assert.equal(bodyAsJson.approachingDiscounts[0].discountMsg, orderDiscountMsg);
+                assert.equal(bodyAsJson.approachingDiscounts[1].discountMsg, shippingDiscountMsg);
                 done();
             });
     });
