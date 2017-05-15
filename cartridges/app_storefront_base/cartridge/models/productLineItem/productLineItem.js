@@ -87,6 +87,33 @@ function getRenderedPromotions(appliedPromotions) {
 }
 
 /**
+ * Retrieve product's options and default selected values from product line item
+ *
+ * @param {dw.util.Collection.<dw.order.ProductLineItem>} optionProductLineItems - Option product
+ *     line items
+ * @return {string []} - Product line item options
+ */
+function getLineItemOptions(optionProductLineItems) {
+    return helper.map(optionProductLineItems, function (item) {
+        return item.productName;
+    });
+}
+
+/**
+ * Retrieve product's options and default selected values
+ *
+ * @param {dw.catalog.ProductOptionModel} optionModel - A product's option model
+ * @param {dw.util.Collection.<dw.catalog.ProductOption>} options - A product's configured options
+ * @return {string []} - Product line item options
+ */
+function getDefaultOptions(optionModel, options) {
+    return helper.map(options, function (option) {
+        var selectedValue = optionModel.getSelectedOptionValue(option);
+        return option.displayName + ': ' + selectedValue.displayValue;
+    });
+}
+
+/**
  * @constructor
  * @classdesc A product model that represents a single product in the cart.
  *
@@ -139,6 +166,12 @@ ProductLineItem.prototype.initialize = function () {
 
     this.appliedPromotions = getAppliedPromotions(this.lineItem);
     this.renderedPromotions = getRenderedPromotions(this.appliedPromotions);
+
+    var optionLineItems = this.lineItem.optionProductLineItems;
+    var optionModel = this.product.optionModel;
+    this.options = optionLineItems.length
+        ? getLineItemOptions(optionLineItems)
+        : getDefaultOptions(optionModel, optionModel.options);
 };
 
 /**
@@ -163,7 +196,7 @@ function ProductWrapper(product, productVariables, quantity, lineItem, promotion
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift',
         'UUID', 'quantity', 'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions',
-        'attributes', 'availability', 'isAvailableForInStorePickup'];
+        'attributes', 'availability', 'isAvailableForInStorePickup', 'options'];
 
     items.forEach(function (item) {
         this[item] = productLineItem[item];

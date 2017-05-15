@@ -31,6 +31,7 @@ server.post('AddProduct', function (req, res, next) {
         ? decodeURIComponent(req.form.childPids).split(',')
         : [];
     var quantity = parseInt(req.form.quantity, 10);
+    var options = req.form.options ? JSON.parse(req.form.options) : [];
     var result;
     var pidsObj;
 
@@ -38,7 +39,8 @@ server.post('AddProduct', function (req, res, next) {
         Transaction.wrap(function () {
             if (!req.form.pidsObj) {
                 result =
-                    CartHelper.addProductToCart(currentBasket, productId, quantity, childPids);
+                    CartHelper.addProductToCart(currentBasket, productId, quantity, childPids,
+                        options);
             } else {
                 // product set
                 pidsObj = JSON.parse(req.form.pidsObj);
@@ -50,14 +52,14 @@ server.post('AddProduct', function (req, res, next) {
                 pidsObj.forEach(function (PIDObj) {
                     quantity = parseInt(PIDObj.qty, 10);
                     var PIDObjResult =
-                        CartHelper.addProductToCart(currentBasket, PIDObj.pid, quantity, childPids);
+                        CartHelper.addProductToCart(currentBasket, PIDObj.pid, quantity, childPids,
+                            options);
                     if (PIDObjResult.error) {
                         result.error = PIDObjResult.error;
                         result.message = PIDObjResult.message;
                     }
                 });
             }
-
             if (!result.error) {
                 CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
                 HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);

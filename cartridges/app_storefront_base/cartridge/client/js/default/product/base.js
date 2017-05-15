@@ -341,6 +341,46 @@ function getChildPids() {
     }).get().join(',');
 }
 
+/**
+ * Retrieve product options
+ *
+ * @return {string} - Product options and their selected values
+ */
+function getOptions() {
+    var options = {};
+    var $quickView = $('#quickViewModal');
+    var productContainer = '.product-detail';
+
+    if ($('.bundle-items').length) {
+        var bundleItems = $('[class*="-items"] .product-detail');
+        bundleItems.each(function () {
+            var productOptions = $(this).find('.product-option');
+            if (productOptions.length) {
+                options[$(this).data('pid')] = productOptions.map(function () {
+                    return {
+                        optionId: $(this).data('option-id'),
+                        selectedValueId: $(this).data('option-value-id')
+                    };
+                }).toArray();
+            }
+        });
+    } else if ($('.set-items').length) {
+        // TO-DO:  To be done when Product Sets feature is complete
+    } else {
+        if ($quickView.length) {
+            productContainer = '#quickViewModal ' + productContainer;
+        }
+        options[$(productContainer).data('pid')] = $('.product-option').map(function () {
+            return {
+                id: $(this).data('option-id'),
+                selectedValueId: $(this).find('.options-select').val()
+            };
+        }).toArray();
+    }
+
+    return JSON.stringify(options);
+}
+
 module.exports = {
     attributeSelect: attributeSelect,
 
@@ -432,7 +472,8 @@ module.exports = {
                         pid: pid,
                         pidsObj: pidsObj,
                         childPids: getChildPids(),
-                        quantity: getQuantitySelected($(this))
+                        quantity: getQuantitySelected($(this)),
+                        options: getOptions()
                     },
                     success: function (data) {
                         handlePostCartAdd(data);

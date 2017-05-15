@@ -2,12 +2,13 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 
-.item-attributes {
-    display: inline-block;
+.item-attributes,
+.item-options {
     vertical-align: top;
 }
 
-.line-item-attributes {
+.line-item-attributes,
+.line-item-option {
     font-size: 0.813rem;
     margin: 0;
 }
@@ -84,4 +85,8 @@
 
 .line-item-availability {
     font-size: 0.813rem;
+}
+
+.product-line-item-details {
+    overflow-y: auto;
 }
