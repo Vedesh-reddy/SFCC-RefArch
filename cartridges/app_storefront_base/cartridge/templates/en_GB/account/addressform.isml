@@ -69,7 +69,7 @@
         <div class="form-control-feedback"></div>
     </div>
 
-    <!-- Country drop down -->
+    <!-- Country and State drop downs -->
     <div class="row">
         <!-- Country  -->
         <div class="col-6">
@@ -88,9 +88,24 @@
                 <div class="form-control-feedback"></div>
             </div>
         </div>
+
+        <!-- State  -->
+        <div class="col-6">
+            <div class="form-group
+                <isif condition="${pdict.addressForm.states.stateCode.mandatory === true}">required</isif>">
+                <label class="form-control-label" for="state">
+                    <isprint value="${pdict.addressForm.states.stateCode.label}" encoding="off" />
+                </label>
+                <input class="form-control" id="state"
+                    <isprint value="${pdict.addressForm.states.stateCode.attributes}" encoding="off" />
+                    autocomplete="region">
+                </input>
+                <div class="form-control-feedback"></div>
+            </div>
+        </div>
     </div>
 
-    <!-- City and ZIP -->
+    <!-- City -->
     <div class="row">
         <div class="col-6">
         <!-- City  -->
@@ -105,6 +120,7 @@
                 <div class="form-control-feedback"></div>
             </div>
         </div>
+
         <!-- ZIP Code -->
         <div class="col-6">
             <div class="form-group
