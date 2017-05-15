@@ -115,3 +115,12 @@ label.availability {
 .price {
     font-size: 1.5rem;
 }
+
+.product-options {
+    margin-top: 1.25em;
+
+    .quantity {
+        padding-left: 0.938em;
+        padding-right: 0.938em;
+    }
+}

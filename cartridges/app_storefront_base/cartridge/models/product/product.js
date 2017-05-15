@@ -77,12 +77,16 @@ function getUrl(variationModel, allAttributes, endPoint, id) {
  *  @return {ProductOptionValues} - View model for a product option's values
  */
 function getOptionValues(optionModel, optionValues) {
-    return Collections.map(optionValues, function (value) {
+    var values = Collections.map(optionValues, function (value) {
         return {
             id: value.ID,
             displayValue: value.displayValue,
             price: optionModel.getPrice(value).toFormattedString()
         };
+    });
+
+    return values.sort(function (a, b) {
+        return a.id - b.id;
     });
 }
 
@@ -103,10 +107,15 @@ function getOptionValues(optionModel, optionValues) {
 function getOptions(product) {
     var optionModel = product.optionModel;
     return Collections.map(optionModel.getOptions(), function (option) {
+        var selectedValue = optionModel.getSelectedOptionValue(option);
+
         return {
             name: option.displayName,
             htmlName: option.htmlName,
-            values: getOptionValues(optionModel, option.optionValues)
+            values: getOptionValues(optionModel, option.optionValues),
+            selectedValueId: Object.prototype.hasOwnProperty.call(selectedValue, 'ID')
+                ? selectedValue.ID
+                : ''
         };
     });
 }

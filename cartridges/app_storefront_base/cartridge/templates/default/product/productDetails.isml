@@ -47,7 +47,7 @@
                         <isset name="isBundleOrSet" value="false" scope="page" />
                         <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
                             <div data-attr="${attr.id}" class="swatch">
-                                <isif condition="${attributeStatus.last && isBundleOrSet !== 'true'}">
+                                <isif condition="${attributeStatus.last && isBundleOrSet !== 'true' && product.options.length === 0}">
                                     <!-- Quantity Drop Down Menu -->
                                     <div class="quantity col-sm-6">
                                         <isinclude template="product/components/quantity" />
@@ -57,12 +57,29 @@
                             </div>
                         </isloop>
 
-                        <isif condition="${!pdict.product.variationAttributes}">
+                        <isif condition="${!product.variationAttributes && product.options.length === 0}">
                             <div class="simple-quantity">
-                                <isinclude template="/product/components/quantity" />
+                                <isinclude template="product/components/quantity" />
                             </div>
                         </isif>
                     </div>
+
+                    <isif condition="${product.options && product.options.length > 0}">
+                        <div class="col-md-10 col-12 product-options">
+                            <div class="row">
+                                <isloop items="${product.options}" var="option" status="loopStatus">
+                                    <div <isif condition="${loopStatus.last}">class="col-8"</isif>>
+                                        <isinclude template="product/components/options" />
+                                    </div>
+                                </isloop>
+
+                                <!-- Quantity Drop Down Menu -->
+                                <div class="col-4 quantity">
+                                    <isinclude template="product/components/quantity" />
+                                </div>
+                            </div>
+                        </div>
+                    </isif>
 
                     <!-- Size Chart -->
                     <isif condition="${product.variationAttributes}">

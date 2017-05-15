@@ -44,6 +44,15 @@
                     </span>
                 </isif>
 
+                <!-- Product Options -->
+                <isif condition="${product.options.length}">
+                    <isloop items="${product.options}" var="option">
+                        <isif condition="${option.selectedValueId !== ''}">
+                            <isinclude template="product/components/option_static" />
+                        </isif>
+                    </isloop>
+                </isif>
+
                 <!-- Availability -->
                 <div class="col-12 col-md-10 availability product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
                     <isinclude template="product/components/availability" />
