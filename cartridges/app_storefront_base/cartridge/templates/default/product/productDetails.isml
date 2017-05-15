@@ -65,20 +65,7 @@
                     </div>
 
                     <isif condition="${product.options && product.options.length > 0}">
-                        <div class="col-md-10 col-12 product-options">
-                            <div class="row">
-                                <isloop items="${product.options}" var="option" status="loopStatus">
-                                    <div <isif condition="${loopStatus.last}">class="col-8"</isif>>
-                                        <isinclude template="product/components/options" />
-                                    </div>
-                                </isloop>
-
-                                <!-- Quantity Drop Down Menu -->
-                                <div class="col-4 quantity">
-                                    <isinclude template="product/components/quantity" />
-                                </div>
-                            </div>
-                        </div>
+                        <isinclude template="product/components/options" />
                     </isif>
 
                     <!-- Size Chart -->

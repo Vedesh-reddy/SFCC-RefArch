@@ -84,6 +84,7 @@ describe('fullProduct', function () {
     };
 
     var mockOption1 = {
+        ID: 'Option1 ID',
         displayName: 'Option 1',
         htmlName: 'Option 1 HTML',
         optionValues: [{
@@ -248,6 +249,7 @@ describe('fullProduct', function () {
         var product = new FullProduct(toProductMock(tempMock), null, null);
 
         var expected = [{
+            id: mockOption1.ID,
             htmlName: mockOption1.htmlName,
             name: mockOption1.displayName,
             selectedValueId: mockOption1.optionValues[0].ID,

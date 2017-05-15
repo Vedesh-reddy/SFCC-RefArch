@@ -110,6 +110,7 @@ function getOptions(product) {
         var selectedValue = optionModel.getSelectedOptionValue(option);
 
         return {
+            id: option.ID,
             name: option.displayName,
             htmlName: option.htmlName,
             values: getOptionValues(optionModel, option.optionValues),
