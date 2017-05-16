@@ -463,6 +463,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
         var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
         if (!shippingAddress) {
             COHelpers.copyCustomerAddressToShipment(preferredAddress);
+            req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
         }
         if (!billingAddress) {
             COHelpers.copyCustomerAddressToBilling(preferredAddress);
