@@ -1,9 +1,21 @@
-<label>${option.name}</label>
+<div class="col-md-10 col-12 product-options">
+    <isloop items="${product.options}" var="option" status="loopStatus">
+        <div class="row product-option">
+            <div class="
+                <isif condition="${loopStatus.last}">
+                    col-8
+                <iselse>
+                    col-12 col-md-10
+                </isif>">
+                <isinclude template="product/components/option" />
+            </div>
 
-<select class="custom-select form-control">
-    <isloop items="${option.values}" var="value">
-        <option value="${value.id}" <isif condition="${value.id === option.selectedValueId}">selected</isif>>
-            [${value.price}] ${value.displayValue}
-        </option>
+            <!-- Quantity Drop Down Menu -->
+            <isif condition="${loopStatus.last}">
+                <div class="col-4 quantity">
+                    <isinclude template="product/components/quantity" />
+                </div>
+            </isif>
+        </div>
     </isloop>
-</select>
+</div>
