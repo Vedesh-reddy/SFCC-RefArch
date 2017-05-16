@@ -1,7 +1,6 @@
 <div class="form-nav billing-nav payment-information"
      data-payment-method-id="CREDIT_CARD"
-     data-is-new-payment="false"
-     data-edited-payemnt="false"
+     data-is-new-payment="${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? false : true}"
 >
     <ul class="nav nav-tabs nav-fill payment-options" role="tablist">
         <isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">
@@ -15,11 +14,6 @@
                              title="${paymentOption.name}"
                         >
                     </a>
-                </li>
-            <iselse/>
-                <!--- apple pay needs to go here --->
-                <li class="nav-item disable">
-                    <a class="nav-link shipping-tab" data-toggle="tab" href="#apple-pay-content" role="tab">${Resource.msg('action.in.store.pick.up', 'checkout', null)}</a>
                 </li>
             </isif>
         </isloop>
@@ -40,75 +34,25 @@
 
             <!--- register/authenticated user --->
             <isif condition="${pdict.customer.registeredUser}">
-                <div class="user-payment-instruments">
+                <div class="user-payment-instruments container ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? '' : 'hidden-xs-up'}">
                     <!--- Stored user payments --->
-                    <isloop items="${pdict.customer.customerPaymentInstruments}" var="paymentInstrument" status="loopSate">
-                        <div class="saved-payment-instrument ${loopSate.first ? 'selected-payment' : ''}" data-uuid="${paymentInstrument.UUID}">
-                            <div class="saved-credit-card-type">
-                                <span>
-                                    ${Resource.msg('msg.payment.type.credit', 'confirmation', null)}
-                                    ${paymentInstrument.creditCardType}
-                                </span>
-                            </div>
-                            <div class="saved-credit-card-number">
-                                ${paymentInstrument.maskedCreditCardNumber}
-                            </div>
-                            <div class="saved-credit-card-expiration-date">
-                                <span>
-                                    ${Resource.msg('msg.card.type.ending', 'confirmation', null)}
-                                    ${paymentInstrument.creditCardExpirationMonth}/${paymentInstrument.creditCardExpirationYear}
-                                </span>
-                            </div>
-                            <div class="edit-payment-instrument" data-uuid="${paymentInstrument.UUID}"
-                                 data-masked-number="${paymentInstrument.maskedCreditCardNumber}"
-                                 data-card-type="${paymentInstrument.creditCardType}"
-                                 data-expiration-month="${paymentInstrument.creditCardExpirationMonth}"
-                                 data-expiration-year="${paymentInstrument.creditCardExpirationYear}"
-                            >
-                                ${Resource.msg('action.edit.step', 'checkout', null)}
-                            </div>
-                        </div>
-                    </isloop>
+                    <div class="stored-payments">
+                        <isinclude template="checkout/billing/storedPaymentInstruments" />
+                    </div>
 
                     <!--- Add new credit card --->
-                    <button class="btn btn-secondary btn-block add-payment btn-outline-primary" type="button">${Resource.msg('button.add.payment', 'checkout', null)}</button>
+                    <div class="row">
+                        <button class="btn btn-secondary btn-block add-payment btn-outline-primary" type="button">${Resource.msg('button.add.payment', 'checkout', null)}</button>
+                    </div>
                 </div>
             </isif>
 
-            <fieldset class="credit-card-form ${pdict.customer.registeredUser ? 'hidden-xs-up' : ''}">
+            <fieldset class="credit-card-form ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? 'hidden-xs-up' : ''}">
                 <isinclude template="checkout/billing/creditCardForm" />
+                <isif condition="${pdict.customer.registeredUser}">
+                    <button class="btn btn-secondary btn-block cancel-new-payment btn-outline-primary ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? '' : 'hidden-xs-up'}" type="button">${Resource.msg('button.cancel', 'checkout', null)}</button>
+                </isif>
             </fieldset>
-        </div>
-
-        <!--- Apple pay / other payments --->
-        <div class="tab-pane" id="apple-pay-content" role="tabpanel">
-            <div>
-                ${Resource.msg('error.not.implemented', 'common', null)}
-            </div>
         </div>
     </div>
 </div>
-
-<!--<div class="row">-->
-    <!--<isloop items="${pdict.order.billing.payment.applicablePaymentMethods}" var="paymentOption" status="loopSate">-->
-        <!--<div class="form-check form-group col-12 ${pdict.forms.billingForm.paymentMethod.htmlName}">-->
-            <!--<label for="paymentOption-${paymentOption.ID}" class="form-check-label">-->
-                <!--<isif condition="${paymentOption.ID === 'CREDIT_CARD'}">-->
-                    <!--<input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"-->
-                           <!--type="radio" class="form-check-input" value="${paymentOption.ID}" checked>-->
-                    <!--<img class="credit-option"-->
-                         <!--src="${URLUtils.staticURL('/images/credit.png')}"-->
-                         <!--height="32"-->
-                         <!--alt="${paymentOption.name}"-->
-                         <!--title="${paymentOption.name}">-->
-                    <!--<span class="credit-card-selection" style="background-image: url('${URLUtils.staticURL('/images/payment-types.png')}')" ></span>-->
-                <!--<iselse/>-->
-                    <!--<input id="paymentOption-${paymentOption.ID}" name="${pdict.forms.billingForm.paymentMethod.htmlName}"-->
-                           <!--type="radio" class="form-check-input" value="${paymentOption.ID}">-->
-                    <!--<span>${paymentOption.name}</span>-->
-                <!--</isif>-->
-            <!--</label>-->
-            <!--<div class="form-control-feedback"></div>-->
-        <!--</div>-->
-    <!--</isloop>-->
-<!--</div>-->

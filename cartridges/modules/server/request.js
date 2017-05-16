@@ -183,8 +183,6 @@ function Request(request, customer, session) {
         return request.setLocale(localeID);
     };
 
-    var what = this.currentCustomer;
-
     var clickStreamEntries = session.clickStream.clicks.toArray();
     var clicks = clickStreamEntries.map(function (clickObj) {
         return {

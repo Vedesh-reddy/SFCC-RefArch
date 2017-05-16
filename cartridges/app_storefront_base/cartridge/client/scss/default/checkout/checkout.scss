@@ -386,22 +386,3 @@ span.ship-to-city-st-zip {
     width: 48px;
     height: 33px;
 }
-
-.add-payment {
-    display: block;
-}
-
-.selected-payment {
-    border: 1px solid $brand-primary;
-    //border-color: $brand-primary;
-}
-
-.edit-payment-instrument{
-    color: $brand-color;
-    float: right;
-    cursor: pointer;
-
-    &:hover {
-        text-decoration: underline;
-    }
-}

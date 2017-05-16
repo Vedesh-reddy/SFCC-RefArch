@@ -8,6 +8,10 @@ var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 
+function createMockToken() {
+    return Math.random().toString(36).substr(2);
+}
+
 /**
  * Verifies that entered credit card information is a valid card. If the information is valid a
  * credit card payment instrument is created
@@ -27,40 +31,42 @@ function Handle(basket, paymentInformation) {
     var cardType = paymentInformation.cardType.value;
     var paymentCard = PaymentMgr.getPaymentCard(cardType);
 
-    var creditCardStatus = paymentCard.verify(
-        expirationMonth,
-        expirationYear,
-        cardNumber,
-        cardSecurityCode
-    );
+    if (!paymentInformation.creditCardToken) {
+        var creditCardStatus = paymentCard.verify(
+            expirationMonth,
+            expirationYear,
+            cardNumber,
+            cardSecurityCode
+        );
 
-    if (creditCardStatus.error) {
-        helper.forEach(creditCardStatus.items, function (item) {
-            switch (item.code) {
-                case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
-                    cardErrors[paymentInformation.cardNumber.htmlName] =
-                        Resource.msg('error.invalid.card.number', 'creditCard', null);
-                    break;
+        if (creditCardStatus.error) {
+            helper.forEach(creditCardStatus.items, function (item) {
+                switch (item.code) {
+                    case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
+                        cardErrors[paymentInformation.cardNumber.htmlName] =
+                            Resource.msg('error.invalid.card.number', 'creditCard', null);
+                        break;
 
-                case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
-                    cardErrors[paymentInformation.expirationMonth.htmlName] =
-                        Resource.msg('error.expired.credit.card', 'creditCard', null);
-                    cardErrors[paymentInformation.expirationYear.htmlName] =
-                        Resource.msg('error.expired.credit.card', 'creditCard', null);
-                    break;
+                    case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
+                        cardErrors[paymentInformation.expirationMonth.htmlName] =
+                            Resource.msg('error.expired.credit.card', 'creditCard', null);
+                        cardErrors[paymentInformation.expirationYear.htmlName] =
+                            Resource.msg('error.expired.credit.card', 'creditCard', null);
+                        break;
 
-                case PaymentStatusCodes.CREDITCARD_INVALID_SECURITY_CODE:
-                    cardErrors[paymentInformation.securityCode.htmlName] =
-                        Resource.msg('error.invalid.security.code', 'creditCard', null);
-                    break;
-                default:
-                    serverErrors.push(
-                        Resource.msg('error.card.information.error', 'creditCard', null)
-                    );
-            }
-        });
+                    case PaymentStatusCodes.CREDITCARD_INVALID_SECURITY_CODE:
+                        cardErrors[paymentInformation.securityCode.htmlName] =
+                            Resource.msg('error.invalid.security.code', 'creditCard', null);
+                        break;
+                    default:
+                        serverErrors.push(
+                            Resource.msg('error.card.information.error', 'creditCard', null)
+                        );
+                }
+            });
 
-        return { fieldErrors: [cardErrors], serverErrors: serverErrors, error: true };
+            return { fieldErrors: [cardErrors], serverErrors: serverErrors, error: true };
+        }
     }
 
     Transaction.wrap(function () {
@@ -76,11 +82,16 @@ function Handle(basket, paymentInformation) {
             PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice
         );
 
-        paymentInstrument.creditCardHolder = currentBasket.billingAddress.fullName;
-        paymentInstrument.creditCardNumber = cardNumber;
-        paymentInstrument.creditCardType = cardType;
-        paymentInstrument.creditCardExpirationMonth = expirationMonth;
-        paymentInstrument.creditCardExpirationYear = expirationYear;
+        paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
+        paymentInstrument.setCreditCardNumber(cardNumber);
+        paymentInstrument.setCreditCardType(cardType);
+        paymentInstrument.setCreditCardExpirationMonth(expirationMonth);
+        paymentInstrument.setCreditCardExpirationYear(expirationYear);
+        paymentInstrument.setCreditCardToken(
+            paymentInformation.creditCardToken
+            ? paymentInformation.creditCardToken
+            : createMockToken()
+        );
     });
 
     return { fieldErrors: cardErrors, serverErrors: serverErrors, error: false };
@@ -117,3 +128,4 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) {
 
 exports.Handle = Handle;
 exports.Authorize = Authorize;
+exports.createMockToken = createMockToken;

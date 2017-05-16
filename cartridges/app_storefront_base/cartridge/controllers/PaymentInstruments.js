@@ -5,6 +5,7 @@ var array = require('~/cartridge/scripts/util/array');
 var helper = require('~/cartridge/scripts/dwHelpers');
 var URLUtils = require('dw/web/URLUtils');
 var CustomerMgr = require('dw/customer/CustomerMgr');
+var HookMgr = require('dw/system/HookMgr');
 var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
 var PaymentMgr = require('dw/order/PaymentMgr');
@@ -229,6 +230,13 @@ server.post('SavePayment', function (req, res, next) {
                     paymentInstrument.setCreditCardType(formInfo.cardType);
                     paymentInstrument.setCreditCardExpirationMonth(formInfo.expirationMonth);
                     paymentInstrument.setCreditCardExpirationYear(formInfo.expirationYear);
+
+                    var token = HookMgr.callHook(
+                        'app.payment.processor.basic_credit',
+                        'createMockToken'
+                    );
+
+                    paymentInstrument.setCreditCardToken(token);
                 });
             } else {
                 var paymentToEdit = array.find(paymentInstruments, function (paymentInstrument) {
@@ -259,16 +267,18 @@ server.post('SavePayment', function (req, res, next) {
 server.get('DeletePayment', function (req, res, next) {
     var UUID = req.querystring.UUID;
     var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
-    var paymentToDelete = array.find(paymentInstruments, function(item) {
+    var paymentToDelete = array.find(paymentInstruments, function (item) {
         return UUID === item.UUID;
     });
+    res.setViewData(paymentToDelete);
     this.on('route:BeforeComplete', function () { // eslint-disable-line no-shadow
+        var payment = res.getViewData();
         var customer = CustomerMgr.getCustomerByCustomerNumber(
             req.currentCustomer.profile.customerNo
         );
         var wallet = customer.getProfile().getWallet();
         Transaction.wrap(function () {
-            wallet.removePaymentInstrument(paymentToDelete.raw);
+            wallet.removePaymentInstrument(payment.raw);
         });
         if (wallet.getPaymentInstruments().length === 0) {
             res.json({

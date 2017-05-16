@@ -87,7 +87,6 @@
             <div class="form-control-feedback"></div>
         </div>
     </div>
-
 </div>
 
 <div class="row">
@@ -124,5 +123,18 @@
                 : ''}" <isprint value=${creditFields.phone.attributes} encoding="off"/> >
             <div class="form-control-feedback"></div>
         </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <isif condition="${pdict.customer.registeredUser}">
+            <div class="form-check save-credit-card">
+                <label class="form-check-label">
+                    <input type="checkbox" class="form-check-input" name="${creditFields.saveCard.htmlName}" value="true" checked>
+                    ${creditFields.saveCard.label}
+                </label>
+            </div>
+        </isif>
     </div>
 </div>

@@ -3,6 +3,8 @@
 var helper = require('~/cartridge/scripts/dwHelpers');
 
 var AddressModel = require('~/cartridge/models/address');
+var URLUtils = require('dw/web/URLUtils');
+
 
 /**
  * Creates a plain object that contains profile information
@@ -77,11 +79,11 @@ function getPayment(wallet) {
     return null;
 }
 
-function getCustomerPaymentInstruments(paymentInstruments) {
-    var reuslt;
+function getCustomerPaymentInstruments(userPaymentInstruments) {
+    var paymentInstruments;
 
-    reuslt = paymentInstruments.map(function (paymentInstrument) {
-        return {
+    paymentInstruments = userPaymentInstruments.map(function (paymentInstrument) {
+        var result = {
             creditCardHolder: paymentInstrument.creditCardHolder,
             maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
             creditCardType: paymentInstrument.creditCardType,
@@ -89,9 +91,28 @@ function getCustomerPaymentInstruments(paymentInstruments) {
             creditCardExpirationYear: paymentInstrument.creditCardExpirationYear,
             UUID: paymentInstrument.UUID
         };
+
+        switch (paymentInstrument.creditCardType) {
+            case 'Visa':
+                result.cardTypeImage = URLUtils.staticURL('/images/visa-dark.svg');
+                break;
+
+            case 'Amex':
+                result.cardTypeImage = URLUtils.staticURL('/images/americanexpress-dark.svg');
+                break;
+
+            case 'Master Card':
+                result.cardTypeImage = URLUtils.staticURL('/images/mastercard-dark.svg');
+                break;
+
+            default:
+                result.cardTypeImage = URLUtils.staticURL('/images/visa-dark.svg');
+        }
+
+        return result;
     });
 
-    return reuslt;
+    return paymentInstruments;
 }
 
 /**

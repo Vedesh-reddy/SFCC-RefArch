@@ -149,3 +149,14 @@ $receipt-spacing: 0.625em;
         font-weight: 500;
     }
 }
+.add-payment {
+    display: block;
+}
+
+.selected-payment {
+    background-color: $gray-lighter;
+}
+
+.saved-security-code {
+    margin-top: .5rem;
+}

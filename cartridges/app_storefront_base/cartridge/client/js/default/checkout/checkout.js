@@ -831,6 +831,18 @@
             );
         }
 
+        /**
+         * clears the credit card form
+         */
+        function clearCreditCardForm() {
+            $('input[name$="_cardNumber"]').val('');
+            $('select[name$="_expirationMonth"]').val('');
+            $('select[name$="_expirationYear"]').val('');
+            $('input[name$="_securityCode"]').val('');
+            $('input[name$="_email"]').val('');
+            $('input[name$="_phone"]').val('');
+        }
+
         //
         // Local member methods of the Checkout plugin
         //
@@ -903,13 +915,24 @@
                         // if payment method is credit card
                         if ($('.payment-information').data('payment-method-id') === 'CREDIT_CARD') {
                             if (!($('.payment-information').data('is-new-payment'))) {
+                                var cvvCode = $('.saved-payment-instrument.' +
+                                    'selected-payment .saved-payment-security-code').val();
+
+                                if (cvvCode === '') {
+                                    $('.saved-payment-instrument.' +
+                                        'selected-payment ' +
+                                        '.saved-security-code').addClass('has-danger');
+                                    defer.reject();
+                                }
+
                                 var $savedPaymentInstrument = $('.saved-payment-instrument' +
                                     '.selected-payment'
                                 );
 
-                                paymentForm += '&storedPaymentUUID=' + $savedPaymentInstrument.data(
-                                    'uuid'
-                                );
+                                paymentForm += '&storedPaymentUUID=' +
+                                    $savedPaymentInstrument.data('uuid');
+
+                                paymentForm += '&securityCode=' + cvvCode;
                             }
                         }
                     }
@@ -946,6 +969,18 @@
                                 // Populate the Address Summary
                                 //
                                 updateCheckoutView(data.order, data.customer);
+
+                                if (data.renderedPaymentInstruments) {
+                                    $('.stored-payments').empty().html(
+                                        data.renderedPaymentInstruments
+                                    );
+                                }
+
+                                if (data.customer.registeredUser
+                                    && data.customer.customerPaymentInstruments.length
+                                ) {
+                                    $('.cancel-new-payment').removeClass('hidden-xs-up');
+                                }
 
                                 defer.resolve(data);
                             }
@@ -1420,20 +1455,39 @@
                      });
                 });
 
-                $('.payment-options .nav-item').on('click', function () {
+                $('.payment-options .nav-item').on('click', function (e) {
+                    e.preventDefault();
                     var methodID = $(this).data('method-id');
                     $('.payment-information').data('payment-method-id', methodID);
                 });
 
-                $('.saved-payment-instrument').on('click', function () {
+                $(document).on('click', '.saved-payment-instrument', function (e) {
+                    e.preventDefault();
+                    $('.saved-payment-security-code').val('');
                     $('.saved-payment-instrument').removeClass('selected-payment');
                     $(this).addClass('selected-payment');
+                    $('.saved-payment-instrument .card-image').removeClass('hidden-xs-up');
+                    $('.saved-payment-instrument .security-code-input').addClass('hidden-xs-up');
+                    $('.saved-payment-instrument.selected-payment' +
+                        ' .card-image').addClass('hidden-xs-up');
+                    $('.saved-payment-instrument.selected-payment ' +
+                        '.security-code-input').removeClass('hidden-xs-up');
                 });
 
-                $('.btn.add-payment').on('click', function () {
+                $('.btn.add-payment').on('click', function (e) {
+                    e.preventDefault();
                     $('.payment-information').data('is-new-payment', true);
+                    clearCreditCardForm();
                     $('.credit-card-form').removeClass('hidden-xs-up');
                     $('.user-payment-instruments').addClass('hidden-xs-up');
+                });
+
+                $('.cancel-new-payment').on('click', function (e) {
+                    e.preventDefault();
+                    $('.payment-information').data('is-new-payment', false);
+                    clearCreditCardForm();
+                    $('.user-payment-instruments').removeClass('hidden-xs-up');
+                    $('.credit-card-form').addClass('hidden-xs-up');
                 });
 
                 //

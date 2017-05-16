@@ -3,6 +3,7 @@
 var server = require('server');
 
 var BasketMgr = require('dw/order/BasketMgr');
+var CustomerMgr = require('dw/customer/CustomerMgr');
 var HookMgr = require('dw/system/HookMgr');
 var Resource = require('dw/web/Resource');
 var PaymentMgr = require('dw/order/PaymentMgr');
@@ -615,7 +616,6 @@ server.post('SubmitShipping', server.middleware.https, function (req, res, next)
     next();
 });
 
-
 /**
  *  Handle Ajax payment (and billing) form submit
  */
@@ -673,11 +673,11 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
                 htmlName: paymentForm.creditCardFields.securityCode.htmlName
             },
             expirationMonth: {
-                value: paymentForm.creditCardFields.expirationMonth.selectedOption,
+                value: parseInt(paymentForm.creditCardFields.expirationMonth.selectedOption, 10),
                 htmlName: paymentForm.creditCardFields.expirationMonth.htmlName
             },
             expirationYear: {
-                value: paymentForm.creditCardFields.expirationYear.value,
+                value: parseInt(paymentForm.creditCardFields.expirationYear.value, 10),
                 htmlName: paymentForm.creditCardFields.expirationYear.htmlName
             }
         };
@@ -691,6 +691,8 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
         };
 
         viewData.phone = { value: paymentForm.creditCardFields.phone.value };
+
+        viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;
 
         res.setViewData(viewData);
 
@@ -760,17 +762,26 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
 
             var processor = PaymentMgr.getPaymentMethod(paymentMethodID).getPaymentProcessor();
 
-            if (billingData.storedPaymentUUID && req.currentCustomer.raw.authenticated && req.currentCustomer.raw.registered) {
+            if (billingData.storedPaymentUUID
+                && req.currentCustomer.raw.authenticated
+                && req.currentCustomer.raw.registered
+            ) {
                 var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
                 var paymentInstrument = array.find(paymentInstruments, function (item) {
                     return billingData.storedPaymentUUID === item.UUID;
                 });
 
-                billingData.paymentInformation.cardNumber.value = paymentInstrument.creditCardNumber;
-                billingData.paymentInformation.cardType.value = paymentInstrument.creditCardType;
-                billingData.paymentInformation.securityCode.value = 123; // TODO: FIX ME
-                billingData.paymentInformation.expirationMonth.value = paymentInstrument.creditCardExpirationMonth;
-                billingData.paymentInformation.expirationYear.value = paymentInstrument.creditCardExpirationYear;
+                billingData.paymentInformation.cardNumber.value = paymentInstrument
+                    .creditCardNumber;
+                billingData.paymentInformation.cardType.value = paymentInstrument
+                    .creditCardType;
+                billingData.paymentInformation.securityCode.value = req.form.securityCode;
+                billingData.paymentInformation.expirationMonth.value = paymentInstrument
+                    .creditCardExpirationMonth;
+                billingData.paymentInformation.expirationYear.value = paymentInstrument
+                    .creditCardExpirationYear;
+                billingData.paymentInformation.creditCardToken = paymentInstrument
+                    .raw.creditCardToken;
             }
 
             if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
@@ -792,6 +803,36 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
                     error: true
                 });
                 return;
+            }
+
+            if (!billingData.storedPaymentUUID
+                && req.currentCustomer.raw.authenticated
+                && req.currentCustomer.raw.registered
+                && billingData.saveCard
+                && (paymentMethodID === 'CREDIT_CARD')
+            ) {
+                var customer = CustomerMgr.getCustomerByCustomerNumber(
+                    req.currentCustomer.profile.customerNo
+                );
+
+                var saveCardResult = COHelpers.savePaymentInstrumentToWallet(
+                    billingData,
+                    currentBasket,
+                    customer
+                );
+
+                req.currentCustomer.wallet.paymentInstruments.push({
+                    creditCardHolder: saveCardResult.creditCardHolder,
+                    maskedCreditCardNumber: saveCardResult.maskedCreditCardNumber,
+                    creditCardType: saveCardResult.creditCardType,
+                    creditCardExpirationMonth: saveCardResult.creditCardExpirationMonth,
+                    creditCardExpirationYear: saveCardResult.creditCardExpirationYear,
+                    UUID: saveCardResult.UUID,
+                    creditCardNumber: Object.hasOwnProperty.call(saveCardResult, 'creditCardNumber')
+                        ? saveCardResult.creditCardNumber
+                        : null,
+                    raw: saveCardResult
+                });
             }
 
             // Calculate the basket
@@ -821,8 +862,15 @@ server.post('SubmitPayment', server.middleware.https, function (req, res, next) 
                 usingMultiShipping: usingMultiShipping
             });
 
+            var accountModel = new AccountModel(req.currentCustomer);
+            var renderedStoredPaymentInstrument = COHelpers.getRenderedPaymentInstruments(
+                req,
+                accountModel
+            );
+
             res.json({
-                customer: new AccountModel(req.currentCustomer),
+                renderedPaymentInstruments: renderedStoredPaymentInstrument,
+                customer: accountModel,
                 order: basketModel,
                 form: server.forms.getForm('billing'),
                 error: false
