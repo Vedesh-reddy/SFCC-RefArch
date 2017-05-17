@@ -90,7 +90,8 @@ describe('fullProduct', function () {
         optionValues: [{
             ID: 'Option 1 ID',
             displayValue: 'Option 1 Display Value',
-            price: '$9.99'
+            price: '$9.99',
+            priceValue: 9.99
         }]
     };
 
@@ -102,7 +103,8 @@ describe('fullProduct', function () {
             return {
                 toFormattedString: function () {
                     return value.price;
-                }
+                },
+                decimalValue: 9.99
             };
         },
         getSelectedOptionValue: function (option) {
@@ -256,7 +258,8 @@ describe('fullProduct', function () {
             values: [{
                 id: mockOption1.optionValues[0].ID,
                 displayValue: mockOption1.optionValues[0].displayValue,
-                price: mockOption1.optionValues[0].price
+                price: mockOption1.optionValues[0].price,
+                priceValue: mockOption1.optionValues[0].priceValue
             }]
         }];
 
