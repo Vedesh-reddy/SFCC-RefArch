@@ -13,7 +13,7 @@ export const ORDER_NUMBER = '.order-number';
 export const ORDER_DATE_LABEL = '.order-date-label';
 export const ORDER_DATE = '.order-date';
 
-export const SHIPPING_ADDR_LABEL = '.shipping-addr-label';
+export const SHIPPING_ADDR_LABEL = '.single-shipping .shipping-addr-label';
 export const SHIPPING_ADDR_FIRST_NAME = '.shipping .firstName';
 export const SHIPPING_ADDR_LAST_NAME = '.shipping .lastName';
 export const SHIPPING_ADDR_ADDRESS1 = '.shipping .address1';

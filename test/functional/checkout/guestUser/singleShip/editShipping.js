@@ -7,6 +7,7 @@ import * as productDetailPage from '../../../../mocks/testDataMgr/pageObjects/pr
 import * as cartPage from '../../../../mocks/testDataMgr/pageObjects/cart';
 import * as checkoutPage from '../../../../mocks/testDataMgr/pageObjects/checkout';
 import * as checkoutInterceptPage from '../../../../mocks/testDataMgr/pageObjects/CheckoutLoginIntercept';
+import * as orderConfPage from '../../../../mocks/testDataMgr/pageObjects/orderConfirmation.js';
 import * as testDataMgr from '../../../../mocks/testDataMgr/main';
 import * as common from '../../../../mocks/testDataMgr/helpers/common';
 import * as Resource from '../../../../mocks/dw/web/Resource';
@@ -26,7 +27,7 @@ describe('Checkout - As Guest - Editing shipping details', () => {
 
     let shippingData = {};
     let shippingData2 = {};
-    let billingData = {};
+    let paymentData = {};
 
     const productVariantId1 = '799927757202';
     let productVariant1;
@@ -51,11 +52,12 @@ describe('Checkout - As Guest - Editing shipping details', () => {
     before(() => {
         return testDataMgr.load()
             .then(() => {
+                const creditCard = testDataMgr.creditCard1;
                 const customer = testDataMgr.getCustomerByLogin(userEmail);
 
                 shippingData = common.createShippingData(customer, locale);
                 shippingData2 = common.createShippingDataWithAddress2(locale);
-                billingData = common.createBillingData(locale);
+                paymentData = common.createPaymentData(creditCard);
 
                 productVariant1 = testDataMgr.getProductById(productVariantId1);
             })
@@ -74,9 +76,19 @@ describe('Checkout - As Guest - Editing shipping details', () => {
             .then(() => browser.waitForExist(checkoutPage.BTN_NEXT_PLACE_ORDER));
     });
 
-    after(() => homePage.navigateTo()
-        .then(() => cartPage.emptyCart())
-    );
+    after(() => {
+        return browser.waitForExist(checkoutPage.BTN_NEXT_PLACE_ORDER)
+            .then(() => browser.waitForVisible(checkoutPage.PAYMENT_FORM))
+            .then(() => checkoutPage.fillOutPaymentForm(paymentData))
+            .then(() => browser.click(checkoutPage.BTN_NEXT_PLACE_ORDER))
+            .then(() => browser.waitForExist(checkoutPage.BTN_PLACE_ORDER))
+            .then(() => browser.waitForVisible(checkoutPage.PAYMENT_SUMMARY))
+            .then(() => browser.click(checkoutPage.BTN_PLACE_ORDER))
+            .then(() => browser.waitForVisible(orderConfPage.RECEIPT_CONTAINER))
+            // in case order submittion failed, clean up the cart
+            .then(() => homePage.navigateTo())
+            .then(() => cartPage.emptyCart());
+    });
 
     describe('Edit shipping information and set different shipping information', () => {
         it('should be able to edit shipping details', () => {
@@ -93,19 +105,10 @@ describe('Checkout - As Guest - Editing shipping details', () => {
         it('should update shipping address, include address line 2, shipping method', () => {
             return checkoutPage.fillOutShippingForm(shippingData2, locale)
                 .then(() => browser.click(checkoutPage.SHIPPING_METHOD_2DAY_EXPRESS))
-                .then(() => browser.waitForVisible(checkoutPage.BTN_NEXT_PAYMENT))
+                // need this pause because the waitForXXX is not working
+                .then(() => browser.pause(500))
                 .then(() => browser.click(checkoutPage.BTN_NEXT_PAYMENT))
                 .then(() => browser.waitForVisible(checkoutPage.PAYMENT_FORM));
-        });
-
-        // Fill in Billing Form and submit
-        it.skip('should fill required fields in billing form and submit', () => {
-            return checkoutPage.fillOutBillingForm(billingData, locale)
-                .then(() => browser.isEnabled(checkoutPage.BTN_NEXT_PLACE_ORDER))
-                .then(btnEnabled => assert.ok(btnEnabled))
-                .then(() => browser.click(checkoutPage.BTN_NEXT_PLACE_ORDER))
-                .then(() => browser.waitForExist(checkoutPage.BTN_PLACE_ORDER))
-                .then(() => browser.waitForVisible(checkoutPage.PAYMENT_SUMMARY));
         });
     });
 
@@ -202,7 +205,7 @@ describe('Checkout - As Guest - Editing shipping details', () => {
         it('should display method arrival time', () => {
             return browser.getText(checkoutPage.SHIPPING_METHOD_ARRIVAL_TIME)
                 .then((shipMethodArrivalTime) => {
-                    const expectedShipMethodArrivalTime = '(2 Business Days)';
+                    const expectedShipMethodArrivalTime = '( 2 Business Days )';
                     return assert.equal(shipMethodArrivalTime, expectedShipMethodArrivalTime, 'Expected shipping method arrival time = ' + expectedShipMethodArrivalTime);
                 });
         });
