@@ -45,7 +45,6 @@ describe('billingForm', function () {
                     postalCode: { value: '09876' },
                     countryCode: { value: 'us' }
                 },
-                shippingAddressUseAsBillingAddress: { value: true },
                 paymentMethod: { value: 'CREDIT_CARD', htmlName: 'CREDIT_CARD' },
                 paymentInformation: {
                     cardType: {
@@ -61,7 +60,7 @@ describe('billingForm', function () {
                         htmlName: 'dwfrm_billing_creditCardFields_securityCode'
                     },
                     expirationMonth: {
-                        value: '02',
+                        value: 2,
                         htmlName: 'dwfrm_billing_creditCardFields_expirationMonth'
                     },
                     expirationYear: {
@@ -74,7 +73,8 @@ describe('billingForm', function () {
                 error: true,
                 cartError: true,
                 fieldErrors: [],
-                serverErrors: []
+                serverErrors: [],
+                saveCard: false
                 /* ,redirectUrl: '/s/SiteGenesis/cart?lang=en_US' */
             };
 

@@ -5,6 +5,7 @@ $checkout-font-weight: 600;
 
 $receipt-font-size: 0.875rem;
 $receipt-spacing: 0.625em;
+$stored-payment-spacing: 1rem;
 
 .page {
     background-color: $light-gray;
@@ -149,8 +150,9 @@ $receipt-spacing: 0.625em;
         font-weight: 500;
     }
 }
+
 .add-payment {
-    margin-top: 1rem;
+    margin-top: $stored-payment-spacing;
 }
 
 .selected-payment {
@@ -158,7 +160,7 @@ $receipt-spacing: 0.625em;
 }
 
 .saved-security-code {
-    margin-top: 1rem;
+    margin-top: $stored-payment-spacing;
 }
 
 .saved-credit-card-type {
@@ -166,12 +168,12 @@ $receipt-spacing: 0.625em;
 }
 
 .saved-payment-information {
-    margin-top: 1rem;
-    margin-bottom: 1rem;
+    margin-top: $stored-payment-spacing;
+    margin-bottom: $stored-payment-spacing;
 }
 
 .payment-information {
-    margin-bottom: 1rem;
+    margin-bottom: $stored-payment-spacing;
 }
 
 .checkout-hidden {

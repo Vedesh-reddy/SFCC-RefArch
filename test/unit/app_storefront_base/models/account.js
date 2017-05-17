@@ -37,6 +37,27 @@ var currentCustomer = {
                 maskedCreditCardNumber: '***********4215',
                 creditCardType: 'Visa',
                 paymentMethod: 'CREDIT_CARD'
+            },
+            {
+                creditCardExpirationMonth: '4',
+                creditCardExpirationYear: '2019',
+                maskedCreditCardNumber: '***********4215',
+                creditCardType: 'Amex',
+                paymentMethod: 'CREDIT_CARD'
+            },
+            {
+                creditCardExpirationMonth: '6',
+                creditCardExpirationYear: '2019',
+                maskedCreditCardNumber: '***********4215',
+                creditCardType: 'Master Card',
+                paymentMethod: 'CREDIT_CARD'
+            },
+            {
+                creditCardExpirationMonth: '5',
+                creditCardExpirationYear: '2019',
+                maskedCreditCardNumber: '***********4215',
+                creditCardType: 'Discover',
+                paymentMethod: 'CREDIT_CARD'
             }
         ]
     },
@@ -134,6 +155,10 @@ describe('account', function () {
         assert.equal(result.payment.creditCardExpirationYear, '2019');
         assert.equal(result.payment.creditCardType, 'Visa');
         assert.equal(result.payment.maskedCreditCardNumber, '***********4215');
+
+        assert.equal(result.customerPaymentInstruments.length, 4);
+        assert.equal(result.customerPaymentInstruments[0].cardTypeImage.src, 'some URL');
+        assert.equal(result.customerPaymentInstruments[0].cardTypeImage.alt, 'Visa');
     });
 
     it('should receive an account with address book, payment method and order history', function () {

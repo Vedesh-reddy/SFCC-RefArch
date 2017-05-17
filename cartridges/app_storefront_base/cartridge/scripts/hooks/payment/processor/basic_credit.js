@@ -8,6 +8,10 @@ var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 
+/**
+ * Creates a token. This should be replaced by utilizing a tokenization provider
+ * @returns {string} a token
+ */
 function createMockToken() {
     return Math.random().toString(36).substr(2);
 }

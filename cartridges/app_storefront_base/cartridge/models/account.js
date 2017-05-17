@@ -77,6 +77,11 @@ function getPayment(wallet) {
     return null;
 }
 
+/**
+ * Creates a plain object that contains payment instrument information
+ * @param {Object} userPaymentInstruments - current customer's paymentInstruments
+ * @returns {Object} object that contains info about the current customer's payment instruments
+ */
 function getCustomerPaymentInstruments(userPaymentInstruments) {
     var paymentInstruments;
 

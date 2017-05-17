@@ -611,6 +611,13 @@ function placeOrder(order) {
     return result;
 }
 
+/**
+ * saves payment instruemnt to customers wallet
+ * @param {Object} billingData - billing information entered by the user
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @param {dw.customer.Customer} customer - The current customer
+ * @returns {dw.customer.CustomerPaymentInstrument} newly stored payment Instrument
+ */
 function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
     var wallet = customer.getProfile().getWallet();
 
@@ -644,6 +651,12 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
     });
 }
 
+/**
+ * renders the user's stored payment Instruments
+ * @param {Object} req - The request object
+ * @param {Object} accountModel - The account model for the current customer
+ * @returns {string|null} newly stored payment Instrument
+ */
 function getRenderedPaymentInstruments(req, accountModel) {
     var result;
 

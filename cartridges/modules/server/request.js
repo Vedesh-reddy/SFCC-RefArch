@@ -84,7 +84,7 @@ function getAddressObject(address) {
 function getPaymentInstruments(rawPaymentInstruments) {
     var paymentInstruments = [];
 
-    if (rawPaymentInstruments.length > 0) {
+    if (rawPaymentInstruments.getLength() > 0) {
         var iterator = rawPaymentInstruments.iterator();
         while (iterator.hasNext()) {
             var item = iterator.next();

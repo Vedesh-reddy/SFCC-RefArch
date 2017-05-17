@@ -362,7 +362,6 @@
                 // Force security code and card number clear
                 $('input[name$=securityCode]', form).val('');
                 $('input[name$=cardNumber]', form).val('');
-
             }
         }
 
@@ -981,7 +980,7 @@
                                 if (data.customer.registeredUser
                                     && data.customer.customerPaymentInstruments.length
                                 ) {
-                                    $('.cancel-new-payment').removeClass('hidden-xs-up');
+                                    $('.cancel-new-payment').removeClass('checkout-hidden');
                                 }
 
                                 defer.resolve(data);

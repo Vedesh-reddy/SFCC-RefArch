@@ -3,7 +3,7 @@
 /**
  * Returns an array of all property keys for an object
  * @param {Array} array - the target object
- * @param {Array} match - function that returns true if match is found
+ * @param {Array} matcher - function that returns true if match is found
  * @return {scope} the array of property keys
  */
 function find(array, matcher) {
