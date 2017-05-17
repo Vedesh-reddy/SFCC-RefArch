@@ -10,7 +10,12 @@
 export function populateField(selector, value, fieldType = 'input') {
     switch (fieldType) {
         case 'input':
-            return browser.clearElement(selector).setValue(selector, value);
+            // For value to be set correctly in input field, need to pause
+            // and click on the field before it is interactable.
+            return browser
+                .pause(500)
+                .click(selector)
+                .clearElement(selector).setValue(selector, value);
         case 'selectByValue':
             return browser.selectByValue(selector, value);
         case 'selectByVisibleText':

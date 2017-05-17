@@ -12,7 +12,6 @@ export const BTN_PLACE_ORDER = '.place-order';
 export const PAGE_TITLE = '.page-title';
 export const SHIPPING_FORM_TITLE = '.shipping-form .card-header h4';
 export const SHIPPING_ACTIVE_TAB = '.shipping-tab.active';
-export const CHECK_BOX_USE_SHIPPING_ADDR_AS_BILLING_ADDR = '#shippingAddressUseAsBillingAddress';
 export const GHOST_PAYMENT_FORM = '.ghost.payment';
 export const CHECK_BOX_SAME_BILLING_AND_SHIPPING = '.billing-same-as-shipping';
 export const PAYMENT_FORM = '.payment-form';
@@ -20,6 +19,8 @@ export const PAYMENT_SUMMARY = '.payment-summary';
 export const PAYMENT_FORM_TITLE = '.payment-form .card-header';
 export const BILLING_ADDRESS_FORM = '.billing-address';
 export const BILLING_ADDRESS_LABEL = '.billing-addr-label';
+
+export const BTN_ADD_NEW = '.payment-form .btn-add-new';
 
 export const BILLING_ADDR_FIRST_NAME = '.billing .firstName';
 export const BILLING_ADDR_LAST_NAME = '.billing .lastName';
@@ -36,7 +37,7 @@ export const PAYMENT_DETAILS = '.payment-details';
 
 export const SHIPPING_METHOD_2DAY_EXPRESS = '#shippingMethod-002';
 
-export const SHIPPING_ADDRESS_LABEL = '.shipping-addr-label';
+export const SHIPPING_ADDRESS_LABEL = '.single-shipping .shipping-addr-label';
 export const SHIPPING_ADDR_FIRST_NAME = '.shipping .firstName';
 export const SHIPPING_ADDR_LAST_NAME = '.shipping .lastName';
 export const SHIPPING_ADDR_ADDRESS1 = '.shipping .address1';
@@ -150,14 +151,7 @@ export function fillOutPaymentForm(billingFields) {
     return Promise.all(fieldsPromise);
 }
 
-export function uncheckUseShippingAddrAsBillingAddr() {
-    return common.uncheckCheckbox(CHECK_BOX_USE_SHIPPING_ADDR_AS_BILLING_ADDR);
-}
-
 export function checkSameBillingShipping() {
     return common.checkCheckbox(CHECK_BOX_SAME_BILLING_AND_SHIPPING);
 }
 
-export function uncheckSameBillingShipping() {
-    return common.uncheckCheckbox(CHECK_BOX_SAME_BILLING_AND_SHIPPING);
-}

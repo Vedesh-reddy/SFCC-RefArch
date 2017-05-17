@@ -253,7 +253,7 @@ export function createPaymentData(creditCard) {
     const paymentData = {};
 
     const nextYear = new Date().getFullYear() + 1;
-    const creditCardExpiredYear = nextYear.toString() + '.0';
+    const creditCardExpiredYear = nextYear.toString();
 
     const creditCardExpiredMonth = 12;
     const paymentPhone = '781-425-1010';
