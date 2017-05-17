@@ -1,7 +1,5 @@
 'use strict';
 
-var helper = require('~/cartridge/scripts/dwHelpers');
-
 var AddressModel = require('~/cartridge/models/address');
 var URLUtils = require('dw/web/URLUtils');
 
@@ -94,19 +92,31 @@ function getCustomerPaymentInstruments(userPaymentInstruments) {
 
         switch (paymentInstrument.creditCardType) {
             case 'Visa':
-                result.cardTypeImage = URLUtils.staticURL('/images/visa-dark.svg');
+                result.cardTypeImage = {
+                    src: URLUtils.staticURL('/images/visa-dark.svg'),
+                    alt: paymentInstrument.creditCardType
+                };
                 break;
 
             case 'Amex':
-                result.cardTypeImage = URLUtils.staticURL('/images/americanexpress-dark.svg');
+                result.cardTypeImage = {
+                    src: URLUtils.staticURL('/images/americanexpress-dark.svg'),
+                    alt: paymentInstrument.creditCardType
+                };
                 break;
 
             case 'Master Card':
-                result.cardTypeImage = URLUtils.staticURL('/images/mastercard-dark.svg');
+                result.cardTypeImage = {
+                    src: URLUtils.staticURL('/images/mastercard-dark.svg'),
+                    alt: paymentInstrument.creditCardType
+                };
                 break;
 
             default:
-                result.cardTypeImage = URLUtils.staticURL('/images/visa-dark.svg');
+                result.cardTypeImage = {
+                    src: URLUtils.staticURL('/images/visa-dark.svg'),
+                    alt: paymentInstrument.creditCardType
+                };
         }
 
         return result;

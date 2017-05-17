@@ -357,11 +357,12 @@
             if (billing.payment && billing.payment.selectedPaymentInstruments
                     && billing.payment.selectedPaymentInstruments.length > 0) {
                 var instrument = billing.payment.selectedPaymentInstruments[0];
-                $('input[name$=cardNumber]', form).val(instrument.maskedCreditCardNumber);
                 $('select[name$=expirationMonth]', form).val(instrument.expirationMonth);
                 $('select[name$=expirationYear]', form).val(instrument.expirationYear);
-                // Force security code clear
+                // Force security code and card number clear
                 $('input[name$=securityCode]', form).val('');
+                $('input[name$=cardNumber]', form).val('');
+
             }
         }
 
@@ -923,6 +924,7 @@
                                         'selected-payment ' +
                                         '.saved-security-code').addClass('has-danger');
                                     defer.reject();
+                                    return defer;
                                 }
 
                                 var $savedPaymentInstrument = $('.saved-payment-instrument' +
@@ -1466,28 +1468,28 @@
                     $('.saved-payment-security-code').val('');
                     $('.saved-payment-instrument').removeClass('selected-payment');
                     $(this).addClass('selected-payment');
-                    $('.saved-payment-instrument .card-image').removeClass('hidden-xs-up');
-                    $('.saved-payment-instrument .security-code-input').addClass('hidden-xs-up');
+                    $('.saved-payment-instrument .card-image').removeClass('checkout-hidden');
+                    $('.saved-payment-instrument .security-code-input').addClass('checkout-hidden');
                     $('.saved-payment-instrument.selected-payment' +
-                        ' .card-image').addClass('hidden-xs-up');
+                        ' .card-image').addClass('checkout-hidden');
                     $('.saved-payment-instrument.selected-payment ' +
-                        '.security-code-input').removeClass('hidden-xs-up');
+                        '.security-code-input').removeClass('checkout-hidden');
                 });
 
                 $('.btn.add-payment').on('click', function (e) {
                     e.preventDefault();
                     $('.payment-information').data('is-new-payment', true);
                     clearCreditCardForm();
-                    $('.credit-card-form').removeClass('hidden-xs-up');
-                    $('.user-payment-instruments').addClass('hidden-xs-up');
+                    $('.credit-card-form').removeClass('checkout-hidden');
+                    $('.user-payment-instruments').addClass('checkout-hidden');
                 });
 
                 $('.cancel-new-payment').on('click', function (e) {
                     e.preventDefault();
                     $('.payment-information').data('is-new-payment', false);
                     clearCreditCardForm();
-                    $('.user-payment-instruments').removeClass('hidden-xs-up');
-                    $('.credit-card-form').addClass('hidden-xs-up');
+                    $('.user-payment-instruments').removeClass('checkout-hidden');
+                    $('.credit-card-form').addClass('checkout-hidden');
                 });
 
                 //

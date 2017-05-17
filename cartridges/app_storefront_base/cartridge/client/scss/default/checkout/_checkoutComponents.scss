@@ -150,7 +150,7 @@ $receipt-spacing: 0.625em;
     }
 }
 .add-payment {
-    display: block;
+    margin-top: 1rem;
 }
 
 .selected-payment {
@@ -158,5 +158,22 @@ $receipt-spacing: 0.625em;
 }
 
 .saved-security-code {
-    margin-top: .5rem;
+    margin-top: 1rem;
+}
+
+.saved-credit-card-type {
+    font-weight: 600;
+}
+
+.saved-payment-information {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.payment-information {
+    margin-bottom: 1rem;
+}
+
+.checkout-hidden {
+    display: none;
 }

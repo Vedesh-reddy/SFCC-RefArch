@@ -30,7 +30,7 @@ var currentCustomer = {
         email: 'jsnow@starks.com'
     },
     wallet: {
-        paymentInstruments: new ArrayList([
+        paymentInstruments: [
             {
                 creditCardExpirationMonth: '3',
                 creditCardExpirationYear: '2019',
@@ -38,7 +38,11 @@ var currentCustomer = {
                 creditCardType: 'Visa',
                 paymentMethod: 'CREDIT_CARD'
             }
-        ])
+        ]
+    },
+    raw: {
+        authenticated: true,
+        registered: true
     }
 };
 
@@ -113,7 +117,8 @@ describe('account', function () {
     var AddressModel = require('../../../mocks/models/address');
     var AccountModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/account', {
         '~/cartridge/scripts/dwHelpers': helper,
-        '~/cartridge/models/address': AddressModel
+        '~/cartridge/models/address': AddressModel,
+        'dw/web/URLUtils': { staticURL: function () { return 'some URL'; } }
     });
 
     it('should receive customer profile', function () {
