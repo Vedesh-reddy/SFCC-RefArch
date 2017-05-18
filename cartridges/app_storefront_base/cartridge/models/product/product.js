@@ -78,15 +78,17 @@ function getUrl(variationModel, allAttributes, endPoint, id) {
  */
 function getOptionValues(optionModel, optionValues) {
     var values = Collections.map(optionValues, function (value) {
+        var priceValue = optionModel.getPrice(value);
         return {
             id: value.ID,
             displayValue: value.displayValue,
-            price: optionModel.getPrice(value).toFormattedString()
+            price: priceValue.toFormattedString(),
+            priceValue: priceValue.decimalValue
         };
     });
 
     return values.sort(function (a, b) {
-        return a.id - b.id;
+        return a.priceValue - b.priceValue;
     });
 }
 
