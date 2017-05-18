@@ -92,10 +92,6 @@ function getAssociatedAddress(shipment, customer) {
         }
     }
 
-    // if (!matchingId) {
-    //     matchingId = shipment.UUID;
-    // }
-
     return matchingId;
 }
 
