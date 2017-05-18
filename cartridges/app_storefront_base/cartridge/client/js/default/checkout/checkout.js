@@ -1257,7 +1257,7 @@
                                 UUID: $('input[name=shipmentUUID]', form).val(),
                                 shippingAddress: addressInfo
                             };
-                            
+
                             $rootEl.data('saved-state', JSON.stringify(savedState));
                             break;
                         case 'cancel':
