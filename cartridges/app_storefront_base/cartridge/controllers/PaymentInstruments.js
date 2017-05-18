@@ -1,36 +1,16 @@
 'use strict';
 
 var server = require('server');
+var array = require('~/cartridge/scripts/util/array');
 var helper = require('~/cartridge/scripts/dwHelpers');
 var URLUtils = require('dw/web/URLUtils');
 var CustomerMgr = require('dw/customer/CustomerMgr');
+var HookMgr = require('dw/system/HookMgr');
 var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
-
-/**
- * Creates a list of address model for the logged in user
- * @param {Array} rawPaymentInstruments - current customer's payment instruments
- * @returns {List} a plain list of objects of the current customer's addresses
- */
-function getList(rawPaymentInstruments) {
-    var paymentInstruments;
-    var length = rawPaymentInstruments.length;
-    if (length) {
-        paymentInstruments = helper.map(rawPaymentInstruments, function (rawPaymentInstrument) {
-            return {
-                creditCardHolder: rawPaymentInstrument.creditCardHolder,
-                maskedCreditCardNumber: rawPaymentInstrument.maskedCreditCardNumber,
-                creditCardType: rawPaymentInstrument.creditCardType,
-                creditCardExpirationMonth: rawPaymentInstrument.creditCardExpirationMonth,
-                creditCardExpirationYear: rawPaymentInstrument.creditCardExpirationYear,
-                UUID: rawPaymentInstrument.UUID
-            };
-        });
-    }
-    return paymentInstruments;
-}
+var AccountModel = require('~/cartridge/models/account');
 
 /**
  * Checks if a credit card is valid or not
@@ -45,7 +25,7 @@ function verifyCard(card, form, paymentInstruments, UUID) {
     var error = false;
     var cardNumber = card.cardNumber;
     if (UUID && (!card.cardNumber)) {
-        var payment = helper.find(paymentInstruments, function (paymentInstrument) {
+        var payment = array.find(paymentInstruments, function (paymentInstrument) {
             return card.UUID === paymentInstrument.UUID;
         });
         cardNumber = payment.creditCardNumber;
@@ -108,9 +88,11 @@ function getDetailsObject(paymentForm, UUID) {
 function getExpirationYears() {
     var currentYear = new Date().getFullYear();
     var creditCardExpirationYears = [];
+
     for (var i = 0; i < 10; i++) {
         creditCardExpirationYears.push((currentYear + i).toString());
     }
+
     return creditCardExpirationYears;
 }
 
@@ -119,7 +101,9 @@ server.get('List', function (req, res, next) {
         res.redirect(URLUtils.url('Login-Show'));
     } else {
         res.render('account/payment/payment', {
-            paymentInstruments: getList(req.currentCustomer.wallet.paymentInstruments),
+            paymentInstruments: AccountModel.getCustomerPaymentInstruments(
+                req.currentCustomer.wallet.paymentInstruments
+            ),
             actionUrl: URLUtils.url('PaymentInstruments-DeletePayment').toString(),
             breadcrumbs: [
                 {
@@ -133,6 +117,7 @@ server.get('List', function (req, res, next) {
             ]
         });
     }
+
     next();
 });
 
@@ -162,6 +147,7 @@ server.get('AddPayment', function (req, res, next) {
             }
         ]
     });
+
     next();
 });
 
@@ -171,7 +157,7 @@ server.get('EditPayment', function (req, res, next) {
     paymentForm.clear();
     var UUID = req.querystring.UUID;
     var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
-    var paymentToEdit = helper.find(paymentInstruments, function (paymentInstrument) {
+    var paymentToEdit = array.find(paymentInstruments, function (paymentInstrument) {
         return UUID === paymentInstrument.UUID;
     });
 
@@ -206,6 +192,7 @@ server.get('EditPayment', function (req, res, next) {
             }
         ]
     });
+
     next();
 });
 
@@ -217,8 +204,8 @@ server.post('SavePayment', function (req, res, next) {
     var result = getDetailsObject(paymentForm, UUID);
     var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
 
-    if (helper.find(paymentInstruments, function (instrument) {
-        return instrument.creditCardNumber === result.cardNumber;
+    if (array.find(paymentInstruments, function (paymentInstrument) {
+        return result.cardNumber === paymentInstrument.creditCardNumber;
     })) {
         paymentForm.valid = false;
         paymentForm.cardNumber.valid = false;
@@ -235,6 +222,7 @@ server.post('SavePayment', function (req, res, next) {
                     req.currentCustomer.profile.customerNo
                 );
                 var wallet = customer.getProfile().getWallet();
+
                 Transaction.wrap(function () {
                     var paymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
                     paymentInstrument.setCreditCardHolder(formInfo.name);
@@ -242,16 +230,24 @@ server.post('SavePayment', function (req, res, next) {
                     paymentInstrument.setCreditCardType(formInfo.cardType);
                     paymentInstrument.setCreditCardExpirationMonth(formInfo.expirationMonth);
                     paymentInstrument.setCreditCardExpirationYear(formInfo.expirationYear);
+
+                    var token = HookMgr.callHook(
+                        'app.payment.processor.basic_credit',
+                        'createMockToken'
+                    );
+
+                    paymentInstrument.setCreditCardToken(token);
                 });
             } else {
-                var paymentToEdit = helper.find(paymentInstruments, function (paymentInstrument) {
+                var paymentToEdit = array.find(paymentInstruments, function (paymentInstrument) {
                     return formInfo.UUID === paymentInstrument.UUID;
                 });
+
                 Transaction.wrap(function () {
-                    paymentToEdit.setCreditCardHolder(formInfo.name);
-                    paymentToEdit.setCreditCardType(formInfo.cardType);
-                    paymentToEdit.setCreditCardExpirationMonth(formInfo.expirationMonth);
-                    paymentToEdit.setCreditCardExpirationYear(formInfo.expirationYear);
+                    paymentToEdit.raw.setCreditCardHolder(formInfo.name);
+                    paymentToEdit.raw.setCreditCardType(formInfo.cardType);
+                    paymentToEdit.raw.setCreditCardExpirationMonth(formInfo.expirationMonth);
+                    paymentToEdit.raw.setCreditCardExpirationYear(formInfo.expirationYear);
                 });
             }
             res.json({
@@ -271,16 +267,18 @@ server.post('SavePayment', function (req, res, next) {
 server.get('DeletePayment', function (req, res, next) {
     var UUID = req.querystring.UUID;
     var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
-    var paymentToDelete = helper.find(paymentInstruments, function (paymentInstrument) {
-        return UUID === paymentInstrument.UUID;
+    var paymentToDelete = array.find(paymentInstruments, function (item) {
+        return UUID === item.UUID;
     });
+    res.setViewData(paymentToDelete);
     this.on('route:BeforeComplete', function () { // eslint-disable-line no-shadow
+        var payment = res.getViewData();
         var customer = CustomerMgr.getCustomerByCustomerNumber(
             req.currentCustomer.profile.customerNo
         );
         var wallet = customer.getProfile().getWallet();
         Transaction.wrap(function () {
-            wallet.removePaymentInstrument(paymentToDelete);
+            wallet.removePaymentInstrument(payment.raw);
         });
         if (wallet.getPaymentInstruments().length === 0) {
             res.json({
@@ -291,6 +289,7 @@ server.get('DeletePayment', function (req, res, next) {
             res.json({ UUID: UUID });
         }
     });
+
     next();
 });
 

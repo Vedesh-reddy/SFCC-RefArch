@@ -77,6 +77,36 @@ function getAddressObject(address) {
 }
 
 /**
+ * Creates a list of payment instruments for the current user
+ * @param {Array} rawPaymentInstruments - current customer's payment instruments
+ * @returns {Array} an array of payment instruments
+ */
+function getPaymentInstruments(rawPaymentInstruments) {
+    var paymentInstruments = [];
+
+    if (rawPaymentInstruments.getLength() > 0) {
+        var iterator = rawPaymentInstruments.iterator();
+        while (iterator.hasNext()) {
+            var item = iterator.next();
+            paymentInstruments.push({
+                creditCardHolder: item.creditCardHolder,
+                maskedCreditCardNumber: item.maskedCreditCardNumber,
+                creditCardType: item.creditCardType,
+                creditCardExpirationMonth: item.creditCardExpirationMonth,
+                creditCardExpirationYear: item.creditCardExpirationYear,
+                UUID: item.UUID,
+                creditCardNumber: Object.hasOwnProperty.call(item, 'creditCardNumber')
+                    ? item.creditCardNumber
+                    : null,
+                raw: item
+            });
+        }
+    }
+
+    return paymentInstruments;
+}
+
+/**
  * Translates global customer object into local object
  * @param {dw.customer.Customer} customer - Global customer object
  * @returns {Object} local instance of customer object
@@ -111,7 +141,7 @@ function getCustomerObject(customer) {
             addresses: []
         },
         wallet: {
-            paymentInstruments: customer.profile.wallet.paymentInstruments
+            paymentInstruments: getPaymentInstruments(customer.profile.wallet.paymentInstruments)
         }
     };
     if (customer.addressBook.addresses && customer.addressBook.addresses.length > 0) {
@@ -152,6 +182,7 @@ function Request(request, customer, session) {
     this.setLocale = function (localeID) {
         return request.setLocale(localeID);
     };
+
     var clickStreamEntries = session.clickStream.clicks.toArray();
     var clicks = clickStreamEntries.map(function (clickObj) {
         return {

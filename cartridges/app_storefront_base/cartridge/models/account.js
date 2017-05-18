@@ -1,8 +1,8 @@
 'use strict';
 
-var helper = require('~/cartridge/scripts/dwHelpers');
-
 var AddressModel = require('~/cartridge/models/address');
+var URLUtils = require('dw/web/URLUtils');
+
 
 /**
  * Creates a plain object that contains profile information
@@ -63,7 +63,7 @@ function getPreferredAddress(addressBook) {
 function getPayment(wallet) {
     if (wallet) {
         var paymentInstruments = wallet.paymentInstruments;
-        var paymentInstrument = helper.first(paymentInstruments);
+        var paymentInstrument = paymentInstruments[0];
 
         if (paymentInstrument) {
             return {
@@ -75,6 +75,37 @@ function getPayment(wallet) {
         }
     }
     return null;
+}
+
+/**
+ * Creates a plain object that contains payment instrument information
+ * @param {Object} userPaymentInstruments - current customer's paymentInstruments
+ * @returns {Object} object that contains info about the current customer's payment instruments
+ */
+function getCustomerPaymentInstruments(userPaymentInstruments) {
+    var paymentInstruments;
+
+    paymentInstruments = userPaymentInstruments.map(function (paymentInstrument) {
+        var result = {
+            creditCardHolder: paymentInstrument.creditCardHolder,
+            maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
+            creditCardType: paymentInstrument.creditCardType,
+            creditCardExpirationMonth: paymentInstrument.creditCardExpirationMonth,
+            creditCardExpirationYear: paymentInstrument.creditCardExpirationYear,
+            UUID: paymentInstrument.UUID
+        };
+
+        result.cardTypeImage = {
+            src: URLUtils.staticURL('/images/' +
+                paymentInstrument.creditCardType.toLowerCase().replace(/\s/g, '') +
+                '-dark.svg'),
+            alt: paymentInstrument.creditCardType
+        };
+
+        return result;
+    });
+
+    return paymentInstruments;
 }
 
 /**
@@ -90,6 +121,13 @@ function account(currentCustomer, addressModel, orderModel) {
     this.preferredAddress = addressModel || getPreferredAddress(currentCustomer.addressBook);
     this.orderHistory = orderModel;
     this.payment = getPayment(currentCustomer.wallet);
+    this.registeredUser = currentCustomer.raw.authenticated && currentCustomer.raw.registered;
+    this.customerPaymentInstruments = currentCustomer.wallet
+        && currentCustomer.wallet.paymentInstruments
+        ? getCustomerPaymentInstruments(currentCustomer.wallet.paymentInstruments)
+        : null;
 }
+
+account.getCustomerPaymentInstruments = getCustomerPaymentInstruments;
 
 module.exports = account;

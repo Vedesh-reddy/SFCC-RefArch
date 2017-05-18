@@ -5,20 +5,20 @@
             <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" data-address-mode="new" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
                 <input name="shipmentUUID" type="hidden" value="${pdict.order.shipping[0].UUID}" />
 
-				<isif condition="${pdict.customer.addresses && pdict.customer.addresses.length > 0}">
-				    <fieldset class="shipment-selector-block">
-				        <div class="form-group">
-				            <label class="form-control-label" for="shipmentSelector">
-				                ${Resource.msg('heading.ship.to.address', 'checkout', null)}
-				            </label>
+                <isif condition="${pdict.customer.addresses && pdict.customer.addresses.length > 0}">
+                    <fieldset class="shipment-selector-block">
+                        <div class="form-group">
+                            <label class="form-control-label" for="shipmentSelector">
+                                ${Resource.msg('heading.ship.to.address', 'checkout', null)}
+                            </label>
                             <a class="btn float-right btn-show-details">${Resource.msg('action.show.details', 'checkout', null)}</a>
                             <a class="btn float-right btn-hide-details">${Resource.msg('action.hide.details', 'checkout', null)}</a>
-				            
-				            <isinclude template="checkout/shipping/shipmentSelector" />
-				            <div class="form-control-feedback"></div>
-				        </div>
-				    </fieldset>
-				</isif>
+
+                            <isinclude template="checkout/shipping/shipmentSelector" />
+                            <div class="form-control-feedback"></div>
+                        </div>
+                    </fieldset>
+                </isif>
                 <fieldset class="shipping-address-block">
                     <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
                     <isinclude template="checkout/shipping/shippingAddress" />
