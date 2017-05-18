@@ -69,7 +69,7 @@
         <div class="form-control-feedback"></div>
     </div>
 
-    <!-- Country drop down -->
+    <!-- Country and State drop downs -->
     <div class="row">
         <!-- Country  -->
         <div class="col-6">
@@ -83,6 +83,24 @@
                     autocomplete="country">
                     <isloop items=${pdict.addressForm.country.options} var="country">
                         <option id="${country.id}" <isif condition="${country.selected}">selected</isif>>${country.htmlValue}</option>
+                    </isloop>
+                </select>
+                <div class="form-control-feedback"></div>
+            </div>
+        </div>
+
+        <!-- State  -->
+        <div class="col-6">
+            <div class="form-group
+                <isif condition="${pdict.addressForm.states.stateCode.mandatory === true}">required</isif>">
+                <label class="form-control-label" for="state">
+                    <isprint value="${pdict.addressForm.states.stateCode.label}" encoding="off" />
+                </label>
+                <select class="form-control" id="state"
+                    <isprint value="${pdict.addressForm.states.stateCode.attributes}" encoding="off" />
+                    autocomplete="region">
+                    <isloop items=${pdict.addressForm.states.stateCode.options} var="state">
+                        <option id="${state.id}" <isif condition="${state.selected}">selected</isif>>${state.htmlValue}</option>
                     </isloop>
                 </select>
                 <div class="form-control-feedback"></div>
@@ -105,6 +123,7 @@
                 <div class="form-control-feedback"></div>
             </div>
         </div>
+
         <!-- ZIP Code -->
         <div class="col-6">
             <div class="form-group
