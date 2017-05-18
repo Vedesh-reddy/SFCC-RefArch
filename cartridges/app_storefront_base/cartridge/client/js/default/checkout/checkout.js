@@ -1252,9 +1252,20 @@
                             }
 
                             $rootEl.attr('data-view-mode', 'edit');
+                            var addressInfo = getAddressFieldsFromUI(form);
+                            var savedState = {
+                                UUID: $('input[name=shipmentUUID]', form).val(),
+                                shippingAddress: addressInfo
+                            };
+                            
+                            $rootEl.data('saved-state', JSON.stringify(savedState));
                             break;
                         case 'cancel':
                             // Should clear out changes / restore previous state
+                            var restoreState = $rootEl.data('saved-state');
+                            if (restoreState) {
+                                updateShippingAddressFormValues(JSON.parse(restoreState));
+                            }
                             $(form).attr('data-address-mode', 'edit');
                             break;
                         case 'save':
