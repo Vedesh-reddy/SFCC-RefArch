@@ -50,7 +50,7 @@
             <fieldset class="credit-card-form ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? 'checkout-hidden' : ''}">
                 <isinclude template="checkout/billing/creditCardForm" />
                 <isif condition="${pdict.customer.registeredUser}">
-                    <button class="btn btn-secondary btn-block cancel-new-payment btn-outline-primary ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? '' : 'checkout-hidden'}" type="button">${Resource.msg('button.cancel', 'checkout', null)}</button>
+                    <button class="btn btn-secondary btn-block cancel-new-payment btn-outline-primary ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? '' : 'checkout-hidden'}" type="button">${Resource.msg('button.back.to.stored.payments', 'checkout', null)}</button>
                 </isif>
             </fieldset>
         </div>

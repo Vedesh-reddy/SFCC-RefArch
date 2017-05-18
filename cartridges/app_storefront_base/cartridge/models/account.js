@@ -95,34 +95,12 @@ function getCustomerPaymentInstruments(userPaymentInstruments) {
             UUID: paymentInstrument.UUID
         };
 
-        switch (paymentInstrument.creditCardType) {
-            case 'Visa':
-                result.cardTypeImage = {
-                    src: URLUtils.staticURL('/images/visa-dark.svg'),
-                    alt: paymentInstrument.creditCardType
-                };
-                break;
-
-            case 'Amex':
-                result.cardTypeImage = {
-                    src: URLUtils.staticURL('/images/americanexpress-dark.svg'),
-                    alt: paymentInstrument.creditCardType
-                };
-                break;
-
-            case 'Master Card':
-                result.cardTypeImage = {
-                    src: URLUtils.staticURL('/images/mastercard-dark.svg'),
-                    alt: paymentInstrument.creditCardType
-                };
-                break;
-
-            default:
-                result.cardTypeImage = {
-                    src: URLUtils.staticURL('/images/visa-dark.svg'),
-                    alt: paymentInstrument.creditCardType
-                };
-        }
+        result.cardTypeImage = {
+            src: URLUtils.staticURL('/images/' +
+                paymentInstrument.creditCardType.toLowerCase().replace(/\s/g, '') +
+                '-dark.svg'),
+            alt: paymentInstrument.creditCardType
+        };
 
         return result;
     });

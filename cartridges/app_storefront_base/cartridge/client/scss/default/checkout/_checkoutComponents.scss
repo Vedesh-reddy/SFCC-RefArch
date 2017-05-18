@@ -179,3 +179,11 @@ $stored-payment-spacing: 1rem;
 .checkout-hidden {
     display: none;
 }
+
+.card-image {
+    margin-top: 0.5rem;
+}
+
+.cancel-new-payment {
+    margin-top: $stored-payment-spacing;
+}

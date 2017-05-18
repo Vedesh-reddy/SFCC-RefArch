@@ -47,7 +47,7 @@
     </field>
 
     <field formid="securityCode" label="profile.securitycode" type="string" mandatory="true" binding="securityCode"
-           max-length="3" missing-error="error.card.info.missing.securityCode" />
+           max-length="4" missing-error="error.card.info.missing.securityCode" />
 
     <field formid="email" label="profile.email" type="string" mandatory="true" binding="email"
            max-length="254" missing-error="error.card.info.missing.email" />

@@ -1386,18 +1386,15 @@
 
                     var cardMap = {
                         4: 'Visa',
-                        5: 'MasterCard',
+                        5: 'Master Card',
                         3: 'Amex',
                         6: 'Discover'
                     };
 
                     if (cardMap[firstDigit]) {
-                        $('.credit-card-selection').attr('data-card-type', cardMap[firstDigit]);
-                        $('.credit-option').hide();
                         $('#cardType').val(cardMap[firstDigit]);
                     } else {
-                        $('.credit-card-selection').removeAttr('data-card-type');
-                        $('.credit-option').show();
+                        $('#cardType').val('Visa');
                     }
                 });
 
