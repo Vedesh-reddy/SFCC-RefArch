@@ -130,7 +130,7 @@ function OrderModel(lineItemContainer, options) {
         var usingMultiShipping = (safeOptions.usingMultiShipping
             || lineItemContainer.shipments.length > 1);
 
-        var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer);
+        var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer, customer);
 
         var paymentModel = new PaymentModel(lineItemContainer, customer, currencyCode);
 
