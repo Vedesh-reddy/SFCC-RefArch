@@ -96,26 +96,27 @@
             var isBilling = safeOptions.type && safeOptions.type === 'billing';
             var className = safeOptions.className || '';
             var isSelected = selected;
+            var isNew = !shipping;
             if (typeof shipping === 'string') {
                 return $('<option class="' + className + '" disabled>' + shipping + '</option>');
             }
             var safeShipping = shipping || {};
             var shippingAddress = safeShipping.shippingAddress || {};
-            
-            if (isBilling && shipping === null && !order.billing.matchingAddressId) {
-            	shippingAddress = order.billing.billingAddress.address;
-            	shipping = true;
-            	isSelected = true;
-            	safeShipping.UUID = 'manual-entry';
+
+            if (isBilling && isNew && !order.billing.matchingAddressId) {
+                shippingAddress = order.billing.billingAddress.address;
+                isNew = false;
+                isSelected = true;
+                safeShipping.UUID = 'manual-entry';
             }
-            
+
             var uuid = safeShipping.UUID ? safeShipping.UUID : 'new';
             var optionEl = $('<option class="' + className + '" />');
             optionEl.val(uuid);
 
             var title;
 
-            if (!shipping) {
+            if (isNew) {
                 title = order.resources.addNewAddress;
             } else {
                 title = [];
@@ -261,8 +262,9 @@
             if ($billingAddressSelector && $billingAddressSelector.length === 1) {
                 $billingAddressSelector.empty();
                 // Add New Address option
-                $billingAddressSelector.append(optionValueForAddress(null, false, order, {type: 'billing'}));
-       
+                $billingAddressSelector.append(optionValueForAddress(null, false, order,
+                    { type: 'billing' }));
+
                 // Separator -
                 $billingAddressSelector.append(optionValueForAddress(
                     order.resources.shippingAddresses, false, order, {
