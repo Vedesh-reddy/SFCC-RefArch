@@ -95,11 +95,20 @@
             var safeOptions = options || {};
             var isBilling = safeOptions.type && safeOptions.type === 'billing';
             var className = safeOptions.className || '';
+            var isSelected = selected;
             if (typeof shipping === 'string') {
                 return $('<option class="' + className + '" disabled>' + shipping + '</option>');
             }
             var safeShipping = shipping || {};
             var shippingAddress = safeShipping.shippingAddress || {};
+            
+            if (isBilling && shipping === null && !order.billing.matchingAddressId) {
+            	shippingAddress = order.billing.billingAddress.address;
+            	shipping = true;
+            	isSelected = true;
+            	safeShipping.UUID = 'manual-entry';
+            }
+            
             var uuid = safeShipping.UUID ? safeShipping.UUID : 'new';
             var optionEl = $('<option class="' + className + '" />');
             optionEl.val(uuid);
@@ -161,11 +170,16 @@
             };
             $.each(keyMap, function (key) {
                 var mappedKey = keyMap[key];
+                var mappedValue = shippingAddress[mappedKey];
+                // In case of country code
+                if (mappedValue && typeof mappedValue === 'object') {
+                    mappedValue = mappedValue.value;
+                }
 
-                optionEl.attr(key, shippingAddress[mappedKey] || '');
+                optionEl.attr(key, mappedValue || '');
             });
 
-            if (selected) {
+            if (isSelected) {
                 optionEl.attr('selected', true);
             }
 
@@ -213,11 +227,12 @@
                     $shippingAddressSelector.append(optionValueForAddress(
                             order.resources.accountAddresses, false, order));
                     customer.addresses.forEach(function (address) {
+                        var isSelected = shipping.matchingAddressId === address.ID;
                         $shippingAddressSelector.append(
                             optionValueForAddress({
                                 UUID: 'ab_' + address.ID,
                                 shippingAddress: address
-                            }, false, order)
+                            }, isSelected, order)
                         );
                     });
                 }
@@ -246,7 +261,8 @@
             if ($billingAddressSelector && $billingAddressSelector.length === 1) {
                 $billingAddressSelector.empty();
                 // Add New Address option
-                $billingAddressSelector.append(optionValueForAddress(null, false, order));
+                $billingAddressSelector.append(optionValueForAddress(null, false, order, {type: 'billing'}));
+       
                 // Separator -
                 $billingAddressSelector.append(optionValueForAddress(
                     order.resources.shippingAddresses, false, order, {
@@ -281,11 +297,11 @@
                 }
             }
 
-            if (!hasSelectedAddress) {
+            if (hasSelectedAddress || !order.billing.matchingAddressId) {
                 // show
-                $(form).attr('data-address-mode', 'new');
-            } else {
                 $(form).attr('data-address-mode', 'edit');
+            } else {
+                $(form).attr('data-address-mode', 'new');
             }
         }
 

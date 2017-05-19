@@ -1,12 +1,32 @@
 <select name="addressSelector" class="addressSelector form-control" data-create-shipment-url="${URLUtils.https('Checkout-SetBillingAddress')}">
-    <option value="new"
-        data-first-name="" data-last-name=""
-        data-address1="" data-address2=""
-        data-city="" data-state-code=""
-        data-country-code="" data-postal-code=""
-        data-phone="">
-        ${Resource.msg('msg.new.address', 'checkout', null)}
-    </option>
+    <isif condition="${pdict.order.billing.matchingAddressId}">
+	    <option value="new"
+	        data-first-name="" data-last-name=""
+	        data-address1="" data-address2=""
+	        data-city="" data-state-code=""
+	        data-country-code="" data-postal-code=""
+	        data-phone="">
+	        ${Resource.msg('msg.new.address', 'checkout', null)}
+	    </option>
+	<iselse/>
+        <option value="manual-entry" 
+            data-first-name="${pdict.order.billing.billingAddress.address.firstName||''}"
+            data-last-name="${pdict.order.billing.billingAddress.address.lastName||''}"
+            data-address1="${pdict.order.billing.billingAddress.address.address1||''}"
+            data-address2="${pdict.order.billing.billingAddress.address.address2||''}"
+            data-city="${pdict.order.billing.billingAddress.address.city}"
+            data-state-code="${pdict.order.billing.billingAddress.address.stateCode}"
+            data-country-code="${pdict.order.billing.billingAddress.address.countryCode.value}"
+            data-postal-code="${pdict.order.billing.billingAddress.address.postalCode}"
+            data-phone="${pdict.order.billing.billingAddress.address.phone}">
+         ${pdict.order.billing.billingAddress.address.firstName || ''}
+         ${pdict.order.billing.billingAddress.address.lastName || ''}
+         ${pdict.order.billing.billingAddress.address.address1 || ''}
+         ${pdict.order.billing.billingAddress.address.city || ''}${!pdict.order.billing.billingAddress.address.city || ','}
+         ${pdict.order.billing.billingAddress.address.stateCode||''}
+         ${pdict.order.billing.billingAddress.address.postalCode||''}
+        </option>
+	</isif>
     <isif condition="${pdict.order.shipping[0].shippingAddress}">
         <option disabled>${Resource.msg('msg.shipping.addresses', 'checkout', null)}</option>
         <isloop items="${pdict.order.shipping}" var="aShippingModel">
