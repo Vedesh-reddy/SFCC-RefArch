@@ -19,6 +19,17 @@ function isAvailable(quantity, product) {
 }
 
 /**
+ * Determines whether all products in the set are ready to
+ * order, this is called from a .some function.
+ *
+ * @param {Object} individualProduct - current product in the array being iterated over.
+ * @returns {boolean} - returns true is all of the readyToOrder values are true.
+ */
+function isReadyToOrder(individualProduct) {
+    return individualProduct.readyToOrder;
+}
+
+/**
  * @constructor
  * @classdesc Set product class
  * @param {dw.catalog.Product} product - Product instance returned from the API
@@ -49,7 +60,7 @@ ProductSet.prototype.initialize = function () {
     this.searchable = this.product.searchable;
     this.minOrderQuantity = this.product.minOrderQuantity.value || 1;
     this.maxOrderQuantity = DEFAULT_MAX_ORDER_QUANTITY;
-    this.readyToOrder = true;
+    this.readyToOrder = this.individualProducts.every(isReadyToOrder);
 };
 
 /**

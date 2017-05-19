@@ -44,10 +44,10 @@
                     <div class="col-md-10 col-12">
                         <isinclude template="product/components/mainAttributes" />
 
-                        <isset name="isBundleOrSet" value="false" scope="page" />
+                        <isset name="isBundle" value="${false}" scope="page" />
                         <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
                             <div data-attr="${attr.id}" class="swatch">
-                                <isif condition="${attributeStatus.last && isBundleOrSet !== 'true' && product.options.length === 0}">
+                                <isif condition="${attributeStatus.last && !isBundle && product.options.length === 0}">
                                     <!-- Quantity Drop Down Menu -->
                                     <div class="quantity col-sm-6">
                                         <isinclude template="product/components/quantity" />

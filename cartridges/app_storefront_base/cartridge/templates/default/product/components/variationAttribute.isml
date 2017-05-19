@@ -18,8 +18,8 @@ Template Notes:
     <isif condition="${attr.swatchable}">
         <!-- Circular Swatch Image Attribute Values -->
         <isloop items="${attr.values}" var="attrValue">
-            <isif condition="${!(isBundleOrSet === 'true' && product.productType === 'variant' && !attrValue.selected) }">
-                <a href="${attrValue.url}" ${ product.productType === "variant" && isBundleOrSet === "true" ? "disabled" : "" }>
+            <isif condition="${!(isBundle && product.productType === 'variant' && !attrValue.selected) }">
+                <a href="${attrValue.url}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }>
                     <span data-attr-value="${attrValue.value}"
                           class="
                               ${attr.id}-value
@@ -41,7 +41,7 @@ Template Notes:
 
     <iselse>
         <!-- Attribute Values Drop Down Menu -->
-        <select class="custom-select form-control select-${attr.id}" ${ product.productType === "variant" && isBundleOrSet === "true" ? "disabled" : "" }>
+        <select class="custom-select form-control select-${attr.id}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }>
             <option value="${attr.resetUrl}">
                 ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
             </option>

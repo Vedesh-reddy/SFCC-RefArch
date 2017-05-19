@@ -1,0 +1,61 @@
+<isdecorate template="common/layout/page">
+
+    <isscript>
+        var assets = require('~/cartridge/scripts/assets');
+        assets.addJs('/js/productDetail.js');
+        assets.addCss('/css/product/detail.css');
+    </isscript>
+
+    <iscomment>
+        It is necessary to set both "set" and "product" to pdict.product here as the downstream.
+    </iscomment>
+
+    <isset name="product" value="${pdict.product}" scope="page" />
+    <isset name="set" value="${pdict.product}" scope="page" />
+    <isset name="isBundle" value="${false}" scope="page" />
+
+    <div class="container product-detail product-set-detail" data-pid="${product.id}">
+        <div class="row">
+            <div class="col-12">
+                <!---Breadcrumbs--->
+                <div class="product-breadcrumb">
+                    <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                </div>
+                <!-- Product Name -->
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h1 class="product-name">${product.productName}</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+             <div class="col-12">
+                 <h4>${Resource.msg('label.set.contains', 'product', null)}</h4>
+             </div>
+        </div>
+        <isinclude template="product/components/setItems" />
+        <hr>
+        <div class="col-12 col-sm-6 offset-sm-6 bundle-footer">
+            <!-- Quantity -->
+            <div class="col-12 prices-add-to-cart-actions">
+                <!-- Prices -->
+                <div class="prices">
+                    <div class="price">
+                        <span class="starting">
+                            ${Resource.msg('label.starting_from', 'pricing', null)}
+                            <isif condition="${set.price.min}"> 
+                                ${set.price.min.sales.formatted}
+                            <iselse>
+                                ${set.price.sales.formatted}
+                            </isif>
+                        </span>
+                    </div>
+                </div>
+                <!-- Cart and [Optionally] Apple Pay -->
+                <isinclude template="product/components/addToCartGlobal" />
+            </div>
+        </div>
+    </div>
+</isdecorate>

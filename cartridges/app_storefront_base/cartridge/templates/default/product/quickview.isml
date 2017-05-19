@@ -1,6 +1,6 @@
 <isset name="productCopy" value="${pdict.product}" scope="page"/>
 <isset name="product" value="${pdict.product}" scope="page"/>
-<isset name="isBundleOrSet" value="false" scope="page"/>
+<isset name="isBundle" value="${false}" scope="page"/>
 <div class="product-quickview product-${product.productType} col product-wrapper" data-pid="${product.id}">
     <div class="row">
         <!-- Product Images Carousel -->
