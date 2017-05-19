@@ -30,14 +30,15 @@ server.post('AddProduct', function (req, res, next) {
     var childPids = Object.hasOwnProperty.call(req.form, 'childPids')
         ? decodeURIComponent(req.form.childPids).split(',')
         : [];
-    var quantity = parseInt(req.form.quantity, 10);
     var options = req.form.options ? JSON.parse(req.form.options) : [];
+    var quantity;
     var result;
     var pidsObj;
 
     if (currentBasket) {
         Transaction.wrap(function () {
             if (!req.form.pidsObj) {
+                quantity = parseInt(req.form.quantity, 10);
                 result =
                     CartHelper.addProductToCart(currentBasket, productId, quantity, childPids,
                         options);

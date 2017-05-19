@@ -113,6 +113,8 @@ module.exports = {
                 $('.modal.show').find(response.container).data('pid', response.data.product.id);
                 $('.modal.show').find(response.container)
                     .find('.product-id').text(response.data.product.id);
+            } else if ($('.set-items').length) {
+                response.container.find('.product-id').text(response.data.product.id);
             } else {
                 $('.modal.show .product-quickview').data('pid', response.data.product.id);
                 $('.modal.show .full-pdp-link')

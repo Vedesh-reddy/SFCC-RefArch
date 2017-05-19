@@ -41,19 +41,9 @@
             <!-- Quantity -->
             <div class="col-12 prices-add-to-cart-actions">
                 <!-- Prices -->
-                <div class="prices">
-                    <div class="price">
-                        <span class="starting">
-                            ${Resource.msg('label.starting_from', 'pricing', null)}
-                            <isif condition="${set.price.min}"> 
-                                ${set.price.min.sales.formatted}
-                            <iselse>
-                                ${set.price.sales.formatted}
-                            </isif>
-                        </span>
-                    </div>
-                </div>
+                <isinclude template="product/components/pricing/setPrice" />
                 <!-- Cart and [Optionally] Apple Pay -->
+                <isset name="product" value="${set}" scope="page" />
                 <isinclude template="product/components/addToCartGlobal" />
             </div>
         </div>

@@ -187,8 +187,11 @@ server.get('ShowQuickView', function (req, res, next) {
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
+    var template = product.productType === 'set'
+        ? 'product/setQuickview.isml'
+        : 'product/quickview.isml';
 
-    res.render('product/quickview.isml', {
+    res.render(template, {
         product: product,
         addToCartUrl: addToCartUrl,
         resources: getResources()

@@ -5,7 +5,11 @@
             data-pid="${product.id}"
             ${!product.readyToOrder || !product.available ? "disabled" : ""}>
                 <i class="fa fa-shopping-bag"></i>
-                ${Resource.msg('button.addalltocart', 'common', null)}
+                <isif condition="${product.productType === 'set' || product.productType === 'bundle'}">
+                    ${Resource.msg('button.addalltocart', 'common', null)}
+                <iselse>
+                    ${Resource.msg('button.addtocart', 'common', null)}
+                </isif>
         </button>
     </div>
 </div>

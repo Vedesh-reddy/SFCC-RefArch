@@ -8,7 +8,7 @@
 function getPidValue($el) {
     var pid;
 
-    if ($('#quickViewModal').hasClass('show')) {
+    if ($('#quickViewModal').hasClass('show') && !$('.product-set-detail').length) {
         pid = $($el).closest('.modal-content').find('.product-quickview').data('pid');
     } else if ($('.product-set-detail').length) {
         pid = $($el).closest('.product-detail').find('.product-id').text();
