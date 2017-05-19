@@ -1,11 +1,39 @@
 'use strict';
 
 /**
+ * Retrieves the relevant pid value
+ * @param {jquery} $el - DOM container for a given add to cart button
+ * @return {string} - value to be used when adding product to cart
+ */
+function getPidValue($el) {
+    var pid;
+
+    if ($('#quickViewModal').hasClass('show')) {
+        pid = $($el).closest('.modal-content').find('.product-quickview').data('pid');
+    } else if ($('.product-set-detail').length) {
+        pid = $($el).closest('.product-detail').find('.product-id').text();
+    } else {
+        pid = $('.product-detail:not(".bundle-item")').data('pid');
+    }
+
+    return pid;
+}
+
+/**
  * Retrieves the value associated with the Quantity pull-down menu
+ * @param {jquery} $el - DOM container for the relevant quantity
  * @return {string} - value found in the quantity input
  */
-function getQuantitySelected() {
-    return $('.quantity-select').val();
+function getQuantitySelected($el) {
+    var quantityValue;
+
+    if ($el && $('.set-items').length) {
+        quantityValue = $($el).closest('.product-detail').find('.quantity-select').val();
+    } else {
+        quantityValue = $('.quantity-select').val();
+    }
+
+    return quantityValue;
 }
 
 /**
@@ -255,7 +283,9 @@ function attributeSelect(selectedValueUrl, $productContainer) {
                 handleVariantResponse(data, $productContainer);
                 $('body').trigger('product:afterAttributeSelect',
                     { data: data, container: $productContainer });
-                $('.quantity-select').data('action', data.product.selectedVariantUrl);
+                $productContainer
+                    .find('.quantity-select')
+                    .data('action', data.product.selectedVariantUrl);
                 $.spinner().stop();
             },
             error: function () {
@@ -311,6 +341,46 @@ function getChildPids() {
     }).get().join(',');
 }
 
+/**
+ * Retrieve product options
+ *
+ * @return {string} - Product options and their selected values
+ */
+function getOptions() {
+    var options = {};
+    var $quickView = $('#quickViewModal');
+    var productContainer = '.product-detail';
+
+    if ($('.bundle-items').length) {
+        var bundleItems = $('[class*="-items"] .product-detail');
+        bundleItems.each(function () {
+            var productOptions = $(this).find('.product-option');
+            if (productOptions.length) {
+                options[$(this).data('pid')] = productOptions.map(function () {
+                    return {
+                        optionId: $(this).data('option-id'),
+                        selectedValueId: $(this).data('option-value-id')
+                    };
+                }).toArray();
+            }
+        });
+    } else if ($('.set-items').length) {
+        // TO-DO:  To be done when Product Sets feature is complete
+    } else {
+        if ($quickView.length) {
+            productContainer = '#quickViewModal ' + productContainer;
+        }
+        options[$(productContainer).data('pid')] = $('.product-option').map(function () {
+            return {
+                id: $(this).data('option-id'),
+                selectedValueId: $(this).find('.options-select').val()
+            };
+        }).toArray();
+    }
+
+    return JSON.stringify(options);
+}
+
 module.exports = {
     attributeSelect: attributeSelect,
 
@@ -349,14 +419,18 @@ module.exports = {
     availability: function () {
         $(document).on('change', '.quantity-select', function (e) {
             e.preventDefault();
-            var quantity = getQuantitySelected();
 
             var $productContainer = $(this).closest('.product-detail');
             if (!$productContainer.length) {
                 $productContainer = $(this).closest('.modal-content').find('.product-quickview');
             }
+            var quantity = getQuantitySelected($(this));
 
-            if ($('.bundle-items', $productContainer).length === 0) {
+            if ($('.set-items').length) {
+                attributeSelect($productContainer
+                    .find('.quantity-select')
+                    .data('action') + '&quantity=' + quantity, $productContainer);
+            } else if ($('.bundle-items', $productContainer).length === 0) {
                 attributeSelect($('.quantity-select').data('action') + '&quantity=' + quantity,
                     $productContainer);
             }
@@ -367,14 +441,26 @@ module.exports = {
         $(document).on('click', 'button.add-to-cart, button.add-to-cart-global', function () {
             var addToCartUrl;
             var pid;
+            var pidsObj;
+            var setPids;
 
             $('body').trigger('product:beforeAddToCart', this);
 
-            if ($('#quickViewModal').hasClass('show')) {
-                pid = $(this).closest('.modal-content').find('.product-quickview').data('pid');
-            } else {
-                pid = $('.product-detail:not(".bundle-item")').data('pid');
+            if ($('.set-items').length && $(this).hasClass('add-to-cart-global')) {
+                setPids = [];
+
+                $('.product-detail').each(function () {
+                    if (!$(this).hasClass('product-set-detail')) {
+                        setPids.push({
+                            pid: $(this).find('.product-id').html(),
+                            qty: $(this).find('.quantity-select').val()
+                        });
+                    }
+                });
+                pidsObj = JSON.stringify(setPids);
             }
+
+            pid = getPidValue($(this));
 
             addToCartUrl = getAddToCartUrl();
 
@@ -384,8 +470,10 @@ module.exports = {
                     method: 'POST',
                     data: {
                         pid: pid,
+                        pidsObj: pidsObj,
                         childPids: getChildPids(),
-                        quantity: getQuantitySelected($(this))
+                        quantity: getQuantitySelected($(this)),
+                        options: getOptions()
                     },
                     success: function (data) {
                         handlePostCartAdd(data);

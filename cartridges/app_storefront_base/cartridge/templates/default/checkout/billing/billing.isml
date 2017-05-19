@@ -19,7 +19,7 @@
                     <label class="form-control-label" for="shipmentSelector">
                         ${Resource.msg('heading.billing.address', 'checkout', null)}
                     </label>
-                    
+
                     <isinclude template="checkout/billing/addressSelector" />
                     <div class="form-control-feedback"></div>
                     <div class="row">
@@ -41,13 +41,6 @@
             <!-------------------------------------------------------------------------->
             <fieldset>
                 <isinclude template="checkout/billing/paymentOptions" />
-            </fieldset>
-
-            <!-------------------------------------------------------------------------->
-            <!-- credit Card Form                                                     -->
-            <!-------------------------------------------------------------------------->
-            <fieldset class="credit-card-form">
-                <isinclude template="checkout/billing/creditCardForm" />
             </fieldset>
         </form>
     </div>

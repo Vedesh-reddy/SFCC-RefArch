@@ -22,8 +22,8 @@ var Transaction = require('dw/system/Transaction');
 var AddressModel = require('~/cartridge/models/address');
 var OrderModel = require('~/cartridge/models/order');
 
+var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
 var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
-
 
 // static functions needed for Checkout Controller logic
 
@@ -611,6 +611,72 @@ function placeOrder(order) {
     return result;
 }
 
+/**
+ * saves payment instruemnt to customers wallet
+ * @param {Object} billingData - billing information entered by the user
+ * @param {dw.order.Basket} currentBasket - The current basket
+ * @param {dw.customer.Customer} customer - The current customer
+ * @returns {dw.customer.CustomerPaymentInstrument} newly stored payment Instrument
+ */
+function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
+    var wallet = customer.getProfile().getWallet();
+
+    return Transaction.wrap(function () {
+        var storedPaymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
+
+        storedPaymentInstrument.setCreditCardHolder(
+            currentBasket.billingAddress.fullName
+        );
+        storedPaymentInstrument.setCreditCardNumber(
+            billingData.paymentInformation.cardNumber.value
+        );
+        storedPaymentInstrument.setCreditCardType(
+            billingData.paymentInformation.cardType.value
+        );
+        storedPaymentInstrument.setCreditCardExpirationMonth(
+            billingData.paymentInformation.expirationMonth.value
+        );
+        storedPaymentInstrument.setCreditCardExpirationYear(
+            billingData.paymentInformation.expirationYear.value
+        );
+
+        var token = HookMgr.callHook(
+            'app.payment.processor.basic_credit',
+            'createMockToken'
+        );
+
+        storedPaymentInstrument.setCreditCardToken(token);
+
+        return storedPaymentInstrument;
+    });
+}
+
+/**
+ * renders the user's stored payment Instruments
+ * @param {Object} req - The request object
+ * @param {Object} accountModel - The account model for the current customer
+ * @returns {string|null} newly stored payment Instrument
+ */
+function getRenderedPaymentInstruments(req, accountModel) {
+    var result;
+
+    if (req.currentCustomer.raw.authenticated
+        && req.currentCustomer.raw.registered
+        && req.currentCustomer.raw.profile.wallet.paymentInstruments.getLength()
+    ) {
+        var context;
+        var template = 'checkout/billing/storedPaymentInstruments';
+
+        context = { customer: accountModel };
+        result = renderTemplateHelper.getRenderedHtml(
+            context,
+            template
+        );
+    }
+
+    return result || null;
+}
+
 module.exports = {
     ensureNoEmptyShipments: ensureNoEmptyShipments,
     getShippingFormKeys: getShippingFormKeys,
@@ -632,5 +698,7 @@ module.exports = {
     handlePayments: handlePayments,
     createOrder: createOrder,
     placeOrder: placeOrder,
+    savePaymentInstrumentToWallet: savePaymentInstrumentToWallet,
+    getRenderedPaymentInstruments: getRenderedPaymentInstruments,
     sendConfirmationEmail: sendConfirmationEmail
 };

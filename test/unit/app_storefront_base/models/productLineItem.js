@@ -90,7 +90,8 @@ describe('Product Line Item', function () {
         minOrderQuantity: {
             value: 2
         },
-        attributeModel: attributeModel
+        attributeModel: attributeModel,
+        optionModel: { options: new ArrayList() }
     };
 
     var productMock = {
@@ -125,6 +126,7 @@ describe('Product Line Item', function () {
         priceAdjustments: priceAdjustments,
         getPrice: function () { return 'money object'; },
         product: toProductMock(productMock),
+        optionProductLineItems: new ArrayList(),
         shipment: {
             UUID: 'shipment UUID'
         }

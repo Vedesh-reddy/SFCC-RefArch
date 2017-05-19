@@ -117,7 +117,15 @@ span.ship-to-city-st-zip {
             display: none;
         }
 
-        button {
+        button.place-order {
+            display: none;
+        }
+
+        button.submit-payment {
+            display: none;
+        }
+
+        button.submit-shipping {
             display: none;
         }
     }

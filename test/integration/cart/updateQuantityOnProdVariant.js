@@ -243,6 +243,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'quantity': expectQty1,
                     'isOrderable': true,
+                    'options': [],
                     'isAvailableForInStorePickup': false
                 },
                 {
@@ -299,6 +300,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'quantity': expectQty2,
                     'isOrderable': true,
+                    'options': [],
                     'isAvailableForInStorePickup': false
                 },
                 {
@@ -354,6 +356,7 @@ describe('Update quantity for product variant', function () {
                     },
                     'quantity': expectQty3,
                     'isOrderable': true,
+                    'options': [],
                     'isAvailableForInStorePickup': false
                 }
             ],

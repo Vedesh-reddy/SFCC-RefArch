@@ -32,10 +32,13 @@ function createFakeRequest(overrides) {
                 wallet: {
                     paymentInstruments: new ArrayList([
                         {
-                            creditCardExpirationMonth: '3',
-                            creditCardExpirationYear: '2019',
-                            maskedCreditCardNumber: '***********4215',
-                            creditCardType: 'Visa'
+                            creditCardHolder: 'someName',
+                            maskedCreditCardNumber: 'someMaskedNumber',
+                            creditCardType: 'someCardType',
+                            creditCardExpirationMonth: 'someMonth',
+                            creditCardExpirationYear: 'someYear',
+                            UUID: 'someUUID',
+                            creditCardNumber: 'someNumber'
                         }
                     ])
                 }

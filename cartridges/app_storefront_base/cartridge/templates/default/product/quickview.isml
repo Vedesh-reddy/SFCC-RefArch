@@ -1,7 +1,7 @@
 <isset name="productCopy" value="${pdict.product}" scope="page"/>
 <isset name="product" value="${pdict.product}" scope="page"/>
-<isset name="isBundleOrSet" value="false" scope="page"/>
-<div class="product-quickview product-${product.productType} col product-wrapper" data-pid="${product.id}">
+<isset name="isBundle" value="${false}" scope="page"/>
+<div class="product-quickview product-${product.productType} col product-wrapper product-detail" data-pid="${product.id}">
     <div class="row">
         <!-- Product Images Carousel -->
         <isinclude template="product/components/image_carousel" />

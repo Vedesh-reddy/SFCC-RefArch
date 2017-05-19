@@ -69,7 +69,7 @@
         <div class="form-control-feedback"></div>
     </div>
 
-    <!-- Country and State drop downs -->
+    <!-- Country drop down -->
     <div class="row">
         <!-- Country  -->
         <div class="col-6">
@@ -116,6 +116,7 @@
                     <isprint value="${pdict.addressForm.postalCode.attributes}" encoding="off" />
                     autocomplete="postal-code">
                 <div class="form-control-feedback"></div>
+                <span>${Resource.msg('example.postalcode','forms',null)}</span>
             </div>
         </div>
     </div>
@@ -130,6 +131,7 @@
             <isprint value="${pdict.addressForm.phone.attributes}" encoding="off" />
             autocomplete="tel">
         <div class="form-control-feedback"></div>
+        <span>${Resource.msg('example.phone','forms',null)}</span>
     </div>
 
     <!-- Cancel and Save Buttons -->

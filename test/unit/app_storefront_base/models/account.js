@@ -30,15 +30,40 @@ var currentCustomer = {
         email: 'jsnow@starks.com'
     },
     wallet: {
-        paymentInstruments: new ArrayList([
+        paymentInstruments: [
             {
                 creditCardExpirationMonth: '3',
                 creditCardExpirationYear: '2019',
                 maskedCreditCardNumber: '***********4215',
                 creditCardType: 'Visa',
                 paymentMethod: 'CREDIT_CARD'
+            },
+            {
+                creditCardExpirationMonth: '4',
+                creditCardExpirationYear: '2019',
+                maskedCreditCardNumber: '***********4215',
+                creditCardType: 'Amex',
+                paymentMethod: 'CREDIT_CARD'
+            },
+            {
+                creditCardExpirationMonth: '6',
+                creditCardExpirationYear: '2019',
+                maskedCreditCardNumber: '***********4215',
+                creditCardType: 'Master Card',
+                paymentMethod: 'CREDIT_CARD'
+            },
+            {
+                creditCardExpirationMonth: '5',
+                creditCardExpirationYear: '2019',
+                maskedCreditCardNumber: '***********4215',
+                creditCardType: 'Discover',
+                paymentMethod: 'CREDIT_CARD'
             }
-        ])
+        ]
+    },
+    raw: {
+        authenticated: true,
+        registered: true
     }
 };
 
@@ -113,7 +138,8 @@ describe('account', function () {
     var AddressModel = require('../../../mocks/models/address');
     var AccountModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/account', {
         '~/cartridge/scripts/dwHelpers': helper,
-        '~/cartridge/models/address': AddressModel
+        '~/cartridge/models/address': AddressModel,
+        'dw/web/URLUtils': { staticURL: function () { return 'some URL'; } }
     });
 
     it('should receive customer profile', function () {
@@ -129,6 +155,10 @@ describe('account', function () {
         assert.equal(result.payment.creditCardExpirationYear, '2019');
         assert.equal(result.payment.creditCardType, 'Visa');
         assert.equal(result.payment.maskedCreditCardNumber, '***********4215');
+
+        assert.equal(result.customerPaymentInstruments.length, 4);
+        assert.equal(result.customerPaymentInstruments[0].cardTypeImage.src, 'some URL');
+        assert.equal(result.customerPaymentInstruments[0].cardTypeImage.alt, 'Visa');
     });
 
     it('should receive an account with address book, payment method and order history', function () {
