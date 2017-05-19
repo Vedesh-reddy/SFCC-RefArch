@@ -153,6 +153,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 },
                 'quantity': 1,
                 'isOrderable': true,
+                'options': [],
                 'isAvailableForInStorePickup': false
             },
             {
@@ -203,6 +204,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 },
                 'quantity': 1,
                 'isOrderable': true,
+                'options': [],
                 'isAvailableForInStorePickup': false
             }
         ],

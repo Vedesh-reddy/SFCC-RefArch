@@ -119,7 +119,8 @@ describe('Bundle Product Line Item', function () {
         availabilityModel: availabilityModelMock,
         minOrderQuantity: {
             value: 2
-        }
+        },
+        optionModel: { options: new ArrayList() }
     };
 
     var priceAdjustments = new ArrayList([
@@ -146,6 +147,7 @@ describe('Bundle Product Line Item', function () {
         shipment: {
             UUID: 'shipment UUID'
         },
+        optionProductLineItems: new ArrayList(),
         bundledProductLineItems: new ArrayList([{ product: productMock, quantity: { value: 1 } }])
     };
 

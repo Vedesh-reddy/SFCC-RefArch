@@ -49,7 +49,11 @@ describe('cartHelpers', function () {
         'dw/catalog/ProductMgr': {
             getProduct: function () {
                 return {
-                    optionModel: {}
+                    optionModel: {
+                        getOption: function () {},
+                        getOptionValue: function () {},
+                        setSelectedOptionValue: function () {}
+                    }
                 };
             }
         },
@@ -70,13 +74,17 @@ describe('cartHelpers', function () {
             }
         }
     });
+    var mockOptions = [{
+        id: 'option 1',
+        selectedValueId: '123'
+    }];
 
     it('should add a product to the cart', function () {
         var currentBasket = createApiBasket(false);
         var spy = sinon.spy(currentBasket, 'createProductLineItem');
         spy.withArgs(1);
 
-        cartHelpers.addProductToCart(currentBasket, 'someProductID', 1);
+        cartHelpers.addProductToCart(currentBasket, 'someProductID', 1, [], mockOptions);
         assert.isTrue(spy.calledOnce);
         currentBasket.createProductLineItem.restore();
     });
@@ -86,7 +94,7 @@ describe('cartHelpers', function () {
         var spy = sinon.spy(currentBasket.productLineItems[0], 'setQuantityValue');
         spy.withArgs(1);
 
-        cartHelpers.addProductToCart(currentBasket, 'someProductID', 1);
+        cartHelpers.addProductToCart(currentBasket, 'someProductID', 1, [], mockOptions);
         assert.isTrue(spy.calledOnce);
         currentBasket.productLineItems[0].setQuantityValue.restore();
     });
@@ -94,7 +102,7 @@ describe('cartHelpers', function () {
     it('should not add a product to the cart', function () {
         var currentBasket = createApiBasket(true);
 
-        var result = cartHelpers.addProductToCart(currentBasket, 'someProductID', 4, []);
+        var result = cartHelpers.addProductToCart(currentBasket, 'someProductID', 4, [], mockOptions);
         assert.isTrue(result.error);
         assert.equal(result.message, 'someString');
     });
@@ -103,7 +111,7 @@ describe('cartHelpers', function () {
         var currentBasket = createApiBasket(true);
         currentBasket.productLineItems[0].quantity.value = 3;
 
-        var result = cartHelpers.addProductToCart(currentBasket, 'someProductID', 3, []);
+        var result = cartHelpers.addProductToCart(currentBasket, 'someProductID', 3, [], mockOptions);
         assert.isTrue(result.error);
         assert.equal(result.message, 'someString');
     });

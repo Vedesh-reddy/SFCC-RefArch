@@ -6,14 +6,41 @@ var Resource = require('dw/web/Resource');
 var Collections = require('~/cartridge/scripts/util/collections');
 var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
 
+/**
+ * Set the selected value on a product option
+ *
+ * @param {dw.catalog.ProductOptionModel} optionModel - A product's option model
+ * @param {string} optionId - A product option for the product being updated
+ * @param {string} selectedValueId - Selected option value ID
+ * @return {boolean} - Standard return value
+ */
+function setSelectedOptionValue(optionModel, optionId, selectedValueId) {
+    var apiOption = optionModel.getOption(optionId);
+    var apiOptionValue = optionModel.getOptionValue(apiOption, selectedValueId);
+    optionModel.setSelectedOptionValue(apiOption, apiOptionValue);
+    return true;
+}
+
+/**
+ * @typedef ProductOption
+ * @type Object
+ * @property {string} id - Option ID
+ * @property {string} selectedValueId - Selected option value ID
+ */
+
+/**
+ * @typedef ProductOptions
+ * @type Object.<string, ProductOption>
+ */
 
 /**
  * Replaces Bundle master product items with their selected variants
  *
  * @param {dw.order.ProductLineItem} apiLineItem - Cart line item containing Bundle
  * @param {string[]} childPids - List of bundle product item ID's with chosen product variant ID's
+ * @param {ProductOptions} options - Selected product options dictionary
  */
-function updateBundleProducts(apiLineItem, childPids) {
+function updateBundleProducts(apiLineItem, childPids, options) {
     var bundle = apiLineItem.product;
     var bundleProducts = bundle.getBundledProducts();
     var bundlePids = Collections.map(bundleProducts, function (product) { return product.ID; });
@@ -27,11 +54,24 @@ function updateBundleProducts(apiLineItem, childPids) {
 
         Collections.forEach(bundleLineItems, function (item) {
             if (item.productID === variant.masterProduct.ID) {
+                if (Object.keys(options).indexOf(variant.ID) !== -1) {
+                    options[variant.ID].forEach(function (option) {
+                        setSelectedOptionValue(variant.optionModel, option.optionId,
+                            option.selectedValueId);
+                    });
+                }
                 item.replaceProduct(variant);
             }
         });
     });
 }
+
+/**
+ * @typedef Option
+ * @type Object
+ * @property {string} id - Option ID
+ * @property {string} selectedValueId - Selected option value ID
+ */
 
 /**
  * Adds a product to the cart. If the product is already in the cart it increases the quantity of
@@ -40,9 +80,10 @@ function updateBundleProducts(apiLineItem, childPids) {
  * @param {string} productId - the productId of the product being added to the cart
  * @param {number} quantity - the number of products to the cart
  * @param {string[]} childPids - the number of products to the cart
+ * @param {Option[]} options - product options
  *  @return {Object} returns an error object
  */
-function addProductToCart(currentBasket, productId, quantity, childPids) {
+function addProductToCart(currentBasket, productId, quantity, childPids, options) {
     var availableToSell;
     var defaultShipment = currentBasket.defaultShipment;
     var product = ProductMgr.getProduct(productId);
@@ -56,6 +97,14 @@ function addProductToCart(currentBasket, productId, quantity, childPids) {
         error: false,
         message: Resource.msg('text.alert.addedtobasket', 'product', null)
     };
+
+    // Set selected option values for non-bundle/set products
+    var optionKeys = Object.keys(options);
+    if (optionKeys.indexOf(productId) !== -1) {
+        options[productId].forEach(function (option) {
+            setSelectedOptionValue(optionModel, option.id, option.selectedValueId);
+        });
+    }
 
     for (var i = 0; i < currentBasket.productLineItems.length; i++) {
         if (productLineItems[i].productID === productId) {
@@ -92,7 +141,7 @@ function addProductToCart(currentBasket, productId, quantity, childPids) {
         );
 
         if (product.bundle && childPids.length) {
-            updateBundleProducts(productLineItem, childPids);
+            updateBundleProducts(productLineItem, childPids, options);
         }
 
         productLineItem.setQuantityValue(quantity);

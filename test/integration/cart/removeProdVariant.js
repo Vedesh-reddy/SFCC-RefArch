@@ -241,6 +241,7 @@ describe('Remove product variant from line item', function () {
                     },
                     'quantity': expectQty1,
                     'isOrderable': true,
+                    'options': [],
                     'isAvailableForInStorePickup': false
                 },
                 {
@@ -295,6 +296,7 @@ describe('Remove product variant from line item', function () {
                     },
                     'quantity': expectQty3,
                     'isOrderable': true,
+                    'options': [],
                     'isAvailableForInStorePickup': false
                 }
             ],
