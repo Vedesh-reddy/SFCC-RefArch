@@ -1,11 +1,11 @@
 <isset name="product" value="${pdict.product}" scope="page"/>
 <isset name="isBundle" value="${false}" scope="page"/>
-<isset name="set" value="${pdict.product}" scope="page" />
+<isset name="productCopy" value="${pdict.product}" scope="page"/>
 <div class="product-quickview product-${product.productType} col product-wrapper" data-pid="${product.id}">
     <div class="row">
         <!-- Product Name -->
         <div class="col-12">
-            <h1 class="product-name">${set.productName}</h1>
+            <h1 class="product-name">${productCopy.productName}</h1>
         </div>
     </div>
     <hr>
@@ -15,7 +15,7 @@
         </div>
     </div>
     <isinclude template="product/components/setItems" />
-    <isset name="product" value="${set}" scope="page"/>
+    <isset name="product" value="${productCopy}" scope="page"/>
 </div>
 <div class="modal-footer row align-items-end">
     <div class="col-6 offset-6">
