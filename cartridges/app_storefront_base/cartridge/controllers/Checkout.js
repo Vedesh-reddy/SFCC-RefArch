@@ -114,7 +114,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     currentBasket.removeShipment(shipment);
                 }
             });
-            COHelpers.ensureNoEmptyShipments();
+            COHelpers.ensureNoEmptyShipments(req);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
@@ -290,7 +290,7 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
             ShippingHelper.ensureShipmentHasMethod(shipment);
         });
         Transaction.wrap(function () {
-            COHelpers.ensureNoEmptyShipments();
+            COHelpers.ensureNoEmptyShipments(req);
             COHelpers.recalculateBasket(basket);
         });
     } catch (err) {
@@ -384,7 +384,7 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
                         COHelpers.copyShippingAddressToShipment(result, shipment);
                         productLineItem.setShipment(shipment);
 
-                        COHelpers.ensureNoEmptyShipments();
+                        COHelpers.ensureNoEmptyShipments(req);
                     }
                 });
             } catch (e) {
@@ -472,7 +472,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     // Calculate the basket
     Transaction.wrap(function () {
-        COHelpers.ensureNoEmptyShipments();
+        COHelpers.ensureNoEmptyShipments(req);
     });
     COHelpers.recalculateBasket(currentBasket);
 
