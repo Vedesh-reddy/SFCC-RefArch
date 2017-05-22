@@ -376,7 +376,7 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
                                 shipment = basket.createShipment(UUIDUtils.createUUID());
                             }
                         } else if (shipmentUUID.indexOf('ab_') === 0) {
-                            shipment = ShippingHelper.getShipmentByUUID(basket, origUUID);
+                        	shipment = basket.createShipment(UUIDUtils.createUUID());
                         } else {
                             // Choose an existing shipment for this PLI
                             shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);

@@ -51,9 +51,7 @@
         function populateAddressSummary(parentSelector, address) {
             $.each(address, function (attr) {
                 var val = address[attr];
-                if (val) {
-                    $('.' + attr, parentSelector).text(val);
-                }
+                $('.' + attr, parentSelector).text(val || '');
             });
         }
 
@@ -104,7 +102,7 @@
             var shippingAddress = safeShipping.shippingAddress || {};
 
             if (isBilling && isNew && !order.billing.matchingAddressId) {
-                shippingAddress = order.billing.billingAddress.address;
+                shippingAddress = order.billing.billingAddress.address || {};
                 isNew = false;
                 isSelected = true;
                 safeShipping.UUID = 'manual-entry';
@@ -268,7 +266,7 @@
                 // Separator -
                 $billingAddressSelector.append(optionValueForAddress(
                     order.resources.shippingAddresses, false, order, {
-                        className: 'multi-shipping',
+                        // className: 'multi-shipping',
                         type: 'billing'
                     }
                 ));
@@ -278,7 +276,10 @@
                     // Shipping Address option
                     $billingAddressSelector.append(
                         optionValueForAddress(aShipping, isSelected, order,
-                                { className: 'multi-shipping', type: 'billing' }
+                            {
+                                // className: 'multi-shipping',
+                                type: 'billing'
+                            }
                         )
                     );
                 });
@@ -381,6 +382,19 @@
                 $('input[name$=securityCode]', form).val('');
                 $('input[name$=cardNumber]', form).val('');
             }
+        }
+
+        /**
+         * clears the billing address form values
+         */
+        function clearBillingAddressFormValues() {
+            updateBillingAddressFormValues({
+                billing: {
+                    billingAddress: {
+                        address: {}
+                    }
+                }
+            });
         }
 
         /**
@@ -1149,9 +1163,20 @@
                 });
 
                 $('.btn-add-new').on('click', function () {
-                    var $newEl = $(this).parents('form').find('.addressSelector option[value=new]');
-                    $newEl.attr('selected', 'selected');
-                    $newEl.parent().trigger('change');
+                    var $el = $(this);
+                    if ($el.parents('#dwfrm_billing').length > 0) {
+                        // Handle billing address case
+                        clearBillingAddressFormValues();
+                        var $firstOption = $($el.parents('form').find('.addressSelector option')[0]);
+                        $firstOption.attr('value', 'new');
+                        $firstOption.text('New Address');
+                        $el.parents('[data-address-mode]').attr('data-address-mode', 'new');
+                    } else {
+                        // Handle shipping address case
+                        var $newEl = $el.parents('form').find('.addressSelector option[value=new]');
+                        $newEl.prop('selected', 'selected');
+                        $newEl.parent().trigger('change');
+                    }
                 });
 
                 $('.btn-show-billing-details').on('click', function () {
@@ -1259,7 +1284,7 @@
                         $('select[name$=stateCode]', form).trigger('change');
                         $(form).attr('data-address-mode', 'shipment');
                     } else if (shipmentUUID.indexOf('ab_') === 0) {
-                        var url = $(this).attr('data-create-shipment-url');
+                        var url = form.action;
                         var serializedData = $(form).serialize();
                         createNewShipment(url, serializedData)
                         .done(function (response) {
@@ -1274,7 +1299,6 @@
                             updateCheckoutView(response.order, response.customer,
                                 { keepOpen: true }
                             );
-                            $('select[name$=stateCode]', form).trigger('change');
                             $(form).attr('data-address-mode', 'customer');
                         })
                         .fail(function () {
