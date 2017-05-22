@@ -8,9 +8,9 @@
 function getPidValue($el) {
     var pid;
 
-    if ($('#quickViewModal').hasClass('show') && !$('.product-set-detail').length) {
+    if ($('#quickViewModal').hasClass('show') && !$('.product-set').length) {
         pid = $($el).closest('.modal-content').find('.product-quickview').data('pid');
-    } else if ($('.product-set-detail').length) {
+    } else if ($('.product-set-detail').length || $('.product-set').length) {
         pid = $($el).closest('.product-detail').find('.product-id').text();
     } else {
         pid = $('.product-detail:not(".bundle-item")').data('pid');

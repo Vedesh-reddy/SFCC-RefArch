@@ -1,5 +1,5 @@
 <div class="set-items">
-    <isloop items="${set.individualProducts}" var="productItem" status="loopState">
+    <isloop items="${productCopy.individualProducts}" var="productItem" status="loopState">
         <isset name="product" value="${productItem}" scope="page" />
 
         <div class="container product-detail set-item">
