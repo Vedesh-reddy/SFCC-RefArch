@@ -1167,9 +1167,9 @@
                     if ($el.parents('#dwfrm_billing').length > 0) {
                         // Handle billing address case
                         clearBillingAddressFormValues();
-                        var $firstOption = $($el.parents('form').find('.addressSelector option')[0]);
-                        $firstOption.attr('value', 'new');
-                        $firstOption.text('New Address');
+                        var $option = $($el.parents('form').find('.addressSelector option')[0]);
+                        $option.attr('value', 'new');
+                        $option.text('New Address');
                         $el.parents('[data-address-mode]').attr('data-address-mode', 'new');
                     } else {
                         // Handle shipping address case

@@ -291,7 +291,7 @@ function ensureNoEmptyShipments(req) {
                     // Move the valid marker with the shipment
                     var altValid = req.session.privacyCache.get(altShipment.UUID);
                     req.session.privacyCache.set(currentBasket.defaultShipment.UUID, altValid);
-                    
+
                     Collections.forEach(altShipment.productLineItems,
                         function (lineItem) {
                             lineItem.setShipment(currentBasket.defaultShipment);
