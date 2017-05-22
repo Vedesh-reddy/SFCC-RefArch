@@ -60,6 +60,7 @@ describe('Shipping', function () {
             UUID: null,
             productLineItems: null,
             applicableShippingMethods: null,
+            matchingAddressId: false,
             shippingAddress: null,
             selectedShippingMethod: null
         });

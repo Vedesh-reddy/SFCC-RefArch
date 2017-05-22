@@ -268,10 +268,10 @@ function getFirstNonDefaultShipmentWithProductLineItems(currentBasket) {
 }
 
 /**
- * Copies a raw address object to the baasket billing address
- * @param {Object} address - an address-similar Object (firstName, ...)
+ * Ensures that no shipment exists with 0 product line items
+ * @param {Object} req - the request object needed to access session.privacyCache
  */
-function ensureNoEmptyShipments() {
+function ensureNoEmptyShipments(req) {
     Transaction.wrap(function () {
         var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -287,6 +287,10 @@ function ensureNoEmptyShipments() {
                     // Copy all line items from 2nd to first
                     var altShipment = getFirstNonDefaultShipmentWithProductLineItems(currentBasket);
                     if (!altShipment) return;
+
+                    // Move the valid marker with the shipment
+                    var altValid = req.session.privacyCache.get(altShipment.UUID);
+                    req.session.privacyCache.set(currentBasket.defaultShipment.UUID, altValid);
 
                     Collections.forEach(altShipment.productLineItems,
                         function (lineItem) {

@@ -3,7 +3,6 @@
 var AddressModel = require('~/cartridge/models/address');
 var URLUtils = require('dw/web/URLUtils');
 
-
 /**
  * Creates a plain object that contains profile information
  * @param {Object} profile - current customer's profile

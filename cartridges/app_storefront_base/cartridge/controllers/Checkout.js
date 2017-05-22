@@ -10,10 +10,7 @@ var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 
 var AccountModel = require('~/cartridge/models/account');
-// var BillingModel = require('~/cartridge/models/billing');
 var OrderModel = require('~/cartridge/models/order');
-// var PaymentModel = require('~/cartridge/models/payment');
-// var ShippingModel = require('~/cartridge/models/shipping');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var TotalsModel = require('~/cartridge/models/totals');
 
@@ -117,7 +114,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     currentBasket.removeShipment(shipment);
                 }
             });
-            COHelpers.ensureNoEmptyShipments();
+            COHelpers.ensureNoEmptyShipments(req);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
@@ -293,7 +290,7 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
             ShippingHelper.ensureShipmentHasMethod(shipment);
         });
         Transaction.wrap(function () {
-            COHelpers.ensureNoEmptyShipments();
+            COHelpers.ensureNoEmptyShipments(req);
             COHelpers.recalculateBasket(basket);
         });
     } catch (err) {
@@ -379,7 +376,7 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
                                 shipment = basket.createShipment(UUIDUtils.createUUID());
                             }
                         } else if (shipmentUUID.indexOf('ab_') === 0) {
-                            shipment = ShippingHelper.getShipmentByUUID(basket, origUUID);
+                            shipment = basket.createShipment(UUIDUtils.createUUID());
                         } else {
                             // Choose an existing shipment for this PLI
                             shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
@@ -387,7 +384,7 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
                         COHelpers.copyShippingAddressToShipment(result, shipment);
                         productLineItem.setShipment(shipment);
 
-                        COHelpers.ensureNoEmptyShipments();
+                        COHelpers.ensureNoEmptyShipments(req);
                     }
                 });
             } catch (e) {
@@ -475,7 +472,7 @@ server.get('Start', server.middleware.https, function (req, res, next) {
 
     // Calculate the basket
     Transaction.wrap(function () {
-        COHelpers.ensureNoEmptyShipments();
+        COHelpers.ensureNoEmptyShipments(req);
     });
     COHelpers.recalculateBasket(currentBasket);
 

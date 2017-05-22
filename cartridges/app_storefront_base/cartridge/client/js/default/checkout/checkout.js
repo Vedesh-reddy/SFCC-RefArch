@@ -51,9 +51,7 @@
         function populateAddressSummary(parentSelector, address) {
             $.each(address, function (attr) {
                 var val = address[attr];
-                if (val) {
-                    $('.' + attr, parentSelector).text(val);
-                }
+                $('.' + attr, parentSelector).text(val || '');
             });
         }
 
@@ -95,18 +93,28 @@
             var safeOptions = options || {};
             var isBilling = safeOptions.type && safeOptions.type === 'billing';
             var className = safeOptions.className || '';
+            var isSelected = selected;
+            var isNew = !shipping;
             if (typeof shipping === 'string') {
                 return $('<option class="' + className + '" disabled>' + shipping + '</option>');
             }
             var safeShipping = shipping || {};
             var shippingAddress = safeShipping.shippingAddress || {};
+
+            if (isBilling && isNew && !order.billing.matchingAddressId) {
+                shippingAddress = order.billing.billingAddress.address || {};
+                isNew = false;
+                isSelected = true;
+                safeShipping.UUID = 'manual-entry';
+            }
+
             var uuid = safeShipping.UUID ? safeShipping.UUID : 'new';
             var optionEl = $('<option class="' + className + '" />');
             optionEl.val(uuid);
 
             var title;
 
-            if (!shipping) {
+            if (isNew) {
                 title = order.resources.addNewAddress;
             } else {
                 title = [];
@@ -161,11 +169,16 @@
             };
             $.each(keyMap, function (key) {
                 var mappedKey = keyMap[key];
+                var mappedValue = shippingAddress[mappedKey];
+                // In case of country code
+                if (mappedValue && typeof mappedValue === 'object') {
+                    mappedValue = mappedValue.value;
+                }
 
-                optionEl.attr(key, shippingAddress[mappedKey] || '');
+                optionEl.attr(key, mappedValue || '');
             });
 
-            if (selected) {
+            if (isSelected) {
                 optionEl.attr('selected', true);
             }
 
@@ -213,11 +226,12 @@
                     $shippingAddressSelector.append(optionValueForAddress(
                             order.resources.accountAddresses, false, order));
                     customer.addresses.forEach(function (address) {
+                        var isSelected = shipping.matchingAddressId === address.ID;
                         $shippingAddressSelector.append(
                             optionValueForAddress({
                                 UUID: 'ab_' + address.ID,
                                 shippingAddress: address
-                            }, false, order)
+                            }, isSelected, order)
                         );
                     });
                 }
@@ -246,11 +260,13 @@
             if ($billingAddressSelector && $billingAddressSelector.length === 1) {
                 $billingAddressSelector.empty();
                 // Add New Address option
-                $billingAddressSelector.append(optionValueForAddress(null, false, order));
+                $billingAddressSelector.append(optionValueForAddress(null, false, order,
+                    { type: 'billing' }));
+
                 // Separator -
                 $billingAddressSelector.append(optionValueForAddress(
                     order.resources.shippingAddresses, false, order, {
-                        className: 'multi-shipping',
+                        // className: 'multi-shipping',
                         type: 'billing'
                     }
                 ));
@@ -260,7 +276,10 @@
                     // Shipping Address option
                     $billingAddressSelector.append(
                         optionValueForAddress(aShipping, isSelected, order,
-                                { className: 'multi-shipping', type: 'billing' }
+                            {
+                                // className: 'multi-shipping',
+                                type: 'billing'
+                            }
                         )
                     );
                 });
@@ -281,11 +300,11 @@
                 }
             }
 
-            if (!hasSelectedAddress) {
+            if (hasSelectedAddress || !order.billing.matchingAddressId) {
                 // show
-                $(form).attr('data-address-mode', 'new');
-            } else {
                 $(form).attr('data-address-mode', 'edit');
+            } else {
+                $(form).attr('data-address-mode', 'new');
             }
         }
 
@@ -363,6 +382,19 @@
                 $('input[name$=securityCode]', form).val('');
                 $('input[name$=cardNumber]', form).val('');
             }
+        }
+
+        /**
+         * clears the billing address form values
+         */
+        function clearBillingAddressFormValues() {
+            updateBillingAddressFormValues({
+                billing: {
+                    billingAddress: {
+                        address: {}
+                    }
+                }
+            });
         }
 
         /**
@@ -1131,9 +1163,20 @@
                 });
 
                 $('.btn-add-new').on('click', function () {
-                    var $newEl = $(this).parents('form').find('.addressSelector option[value=new]');
-                    $newEl.attr('selected', 'selected');
-                    $newEl.parent().trigger('change');
+                    var $el = $(this);
+                    if ($el.parents('#dwfrm_billing').length > 0) {
+                        // Handle billing address case
+                        clearBillingAddressFormValues();
+                        var $option = $($el.parents('form').find('.addressSelector option')[0]);
+                        $option.attr('value', 'new');
+                        $option.text('New Address');
+                        $el.parents('[data-address-mode]').attr('data-address-mode', 'new');
+                    } else {
+                        // Handle shipping address case
+                        var $newEl = $el.parents('form').find('.addressSelector option[value=new]');
+                        $newEl.prop('selected', 'selected');
+                        $newEl.parent().trigger('change');
+                    }
                 });
 
                 $('.btn-show-billing-details').on('click', function () {
@@ -1241,7 +1284,7 @@
                         $('select[name$=stateCode]', form).trigger('change');
                         $(form).attr('data-address-mode', 'shipment');
                     } else if (shipmentUUID.indexOf('ab_') === 0) {
-                        var url = $(this).attr('data-create-shipment-url');
+                        var url = form.action;
                         var serializedData = $(form).serialize();
                         createNewShipment(url, serializedData)
                         .done(function (response) {
@@ -1256,7 +1299,6 @@
                             updateCheckoutView(response.order, response.customer,
                                 { keepOpen: true }
                             );
-                            $('select[name$=stateCode]', form).trigger('change');
                             $(form).attr('data-address-mode', 'customer');
                         })
                         .fail(function () {
@@ -1305,9 +1347,20 @@
                             }
 
                             $rootEl.attr('data-view-mode', 'edit');
+                            var addressInfo = getAddressFieldsFromUI(form);
+                            var savedState = {
+                                UUID: $('input[name=shipmentUUID]', form).val(),
+                                shippingAddress: addressInfo
+                            };
+
+                            $rootEl.data('saved-state', JSON.stringify(savedState));
                             break;
                         case 'cancel':
                             // Should clear out changes / restore previous state
+                            var restoreState = $rootEl.data('saved-state');
+                            if (restoreState) {
+                                updateShippingAddressFormValues(JSON.parse(restoreState));
+                            }
                             $(form).attr('data-address-mode', 'edit');
                             break;
                         case 'save':

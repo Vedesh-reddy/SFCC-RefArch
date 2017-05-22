@@ -1,12 +1,33 @@
+<isset name="billingAddress" scope="page" value="${pdict.order.billing.billingAddress.address}">
 <select name="addressSelector" class="addressSelector form-control" data-create-shipment-url="${URLUtils.https('Checkout-SetBillingAddress')}">
-    <option value="new"
-        data-first-name="" data-last-name=""
-        data-address1="" data-address2=""
-        data-city="" data-state-code=""
-        data-country-code="" data-postal-code=""
-        data-phone="">
-        ${Resource.msg('msg.new.address', 'checkout', null)}
-    </option>
+    <isif condition="${pdict.order.billing.matchingAddressId || !billingAddress}">
+	    <option value="new"
+	        data-first-name="" data-last-name=""
+	        data-address1="" data-address2=""
+	        data-city="" data-state-code=""
+	        data-country-code="" data-postal-code=""
+	        data-phone="">
+	        ${Resource.msg('msg.new.address', 'checkout', null)}
+	    </option>
+	<iselse/>
+        <option value="manual-entry" 
+            data-first-name="${billingAddress.firstName||''}"
+            data-last-name="${billingAddress.lastName||''}"
+            data-address1="${billingAddress.address1||''}"
+            data-address2="${billingAddress.address2||''}"
+            data-city="${billingAddress.city||''}"
+            data-state-code="${billingAddress.stateCode}"
+            data-country-code="${billingAddress.countryCode ? billingAddress.countryCode.value : ''}"
+            data-postal-code="${billingAddress.postalCode}"
+            data-phone="${billingAddress.phone}">
+         ${billingAddress.firstName || ''}
+         ${billingAddress.lastName || ''}
+         ${billingAddress.address1 || ''}
+         ${billingAddress.city || ''}${!billingAddress.city || ','}
+         ${billingAddress.stateCode||''}
+         ${billingAddress.postalCode||''}
+        </option>
+	</isif>
     <isif condition="${pdict.order.shipping[0].shippingAddress}">
         <option disabled>${Resource.msg('msg.shipping.addresses', 'checkout', null)}</option>
         <isloop items="${pdict.order.shipping}" var="aShippingModel">
