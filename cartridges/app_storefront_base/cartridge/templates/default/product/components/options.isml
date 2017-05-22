@@ -2,7 +2,7 @@
     <isloop items="${product.options}" var="option" status="loopStatus">
         <div class="row product-option" data-option-id="${option.id}">
             <div class="
-                <isif condition="${loopStatus.last}">
+                <isif condition="${loopStatus.last && !isQuickView}">
                     col-8
                 <iselse>
                     col-12 col-md-10
@@ -11,7 +11,7 @@
             </div>
 
             <!-- Quantity Drop Down Menu -->
-            <isif condition="${loopStatus.last}">
+            <isif condition="${loopStatus.last && !isQuickView}">
                 <div class="col-4 quantity">
                     <isinclude template="product/components/quantity" />
                 </div>
