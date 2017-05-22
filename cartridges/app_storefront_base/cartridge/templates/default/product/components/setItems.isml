@@ -77,7 +77,7 @@
                            <hr>
                        </div>
 
-                       <div class="col-12 prices-add-to-cart-actions">
+                       <div class="col-12">
                            <!-- Prices -->
                            <div class="prices">
                                <isset name="price" value="${product.price}" scope="page" />
