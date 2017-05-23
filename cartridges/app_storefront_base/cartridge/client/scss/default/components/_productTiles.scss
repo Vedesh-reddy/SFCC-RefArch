@@ -206,6 +206,10 @@
         border: none;
         border-bottom-right-radius: 0.1875rem;
         border-bottom-left-radius: 0.1875rem;
+
+        .prices .price {
+            font-size: 1.6em;
+        }
     }
 
     .prices .sales {
