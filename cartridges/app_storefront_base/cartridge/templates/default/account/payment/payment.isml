@@ -25,7 +25,6 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="pull-left">${paymentInstrument.creditCardHolder}</h4>
-                            <a href="${URLUtils.url('PaymentInstruments-EditPayment', 'UUID', paymentInstrument.UUID)}" class="pull-right">${Resource.msg('link.edit','payment',null)}</a>
                         </div>
                         <div class="card-block card-block-positioning">
                             <div class="card-info-group">

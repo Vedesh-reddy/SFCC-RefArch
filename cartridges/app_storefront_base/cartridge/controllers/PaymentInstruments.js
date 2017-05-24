@@ -16,25 +16,18 @@ var AccountModel = require('~/cartridge/models/account');
  * Checks if a credit card is valid or not
  * @param {Object} card - plain object with card details
  * @param {Object} form - form object
- * @param {Object} paymentInstruments - saved payment instruments of the customer
- * @param {string} UUID - UUID of the payment instrument
  * @returns {boolean} a boolean representing card validation
  */
-function verifyCard(card, form, paymentInstruments, UUID) {
+function verifyCard(card, form) {
     var paymentCard = PaymentMgr.getPaymentCard(card.cardType);
     var error = false;
     var cardNumber = card.cardNumber;
-    if (UUID && (!card.cardNumber)) {
-        var payment = array.find(paymentInstruments, function (paymentInstrument) {
-            return card.UUID === paymentInstrument.UUID;
-        });
-        cardNumber = payment.creditCardNumber;
-    }
     var creditCardStatus = paymentCard.verify(
         card.expirationMonth,
         card.expirationYear,
         cardNumber
     );
+
     if (creditCardStatus.error) {
         helper.forEach(creditCardStatus.items, function (item) {
             switch (item.code) {
@@ -66,18 +59,16 @@ function verifyCard(card, form, paymentInstruments, UUID) {
 /**
  * Creates an object from form values
  * @param {Object} paymentForm - form object
- * @param {string} UUID - UUID of the payment instrument
  * @returns {Object} a plain object of payment instrument
  */
-function getDetailsObject(paymentForm, UUID) {
+function getDetailsObject(paymentForm) {
     return {
         name: paymentForm.cardOwner.value,
-        cardNumber: UUID ? null : paymentForm.cardNumber.value,
+        cardNumber: paymentForm.cardNumber.value,
         cardType: paymentForm.cardType.value,
         expirationMonth: paymentForm.expirationMonth.value,
         expirationYear: paymentForm.expirationYear.value,
-        paymentForm: paymentForm,
-        UUID: UUID
+        paymentForm: paymentForm
     };
 }
 
@@ -151,105 +142,37 @@ server.get('AddPayment', function (req, res, next) {
     next();
 });
 
-server.get('EditPayment', function (req, res, next) {
-    var creditCardExpirationYears = getExpirationYears();
-    var paymentForm = server.forms.getForm('creditcard');
-    paymentForm.clear();
-    var UUID = req.querystring.UUID;
-    var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
-    var paymentToEdit = array.find(paymentInstruments, function (paymentInstrument) {
-        return UUID === paymentInstrument.UUID;
-    });
-
-    paymentForm.cardOwner.value = paymentToEdit.creditCardHolder;
-    paymentForm.cardType.value = paymentToEdit.creditCardType;
-    paymentForm.expirationYear.value = paymentToEdit.creditCardExpirationYear;
-    paymentForm.editNumber.value = paymentToEdit.maskedCreditCardNumber;
-
-    var months = paymentForm.expirationMonth.options;
-    for (var j = 1, k = months.length; j < k; j++) {
-        months[j].selected = false;
-        if (months[j].value === paymentToEdit.creditCardExpirationMonth) {
-            months[j].selected = true;
-        }
-    }
-    res.render('account/payment/editaddpayment', {
-        paymentForm: paymentForm,
-        UUID: UUID,
-        expirationYears: creditCardExpirationYears,
-        breadcrumbs: [
-            {
-                htmlValue: Resource.msg('global.home', 'common', null),
-                url: URLUtils.home().toString()
-            },
-            {
-                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
-                url: URLUtils.url('Account-Show').toString()
-            },
-            {
-                htmlValue: Resource.msg('page.heading.payments', 'payment', null),
-                url: URLUtils.url('PaymentInstruments-List').toString()
-            }
-        ]
-    });
-
-    next();
-});
-
 server.post('SavePayment', function (req, res, next) {
     var formErrors = require('~/cartridge/scripts/formErrors');
 
-    var UUID = req.querystring.UUID ? req.querystring.UUID : null;
     var paymentForm = server.forms.getForm('creditcard');
-    var result = getDetailsObject(paymentForm, UUID);
+    var result = getDetailsObject(paymentForm);
     var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
 
-    if (array.find(paymentInstruments, function (paymentInstrument) {
-        return result.cardNumber === paymentInstrument.creditCardNumber;
-    })) {
-        paymentForm.valid = false;
-        paymentForm.cardNumber.valid = false;
-        paymentForm.cardNumber.error =
-            Resource.msg('error.message.creditnumber.exists', 'forms', null);
-    }
-
-    if (paymentForm.valid && !verifyCard(result, paymentForm, paymentInstruments, UUID)) {
+    if (paymentForm.valid && !verifyCard(result, paymentForm, paymentInstruments)) {
         res.setViewData(result);
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var formInfo = res.getViewData();
-            if (!UUID) {
-                var customer = CustomerMgr.getCustomerByCustomerNumber(
-                    req.currentCustomer.profile.customerNo
+            var customer = CustomerMgr.getCustomerByCustomerNumber(
+                req.currentCustomer.profile.customerNo
+            );
+            var wallet = customer.getProfile().getWallet();
+
+            Transaction.wrap(function () {
+                var paymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
+                paymentInstrument.setCreditCardHolder(formInfo.name);
+                paymentInstrument.setCreditCardNumber(formInfo.cardNumber);
+                paymentInstrument.setCreditCardType(formInfo.cardType);
+                paymentInstrument.setCreditCardExpirationMonth(formInfo.expirationMonth);
+                paymentInstrument.setCreditCardExpirationYear(formInfo.expirationYear);
+
+                var token = HookMgr.callHook(
+                    'app.payment.processor.basic_credit',
+                    'createMockToken'
                 );
-                var wallet = customer.getProfile().getWallet();
 
-                Transaction.wrap(function () {
-                    var paymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
-                    paymentInstrument.setCreditCardHolder(formInfo.name);
-                    paymentInstrument.setCreditCardNumber(formInfo.cardNumber);
-                    paymentInstrument.setCreditCardType(formInfo.cardType);
-                    paymentInstrument.setCreditCardExpirationMonth(formInfo.expirationMonth);
-                    paymentInstrument.setCreditCardExpirationYear(formInfo.expirationYear);
-
-                    var token = HookMgr.callHook(
-                        'app.payment.processor.basic_credit',
-                        'createMockToken'
-                    );
-
-                    paymentInstrument.setCreditCardToken(token);
-                });
-            } else {
-                var paymentToEdit = array.find(paymentInstruments, function (paymentInstrument) {
-                    return formInfo.UUID === paymentInstrument.UUID;
-                });
-
-                Transaction.wrap(function () {
-                    paymentToEdit.raw.setCreditCardHolder(formInfo.name);
-                    paymentToEdit.raw.setCreditCardType(formInfo.cardType);
-                    paymentToEdit.raw.setCreditCardExpirationMonth(formInfo.expirationMonth);
-                    paymentToEdit.raw.setCreditCardExpirationYear(formInfo.expirationYear);
-                });
-            }
+                paymentInstrument.setCreditCardToken(token);
+            });
             res.json({
                 success: true,
                 redirectUrl: URLUtils.url('PaymentInstruments-List').toString()
