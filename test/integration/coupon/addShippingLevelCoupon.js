@@ -41,9 +41,20 @@ describe('Shipping Level Coupon - add coupon', function () {
                 cookieJar.setCookie(cookie, myRequest.url);
                 return request(myRequest);
             })
+            // get CSRF token
             .then(function () {
-                myRequest.method = 'GET';
-                myRequest.url = config.baseUrl + '/Cart-AddCoupon?couponCode=' + couponCode;
+                myRequest.method = 'POST';
+                myRequest.url = config.baseUrl + '/CSRF-Generate';
+                var cookie = request.cookie(cookieString);
+                cookieJar.setCookie(cookie, myRequest.url);
+                return request(myRequest)
+                    .then(function (csrfResponse) {
+                        var csrfJsonResponse = JSON.parse(csrfResponse.body);
+                        myRequest.method = 'GET';
+                        myRequest.url = config.baseUrl + '/Cart-AddCoupon?couponCode=' +
+                            couponCode + '&' + csrfJsonResponse.csrf.tokenName + '=' +
+                            csrfJsonResponse.csrf.token;
+                    });
             });
     });
 

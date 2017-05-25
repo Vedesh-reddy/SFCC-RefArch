@@ -12,6 +12,9 @@
                     <div class="col-7">
                         <input type="text" class="form-control coupon-code-field" id="couponCode" name="couponCode" placeholder="${Resource.msg('placholder.text.promo.code.input','cart',null)}">
                     </div>
+
+                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+
                     <div class="col-5 promo-code-submit">
                         <button type="submit" class="btn btn-primary btn-block promo-code-btn">
                             ${Resource.msg('button.submit.promo.code','cart',null)}

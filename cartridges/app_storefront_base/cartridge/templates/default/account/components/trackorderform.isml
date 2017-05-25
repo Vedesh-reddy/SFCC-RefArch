@@ -51,6 +51,9 @@
                 pattern="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)">
             <div class="form-control-feedback"></div>
         </div>
+
+        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+
         <div class="form-group">
             <button class="btn btn-block btn-primary" type="submit" name="submit" value="submit">
                 ${Resource.msg('button.text.trackorderform', 'login', null)}

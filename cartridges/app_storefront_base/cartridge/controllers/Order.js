@@ -11,6 +11,7 @@ var URLUtils = require('dw/web/URLUtils');
 var OrderModel = require('~/cartridge/models/order');
 
 var OrderHelpers = require('~/cartridge/scripts/order/orderHelpers');
+var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
 
 
 server.get('Confirm', function (req, res, next) {
@@ -39,72 +40,78 @@ server.get('Confirm', function (req, res, next) {
     next();
 });
 
-server.post('Track', server.middleware.https, function (req, res, next) {
-    var order;
-    var validForm = true;
+server.post(
+    'Track',
+    server.middleware.https,
+    CSRFProtection.validateRequest,
+    CSRFProtection.generateToken,
+    function (req, res, next) {
+        var order;
+        var validForm = true;
 
-    var profileForm = server.forms.getForm('profile');
-    profileForm.clear();
+        var profileForm = server.forms.getForm('profile');
+        profileForm.clear();
 
-    if (req.form.trackOrderEmail && req.form.trackOrderPostal && req.form.trackOrderNumber) {
-        order = OrderMgr.getOrder(req.form.trackOrderNumber);
-    } else {
-        validForm = false;
-    }
-
-    if (!order) {
-        res.render('/account/login', {
-            navTabValue: 'login',
-            orderTrackFormError: validForm,
-            profileForm: profileForm,
-            userName: ''
-        });
-        next();
-    } else {
-        var config = {
-            numberOfLineItems: '*'
-        };
-        var orderModel = new OrderModel(order, { config: config });
-
-        // check the email and postal code of the form
-        if (req.form.trackOrderEmail !== orderModel.orderEmail) {
-            validForm = false;
-        }
-
-        if (req.form.trackOrderPostal
-            !== orderModel.billing.billingAddress.address.postalCode) {
-            validForm = false;
-        }
-
-        if (validForm) {
-            var exitLinkText;
-            var exitLinkUrl;
-
-            exitLinkText = !req.currentCustomer.profile
-                ? Resource.msg('link.continue.shop', 'order', null)
-                : Resource.msg('link.orderdetails.myaccount', 'account', null);
-
-            exitLinkUrl = !req.currentCustomer.profile
-                ? URLUtils.https('Home-Show')
-                : URLUtils.https('Account-Show');
-
-            res.render('account/orderdetails', {
-                order: orderModel,
-                exitLinkText: exitLinkText,
-                exitLinkUrl: exitLinkUrl
-            });
+        if (req.form.trackOrderEmail && req.form.trackOrderPostal && req.form.trackOrderNumber) {
+            order = OrderMgr.getOrder(req.form.trackOrderNumber);
         } else {
+            validForm = false;
+        }
+
+        if (!order) {
             res.render('/account/login', {
                 navTabValue: 'login',
+                orderTrackFormError: validForm,
                 profileForm: profileForm,
-                orderTrackFormError: !validForm,
                 userName: ''
             });
-        }
+            next();
+        } else {
+            var config = {
+                numberOfLineItems: '*'
+            };
+            var orderModel = new OrderModel(order, { config: config });
 
-        next();
+            // check the email and postal code of the form
+            if (req.form.trackOrderEmail !== orderModel.orderEmail) {
+                validForm = false;
+            }
+
+            if (req.form.trackOrderPostal
+                !== orderModel.billing.billingAddress.address.postalCode) {
+                validForm = false;
+            }
+
+            if (validForm) {
+                var exitLinkText;
+                var exitLinkUrl;
+
+                exitLinkText = !req.currentCustomer.profile
+                    ? Resource.msg('link.continue.shop', 'order', null)
+                    : Resource.msg('link.orderdetails.myaccount', 'account', null);
+
+                exitLinkUrl = !req.currentCustomer.profile
+                    ? URLUtils.https('Home-Show')
+                    : URLUtils.https('Account-Show');
+
+                res.render('account/orderdetails', {
+                    order: orderModel,
+                    exitLinkText: exitLinkText,
+                    exitLinkUrl: exitLinkUrl
+                });
+            } else {
+                res.render('/account/login', {
+                    navTabValue: 'login',
+                    profileForm: profileForm,
+                    orderTrackFormError: !validForm,
+                    userName: ''
+                });
+            }
+
+            next();
+        }
     }
-});
+);
 
 server.get('History', server.middleware.https, function (req, res, next) {
     if (!req.currentCustomer.profile) {

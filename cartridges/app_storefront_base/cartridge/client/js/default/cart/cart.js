@@ -311,8 +311,12 @@ module.exports = function () {
                 $.spinner().stop();
             },
             error: function (err) {
-                createErrorNotification(err.errorMessage);
-                $.spinner().stop();
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                } else {
+                    createErrorNotification(err.errorMessage);
+                    $.spinner().stop();
+                }
             }
         });
         return false;

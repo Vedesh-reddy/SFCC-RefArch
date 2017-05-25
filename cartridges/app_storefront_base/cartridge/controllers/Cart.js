@@ -15,6 +15,7 @@ var Collections = require('~/cartridge/scripts/util/collections');
 var CartHelper = require('~/cartridge/scripts/cart/cartHelpers');
 var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
 
+var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
@@ -81,25 +82,30 @@ server.post('AddProduct', function (req, res, next) {
     next();
 });
 
-server.get('Show', server.middleware.https, function (req, res, next) {
-    var currentBasket = BasketMgr.getCurrentBasket();
+server.get(
+    'Show',
+    server.middleware.https,
+    CSRFProtection.generateToken,
+    function (req, res, next) {
+        var currentBasket = BasketMgr.getCurrentBasket();
 
-    if (currentBasket) {
-        Transaction.wrap(function () {
-            if (currentBasket.currencyCode !== req.session.currency.currencyCode) {
-                currentBasket.updateCurrency();
-            }
-            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
+        if (currentBasket) {
+            Transaction.wrap(function () {
+                if (currentBasket.currencyCode !== req.session.currency.currencyCode) {
+                    currentBasket.updateCurrency();
+                }
+                CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-        });
+                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            });
+        }
+
+        var basketModel = new CartModel(currentBasket);
+
+        res.render('cart/cart', basketModel);
+        next();
     }
-
-    var basketModel = new CartModel(currentBasket);
-
-    res.render('cart/cart', basketModel);
-    next();
-});
+);
 
 server.get('Get', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
@@ -258,57 +264,68 @@ server.get('MiniCartShow', function (req, res, next) {
     next();
 });
 
-server.get('AddCoupon', server.middleware.https, function (req, res, next) {
-    var currentBasket = BasketMgr.getCurrentBasket();
+server.get(
+    'AddCoupon',
+    server.middleware.https,
+    CSRFProtection.validateAjaxRequest,
+    function (req, res, next) {
+        var data = res.getViewData();
+        if (data && data.csrfError) {
+            res.json();
+            return next();
+        }
 
-    if (!currentBasket) {
-        res.setStatusCode(500);
-        res.json({ errorMessage: Resource.msg('error.add.coupon', 'cart', null) });
-        return next();
-    }
+        var currentBasket = BasketMgr.getCurrentBasket();
 
-    var error = false;
-    var errorMessage;
+        if (!currentBasket) {
+            res.setStatusCode(500);
+            res.json({ errorMessage: Resource.msg('error.add.coupon', 'cart', null) });
+            return next();
+        }
 
-    try {
+        var error = false;
+        var errorMessage;
+
+        try {
+            Transaction.wrap(function () {
+                return currentBasket.createCouponLineItem(req.querystring.couponCode, true);
+            });
+        } catch (e) {
+            error = true;
+            var errorCodes = {
+                COUPON_CODE_ALREADY_IN_BASKET: 'error.coupon.already.in.cart',
+                COUPON_ALREADY_IN_BASKET: 'error.coupon.cannot.be.combined',
+                COUPON_CODE_ALREADY_REDEEMED: 'error.coupon.already.redeemed',
+                COUPON_CODE_UNKNOWN: 'error.unable.to.add.coupon',
+                COUPON_DISABLED: 'error.unable.to.add.coupon',
+                REDEMPTION_LIMIT_EXCEEDED: 'error.unable.to.add.coupon',
+                TIMEFRAME_REDEMPTION_LIMIT_EXCEEDED: 'error.unable.to.add.coupon',
+                NO_ACTIVE_PROMOTION: 'error.unable.to.add.coupon',
+                default: 'error.unable.to.add.coupon'
+            };
+
+            var errorMessageKey = errorCodes[e.errorCode] || errorCodes.default;
+            errorMessage = Resource.msg(errorMessageKey, 'cart', null);
+        }
+
+        if (error) {
+            res.json({
+                error: error,
+                errorMessage: errorMessage
+            });
+            return next();
+        }
+
         Transaction.wrap(function () {
-            return currentBasket.createCouponLineItem(req.querystring.couponCode, true);
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
-    } catch (e) {
-        error = true;
-        var errorCodes = {
-            COUPON_CODE_ALREADY_IN_BASKET: 'error.coupon.already.in.cart',
-            COUPON_ALREADY_IN_BASKET: 'error.coupon.cannot.be.combined',
-            COUPON_CODE_ALREADY_REDEEMED: 'error.coupon.already.redeemed',
-            COUPON_CODE_UNKNOWN: 'error.unable.to.add.coupon',
-            COUPON_DISABLED: 'error.unable.to.add.coupon',
-            REDEMPTION_LIMIT_EXCEEDED: 'error.unable.to.add.coupon',
-            TIMEFRAME_REDEMPTION_LIMIT_EXCEEDED: 'error.unable.to.add.coupon',
-            NO_ACTIVE_PROMOTION: 'error.unable.to.add.coupon',
-            default: 'error.unable.to.add.coupon'
-        };
 
-        var errorMessageKey = errorCodes[e.errorCode] || errorCodes.default;
-        errorMessage = Resource.msg(errorMessageKey, 'cart', null);
-    }
+        var basketModel = new CartModel(currentBasket);
 
-    if (error) {
-        res.json({
-            error: error,
-            errorMessage: errorMessage
-        });
+        res.json(basketModel);
         return next();
     }
-
-    Transaction.wrap(function () {
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-    });
-
-    var basketModel = new CartModel(currentBasket);
-
-    res.json(basketModel);
-    return next();
-});
+);
 
 
 server.get('RemoveCouponLineItem', function (req, res, next) {
