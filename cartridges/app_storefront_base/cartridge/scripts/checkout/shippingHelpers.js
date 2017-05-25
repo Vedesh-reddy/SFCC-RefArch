@@ -38,7 +38,7 @@ function getAddressFromRequest(req) {
         city: req.form.city,
         stateCode: req.form.stateCode,
         postalCode: req.form.postalCode,
-        countryCode: req.form.stateCode,
+        countryCode: req.form.countryCode,
         phone: req.form.phone
     };
 }

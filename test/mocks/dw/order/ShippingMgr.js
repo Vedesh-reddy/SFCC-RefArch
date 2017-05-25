@@ -1,4 +1,6 @@
 
+var ArrayList = require('../../../mocks/dw.util.Collection');
+
 var defaultShippingMethod =
     {
         description: 'Order received within 7-10 business days',
@@ -11,7 +13,7 @@ var defaultShippingMethod =
 
 function createShipmentShippingModel() {
     return {
-        applicableShippingMethods: [
+        applicableShippingMethods: new ArrayList([
             {
                 description: 'Order received within 7-10 business days',
                 displayName: 'Ground',
@@ -29,9 +31,9 @@ function createShipmentShippingModel() {
                     estimatedArrivalTime: '2 Business Days'
                 }
             }
-        ],
+        ]),
         getApplicableShippingMethods: function () {
-            return [
+            return new ArrayList([
                 {
                     description: 'Order received within 7-10 business days',
                     displayName: 'Ground',
@@ -49,7 +51,7 @@ function createShipmentShippingModel() {
                         estimatedArrivalTime: '2 Business Days'
                     }
                 }
-            ];
+            ]);
         },
         getShippingCost: function () {
             return {
