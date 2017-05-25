@@ -6,9 +6,9 @@ export const NEXT_BUTTON = '.icon-next';
 export const PRODUCT_NAME = '.product-name';
 export const SELECTED_SWATCH_COLOR = '.swatch-value.selected';
 export const SELECTED_SIZE = '.select-size option[selected]';
-export const SELECTED_QUANTITY = '.quantity select.custom-select.form-control';
+export const SELECTED_QUANTITY = '.quantity-select.custom-select.form-control';
 export const PRICE = '.prices .price .sales .value';
-export const ADD_TO_CART = '.add-to-cart';
+export const ADD_TO_CART = '.add-to-cart-global';
 export const CLOSE_BUTTON = '.modal-content .close';
 
 

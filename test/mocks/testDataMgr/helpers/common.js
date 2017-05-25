@@ -51,7 +51,7 @@ export function selectAttributeByDropDown(attributeName, index) {
     let selector = '.select-' + attributeName;
     return browser.waitForVisible(selector)
         .then(() => browser.selectByIndex(selector, index))
-        .then(() => browser.pause(3000));
+        .then(() => browser.pause(1000));
 }
 
 // function isAttributeSelected(selector) {
@@ -91,7 +91,7 @@ export function addProductVariationToBasket(product, btnAdd) {
             return Promise.resolve();
         })
         .then(() => {
-            return browser.waitForEnabled(btnAdd, 3000)
+            return browser.waitForEnabled(btnAdd, 1000)
                 .click(btnAdd);
         })
         .then(() => Promise.resolve());
