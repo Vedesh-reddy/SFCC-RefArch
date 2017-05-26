@@ -1,16 +1,13 @@
 'use strict';
 
-// shippingHelpers.js
-
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 var ArrayList = require('../../../../mocks/dw.util.Collection');
-var ShippingMethodModel = require('../../../../mocks/models/shippingMethod');
 
 var shippingHelpers = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/checkout/shippingHelpers', {
     '~/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
-         'dw/util/ArrayList': ArrayList
+        'dw/util/ArrayList': ArrayList
     }),
 
     'dw/order/ShippingMgr': require('../../../../mocks/dw/order/ShippingMgr'),
@@ -18,8 +15,28 @@ var shippingHelpers = proxyquire('../../../../../cartridges/app_storefront_base/
     '~/cartridge/models/shipping': require('../../../../mocks/models/shipping')
 });
 
+function MockBasket() {}
 
-describe.only('shippingHelpers', function () {
+MockBasket.prototype.getShipments = function () {
+    return new ArrayList([null, null, null]);
+};
+
+describe('shippingHelpers', function () {
+    describe('getShippingModels', function () {
+        it('should handle a null basket', function () {
+            var shippingModels = shippingHelpers.getShippingModels(null);
+            assert.isNotNull(shippingModels);
+            assert.equal(shippingModels.length, 0);
+        });
+
+        it('should handle a basket with multiple shipments', function () {
+            var mockBasket = new MockBasket();
+            var shippingModels = shippingHelpers.getShippingModels(mockBasket);
+            assert.isNotNull(shippingModels);
+            assert.equal(shippingModels.length, 3);
+        });
+    });
+
     describe('getAddressFromRequest', function () {
         var request = {
             form: {
@@ -47,7 +64,6 @@ describe.only('shippingHelpers', function () {
             assert.equal(address.countryCode, request.form.countryCode);
             assert.equal(address.phone, request.form.phone);
         });
-
     });
 
     describe('getShipmentByUUID', function () {
@@ -77,7 +93,6 @@ describe.only('shippingHelpers', function () {
     });
 
     describe('selectShippingMethod', function () {
-
         var shipment = {
             UUID: '1234-1234-1234-1234',
             setShippingMethod: function (shippingMethod) {
@@ -121,7 +136,7 @@ describe.only('shippingHelpers', function () {
             postalCode: '01803'
         };
 
-        it('should replace shipment.shippingAddress with the provided address', function () {
+        it('test 1: should replace shipment.shippingAddress with the provided address', function () {
             var shippingMethodID = '002';
 
             shippingHelpers.selectShippingMethod(shipment, shippingMethodID, shippingMethods, address);
@@ -129,7 +144,7 @@ describe.only('shippingHelpers', function () {
             assert.deepEqual(shipment.shippingAddress, address);
         });
 
-        it('should make no change to shipment.shippingAddress when it is null', function () {
+        it('test 2: should make no change to shipment.shippingAddress when it is null', function () {
             var shippingMethodID = '002';
 
             var myShipment = {
@@ -148,7 +163,7 @@ describe.only('shippingHelpers', function () {
         });
 
 
-        it('should set shipping method when matching shippingMethodID is supplied', function () {
+        it('test 3: should set shipping method when matching shippingMethodID is supplied', function () {
             var shippingMethodID = '002';
             var expectedShippingMethod = {
                 ID: '002',
@@ -170,7 +185,7 @@ describe.only('shippingHelpers', function () {
             shipment.setShippingMethod.restore();
         });
 
-        it.only('should set default shipping method when no matching shippingMethodID found and applicable shipping methods contains default shipping method', function () {
+        it('test 4: should set default shipping method when no matching shippingMethodID found and applicable shipping methods contains default shipping method', function () {
             var shippingMethodID = 'IdNotExist';
             var expectedDefaultShipMethod = {
                 ID: '001',
@@ -191,7 +206,7 @@ describe.only('shippingHelpers', function () {
             shipment.setShippingMethod.restore();
         });
 
-        it('should set first shipping method when no matching shippingMethodID found and applicable shipping methods exist but no default shipping method', function () {
+        it('test 5: should set first shipping method when no matching shippingMethodID found and applicable shipping methods exist but no default shipping method', function () {
             var shippingMethodID = 'IdNotExist';
 
             var shippingMethodList = new ArrayList([
@@ -232,7 +247,7 @@ describe.only('shippingHelpers', function () {
             shipment.setShippingMethod.restore();
         });
 
-        it('should set shipping method to null when no matching shippingMethodID found and applicable shipping methods not exist', function () {
+        it('test 6: should set shipping method to null when no matching shippingMethodID found and applicable shipping methods not exist', function () {
             var shippingMethodID = 'IdNotExist';
 
             var shippingMethodList = new ArrayList([]);
@@ -247,7 +262,7 @@ describe.only('shippingHelpers', function () {
             shipment.setShippingMethod.restore();
         });
 
-        it('should get shipping method from applicable shipping methods and given address that matched shippingMethodID', function () {
+        it('test 7: should get shipping method from applicable shipping methods and given address that matched shippingMethodID', function () {
             var shippingMethodID = '002';
 
             var shippingMethodList = null;
@@ -272,7 +287,7 @@ describe.only('shippingHelpers', function () {
             shipment.setShippingMethod.restore();
         });
 
-        it('should set shipping method from applicable shipping methods when no address provided and matched shippingMethodID', function () {
+        it('test 8: should set shipping method from applicable shipping methods when no address provided and matched shippingMethodID', function () {
             var shippingMethodID = '002';
 
             var shippingMethodList = null;
@@ -298,7 +313,7 @@ describe.only('shippingHelpers', function () {
             shipment.setShippingMethod.restore();
         });
 
-        it('should not loop through the shipping methods to get shipping method when shipping method ID is not provided', function () {
+        it('test 9: should not loop through the shipping methods to get shipping method when shipping method ID is not provided', function () {
             var shippingMethodID = null;
             var expectedDefaultShipMethod = {
                 ID: '001',
@@ -318,5 +333,56 @@ describe.only('shippingHelpers', function () {
             assert.isTrue(spy.withArgs(expectedDefaultShipMethod).calledOnce);
             shipment.setShippingMethod.restore();
         });
-    })
+    });
+
+    describe('ensureShipmentHasMethod', function () {
+        it('test 1: should not set shipping method if shipment method is available in shipment', function () {
+            var shipmentWithShipMethod = {
+                setShippingMethod: function (shippingMethod) {
+                    return shippingMethod;
+                },
+                shippingMethod: {
+                    ID: '001',
+                    displayName: 'Ground',
+                    description: 'Order received within 7-10 business days',
+                    custom: {
+                        estimatedArrivalTime: '7-10 Business Days'
+                    }
+                }
+            };
+
+            var spy = sinon.spy(shipmentWithShipMethod, 'setShippingMethod');
+
+            shippingHelpers.ensureShipmentHasMethod(shipmentWithShipMethod);
+
+            assert.isTrue(spy.notCalled);
+            shipmentWithShipMethod.setShippingMethod.restore();
+        });
+
+        it('test 2: should set default shipping method when shipment method is NOT available in shipment', function () {
+            var shipmentWithNoShipMethod = {
+                setShippingMethod: function (shippingMethod) {
+                    return shippingMethod;
+                }
+            };
+
+            var expectedDefaultShipMethod = {
+                ID: '001',
+                displayName: 'Ground',
+                description: 'Order received within 7-10 business days',
+                custom: {
+                    estimatedArrivalTime: '7-10 Business Days'
+                }
+            };
+
+            var spy = sinon.spy(shipmentWithNoShipMethod, 'setShippingMethod');
+            spy.withArgs(expectedDefaultShipMethod);
+
+            shippingHelpers.ensureShipmentHasMethod(shipmentWithNoShipMethod);
+
+            assert.isTrue(spy.calledOnce);
+            assert.isTrue(spy.withArgs(expectedDefaultShipMethod).calledOnce);
+            shipmentWithNoShipMethod.setShippingMethod.restore();
+        });
+    });
 });
