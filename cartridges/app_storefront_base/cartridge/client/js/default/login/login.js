@@ -26,8 +26,12 @@ module.exports = {
                     }
                 },
                 error: function (data) {
-                    $('form.login').trigger('login:error', data);
-                    form.spinner().stop();
+                    if (data.responseJSON.redirectUrl) {
+                        window.location.href = data.responseJSON.redirectUrl;
+                    } else {
+                        $('form.login').trigger('login:error', data);
+                        form.spinner().stop();
+                    }
                 }
             });
             return false;

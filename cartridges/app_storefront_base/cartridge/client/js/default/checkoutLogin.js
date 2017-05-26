@@ -21,8 +21,11 @@ $(document).ready(function () {
                     location.href = data.redirectUrl;
                 }
             },
-            error: function () {
+            error: function (err) {
                 form.spinner().stop();
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                }
             }
         });
         return false;

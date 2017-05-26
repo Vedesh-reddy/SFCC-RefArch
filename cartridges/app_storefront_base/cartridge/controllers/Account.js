@@ -136,30 +136,42 @@ server.get('Show', server.middleware.https, function (req, res, next) {
     next();
 });
 
-server.post('Login', server.middleware.https, function (req, res, next) {
-    var email = req.form.loginEmail;
-    var password = req.form.loginPassword;
-    var rememberMe = req.form.loginRememberMe
-        ? (!!req.form.loginRememberMe)
-        : false;
-    var authenticatedCustomer;
-    var checkoutLogin = req.querystring.checkoutLogin;
+server.post(
+    'Login',
+    server.middleware.https,
+    CSRFProtection.validateAjaxRequest,
+    function (req, res, next) {
+        var data = res.getViewData();
+        if (data && data.csrfError) {
+            res.json();
+            return next();
+        }
 
-    Transaction.wrap(function () {
-        authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
-    });
-    if (authenticatedCustomer && authenticatedCustomer.authenticated) {
-        res.json({
-            success: true,
-            redirectUrl: checkoutLogin
-                ? URLUtils.url('Checkout-Start').toString()
-                : URLUtils.url('Account-Show').toString()
+        var email = req.form.loginEmail;
+        var password = req.form.loginPassword;
+        var rememberMe = req.form.loginRememberMe
+            ? (!!req.form.loginRememberMe)
+            : false;
+        var authenticatedCustomer;
+        var checkoutLogin = req.querystring.checkoutLogin;
+
+        Transaction.wrap(function () {
+            authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
         });
-    } else {
-        res.json({ error: [Resource.msg('error.message.login.form', 'login', null)] });
+        if (authenticatedCustomer && authenticatedCustomer.authenticated) {
+            res.json({
+                success: true,
+                redirectUrl: checkoutLogin
+                    ? URLUtils.url('Checkout-Start').toString()
+                    : URLUtils.url('Account-Show').toString()
+            });
+        } else {
+            res.json({ error: [Resource.msg('error.message.login.form', 'login', null)] });
+        }
+
+        return next();
     }
-    next();
-});
+);
 
 server.post(
     'SubmitRegistration',
