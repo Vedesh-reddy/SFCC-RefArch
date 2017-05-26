@@ -52,7 +52,10 @@ module.exports = {
                         location.href = data.redirectUrl;
                     }
                 },
-                error: function () {
+                error: function (err) {
+                    if (err.responseJSON.redirectUrl) {
+                        window.location.href = err.responseJSON.redirectUrl;
+                    }
                     $form.spinner().stop();
                 }
             });

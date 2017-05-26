@@ -11,6 +11,7 @@ var Resource = require('dw/web/Resource');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var AccountModel = require('~/cartridge/models/account');
+var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
 
 /**
  * Checks if a credit card is valid or not
@@ -112,7 +113,7 @@ server.get('List', function (req, res, next) {
     next();
 });
 
-server.get('AddPayment', function (req, res, next) {
+server.get('AddPayment', CSRFProtection.generateToken, function (req, res, next) {
     var creditCardExpirationYears = getExpirationYears();
     var paymentForm = server.forms.getForm('creditcard');
     paymentForm.clear();
@@ -142,7 +143,12 @@ server.get('AddPayment', function (req, res, next) {
     next();
 });
 
-server.post('SavePayment', function (req, res, next) {
+server.post('SavePayment', CSRFProtection.validateAjaxRequest, function (req, res, next) {
+    var data = res.getViewData();
+    if (data && data.csrfError) {
+        res.json();
+        return next();
+    }
     var formErrors = require('~/cartridge/scripts/formErrors');
 
     var paymentForm = server.forms.getForm('creditcard');
@@ -184,7 +190,7 @@ server.post('SavePayment', function (req, res, next) {
             fields: formErrors(paymentForm)
         });
     }
-    next();
+    return next();
 });
 
 server.get('DeletePayment', function (req, res, next) {
