@@ -453,175 +453,199 @@ server.post('AddNewAddress', server.middleware.https, function (req, res, next) 
 
 
 // Main entry point for Checkout
-server.get('Start', server.middleware.https, function (req, res, next) {
-    var currentBasket = BasketMgr.getCurrentBasket();
-    if (!currentBasket) {
-        res.redirect(URLUtils.url('Cart-Show'));
+server.get(
+    'Start',
+    server.middleware.https,
+    CSRFProtection.generateToken,
+    function (req, res, next) {
+        var currentBasket = BasketMgr.getCurrentBasket();
+        if (!currentBasket) {
+            res.redirect(URLUtils.url('Cart-Show'));
+            return next();
+        }
+
+        var currentStage = req.querystring.stage ? req.querystring.stage : 'shipping';
+
+        var billingAddress = currentBasket.billingAddress;
+        var shippingAddress = currentBasket.defaultShipment.shippingAddress;
+
+        var currentCustomer = req.currentCustomer.raw;
+        var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+
+        // only true if customer is registered
+        if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+            var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
+            if (!shippingAddress) {
+                COHelpers.copyCustomerAddressToShipment(preferredAddress);
+                req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
+            }
+            if (!billingAddress) {
+                COHelpers.copyCustomerAddressToBilling(preferredAddress);
+            }
+        }
+
+        // Calculate the basket
+        Transaction.wrap(function () {
+            COHelpers.ensureNoEmptyShipments(req);
+        });
+        COHelpers.recalculateBasket(currentBasket);
+
+        var shippingForm = COHelpers.prepareShippingForm(currentBasket);
+        var billingForm = COHelpers.prepareBillingForm(currentBasket);
+
+        // Loop through all shipments and make sure all are valid
+        var isValid;
+        var allValid = true;
+        for (var i = 0, ii = currentBasket.shipments.length; i < ii; i++) {
+            isValid = req.session.privacyCache.get(currentBasket.shipments[i].UUID);
+            if (isValid !== 'valid') {
+                allValid = false;
+                break;
+            }
+        }
+
+        var orderModel = new OrderModel(currentBasket, {
+            customer: currentCustomer,
+            currencyCode: req.geolocation.countryCode,
+            usingMultiShipping: usingMultiShipping,
+            shippable: allValid
+        });
+
+        // Get rid of this from top-level ... should be part of OrderModel???
+        var currentYear = new Date().getFullYear();
+        var creditCardExpirationYears = [];
+
+        for (var j = 0; j < 10; j++) {
+            creditCardExpirationYears.push(currentYear + j);
+        }
+
+        var accountModel = new AccountModel(req.currentCustomer);
+
+        res.render('checkout/checkout', {
+            order: orderModel,
+            customer: accountModel,
+            forms: {
+                shippingForm: shippingForm,
+                billingForm: billingForm
+            },
+            expirationYears: creditCardExpirationYears,
+            currentStage: currentStage
+        });
+
         return next();
     }
-
-    var currentStage = req.querystring.stage ? req.querystring.stage : 'shipping';
-
-    var billingAddress = currentBasket.billingAddress;
-    var shippingAddress = currentBasket.defaultShipment.shippingAddress;
-
-    var currentCustomer = req.currentCustomer.raw;
-    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
-
-    // only true if customer is registered
-    if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
-        var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
-        if (!shippingAddress) {
-            COHelpers.copyCustomerAddressToShipment(preferredAddress);
-            req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
-        }
-        if (!billingAddress) {
-            COHelpers.copyCustomerAddressToBilling(preferredAddress);
-        }
-    }
-
-    // Calculate the basket
-    Transaction.wrap(function () {
-        COHelpers.ensureNoEmptyShipments(req);
-    });
-    COHelpers.recalculateBasket(currentBasket);
-
-    var shippingForm = COHelpers.prepareShippingForm(currentBasket);
-    var billingForm = COHelpers.prepareBillingForm(currentBasket);
-
-    // Loop through all shipments and make sure all are valid
-    var isValid;
-    var allValid = true;
-    for (var i = 0, ii = currentBasket.shipments.length; i < ii; i++) {
-        isValid = req.session.privacyCache.get(currentBasket.shipments[i].UUID);
-        if (isValid !== 'valid') {
-            allValid = false;
-            break;
-        }
-    }
-
-    var orderModel = new OrderModel(currentBasket, {
-        customer: currentCustomer,
-        currencyCode: req.geolocation.countryCode,
-        usingMultiShipping: usingMultiShipping,
-        shippable: allValid
-    });
-
-    // Get rid of this from top-level ... should be part of OrderModel???
-    var currentYear = new Date().getFullYear();
-    var creditCardExpirationYears = [];
-
-    for (var j = 0; j < 10; j++) {
-        creditCardExpirationYears.push(currentYear + j);
-    }
-
-    var accountModel = new AccountModel(req.currentCustomer);
-
-    res.render('checkout/checkout', {
-        order: orderModel,
-        customer: accountModel,
-        forms: {
-            shippingForm: shippingForm,
-            billingForm: billingForm
-        },
-        expirationYears: creditCardExpirationYears,
-        currentStage: currentStage
-    });
-    return next();
-});
+);
 
 
 /**
  * Handle Ajax shipping form submit
  */
-server.post('SubmitShipping', server.middleware.https, function (req, res, next) {
-    var currentBasket = BasketMgr.getCurrentBasket();
+server.post(
+    'SubmitShipping',
+    server.middleware.https,
+    CSRFProtection.validateAjaxRequest,
+    function (req, res, next) {
+        var data = res.getViewData();
+        if (data && data.csrfError) {
+            res.json();
+            return next();
+        }
 
-    if (!currentBasket) {
-        res.json({
-            error: true,
-            cartError: true,
-            fieldErrors: [],
-            serverErrors: [],
-            redirectUrl: URLUtils.url('Cart-Show').toString()
-        });
-        return;
-    }
+        var currentBasket = BasketMgr.getCurrentBasket();
 
-    var form = server.forms.getForm('shipping');
-    var result = {};
-
-    // verify shipping form data
-    var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
-
-    if (Object.keys(shippingFormErrors).length > 0) {
-        req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'invalid');
-
-        res.json({
-            form: form,
-            fieldErrors: [shippingFormErrors],
-            serverErrors: [],
-            error: true
-        });
-    } else {
-        req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
-
-        result.address = {
-            firstName: form.shippingAddress.addressFields.firstName.value,
-            lastName: form.shippingAddress.addressFields.lastName.value,
-            address1: form.shippingAddress.addressFields.address1.value,
-            address2: form.shippingAddress.addressFields.address2.value,
-            city: form.shippingAddress.addressFields.city.value,
-            stateCode: form.shippingAddress.addressFields.states.stateCode.value,
-            postalCode: form.shippingAddress.addressFields.postalCode.value,
-            countryCode: form.shippingAddress.addressFields.country.value,
-            phone: form.shippingAddress.addressFields.phone.value
-        };
-
-        result.shippingBillingSame = form.shippingAddress.shippingAddressUseAsBillingAddress.value;
-        result.shippingMethod = form.shippingAddress.shippingMethodID.value.toString();
-
-        res.setViewData(result);
-
-        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-            var shippingData = res.getViewData();
-
-            COHelpers.copyShippingAddressToShipment(shippingData, currentBasket.defaultShipment);
-            if (!currentBasket.billingAddress) {
-                if (req.currentCustomer.addressBook
-                    && req.currentCustomer.addressBook.preferredAddress) {
-                    // Copy over preferredAddress (use addressUUID for matching)
-                    COHelpers.copyBillingAddressToBasket(
-                        req.currentCustomer.addressBook.preferredAddress);
-                } else {
-                    // Copy over first shipping address (use shipmentUUID for matching)
-                    COHelpers.copyBillingAddressToBasket(
-                        currentBasket.defaultShipment.shippingAddress);
-                }
-            }
-            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
-            if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
-                req.session.privacyCache.set('usingMultiShipping', false);
-                usingMultiShipping = false;
-            }
-
-            COHelpers.recalculateBasket(currentBasket);
-
-            var basketModel = new OrderModel(currentBasket, {
-                usingMultiShipping: usingMultiShipping,
-                shippable: true
+        if (!currentBasket) {
+            res.json({
+                error: true,
+                cartError: true,
+                fieldErrors: [],
+                serverErrors: [],
+                redirectUrl: URLUtils.url('Cart-Show').toString()
             });
+            return next();
+        }
+
+        var form = server.forms.getForm('shipping');
+        var result = {};
+
+        // verify shipping form data
+        var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
+
+        if (Object.keys(shippingFormErrors).length > 0) {
+            req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'invalid');
 
             res.json({
-                customer: new AccountModel(req.currentCustomer),
-                order: basketModel,
-                form: server.forms.getForm('shipping')
+                form: form,
+                fieldErrors: [shippingFormErrors],
+                serverErrors: [],
+                error: true
             });
-        });
-    }
+        } else {
+            req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
 
-    next();
-});
+            result.address = {
+                firstName: form.shippingAddress.addressFields.firstName.value,
+                lastName: form.shippingAddress.addressFields.lastName.value,
+                address1: form.shippingAddress.addressFields.address1.value,
+                address2: form.shippingAddress.addressFields.address2.value,
+                city: form.shippingAddress.addressFields.city.value,
+                stateCode: form.shippingAddress.addressFields.states.stateCode.value,
+                postalCode: form.shippingAddress.addressFields.postalCode.value,
+                countryCode: form.shippingAddress.addressFields.country.value,
+                phone: form.shippingAddress.addressFields.phone.value
+            };
+
+            result.shippingBillingSame =
+                form.shippingAddress.shippingAddressUseAsBillingAddress.value;
+
+            result.shippingMethod =
+                form.shippingAddress.shippingMethodID.value.toString();
+
+            res.setViewData(result);
+
+            this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+                var shippingData = res.getViewData();
+
+                COHelpers.copyShippingAddressToShipment(
+                    shippingData,
+                    currentBasket.defaultShipment
+                );
+
+                if (!currentBasket.billingAddress) {
+                    if (req.currentCustomer.addressBook
+                        && req.currentCustomer.addressBook.preferredAddress) {
+                        // Copy over preferredAddress (use addressUUID for matching)
+                        COHelpers.copyBillingAddressToBasket(
+                            req.currentCustomer.addressBook.preferredAddress);
+                    } else {
+                        // Copy over first shipping address (use shipmentUUID for matching)
+                        COHelpers.copyBillingAddressToBasket(
+                            currentBasket.defaultShipment.shippingAddress);
+                    }
+                }
+                var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+                if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
+                    req.session.privacyCache.set('usingMultiShipping', false);
+                    usingMultiShipping = false;
+                }
+
+                COHelpers.recalculateBasket(currentBasket);
+
+                var basketModel = new OrderModel(currentBasket, {
+                    usingMultiShipping: usingMultiShipping,
+                    shippable: true
+                });
+
+                res.json({
+                    customer: new AccountModel(req.currentCustomer),
+                    order: basketModel,
+                    form: server.forms.getForm('shipping')
+                });
+            });
+        }
+
+        return next();
+    }
+);
 
 /**
  *  Handle Ajax payment (and billing) form submit

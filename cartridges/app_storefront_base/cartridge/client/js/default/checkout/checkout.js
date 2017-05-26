@@ -927,7 +927,10 @@
                             success: function (data) {
                                 shippingFormResponse(defer, data);
                             },
-                            error: function () {
+                            error: function (err) {
+                                if (err.responseJSON.redirectUrl) {
+                                    window.location.href = err.responseJSON.redirectUrl;
+                                }
                                 // Server error submitting form
                                 defer.reject();
                             }
