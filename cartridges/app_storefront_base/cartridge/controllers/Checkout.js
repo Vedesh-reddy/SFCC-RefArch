@@ -320,136 +320,151 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
 });
 
 
-server.post('AddNewAddress', server.middleware.https, function (req, res, next) {
-    var pliUUID = req.form.productLineItemUUID;
-    var shipmentUUID = req.form.shipmentSelector || req.form.shipmentUUID;
-    var origUUID = req.form.originalShipmentUUID;
-
-    var form = server.forms.getForm('shipping');
-    var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
-    var basket = BasketMgr.getCurrentBasket();
-    var result = {};
-
-    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
-
-    if (Object.keys(shippingFormErrors).length > 0) {
-        if (shipmentUUID === 'new') {
-            req.session.privacyCache.set(origUUID, 'invalid');
-        } else {
-            req.session.privacyCache.set(shipmentUUID, 'invalid');
-        }
-        res.json({
-            form: form,
-            fieldErrors: shippingFormErrors,
-            serverErrors: [],
-            error: true
-        });
-    } else {
-        result.address = {
-            firstName: form.shippingAddress.addressFields.firstName.value,
-            lastName: form.shippingAddress.addressFields.lastName.value,
-            address1: form.shippingAddress.addressFields.address1.value,
-            address2: form.shippingAddress.addressFields.address2.value,
-            city: form.shippingAddress.addressFields.city.value,
-            stateCode: form.shippingAddress.addressFields.states.stateCode.value,
-            postalCode: form.shippingAddress.addressFields.postalCode.value,
-            countryCode: form.shippingAddress.addressFields.country.value,
-            phone: form.shippingAddress.addressFields.phone.value
-        };
-
-        result.shippingBillingSame = form.shippingAddress.shippingAddressUseAsBillingAddress.value;
-        result.shippingMethod = form.shippingAddress.shippingMethodID.value ?
-            '' + form.shippingAddress.shippingMethodID.value : null;
-
-        var shipment;
-
-        if (!COHelpers.isShippingAddressInitialized()) {
-            // First use always applies to defaultShipment
-            COHelpers.copyShippingAddressToShipment(result, basket.defaultShipment);
-        } else {
-            try {
-                Transaction.wrap(function () {
-                    if (origUUID === shipmentUUID) {
-                        // An edit to the address or shipping method
-                        shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
-                        COHelpers.copyShippingAddressToShipment(result, shipment);
-                    } else {
-                        var productLineItem = COHelpers.getProductLineItem(basket, pliUUID);
-                        if (shipmentUUID === 'new') {
-                            // Choosing a new address for this pli
-                            if (origUUID === basket.defaultShipment.UUID
-                                    && basket.defaultShipment.productLineItems.length === 1) {
-                                // just replace the built-in one
-                                shipment = basket.defaultShipment;
-                            } else {
-                                // or create a new shipment and associate the current pli (later)
-                                shipment = basket.createShipment(UUIDUtils.createUUID());
-                            }
-                        } else if (shipmentUUID.indexOf('ab_') === 0) {
-                            shipment = basket.createShipment(UUIDUtils.createUUID());
-                        } else {
-                            // Choose an existing shipment for this PLI
-                            shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
-                        }
-                        COHelpers.copyShippingAddressToShipment(result, shipment);
-                        productLineItem.setShipment(shipment);
-
-                        COHelpers.ensureNoEmptyShipments(req);
-                    }
-                });
-            } catch (e) {
-                result.error = e;
-            }
+server.post(
+    'AddNewAddress',
+    server.middleware.https,
+    CSRFProtection.validateAjaxRequest,
+    function (req, res, next) {
+        var data = res.getViewData();
+        if (data && data.csrfError) {
+            res.json();
+            return next();
         }
 
-        if (shipment && shipment.UUID) {
-            req.session.privacyCache.set(shipment.UUID, 'valid');
-        }
+        var pliUUID = req.form.productLineItemUUID;
+        var shipmentUUID = req.form.shipmentSelector || req.form.shipmentUUID;
+        var origUUID = req.form.originalShipmentUUID;
 
-        // Loop through all shipments and make sure all are valid
-        var isValid;
-        var allValid = true;
-        for (var i = 0, ii = basket.shipments.length; i < ii; i++) {
-            isValid = req.session.privacyCache.get(basket.shipments[i].UUID);
-            if (isValid !== 'valid') {
-                allValid = false;
-                break;
-            }
-        }
+        var form = server.forms.getForm('shipping');
+        var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
+        var basket = BasketMgr.getCurrentBasket();
+        var result = {};
 
-        if (!basket.billingAddress) {
-            if (req.currentCustomer.addressBook
-                && req.currentCustomer.addressBook.preferredAddress) {
-                // Copy over preferredAddress (use addressUUID for matching)
-                COHelpers.copyBillingAddressToBasket(
-                    req.currentCustomer.addressBook.preferredAddress);
+        var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+
+        if (Object.keys(shippingFormErrors).length > 0) {
+            if (shipmentUUID === 'new') {
+                req.session.privacyCache.set(origUUID, 'invalid');
             } else {
-                // Copy over first shipping address (use shipmentUUID for matching)
-                COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress);
+                req.session.privacyCache.set(shipmentUUID, 'invalid');
             }
+            res.json({
+                form: form,
+                fieldErrors: shippingFormErrors,
+                serverErrors: [],
+                error: true
+            });
+        } else {
+            result.address = {
+                firstName: form.shippingAddress.addressFields.firstName.value,
+                lastName: form.shippingAddress.addressFields.lastName.value,
+                address1: form.shippingAddress.addressFields.address1.value,
+                address2: form.shippingAddress.addressFields.address2.value,
+                city: form.shippingAddress.addressFields.city.value,
+                stateCode: form.shippingAddress.addressFields.states.stateCode.value,
+                postalCode: form.shippingAddress.addressFields.postalCode.value,
+                countryCode: form.shippingAddress.addressFields.country.value,
+                phone: form.shippingAddress.addressFields.phone.value
+            };
+
+            result.shippingBillingSame =
+                form.shippingAddress.shippingAddressUseAsBillingAddress.value;
+
+            result.shippingMethod =
+                form.shippingAddress.shippingMethodID.value ?
+                '' + form.shippingAddress.shippingMethodID.value : null;
+
+            var shipment;
+
+            if (!COHelpers.isShippingAddressInitialized()) {
+                // First use always applies to defaultShipment
+                COHelpers.copyShippingAddressToShipment(result, basket.defaultShipment);
+            } else {
+                try {
+                    Transaction.wrap(function () {
+                        if (origUUID === shipmentUUID) {
+                            // An edit to the address or shipping method
+                            shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
+                            COHelpers.copyShippingAddressToShipment(result, shipment);
+                        } else {
+                            var productLineItem = COHelpers.getProductLineItem(basket, pliUUID);
+                            if (shipmentUUID === 'new') {
+                                // Choosing a new address for this pli
+                                if (origUUID === basket.defaultShipment.UUID
+                                        && basket.defaultShipment.productLineItems.length === 1) {
+                                    // just replace the built-in one
+                                    shipment = basket.defaultShipment;
+                                } else {
+                                    // create a new shipment and associate the current pli (later)
+                                    shipment = basket.createShipment(UUIDUtils.createUUID());
+                                }
+                            } else if (shipmentUUID.indexOf('ab_') === 0) {
+                                shipment = basket.createShipment(UUIDUtils.createUUID());
+                            } else {
+                                // Choose an existing shipment for this PLI
+                                shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
+                            }
+                            COHelpers.copyShippingAddressToShipment(result, shipment);
+                            productLineItem.setShipment(shipment);
+
+                            COHelpers.ensureNoEmptyShipments(req);
+                        }
+                    });
+                } catch (e) {
+                    result.error = e;
+                }
+            }
+
+            if (shipment && shipment.UUID) {
+                req.session.privacyCache.set(shipment.UUID, 'valid');
+            }
+
+            // Loop through all shipments and make sure all are valid
+            var isValid;
+            var allValid = true;
+            for (var i = 0, ii = basket.shipments.length; i < ii; i++) {
+                isValid = req.session.privacyCache.get(basket.shipments[i].UUID);
+                if (isValid !== 'valid') {
+                    allValid = false;
+                    break;
+                }
+            }
+
+            if (!basket.billingAddress) {
+                if (req.currentCustomer.addressBook
+                    && req.currentCustomer.addressBook.preferredAddress) {
+                    // Copy over preferredAddress (use addressUUID for matching)
+                    COHelpers.copyBillingAddressToBasket(
+                        req.currentCustomer.addressBook.preferredAddress);
+                } else {
+                    // Copy over first shipping address (use shipmentUUID for matching)
+                    COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress);
+                }
+            }
+
+            COHelpers.recalculateBasket(basket);
+            var basketModel = new OrderModel(basket, {
+                usingMultiShipping: usingMultiShipping,
+                shippable: allValid
+            });
+
+            var accountModel = new AccountModel(req.currentCustomer);
+
+            res.json({
+                form: form,
+                data: result,
+                order: basketModel,
+                customer: accountModel,
+
+                fieldErrors: [],
+                serverErrors: [],
+                error: false
+            });
         }
 
-        COHelpers.recalculateBasket(basket);
-        var basketModel = new OrderModel(basket, {
-            usingMultiShipping: usingMultiShipping,
-            shippable: allValid
-        });
-
-        var accountModel = new AccountModel(req.currentCustomer);
-
-        res.json({
-            form: form,
-            data: result,
-            order: basketModel,
-            customer: accountModel,
-
-            fieldErrors: [],
-            serverErrors: [],
-            error: false
-        });
+        return next();
     }
-    next();
-});
+);
 
 
 // Main entry point for Checkout

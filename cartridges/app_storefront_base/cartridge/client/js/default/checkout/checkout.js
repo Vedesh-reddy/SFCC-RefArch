@@ -1395,10 +1395,11 @@
                                 }
                                 $rootEl.spinner().stop();
                             })
-                            .fail(function () {
-                                // console.error('error saving address!');
-                                // console.dir(err);
-                                // $rootEl.attr('data-view-mode','edit');
+                            .fail(function (err) {
+                                if (err.responseJSON.redirectUrl) {
+                                    window.location.href = err.responseJSON.redirectUrl;
+                                }
+
                                 $rootEl.spinner().stop();
                             });
 

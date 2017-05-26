@@ -11,6 +11,7 @@
                             <input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
                             <input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
                             <input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
 
                             <div class="edit-address-block shipping-address">
                                 <fieldset class="shipment-selector-block">
@@ -27,14 +28,14 @@
                                         </div>
                                     </div>
                                 </fieldset>
-                                
+
                                 <div class="shipping-address-form">
                                     <fieldset class="shipping-address-block">
                                         <isinclude template="checkout/shipping/shippingAddress" />
                                     </fieldset>
                                     <fieldset class="shipping-method-block">
                                         <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
-                                    
+
                                         <isinclude template="checkout/shipping/shippingMethod" />
                                     </fieldset>
                                 </div>
@@ -58,7 +59,7 @@
                             </a>
                             <a class="btn btn-outline-primary col-12" data-action="edit">
                                 ${Resource.msg('button.edit', 'checkout', null)}
-                            </a> 
+                            </a>
                         </form>
                     </div>
                 </div>
