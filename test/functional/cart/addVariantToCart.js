@@ -90,7 +90,7 @@ describe('Cart - Add Variant To Cart', () => {
         const expectedColor = 'Color: Slate';
         return cartPage
             .createCssNthLineItem(1, 1)
-            .then(color => assert.equal(color, expectedColor));
+            .then(color => assert.equal(color[0], expectedColor));
     });
 
     it('should display the correct size', () => {
