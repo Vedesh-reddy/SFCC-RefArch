@@ -1,5 +1,7 @@
 <isif condition="${product.attributes && product.attributes.length}">
-    <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.attributes', 'product', null)}</h2>
+    <h2 class="col-sm-12 col-md-4 col-lg-3">
+      <a class="title" href="${'#'}">${Resource.msg('label.attributes', 'product', null)}</a>
+    </h2>
     <div class="col-sm-12 col-md-8 col-lg-9 value content">
         <isloop items="${product.attributes}" var="attrGroup" status="loopstate">
             <isif condition="${attrGroup.ID !== 'mainAttributes'}">

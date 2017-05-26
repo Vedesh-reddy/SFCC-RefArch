@@ -4,7 +4,8 @@ module.exports = function () {
 
     sizes.forEach(function (size) {
         var selector = '.collapsable-' + size + ' .title, .collapsable-' + size + '>.card-header';
-        $('body').on('click', selector, function () {
+        $('body').on('click', selector, function (e) {
+            e.preventDefault();
             $(this).parents('.collapsable-' + size).toggleClass('active');
         });
     });

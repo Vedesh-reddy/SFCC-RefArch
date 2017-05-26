@@ -8,7 +8,9 @@
     </isif>
 
     <div class="row description collapsable-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
-        <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.description', 'product', null)}</h2>
+        <h2 class="col-sm-12 col-md-4 col-lg-3">
+          <a class="title" href="${'#'}">${Resource.msg('label.description', 'product', null)}</a>
+        </h2>
         <isinclude template="product/components/description" />
     </div>
 
@@ -17,7 +19,9 @@
     </isif>
 
     <div class="row details collapsable-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
-        <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.details', 'product', null)}</h2>
+        <h2 class="col-sm-12 col-md-4 col-lg-3">
+          <a class="title" href="${'#'}">${Resource.msg('label.details', 'product', null)}</a>
+        </h2>
         <isinclude template="product/components/details" />
     </div>
 </div>

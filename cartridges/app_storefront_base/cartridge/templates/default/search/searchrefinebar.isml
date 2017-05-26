@@ -26,9 +26,9 @@
     <div class="refinements">
         <isloop items="${pdict.productSearch.refinements}" var="refinement">
             <div class="card collapsable-sm refinement refinement-${refinement.displayName.toLowerCase().replace(/ /g, '-')}">
-                <div class="card-header">
+                <a class="title" href="${'#'}">
                     ${refinement.displayName}
-                </div>
+                </a>
                 <div class="card-block">
                     <!--- CATEGORY REFINEMENTS --->
                     <isif condition="${refinement.isCategoryRefinement}">
