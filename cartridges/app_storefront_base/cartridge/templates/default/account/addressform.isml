@@ -151,6 +151,8 @@
         <div class="form-control-feedback"></div>
     </div>
 
+    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+
     <!-- Cancel and Save Buttons -->
     <div class="row">
         <div class="col-6">

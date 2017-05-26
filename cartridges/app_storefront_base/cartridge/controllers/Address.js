@@ -7,6 +7,7 @@ var helper = require('~/cartridge/scripts/dwHelpers');
 var URLUtils = require('dw/web/URLUtils');
 var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
+var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
 
 /**
  * Creates a list of address model for the logged in user
@@ -50,7 +51,7 @@ server.get('List', function (req, res, next) {
     next();
 });
 
-server.get('AddAddress', function (req, res, next) {
+server.get('AddAddress', CSRFProtection.generateToken, function (req, res, next) {
     var addressForm = server.forms.getForm('address');
     addressForm.clear();
     res.render('account/editaddaddress', {
@@ -73,7 +74,7 @@ server.get('AddAddress', function (req, res, next) {
     next();
 });
 
-server.get('EditAddress', function (req, res, next) {
+server.get('EditAddress', CSRFProtection.generateToken, function (req, res, next) {
     var addressId = req.querystring.addressId;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo
@@ -108,7 +109,13 @@ server.get('EditAddress', function (req, res, next) {
     next();
 });
 
-server.post('SaveAddress', function (req, res, next) {
+server.post('SaveAddress', CSRFProtection.validateAjaxRequest, function (req, res, next) {
+    var data = res.getViewData();
+    if (data && data.csrfError) {
+        res.json();
+        return next();
+    }
+
     var formErrors = require('~/cartridge/scripts/formErrors');
 
     var addressForm = server.forms.getForm('address');
@@ -171,7 +178,7 @@ server.post('SaveAddress', function (req, res, next) {
             fields: formErrors(addressForm)
         });
     }
-    next();
+    return next();
 });
 
 server.get('DeleteAddress', function (req, res, next) {
