@@ -1,5 +1,7 @@
 <isset name="product" value="${pdict.product}" scope="page"/>
 <isset name="isBundle" value="${false}" scope="page"/>
+<isset name="isProductSet" value="${true}" scope="page" />
+<isset name="isQuickView" value="${true}" scope="page" />
 <isset name="productCopy" value="${pdict.product}" scope="page"/>
 <div class="product-quickview product-${product.productType} col product-wrapper" data-pid="${product.id}">
     <div class="row">

@@ -90,6 +90,48 @@ describe('productSet', function () {
         rank: null
     }]);
 
+    var mockOption1 = {
+        ID: 'Option 1 ID',
+        displayName: 'Option 1',
+        htmlName: 'Option 1 HTML',
+        selectedValueId: 'Option Value 1 ID',
+        optionId: 'Option 1 ID',
+        optionValues: [{
+            ID: 'Option Value 1 ID',
+            displayValue: 'Option 1 Display Value',
+            price: '$9.99',
+            priceValue: 9.99
+        }]
+    };
+
+    var optionUrl = 'some url';
+    var optionModelMock = {
+        getOptions: function () {
+            return new ArrayList([mockOption1]);
+        },
+        getPrice: function (value) {
+            return {
+                toFormattedString: function () {
+                    return value.price;
+                },
+                decimalValue: 9.99
+            };
+        },
+        getOptionValue: function () {},
+        getSelectedOptionValue: function (option) {
+            return option.optionValues[0];
+        },
+        setSelectedOptionValue: function () {},
+        urlSelectOptionValue: function () {
+            return {
+                toString: function () {
+                    return optionUrl;
+                }
+            };
+        },
+        options: new ArrayList([mockOption1])
+    };
+
     var productVariantMock = {
         ID: '1234567',
         name: 'test product',
@@ -100,6 +142,7 @@ describe('productSet', function () {
         master: true,
         attributeModel: attributeModel,
         availabilityModel: availabilityModelMock,
+        optionModel: optionModelMock,
         minOrderQuantity: {
             value: 2
         }
@@ -122,6 +165,7 @@ describe('productSet', function () {
             }
         },
         attributeModel: attributeModel,
+        optionModel: optionModelMock,
         master: false,
         variant: false,
         variationGroup: false,
@@ -148,6 +192,7 @@ describe('productSet', function () {
         bundledProducts: new ArrayList([productMock, productMock]),
         variationModel: {},
         availabilityModel: availabilityModelMock,
+        optionModel: optionModelMock,
         minOrderQuantity: {
             value: 2
         },

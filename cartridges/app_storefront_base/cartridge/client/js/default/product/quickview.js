@@ -6,7 +6,7 @@ var base = require('./base');
  *
  */
 function getModalHtmlElement() {
-    if ($('.quickViewDialog').length !== 0) {
+    if ($('#quickViewModal').length !== 0) {
         $('#quickViewModal').remove();
     }
     var htmlString = '<!-- Modal -->'
@@ -90,6 +90,7 @@ module.exports = {
     },
     colorAttribute: base.colorAttribute,
     selectAttribute: base.selectAttribute,
+    selectOption: base.selectOption,
     availability: base.availability,
     addToCart: base.addToCart,
     showSpinner: function () {

@@ -78,7 +78,7 @@ function getPrice(inputProduct, currency, useSimplePrice, promotions, currentOpt
     var listPrice;
     var product = inputProduct;
     var promotionPrice = money.NOT_AVAILABLE;
-    var priceModel = product.getPriceModel();
+    var priceModel = product.getPriceModel(currentOptionModel);
     var priceTable = priceModel.getPriceTable();
 
     // TIERED

@@ -259,8 +259,10 @@ ProductBase.prototype = {
     initialize: function () {
         this.id = this.product.ID;
         this.productName = this.product.name;
+        this.options = this.options || this.product.optionModel.options;
+        this.currentOptionModel = this.currentOptionModel || this.product.optionModel;
         this.price = priceFactory.getPrice(this.product, null, this.useSimplePrice,
-            this.apiPromotions);
+            this.apiPromotions, this.currentOptionModel);
         this.productType = getProductType(this.product);
         this.images = this.variationModel
             ? new ImageModel(this.variationModel, this.imageConfig)
@@ -284,7 +286,6 @@ ProductBase.prototype = {
     getVariationModel: function (product, productVariables) {
         return getVariationModel(product, productVariables);
     }
-
 };
 
 /**

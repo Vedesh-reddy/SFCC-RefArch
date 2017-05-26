@@ -200,4 +200,15 @@ server.get('ShowQuickView', function (req, res, next) {
     next();
 });
 
+server.post('Option', function (req, res, next) {
+    var product = ProductFactory.get(req.querystring);
+
+    res.json({
+        priceHtml: priceHelper.renderHtml(priceHelper.getHtmlContext(product.price)),
+        options: product.options
+    });
+
+    next();
+});
+
 module.exports = server.exports();

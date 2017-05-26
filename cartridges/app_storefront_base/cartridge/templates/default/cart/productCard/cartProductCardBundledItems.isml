@@ -9,16 +9,14 @@
                  alt="${bundledLineItem.images.small[0].alt}"
                  title="${bundledLineItem.images.small[0].title}"
             >
-            <div class="pull-left">
-                <div class="item-attributes">
-                    <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
-                        <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
+            <div class="pull-left item-attributes">
+                <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
+                    <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
+                </isloop>
+                <div class="item-options">
+                    <isloop items="${bundledLineItem.options}" var="option">
+                        <div class="line-item-option">${option}</div>
                     </isloop>
-                    <div class="item-options">
-                        <isloop items="${bundledLineItem.options}" var="option">
-                            <div class="line-item-option">${option}</div>
-                        </isloop>
-                    </div>
                 </div>
             </div>
         </div>

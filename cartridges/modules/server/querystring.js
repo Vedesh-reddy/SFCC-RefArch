@@ -3,6 +3,7 @@
 var querystring = function (raw) {
     var pair;
     var left;
+
     if (raw && raw.length > 0) {
         var qs = raw.substring(raw.indexOf('?') + 1).split('&');
         for (var i = qs.length - 1; i >= 0; i--) {
@@ -18,6 +19,22 @@ var querystring = function (raw) {
                         id: variableParts[1],
                         value: decodeURIComponent(pair[1])
                     };
+                    continue; // eslint-disable-line no-continue
+                }
+            } else if (left.indexOf('dwopt_') === 0) {
+                var optionParts = left.split('_');
+                var productId = optionParts[1];
+                var optionId = optionParts[2];
+                var selectedOptionValueId = decodeURIComponent(pair[1]);
+                if (optionParts.length === 3) {
+                    if (!this.options) {
+                        this.options = [];
+                    }
+                    this.options.push({
+                        optionId: optionId,
+                        selectedValueId: selectedOptionValueId,
+                        productId: productId
+                    });
                     continue; // eslint-disable-line no-continue
                 }
             }
@@ -39,6 +56,7 @@ querystring.prototype.toString = function () {
             result.push(key + '=' + this[key]);
         }
     }, this);
+
     return result.sort().join('&');
 };
 

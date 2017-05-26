@@ -344,41 +344,60 @@ function getChildPids() {
 /**
  * Retrieve product options
  *
+ * @param {jQuery} $productContainer - DOM element for current product
  * @return {string} - Product options and their selected values
  */
-function getOptions() {
+function getOptions($productContainer) {
     var options = {};
-    var $quickView = $('#quickViewModal');
-    var productContainer = '.product-detail';
-
-    if ($('.bundle-items').length) {
-        var bundleItems = $('[class*="-items"] .product-detail');
-        bundleItems.each(function () {
-            var productOptions = $(this).find('.product-option');
-            if (productOptions.length) {
-                options[$(this).data('pid')] = productOptions.map(function () {
-                    return {
-                        optionId: $(this).data('option-id'),
-                        selectedValueId: $(this).data('option-value-id')
-                    };
-                }).toArray();
-            }
-        });
-    } else if ($('.set-items').length) {
-        // TO-DO:  To be done when Product Sets feature is complete
-    } else {
-        if ($quickView.length) {
-            productContainer = '#quickViewModal ' + productContainer;
-        }
-        options[$(productContainer).data('pid')] = $('.product-option').map(function () {
+    options[$productContainer.data('pid')] = $productContainer
+        .find('.product-option')
+        .map(function () {
+            var $elOption = $(this).find('.options-select');
+            var urlValue = $elOption.val();
+            var selectedValueId = $elOption.find('option[value="' + urlValue + '"]')
+                .data('value-id');
             return {
                 id: $(this).data('option-id'),
-                selectedValueId: $(this).find('.options-select').val()
+                selectedValueId: selectedValueId
             };
         }).toArray();
-    }
 
     return JSON.stringify(options);
+}
+
+/**
+ * @typedef UpdatedOptionValue
+ * @type Object
+ * @property {string} id - Option value ID for look up
+ * @property {string} url - Updated option value selection URL
+ */
+
+/**
+ * @typedef OptionSelectionResponse
+ * @type Object
+ * @property {string} priceHtml - Updated price HTML code
+ * @property {Object} options -
+ * @property {string} options.id - Option ID
+ * @property {UpdatedOptionValue []} options.values - Option values
+ */
+
+/**
+ * Updates DOM using  post-option selection Ajax response
+ *
+ * @param {OptionSelectionResponse} response - Ajax response from selecting a product option
+ * @param {jQuery} $productContainer - DOM element for current product
+ */
+function updateOptions(response, $productContainer) {
+    $productContainer.find('.prices .price').replaceWith(response.priceHtml);
+
+    response.options.forEach(function (option) {
+        var $optionEl = $productContainer.find('.product-option[data-option-id*="' + option.id
+            + '"]');
+        option.values.forEach(function (value) {
+            var valueEl = $optionEl.find('option[data-value-id*="' + value.id + '"]');
+            valueEl.val(value.url);
+        });
+    });
 }
 
 module.exports = {
@@ -413,6 +432,29 @@ module.exports = {
 
             var selectedValueUrl = createSelectedValueUrl(e.currentTarget.value);
             attributeSelect(selectedValueUrl, $productContainer);
+        });
+    },
+
+    selectOption: function () {
+        $(document).on('change', '.options-select', function (e) {
+            e.preventDefault();
+
+            var $productContainer = $(this).closest('.product-detail');
+            if (!$productContainer.length) {
+                $productContainer = $(this).closest('.quick-view-dialog').find('.product-detail');
+            }
+
+            $.ajax({
+                url: e.currentTarget.value,
+                method: 'POST',
+                success: function (data) {
+                    updateOptions(data, $productContainer);
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
+                }
+            });
         });
     },
 
@@ -452,8 +494,9 @@ module.exports = {
                 $('.product-detail').each(function () {
                     if (!$(this).hasClass('product-set-detail')) {
                         setPids.push({
-                            pid: $(this).find('.product-id').html(),
-                            qty: $(this).find('.quantity-select').val()
+                            pid: $(this).find('.product-id').text(),
+                            qty: $(this).find('.quantity-select').val(),
+                            options: getOptions($(this))
                         });
                     }
                 });
@@ -464,6 +507,11 @@ module.exports = {
 
             addToCartUrl = getAddToCartUrl();
 
+            var $productContainer = $(this).closest('.product-detail');
+            if (!$productContainer.length) {
+                $productContainer = $(this).closest('.quick-view-dialog').find('.product-detail');
+            }
+
             if (addToCartUrl) {
                 $.ajax({
                     url: addToCartUrl,
@@ -473,7 +521,7 @@ module.exports = {
                         pidsObj: pidsObj,
                         childPids: getChildPids(),
                         quantity: getQuantitySelected($(this)),
-                        options: getOptions()
+                        options: getOptions($productContainer)
                     },
                     success: function (data) {
                         handlePostCartAdd(data);

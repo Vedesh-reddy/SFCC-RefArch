@@ -121,6 +121,7 @@ describe('productBase', function () {
         master: true,
         attributeModel: attributeModel,
         availabilityModel: availabilityModelMock,
+        optionModel: { options: [] },
         minOrderQuantity: {
             value: 2
         }

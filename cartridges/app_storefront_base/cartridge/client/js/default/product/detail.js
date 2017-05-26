@@ -4,6 +4,8 @@ var base = require('./base');
 module.exports = {
     selectAttributes: base.selectAttribute,
 
+    selectOption: base.selectOption,
+
     colorAttribute: base.colorAttribute,
 
     availability: base.availability,

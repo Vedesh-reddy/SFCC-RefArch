@@ -2,9 +2,9 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 
-.item-attributes,
-.item-options {
+.item-attributes {
     vertical-align: top;
+    padding-left: 0;
 }
 
 .line-item-attributes,
@@ -51,8 +51,8 @@
 }
 
 .product-image {
+    height: 5.625em;
     width: 5.625em;
-    margin-right: 0.625em;
 }
 
 .non-adjusted-price {

@@ -13,6 +13,8 @@
     <isset name="product" value="${pdict.product}" scope="page" />
     <isset name="productCopy" value="${pdict.product}" scope="page" />
     <isset name="isBundle" value="${false}" scope="page" />
+    <isset name="isProductSet" value="${true}" scope="page" />
+    <isset name="isQuickView" value="${false}" scope="page" />
 
     <div class="container product-detail product-set-detail" data-pid="${product.id}">
         <div class="row">

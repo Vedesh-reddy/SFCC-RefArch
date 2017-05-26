@@ -11,15 +11,18 @@ describe('Add Product Set to cart', function () {
         var pidsObj = [
             {
                 'pid': '726819487824',
-                'qty': '1'
+                'qty': '1',
+                options: ''
             },
             {
                 'pid': '69309284-2',
-                'qty': '1'
+                'qty': '1',
+                options: ''
             },
             {
                 'pid': '799927335059',
-                'qty': '1'
+                'qty': '1',
+                options: ''
             }
         ];
 

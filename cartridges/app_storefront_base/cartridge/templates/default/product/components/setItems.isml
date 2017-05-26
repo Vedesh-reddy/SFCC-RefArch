@@ -2,7 +2,7 @@
     <isloop items="${productCopy.individualProducts}" var="productItem" status="loopState">
         <isset name="product" value="${productItem}" scope="page" />
 
-        <div class="container product-detail set-item">
+        <div class="container product-detail set-item" data-pid="${product.id}">
             <div class="row">
                 <div class="col-12">
                     <!-- Product Name -->
@@ -17,11 +17,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row">
                 <!-- Product Images Carousel -->
                 <isinclude template="product/components/image_carousel" />
-                
+
                 <div class="col-12 col-sm-6">
                     <!-- Product Name -->
                     <h3 class="product-name hidden-sm-down">
@@ -29,9 +29,9 @@
                             ${product.productName}
                         </a>
                     </h3>
-                    
+
                     <isinclude template="product/components/pidRating" />
-                    
+
                     <div class="row justify-content-center">
                         <div class="col-md-10 col-12">
                             <isinclude template="product/components/mainAttributes" />
@@ -39,7 +39,7 @@
                             <isif condition="${product.variationAttributes}">
                                 <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
                                     <div data-attr="${attr.id}" class="swatch">
-                                        <isif condition="${attributeStatus.last && !isBundle}">
+                                        <isif condition="${attributeStatus.last && !isBundle && product.options.length === 0}">
                                             <!-- Quantity Drop Down Menu -->
                                             <div class="quantity col-sm-6">
                                                 <isinclude template="product/components/quantity" />
@@ -48,13 +48,18 @@
                                         <isinclude template="product/components/variationAttribute" />
                                     </div>
                                 </isloop>
-                            <iselse>
+                            </isif>
+                            <isif condition="${product.options && product.options.length}">
+                                <div class="row">
+                                    <isinclude template="product/components/options" />
+                                </div>
+                            </isif>
+                            <isif condition="${!product.variationAttributes.length && !product.options.length}">
                                 <div class="simple-quantity">
                                     <isinclude template="/product/components/quantity" />
                                 </div>
                             </isif>
-                        </div>                
-        
+                        </div>
 
                         <!-- Size Chart -->
                         <isif condition="${product.variationAttributes}">
@@ -62,17 +67,17 @@
                                 <isinclude template="product/components/sizeChart" />
                             </span>
                         </isif>
-                        
+
                         <!-- Availability -->
                         <div class="col-12 col-md-10 availability product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
                             <isinclude template="product/components/availability" />
                         </div>
-        
+
                         <!-- Applicable Promotions -->
                         <div class="col-md-10 col-12 promotions">
                            <isinclude template="product/components/promotions" />
                        </div>
-        
+
                        <div class="col-md-10 col-12">
                            <hr>
                        </div>
@@ -83,14 +88,14 @@
                                <isset name="price" value="${product.price}" scope="page" />
                                <isinclude template="product/components/pricing/main" />
                            </div>
-        
+
                            <!-- Cart and [Optionally] Apple Pay -->
                            <isinclude template="product/components/addToCartProduct" />
                        </div>
-                       
+
                        <!-- Add to Wishlist and Social Sharing Icons -->
                        <isinclude template="product/components/wishlistSocial" />
-        
+
                     </div>
                 </div>
             </div>
@@ -100,20 +105,20 @@
             <div class="row product-attributes collapsable-xs">
                 <isinclude template="/product/components/attributes" />
             </div>
-    
+
             <isif condition="${product.attributes && product.attributes.length}">
                 <hr class="hidden-sm-up">
             </isif>
-    
+
             <div class="row description collapsable-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
                 <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.description', 'product', null)}</h2>
                 <isinclude template="/product/components/description" />
             </div>
-    
+
             <isif condition="${product.longDescription}">
                 <hr class="hidden-sm-up">
             </isif>
-    
+
             <div class="row details collapsable-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
                 <h2 class="col-sm-12 col-md-4 col-lg-3 title">${Resource.msg('label.details', 'product', null)}</h2>
                 <isinclude template="/product/components/details" />

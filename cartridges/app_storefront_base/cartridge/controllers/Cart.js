@@ -53,9 +53,9 @@ server.post('AddProduct', function (req, res, next) {
 
                 pidsObj.forEach(function (PIDObj) {
                     quantity = parseInt(PIDObj.qty, 10);
-                    var PIDObjResult =
-                        CartHelper.addProductToCart(currentBasket, PIDObj.pid, quantity, childPids,
-                            options);
+                    var pidOptions = PIDObj.options ? JSON.parse(PIDObj.options) : {};
+                    var PIDObjResult = CartHelper.addProductToCart(currentBasket, PIDObj.pid,
+                        quantity, childPids, pidOptions);
                     if (PIDObjResult.error) {
                         result.error = PIDObjResult.error;
                         result.message = PIDObjResult.message;

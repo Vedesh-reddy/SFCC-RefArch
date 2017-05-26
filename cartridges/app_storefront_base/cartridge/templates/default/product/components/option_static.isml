@@ -3,7 +3,7 @@
         <div class="col-md-10 col-12 product-option"
              data-option-id="${option.id}"
              data-option-value-id="${value.id}">
-            <div>${option.name}: [${value.price}] ${value.displayValue}</div>
+            <div>${option.name}: ${value.displayValue}</div>
         </div>
     </isif>
 </isloop>

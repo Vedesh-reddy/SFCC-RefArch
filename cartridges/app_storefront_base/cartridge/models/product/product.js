@@ -72,18 +72,22 @@ function getUrl(variationModel, allAttributes, endPoint, id) {
 /**
  * Get a product option's values
  *
- *  @param {dw.catalog.ProductOptionModel} optionModel - A product's option model
- *  @param {dw.util.Collection <dw.catalog.ProductOptionValue>} optionValues - Product option values
- *  @return {ProductOptionValues} - View model for a product option's values
+ * @param {dw.catalog.ProductOptionModel} optionModel - A product's option model
+ * @param {dw.catalog.ProductOption} option - A product's option
+ * @param {dw.util.Collection <dw.catalog.ProductOptionValue>} optionValues - Product option values
+ * @return {ProductOptionValues} - View model for a product option's values
  */
-function getOptionValues(optionModel, optionValues) {
+function getOptionValues(optionModel, option, optionValues) {
+    var action = 'Product-Option';
     var values = Collections.map(optionValues, function (value) {
         var priceValue = optionModel.getPrice(value);
+        var url = optionModel.urlSelectOptionValue(action, option, value);
         return {
             id: value.ID,
             displayValue: value.displayValue,
             price: priceValue.toFormattedString(),
-            priceValue: priceValue.decimalValue
+            priceValue: priceValue.decimalValue,
+            url: url.toString()
         };
     });
 
@@ -95,32 +99,62 @@ function getOptionValues(optionModel, optionValues) {
 /**
  * @typedef {Object} ProductOptions
  *
+ * @property {string} id - Product option ID
  * @property {string} name - Product option name
  * @property {string} htmlName - HTML representation of product option name
  * @property {ProductOptionValues} values - A product option's values
+ * @property {string} selectedValueId - Selected option value ID
  */
 
 /**
  * Retrieve provided product's options
  *
- * @param {dw.catalog.Product} product - Product instance returned from the API
- * @return {ProductOptions} - Product options for this product
+ * @param {dw.catalog.ProductOptionModel} optionModel - Product's option model
+ * @return {ProductOptions[]} - Parsed options for this product
  */
-function getOptions(product) {
-    var optionModel = product.optionModel;
-    return Collections.map(optionModel.getOptions(), function (option) {
-        var selectedValue = optionModel.getSelectedOptionValue(option);
-
+function getOptions(optionModel) {
+    return Collections.map(optionModel.options, function (option) {
         return {
             id: option.ID,
             name: option.displayName,
             htmlName: option.htmlName,
-            values: getOptionValues(optionModel, option.optionValues),
-            selectedValueId: Object.prototype.hasOwnProperty.call(selectedValue, 'ID')
-                ? selectedValue.ID
-                : ''
+            values: getOptionValues(optionModel, option, option.optionValues),
+            selectedValueId: optionModel.getSelectedOptionValue(option).ID
         };
     });
+}
+
+/**
+ * @typedef SelectedOption
+ * @type Object
+ * @property {string} optionId - Product option ID
+ * @property {string} productId - Product ID
+ * @property {string} selectedValueId - Selected product option value ID
+ */
+
+/**
+ * Provides a current option model by setting selected option values
+ *
+ * @param {dw.catalog.ProductOptionModel} optionModel - Product's option model
+ * @param {SelectedOption[]} selectedOptions - Options selected in UI
+ * @return {dw.catalog.ProductOptionModel} - Option model updated with selected options
+ */
+function getCurrentOptionModel(optionModel, selectedOptions) {
+    var productOptions = optionModel.options;
+    var selectedValue;
+    var selectedValueId;
+
+    if (selectedOptions.length) {
+        Collections.forEach(productOptions, function (option) {
+            selectedValueId = selectedOptions.filter(function (selectedOption) {
+                return selectedOption.optionId === option.ID;
+            })[0].selectedValueId;
+            selectedValue = optionModel.getOptionValue(option, selectedValueId);
+            optionModel.setSelectedOptionValue(option, selectedValue);
+        });
+    }
+
+    return optionModel;
 }
 
 /**
@@ -132,8 +166,9 @@ function getOptions(product) {
  * @param {number} quantity - quantity of products selected
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
  *                                                                  product
+ * @param {SelectedOption[]} selectedOptions - Dictionary object of selected options
  */
-function FullProduct(product, productVariables, quantity, promotions) {
+function FullProduct(product, productVariables, quantity, promotions, selectedOptions) {
     this.variationModel = this.getVariationModel(product, productVariables);
     if (this.variationModel) {
         this.product = this.variationModel.selectedVariant || product;
@@ -152,6 +187,8 @@ function FullProduct(product, productVariables, quantity, promotions) {
     };
     this.useSimplePrice = false;
     this.apiPromotions = promotions;
+    this.currentOptionModel = getCurrentOptionModel(this.product.optionModel, selectedOptions);
+    this.options = getOptions(this.currentOptionModel);
     this.initialize();
 }
 
@@ -186,7 +223,6 @@ FullProduct.prototype.initialize = function () {
         this.id
     );
     this.selectedQuantity = this.quantity ? parseInt(this.quantity, 10) : this.minOrderQuantity;
-    this.options = getOptions(this.product);
 };
 
 /**
@@ -197,9 +233,11 @@ FullProduct.prototype.initialize = function () {
  *                                    target product variation group
  * @param {number} quantity - quantity of products selected
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
+ * @param {SelectedOption[]} selectedOptions - Dictionary object of selected options
  */
-function ProductWrapper(product, productVariables, quantity, promotions) {
-    var fullProduct = new FullProduct(product, productVariables, quantity, promotions);
+function ProductWrapper(product, productVariables, quantity, promotions, selectedOptions) {
+    var fullProduct = new FullProduct(product, productVariables, quantity, promotions,
+        selectedOptions);
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',

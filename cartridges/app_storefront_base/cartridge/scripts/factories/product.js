@@ -16,11 +16,13 @@ ProductFactory.get = function (params) {
     var productId = params.pid;
     var apiProduct = ProductMgr.getProduct(productId);
     var variationModel = Product.getVariationModel(apiProduct, params.variables);
+    var selectedOptions = params.options || [];
     var productFactory = this;
     var ProductSetTile;
     var ProductSet;
     var ProductBundle;
     var product;
+
     if (variationModel) {
         product = variationModel.getSelectedVariant() || apiProduct;
     } else {
@@ -88,7 +90,8 @@ ProductFactory.get = function (params) {
                 );
                 break;
             default:
-                product = new Product(product, params.variables, params.quantity, promotions);
+                product = new Product(product, params.variables, params.quantity, promotions,
+                    selectedOptions);
                 break;
         }
     }
