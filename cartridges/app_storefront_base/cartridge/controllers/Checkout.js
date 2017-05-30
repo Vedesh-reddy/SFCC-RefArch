@@ -361,11 +361,16 @@ server.post(
                 address1: form.shippingAddress.addressFields.address1.value,
                 address2: form.shippingAddress.addressFields.address2.value,
                 city: form.shippingAddress.addressFields.city.value,
-                stateCode: form.shippingAddress.addressFields.states.stateCode.value,
                 postalCode: form.shippingAddress.addressFields.postalCode.value,
                 countryCode: form.shippingAddress.addressFields.country.value,
                 phone: form.shippingAddress.addressFields.phone.value
             };
+
+            if (Object.prototype.hasOwnProperty
+                .call(form.shippingAddress.addressFields, 'states')) {
+                result.address.stateCode =
+                    form.shippingAddress.addressFields.states.stateCode.value;
+            }
 
             result.shippingBillingSame =
                 form.shippingAddress.shippingAddressUseAsBillingAddress.value;
@@ -486,10 +491,11 @@ server.get(
 
         var currentCustomer = req.currentCustomer.raw;
         var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+        var preferredAddress;
 
         // only true if customer is registered
         if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
-            var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
+            preferredAddress = req.currentCustomer.addressBook.preferredAddress;
             if (!shippingAddress) {
                 COHelpers.copyCustomerAddressToShipment(preferredAddress);
                 req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
@@ -507,6 +513,12 @@ server.get(
 
         var shippingForm = COHelpers.prepareShippingForm(currentBasket);
         var billingForm = COHelpers.prepareBillingForm(currentBasket);
+
+        if (preferredAddress) {
+            shippingForm.copyFrom(preferredAddress);
+            billingForm.copyFrom(preferredAddress);
+        }
+
 
         // Loop through all shipments and make sure all are valid
         var isValid;
@@ -603,11 +615,15 @@ server.post(
                 address1: form.shippingAddress.addressFields.address1.value,
                 address2: form.shippingAddress.addressFields.address2.value,
                 city: form.shippingAddress.addressFields.city.value,
-                stateCode: form.shippingAddress.addressFields.states.stateCode.value,
                 postalCode: form.shippingAddress.addressFields.postalCode.value,
                 countryCode: form.shippingAddress.addressFields.country.value,
                 phone: form.shippingAddress.addressFields.phone.value
             };
+            if (Object.prototype.hasOwnProperty
+                .call(form.shippingAddress.addressFields, 'states')) {
+                result.address.stateCode =
+                    form.shippingAddress.addressFields.states.stateCode.value;
+            }
 
             result.shippingBillingSame =
                 form.shippingAddress.shippingAddressUseAsBillingAddress.value;
@@ -704,10 +720,15 @@ server.post(
                 address1: { value: paymentForm.addressFields.address1.value },
                 address2: { value: paymentForm.addressFields.address2.value },
                 city: { value: paymentForm.addressFields.city.value },
-                stateCode: { value: paymentForm.addressFields.states.stateCode.value },
                 postalCode: { value: paymentForm.addressFields.postalCode.value },
                 countryCode: { value: paymentForm.addressFields.country.value }
             };
+
+            if (Object.prototype.hasOwnProperty
+                .call(paymentForm.addressFields, 'states')) {
+                viewData.address.stateCode =
+                    { value: paymentForm.addressFields.states.stateCode.value };
+            }
 
             viewData.paymentMethod = {
                 value: paymentForm.paymentMethod.value,
@@ -785,7 +806,9 @@ server.post(
                     billingAddress.setAddress2(billingData.address.address2.value);
                     billingAddress.setCity(billingData.address.city.value);
                     billingAddress.setPostalCode(billingData.address.postalCode.value);
-                    billingAddress.setStateCode(billingData.address.stateCode.value);
+                    if (Object.prototype.hasOwnProperty.call(billingData.address, 'stateCode')) {
+                        billingAddress.setStateCode(billingData.address.stateCode.value);
+                    }
                     billingAddress.setCountryCode(billingData.address.countryCode.value);
 
                     if (billingData.storedPaymentUUID) {

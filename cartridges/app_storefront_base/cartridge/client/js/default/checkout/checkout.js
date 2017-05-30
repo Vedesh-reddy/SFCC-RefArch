@@ -506,10 +506,6 @@
                 var address1Line = address.address1;
                 var address2Line = address.address2;
 
-                var cityStZipLine = address.city ? address.city + ', ' : '';
-                if (address.stateCode) cityStZipLine += address.stateCode + ' ';
-                if (address.postalCode) cityStZipLine += address.postalCode;
-
                 var phoneLine = address.phone;
 
                 var shippingCost = selectedMethod ? selectedMethod.shippingCost : '';
@@ -537,7 +533,11 @@
                     $('.ship-to-name', tmpl).text(nameLine);
                     $('.ship-to-address1', tmpl).text(address1Line);
                     $('.ship-to-address2', tmpl).text(address2Line);
-                    $('.ship-to-city-st-zip', tmpl).text(cityStZipLine);
+                    $('.ship-to-city', tmpl).text(address.city);
+                    if (address.stateCode) {
+                        $('.ship-to-st', tmpl).text(address.stateCode);
+                    }
+                    $('.ship-to-zip', tmpl).text(address.postalCode);
                     $('.ship-to-phone', tmpl).text(phoneLine);
 
                     if (!address2Line) {
@@ -597,10 +597,6 @@
             var address1Line = address.address1;
             var address2Line = address.address2;
 
-            var cityStZipLine = address.city ? address.city + ', ' : '';
-            if (address.stateCode) cityStZipLine += address.stateCode + ' ';
-            if (address.postalCode) cityStZipLine += address.postalCode;
-
             var phoneLine = address.phone;
 
             var shippingCost = selectedMethod ? selectedMethod.shippingCost : '';
@@ -614,7 +610,11 @@
             $('.ship-to-name', tmpl).text(nameLine);
             $('.ship-to-address1', tmpl).text(address1Line);
             $('.ship-to-address2', tmpl).text(address2Line);
-            $('.ship-to-city-st-zip', tmpl).text(cityStZipLine);
+            $('.ship-to-city', tmpl).text(address.city);
+            if (address.stateCode) {
+                $('.ship-to-st', tmpl).text(address.stateCode);
+            }
+            $('.ship-to-zip', tmpl).text(address.postalCode);
             $('.ship-to-phone', tmpl).text(phoneLine);
 
             if (!address2Line) {

@@ -92,19 +92,6 @@
 
     <!-- City and ZIP -->
     <div class="row">
-        <div class="col-6">
-        <!-- City  -->
-            <div class="form-group
-                <isif condition="${pdict.addressForm.city.mandatory === true}">required</isif>">
-                <label class="form-control-label" for="city">
-                    <isprint value="${pdict.addressForm.city.label}" encoding="off" />
-                </label>
-                <input type="text" class="form-control" id="city"
-                    <isprint value="${pdict.addressForm.city.attributes}" encoding="off" />
-                    autocomplete="locality">
-                <div class="form-control-feedback"></div>
-            </div>
-        </div>
         <!-- ZIP Code -->
         <div class="col-6">
             <div class="form-group
@@ -119,6 +106,20 @@
                 <span>${Resource.msg('example.postalcode','forms',null)}</span>
             </div>
         </div>
+        <!-- City  -->
+        <div class="col-6">
+            <div class="form-group
+                <isif condition="${pdict.addressForm.city.mandatory === true}">required</isif>">
+                <label class="form-control-label" for="city">
+                    <isprint value="${pdict.addressForm.city.label}" encoding="off" />
+                </label>
+                <input type="text" class="form-control" id="city"
+                    <isprint value="${pdict.addressForm.city.attributes}" encoding="off" />
+                    autocomplete="locality">
+                <div class="form-control-feedback"></div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Phone Number -->
@@ -145,5 +146,5 @@
             <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save','account',null)}</button>
         </div>
     </div>
-
+    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
 </form>

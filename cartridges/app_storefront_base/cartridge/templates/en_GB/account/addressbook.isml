@@ -32,13 +32,12 @@
                             <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="pull-right">${Resource.msg('link.edit','account',null)}</a>
                         </div>
                         <div class="card-block card-block-positioning">
-                            <div>${address.address.postalCode} </div>
-                            <div>${address.address.stateCode} ${address.address.city}</div>
+                            <div>${address.address.firstName} ${address.address.lastName}</div>
                             <div>${address.address.address1}</div>
                             <isif condition="${address.address.address2 !== null}">
                                 <div>${address.address.address2}</div>
                             </isif>
-                            <div>${address.address.lastName} ${address.address.firstName}</div>
+                            <div>${address.address.city}, ${address.address.stateCode} ${address.address.postalCode}</div>
                             <div>${address.address.phone}</div>
                             <isif condition="${address.address.ID !== pdict.addressBook[0].address.ID}">
                                 <div class="card-make-default-link">
