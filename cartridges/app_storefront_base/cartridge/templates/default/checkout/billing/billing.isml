@@ -42,6 +42,8 @@
             <fieldset>
                 <isinclude template="checkout/billing/paymentOptions" />
             </fieldset>
+
+            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
         </form>
     </div>
 </div>

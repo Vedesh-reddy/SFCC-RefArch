@@ -1021,7 +1021,10 @@
                                 defer.resolve(data);
                             }
                         },
-                        error: function () {
+                        error: function (err) {
+                            if (err.responseJSON.redirectUrl) {
+                                window.location.href = err.responseJSON.redirectUrl;
+                            }
                         }
                     });
 

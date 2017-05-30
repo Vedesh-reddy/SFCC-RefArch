@@ -12,8 +12,28 @@ describe('billingForm', function () {
     this.timeout(5000);
 
     describe('positive test', function () {
+        var cookieJar = request.jar();
+
+        var myRequest = {
+            url: config.baseUrl + '/CSRF-Generate',
+            method: 'POST',
+            rejectUnauthorized: false,
+            resolveWithFullResponse: true,
+            jar: cookieJar
+        };
+
+        before(function () {
+            return request(myRequest)
+                .then(function (csrfResponse) {
+                    var csrfJsonResponse = JSON.parse(csrfResponse.body);
+                    myRequest.url = config.baseUrl + '/Checkout-SubmitPayment?' +
+                        csrfJsonResponse.csrf.tokenName + '=' +
+                        csrfJsonResponse.csrf.token;
+                });
+        });
+
         it('should submit billing form successfully', function (done) {
-            var myBillIngForm = {
+            myRequest.form = {
                 dwfrm_billing_shippingAddressUseAsBillingAddress: 'true',
                 dwfrm_billing_addressFields_firstName: 'John',
                 dwfrm_billing_addressFields_lastName: 'Smith',
@@ -78,22 +98,14 @@ describe('billingForm', function () {
                 /* ,redirectUrl: '/s/SiteGenesis/cart?lang=en_US' */
             };
 
-            request.post({
-                url: config.baseUrl + '/Checkout-SubmitPayment',
-                form: myBillIngForm,
-                rejectUnauthorized: false,
-                resolveWithFullResponse: true
-            }, function responseCallBack(err, httpResponse) {
-                if (err) {
-                    throw new Error('Checkout-SubmitPayment request failed with error: ' + err);
-                }
-                // This will fail without SEO urls turned on
-                var bodyAsJson = JSON.parse(httpResponse.body);
-                var strippedBody = jsonHelpers.deleteProperties(bodyAsJson, ['redirectUrl', 'action', 'queryString']);
-                assert.equal(httpResponse.statusCode, 200, 'Expected Checkout-SubmitPayment statusCode to be 200.');
-                assert.deepEqual(strippedBody, ExpectedResBody, 'Expecting actual response to be equal match expected response');
-                return done();
-            });
+            return request(myRequest)
+                .then(function (response) {
+                    var bodyAsJson = JSON.parse(response.body);
+                    var strippedBody = jsonHelpers.deleteProperties(bodyAsJson, ['redirectUrl', 'action', 'queryString']);
+                    assert.equal(response.statusCode, 200, 'Expected Checkout-SubmitPayment statusCode to be 200.');
+                    assert.deepEqual(strippedBody, ExpectedResBody, 'Expecting actual response to be equal match expected response');
+                    done();
+                });
         });
     });
 });
