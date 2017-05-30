@@ -14,7 +14,7 @@ var OrderHelpers = require('~/cartridge/scripts/order/orderHelpers');
 var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
 
 
-server.get('Confirm', function (req, res, next) {
+server.get('Confirm', CSRFProtection.generateToken, function (req, res, next) {
     var order = OrderMgr.getOrder(req.querystring.ID);
     var config = {
         numberOfLineItems: '*'
@@ -204,80 +204,92 @@ server.get('Filtered', server.middleware.https, function (req, res, next) {
     next();
 });
 
-server.post('CreateAccount', server.middleware.https, function (req, res, next) {
-    var formErrors = require('~/cartridge/scripts/formErrors');
+server.post(
+    'CreateAccount',
+    server.middleware.https,
+    CSRFProtection.validateAjaxRequest,
+    function (req, res, next) {
+        var data = res.getViewData();
+        if (data && data.csrfError) {
+            res.json();
+            return next();
+        }
 
-    var passwordForm = server.forms.getForm('newpasswords');
-    var newPassword = passwordForm.newpassword.htmlValue;
-    var confirmPassword = passwordForm.newpasswordconfirm.htmlValue;
-    if (newPassword !== confirmPassword) {
-        passwordForm.valid = false;
-        passwordForm.newpasswordconfirm.valid = false;
-        passwordForm.newpasswordconfirm.error =
-            Resource.msg('error.message.mismatch.newpassword', 'forms', null);
+        var formErrors = require('~/cartridge/scripts/formErrors');
+
+        var passwordForm = server.forms.getForm('newpasswords');
+        var newPassword = passwordForm.newpassword.htmlValue;
+        var confirmPassword = passwordForm.newpasswordconfirm.htmlValue;
+        if (newPassword !== confirmPassword) {
+            passwordForm.valid = false;
+            passwordForm.newpasswordconfirm.valid = false;
+            passwordForm.newpasswordconfirm.error =
+                Resource.msg('error.message.mismatch.newpassword', 'forms', null);
+        }
+
+        var order = OrderMgr.getOrder(req.querystring.ID);
+
+        var registrationObj = {
+            firstName: order.billingAddress.firstName,
+            lastName: order.billingAddress.lastName,
+            phone: order.billingAddress.phone,
+            email: order.customerEmail,
+            password: newPassword
+        };
+
+        if (passwordForm.valid) {
+            res.setViewData(registrationObj);
+
+            this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+                var registrationData = res.getViewData();
+
+                var login = registrationData.email;
+                var password = registrationData.password;
+                var newCustomer;
+                var authenticatedCustomer;
+                var newCustomerProfile;
+                var registeredUser;
+
+                // attempt to create a new user and log that user in.
+                try {
+                    Transaction.wrap(function () {
+                        newCustomer = CustomerMgr.createCustomer(login, password);
+                        authenticatedCustomer =
+                            CustomerMgr.loginCustomer(login, password, false);
+                        if (newCustomer && authenticatedCustomer.authenticated) {
+                            // assign values to the profile
+                            newCustomerProfile = newCustomer.getProfile();
+                            newCustomerProfile.firstName = registrationData.firstName;
+                            newCustomerProfile.lastName = registrationData.lastName;
+                            newCustomerProfile.phoneHome = registrationData.phone;
+                            newCustomerProfile.email = registrationData.email;
+                            order.setCustomer(newCustomer);
+                            registeredUser = {
+                                email: login,
+                                firstName: registrationData.firstName,
+                                lastName: registrationData.lastName
+                            };
+                            OrderHelpers.sendConfirmationEmail(registeredUser);
+                            res.json({
+                                success: true,
+                                redirectUrl: URLUtils.url('Account-Show').toString()
+                            });
+                        }
+                    });
+                } catch (e) {
+                    res.json({
+                        error: [Resource.msg('error.account.exists', 'checkout', null)]
+                    }); // Show error if the login email already exists
+                }
+            });
+        } else {
+            res.json({
+                fields: formErrors(passwordForm)
+            });
+        }
+
+        return next();
     }
-
-    var order = OrderMgr.getOrder(req.querystring.ID);
-
-    var registrationObj = {
-        firstName: order.billingAddress.firstName,
-        lastName: order.billingAddress.lastName,
-        phone: order.billingAddress.phone,
-        email: order.customerEmail,
-        password: newPassword
-    };
-
-    if (passwordForm.valid) {
-        res.setViewData(registrationObj);
-
-        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-            var registrationData = res.getViewData();
-
-            var login = registrationData.email;
-            var password = registrationData.password;
-            var newCustomer;
-            var authenticatedCustomer;
-            var newCustomerProfile;
-            var registeredUser;
-
-            // attempt to create a new user and log that user in.
-            try {
-                Transaction.wrap(function () {
-                    newCustomer = CustomerMgr.createCustomer(login, password);
-                    authenticatedCustomer =
-                        CustomerMgr.loginCustomer(login, password, false);
-                    if (newCustomer && authenticatedCustomer.authenticated) {
-                        // assign values to the profile
-                        newCustomerProfile = newCustomer.getProfile();
-                        newCustomerProfile.firstName = registrationData.firstName;
-                        newCustomerProfile.lastName = registrationData.lastName;
-                        newCustomerProfile.phoneHome = registrationData.phone;
-                        newCustomerProfile.email = registrationData.email;
-                        order.setCustomer(newCustomer);
-                        registeredUser = {
-                            email: login,
-                            firstName: registrationData.firstName,
-                            lastName: registrationData.lastName
-                        };
-                        OrderHelpers.sendConfirmationEmail(registeredUser);
-                        res.json({
-                            success: true,
-                            redirectUrl: URLUtils.url('Account-Show').toString()
-                        });
-                    }
-                });
-            } catch (e) {
-                res.json({
-                    error: [Resource.msg('error.account.exists', 'checkout', null)]
-                }); // Show error if the login email already exists
-            }
-        });
-    } else {
-        res.json({
-            fields: formErrors(passwordForm)
-        });
-    }
-    next();
-});
+);
 
 module.exports = server.exports();

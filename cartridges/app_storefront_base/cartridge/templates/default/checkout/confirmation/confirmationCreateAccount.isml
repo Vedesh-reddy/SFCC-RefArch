@@ -33,6 +33,9 @@
                        <isprint value="${pdict.passwordForm.newpasswordconfirm.attributes}" encoding="off" />>
                     <div class="form-control-feedback"></div>
                 </div>
+
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+
                 <button class="btn btn-primary btn-block">
                     ${Resource.msg('button.create.account','confirmation',null)}
                 </button>
