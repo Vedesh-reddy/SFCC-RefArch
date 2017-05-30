@@ -69,15 +69,9 @@ describe('shippingHelpers', function () {
     describe('getShipmentByUUID', function () {
         var basket = {
             shipments: new ArrayList([
-                {
-                    UUID: '00001'
-                },
-                {
-                    UUID: '00002'
-                },
-                {
-                    UUID: '00003'
-                }
+                { UUID: '00001' },
+                { UUID: '00002' },
+                { UUID: '00003' }
             ])
         };
 
