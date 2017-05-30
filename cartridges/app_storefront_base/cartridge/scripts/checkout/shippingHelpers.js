@@ -39,7 +39,7 @@ function getAddressFromRequest(req) {
         city: req.form.city,
         stateCode: req.form.stateCode,
         postalCode: req.form.postalCode,
-        countryCode: req.form.stateCode,
+        countryCode: req.form.countryCode,
         phone: req.form.phone
     };
 }
@@ -93,7 +93,9 @@ function selectShippingMethod(shipment, shippingMethodID, shippingMethods, addre
     }
 
     if (!isShipmentSet) {
-        if (applicableShippingMethods.contains(defaultShippingMethod)) {
+        if (Collections.find(applicableShippingMethods, function (method) {
+            return method.ID === defaultShippingMethod.ID;
+        })) {
             shipment.setShippingMethod(defaultShippingMethod);
         } else if (applicableShippingMethods.length > 0) {
             shipment.setShippingMethod(Collections.first(applicableShippingMethods));

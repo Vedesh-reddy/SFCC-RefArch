@@ -26,6 +26,8 @@ module.exports = function (array) {
         return items.length;
     };
 
+    this.length = this.getLength();
+
     this.toArray = function () {
         return items;
     };
