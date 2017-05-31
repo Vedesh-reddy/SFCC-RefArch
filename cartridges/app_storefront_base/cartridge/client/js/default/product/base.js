@@ -357,7 +357,7 @@ function getOptions($productContainer) {
             var selectedValueId = $elOption.find('option[value="' + urlValue + '"]')
                 .data('value-id');
             return {
-                id: $(this).data('option-id'),
+                optionId: $(this).data('option-id'),
                 selectedValueId: selectedValueId
             };
         }).toArray();
@@ -388,7 +388,7 @@ function getOptions($productContainer) {
  * @param {jQuery} $productContainer - DOM element for current product
  */
 function updateOptions(response, $productContainer) {
-    $productContainer.find('.prices .price').replaceWith(response.priceHtml);
+    $productContainer.closest('.container').find('.prices .price').replaceWith(response.priceHtml);
 
     response.options.forEach(function (option) {
         var $optionEl = $productContainer.find('.product-option[data-option-id*="' + option.id

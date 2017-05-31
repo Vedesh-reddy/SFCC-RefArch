@@ -86,7 +86,8 @@ ProductFactory.get = function (params) {
                     params.variables,
                     params.quantity,
                     params.lineItem,
-                    promotions
+                    promotions,
+                    selectedOptions
                 );
                 break;
             default:

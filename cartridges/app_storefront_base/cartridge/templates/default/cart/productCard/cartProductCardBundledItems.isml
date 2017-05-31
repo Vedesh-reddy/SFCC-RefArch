@@ -3,13 +3,13 @@
         <div class="line-item-name">
             <span>${bundledLineItem.productName}</span>
         </div>
-        <div>
-            <img class="product-image pull-left"
+        <div class="row">
+            <img class="col-4 product-image"
                  src="${bundledLineItem.images.small[0].url}"
                  alt="${bundledLineItem.images.small[0].alt}"
                  title="${bundledLineItem.images.small[0].title}"
             >
-            <div class="pull-left item-attributes">
+            <div class="col-8 item-attributes">
                 <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
                     <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                 </isloop>

@@ -5,6 +5,7 @@ var Resource = require('dw/web/Resource');
 
 var Collections = require('~/cartridge/scripts/util/collections');
 var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
+var productHelper = require('~/cartridge/scripts/helpers/productHelpers');
 
 /**
  * Set the selected value on a product option
@@ -92,19 +93,11 @@ function addProductToCart(currentBasket, productId, quantity, childPids, options
     var productLineItems = currentBasket.productLineItems;
     var productQuantityInCart;
     var quantityToSet;
-    var optionModel = product.optionModel;
+    var optionModel = productHelper.getCurrentOptionModel(product.optionModel, options[productId]);
     var result = {
         error: false,
         message: Resource.msg('text.alert.addedtobasket', 'product', null)
     };
-
-    // Set selected option values for non-bundle/set products
-    var optionKeys = Object.keys(options);
-    if (optionKeys.indexOf(productId) !== -1) {
-        options[productId].forEach(function (option) {
-            setSelectedOptionValue(optionModel, option.id, option.selectedValueId);
-        });
-    }
 
     for (var i = 0; i < currentBasket.productLineItems.length; i++) {
         if (productLineItems[i].productID === productId) {

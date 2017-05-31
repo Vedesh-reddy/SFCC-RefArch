@@ -30,6 +30,11 @@ describe('Bundle Product Line Item', function () {
         },
         '~/cartridge/scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
             'dw/util/ArrayList': ArrayList
+        }),
+        '~/cartridge/scripts/helpers/productHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/productHelpers', {
+            '~/cartridge/scripts/util/collections': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+                'dw/util/ArrayList': ArrayList
+            })
         })
     });
 

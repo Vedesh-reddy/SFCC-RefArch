@@ -4,6 +4,8 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
+var ArrayList = require('../../../../mocks/dw.util.Collection.js');
+
 var createApiBasket = function (productInBasket) {
     var currentBasket = {
         defaultShipment: {},
@@ -57,8 +59,10 @@ describe('cartHelpers', function () {
                 };
             }
         },
-        '~/cartridge/scripts/util/collections': {
-        },
+        '~/cartridge/scripts/util/collections': proxyquire(
+            '../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+                'dw/util/ArrayList': ArrayList
+            }),
         '~/cartridge/scripts/checkout/shippingHelpers': {},
         'dw/system/Transaction': {
             wrap: function (item) {
@@ -72,6 +76,10 @@ describe('cartHelpers', function () {
             msgf: function () {
                 return 'someString';
             }
+        },
+        '~/cartridge/scripts/helpers/productHelpers': {
+            getOptions: function () {},
+            getCurrentOptionModel: function () {}
         }
     });
     var mockOptions = [{

@@ -11,12 +11,19 @@ var ProductFactory = require('../scripts/factories/product');
  */
 function createProductLineItemsObject(allLineItems) {
     var lineItems = helper.map(allLineItems, function (item) {
+        var options = helper.map(item.optionProductLineItems, function (optionItem) {
+            return {
+                optionId: optionItem.optionID,
+                selectedValueId: optionItem.optionValueID
+            };
+        });
         var params = {
             pid: item.product.ID,
             quantity: item.quantity.value,
             variables: null,
             pview: 'productLineItem',
-            lineItem: item
+            lineItem: item,
+            options: options
         };
 
         return ProductFactory.get(params);

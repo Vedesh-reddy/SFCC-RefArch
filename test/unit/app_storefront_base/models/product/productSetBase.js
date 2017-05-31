@@ -137,7 +137,7 @@ describe('productSetBase', function () {
         htmlName: 'Option 1 HTML',
         selectedValueId: 'Option Value 1 ID',
         optionId: 'Option 1 ID',
-        optionValues: [{
+        values: [{
             ID: 'Option Value 1 ID',
             displayValue: 'Option 1 Display Value',
             price: '$9.99',
@@ -160,7 +160,7 @@ describe('productSetBase', function () {
         },
         getOptionValue: function () {},
         getSelectedOptionValue: function (option) {
-            return option.optionValues[0];
+            return option.values[0];
         },
         setSelectedOptionValue: function () {},
         urlSelectOptionValue: function () {

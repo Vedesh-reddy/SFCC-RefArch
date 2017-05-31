@@ -5,6 +5,10 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../mocks/dw.util.Collection');
 var toProductMock = require('../../../util');
 
+var option1Mock = {
+    abc: '123'
+};
+
 describe('Product Line Item', function () {
     var ProductLineItem = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/productLineItem/productLineItem', {
         './../product/productBase': proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
@@ -30,7 +34,11 @@ describe('Product Line Item', function () {
         },
         '~/cartridge/scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
             'dw/util/ArrayList': ArrayList
-        })
+        }),
+        '~/cartridge/scripts/helpers/productHelpers': {
+            getOptions: function () { return [option1Mock]; },
+            getCurrentOptionModel: function () {}
+        }
     });
 
     var attributeModel = {
@@ -115,18 +123,20 @@ describe('Product Line Item', function () {
         }
     ]);
 
+    var optionProductLineItemMock = { productName: 'product 1' };
     var lineItem = {
         bonusProductLineItem: false,
         gift: false,
         UUID: 'some UUID',
         adjustedPrice: {
             value: 'some value',
-            currencyCode: 'US'
+            currencyCode: 'US',
+            add: function () {}
         },
         priceAdjustments: priceAdjustments,
         getPrice: function () { return 'money object'; },
         product: toProductMock(productMock),
-        optionProductLineItems: new ArrayList(),
+        optionProductLineItems: new ArrayList([optionProductLineItemMock]),
         shipment: {
             UUID: 'shipment UUID'
         }
@@ -152,5 +162,11 @@ describe('Product Line Item', function () {
         assert.deepEqual(productLineItem.appliedPromotions,
             [{ callOutMsg: 'string', name: 'some name', details: 'string' }]);
         assert.equal(productLineItem.renderedPromotions, 'string');
+    });
+
+    it('should have options when associated', function () {
+        var productLineItem = new ProductLineItem(lineItem.product, null, 1, lineItem);
+
+        assert.deepEqual(productLineItem.options, [optionProductLineItemMock.productName]);
     });
 });
