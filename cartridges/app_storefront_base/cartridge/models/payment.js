@@ -13,16 +13,12 @@ var helper = require('~/cartridge/scripts/dwHelpers');
  *      current cart
  */
 function applicablePaymentMethods(paymentMethods) {
-    var results = [];
-    helper.forEach(paymentMethods, function (method) {
-        if (method.ID === 'CREDIT_CARD') {
-            results.push({
-                ID: method.ID,
-                name: method.name
-            });
-        }
+    return helper.map(paymentMethods, function (method) {
+        return {
+            ID: method.ID,
+            name: method.name
+        };
     });
-    return results;
 }
 
 /**

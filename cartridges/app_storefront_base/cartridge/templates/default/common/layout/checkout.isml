@@ -6,6 +6,7 @@
 <html lang="en">
     <head>
         <isinclude template="/common/htmlhead" />
+        <isactivedatahead/>
     </head>
     <body>
         <div class="page">
