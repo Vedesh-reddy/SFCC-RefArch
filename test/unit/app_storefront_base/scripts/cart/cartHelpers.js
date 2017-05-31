@@ -6,6 +6,31 @@ var sinon = require('sinon');
 
 var ArrayList = require('../../../../mocks/dw.util.Collection.js');
 
+var mockOptions = [{
+    optionId: 'option 1',
+    selectedValueId: '123'
+}];
+
+var productLineItemMock = {
+    productID: 'someProductID',
+    quantity: {
+        value: 1
+    },
+    setQuantityValue: function () {
+        return;
+    },
+    product: {
+        availabilityModel: {
+            inventoryRecord: {
+                ATS: {
+                    value: 3
+                }
+            }
+        }
+    },
+    optionProductLineItems: new ArrayList(mockOptions)
+};
+
 var createApiBasket = function (productInBasket) {
     var currentBasket = {
         defaultShipment: {},
@@ -19,26 +44,7 @@ var createApiBasket = function (productInBasket) {
     };
 
     if (productInBasket) {
-        currentBasket.productLineItems = [
-            {
-                productID: 'someProductID',
-                quantity: {
-                    value: 1
-                },
-                setQuantityValue: function () {
-                    return;
-                },
-                product: {
-                    availabilityModel: {
-                        inventoryRecord: {
-                            ATS: {
-                                value: 3
-                            }
-                        }
-                    }
-                }
-            }
-        ];
+        currentBasket.productLineItems = [productLineItemMock];
     } else {
         currentBasket.productLineItems = [];
     }
@@ -47,6 +53,9 @@ var createApiBasket = function (productInBasket) {
 };
 
 describe('cartHelpers', function () {
+    var findStub = sinon.stub();
+    findStub.withArgs([productLineItemMock]).returns(productLineItemMock);
+
     var cartHelpers = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/cart/cartHelpers', {
         'dw/catalog/ProductMgr': {
             getProduct: function () {
@@ -59,16 +68,16 @@ describe('cartHelpers', function () {
                 };
             }
         },
-        '~/cartridge/scripts/util/collections': proxyquire(
-            '../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
-                'dw/util/ArrayList': ArrayList
-            }),
+        '~/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+            'dw/util/ArrayList': ArrayList
+        }),
         '~/cartridge/scripts/checkout/shippingHelpers': {},
         'dw/system/Transaction': {
             wrap: function (item) {
                 item();
             }
         },
+        '~/cartridge/scripts/util/array': { find: findStub },
         'dw/web/Resource': {
             msg: function () {
                 return 'someString';
@@ -82,10 +91,6 @@ describe('cartHelpers', function () {
             getCurrentOptionModel: function () {}
         }
     });
-    var mockOptions = [{
-        id: 'option 1',
-        selectedValueId: '123'
-    }];
 
     it('should add a product to the cart', function () {
         var currentBasket = createApiBasket(false);

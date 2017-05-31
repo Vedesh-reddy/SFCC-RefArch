@@ -150,6 +150,28 @@ function first(collection) {
     return iterator.hasNext() ? iterator.next() : null;
 }
 
+/**
+ * Determines whether every list item meets callback's truthy conditional
+ *
+ * @param {dw.util.Collection} collection - Collection subclass instance to map over
+ * @param {Function} callback - Callback function for each item
+ * @return {boolean} - Whether every list item meets callback's truthy conditional
+ */
+function every(collection, callback) {
+    if (typeof callback !== 'function') {
+        throw new TypeError(callback + ' is not a function');
+    }
+
+    var iterator = collection.iterator();
+    while (iterator.hasNext()) {
+        var item = iterator.next();
+
+        if (!callback(item)) {
+            return false;
+        }
+    }
+    return true;
+}
 
 module.exports = {
     map: map,
@@ -158,5 +180,6 @@ module.exports = {
     reduce: reduce,
     pluck: pluck,
     find: find,
-    first: first
+    first: first,
+    every: every
 };
