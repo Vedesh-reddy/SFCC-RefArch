@@ -31,7 +31,7 @@ server.post('AddProduct', function (req, res, next) {
     var childPids = Object.hasOwnProperty.call(req.form, 'childPids')
         ? decodeURIComponent(req.form.childPids).split(',')
         : [];
-    var options = req.form.options ? JSON.parse(req.form.options)[productId] : [];
+    var options = req.form.options ? JSON.parse(req.form.options) : [];
     var quantity;
     var result;
     var pidsObj;
@@ -53,7 +53,7 @@ server.post('AddProduct', function (req, res, next) {
 
                 pidsObj.forEach(function (PIDObj) {
                     quantity = parseInt(PIDObj.qty, 10);
-                    var pidOptions = PIDObj.options ? JSON.parse(PIDObj.options)[PIDObj.pid] : {};
+                    var pidOptions = PIDObj.options ? JSON.parse(PIDObj.options) : {};
                     var PIDObjResult = CartHelper.addProductToCart(currentBasket, PIDObj.pid,
                         quantity, childPids, pidOptions);
                     if (PIDObjResult.error) {

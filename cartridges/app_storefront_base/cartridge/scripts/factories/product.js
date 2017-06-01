@@ -16,12 +16,18 @@ ProductFactory.get = function (params) {
     var productId = params.pid;
     var apiProduct = ProductMgr.getProduct(productId);
     var variationModel = Product.getVariationModel(apiProduct, params.variables);
-    var selectedOptions = params.options || [];
+    var selectedOptions = params.options;
     var productFactory = this;
     var ProductSetTile;
     var ProductSet;
     var ProductBundle;
     var product;
+
+    if (typeof (params.options) === 'string') {
+        selectedOptions = JSON.parse(params.options);
+    } else if (!selectedOptions) {
+        selectedOptions = [];
+    }
 
     if (variationModel) {
         product = variationModel.getSelectedVariant() || apiProduct;

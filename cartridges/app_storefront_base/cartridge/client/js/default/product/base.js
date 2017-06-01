@@ -348,8 +348,7 @@ function getChildPids() {
  * @return {string} - Product options and their selected values
  */
 function getOptions($productContainer) {
-    var options = {};
-    options[$productContainer.data('pid')] = $productContainer
+    var options = $productContainer
         .find('.product-option')
         .map(function () {
             var $elOption = $(this).find('.options-select');
@@ -466,15 +465,19 @@ module.exports = {
             if (!$productContainer.length) {
                 $productContainer = $(this).closest('.modal-content').find('.product-quickview');
             }
+
             var quantity = getQuantitySelected($(this));
+            var options = getOptions($productContainer);
+            var selectedValueUrl;
 
             if ($('.set-items').length) {
-                attributeSelect($productContainer
-                    .find('.quantity-select')
-                    .data('action') + '&quantity=' + quantity, $productContainer);
+                selectedValueUrl = $productContainer.find('.quantity-select')
+                    .data('action') + '&quantity=' + quantity + '&options=' + options;
+                attributeSelect(selectedValueUrl, $productContainer);
             } else if ($('.bundle-items', $productContainer).length === 0) {
-                attributeSelect($('.quantity-select').data('action') + '&quantity=' + quantity,
-                    $productContainer);
+                selectedValueUrl = $('.quantity-select').data('action') + '&quantity=' + quantity +
+                    '&options=' + options;
+                attributeSelect(selectedValueUrl, $productContainer);
             }
         });
     },
