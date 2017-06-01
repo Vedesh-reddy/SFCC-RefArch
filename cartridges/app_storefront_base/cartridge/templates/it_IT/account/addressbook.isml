@@ -47,7 +47,7 @@
                                 data-target="#deleteAddressModal"
                                 data-id="${address.address.ID}"
                                 data-url="${pdict.actionUrls.deleteActionUrl}"
-                                <isif condition="${address.address.ID == pdict.addressBook[0].address.ID}">data-default="true"</isif>>
+                                ${ address.address.ID == pdict.addressBook[0].address.ID ? data-default="true" : '' }>
                                 &times;
                             </button>
                         </div>
