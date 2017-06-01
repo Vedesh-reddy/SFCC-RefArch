@@ -116,12 +116,3 @@ target.integration = function (args) {
     });
 
 };
-
-target.upload = function (files) {
-    files.forEach(function (file) {
-        var relativePath = path.relative('./cartridges/', file);
-        cp('dw.json', './cartridges/');
-        exec('cd cartridges && node ../node_modules/.bin/dwupload --file ' + relativePath + ' && cd ..');
-        rm('./cartridges/dw.json');
-    });
-};

@@ -7,21 +7,20 @@
     "node": ">=4.0"
   },
   "scripts": {
-    "test": "mocha -R spec test/unit/**/*.js",
+    "test": "sgmf-scripts --test test/unit/**/*.js",
     "test:appium": "node bin/Makefile functional -- appium -- ",
-    "cover": "istanbul cover ./node_modules/.bin/_mocha -- -R spec test/unit/**/*.js",
+    "cover": "sgmf-scripts --cover",
     "test:integration": "node bin/Makefile integration -- ",
     "test:functional": "node bin/Makefile functional -- ",
     "test:functional:docker": "bin/test-functional-docker.sh",
     "test:functional:sauce": "./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js ",
-    "compile:scss": "node-sass --include-path node_modules --include-path node_modules/flag-icon-css/sass cartridges/app_storefront_base/cartridge/client/scss/default/ -o cartridges/app_storefront_base/cartridge/static/default/css/ --output-style compressed",
-    "compile:js": "webpack",
+    "compile:scss": "sgmf-scripts --compile css",
+    "compile:js": "sgmf-scripts --compile js",
     "compile:fonts": "mkdir -p cartridges/app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/font-awesome/fonts/ cartridges/app_storefront_base/cartridge/static/default/fonts && cp -r node_modules/flag-icon-css/flags/ cartridges/app_storefront_base/cartridge/static/default/fonts/flags",
-    "lint": "eslint . && stylelint --syntax scss \"cartridges/app_storefront_base/cartridge/client/scss/**/*.scss\"",
-    "upload": "node bin/Makefile upload -- ",
-    "watch:static": "onchange 'cartridges/app_storefront_base/cartridge/client/js/**/*.js' -- npm run compile:js & onchange 'cartridges/app_storefront_base/cartridge/client/scss/**/*.scss' -- npm run compile:scss & onchange 'cartridges/app_storefront_base/cartridge/static/**/*' -w -- npm run upload -- {{changed}}",
-    "watch:cartridge": "onchange 'cartridges/app_storefront_base/cartridge/(controllers|models|scripts|templates|forms)/**/*' -w -- npm run upload -- {{changed}}",
-    "watch": "npm run watch:static & npm run watch:cartridge"
+    "lint": "sgmf-scripts --lint css && sgmf-scripts --lint js",
+    "upload": "sgmf-scripts --upload",
+    "uploadCartridge": "sgmf-scripts --uploadCartridge app_storefront_base && sgmf-scripts --uploadCartridge modules",
+    "watch": "sgmf-scripts --watch"
   },
   "repository": {
     "type": "git",
@@ -32,11 +31,9 @@
   "homepage": "https://bitbucket.org/demandware/storefront-base#readme",
   "devDependencies": {
     "@tridnguyen/config": "^2.3.1",
-    "babel-core": "^6.13.2",
-    "babel-loader": "^6.2.7",
-    "babel-preset-es2015": "^6.13.2",
     "chai": "^3.5.0",
     "chalk": "^1.1.3",
+    "cheerio": "0.22.0",
     "cldr-data": "^29.0.1",
     "dwupload": "^3.4.0",
     "eslint": "^3.2.2",
@@ -49,23 +46,20 @@
     "mocha": "^2.5.3",
     "mocha-junit-reporter": "^1.12.0",
     "moment-timezone": "^0.5.5",
-    "node-sass": "^3.8.0",
-    "onchange": "^2.5.0",
     "properties-parser": "^0.3.0",
     "proxyquire": "1.7.4",
     "request-promise": "^4.1.1",
-    "cheerio": "0.22.0",
     "selenium-standalone": "^5.9.0",
+    "sgmf-scripts": "^0.0.5",
     "shelljs": "^0.7.0",
     "sinon": "^1.17.4",
     "stylelint": "^7.1.0",
     "stylelint-config-standard": "^12.0.0",
     "stylelint-scss": "^1.3.4",
     "url": "^0.11.0",
+    "wdio-sauce-service": "~0.1",
     "webdriverio": "^3.3.0",
-    "webpack": "^2.2.1",
-    "xml2js": "^0.4.17",
-    "wdio-sauce-service": "~0.1"
+    "xml2js": "^0.4.17"
   },
   "dependencies": {
     "bootstrap": "4.0.0-alpha.6",
@@ -73,5 +67,9 @@
     "font-awesome": "^4.6.3",
     "jquery": "^3.1.1"
   },
+  "browserslist": [
+    "last 2 versions",
+    "ie >= 10"
+  ],
   "packageName": "app_storefront_base"
 }
