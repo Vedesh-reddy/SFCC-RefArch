@@ -3,18 +3,10 @@
     <isif condition="${shippingLoop.first}">
         <div class="single-shipping" data-shipment-summary="${shippingModel.UUID}">
             <p class="summary-section-label shipping-addr-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</p>
-            <isif condition="${shippingModel.shippingAddress !== null}">
-                <isset name="address" value="${shippingModel.shippingAddress}" scope="page"/>
-            <iselse>
-                <isset name="address" value="{}" scope="page"/>
-            </isif>
+            <isset name="address" value="${shippingModel.shippingAddress !== null ? shippingModel.shippingAddress : {} }"  scope="page"/>
             <div class="summary-details shipping">
                 <isinclude template="checkout/addressSummary" />
-                <isif condition="${shippingModel.shippingAddress}">
-                    <div class="shipping-phone">${shippingModel.shippingAddress.phone}</div>
-                <iselse>
-                    <div class="shipping-phone"></div>
-                </isif>
+                <div class="shipping-phone">${shippingModel.shippingAddress ? shippingModel.shippingAddress.phone : ''}</div>
             </div>
             
             <!--- Shipping information --->
