@@ -2,7 +2,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.firstName.mandatory === true}>required</isif>
+            ${billingFields.firstName.mandatory === true ? required: ''}
             ${billingFields.firstName.htmlName}">
             <label class="form-control-label" for="billingFirstName">${Resource.msg('field.billing.address.first.name','address',null)}</label>
             <input autofocus type="text" class="form-control billingFirstName" id="billingFirstName"
@@ -17,7 +17,7 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.lastName.mandatory === true}>required</isif>
+            ${billingFields.lastName.mandatory === true ? required: ''}
             ${billingFields.lastName.htmlName}">
             <label class="form-control-label" for="billingLastName">${Resource.msg('field.billing.address.last.name','address',null)}</label>
             <input type="text" class="form-control billingLastName" id="billingLastName"
@@ -35,7 +35,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="form-group
-            <isif condition=${billingFields.address1.mandatory === true}>required</isif>
+            ${billingFields.address1.mandatory === true ? required: ''}
             ${billingFields.address1.htmlName}">
             <label class="form-control-label" for="billingAddressOne">${Resource.msg('field.billing.address.one','address',null)}</label>
             <input type="text" class="form-control billingAddressOne" id="billingAddressOne"
@@ -52,7 +52,9 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="form-group ${billingFields.address2.htmlName}">
+        <div class="form-group 
+            ${billingFields.address2.mandatory === true ? required: ''}
+            ${billingFields.address2.htmlName}">
             <label class="form-control-label" for="billingAddressTwo">${Resource.msg('field.billing.address.two','address',null)}</label>
             <input type="text" class="form-control billingAddressTwo" id="billingAddressTwo"
                 value="${pdict.order.billing.billingAddress.address
@@ -70,7 +72,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.country.mandatory === true}>required</isif>
+            ${billingFields.country.mandatory === true ? required: ''}
             ${billingFields.country.htmlName}">
             <label class="form-control-label" for="billingCountry">${Resource.msg('field.billing.address.country','address',null)}</label>
             <select class="form-control billingCountry" id="billingCountry"
@@ -93,7 +95,7 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.states.stateCode.mandatory === true}>required</isif>
+            ${billingFields.states.stateCode.mandatory === true ? required: ''}
             ${billingFields.states.stateCode.htmlName}">
             <label class="form-control-label" for="billingState">${Resource.msg('field.billing.address.state','address',null)}</label>
             <select class="form-control billingState" id="billingState"
@@ -118,7 +120,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.city.mandatory === true}>required</isif>
+            ${billingFields.city.mandatory === true ? required: ''}
             ${billingFields.city.htmlName}">
             <label class="form-control-label" for="billingAddressCity">${Resource.msg('field.billing.address.city','address',null)}</label>
             <input type="text" class="form-control billingAddressCity" id="billingAddressCity"
@@ -133,7 +135,7 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${billingFields.postalCode.mandatory === true}>required</isif>
+            ${billingFields.postalCode.mandatory === true ? required: ''}
             ${billingFields.postalCode.htmlName}">
             <label class="form-control-label" for="billingZipCode">${Resource.msg('field.billing.address.zip.code','address',null)}</label>
             <input type="text" class="form-control billingZipCode" id="billingZipCode"
