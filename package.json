@@ -1,6 +1,6 @@
 {
   "name": "mfsg",
-  "version": "0.0.7",
+  "version": "0.0.17",
   "description": "Mobile First SiteGenesis",
   "main": "index.js",
   "engines": {
@@ -20,7 +20,8 @@
     "lint": "sgmf-scripts --lint css && sgmf-scripts --lint js",
     "upload": "sgmf-scripts --upload",
     "uploadCartridge": "sgmf-scripts --uploadCartridge app_storefront_base && sgmf-scripts --uploadCartridge modules",
-    "watch": "sgmf-scripts --watch"
+    "watch": "sgmf-scripts --watch",
+    "release": "node bin/Makefile release --"
   },
   "repository": {
     "type": "git",

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <isif condition="${dw.system.System.getInstanceType() != dw.system.System.PRODUCTION_SYSTEM}">
-	<title>${pdict.CurrentPageMetaData.title} | ${Resource.msg('global.site.name', 'locale', null)} | ${Resource.msg('revisioninfo.revisionnumber', 'revisioninfo', null)}</title>
+	<title>${pdict.CurrentPageMetaData.title} | ${Resource.msg('global.site.name', 'version', null)} | ${Resource.msg('global.version.number', 'version', null)}</title>
 <iselse/>
   <title><isprint value="${pdict.CurrentPageMetaData.title}" encoding="off" /></title>
 </isif>

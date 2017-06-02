@@ -11,17 +11,17 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 
 1 Clone this repository.
 
-2 Upload the `modules` folder to the WebDav location for cartridges for your Sandbox through CyberDuck or any other WebDAV client.
-*Note:* you can't upload the modules folder through Studio.
-You can upload via dwupload command. For example:
+2 Run `npm install` to install all of the local dependancies
 
-dwupload --hostname sbox01-realm1-company.demandware.net --username admin --password "Grid is a-4letter-word!" --cartridge modules
+3 Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
 
-3 Upload the `app_storefront_base` and `applepay` cartridges via Studio or use a WebDAV client to upload it to the WebDAV Cartridge location.
+4 Create `dw.json` file in the root of the project that would contain hostname, username and password to your sandbox. Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
 
-4 Add the `app_storefront_base` and `applepay` cartridges to your cartridge path.
+5 Use https://bitbucket.org/demandware/sitegenesisdata to zip and import site date on your sandbox.
 
-5 Install npm modules for the project in the root directory of the project: `npm install`.
+6 Add the `app_storefront_base` cartridge to your cartridge path.
+
+7 You should now be ready to navigate to and use your site.
 
 
 # NPM scripts
@@ -39,21 +39,23 @@ Use the provided NPM scripts to compile and upload changes to your Sandbox.
 
 ## Watching for changes and uploading
 
-`npm run watch:static` - Watches js and scss files for changes, recompiles them and uploads result to the sandbox. Requires a valid dw.json file at the root that is configured for the sandbox to upload.
-
-`npm run watch:cartridge` - Watches all cartridge files (except for static content) and uploads it to sandbox. Requires a valid dw.json file at the root that is configured for the sandbox to upload.
-
 `npm run watch` - Watches everything and recompiles (if necessary) and uploads to the sandbox. Requires a valid dw.json file at the root that is configured for the sandbox to upload.
+
+## Uploading
+
+`npm run uploadCartridge` - Will upload both `app_storefront_base` and `modules` to the server. Requires a valid dw.json file at the root that is configured for the sandbox to upload.
+
+`npm run upload <filepath>` - Will upload a given file to the server. Requires a valid dw.json file.
 
 #Testing
 ## Running unit tests
 
-You can run `npm test` to execute all unit tests in the project. Run `npm test --coverage` to get coverage information. Coverage will be available in `coverage` folder under root directory.
+You can run `npm test` to execute all unit tests in the project. Run `npm run cover` to get coverage information. Coverage will be available in `coverage` folder under root directory.
 
 * UNIT test code coverage:
 1. Open a terminal and navigate to the root directory of the mfsg repository.
 2. Enter the command: `npm run cover`.
-3. Examine the report that is generated. For example: `Writing coverage reports at [/Users/zsardoone/Demandware/mfsg/coverage]`
+3. Examine the report that is generated. For example: `Writing coverage reports at [/Users/yourusername/SCC/mfsg/coverage]`
 3. Navigate to this directory on your local machine, open up the index.html file. This file contains a detailed report.
 
 ## Running integration tests
