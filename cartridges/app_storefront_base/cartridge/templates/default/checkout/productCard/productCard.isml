@@ -12,12 +12,12 @@
         <!--- individual bundled line items --->
         <isinclude template="cart/productCard/cartProductCardBundledItems" />
     <iselse/>
-        <div class="row product-line-item-details">
-            <img class="col-4 product-image"
+        <div class="product-line-item-details">
+            <img class="pull-left product-image"
                  src="${lineItem.images.small[0].url}"
                  alt="${lineItem.images.small[0].alt}"
                  title="${lineItem.images.small[0].title}">
-            <div class="col-8 item-attributes">
+            <div class="pull-left item-attributes">
                 <isloop items="${lineItem.variationAttributes}" var="attribute">
                     <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                 </isloop>

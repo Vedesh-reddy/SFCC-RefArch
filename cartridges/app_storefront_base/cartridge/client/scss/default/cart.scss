@@ -54,7 +54,7 @@ $negative-spacer: -0.625rem;
 .item-attributes {
     display: inline-block;
     vertical-align: top;
-    margin-left: 0.625em;
+    max-width: 65%;
 }
 
 .line-item-divider {
@@ -115,6 +115,7 @@ $negative-spacer: -0.625rem;
 .product-image {
     height: 5.625em;
     width: 5.625em;
+    margin-right: 0.938em;
 }
 
 .promo-code-form {
@@ -275,4 +276,10 @@ $negative-spacer: -0.625rem;
 
 .valid-cart-error {
     min-height: 6.5rem;
+}
+
+.bundled-line-item {
+    .item-attributes {
+        margin-left: 0;
+    }
 }

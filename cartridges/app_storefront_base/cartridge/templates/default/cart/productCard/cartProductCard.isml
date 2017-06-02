@@ -11,6 +11,11 @@
                         <isloop items="${lineItem.variationAttributes}" var="attribute">
                             <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                         </isloop>
+                        <isloop items="${lineItem.options}" var="option">
+                            <isif condition="${!!option}" />
+                                <p class="line-item-attributes">${option}</p>
+                            </isif>
+                        </isloop>
 
                         <isinclude template="cart/productCard/cartProductCardAvailability" />
 
@@ -26,4 +31,3 @@
         <isinclude template="cart/productCard/cartProductCardProductPrice" />
     </div>
 </div>
-

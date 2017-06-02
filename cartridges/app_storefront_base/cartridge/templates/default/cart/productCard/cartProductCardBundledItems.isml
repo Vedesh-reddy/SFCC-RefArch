@@ -3,21 +3,19 @@
         <div class="line-item-name">
             <span>${bundledLineItem.productName}</span>
         </div>
-        <div class="row">
-            <img class="col-4 product-image"
-                 src="${bundledLineItem.images.small[0].url}"
-                 alt="${bundledLineItem.images.small[0].alt}"
-                 title="${bundledLineItem.images.small[0].title}"
-            >
-            <div class="col-8 item-attributes">
-                <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
-                    <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
+        <img class="pull-left product-image"
+             src="${bundledLineItem.images.small[0].url}"
+             alt="${bundledLineItem.images.small[0].alt}"
+             title="${bundledLineItem.images.small[0].title}"
+        >
+        <div class="pull-left item-attributes">
+            <isloop items="${bundledLineItem.variationAttributes}" var="attribute">
+                <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
+            </isloop>
+            <div class="item-options">
+                <isloop items="${bundledLineItem.options}" var="option">
+                    <div class="line-item-option">${option}</div>
                 </isloop>
-                <div class="item-options">
-                    <isloop items="${bundledLineItem.options}" var="option">
-                        <div class="line-item-option">${option}</div>
-                    </isloop>
-                </div>
             </div>
         </div>
     </div>
