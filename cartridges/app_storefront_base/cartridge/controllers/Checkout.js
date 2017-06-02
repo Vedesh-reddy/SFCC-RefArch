@@ -519,7 +519,6 @@ server.get(
             billingForm.copyFrom(preferredAddress);
         }
 
-
         // Loop through all shipments and make sure all are valid
         var isValid;
         var allValid = true;
