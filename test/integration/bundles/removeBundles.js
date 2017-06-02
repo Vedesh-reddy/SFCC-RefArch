@@ -20,7 +20,8 @@ describe('Remove bundle from product line item', function () {
         form: {
             pid: bundlePid,
             childPids: childPids,
-            quantity: qty
+            quantity: qty,
+            options: []
         }
     };
 

@@ -20,20 +20,23 @@ function getPidValue($el) {
 }
 
 /**
+ * Retrieve contextual quantity selector
+ * @param {jquery} $el - DOM container for the relevant quantity
+ * @return {jquery} - quantity selector DOM container
+ */
+function getQuantitySelector($el) {
+    return $el && $('.set-items').length
+        ? $($el).closest('.product-detail').find('.quantity-select')
+        : $('.quantity-select');
+}
+
+/**
  * Retrieves the value associated with the Quantity pull-down menu
  * @param {jquery} $el - DOM container for the relevant quantity
  * @return {string} - value found in the quantity input
  */
 function getQuantitySelected($el) {
-    var quantityValue;
-
-    if ($el && $('.set-items').length) {
-        quantityValue = $($el).closest('.product-detail').find('.quantity-select').val();
-    } else {
-        quantityValue = $('.quantity-select').val();
-    }
-
-    return quantityValue;
+    return getQuantitySelector($el).val();
 }
 
 /**
@@ -281,11 +284,10 @@ function attributeSelect(selectedValueUrl, $productContainer) {
             method: 'GET',
             success: function (data) {
                 handleVariantResponse(data, $productContainer);
+                getQuantitySelector($productContainer)
+                    .data('action', data.product.selectedVariantUrl);
                 $('body').trigger('product:afterAttributeSelect',
                     { data: data, container: $productContainer });
-                $productContainer
-                    .find('.quantity-select')
-                    .data('action', data.product.selectedVariantUrl);
                 $.spinner().stop();
             },
             error: function () {
