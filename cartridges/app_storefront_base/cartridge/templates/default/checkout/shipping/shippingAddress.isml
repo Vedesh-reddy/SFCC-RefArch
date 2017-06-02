@@ -1,14 +1,10 @@
 <isset name="addressFields" value="${pdict.forms.shippingForm.shippingAddress.addressFields}" scope="page"/>
-<isif condition="${shippingModel.shippingAddress}">
-	<isset name="shippingAddress" value="${shippingModel.shippingAddress}" scope="page" />
-<iselse/>
-	<isset name="shippingAddress" value="${{}}" scope="page" />
-</isif>
+<isset name="shippingAddress" value="${ shippingModel.shippingAddress ? shippingModel.shippingAddress : {} }" scope="page" />
 
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${addressFields.firstName.mandatory === true}>required</isif>
+            ${addressFields.firstName.mandatory === true ? required: ''}
             ${addressFields.firstName.htmlName}">
             <label class="form-control-label" for="shippingFirstName"  >
                 ${Resource.msg('field.shipping.address.first.name','address',null)}
@@ -22,7 +18,7 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${addressFields.lastName.mandatory === true}>required</isif>
+            ${addressFields.lastName.mandatory === true ? required: ''}
             ${addressFields.lastName.htmlName}">
             <label class="form-control-label" for="shippingLastName">
                 ${Resource.msg('field.shipping.address.last.name','address',null)}
@@ -38,7 +34,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="form-group
-            <isif condition=${addressFields.address1.mandatory === true}>required</isif>
+            ${addressFields.address1.mandatory === true ? required: ''}
             ${addressFields.address1.htmlName}">
             <label class="form-control-label" for="shippingAddressOne">
                 ${Resource.msg('field.shipping.address.one','address',null)}
@@ -55,7 +51,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="form-group
-            <isif condition=${addressFields.address2.mandatory === true}>required</isif>
+            ${addressFields.address2.mandatory === true ? required: ''}
             ${addressFields.address2.htmlName}">
             <label class="form-control-label" for="shippingAddressTwo">
                 ${Resource.msg('field.shipping.address.two','address',null)}
@@ -72,7 +68,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${addressFields.country.mandatory === true}>required</isif>
+            ${addressFields.country.mandatory === true ? required: ''}
             ${addressFields.country.htmlName}">
             <label class="form-control-label" for="shippingCountry">
                 ${Resource.msg('field.shipping.address.country','address',null)}
@@ -81,7 +77,7 @@
                 <isprint value=${addressFields.country.attributes} encoding="off"/>
                 autocomplete="shipping country">
                     <isloop items=${addressFields.country.options} var="country">
-                        <option id="${country.id}" <isif condition="${country.id==shippingAddress.countryCode}">selected</isif>>${country.htmlValue}</option>
+                        <option id="${country.id}" ${country.id==shippingAddress.countryCode ? selected : ''}>${country.htmlValue}</option>
                     </isloop>
             </select>
             <div class="form-control-feedback"><isprint value="${addressFields.country.error}" ></div>
@@ -89,7 +85,7 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${addressFields.states.stateCode.mandatory === true}>required</isif>
+            ${addressFields.states.stateCode.mandatory === true ? required: ''}
             ${addressFields.states.stateCode.htmlName}">
             <label class="form-control-label" for="shippingState">
                 ${Resource.msg('field.shipping.address.state','address',null)}
@@ -109,7 +105,7 @@
 <div class="row">
     <div class="col-sm-6">
         <div class="form-group
-        <isif condition=${addressFields.city.mandatory === true}>required</isif>
+            ${addressFields.city.mandatory === true ? required: ''}
             ${addressFields.city.htmlName}">
             <label class="form-control-label" for="shippingAddressCity">
                 ${Resource.msg('field.shipping.address.city','address',null)}
@@ -122,7 +118,7 @@
     </div>
     <div class="col-sm-6">
         <div class="form-group
-            <isif condition=${addressFields.postalCode.mandatory === true}>required</isif>
+            ${addressFields.postalCode.mandatory === true ? required: ''}
             ${addressFields.postalCode.htmlName}">
             <label class="form-control-label" for="shippingZipCode">
                 ${Resource.msg('field.shipping.address.zip.code','address',null)}
@@ -138,7 +134,7 @@
 <div class="row">
     <div class="col-sm-12">
         <div class="form-group
-            <isif condition=${addressFields.phone.mandatory === true}>required</isif>
+            ${addressFields.phone.mandatory === true ? required: ''}
             ${addressFields.phone.htmlName}">
             <label class="form-control-label" for="shippingPhoneNumber">
                 ${Resource.msg('field.shipping.address.phone','address',null)}

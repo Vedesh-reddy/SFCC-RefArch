@@ -89,7 +89,9 @@ function validateFields(form, formKeys) {
             item = form;
             var properties = key.split('.');
             properties.forEach(function (property) {
-                item = item[property];
+                if (Object.prototype.hasOwnProperty.call(form, property)) {
+                    item = item[property];
+                }
             });
         } else {
             item = form[key];
@@ -366,9 +368,12 @@ function validateBillingForm(form) {
         'address2',
         'city',
         'postalCode',
-        'country',
-        'states.stateCode'
+        'country'
     ];
+
+    if (Object.prototype.hasOwnProperty.call(form, 'states')) {
+        formKeys.push('states.stateCode');
+    }
 
     return validateFields(form, formKeys);
 }

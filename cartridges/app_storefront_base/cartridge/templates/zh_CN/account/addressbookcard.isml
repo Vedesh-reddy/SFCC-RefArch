@@ -9,8 +9,9 @@
         <div class="card-block">
             <div>
                 <div class="dashboard-cards-block-title">${Resource.msg('label.addressbook.defaultaddress','account',null)}</div>
-                <dt class="dashboard-info">${pdict.account.preferredAddress.address.ID}</dt>
-                <div>${pdict.account.preferredAddress.address.postalCode} ${pdict.account.preferredAddress.address.stateCode} ${pdict.account.preferredAddress.address.city}</div>
+                <div class="dashboard-info">${pdict.account.preferredAddress.address.ID}</div>
+                <div>${pdict.account.preferredAddress.address.postalCode} </div>
+                <div>${pdict.account.preferredAddress.address.stateCode} ${pdict.account.preferredAddress.address.city}</div>
                 <div>${pdict.account.preferredAddress.address.address1}</div>
                 <div>${pdict.account.preferredAddress.address.lastName} ${pdict.account.preferredAddress.address.firstName}</div>
                 <div>${pdict.account.preferredAddress.address.phone}</div>
