@@ -1,6 +1,7 @@
 'use strict';
 
 var collections = require('*/cartridge/scripts/util/collections');
+var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
 var ImageModel = require('./productImages');
 
 /**
@@ -21,14 +22,24 @@ function isSwatchable(dwAttributeId) {
  * @param {dw.catalog.ProductVariationAttributeValue} selectedValue - Selected attribute value
  * @param {dw.catalog.ProductVariationAttribute} attr - Attribute value'
  * @param {string} endPoint - The end point to use in the Product Controller
+ * @param {string} selectedOptionsQueryParams - Selected options query params
+ * @param {string} quantity - Quantity selected
  * @returns {Object[]} - List of attribute value objects for template context
  */
-function getAllAttrValues(variationModel, selectedValue, attr, endPoint) {
+function getAllAttrValues(
+    variationModel,
+    selectedValue,
+    attr,
+    endPoint,
+    selectedOptionsQueryParams,
+    quantity
+) {
     var attrValues = variationModel.getAllValues(attr);
     var actionEndpoint = 'Product-' + endPoint;
 
     return collections.map(attrValues, function (value) {
         var isSelected = (selectedValue && selectedValue.equals(value)) || false;
+        var valueUrl = '';
 
         var processedAttr = {
             id: value.ID,
@@ -40,9 +51,11 @@ function getAllAttrValues(variationModel, selectedValue, attr, endPoint) {
         };
 
         if (processedAttr.selectable) {
-            processedAttr.url = (isSelected && endPoint !== 'Show')
+            valueUrl = (isSelected && endPoint !== 'Show')
                 ? variationModel.urlUnselectVariationValue(actionEndpoint, attr)
                 : variationModel.urlSelectVariationValue(actionEndpoint, attr, value);
+            processedAttr.url = urlHelper.appendQueryParams(valueUrl, [selectedOptionsQueryParams,
+                'quantity=' + quantity]);
         }
 
         if (isSwatchable(attr.attributeID)) {
@@ -99,13 +112,17 @@ function getAttrResetUrl(values, attrID) {
  *
  * @param {string} attrConfig.endPoint - the endpoint to use when generating urls for
  *                                       product attributes
+ * @param {string} selectedOptionsQueryParams - Selected options query params
+ * @param {string} quantity - Quantity selected
  */
-function VariationAttributesModel(variationModel, attrConfig) {
+function VariationAttributesModel(variationModel, attrConfig, selectedOptionsQueryParams,
+                                  quantity) {
     var allAttributes = variationModel.productVariationAttributes;
     var result = [];
     collections.forEach(allAttributes, function (attr) {
         var selectedValue = variationModel.getSelectedValue(attr);
-        var values = getAllAttrValues(variationModel, selectedValue, attr, attrConfig.endPoint);
+        var values = getAllAttrValues(variationModel, selectedValue, attr, attrConfig.endPoint,
+            selectedOptionsQueryParams, quantity);
         var resetUrl = getAttrResetUrl(values, attr.ID);
 
         if ((Array.isArray(attrConfig.attributes)

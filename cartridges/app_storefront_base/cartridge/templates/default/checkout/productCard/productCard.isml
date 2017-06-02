@@ -12,24 +12,25 @@
         <!--- individual bundled line items --->
         <isinclude template="cart/productCard/cartProductCardBundledItems" />
     <iselse/>
-        <div class="product-line-item-details">
-            <img class="pull-left product-image"
+        <div class="product-line-item-details d-flex flex-row">
+            <img class="product-image"
                  src="${lineItem.images.small[0].url}"
                  alt="${lineItem.images.small[0].alt}"
                  title="${lineItem.images.small[0].title}">
-            <div class="pull-left item-attributes">
+            <div class="item-attributes">
                 <isloop items="${lineItem.variationAttributes}" var="attribute">
                     <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
                 </isloop>
 
-                <isif condition="${(pdict.order && !pdict.order.orderStatus) || miniCart}">
-                    <isinclude template="cart/productCard/cartProductCardAvailability" />
-                </isif>
                 <div class="item-options">
                     <isloop items="${lineItem.options}" var="option">
                         <div class="line-item-option">${option}</div>
                     </isloop>
                 </div>
+
+                <isif condition="${(pdict.order && !pdict.order.orderStatus) || miniCart}">
+                    <isinclude template="cart/productCard/cartProductCardAvailability" />
+                </isif>
             </div>
         </div>
     </isif>

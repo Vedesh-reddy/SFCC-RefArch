@@ -4,7 +4,7 @@ var formatMoney = require('dw/util/StringUtils').formatMoney;
 var ProductBase = require('./../product/productBase').productBase;
 var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
 var collections = require('*/cartridge/scripts/util/collections');
-var productHelper = require('~/cartridge/scripts/helpers/productHelpers');
+var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
 
 /**
  * get the min and max numbers to display in the quantity drop down.

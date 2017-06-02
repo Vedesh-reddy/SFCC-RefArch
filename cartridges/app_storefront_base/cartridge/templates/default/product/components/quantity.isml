@@ -1,12 +1,11 @@
 <label>${Resource.msg('label.quantity', 'common', null)}</label>
-<select class="quantity-select custom-select form-control" data-action="${product.selectedVariantUrl}">
-    <isloop begin="${product.minOrderQuantity}"
-            end="${product.maxOrderQuantity}"
-            status="status">
-        <isif condition="${product.selectedQuantity === status.index}">
-            <option selected value="${status.index}">${status.index}</option>
-        <iselse/>
-            <option value="${status.index}">${status.index}</option>
-        </isif>
+<select class="quantity-select custom-select form-control">
+    <isloop items="${product.quantities}" var="quantity">
+        <option value="${quantity.value}"
+                <isif condition="${product.productType !== 'bundle'}">data-url="${quantity.url}"</isif>
+                ${quantity.selected ? 'selected' : ''}
+        >
+            ${quantity.value}
+        </option>
     </isloop>
 </select>

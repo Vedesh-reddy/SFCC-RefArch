@@ -16,6 +16,9 @@ describe('productBase', function () {
         'dw/web/Resource': {
             msgf: function (params) { return params; },
             msg: function (params) { return params; }
+        },
+        '*/cartridge/scripts/helpers/productHelpers': {
+            getSelectedOptionsUrl: function () { return ''; }
         }
     });
 

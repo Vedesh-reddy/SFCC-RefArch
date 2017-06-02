@@ -17,7 +17,15 @@ describe('Bundle Product Line Item', function () {
             'dw/web/Resource': {
                 msgf: function () { return 'some string with param'; },
                 msg: function () { return 'some string'; }
-            }
+            },
+            '*/cartridge/scripts/helpers/productHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/productHelpers', {
+                '*/cartridge/scripts/util/collections': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+                    'dw/util/ArrayList': ArrayList
+                }),
+                '*/cartridge/scripts/helpers/urlHelpers': {
+                    appendQueryParams: function () {}
+                }
+            })
         }),
         'dw/util/StringUtils': {
             formatMoney: function () {
@@ -31,11 +39,9 @@ describe('Bundle Product Line Item', function () {
         '*/cartridge/scripts/util/collections': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
-        '~/cartridge/scripts/helpers/productHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/productHelpers', {
-            '*/cartridge/scripts/util/collections': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
-                'dw/util/ArrayList': ArrayList
-            })
-        })
+        '*/cartridge/scripts/helpers/productHelpers': {
+            getCurrentOptionModel: function () {}
+        }
     });
 
     var ProductLineItemBundle = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/productLineItem/bundleLineItem', {

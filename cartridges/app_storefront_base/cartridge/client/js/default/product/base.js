@@ -108,19 +108,6 @@ function processNonSwatchValues(attr, $productContainer) {
 }
 
 /**
- * Appends the quantity selected to the Ajax URL.  Used to determine product availability, which is
- * one criteria used to enable the "Add to Cart" button
- *
- * @param {string} url - Attribute value onClick URL used to [de]select an attribute value
- * @return {string} - The provided URL appended with the quantity selected in the query params or
- *     the original provided URL if no quantity selected
- */
-function appendQuantityToUrl(url) {
-    var quantitySelected = getQuantitySelected();
-    return !quantitySelected ? url : url + '&quantity=' + quantitySelected;
-}
-
-/**
  * Routes the handling of attribute processing depending on whether the attribute has image
  *     swatches or not
  *
@@ -214,6 +201,39 @@ function getAttributesHtml(attributes) {
 }
 
 /**
+ * @typedef UpdatedOptionValue
+ * @type Object
+ * @property {string} id - Option value ID for look up
+ * @property {string} url - Updated option value selection URL
+ */
+
+/**
+ * @typedef OptionSelectionResponse
+ * @type Object
+ * @property {string} priceHtml - Updated price HTML code
+ * @property {Object} options - Updated Options
+ * @property {string} options.id - Option ID
+ * @property {UpdatedOptionValue[]} options.values - Option values
+ */
+
+/**
+ * Updates DOM using post-option selection Ajax response
+ *
+ * @param {OptionSelectionResponse} options - Ajax response options from selecting a product option
+ * @param {jQuery} $productContainer - DOM element for current product
+ */
+function updateOptions(options, $productContainer) {
+    options.forEach(function (option) {
+        var $optionEl = $productContainer.find('.product-option[data-option-id*="' + option.id
+            + '"]');
+        option.values.forEach(function (value) {
+            var valueEl = $optionEl.find('option[data-value-id*="' + value.id + '"]');
+            valueEl.val(value.url);
+        });
+    });
+}
+
+/**
  * Parses JSON from Ajax call made whenever an attribute value is [de]selected
  * @param {Object} response - response from Ajax call
  * @param {Object} response.product - Product object
@@ -238,7 +258,10 @@ function handleVariantResponse(response, $productContainer) {
     });
 
     // Update pricing
-    $('.prices .price', $productContainer).replaceWith(response.product.price.html);
+    var $priceSelector = $('.prices .price', $productContainer).length
+        ? $('.prices .price', $productContainer)
+        : $('.prices .price');
+    $priceSelector.replaceWith(response.product.price.html);
 
     // Update promotions
     $('.promotions').empty().html(getPromotionsHtml(response.product.promotions));
@@ -256,16 +279,26 @@ function handleVariantResponse(response, $productContainer) {
 }
 
 /**
- * Retrieves url to use when updating a product view and appends the quantity
- * @param {string} selectedValueUrl - string The url used to indicate the product variation
- * @return {string|null} - the Url for the selected variation value
+ * @typespec UpdatedQuantity
+ * @type Object
+ * @property {boolean} selected - Whether the quantity has been selected
+ * @property {string} value - The number of products to purchase
+ * @property {string} url - Compiled URL that specifies variation attributes, product ID, options,
+ *     etc.
  */
-function createSelectedValueUrl(selectedValueUrl) {
-    if (selectedValueUrl && selectedValueUrl !== 'null') {
-        return appendQuantityToUrl(selectedValueUrl);
-    }
 
-    return null;
+/**
+ * Updates the quantity DOM elements post Ajax call
+ * @param {UpdatedQuantity[]} quantities -
+ * @param {jQuery} $productContainer - DOM container for a given product
+ */
+function updateQuantities(quantities, $productContainer) {
+    var optionsHtml = quantities.map(function (quantity) {
+        var selected = quantity.selected ? ' selected ' : '';
+        return '<option value="' + quantity.value + '"  data-url="' + quantity.url + '"' +
+            selected + '>' + quantity.value + '</option>';
+    }).join('');
+    getQuantitySelector($productContainer).empty().html(optionsHtml);
 }
 
 /**
@@ -284,8 +317,8 @@ function attributeSelect(selectedValueUrl, $productContainer) {
             method: 'GET',
             success: function (data) {
                 handleVariantResponse(data, $productContainer);
-                getQuantitySelector($productContainer)
-                    .data('action', data.product.selectedVariantUrl);
+                updateOptions(data.product.options, $productContainer);
+                updateQuantities(data.product.quantities, $productContainer);
                 $('body').trigger('product:afterAttributeSelect',
                     { data: data, container: $productContainer });
                 $.spinner().stop();
@@ -366,41 +399,6 @@ function getOptions($productContainer) {
     return JSON.stringify(options);
 }
 
-/**
- * @typedef UpdatedOptionValue
- * @type Object
- * @property {string} id - Option value ID for look up
- * @property {string} url - Updated option value selection URL
- */
-
-/**
- * @typedef OptionSelectionResponse
- * @type Object
- * @property {string} priceHtml - Updated price HTML code
- * @property {Object} options -
- * @property {string} options.id - Option ID
- * @property {UpdatedOptionValue []} options.values - Option values
- */
-
-/**
- * Updates DOM using  post-option selection Ajax response
- *
- * @param {OptionSelectionResponse} response - Ajax response from selecting a product option
- * @param {jQuery} $productContainer - DOM element for current product
- */
-function updateOptions(response, $productContainer) {
-    $productContainer.closest('.container').find('.prices .price').replaceWith(response.priceHtml);
-
-    response.options.forEach(function (option) {
-        var $optionEl = $productContainer.find('.product-option[data-option-id*="' + option.id
-            + '"]');
-        option.values.forEach(function (value) {
-            var valueEl = $optionEl.find('option[data-value-id*="' + value.id + '"]');
-            valueEl.val(value.url);
-        });
-    });
-}
-
 module.exports = {
     attributeSelect: attributeSelect,
 
@@ -417,13 +415,12 @@ module.exports = {
                 $productContainer = $(this).closest('.product-quickview');
             }
 
-            var selectedValueUrl = createSelectedValueUrl(e.currentTarget.href);
-            attributeSelect(selectedValueUrl, $productContainer);
+            attributeSelect(e.currentTarget.href, $productContainer);
         });
     },
 
     selectAttribute: function () {
-        $(document).on('change', 'select[class*="select-"]', function (e) {
+        $(document).on('change', 'select[class*="select-"], .options-select', function (e) {
             e.preventDefault();
 
             var $productContainer = $(this).closest('.product-detail');
@@ -431,31 +428,7 @@ module.exports = {
                 $productContainer = $(this).closest('.product-quickview');
             }
 
-            var selectedValueUrl = createSelectedValueUrl(e.currentTarget.value);
-            attributeSelect(selectedValueUrl, $productContainer);
-        });
-    },
-
-    selectOption: function () {
-        $(document).on('change', '.options-select', function (e) {
-            e.preventDefault();
-
-            var $productContainer = $(this).closest('.product-detail');
-            if (!$productContainer.length) {
-                $productContainer = $(this).closest('.quick-view-dialog').find('.product-detail');
-            }
-
-            $.ajax({
-                url: e.currentTarget.value,
-                method: 'POST',
-                success: function (data) {
-                    updateOptions(data, $productContainer);
-                    $.spinner().stop();
-                },
-                error: function () {
-                    $.spinner().stop();
-                }
-            });
+            attributeSelect(e.currentTarget.value, $productContainer);
         });
     },
 
@@ -468,18 +441,9 @@ module.exports = {
                 $productContainer = $(this).closest('.modal-content').find('.product-quickview');
             }
 
-            var quantity = getQuantitySelected($(this));
-            var options = getOptions($productContainer);
-            var selectedValueUrl;
-
-            if ($('.set-items').length) {
-                selectedValueUrl = $productContainer.find('.quantity-select')
-                    .data('action') + '&quantity=' + quantity + '&options=' + options;
-                attributeSelect(selectedValueUrl, $productContainer);
-            } else if ($('.bundle-items', $productContainer).length === 0) {
-                selectedValueUrl = $('.quantity-select').data('action') + '&quantity=' + quantity +
-                    '&options=' + options;
-                attributeSelect(selectedValueUrl, $productContainer);
+            if ($('.bundle-items', $productContainer).length === 0) {
+                attributeSelect($(e.currentTarget).find('option:selected').data('url'),
+                    $productContainer);
             }
         });
     },
@@ -510,24 +474,29 @@ module.exports = {
 
             pid = getPidValue($(this));
 
-            addToCartUrl = getAddToCartUrl();
-
             var $productContainer = $(this).closest('.product-detail');
             if (!$productContainer.length) {
                 $productContainer = $(this).closest('.quick-view-dialog').find('.product-detail');
+            }
+
+            addToCartUrl = getAddToCartUrl();
+
+            var form = {
+                pid: pid,
+                pidsObj: pidsObj,
+                childPids: getChildPids(),
+                quantity: getQuantitySelected($(this))
+            };
+
+            if (!$('.bundle-item').length) {
+                form.options = getOptions($productContainer);
             }
 
             if (addToCartUrl) {
                 $.ajax({
                     url: addToCartUrl,
                     method: 'POST',
-                    data: {
-                        pid: pid,
-                        pidsObj: pidsObj,
-                        childPids: getChildPids(),
-                        quantity: getQuantitySelected($(this)),
-                        options: getOptions($productContainer)
-                    },
+                    data: form,
                     success: function (data) {
                         handlePostCartAdd(data);
                         $('body').trigger('product:afterAddToCart', data);

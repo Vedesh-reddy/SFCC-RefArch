@@ -20,7 +20,7 @@ var variationAttrsMock = [{
 }];
 
 var option1Mock = {
-    abc: '123'
+    values: [{ abc: '123' }]
 };
 
 describe('fullProduct', function () {
@@ -35,13 +35,37 @@ describe('fullProduct', function () {
             'dw/web/Resource': {
                 msgf: function () { return 'some string with param'; },
                 msg: function () { return 'some string'; }
+            },
+            '*/cartridge/scripts/helpers/productHelpers': {
+                getSelectedOptionsUrl: function () { return ''; }
             }
         }),
-        '~/cartridge/scripts/helpers/productHelpers': {
+        '*/cartridge/scripts/helpers/productHelpers': {
             getOptions: function () { return [option1Mock]; },
-            getCurrentOptionModel: function () {}
+            getCurrentOptionModel: function () {},
+            getSelectedOptionsUrl: function () { return ''; }
         },
-        'dw/web/URLUtils': { url: function () { return { relative: function () { return 'some url'; } }; } }
+        '*/cartridge/scripts/helpers/urlHelpers': {
+            appendQueryParams: function () {}
+        },
+        'dw/web/URLUtils': {
+            url: function () {
+                return {
+                    relative: function () {
+                        return 'some url';
+                    },
+                    append: function () {
+                        return {
+                            relative: function () {
+                                return {
+                                    toString: function () {}
+                                };
+                            }
+                        };
+                    }
+                };
+            }
+        }
     });
 
     var attributeModel = {
@@ -133,6 +157,9 @@ describe('fullProduct', function () {
         minOrderQuantity: {
             value: 2
         },
+        stepQuantity: {
+            value: 1
+        },
         attributeModel: attributeModel,
         optionModel: optionModelMock
     };
@@ -157,6 +184,15 @@ describe('fullProduct', function () {
                     relative: {
                         return: 'some url',
                         type: 'function'
+                    },
+                    append: function () {
+                        return {
+                            relative: function () {
+                                return {
+                                    toString: function () {}
+                                };
+                            }
+                        };
                     }
                 },
                 type: 'function'
@@ -239,14 +275,6 @@ describe('fullProduct', function () {
         assert.equal(product.productName, 'test product');
         assert.equal(product.id, 1234567);
         assert.equal(product.rating, 4);
-    });
-
-    it('should create a url form the selected attributes', function () {
-        var tempMock = Object.assign({}, productMock);
-        tempMock = Object.assign({}, productVariantMock, tempMock);
-        var product = new FullProduct(toProductMock(tempMock), null, null, null, selectedOptionsMock);
-
-        assert.equal(product.selectedVariantUrl, 'some url');
     });
 
     it('should have options when associated', function () {

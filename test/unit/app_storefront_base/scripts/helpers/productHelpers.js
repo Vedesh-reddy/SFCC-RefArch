@@ -9,7 +9,10 @@ var mockCollections = require('../../../../mocks/util/collections');
 describe('Helpers - Product', function () {
     var productHelpers = proxyquire(
         '../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/productHelpers', {
-            '*/cartridge/scripts/util/collections': mockCollections
+            '*/cartridge/scripts/util/collections': mockCollections,
+            '*/cartridge/scripts/helpers/urlHelpers': {
+                appendQueryParams: function () { return 'some url'; }
+            }
         });
 
     var optionValue1Mock = {
@@ -105,6 +108,13 @@ describe('Helpers - Product', function () {
                 url: 'some url'
             }];
             assert.deepEqual(optionValues, expected);
+        });
+    });
+
+    describe('getSelectedOptionsUrl() function', function () {
+        it('should return a url', function () {
+            var url = productHelpers.getSelectedOptionsUrl(optionModelMock);
+            assert.equal(url, 'some url');
         });
     });
 });

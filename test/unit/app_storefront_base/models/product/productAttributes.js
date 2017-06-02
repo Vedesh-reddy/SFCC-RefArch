@@ -10,7 +10,10 @@ describe('productAttributes', function () {
         './productImages': function () {},
         '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
-        })
+        }),
+        '*/cartridge/scripts/helpers/urlHelpers': { appendQueryParams: function () {
+            return '?pid=25604524&dwvar_25604524_size=038&dwvar_25604524_color=BLACKFB';
+        } }
     });
 
     var variationsMock = {
@@ -168,7 +171,7 @@ describe('productAttributes', function () {
             value: '038',
             selectable: true,
             selected: false,
-            url: ''
+            url: 'attrID=something'
         }, {
             ID: '039',
             description: '',
@@ -176,7 +179,7 @@ describe('productAttributes', function () {
             value: '039',
             selectable: true,
             selected: false,
-            url: ''
+            url: 'attrID=something'
 
         }]);
 
