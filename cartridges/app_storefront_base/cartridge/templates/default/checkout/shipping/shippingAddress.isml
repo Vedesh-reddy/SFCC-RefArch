@@ -1,5 +1,9 @@
 <isset name="addressFields" value="${pdict.forms.shippingForm.shippingAddress.addressFields}" scope="page"/>
-<isset name="shippingAddress" value="${ shippingModel.shippingAddress ? shippingModel.shippingAddress : {} }" scope="page" />
+<isif condition="${shippingModel.shippingAddress}">
+    <isset name="shippingAddress" value="${shippingModel.shippingAddress}" scope="page" />
+<iselse/>
+    <isset name="shippingAddress" value="${{}}" scope="page" />
+</isif>
 
 <div class="row">
     <div class="col-sm-6">
