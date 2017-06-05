@@ -8,14 +8,14 @@ var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
 
-var CartModel = require('~/cartridge/models/cart');
-var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
+var CartModel = require('*/cartridge/models/cart');
+var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 
-var Collections = require('~/cartridge/scripts/util/collections');
-var CartHelper = require('~/cartridge/scripts/cart/cartHelpers');
-var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
+var Collections = require('*/cartridge/scripts/util/collections');
+var CartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
-var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
+var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();

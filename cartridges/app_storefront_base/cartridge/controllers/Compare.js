@@ -2,9 +2,10 @@
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var server = require('server');
+var cache = require('*/cartridge/scripts/middleware/cache');
 
 
-server.post('Show', function (req, res, next) {
+server.post('Show', cache.applyDefaultCache, function (req, res, next) {
     var compareProductsForm = req.form;
     var category = CatalogMgr.getCategory(compareProductsForm.cgid);
     var pids = Object.keys(compareProductsForm)

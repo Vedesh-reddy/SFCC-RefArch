@@ -77,14 +77,9 @@ describe('response', function () {
         response.setStatusCode(500);
     });
     it('should set cache expiration for the page', function (done) {
-        var currentDate = new Date(Date.now());
-        currentDate.setHours(currentDate.getHours() + 6);
-        var response = new Response({
-            setExpires: function (date) {
-                assert.equal(date, (currentDate.getTime() / 1000).toFixed(0));
-                done();
-            }
-        });
+        var response = new Response();
         response.cacheExpiration(6);
+        assert.equal(6, response.cachePeriod);
+        done();
     });
 });

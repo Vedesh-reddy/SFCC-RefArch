@@ -3,10 +3,11 @@
 var server = require('server');
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
-var search = require('~/cartridge/scripts/search/search');
+var search = require('*/cartridge/scripts/search/search');
 var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-var ProductSearch = require('~/cartridge/models/search/productSearch');
-var ProductSortOptions = require('~/cartridge/models/search/productSortOptions');
+var ProductSearch = require('*/cartridge/models/search/productSearch');
+var ProductSortOptions = require('*/cartridge/models/search/productSortOptions');
+var cache = require('*/cartridge/scripts/middleware/cache');
 
 /**
  * Set search configuration values
@@ -36,7 +37,7 @@ function getCategoryTemplate(dwProductSearch) {
     return dwProductSearch.category ? dwProductSearch.category.template : '';
 }
 
-server.get('UpdateGrid', function (req, res, next) {
+server.get('UpdateGrid', cache.applyPromotionSenstiveCache, function (req, res, next) {
     var params = search.parseParams(req.querystring);
     var dwProductSearch = new ProductSearchModel();
     var productSearch = {};
@@ -52,7 +53,7 @@ server.get('UpdateGrid', function (req, res, next) {
     next();
 });
 
-server.get('Show', function (req, res, next) {
+server.get('Show', cache.applyPromotionSenstiveCache, function (req, res, next) {
     var categoryTemplate = '';
     var productSearch;
     var productSort;
@@ -105,9 +106,9 @@ server.get('Show', function (req, res, next) {
     next();
 });
 
-server.get('Content', function (req, res, next) {
+server.get('Content', cache.applyDefaultCache, function (req, res, next) {
     var ContentSearchModel = require('dw/content/ContentSearchModel');
-    var ContentSearch = require('~/cartridge/models/search/contentSearch');
+    var ContentSearch = require('*/cartridge/models/search/contentSearch');
     var apiContentSearchModel = new ContentSearchModel();
     var contentSearch;
     var contentSearchResult;
@@ -127,11 +128,11 @@ server.get('Content', function (req, res, next) {
     next();
 });
 
-server.get('GetSuggestions', function (req, res, next) {
+server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) {
     var SuggestModel = require('dw/suggest/SuggestModel');
-    var CategorySuggestions = require('~/cartridge/models/search/suggestions/category');
-    var ContentSuggestions = require('~/cartridge/models/search/suggestions/content');
-    var ProductSuggestions = require('~/cartridge/models/search/suggestions/product');
+    var CategorySuggestions = require('*/cartridge/models/search/suggestions/category');
+    var ContentSuggestions = require('*/cartridge/models/search/suggestions/content');
+    var ProductSuggestions = require('*/cartridge/models/search/suggestions/product');
     var categorySuggestions;
     var contentSuggestions;
     var productSuggestions;

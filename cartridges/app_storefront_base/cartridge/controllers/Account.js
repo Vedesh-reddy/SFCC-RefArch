@@ -12,11 +12,11 @@ var Template = require('dw/util/Template');
 var Site = require('dw/system/Site');
 var HashMap = require('dw/util/HashMap');
 
-var AccountModel = require('~/cartridge/models/account');
-var AddressModel = require('~/cartridge/models/address');
-var OrderModel = require('~/cartridge/models/order');
+var AccountModel = require('*/cartridge/models/account');
+var AddressModel = require('*/cartridge/models/address');
+var OrderModel = require('*/cartridge/models/order');
 
-var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
+var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 
 /**
  * Creates an account model for the current customer
@@ -184,7 +184,7 @@ server.post(
             return next();
         }
 
-        var formErrors = require('~/cartridge/scripts/formErrors');
+        var formErrors = require('*/cartridge/scripts/formErrors');
 
         var registrationForm = server.forms.getForm('profile');
 

@@ -9,23 +9,23 @@ var Resource = require('dw/web/Resource');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var Transaction = require('dw/system/Transaction');
 
-var AccountModel = require('~/cartridge/models/account');
-var OrderModel = require('~/cartridge/models/order');
-var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
-var TotalsModel = require('~/cartridge/models/totals');
+var AccountModel = require('*/cartridge/models/account');
+var OrderModel = require('*/cartridge/models/order');
+var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
+var TotalsModel = require('*/cartridge/models/totals');
 
 var URLUtils = require('dw/web/URLUtils');
 var UUIDUtils = require('dw/util/UUIDUtils');
 
-var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
+var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
-var COHelpers = require('~/cartridge/scripts/checkout/checkoutHelpers');
+var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
-var Collections = require('~/cartridge/scripts/util/collections');
+var Collections = require('*/cartridge/scripts/util/collections');
 
-var array = require('~/cartridge/scripts/util/array');
+var array = require('*/cartridge/scripts/util/array');
 
-var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
+var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 
 /**
  * Main entry point for Checkout

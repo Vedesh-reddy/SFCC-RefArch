@@ -1,8 +1,8 @@
 'use strict';
 
 var server = require('server');
-var array = require('~/cartridge/scripts/util/array');
-var helper = require('~/cartridge/scripts/dwHelpers');
+var array = require('*/cartridge/scripts/util/array');
+var helper = require('*/cartridge/scripts/dwHelpers');
 var URLUtils = require('dw/web/URLUtils');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var HookMgr = require('dw/system/HookMgr');
@@ -10,8 +10,8 @@ var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
-var AccountModel = require('~/cartridge/models/account');
-var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
+var AccountModel = require('*/cartridge/models/account');
+var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 
 /**
  * Checks if a credit card is valid or not
@@ -149,7 +149,7 @@ server.post('SavePayment', CSRFProtection.validateAjaxRequest, function (req, re
         res.json();
         return next();
     }
-    var formErrors = require('~/cartridge/scripts/formErrors');
+    var formErrors = require('*/cartridge/scripts/formErrors');
 
     var paymentForm = server.forms.getForm('creditcard');
     var result = getDetailsObject(paymentForm);

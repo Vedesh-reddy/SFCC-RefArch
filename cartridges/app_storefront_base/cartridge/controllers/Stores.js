@@ -1,6 +1,7 @@
 'use strict';
 
 var server = require('server');
+var cache = require('*/cartridge/scripts/middleware/cache');
 
 /**
  * Searches for stores and creates a plain object of the stores returned by the search
@@ -8,7 +9,7 @@ var server = require('server');
  * @returns {Object} a plain object containing the results of the search
  */
 function getModel(req) {
-    var StoresModel = require('~/cartridge/models/stores');
+    var StoresModel = require('*/cartridge/models/stores');
     var StoreMgr = require('dw/catalog/StoreMgr');
     var URLUtils = require('dw/web/URLUtils');
     var Site = require('dw/system/Site');
@@ -54,7 +55,7 @@ function getModel(req) {
     return new StoresModel(storesMgrResult.keySet(), searchKey, radius, actionUrl, apiKey);
 }
 
-server.get('Find', server.middleware.https, function (req, res, next) {
+server.get('Find', server.middleware.https, cache.applyDefaultCache, function (req, res, next) {
     res.render('storelocator/storelocator', getModel(req));
     next();
 });

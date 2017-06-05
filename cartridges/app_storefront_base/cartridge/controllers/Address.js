@@ -2,12 +2,12 @@
 
 var server = require('server');
 var CustomerMgr = require('dw/customer/CustomerMgr');
-var AddressModel = require('~/cartridge/models/address');
-var helper = require('~/cartridge/scripts/dwHelpers');
+var AddressModel = require('*/cartridge/models/address');
+var helper = require('*/cartridge/scripts/dwHelpers');
 var URLUtils = require('dw/web/URLUtils');
 var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
-var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
+var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 
 /**
  * Creates a list of address model for the logged in user
@@ -116,7 +116,7 @@ server.post('SaveAddress', CSRFProtection.validateAjaxRequest, function (req, re
         return next();
     }
 
-    var formErrors = require('~/cartridge/scripts/formErrors');
+    var formErrors = require('*/cartridge/scripts/formErrors');
 
     var addressForm = server.forms.getForm('address');
     var addressFormObj = addressForm.toObject();

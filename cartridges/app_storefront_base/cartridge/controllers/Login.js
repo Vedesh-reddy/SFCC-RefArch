@@ -4,7 +4,7 @@ var server = require('server');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
-var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
+var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get(
     'Show',

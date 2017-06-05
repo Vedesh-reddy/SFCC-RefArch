@@ -7,45 +7,57 @@ var Logger = require('dw/system/Logger');
 var Locale = require('dw/util/Locale');
 var Site = require('dw/system/Site');
 
-var ContentModel = require('~/cartridge/models/content');
+var ContentModel = require('*/cartridge/models/content');
+var cache = require('*/cartridge/scripts/middleware/cache');
 
-server.get('Include', server.middleware.include, function (req, res, next) {
-    var apiContent = ContentMgr.getContent(req.querystring.cid);
+server.get(
+    'Include',
+    server.middleware.include,
+    cache.applyDefaultCache,
+    function (req, res, next) {
+        var apiContent = ContentMgr.getContent(req.querystring.cid);
 
-    if (apiContent) {
-        var content = new ContentModel(apiContent, 'components/content/contentassetinc');
-        if (content.template) {
-            res.cacheExpiration(24);
-            res.render(content.template, { content: content });
+        if (apiContent) {
+            var content = new ContentModel(apiContent, 'components/content/contentassetinc');
+            if (content.template) {
+                res.render(content.template, { content: content });
+            } else {
+                Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
+                res.render('/components/content/offlinecontent');
+            }
         } else {
-            Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
-            res.render('/components/content/offlinecontent');
+            Logger.warn('Content asset with ID {0} was included but not found',
+                    req.querystring.cid);
         }
-    } else {
-        Logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);
+        next();
     }
-    next();
-});
+);
 
-server.get('IncludeHeaderMenu', server.middleware.include, function (req, res, next) {
-    var catalogMgr = require('dw/catalog/CatalogMgr');
-    var Categories = require('~/cartridge/models/categories');
-    var ProductSearch = require('dw/catalog/ProductSearchModel');
-    var helper = require('~/cartridge/scripts/dwHelpers');
+server.get(
+    'IncludeHeaderMenu',
+    server.middleware.include,
+    cache.applyDefaultCache,
+    function (req, res, next) {
+        var catalogMgr = require('dw/catalog/CatalogMgr');
+        var Categories = require('*/cartridge/models/categories');
+        var ProductSearch = require('dw/catalog/ProductSearchModel');
+        var helper = require('*/cartridge/scripts/dwHelpers');
+        var siteRootCategory = catalogMgr.getSiteCatalog().getRoot();
+        var ps = new ProductSearch();
+        var topLevelCategories = null;
+        var categories = null;
 
-    var siteRootCategory = catalogMgr.getSiteCatalog().getRoot();
-    var ps = new ProductSearch();
-    var topLevelCategories = null;
-    var categories = null;
-    ps.setCategoryID(siteRootCategory.getID());
-    ps.search();
-    topLevelCategories = ps.getRefinements().getNextLevelCategoryRefinementValues(siteRootCategory);
-    categories = helper.map(topLevelCategories, function (item) {
-        return catalogMgr.getCategory(item.value);
-    });
-    res.render('/components/header/menu', new Categories(categories));
-    next();
-});
+        ps.setCategoryID(siteRootCategory.getID());
+        ps.search();
+        topLevelCategories =
+            ps.getRefinements().getNextLevelCategoryRefinementValues(siteRootCategory);
+        categories = helper.map(topLevelCategories, function (item) {
+            return catalogMgr.getCategory(item.value);
+        });
+        res.render('/components/header/menu', new Categories(categories));
+        next();
+    }
+);
 
 server.get('SetLocale', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
@@ -85,7 +97,7 @@ server.get('SetLocale', function (req, res, next) {
 });
 
 server.get('Locale', function (req, res, next) {
-    var LocaleModel = require('~/cartridge/models/locale');
+    var LocaleModel = require('*/cartridge/models/locale');
     var currentSite = Site.getCurrent();
     var siteId = currentSite.getID();
     var allowedLocales = currentSite.allowedLocales;
@@ -99,13 +111,12 @@ server.get('Locale', function (req, res, next) {
     next();
 });
 
-server.get('Show', function (req, res, next) {
+server.get('Show', cache.applyDefaultCache, function (req, res, next) {
     var apiContent = ContentMgr.getContent(req.querystring.cid);
 
     if (apiContent) {
         var content = new ContentModel(apiContent, 'content/contentasset');
         if (content.template) {
-            res.cacheExpiration(24);
             res.render(content.template, { content: content });
         } else {
             Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);

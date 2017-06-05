@@ -34,6 +34,24 @@ function request() {
 }
 
 describe('server', function () {
+    // this function initializes fields in the response object
+    // which is created in the server.use method
+    var initResponse = function (response) {
+        response.cachePeriod = 0; // eslint-disable-line no-param-reassign
+        response.cachePeriodUnit = null; // eslint-disable-line no-param-reassign
+        response.personalized = false; // eslint-disable-line no-param-reassign
+        response.base = { // eslint-disable-line no-param-reassign
+            setExpires: function () {},
+            setVaryBy: function () {}
+        };
+        response.json = function () {}; // eslint-disable-line no-param-reassign
+        response.isJson = true; // eslint-disable-line no-param-reassign
+        response.setViewData = function () { // eslint-disable-line no-param-reassign
+            return '';
+        };
+        return response;
+    };
+
     beforeEach(function () {
         server = proxyquire('../../../../cartridges/modules/server/server', {
             './render': render,
@@ -44,6 +62,61 @@ describe('server', function () {
         server.use('test', function () {});
         var exports = server.exports();
         assert.equal(typeof exports.test, 'function');
+    });
+    it('should apply default page cache period value', function () {
+        var mockResp = null;
+        server.use('test', function (req, res, next) {
+            mockResp = initResponse(res);
+            res.cachePeriod = 24; // eslint-disable-line no-param-reassign
+            res.cachePeriodUnit = 'hours'; // eslint-disable-line no-param-reassign
+            next();
+        });
+        var exports = server.exports();
+        var route = exports.__routes.test;
+        var routeStartHit = false;
+        var routeCompleteHit = false;
+
+        route.once('route:Start', function () {
+            routeStartHit = true;
+        });
+        route.on('route:Complete', function () {
+            routeCompleteHit = true;
+            assert.equal(typeof mockResp.cachePeriod, 'number');
+            assert.equal(24, mockResp.cachePeriod);
+            assert.equal('hours', mockResp.cachePeriodUnit);
+            assert.equal(false, mockResp.personalized);
+        });
+        exports.test();
+        assert.isTrue(routeStartHit);
+        assert.isTrue(routeCompleteHit);
+    });
+    it('should apply default page cache period value', function () {
+        var mockResp = null;
+        server.use('test', function (req, res, next) {
+            mockResp = initResponse(res);
+            res.cachePeriod = 30; // eslint-disable-line no-param-reassign
+            res.cachePeriodUnit = 'minutes'; // eslint-disable-line no-param-reassign
+            res.personalized = true; // eslint-disable-line no-param-reassign
+            next();
+        });
+        var exports = server.exports();
+        var route = exports.__routes.test;
+        var routeStartHit = false;
+        var routeCompleteHit = false;
+
+        route.once('route:Start', function () {
+            routeStartHit = true;
+        });
+        route.on('route:Complete', function () {
+            routeCompleteHit = true;
+            assert.equal(typeof mockResp.cachePeriod, 'number');
+            assert.equal(30, mockResp.cachePeriod);
+            assert.equal('minutes', mockResp.cachePeriodUnit);
+            assert.equal(true, mockResp.personalized);
+        });
+        exports.test();
+        assert.isTrue(routeStartHit);
+        assert.isTrue(routeCompleteHit);
     });
     it('should create a server with a route of two steps', function () {
         server.get('test', function () {});

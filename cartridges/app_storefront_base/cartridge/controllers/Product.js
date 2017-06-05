@@ -7,7 +7,8 @@ var ProductFactory = require('../scripts/factories/product');
 var Resource = require('dw/web/Resource');
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var ProductMgr = require('dw/catalog/ProductMgr');
-var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
+var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
+var cache = require('*/cartridge/scripts/middleware/cache');
 
 /**
  * Creates the breadcrumbs object
@@ -93,12 +94,12 @@ function showProductPage(querystring, res) {
     });
 }
 
-server.get('Show', function (req, res, next) {
+server.get('Show', cache.applyPromotionSenstiveCache, function (req, res, next) {
     showProductPage(req.querystring, res);
     next();
 });
 
-server.get('ShowInCategory', function (req, res, next) {
+server.get('ShowInCategory', cache.applyPromotionSenstiveCache, function (req, res, next) {
     showProductPage(req.querystring, res);
     next();
 });
@@ -124,7 +125,7 @@ server.get('Variation', function (req, res, next) {
     next();
 });
 
-server.get('ShowTile', function (req, res, next) {
+server.get('ShowTile', cache.applyPromotionSenstiveCache, function (req, res, next) {
     // The req parameter has a property called querystring. In this use case the querystring could
     // have the following:
     // pid - the Product ID
@@ -183,7 +184,7 @@ server.get('ShowTile', function (req, res, next) {
     next();
 });
 
-server.get('ShowQuickView', function (req, res, next) {
+server.get('ShowQuickView', cache.applyPromotionSenstiveCache, function (req, res, next) {
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');

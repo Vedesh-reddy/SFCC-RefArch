@@ -14,6 +14,9 @@ function Response(response) {
     this.redirectUrl = null;
     this.messageLog = [];
     this.base = response;
+    this.cachePeriod = null;
+    this.cachePeriodUnit = null;
+    this.personalized = false;
 }
 
 Response.prototype = {
@@ -104,15 +107,12 @@ Response.prototype = {
     },
 
     /**
-     * Sets current page cache expiration period in hours
+     * Sets current page cache expiration period value in hours
      * @param  {int} period Number of hours from current time
      * @return {void}
      */
     cacheExpiration: function cacheExpiration(period) {
-        var currentTime = new Date(Date.now());
-        currentTime.setHours(currentTime.getHours() + period);
-
-        this.base.setExpires((currentTime.getTime() / 1000).toFixed(0));
+        this.cachePeriod = period;
     }
 
 };

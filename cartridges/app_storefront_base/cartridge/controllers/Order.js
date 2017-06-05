@@ -8,10 +8,10 @@ var Resource = require('dw/web/Resource');
 var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
 
-var OrderModel = require('~/cartridge/models/order');
+var OrderModel = require('*/cartridge/models/order');
 
-var OrderHelpers = require('~/cartridge/scripts/order/orderHelpers');
-var CSRFProtection = require('~/cartridge/scripts/middleware/csrf');
+var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 
 
 server.get('Confirm', CSRFProtection.generateToken, function (req, res, next) {
@@ -215,7 +215,7 @@ server.post(
             return next();
         }
 
-        var formErrors = require('~/cartridge/scripts/formErrors');
+        var formErrors = require('*/cartridge/scripts/formErrors');
 
         var passwordForm = server.forms.getForm('newpasswords');
         var newPassword = passwordForm.newpassword.htmlValue;
