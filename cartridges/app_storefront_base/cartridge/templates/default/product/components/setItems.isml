@@ -54,9 +54,7 @@
                                     <isinclude template="product/components/options" />
                                 </div>
                             </isif>
-                            <isif condition="${!product.options || !product.variationAttributes ||
-                                (product.variationAttributes && !product.variationAttributes.length
-                                && product.options && !product.options.length)}">
+                            <isif condition="${(product.options && !product.options.length && !product.variationAttributes)}">
                                 <div class="simple-quantity">
                                     <isinclude template="/product/components/quantity" />
                                 </div>
