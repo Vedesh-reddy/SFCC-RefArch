@@ -1,6 +1,6 @@
 'use strict';
 
-var CSRFProtection = require('dw/web/CSRFProtection');
+var csrfProtection = require('dw/web/CSRFProtection');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var URLUtils = require('dw/web/URLUtils');
 
@@ -12,7 +12,7 @@ var URLUtils = require('dw/web/URLUtils');
  * @returns {void}
  */
 function validateRequest(req, res, next) {
-    if (!CSRFProtection.validateRequest()) {
+    if (!csrfProtection.validateRequest()) {
         CustomerMgr.logoutCustomer(false);
         res.redirect(URLUtils.url('CSRF-Fail'));
     }
@@ -28,7 +28,7 @@ function validateRequest(req, res, next) {
  * @returns {void}
  */
 function validateAjaxRequest(req, res, next) {
-    if (!CSRFProtection.validateRequest()) {
+    if (!csrfProtection.validateRequest()) {
         CustomerMgr.logoutCustomer(false);
         res.setStatusCode(500);
         res.setViewData({
@@ -49,7 +49,7 @@ function validateAjaxRequest(req, res, next) {
  */
 function generateToken(req, res, next) {
     res.setViewData({ csrf: {
-        tokenName: CSRFProtection.getTokenName(), token: CSRFProtection.generateToken() } });
+        tokenName: csrfProtection.getTokenName(), token: csrfProtection.generateToken() } });
 
     next();
 }

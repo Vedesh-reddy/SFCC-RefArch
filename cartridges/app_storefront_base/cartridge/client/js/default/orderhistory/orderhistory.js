@@ -13,7 +13,10 @@ module.exports = function () {
                 $ordersContainer.html(data);
                 $.spinner().stop();
             },
-            error: function () {
+            error: function (err) {
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                }
                 $.spinner().stop();
             }
         });

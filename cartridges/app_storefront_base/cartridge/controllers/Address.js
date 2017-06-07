@@ -7,7 +7,8 @@ var collections = require('*/cartridge/scripts/util/collections');
 var URLUtils = require('dw/web/URLUtils');
 var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
-var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
 /**
  * Creates a list of address model for the logged in user
@@ -25,33 +26,29 @@ function getList(customerNo) {
     return addressBook;
 }
 
-server.get('List', function (req, res, next) {
-    if (!req.currentCustomer.profile) {
-        res.redirect(URLUtils.url('Login-Show'));
-    } else {
-        var actionUrls = {
-            deleteActionUrl: URLUtils.url('Address-DeleteAddress').toString(),
-            listActionUrl: URLUtils.url('Address-List').toString()
-        };
-        res.render('account/addressbook', {
-            addressBook: getList(req.currentCustomer.profile.customerNo),
-            actionUrls: actionUrls,
-            breadcrumbs: [
-                {
-                    htmlValue: Resource.msg('global.home', 'common', null),
-                    url: URLUtils.home().toString()
-                },
-                {
-                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
-                    url: URLUtils.url('Account-Show').toString()
-                }
-            ]
-        });
-    }
+server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
+    var actionUrls = {
+        deleteActionUrl: URLUtils.url('Address-DeleteAddress').toString(),
+        listActionUrl: URLUtils.url('Address-List').toString()
+    };
+    res.render('account/addressbook', {
+        addressBook: getList(req.currentCustomer.profile.customerNo),
+        actionUrls: actionUrls,
+        breadcrumbs: [
+            {
+                htmlValue: Resource.msg('global.home', 'common', null),
+                url: URLUtils.home().toString()
+            },
+            {
+                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                url: URLUtils.url('Account-Show').toString()
+            }
+        ]
+    });
     next();
 });
 
-server.get('AddAddress', CSRFProtection.generateToken, function (req, res, next) {
+server.get('AddAddress', csrfProtection.generateToken, function (req, res, next) {
     var addressForm = server.forms.getForm('address');
     addressForm.clear();
     res.render('account/editaddaddress', {
@@ -74,7 +71,7 @@ server.get('AddAddress', CSRFProtection.generateToken, function (req, res, next)
     next();
 });
 
-server.get('EditAddress', CSRFProtection.generateToken, function (req, res, next) {
+server.get('EditAddress', csrfProtection.generateToken, function (req, res, next) {
     var addressId = req.querystring.addressId;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo
@@ -109,7 +106,7 @@ server.get('EditAddress', CSRFProtection.generateToken, function (req, res, next
     next();
 });
 
-server.post('SaveAddress', CSRFProtection.validateAjaxRequest, function (req, res, next) {
+server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, res, next) {
     var data = res.getViewData();
     if (data && data.csrfError) {
         res.json();

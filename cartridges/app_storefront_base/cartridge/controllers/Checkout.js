@@ -25,7 +25,7 @@ var collections = require('*/cartridge/scripts/util/collections');
 
 var array = require('*/cartridge/scripts/util/array');
 
-var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 /**
  * Main entry point for Checkout
@@ -34,7 +34,7 @@ var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 server.get(
     'Login',
     server.middleware.https,
-    CSRFProtection.generateToken,
+    csrfProtection.generateToken,
     function (req, res, next) {
         var currentBasket = BasketMgr.getCurrentBasket();
         if (!currentBasket) {
@@ -323,7 +323,7 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
 server.post(
     'AddNewAddress',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {
@@ -476,7 +476,7 @@ server.post(
 server.get(
     'Start',
     server.middleware.https,
-    CSRFProtection.generateToken,
+    csrfProtection.generateToken,
     function (req, res, next) {
         var currentBasket = BasketMgr.getCurrentBasket();
         if (!currentBasket) {
@@ -569,7 +569,7 @@ server.get(
 server.post(
     'SubmitShipping',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {
@@ -683,7 +683,7 @@ server.post(
 server.post(
     'SubmitPayment',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {
