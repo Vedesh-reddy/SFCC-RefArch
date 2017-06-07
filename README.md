@@ -3,7 +3,7 @@
 This is a repository for the mobile-optimized version of SiteGenesis.
 
 SiteGenesis Mobile First has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
-SiteGenesis Mobile-First supplies an apple_pay plugin cartridge to demonstrate how to layer customizations for SiteGenesis.
+SiteGenesis Mobile-First supplies an [plugin_applepay](https://bitbucket.org/demandware/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for SiteGenesis.
 
 Your feedback on the ease-of-use and limitations of this new architecture is invaluable during the developer preview. Particularly, feedback on any issues you encounter or workarounds you develop for efficiently customizing the base cartridge without editing it directly.
 
