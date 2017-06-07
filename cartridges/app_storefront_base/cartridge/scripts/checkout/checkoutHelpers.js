@@ -2,8 +2,7 @@
 
 var server = require('server');
 
-var Collections = require('~/cartridge/scripts/util/collections');
-var Objects = require('~/cartridge/scripts/util/objects');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var BasketMgr = require('dw/order/BasketMgr');
 var HashMap = require('dw/util/HashMap');
@@ -44,7 +43,7 @@ var SHIPPING_FORM_MAP = {
  * @returns {string[]} the names of the invalid form fields
  */
 function getShippingFormKeys() {
-    return Objects.values(SHIPPING_FORM_MAP);
+    return Object.keys(SHIPPING_FORM_MAP).map(function (key) { return SHIPPING_FORM_MAP[key]; });
 }
 
 /**
@@ -294,7 +293,7 @@ function ensureNoEmptyShipments(req) {
                     var altValid = req.session.privacyCache.get(altShipment.UUID);
                     req.session.privacyCache.set(currentBasket.defaultShipment.UUID, altValid);
 
-                    Collections.forEach(altShipment.productLineItems,
+                    collections.forEach(altShipment.productLineItems,
                         function (lineItem) {
                             lineItem.setShipment(currentBasket.defaultShipment);
                         });

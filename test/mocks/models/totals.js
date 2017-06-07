@@ -27,7 +27,7 @@ function proxyModel() {
                 }
             };
         },
-        '~/cartridge/scripts/dwHelpers': require('../dwHelpers')
+        '*/cartridge/scripts/util/collections': require('../util/collections')
     });
 }
 

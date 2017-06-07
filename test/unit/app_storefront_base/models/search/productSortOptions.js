@@ -2,12 +2,12 @@
 
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-var mockDwHelpers = require('../../../../mocks/dwHelpers');
+var mockCollections = require('../../../../mocks/util/collections');
 
 describe('ProductSortOptions model', function () {
     var ProductSortOptions = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/search/productSortOptions', {
-        '~/cartridge/scripts/dwHelpers': {
-            map: mockDwHelpers.map
+        '*/cartridge/scripts/util/collections': {
+            map: mockCollections.map
         }
     });
 

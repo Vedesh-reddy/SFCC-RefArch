@@ -1,6 +1,6 @@
 'use strict';
 
-var dwHelpers = require('../../scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var ImageModel = require('./productImages');
 
 /**
@@ -27,7 +27,7 @@ function getAllAttrValues(variationModel, selectedValue, attr, endPoint) {
     var attrValues = variationModel.getAllValues(attr);
     var actionEndpoint = 'Product-' + endPoint;
 
-    return dwHelpers.map(attrValues, function (value) {
+    return collections.map(attrValues, function (value) {
         var isSelected = (selectedValue && selectedValue.equals(value)) || false;
 
         var processedAttr = {
@@ -103,7 +103,7 @@ function getAttrResetUrl(values, attrID) {
 function VariationAttributesModel(variationModel, attrConfig) {
     var allAttributes = variationModel.productVariationAttributes;
     var result = [];
-    dwHelpers.forEach(allAttributes, function (attr) {
+    collections.forEach(allAttributes, function (attr) {
         var selectedValue = variationModel.getSelectedValue(attr);
         var values = getAllAttrValues(variationModel, selectedValue, attr, attrConfig.endPoint);
         var resetUrl = getAttrResetUrl(values, attr.ID);

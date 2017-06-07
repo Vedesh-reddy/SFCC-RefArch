@@ -1,6 +1,6 @@
 'use strict';
 
-var Collections = require('~/cartridge/scripts/util/collections');
+var collections = require('*/cartridge/scripts/util/collections');
 
 /**
  * @typedef {Object} ProductOptionValues
@@ -20,7 +20,7 @@ var Collections = require('~/cartridge/scripts/util/collections');
  */
 function getOptionValues(optionModel, option, optionValues) {
     var action = 'Product-Option';
-    var values = Collections.map(optionValues, function (value) {
+    var values = collections.map(optionValues, function (value) {
         var priceValue = optionModel.getPrice(value);
         var url = optionModel.urlSelectOptionValue(action, option, value);
         return {
@@ -54,7 +54,7 @@ function getOptionValues(optionModel, option, optionValues) {
  * @return {ProductOptions[]} - Parsed options for this product
  */
 function getOptions(optionModel) {
-    return Collections.map(optionModel.options, function (option) {
+    return collections.map(optionModel.options, function (option) {
         return {
             id: option.ID,
             name: option.displayName,
@@ -86,7 +86,7 @@ function getCurrentOptionModel(optionModel, selectedOptions) {
     var selectedValueId;
 
     if (selectedOptions && selectedOptions.length) {
-        Collections.forEach(productOptions, function (option) {
+        collections.forEach(productOptions, function (option) {
             selectedValueId = selectedOptions.filter(function (selectedOption) {
                 return selectedOption.optionId === option.ID;
             })[0].selectedValueId;

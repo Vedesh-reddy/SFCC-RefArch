@@ -3,7 +3,7 @@
 var formatMoney = require('dw/util/StringUtils').formatMoney;
 var ProductBase = require('./../product/productBase').productBase;
 var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
-var helper = require('~/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var productHelper = require('~/cartridge/scripts/helpers/productHelpers');
 
 /**
@@ -41,7 +41,7 @@ function getTotalPrice(lineItem) {
 
     // The platform does not include prices for selected option values in a line item product's
     // price by default.  So, we must add the option price to get the correct line item total price.
-    helper.forEach(lineItem.optionProductLineItems, function (item) {
+    collections.forEach(lineItem.optionProductLineItems, function (item) {
         price = price.add(item.adjustedNetPrice);
     });
 
@@ -63,7 +63,7 @@ function getAppliedPromotions(lineItem) {
     var priceAdjustments;
 
     if (lineItem.priceAdjustments.getLength() > 0) {
-        priceAdjustments = helper.map(lineItem.priceAdjustments, function (priceAdjustment) {
+        priceAdjustments = collections.map(lineItem.priceAdjustments, function (priceAdjustment) {
             return {
                 callOutMsg: priceAdjustment.promotion.calloutMsg ?
                     priceAdjustment.promotion.calloutMsg.markup : null,
@@ -105,7 +105,7 @@ function getRenderedPromotions(appliedPromotions) {
  * @return {string []} - Product line item options
  */
 function getLineItemOptions(optionProductLineItems, productId) {
-    return helper.map(optionProductLineItems, function (item) {
+    return collections.map(optionProductLineItems, function (item) {
         return {
             productId: productId,
             optionId: item.optionID,
@@ -122,7 +122,7 @@ function getLineItemOptions(optionProductLineItems, productId) {
  * @return {string[]} - Product line item option display values
  */
 function getLineItemOptionNames(optionProductLineItems) {
-    return helper.map(optionProductLineItems, function (item) {
+    return collections.map(optionProductLineItems, function (item) {
         return item.productName;
     });
 }
@@ -134,7 +134,7 @@ function getLineItemOptionNames(optionProductLineItems) {
  * @return {string []} - Product line item options
  */
 function getDefaultOptions(optionModel, options) {
-    return helper.map(options, function (option) {
+    return collections.map(options, function (option) {
         var selectedValue = optionModel.getSelectedOptionValue(option);
         return option.displayName + ': ' + selectedValue.displayValue;
     });

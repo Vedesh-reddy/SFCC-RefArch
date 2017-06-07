@@ -1,7 +1,7 @@
 'use strict';
 
 var money = require('dw/value/Money');
-var dwHelpers = require('../dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var priceHelper = require('../helpers/pricing');
 var DefaultPrice = require('../../models/price/default');
 var RangePrice = require('../../models/price/range');
@@ -47,7 +47,7 @@ function getListPrice(priceModel) {
  */
 function getPromotionPrice(product, promotions, currentOptionModel) {
     var price = money.NOT_AVAILABLE;
-    var promotion = dwHelpers.find(promotions, function (promo) {
+    var promotion = collections.find(promotions, function (promo) {
         return promo.promotionClass && promo.promotionClass.equals(PROMOTION_CLASS_PRODUCT);
     });
 

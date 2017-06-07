@@ -11,7 +11,7 @@ var URLUtils = require('dw/web/URLUtils');
 var CartModel = require('*/cartridge/models/cart');
 var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 
-var Collections = require('*/cartridge/scripts/util/collections');
+var collections = require('*/cartridge/scripts/util/collections');
 var CartHelper = require('*/cartridge/scripts/cart/cartHelpers');
 var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
@@ -333,7 +333,7 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
     var couponLineItem;
 
     if (currentBasket && req.querystring.uuid) {
-        couponLineItem = Collections.find(currentBasket.couponLineItems, function (item) {
+        couponLineItem = collections.find(currentBasket.couponLineItems, function (item) {
             return item.UUID === req.querystring.uuid;
         });
 

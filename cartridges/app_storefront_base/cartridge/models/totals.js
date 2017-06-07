@@ -1,7 +1,7 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var helper = require('~/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var HashMap = require('dw/util/HashMap');
 var Template = require('dw/util/Template');
 
@@ -56,7 +56,7 @@ function getShippingLevelDiscountTotal(lineItemContainer) {
  */
 function createDiscountObject(collection, discounts) {
     var result = discounts;
-    helper.forEach(collection, function (item) {
+    collections.forEach(collection, function (item) {
         if (!item.basedOnCoupon) {
             result[item.UUID] = {
                 UUID: item.UUID,
@@ -79,8 +79,8 @@ function createDiscountObject(collection, discounts) {
 function getDiscounts(lineItemContainer) {
     var discounts = {};
 
-    helper.forEach(lineItemContainer.couponLineItems, function (couponLineItem) {
-        var priceAdjustments = helper.map(
+    collections.forEach(lineItemContainer.couponLineItems, function (couponLineItem) {
+        var priceAdjustments = collections.map(
             couponLineItem.priceAdjustments, function (priceAdjustment) {
                 return { callOutMsg: priceAdjustment.promotion.calloutMsg };
             });

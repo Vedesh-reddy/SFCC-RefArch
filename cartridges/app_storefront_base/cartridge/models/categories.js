@@ -1,6 +1,6 @@
 'use strict';
 
-var helper = require('~/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var URLUtils = require('dw/web/URLUtils');
 
 /**
@@ -31,7 +31,7 @@ function categoryToObject(category) {
     var subCategories = category.getOnlineSubCategories();
 
     if (subCategories.getLength() > 0) {
-        helper.forEach(subCategories, function (subcategory) {
+        collections.forEach(subCategories, function (subcategory) {
             var converted = categoryToObject(subcategory);
             if (converted) {
                 if (!result.subCategories) {

@@ -2,7 +2,7 @@
 
 var server = require('server');
 var array = require('*/cartridge/scripts/util/array');
-var helper = require('*/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var URLUtils = require('dw/web/URLUtils');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var HookMgr = require('dw/system/HookMgr');
@@ -30,7 +30,7 @@ function verifyCard(card, form) {
     );
 
     if (creditCardStatus.error) {
-        helper.forEach(creditCardStatus.items, function (item) {
+        collections.forEach(creditCardStatus.items, function (item) {
             switch (item.code) {
                 case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
                     var formCardNumber = form.cardNumber;

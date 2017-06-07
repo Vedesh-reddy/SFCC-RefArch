@@ -2,7 +2,7 @@
 
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-var mockDwHelpers = require('../../../../mocks/dwHelpers');
+var mockCollections = require('../../../../mocks/util/collections');
 var sinon = require('sinon');
 
 
@@ -33,7 +33,7 @@ describe('Tiered Price Model', function () {
         }
     };
     var TieredPrice = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/price/tiered.js', {
-        '../../scripts/dwHelpers': { map: mockDwHelpers.map },
+        '*/cartridge/scripts/util/collections': { map: mockCollections.map },
         './default': stubDefaultPrice
     });
 

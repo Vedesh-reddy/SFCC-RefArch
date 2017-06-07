@@ -10,7 +10,7 @@ describe('productSetBase', function () {
         './productBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
             './productImages': function () {},
             './productAttributes': function () { return []; },
-            '../../scripts/dwHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
+            '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
                 'dw/util/ArrayList': ArrayList
             }),
             '../../scripts/factories/price': { getPrice: function () {} },
@@ -19,7 +19,7 @@ describe('productSetBase', function () {
                 msg: function (params) { return params; }
             }
         }),
-        '../../scripts/dwHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
+        '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
         '~/cartridge/scripts/util/formatting': {

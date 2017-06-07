@@ -3,7 +3,7 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
-var mockDwHelpers = require('../../../../mocks/dwHelpers');
+var mockCollections = require('../../../../mocks/util/collections');
 
 
 describe('ProductSearch model', function () {
@@ -33,8 +33,8 @@ describe('ProductSearch model', function () {
         selected: false
     }];
     var ProductSearch = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/search/productSearch.js', {
-        '~/cartridge/scripts/dwHelpers': {
-            map: mockDwHelpers.map,
+        '*/cartridge/scripts/util/collections': {
+            map: mockCollections.map,
             pluck: function () { return pluckValue; }
         },
         '~/cartridge/scripts/factories/searchRefinements': {

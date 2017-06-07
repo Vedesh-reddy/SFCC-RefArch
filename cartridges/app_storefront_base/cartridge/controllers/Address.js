@@ -3,7 +3,7 @@
 var server = require('server');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var AddressModel = require('*/cartridge/models/address');
-var helper = require('*/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var URLUtils = require('dw/web/URLUtils');
 var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
@@ -17,7 +17,7 @@ var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
 function getList(customerNo) {
     var customer = CustomerMgr.getCustomerByCustomerNumber(customerNo);
     var rawAddressBook = customer.addressBook.getAddresses();
-    var addressBook = helper.map(rawAddressBook, function (rawAddress) {
+    var addressBook = collections.map(rawAddressBook, function (rawAddress) {
         var addressModel = new AddressModel(rawAddress);
         addressModel.address.UUID = rawAddress.UUID;
         return addressModel;

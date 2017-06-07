@@ -1,6 +1,6 @@
 'use strict';
 
-var dwHelpers = require('../../scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var VariationAttributesModel = require('./productAttributes');
 var ImageModel = require('./productImages');
 var priceFactory = require('../../scripts/factories/price');
@@ -63,7 +63,7 @@ function getRating(id) {
  * @return {Promotion} - JSON representation of Promotion instance
  */
 function getPromotions(promotions) {
-    return dwHelpers.map(promotions, function (promotion) {
+    return collections.map(promotions, function (promotion) {
         return {
             calloutMsg: promotion.calloutMsg ? promotion.calloutMsg.markup : null,
             details: promotion.details ? promotion.details.markup : null,
@@ -91,9 +91,9 @@ function getVariationModel(product, productVariables) {
         var variationAttrs = variationModel.productVariationAttributes;
         Object.keys(productVariables).forEach(function (attr) {
             if (attr && productVariables[attr].value) {
-                var dwAttr = dwHelpers.find(variationAttrs,
+                var dwAttr = collections.find(variationAttrs,
                     function (item) { return item.attributeID === attr; });
-                var dwAttrValue = dwHelpers.find(variationModel.getAllValues(dwAttr),
+                var dwAttrValue = collections.find(variationModel.getAllValues(dwAttr),
                     function (item) { return item.value === productVariables[attr].value; });
 
                 if (dwAttr && dwAttrValue) {
@@ -116,27 +116,30 @@ function getAttributes(product) {
     var visibleAttributeGroups = attributeModel.visibleAttributeGroups;
 
     if (visibleAttributeGroups.getLength() > 0) {
-        attributes = dwHelpers.map(attributeModel.visibleAttributeGroups, function (group) {
+        attributes = collections.map(attributeModel.visibleAttributeGroups, function (group) {
             var visibleAttributeDef = attributeModel.getVisibleAttributeDefinitions(group);
             var attributeResult = {};
 
             attributeResult.ID = group.ID;
             attributeResult.name = group.displayName;
-            attributeResult.attributes = dwHelpers.map(visibleAttributeDef, function (definition) {
-                var definitionResult = {};
-                definitionResult.label = definition.displayName;
+            attributeResult.attributes = collections.map(
+                visibleAttributeDef,
+                function (definition) {
+                    var definitionResult = {};
+                    definitionResult.label = definition.displayName;
 
-                if (definition.multiValueType) {
-                    definitionResult.value = attributeModel.getDisplayValue(definition).map(
-                        function (item) {
-                            return item;
-                        });
-                } else {
-                    definitionResult.value = [attributeModel.getDisplayValue(definition)];
+                    if (definition.multiValueType) {
+                        definitionResult.value = attributeModel.getDisplayValue(definition).map(
+                            function (item) {
+                                return item;
+                            });
+                    } else {
+                        definitionResult.value = [attributeModel.getDisplayValue(definition)];
+                    }
+
+                    return definitionResult;
                 }
-
-                return definitionResult;
-            });
+            );
 
             return attributeResult;
         });

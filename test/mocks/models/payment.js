@@ -1,11 +1,11 @@
 'use strict';
 
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-var helpers = require('../dwHelpers');
+var collections = require('../util/collections');
 
 function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/payment', {
-        '~/cartridge/scripts/dwHelpers': helpers,
+        '*/cartridge/scripts/util/collections': collections,
         'dw/order/PaymentMgr': {
             getApplicablePaymentMethods: function () {
                 return [

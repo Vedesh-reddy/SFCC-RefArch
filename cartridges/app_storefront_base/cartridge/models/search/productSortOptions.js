@@ -1,6 +1,6 @@
 'use strict';
 
-var dwHelper = require('~/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var ACTION_ENDPOINT = 'Search-UpdateGrid';
 
@@ -13,7 +13,7 @@ var ACTION_ENDPOINT = 'Search-UpdateGrid';
  * @return {SortingOption} - Sorting option
  */
 function getSortingOptions(productSearch, sortingOptions) {
-    return dwHelper.map(sortingOptions, function (option) {
+    return collections.map(sortingOptions, function (option) {
         return {
             displayName: option.displayName,
             id: option.ID,

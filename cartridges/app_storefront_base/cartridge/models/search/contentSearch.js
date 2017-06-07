@@ -1,7 +1,7 @@
 'use strict';
 
 var PagingModel = require('dw/web/PagingModel');
-var helper = require('~/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var URLUtils = require('dw/web/URLUtils');
 var ACTION_ENDPOINT_GRID = 'Search-Content';
 var ACTION_ENDPOINT_CONTENT = 'Page-Show';
@@ -29,7 +29,7 @@ function getPagingModel(contentHits, count, pageSize, startIndex) {
  * @return {Array} - page of content JSON objects
  */
 function getContentSearchPageJSON(pageElements) {
-    return helper.map(pageElements, function (contentAsset) {
+    return collections.map(pageElements, function (contentAsset) {
         return {
             name: contentAsset.name,
             url: URLUtils.url(ACTION_ENDPOINT_CONTENT, 'cid', contentAsset.ID),

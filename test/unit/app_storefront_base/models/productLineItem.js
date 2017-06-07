@@ -14,7 +14,7 @@ describe('Product Line Item', function () {
         './../product/productBase': proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
             './productImages': function () {},
             './productAttributes': function () { return []; },
-            '../../scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
+            '*/cartridge/scripts/util/collections': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
                 'dw/util/ArrayList': ArrayList
             }),
             '../../scripts/factories/price': { getPrice: function () {} },
@@ -32,7 +32,7 @@ describe('Product Line Item', function () {
         '~/cartridge/scripts/renderTemplateHelper': {
             getRenderedHtml: function () { return 'string'; }
         },
-        '~/cartridge/scripts/dwHelpers': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
+        '*/cartridge/scripts/util/collections': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
         '~/cartridge/scripts/helpers/productHelpers': {

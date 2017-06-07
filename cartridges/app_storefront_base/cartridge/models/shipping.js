@@ -2,7 +2,7 @@
 
 var ShippingMgr = require('dw/order/ShippingMgr');
 
-var Collections = require('~/cartridge/scripts/util/collections');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var AddressModel = require('~/cartridge/models/address');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
@@ -27,7 +27,7 @@ function getApplicableShippingMethods(shipment, address) {
         shippingMethods = shipmentShippingModel.getApplicableShippingMethods();
     }
 
-    return Collections.map(shippingMethods, function (shippingMethod) {
+    return collections.map(shippingMethods, function (shippingMethod) {
         return new ShippingMethodModel(shippingMethod, shipment);
     });
 }

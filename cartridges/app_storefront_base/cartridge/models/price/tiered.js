@@ -1,8 +1,7 @@
 'use strict';
 
-var dwHelpers = require('../../scripts/dwHelpers');
 var DefaultPrice = require('./default');
-
+var collections = require('*/cartridge/scripts/util/collections');
 
 /**
  * @constructor
@@ -16,7 +15,7 @@ function TieredPrice(priceTable, useSimplePrice) {
     this.type = 'tiered';
     this.useSimplePrice = useSimplePrice || false;
 
-    this.tiers = dwHelpers.map(priceTable.getQuantities(), function (quantity) {
+    this.tiers = collections.map(priceTable.getQuantities(), function (quantity) {
         var price = new DefaultPrice(priceTable.getPrice(quantity));
 
         if (!startingFromPrice) {

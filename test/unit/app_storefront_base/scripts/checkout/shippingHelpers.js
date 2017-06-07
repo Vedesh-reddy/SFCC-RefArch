@@ -6,7 +6,7 @@ var sinon = require('sinon');
 var ArrayList = require('../../../../mocks/dw.util.Collection');
 
 var shippingHelpers = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/checkout/shippingHelpers', {
-    '~/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+    '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
         'dw/util/ArrayList': ArrayList
     }),
 

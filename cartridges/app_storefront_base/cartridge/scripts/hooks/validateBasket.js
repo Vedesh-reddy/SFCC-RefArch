@@ -1,6 +1,6 @@
 'use strict';
 
-var Collections = require('~/cartridge/scripts/util/collections');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
 var Resource = require('dw/web/Resource');
@@ -18,7 +18,7 @@ function validateProducts(basket) {
     };
     var productLineItems = basket.productLineItems;
 
-    Collections.forEach(productLineItems, function (item) {
+    collections.forEach(productLineItems, function (item) {
         if (item.product === null || !item.product.online) {
             result.error = true;
             return;
@@ -49,7 +49,7 @@ function validateProducts(basket) {
  * @returns {Object} an error object
  */
 function validateCoupons(basket) {
-    var invalidCouponLineItem = Collections.find(basket.couponLineItems, function (couponLineItem) {
+    var invalidCouponLineItem = collections.find(basket.couponLineItems, function (couponLineItem) {
         return !couponLineItem.valid;
     });
 

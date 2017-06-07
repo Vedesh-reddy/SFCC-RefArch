@@ -13,7 +13,7 @@ var Money = require('../dw.value.Money');
 
 function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/cart', {
-        '~/cartridge/scripts/util/collections': {},
+        '*/cartridge/scripts/util/collections': {},
         'dw/campaign/PromotionMgr': {
             getDiscounts: function () {
                 return {
@@ -59,7 +59,6 @@ function proxyModel() {
         '~/cartridge/models/totals': TotalsModel,
         '~/cartridge/models/productLineItems': ProductLineItemsModel,
         '~/cartridge/scripts/checkout/shippingHelpers': ShippingHelpers,
-        '~/cartridge/scripts/dwHelpers': {},
         'dw/web/URLUtils': URLUtils,
         'dw/util/StringUtils': {
             formatMoney: function () {

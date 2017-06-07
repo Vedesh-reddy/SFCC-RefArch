@@ -1,6 +1,6 @@
 'use strict';
 
-var Collections = require('~/cartridge/scripts/util/collections');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var ShippingMgr = require('dw/order/ShippingMgr');
 
@@ -20,7 +20,7 @@ function getShippingModels(currentBasket, customer) {
 
     if (!shipments) return [];
 
-    return Collections.map(shipments, function (shipment) {
+    return collections.map(shipments, function (shipment) {
         return new ShippingModel(shipment, null, customer);
     });
 }
@@ -93,12 +93,12 @@ function selectShippingMethod(shipment, shippingMethodID, shippingMethods, addre
     }
 
     if (!isShipmentSet) {
-        if (Collections.find(applicableShippingMethods, function (method) {
+        if (collections.find(applicableShippingMethods, function (method) {
             return method.ID === defaultShippingMethod.ID;
         })) {
             shipment.setShippingMethod(defaultShippingMethod);
         } else if (applicableShippingMethods.length > 0) {
-            shipment.setShippingMethod(Collections.first(applicableShippingMethods));
+            shipment.setShippingMethod(collections.first(applicableShippingMethods));
         } else {
             shipment.setShippingMethod(null);
         }
@@ -116,16 +116,16 @@ function ensureShipmentHasMethod(shipment) {
         var defaultMethod = ShippingMgr.getDefaultShippingMethod();
 
         if (!defaultMethod) {
-			// If no defaultMethod set, just use the first one
+            // If no defaultMethod set, just use the first one
             shippingMethod = methods[0];
         } else {
-			// Look for defaultMethod in applicableMethods
-            shippingMethod = Collections.find(methods, function (method) {
+            // Look for defaultMethod in applicableMethods
+            shippingMethod = collections.find(methods, function (method) {
                 return method.ID === defaultMethod.ID;
             });
         }
 
-		// If found, use it.  Otherwise return the first one
+        // If found, use it.  Otherwise return the first one
         if (!shippingMethod && methods && methods.length > 0) {
             shippingMethod = methods[0];
         }
@@ -143,7 +143,7 @@ function ensureShipmentHasMethod(shipment) {
  * @returns {dw.order.Shipment} a Shipment object
  */
 function getShipmentByUUID(basket, uuid) {
-    return Collections.find(basket.shipments, function (shipment) {
+    return collections.find(basket.shipments, function (shipment) {
         return shipment.UUID === uuid;
     });
 }

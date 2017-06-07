@@ -1,6 +1,6 @@
 'use strict';
 
-var dwHelpers = require('../../scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 
 /**
  * @constructor
@@ -14,14 +14,14 @@ function Images(product, imageConfig) {
         var result = {};
 
         if (imageConfig.quantity === 'single') {
-            var firstImage = dwHelpers.first(images);
+            var firstImage = collections.first(images);
             result = [{
                 alt: firstImage.alt,
                 url: firstImage.URL.relative().toString(),
                 title: firstImage.title
             }];
         } else {
-            result = dwHelpers.map(images, function (image) {
+            result = collections.map(images, function (image) {
                 return {
                     alt: image.alt,
                     url: image.URL.relative().toString(),

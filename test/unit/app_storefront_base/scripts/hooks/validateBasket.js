@@ -93,7 +93,7 @@ describe('validate basket', function () {
                 return param;
             }
         },
-        '~/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+        '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
         'dw/catalog/StoreMgr': {

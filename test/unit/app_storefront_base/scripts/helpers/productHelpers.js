@@ -4,12 +4,12 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
-var dwHelpers = require('../../../../mocks/dwHelpers');
+var mockCollections = require('../../../../mocks/util/collections');
 
 describe('Helpers - Product', function () {
     var productHelpers = proxyquire(
         '../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/productHelpers', {
-            '~/cartridge/scripts/util/collections': dwHelpers
+            '*/cartridge/scripts/util/collections': mockCollections
         });
 
     var optionValue1Mock = {

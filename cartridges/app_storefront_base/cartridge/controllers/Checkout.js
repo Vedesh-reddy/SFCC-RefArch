@@ -21,7 +21,7 @@ var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
-var Collections = require('*/cartridge/scripts/util/collections');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var array = require('*/cartridge/scripts/util/array');
 
@@ -116,9 +116,9 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
     if (!usingMultiShipping && shipments.length > 1) {
         // Make sure we move all product line items back to the default shipment
         Transaction.wrap(function () {
-            Collections.forEach(shipments, function (shipment) {
+            collections.forEach(shipments, function (shipment) {
                 if (!shipment.default) {
-                    Collections.forEach(shipment.productLineItems, function (pli) {
+                    collections.forEach(shipment.productLineItems, function (pli) {
                         pli.setShipment(defaultShipment);
                     });
                     currentBasket.removeShipment(shipment);

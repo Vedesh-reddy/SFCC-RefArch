@@ -1,7 +1,7 @@
 'use strict';
 
 var ProductLineItem = require('./productLineItem').productLineItem;
-var helper = require('~/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 
 /**
  * creates an array of bundled line items
@@ -10,15 +10,18 @@ var helper = require('~/cartridge/scripts/dwHelpers');
  * @returns {Array} an array of bundled line items
  */
 function getBundledProductLineItems(bundledProductLineItems, productFactory) {
-    var bundledLineItems = helper.map(bundledProductLineItems, function (bundledProductLineItem) {
-        return productFactory.get({
-            pid: bundledProductLineItem.product.ID,
-            pview: 'productLineItem',
-            lineItem: bundledProductLineItem,
-            quantity: bundledProductLineItem.quantity.value,
-            variables: null
-        });
-    });
+    var bundledLineItems = collections.map(
+            bundledProductLineItems,
+            function (bundledProductLineItem) {
+                return productFactory.get({
+                    pid: bundledProductLineItem.product.ID,
+                    pview: 'productLineItem',
+                    lineItem: bundledProductLineItem,
+                    quantity: bundledProductLineItem.quantity.value,
+                    variables: null
+                });
+            }
+        );
     return bundledLineItems;
 }
 

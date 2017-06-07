@@ -1,7 +1,7 @@
 'use strict';
 
 var ProductBase = require('./productBase').productBase;
-var helper = require('../../scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;
 
@@ -41,7 +41,7 @@ function isReadyToOrder(bundledProducts) {
  * @returns {Array} Array of products in a bundle
  */
 function getBundledProducts(apiBundle, bundledProducts, productFactory) {
-    return helper.map(bundledProducts, function (bundledProduct) {
+    return collections.map(bundledProducts, function (bundledProduct) {
         return productFactory.get({
             pid: bundledProduct.ID,
             quantity: apiBundle.getBundledProductQuantity(bundledProduct).value

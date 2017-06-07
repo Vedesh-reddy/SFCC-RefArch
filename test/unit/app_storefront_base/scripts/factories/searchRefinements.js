@@ -4,7 +4,7 @@ var assert = require('chai').assert;
 var sinon = require('sinon');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-var mockDwHelpers = require('../../../../mocks/dwHelpers');
+var mockCollections = require('../../../../mocks/util/collections');
 var mockPriceRefinementValue = sinon.spy();
 var mockColorRefinementValue = sinon.spy();
 var mockSizeRefinementValue = sinon.spy();
@@ -13,7 +13,7 @@ var mockGetCategory = sinon.stub();
 
 var searchRefinements = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/searchRefinements', {
     'dw/catalog/CatalogMgr': { getCategory: mockGetCategory },
-    '~/cartridge/scripts/dwHelpers': mockDwHelpers,
+    '*/cartridge/scripts/util/collections': mockCollections,
     '~/cartridge/models/search/attributeRefinementValue/price': mockPriceRefinementValue,
     '~/cartridge/models/search/attributeRefinementValue/color': mockColorRefinementValue,
     '~/cartridge/models/search/attributeRefinementValue/size': mockSizeRefinementValue,

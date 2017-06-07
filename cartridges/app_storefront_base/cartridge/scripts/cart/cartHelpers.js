@@ -3,7 +3,7 @@
 var ProductMgr = require('dw/catalog/ProductMgr');
 var Resource = require('dw/web/Resource');
 
-var Collections = require('~/cartridge/scripts/util/collections');
+var collections = require('*/cartridge/scripts/util/collections');
 var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
 var productHelper = require('~/cartridge/scripts/helpers/productHelpers');
 var arrayHelper = require('~/cartridge/scripts/util/array');
@@ -29,7 +29,7 @@ var arrayHelper = require('~/cartridge/scripts/util/array');
 function updateBundleProducts(apiLineItem, childPids) {
     var bundle = apiLineItem.product;
     var bundleProducts = bundle.getBundledProducts();
-    var bundlePids = Collections.map(bundleProducts, function (product) { return product.ID; });
+    var bundlePids = collections.map(bundleProducts, function (product) { return product.ID; });
     var selectedPids = childPids.filter(function (pid) {
         return bundlePids.indexOf(pid) === -1;
     });
@@ -38,7 +38,7 @@ function updateBundleProducts(apiLineItem, childPids) {
     selectedPids.forEach(function (productId) {
         var variant = ProductMgr.getProduct(productId);
 
-        Collections.forEach(bundleLineItems, function (item) {
+        collections.forEach(bundleLineItems, function (item) {
             if (item.productID === variant.masterProduct.ID) {
                 item.replaceProduct(variant);
             }
@@ -65,7 +65,7 @@ function hasSameOptions(existingOptions, selectedOptions) {
     for (var i = 0, j = selectedOptions.length; i < j; i++) {
         selected[selectedOptions[i].optionId] = selectedOptions[i].selectedValueId;
     }
-    return Collections.every(existingOptions, function (option) {
+    return collections.every(existingOptions, function (option) {
         return option.optionValueID === selected[option.optionID];
     });
 }
@@ -173,7 +173,7 @@ function addProductToCart(currentBasket, productId, quantity, childPids, options
 function ensureAllShipmentsHaveMethods(basket) {
     var shipments = basket.shipments;
 
-    Collections.forEach(shipments, function (shipment) {
+    collections.forEach(shipments, function (shipment) {
         ShippingHelpers.ensureShipmentHasMethod(shipment);
     });
 }

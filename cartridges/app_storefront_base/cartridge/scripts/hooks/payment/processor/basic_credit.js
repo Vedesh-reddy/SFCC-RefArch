@@ -1,6 +1,6 @@
 'use strict';
 
-var helper = require('~/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
@@ -44,7 +44,7 @@ function Handle(basket, paymentInformation) {
         );
 
         if (creditCardStatus.error) {
-            helper.forEach(creditCardStatus.items, function (item) {
+            collections.forEach(creditCardStatus.items, function (item) {
                 switch (item.code) {
                     case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
                         cardErrors[paymentInformation.cardNumber.htmlName] =
@@ -78,7 +78,7 @@ function Handle(basket, paymentInformation) {
             PaymentInstrument.METHOD_CREDIT_CARD
         );
 
-        helper.forEach(paymentInstruments, function (item) {
+        collections.forEach(paymentInstruments, function (item) {
             currentBasket.removePaymentInstrument(item);
         });
 

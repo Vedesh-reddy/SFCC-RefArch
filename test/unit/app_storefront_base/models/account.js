@@ -132,12 +132,8 @@ var orderModel = {
 };
 
 describe('account', function () {
-    var helper = proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/dwHelpers', {
-        'dw/util/ArrayList': ArrayList
-    });
     var AddressModel = require('../../../mocks/models/address');
     var AccountModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/account', {
-        '~/cartridge/scripts/dwHelpers': helper,
         '~/cartridge/models/address': AddressModel,
         'dw/web/URLUtils': { staticURL: function () { return 'some URL'; } }
     });

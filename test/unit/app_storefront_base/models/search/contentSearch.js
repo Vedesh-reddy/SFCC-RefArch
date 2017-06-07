@@ -9,7 +9,7 @@ var DEFAULT_PAGE_SIZE = 12;
 var QUERY_PHRASE = 'queryPhraseString';
 var startingPage;
 var stubPagingModel = sinon.stub();
-var mockDwHelpers = require('../../../../mocks/dwHelpers');
+var mockCollections = require('../../../../mocks/util/collections');
 
 var contentAssets = [
     {
@@ -143,8 +143,8 @@ var ContentSearch = proxyquire('../../../../../cartridges/app_storefront_base/ca
     'dw/web/URLUtils': {
         url: function (endpoint, param, value) { return [endpoint, param, value].join(' '); }
     },
-    '~/cartridge/scripts/dwHelpers': {
-        map: mockDwHelpers.map
+    '*/cartridge/scripts/util/collections': {
+        map: mockCollections.map
     },
     'dw/web/PagingModel': stubPagingModel
 });

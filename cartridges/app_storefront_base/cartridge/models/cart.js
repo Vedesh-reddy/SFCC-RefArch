@@ -1,7 +1,7 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var Collections = require('~/cartridge/scripts/util/collections');
+var collections = require('*/cartridge/scripts/util/collections');
 
 var HookMgr = require('dw/system/HookMgr');
 var URLUtils = require('dw/web/URLUtils');
@@ -33,7 +33,7 @@ function getApproachingDiscounts(basket, discountPlan) {
             discountPlan.getApproachingShippingDiscounts(basket.defaultShipment);
 
         orderDiscountObject =
-            Collections.map(approachingOrderDiscounts, function (approachingOrderDiscount) {
+            collections.map(approachingOrderDiscounts, function (approachingOrderDiscount) {
                 return {
                     discountMsg: Resource.msgf(
                         'msg.approachingpromo',
@@ -49,7 +49,7 @@ function getApproachingDiscounts(basket, discountPlan) {
             });
 
         shippingDiscountObject =
-            Collections.map(approachingShippingDiscounts, function (approachingShippingDiscount) {
+            collections.map(approachingShippingDiscounts, function (approachingShippingDiscount) {
                 return {
                     discountMsg: Resource.msgf(
                         'msg.approachingpromo',

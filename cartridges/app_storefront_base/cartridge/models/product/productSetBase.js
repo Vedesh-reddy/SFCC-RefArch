@@ -2,7 +2,7 @@
 
 var base = require('./productBase');
 var ProductBase = base.productBase;
-var helper = require('../../scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurrency;
 
 /**
@@ -14,7 +14,7 @@ var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurren
  * @returns {Array} Array of products in a set
  */
 function getIndividualProducts(individualProducts, productFactory) {
-    var products = helper.map(individualProducts, function (individualProduct) {
+    var products = collections.map(individualProducts, function (individualProduct) {
         return productFactory.get({ pid: individualProduct.ID });
     });
     return products;

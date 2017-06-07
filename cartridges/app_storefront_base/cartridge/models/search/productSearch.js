@@ -1,6 +1,6 @@
 'use strict';
 
-var dwHelper = require('~/cartridge/scripts/dwHelpers');
+var collections = require('*/cartridge/scripts/util/collections');
 var searchRefinementsFactory = require('~/cartridge/scripts/factories/searchRefinements');
 var URLUtils = require('dw/web/URLUtils');
 
@@ -33,7 +33,7 @@ function getResetLink(search, httpParams) {
  * @return {Refinement[]} - List of parsed refinements
  */
 function getRefinements(productSearch, refinements, refinementDefinitions) {
-    return dwHelper.map(refinementDefinitions, function (definition) {
+    return collections.map(refinementDefinitions, function (definition) {
         var refinementValues = refinements.getAllRefinementValues(definition);
         var values = searchRefinementsFactory.get(productSearch, definition, refinementValues);
 
@@ -149,7 +149,7 @@ function ProductSearch(productSearch, httpParams) {
     this.selectedFilters = getSelectedFilters(this.refinements);
     this.resetLink = getResetLink(productSearch, httpParams);
     this.bannerImageUrl = productSearch.category ? getBannerImageUrl(productSearch.category) : null;
-    this.productIds = dwHelper.pluck(paging.pageElements, 'productID');
+    this.productIds = collections.pluck(paging.pageElements, 'productID');
     this.showMoreUrl = getShowMoreUrl(paging, productSearch);
 
     if (productSearch.category) {

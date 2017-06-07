@@ -68,7 +68,7 @@ describe('cartHelpers', function () {
                 };
             }
         },
-        '~/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+        '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
         '~/cartridge/scripts/checkout/shippingHelpers': {},

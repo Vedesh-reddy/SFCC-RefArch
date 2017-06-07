@@ -41,7 +41,7 @@ server.get(
         var catalogMgr = require('dw/catalog/CatalogMgr');
         var Categories = require('*/cartridge/models/categories');
         var ProductSearch = require('dw/catalog/ProductSearchModel');
-        var helper = require('*/cartridge/scripts/dwHelpers');
+        var collections = require('*/cartridge/scripts/util/collections');
         var siteRootCategory = catalogMgr.getSiteCatalog().getRoot();
         var ps = new ProductSearch();
         var topLevelCategories = null;
@@ -51,7 +51,7 @@ server.get(
         ps.search();
         topLevelCategories =
             ps.getRefinements().getNextLevelCategoryRefinementValues(siteRootCategory);
-        categories = helper.map(topLevelCategories, function (item) {
+        categories = collections.map(topLevelCategories, function (item) {
             return catalogMgr.getCategory(item.value);
         });
         res.render('/components/header/menu', new Categories(categories));
