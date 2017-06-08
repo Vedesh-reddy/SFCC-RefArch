@@ -39,3 +39,17 @@ header ~ .container a:not(.btn-primary) {
     width: 100%;
     z-index: 1;
 }
+
+.error-hero {
+    background-image: url('../images/storelocator.jpg');
+    margin-bottom: 0.625em;
+}
+
+.error-message {
+    margin-top: 3.125rem;
+    margin-bottom: 3.125rem;
+}
+
+.error.continue-shopping {
+    margin-bottom: 6.25em;
+}

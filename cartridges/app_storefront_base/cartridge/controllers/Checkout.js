@@ -1095,6 +1095,7 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     res.json({
         error: false,
         orderID: order.orderNo,
+        orderToken: order.orderToken,
         continueUrl: URLUtils.url('Order-Confirm').toString()
     });
 

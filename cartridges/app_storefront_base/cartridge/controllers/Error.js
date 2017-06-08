@@ -2,6 +2,7 @@
 
 var server = require('server');
 var system = require('dw/system/System');
+var Resource = require('dw/web/Resource');
 
 server.use('Start', function (req, res, next) {
     res.setStatusCode(500);
@@ -9,7 +10,8 @@ server.use('Start', function (req, res, next) {
         && system.getInstanceType !== system.STAGING_SYSTEM;
     res.render('error', {
         error: req.error || {},
-        showError: showError
+        showError: showError,
+        message: Resource.msg('subheading.error.general', 'error', null)
     });
     next();
 });

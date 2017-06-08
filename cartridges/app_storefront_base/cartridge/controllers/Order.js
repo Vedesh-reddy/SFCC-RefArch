@@ -16,9 +16,20 @@ var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
 server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
     var order = OrderMgr.getOrder(req.querystring.ID);
+    var token = req.querystring.token ? req.querystring.token : null;
+
+    if (!order || !token || token !== order.orderToken) {
+        res.render('/error', {
+            message: Resource.msg('error.confirmation.error', 'confirmation', null)
+        });
+
+        return next();
+    }
+
     var config = {
         numberOfLineItems: '*'
     };
+
     var orderModel = new OrderModel(order, { config: config });
     var passwordForm;
 
@@ -37,7 +48,7 @@ server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
         });
     }
 
-    next();
+    return next();
 });
 
 server.post(
