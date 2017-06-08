@@ -1,6 +1,6 @@
 {
   "name": "mfsg",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "Mobile First SiteGenesis",
   "main": "index.js",
   "engines": {
