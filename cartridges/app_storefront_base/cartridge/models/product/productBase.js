@@ -92,7 +92,7 @@ function getVariationModel(product, productVariables) {
         Object.keys(productVariables).forEach(function (attr) {
             if (attr && productVariables[attr].value) {
                 var dwAttr = collections.find(variationAttrs,
-                    function (item) { return item.attributeID === attr; });
+                    function (item) { return item.ID === attr; });
                 var dwAttrValue = collections.find(variationModel.getAllValues(dwAttr),
                     function (item) { return item.value === productVariables[attr].value; });
 
