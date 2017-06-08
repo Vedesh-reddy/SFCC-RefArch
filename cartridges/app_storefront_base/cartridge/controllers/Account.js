@@ -16,7 +16,8 @@ var AccountModel = require('*/cartridge/models/account');
 var AddressModel = require('*/cartridge/models/address');
 var OrderModel = require('*/cartridge/models/order');
 
-var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
 /**
  * Creates an account model for the current customer
@@ -117,9 +118,12 @@ function sendPasswordResetEmail(email, resettingCustomer) {
     resetPasswordEmail.send();
 }
 
-server.get('Show', server.middleware.https, function (req, res, next) {
-    var accountModel = getModel(req);
-    if (accountModel) {
+server.get(
+    'Show',
+    server.middleware.https,
+    userLoggedIn.validateLoggedIn,
+    function (req, res, next) {
+        var accountModel = getModel(req);
         res.render('account/accountdashboard', {
             account: accountModel,
             accountlanding: true,
@@ -130,16 +134,14 @@ server.get('Show', server.middleware.https, function (req, res, next) {
                 }
             ]
         });
-    } else {
-        res.redirect(URLUtils.url('Login-Show'));
+        next();
     }
-    next();
-});
+);
 
 server.post(
     'Login',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {
@@ -176,7 +178,7 @@ server.post(
 server.post(
     'SubmitRegistration',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {
@@ -296,32 +298,29 @@ server.post(
 server.get(
     'EditProfile',
     server.middleware.https,
-    CSRFProtection.generateToken,
+    csrfProtection.generateToken,
+    userLoggedIn.validateLoggedIn,
     function (req, res, next) {
         var accountModel = getModel(req);
-        if (accountModel) {
-            var profileForm = server.forms.getForm('profile');
-            profileForm.clear();
-            profileForm.customer.firstname.value = accountModel.profile.firstName;
-            profileForm.customer.lastname.value = accountModel.profile.lastName;
-            profileForm.customer.phone.value = accountModel.profile.phone;
-            profileForm.customer.email.value = accountModel.profile.email;
-            res.render('account/profile', {
-                profileForm: profileForm,
-                breadcrumbs: [
-                    {
-                        htmlValue: Resource.msg('global.home', 'common', null),
-                        url: URLUtils.home().toString()
-                    },
-                    {
-                        htmlValue: Resource.msg('page.title.myaccount', 'account', null),
-                        url: URLUtils.url('Account-Show').toString()
-                    }
-                ]
-            });
-        } else {
-            res.redirect(URLUtils.url('Login-Show'));
-        }
+        var profileForm = server.forms.getForm('profile');
+        profileForm.clear();
+        profileForm.customer.firstname.value = accountModel.profile.firstName;
+        profileForm.customer.lastname.value = accountModel.profile.lastName;
+        profileForm.customer.phone.value = accountModel.profile.phone;
+        profileForm.customer.email.value = accountModel.profile.email;
+        res.render('account/profile', {
+            profileForm: profileForm,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                }
+            ]
+        });
         next();
     }
 );
@@ -329,7 +328,7 @@ server.get(
 server.post(
     'SaveProfile',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {
@@ -418,28 +417,24 @@ server.post(
 server.get(
     'EditPassword',
     server.middleware.https,
-    CSRFProtection.generateToken,
+    csrfProtection.generateToken,
+    userLoggedIn.validateLoggedIn,
     function (req, res, next) {
-        var accountModel = getModel(req);
-        if (accountModel) {
-            var profileForm = server.forms.getForm('profile');
-            profileForm.clear();
-            res.render('account/password', {
-                profileForm: profileForm,
-                breadcrumbs: [
-                    {
-                        htmlValue: Resource.msg('global.home', 'common', null),
-                        url: URLUtils.home().toString()
-                    },
-                    {
-                        htmlValue: Resource.msg('page.title.myaccount', 'account', null),
-                        url: URLUtils.url('Account-Show').toString()
-                    }
-                ]
-            });
-        } else {
-            res.redirect(URLUtils.url('Login-Show'));
-        }
+        var profileForm = server.forms.getForm('profile');
+        profileForm.clear();
+        res.render('account/password', {
+            profileForm: profileForm,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                }
+            ]
+        });
         next();
     }
 );
@@ -447,7 +442,7 @@ server.get(
 server.post(
     'SavePassword',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {

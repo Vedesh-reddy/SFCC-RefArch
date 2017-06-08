@@ -11,7 +11,8 @@ var Resource = require('dw/web/Resource');
 var PaymentMgr = require('dw/order/PaymentMgr');
 var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
 var AccountModel = require('*/cartridge/models/account');
-var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
 /**
  * Checks if a credit card is valid or not
@@ -88,32 +89,27 @@ function getExpirationYears() {
     return creditCardExpirationYears;
 }
 
-server.get('List', function (req, res, next) {
-    if (!req.currentCustomer.profile) {
-        res.redirect(URLUtils.url('Login-Show'));
-    } else {
-        res.render('account/payment/payment', {
-            paymentInstruments: AccountModel.getCustomerPaymentInstruments(
-                req.currentCustomer.wallet.paymentInstruments
-            ),
-            actionUrl: URLUtils.url('PaymentInstruments-DeletePayment').toString(),
-            breadcrumbs: [
-                {
-                    htmlValue: Resource.msg('global.home', 'common', null),
-                    url: URLUtils.home().toString()
-                },
-                {
-                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
-                    url: URLUtils.url('Account-Show').toString()
-                }
-            ]
-        });
-    }
-
+server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
+    res.render('account/payment/payment', {
+        paymentInstruments: AccountModel.getCustomerPaymentInstruments(
+            req.currentCustomer.wallet.paymentInstruments
+        ),
+        actionUrl: URLUtils.url('PaymentInstruments-DeletePayment').toString(),
+        breadcrumbs: [
+            {
+                htmlValue: Resource.msg('global.home', 'common', null),
+                url: URLUtils.home().toString()
+            },
+            {
+                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                url: URLUtils.url('Account-Show').toString()
+            }
+        ]
+    });
     next();
 });
 
-server.get('AddPayment', CSRFProtection.generateToken, function (req, res, next) {
+server.get('AddPayment', csrfProtection.generateToken, function (req, res, next) {
     var creditCardExpirationYears = getExpirationYears();
     var paymentForm = server.forms.getForm('creditcard');
     paymentForm.clear();
@@ -143,7 +139,7 @@ server.get('AddPayment', CSRFProtection.generateToken, function (req, res, next)
     next();
 });
 
-server.post('SavePayment', CSRFProtection.validateAjaxRequest, function (req, res, next) {
+server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, res, next) {
     var data = res.getViewData();
     if (data && data.csrfError) {
         res.json();

@@ -4,7 +4,7 @@ var assert = require('chai').assert;
 var sinon = require('sinon');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-var CSRFProtection = {
+var csrfProtection = {
     validateRequest: function () { return false; },
     getTokenName: function () { return 'name'; },
     generateToken: function () { return 'token'; }
@@ -13,9 +13,9 @@ var logoutCustomer = { logoutCustomer: function () { return {}; } };
 
 var logoutStub = sinon.stub(logoutCustomer, 'logoutCustomer', function () { return {}; });
 
-var validateRequestStub = sinon.stub(CSRFProtection, 'validateRequest');
-var getTokenNameStub = sinon.stub(CSRFProtection, 'getTokenName');
-var generateTokenStub = sinon.stub(CSRFProtection, 'generateToken');
+var validateRequestStub = sinon.stub(csrfProtection, 'validateRequest');
+var getTokenNameStub = sinon.stub(csrfProtection, 'getTokenName');
+var generateTokenStub = sinon.stub(csrfProtection, 'generateToken');
 
 
 var csrfMiddleware = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/middleware/csrf', {

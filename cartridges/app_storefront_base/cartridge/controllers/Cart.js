@@ -15,7 +15,7 @@ var collections = require('*/cartridge/scripts/util/collections');
 var CartHelper = require('*/cartridge/scripts/cart/cartHelpers');
 var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
-var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
@@ -85,7 +85,7 @@ server.post('AddProduct', function (req, res, next) {
 server.get(
     'Show',
     server.middleware.https,
-    CSRFProtection.generateToken,
+    csrfProtection.generateToken,
     function (req, res, next) {
         var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -267,7 +267,7 @@ server.get('MiniCartShow', function (req, res, next) {
 server.get(
     'AddCoupon',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {

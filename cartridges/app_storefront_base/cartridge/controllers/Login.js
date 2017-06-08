@@ -4,12 +4,12 @@ var server = require('server');
 var CustomerMgr = require('dw/customer/CustomerMgr');
 var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
-var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get(
     'Show',
     server.middleware.https,
-    CSRFProtection.generateToken,
+    csrfProtection.generateToken,
     function (req, res, next) {
         var rememberMe = false;
         var userName = '';

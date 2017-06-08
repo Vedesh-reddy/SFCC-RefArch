@@ -11,10 +11,10 @@ var URLUtils = require('dw/web/URLUtils');
 var OrderModel = require('*/cartridge/models/order');
 
 var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
-var CSRFProtection = require('*/cartridge/scripts/middleware/csrf');
+var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
-
-server.get('Confirm', CSRFProtection.generateToken, function (req, res, next) {
+server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
     var order = OrderMgr.getOrder(req.querystring.ID);
     var config = {
         numberOfLineItems: '*'
@@ -43,8 +43,8 @@ server.get('Confirm', CSRFProtection.generateToken, function (req, res, next) {
 server.post(
     'Track',
     server.middleware.https,
-    CSRFProtection.validateRequest,
-    CSRFProtection.generateToken,
+    csrfProtection.validateRequest,
+    csrfProtection.generateToken,
     function (req, res, next) {
         var order;
         var validForm = true;
@@ -113,10 +113,11 @@ server.post(
     }
 );
 
-server.get('History', server.middleware.https, function (req, res, next) {
-    if (!req.currentCustomer.profile) {
-        res.redirect(URLUtils.url('Login-Show'));
-    } else {
+server.get(
+    'History',
+    server.middleware.https,
+    userLoggedIn.validateLoggedIn,
+    function (req, res, next) {
         var ordersResult = OrderHelpers.getOrders(req.currentCustomer, req.querystring);
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
@@ -138,14 +139,15 @@ server.get('History', server.middleware.https, function (req, res, next) {
             accountlanding: false,
             breadcrumbs: breadcrumbs
         });
+        next();
     }
-    next();
-});
+);
 
-server.get('Details', server.middleware.https, function (req, res, next) {
-    if (!req.currentCustomer.profile) {
-        res.redirect(URLUtils.url('Login-Show'));
-    } else {
+server.get(
+    'Details',
+    server.middleware.https,
+    userLoggedIn.validateLoggedIn,
+    function (req, res, next) {
         var order = OrderMgr.getOrder(req.querystring.orderID);
         var orderCustomerNo = req.currentCustomer.profile.customerNo;
         var currentCustomerNo = order.customer.profile.customerNo;
@@ -182,14 +184,21 @@ server.get('Details', server.middleware.https, function (req, res, next) {
         } else {
             res.redirect(URLUtils.url('Account-Show'));
         }
+        next();
     }
-    next();
-});
+);
 
-server.get('Filtered', server.middleware.https, function (req, res, next) {
-    if (!req.currentCustomer.profile) {
-        res.redirect(URLUtils.url('Login-Show'));
-    } else {
+server.get(
+    'Filtered',
+    server.middleware.https,
+    userLoggedIn.validateLoggedInAjax,
+    function (req, res, next) {
+        var data = res.getViewData();
+        if (data && !data.loggedin) {
+            res.json();
+            return next();
+        }
+
         var ordersResult = OrderHelpers.getOrders(req.currentCustomer, req.querystring);
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
@@ -200,14 +209,14 @@ server.get('Filtered', server.middleware.https, function (req, res, next) {
             orderFilter: req.querystring.orderFilter,
             accountlanding: false
         });
+        return next();
     }
-    next();
-});
+);
 
 server.post(
     'CreateAccount',
     server.middleware.https,
-    CSRFProtection.validateAjaxRequest,
+    csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var data = res.getViewData();
         if (data && data.csrfError) {
