@@ -209,6 +209,14 @@ server.post(
             registrationForm.valid = false;
         }
 
+        if (!CustomerMgr.isAcceptablePassword(registrationForm.login.password.value)) {
+            registrationForm.login.password.valid = false;
+            registrationForm.login.passwordconfirm.valid = false;
+            registrationForm.login.passwordconfirm.error =
+                Resource.msg('error.message.password.constraints.not.matched', 'forms', null);
+            registrationForm.valid = false;
+        }
+
         // setting variables for the BeforeComplete function
         var registrationFormObj = {
             firstName: registrationForm.customer.firstname.value,
