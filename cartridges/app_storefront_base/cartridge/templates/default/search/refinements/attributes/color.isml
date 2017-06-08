@@ -1,7 +1,7 @@
 <li title="${refinementValue.title}"
     class="
         color-attribute
-        <isif condition="${!refinementValue.selectable}">disabled</isif>
+        ${!refinementValue.selectable ? 'disabled' : ''}
     "
 >
     <a href="${refinementValue.url}">
@@ -14,7 +14,7 @@
                 </isif>
                 <isif condition="${!refinementValue.selectable}">disabled</isif>
             "
-            <isif condition="${!refinementValue.selectable}">disabled</isif>
+
         >
         </span>
     </a>

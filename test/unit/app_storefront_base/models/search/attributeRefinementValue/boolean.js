@@ -91,7 +91,7 @@ describe('BooleanAttributeValue model', function () {
             selected: false,
             selectable: false,
             title: 'some product title',
-            url: '"#"'
+            url: '#'
         });
     });
 });

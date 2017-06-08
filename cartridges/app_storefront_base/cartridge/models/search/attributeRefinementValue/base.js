@@ -42,7 +42,7 @@ BaseAttributeValue.prototype = {
             url = productSearch.urlRelaxAttributeValue(actionEndpoint, id, value)
                 .relative().toString();
         } else if (!selectable) {
-            url = '"#"';
+            url = '#';
         } else {
             url = productSearch.urlRefineAttributeValue(actionEndpoint, id, value)
                 .relative().toString();

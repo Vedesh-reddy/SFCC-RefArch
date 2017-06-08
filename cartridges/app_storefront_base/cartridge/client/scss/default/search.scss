@@ -241,10 +241,23 @@
     }
 }
 
+.tab-content {
+
+    @include media-breakpoint-down(xs) {
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
+
 .product-grid {
 
     @include media-breakpoint-down(xs) {
         padding-top: 0.938em;
+
+        .col-6 {
+            padding-left: 5px;
+            padding-right: 5px;
+        }
     }
 }
 

@@ -11,7 +11,7 @@
                 <button type="submit" class="compare btn btn-primary">Compare</button>
             </div>
             <div class="col-2 action">
-                <a href=""#"" class="clear-all">Clear All</a>
+                <a href="${'#'}" class="clear-all">Clear All</a>
             </div>
         </div>
         <input type="hidden" name="cgid" />

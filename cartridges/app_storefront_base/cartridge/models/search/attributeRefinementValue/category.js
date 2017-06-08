@@ -59,7 +59,14 @@ CategoryAttributeValue.prototype.getUrl = function (
     var url = '';
 
     if (selected) {
-        url = productSearch.urlRelaxCategory(actionEndpoint).relative().toString();
+        if (productSearch.category && productSearch.category.parent) {
+            url = productSearch
+                .urlRefineCategory(actionEndpoint, productSearch.category.parent.ID)
+                .relative()
+                .toString();
+        } else {
+            url = productSearch.urlRefineCategory(actionEndpoint, id).relative().toString();
+        }
     } else {
         url = productSearch.urlRefineCategory(actionEndpoint, id).relative().toString();
     }

@@ -17,14 +17,14 @@ function Images(product, imageConfig) {
             var firstImage = collections.first(images);
             result = [{
                 alt: firstImage.alt,
-                url: firstImage.URL.relative().toString(),
+                url: firstImage.URL.toString(),
                 title: firstImage.title
             }];
         } else {
             result = collections.map(images, function (image) {
                 return {
                     alt: image.alt,
-                    url: image.URL.relative().toString(),
+                    url: image.URL.toString(),
                     title: image.title
                 };
             });

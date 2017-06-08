@@ -18,24 +18,16 @@ describe('productImages', function () {
                 alt: 'First Image',
                 title: 'First Image',
                 URL: {
-                    relative: function () {
-                        return {
-                            toString: function () {
-                                return '/first_image_url';
-                            }
-                        };
+                    toString: function () {
+                        return '/first_image_url';
                     }
                 }
             }, {
                 alt: 'Second Image',
                 title: 'Second Image',
                 URL: {
-                    relative: function () {
-                        return {
-                            toString: function () {
-                                return '/second_image_url';
-                            }
-                        };
+                    toString: function () {
+                        return '/second_image_url';
                     }
                 }
             }]),

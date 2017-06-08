@@ -23,15 +23,6 @@ describe('CategoryAttributeValue model', function () {
 
     var productSearch = {
         isRefinedByAttributeValue: function () { return true; },
-        urlRelaxCategory: function () {
-            return {
-                relative: function () {
-                    return {
-                        toString: function () { return 'relax url'; }
-                    };
-                }
-            };
-        },
         urlRefineCategory: function () {
             return {
                 relative: function () {
@@ -50,7 +41,7 @@ describe('CategoryAttributeValue model', function () {
         hitCount: 10
     };
 
-    it('should instantiate a selected Category Attribute Value model', function () {
+    it('should instantiate a selected root Category Attribute Value model', function () {
         booleanAttributeValue = new CategoryAttributeValue(productSearch, refinementDefinition, refinementValue, true);
 
         assert.deepEqual(booleanAttributeValue, {
@@ -60,7 +51,28 @@ describe('CategoryAttributeValue model', function () {
             selected: true,
             selectable: true,
             title: 'some product title',
-            url: 'relax url',
+            url: 'category url',
+            subCategories: []
+        });
+    });
+
+    it('should instantiate a selected non-root Category Attribute Value model', function () {
+        productSearch.category = {
+            parent: {
+                ID: 'test'
+            }
+        };
+
+        booleanAttributeValue = new CategoryAttributeValue(productSearch, refinementDefinition, refinementValue, true);
+
+        assert.deepEqual(booleanAttributeValue, {
+            id: 'product 1',
+            type: 'category',
+            displayValue: 'some display value',
+            selected: true,
+            selectable: true,
+            title: 'some product title',
+            url: 'category url',
             subCategories: []
         });
     });

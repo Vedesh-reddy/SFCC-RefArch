@@ -29,7 +29,8 @@
                                         <img class="swatch swatch-circle"
                                              data-index="${loopstate.count-1}"
                                              style="background-image: url(${swatch.images.swatch[0].url})"
-                                             src="${swatch.images.swatch[0].url}" />
+                                             src="${swatch.images.swatch[0].url}"
+                                             alt="${swatch.images.swatch[0].alt}"/>
                                     </span>
                                 </a>
                             <iselse/>
