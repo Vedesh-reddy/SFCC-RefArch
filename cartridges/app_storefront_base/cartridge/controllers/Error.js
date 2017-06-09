@@ -8,11 +8,18 @@ server.use('Start', function (req, res, next) {
     res.setStatusCode(500);
     var showError = system.getInstanceType() !== system.PRODUCTION_SYSTEM
         && system.getInstanceType !== system.STAGING_SYSTEM;
-    res.render('error', {
-        error: req.error || {},
-        showError: showError,
-        message: Resource.msg('subheading.error.general', 'error', null)
-    });
+    if (req.httpHeaders['x-requested-with'] === 'XMLHttpRequest') {
+        res.json({
+            error: req.error || {},
+            message: Resource.msg('subheading.error.general', 'error', null)
+        });
+    } else {
+        res.render('error', {
+            error: req.error || {},
+            showError: showError,
+            message: Resource.msg('subheading.error.general', 'error', null)
+        });
+    }
     next();
 });
 
