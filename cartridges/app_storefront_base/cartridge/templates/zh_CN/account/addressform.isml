@@ -5,7 +5,7 @@
     name="address-form" ${pdict.addressForm.attributes}>
     <!-- Address Title -->
     <div class="form-group
-        ${pdict.addressForm.addressId.mandatory === true ? required : ''}">
+        ${pdict.addressForm.addressId.mandatory === true ? 'required' : ''}">
         <label class="form-control-label" for="addressId">
             <isprint value="${pdict.addressForm.addressId.label}" encoding="off" />
         </label>
@@ -19,7 +19,7 @@
         <!-- Country  -->
         <div class="col-6">
             <div class="form-group
-                ${pdict.addressForm.country.mandatory === true ? required : ''}">
+                ${pdict.addressForm.country.mandatory === true ? 'required' : ''}">
                 <label class="form-control-label" for="country">
                     <isprint value="${pdict.addressForm.country.label}" encoding="off" />
                 </label>
@@ -37,7 +37,7 @@
         <!-- ZIP Code -->
         <div class="col-6">
             <div class="form-group
-                ${pdict.addressForm.postalCode.mandatory === true ? required : ''}">
+                ${pdict.addressForm.postalCode.mandatory === true ? 'required' : ''}">
                 <label class="form-control-label" for="zipCode">
                     <isprint value="${pdict.addressForm.postalCode.label}" encoding="off" />
                 </label>
@@ -55,7 +55,7 @@
         <!-- State  -->
         <div class="col-6">
             <div class="form-group
-                ${pdict.addressForm.states.stateCode.mandatory === true ? required : ''}">
+                ${pdict.addressForm.states.stateCode.mandatory === true ? 'required' : ''}">
                 <label class="form-control-label" for="state">
                     <isprint value="${pdict.addressForm.states.stateCode.label}" encoding="off" />
                 </label>
@@ -70,7 +70,7 @@
         <!-- City  -->
         <div class="col-6">
             <div class="form-group
-                ${pdict.addressForm.city.mandatory === true ? required : ''}">
+                ${pdict.addressForm.city.mandatory === true ? 'required' : ''}">
                 <label class="form-control-label" for="city">
                     <isprint value="${pdict.addressForm.city.label}" encoding="off" />
                 </label>
@@ -84,7 +84,7 @@
     
     <!-- Address 1 -->
     <div class="form-group
-        ${pdict.addressForm.address1.mandatory === true ? required : ''}">
+        ${pdict.addressForm.address1.mandatory === true ? 'required' : ''}">
         <label class="form-control-label" for="address1">
             <isprint value="${pdict.addressForm.address1.label}" encoding="off" />
         </label>
@@ -96,7 +96,7 @@
 
     <!-- Address 2 -->
     <div class="form-group
-        ${pdict.addressForm.address2.mandatory === true ? required : ''}">
+        ${pdict.addressForm.address2.mandatory === true ? 'required' : ''}">
         <label class="form-control-label" for="address2">
             <isprint value="${pdict.addressForm.address2.label}" encoding="off" />
         </label>
@@ -111,7 +111,7 @@
         <!-- Last Name -->
         <div class="col-6">
             <div class="form-group
-                ${pdict.addressForm.lastName.mandatory === true ? required : ''}">
+                ${pdict.addressForm.lastName.mandatory === true ? 'required' : ''}">
                 <label class="form-control-label" for="lastName">
                     <isprint value="${pdict.addressForm.lastName.label}" encoding="off" />
                 </label>
@@ -125,7 +125,7 @@
         <!-- First Name -->
         <div class="col-6">
             <div class="form-group
-                ${pdict.addressForm.firstName.mandatory === true ? required : ''}">
+                ${pdict.addressForm.firstName.mandatory === true ? 'required' : ''}">
                 <label class="form-control-label" for="firstName">
                     <isprint value="${pdict.addressForm.firstName.label}" encoding="off" />
                 </label>
@@ -139,7 +139,7 @@
     
     <!-- Phone Number -->
     <div class="form-group
-        ${pdict.addressForm.phone.mandatory === true ? required : ''}">
+        ${pdict.addressForm.phone.mandatory === true ? 'required' : ''}">
         <label class="form-control-label" for="phone">
             <isprint value="${pdict.addressForm.phone.label}" encoding="off" />
         </label>
