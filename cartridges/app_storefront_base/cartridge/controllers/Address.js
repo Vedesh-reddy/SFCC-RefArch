@@ -48,63 +48,73 @@ server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
     next();
 });
 
-server.get('AddAddress', csrfProtection.generateToken, function (req, res, next) {
-    var addressForm = server.forms.getForm('address');
-    addressForm.clear();
-    res.render('account/editaddaddress', {
-        addressForm: addressForm,
-        breadcrumbs: [
-            {
-                htmlValue: Resource.msg('global.home', 'common', null),
-                url: URLUtils.home().toString()
-            },
-            {
-                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
-                url: URLUtils.url('Account-Show').toString()
-            },
-            {
-                htmlValue: Resource.msg('label.addressbook', 'account', null),
-                url: URLUtils.url('Address-List').toString()
-            }
-        ]
-    });
-    next();
-});
+server.get(
+    'AddAddress',
+    csrfProtection.generateToken,
+    userLoggedIn.validateLoggedIn,
+    function (req, res, next) {
+        var addressForm = server.forms.getForm('address');
+        addressForm.clear();
+        res.render('account/editaddaddress', {
+            addressForm: addressForm,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                },
+                {
+                    htmlValue: Resource.msg('label.addressbook', 'account', null),
+                    url: URLUtils.url('Address-List').toString()
+                }
+            ]
+        });
+        next();
+    }
+);
 
-server.get('EditAddress', csrfProtection.generateToken, function (req, res, next) {
-    var addressId = req.querystring.addressId;
-    var customer = CustomerMgr.getCustomerByCustomerNumber(
-        req.currentCustomer.profile.customerNo
-    );
-    var addressBook = customer.getProfile().getAddressBook();
-    var rawAddress = addressBook.getAddress(addressId);
-    var addressModel = new AddressModel(rawAddress);
-    var addressForm = server.forms.getForm('address');
-    addressForm.clear();
+server.get(
+    'EditAddress',
+    csrfProtection.generateToken,
+    userLoggedIn.validateLoggedIn,
+    function (req, res, next) {
+        var addressId = req.querystring.addressId;
+        var customer = CustomerMgr.getCustomerByCustomerNumber(
+            req.currentCustomer.profile.customerNo
+        );
+        var addressBook = customer.getProfile().getAddressBook();
+        var rawAddress = addressBook.getAddress(addressId);
+        var addressModel = new AddressModel(rawAddress);
+        var addressForm = server.forms.getForm('address');
+        addressForm.clear();
 
-    addressForm.copyFrom(addressModel.address);
+        addressForm.copyFrom(addressModel.address);
 
-    res.render('account/editaddaddress', {
-        addressForm: addressForm,
-        addressId: addressId,
-        breadcrumbs: [
-            {
-                htmlValue: Resource.msg('global.home', 'common', null),
-                url: URLUtils.home().toString()
-            },
-            {
-                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
-                url: URLUtils.url('Account-Show').toString()
-            },
-            {
-                htmlValue: Resource.msg('label.addressbook', 'account', null),
-                url: URLUtils.url('Address-List').toString()
-            }
-        ]
-    });
+        res.render('account/editaddaddress', {
+            addressForm: addressForm,
+            addressId: addressId,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                },
+                {
+                    htmlValue: Resource.msg('label.addressbook', 'account', null),
+                    url: URLUtils.url('Address-List').toString()
+                }
+            ]
+        });
 
-    next();
-});
+        next();
+    }
+);
 
 server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, res, next) {
     var data = res.getViewData();
@@ -178,7 +188,13 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
     return next();
 });
 
-server.get('DeleteAddress', function (req, res, next) {
+server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
+    var data = res.getViewData();
+    if (data && !data.loggedin) {
+        res.json();
+        return next();
+    }
+
     var addressId = req.querystring.addressId;
     var isDefault = req.querystring.isDefault;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
@@ -209,10 +225,10 @@ server.get('DeleteAddress', function (req, res, next) {
             });
         }
     });
-    next();
+    return next();
 });
 
-server.get('SetDefault', function (req, res, next) {
+server.get('SetDefault', userLoggedIn.validateLoggedIn, function (req, res, next) {
     var addressId = req.querystring.addressId;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo

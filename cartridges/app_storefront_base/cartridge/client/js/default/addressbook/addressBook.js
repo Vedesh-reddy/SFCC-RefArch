@@ -43,6 +43,12 @@ module.exports = {
                                 $('.addressList').after(toInsert);
                             }
                         }
+                    },
+                    error: function (err) {
+                        if (err.responseJSON.redirectUrl) {
+                            window.location.href = err.responseJSON.redirectUrl;
+                        }
+                        $.spinner().stop();
                     }
                 });
             });

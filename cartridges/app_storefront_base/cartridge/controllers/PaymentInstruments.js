@@ -109,35 +109,40 @@ server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
     next();
 });
 
-server.get('AddPayment', csrfProtection.generateToken, function (req, res, next) {
-    var creditCardExpirationYears = getExpirationYears();
-    var paymentForm = server.forms.getForm('creditcard');
-    paymentForm.clear();
-    var months = paymentForm.expirationMonth.options;
-    for (var j = 0, k = months.length; j < k; j++) {
-        months[j].selected = false;
-    }
-    res.render('account/payment/editaddpayment', {
-        paymentForm: paymentForm,
-        expirationYears: creditCardExpirationYears,
-        breadcrumbs: [
-            {
-                htmlValue: Resource.msg('global.home', 'common', null),
-                url: URLUtils.home().toString()
-            },
-            {
-                htmlValue: Resource.msg('page.title.myaccount', 'account', null),
-                url: URLUtils.url('Account-Show').toString()
-            },
-            {
-                htmlValue: Resource.msg('page.heading.payments', 'payment', null),
-                url: URLUtils.url('PaymentInstruments-List').toString()
-            }
-        ]
-    });
+server.get(
+    'AddPayment',
+    csrfProtection.generateToken,
+    userLoggedIn.validateLoggedIn,
+    function (req, res, next) {
+        var creditCardExpirationYears = getExpirationYears();
+        var paymentForm = server.forms.getForm('creditcard');
+        paymentForm.clear();
+        var months = paymentForm.expirationMonth.options;
+        for (var j = 0, k = months.length; j < k; j++) {
+            months[j].selected = false;
+        }
+        res.render('account/payment/editaddpayment', {
+            paymentForm: paymentForm,
+            expirationYears: creditCardExpirationYears,
+            breadcrumbs: [
+                {
+                    htmlValue: Resource.msg('global.home', 'common', null),
+                    url: URLUtils.home().toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.title.myaccount', 'account', null),
+                    url: URLUtils.url('Account-Show').toString()
+                },
+                {
+                    htmlValue: Resource.msg('page.heading.payments', 'payment', null),
+                    url: URLUtils.url('PaymentInstruments-List').toString()
+                }
+            ]
+        });
 
-    next();
-});
+        next();
+    }
+);
 
 server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, res, next) {
     var data = res.getViewData();
@@ -189,7 +194,13 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
     return next();
 });
 
-server.get('DeletePayment', function (req, res, next) {
+server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
+    var data = res.getViewData();
+    if (data && !data.loggedin) {
+        res.json();
+        return next();
+    }
+
     var UUID = req.querystring.UUID;
     var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
     var paymentToDelete = array.find(paymentInstruments, function (item) {
@@ -215,7 +226,7 @@ server.get('DeletePayment', function (req, res, next) {
         }
     });
 
-    next();
+    return next();
 });
 
 server.get('Header', server.middleware.include, function (req, res, next) {

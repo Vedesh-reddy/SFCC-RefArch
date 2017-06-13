@@ -56,7 +56,7 @@ describe('userLoggedInMiddleware', function () {
         req.currentCustomer.profile = 'profile';
         userLoggedInMiddleware.validateLoggedInAjax(req, res, next);
         assert.isTrue(res.setStatusCode.withArgs(500).notCalled);
-        assert.isTrue(res.setViewData.notCalled);
+        assert.isTrue(res.setViewData.calledOnce);
         assert.isTrue(next.calledOnce);
     });
 });

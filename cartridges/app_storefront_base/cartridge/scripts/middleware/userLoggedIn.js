@@ -30,6 +30,10 @@ function validateLoggedInAjax(req, res, next) {
             loggedin: false,
             redirectUrl: URLUtils.url('Login-Show').toString()
         });
+    } else {
+        res.setViewData({
+            loggedin: true
+        });
     }
     next();
 }
