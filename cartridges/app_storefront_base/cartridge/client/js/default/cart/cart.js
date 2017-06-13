@@ -21,7 +21,7 @@ function appendToUrl(url, params) {
  * @param {Object} data - AJAX response from the server
  */
 function validateBasket(data) {
-    if (data.valid.error === true) {
+    if (data.valid.error) {
         if (data.valid.message) {
             var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
                 'fade show" role="alert">' +
@@ -30,6 +30,17 @@ function validateBasket(data) {
                 '</button>' + data.valid.message + '</div>';
 
             $('.cart-error').append(errorHtml);
+        } else {
+            $('.cart').empty().append('<div class="row"> ' +
+                '<div class="col-12 text-center"> ' +
+                '<h1>' + data.resources.emptyCartMsg + '</h1> ' +
+                '</div> ' +
+                '</div>'
+            );
+            $('.number-of-items').empty().append(data.resources.numberOfItems);
+            $('.minicart-quantity').empty().append(data.numItems);
+            $('.mini-cart .popover').empty();
+            $('.mini-cart .popover').removeClass('show');
         }
 
         $('.checkout-btn').addClass('disabled');
@@ -205,8 +216,12 @@ module.exports = function () {
                 $.spinner().stop();
             },
             error: function (err) {
-                createErrorNotification(err.responseJSON.errorMessage);
-                $.spinner().stop();
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                } else {
+                    createErrorNotification(err.responseJSON.errorMessage);
+                    $.spinner().stop();
+                }
             }
         });
     });
@@ -240,8 +255,12 @@ module.exports = function () {
                 $.spinner().stop();
             },
             error: function (err) {
-                createErrorNotification(err.responseJSON.errorMessage);
-                $.spinner().stop();
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                } else {
+                    createErrorNotification(err.responseJSON.errorMessage);
+                    $.spinner().stop();
+                }
             }
         });
     });
@@ -271,8 +290,12 @@ module.exports = function () {
                 $.spinner().stop();
             },
             error: function (err) {
-                createErrorNotification(err.responseJSON.errorMessage);
-                $.spinner().stop();
+                if (err.redirectUrl) {
+                    window.location.href = err.redirectUrl;
+                } else {
+                    createErrorNotification(err.responseJSON.errorMessage);
+                    $.spinner().stop();
+                }
             }
         });
     });
@@ -364,8 +387,12 @@ module.exports = function () {
                 $.spinner().stop();
             },
             error: function (err) {
-                createErrorNotification(err.errorMessage);
-                $.spinner().stop();
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                } else {
+                    createErrorNotification(err.responseJSON.errorMessage);
+                    $.spinner().stop();
+                }
             }
         });
     });

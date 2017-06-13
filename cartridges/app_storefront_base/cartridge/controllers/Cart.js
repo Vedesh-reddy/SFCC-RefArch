@@ -126,6 +126,17 @@ server.get('Get', function (req, res, next) {
 
 server.get('RemoveProductLineItem', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.setStatusCode(500);
+        res.json({
+            error: true,
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+
+        return next();
+    }
+
     var isProductLineItemFound = false;
 
     Transaction.wrap(function () {
@@ -145,18 +156,28 @@ server.get('RemoveProductLineItem', function (req, res, next) {
 
     if (isProductLineItemFound) {
         var basketModel = new CartModel(currentBasket);
-
         res.json(basketModel);
-        next();
     } else {
         res.setStatusCode(500);
         res.json({ errorMessage: Resource.msg('error.cannot.remove.product', 'cart', null) });
-        next();
     }
+
+    return next();
 });
 
 server.get('UpdateQuantity', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.setStatusCode(500);
+        res.json({
+            error: true,
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+
+        return next();
+    }
+
     var isProductLineItemFound = false;
     var error = false;
 
@@ -186,16 +207,15 @@ server.get('UpdateQuantity', function (req, res, next) {
 
     if (isProductLineItemFound && !error) {
         var basketModel = new CartModel(currentBasket);
-
         res.json(basketModel);
-        next();
     } else {
         res.setStatusCode(500);
         res.json({
             errorMessage: Resource.msg('error.cannot.update.product.quantity', 'cart', null)
         });
-        next();
     }
+
+    return next();
 });
 
 
@@ -207,6 +227,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
             error: true,
             redirectUrl: URLUtils.url('Cart-Show').toString()
         });
+
         return next();
     }
 
@@ -279,6 +300,16 @@ server.get(
 
         if (!currentBasket) {
             res.setStatusCode(500);
+            res.json({
+                error: true,
+                redirectUrl: URLUtils.url('Cart-Show').toString()
+            });
+
+            return next();
+        }
+
+        if (!currentBasket) {
+            res.setStatusCode(500);
             res.json({ errorMessage: Resource.msg('error.add.coupon', 'cart', null) });
             return next();
         }
@@ -330,6 +361,17 @@ server.get(
 
 server.get('RemoveCouponLineItem', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.setStatusCode(500);
+        res.json({
+            error: true,
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+
+        return next();
+    }
+
     var couponLineItem;
 
     if (currentBasket && req.querystring.uuid) {
