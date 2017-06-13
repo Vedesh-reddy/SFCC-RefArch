@@ -11,7 +11,7 @@ describe('Cart - Add Variant To Cart', () => {
     let catalog;
     let productVariationMaster;
     let resourcePath;
-    let jenkins;:
+    let jenkins;
     let jenkins2;
 
     const variant1 = {
