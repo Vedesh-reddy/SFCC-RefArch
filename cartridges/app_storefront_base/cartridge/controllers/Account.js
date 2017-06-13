@@ -515,9 +515,11 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
     var errorMsg;
     var isValid;
     var resettingCustomer;
+    var mobile = req.querystring.mobile;
     var receivedMsgHeading = Resource.msg('label.resetpasswordreceived', 'login', null);
     var receivedMsgBody = Resource.msg('msg.requestedpasswordreset', 'login', null);
     var buttonText = Resource.msg('button.text.loginform', 'login', null);
+    var returnUrl = URLUtils.url('Login-Show').toString();
     if (email) {
         isValid = validateEmail(email);
         if (isValid) {
@@ -529,7 +531,9 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
                 success: true,
                 receivedMsgHeading: receivedMsgHeading,
                 receivedMsgBody: receivedMsgBody,
-                buttonText: buttonText
+                buttonText: buttonText,
+                mobile: mobile,
+                returnUrl: returnUrl
             });
         } else {
             errorMsg = Resource.msg('error.message.passwordreset', 'login', null);
@@ -547,6 +551,11 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
             }
         });
     }
+    next();
+});
+
+server.get('PasswordReset', server.middleware.https, function (req, res, next) {
+    res.render('account/password/requestPasswordReset', { mobile: true });
     next();
 });
 
