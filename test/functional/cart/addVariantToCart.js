@@ -11,8 +11,8 @@ describe('Cart - Add Variant To Cart', () => {
     let catalog;
     let productVariationMaster;
     let resourcePath;
-    //this is a test for jenkins
-    
+    let jenkins;:
+
     const variant1 = {
         instance: undefined,
         color: {
