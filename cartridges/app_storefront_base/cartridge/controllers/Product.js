@@ -56,10 +56,6 @@ function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
  */
 function getResources() {
     return {
-        label_instock: Resource.msg('label.instock', 'common', 'In Stock'),
-        label_outofstock: Resource.msg('label.outofstock', 'common', 'Out of Stock'),
-        label_allnotavailable: Resource.msg('label.allnotavailable', 'common',
-            'This item is currently not available'),
         info_selectforstock: Resource.msg('info.selectforstock', 'product',
             'Select Styles for Availability')
     };

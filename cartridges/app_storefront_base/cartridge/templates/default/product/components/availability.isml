@@ -7,12 +7,12 @@
     <div class="col-12 col-sm-9">
         <ul class="list-unstyled availability-msg">
             <li>
-                <isif condition="${product.readyToOrder && product.available}">
-                    ${pdict.resources.label_instock}
-                <iselseif condition="${product.readyToOrder && !product.available}">
-                    ${pdict.resources.label_allnotavailable}
+                <isif condition="${!product.readyToOrder}">
+                    ${Resource.msg('info.selectforstock', 'product', 'Select Styles for Availability')}
                 <iselse>
-                    ${pdict.resources.info_selectforstock}
+                    <isloop items="${product.availability.messages}" var="message">
+                        <div>${message}</div>
+                    </isloop>
                 </isif>
             </li>
         </ul>
