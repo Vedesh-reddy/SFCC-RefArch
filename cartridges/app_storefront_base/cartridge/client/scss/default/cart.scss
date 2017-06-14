@@ -54,7 +54,6 @@ $negative-spacer: -0.625rem;
 .item-attributes {
     display: inline-block;
     vertical-align: top;
-    max-width: 65%;
 }
 
 .line-item-divider {
@@ -116,6 +115,8 @@ $negative-spacer: -0.625rem;
     height: 5.625em;
     width: 5.625em;
     margin-right: 0.938em;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
 .promo-code-form {

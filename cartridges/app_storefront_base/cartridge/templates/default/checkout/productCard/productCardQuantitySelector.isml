@@ -11,7 +11,7 @@
                 status="status">
             <isif condition="${lineItem.quantity === status.index}">
                 <option selected>${status.index}</option>
-                <iselse/>
+            <iselse/>
                 <option>${status.index}</option>
             </isif>
         </isloop>

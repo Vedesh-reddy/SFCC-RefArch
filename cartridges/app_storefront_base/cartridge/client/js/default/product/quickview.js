@@ -90,7 +90,6 @@ module.exports = {
     },
     colorAttribute: base.colorAttribute,
     selectAttribute: base.selectAttribute,
-    selectOption: base.selectOption,
     availability: base.availability,
     addToCart: base.addToCart,
     showSpinner: function () {
@@ -130,7 +129,6 @@ module.exports = {
                 (!response.product.readyToOrder || !response.product.available));
 
             // update global add to cart (single products, bundles)
-
             var dialog = $(response.$productContainer)
                 .closest('.quick-view-dialog');
 

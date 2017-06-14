@@ -71,6 +71,20 @@ function hasSameOptions(existingOptions, selectedOptions) {
 }
 
 /**
+ * Determines whether provided Bundle items are in the list of submitted bundle item IDs
+ *
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Bundle item IDs
+ *     currently in the Cart
+ * @param {string[]} childPids - List of product IDs for the submitted Bundle under consideration
+ * @return {boolean} - Whether provided Bundle items are in the list of submitted bundle item IDs
+ */
+function allBundleItemsSame(productLineItems, childPids) {
+    return collections.every(productLineItems, function (item) {
+        return childPids.indexOf(item.productID) !== -1;
+    });
+}
+
+/**
  * Adds a line item for this product to the Cart
  *
  * @param {dw.order.Basket} currentBasket -
@@ -136,7 +150,9 @@ function addProductToCart(currentBasket, productId, quantity, childPids, options
     }
 
     productInCart = arrayHelper.find(matchingProducts, function (matchingProduct) {
-        return hasSameOptions(matchingProduct.optionProductLineItems, options || []);
+        return product.bundle
+            ? allBundleItemsSame(matchingProduct.bundledProductLineItems, childPids)
+            : hasSameOptions(matchingProduct.optionProductLineItems, options || []);
     });
 
     if (productInCart) {

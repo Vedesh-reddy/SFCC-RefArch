@@ -17,6 +17,9 @@ describe('productSetBase', function () {
             'dw/web/Resource': {
                 msgf: function (params) { return params; },
                 msg: function (params) { return params; }
+            },
+            '*/cartridge/scripts/helpers/productHelpers': {
+                getSelectedOptionsUrl: function () { return ''; }
             }
         }),
         '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {

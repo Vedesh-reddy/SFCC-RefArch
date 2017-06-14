@@ -52,6 +52,12 @@ querystring.prototype.toString = function () {
                     this.variables[variable].id + '_' +
                     variable + '=' + this.variables[variable].value);
             }, this);
+        } else if (key === 'options') {
+            this.options.forEach(function (option) {
+                result.push('dwopt_' +
+                    option.productId + '_' +
+                    option.optionId + '=' + option.selectedValueId);
+            });
         } else {
             result.push(key + '=' + this[key]);
         }

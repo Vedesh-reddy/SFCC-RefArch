@@ -14,7 +14,8 @@ describe('ProductVariation - Get product variation with only master product ID',
     };
 
     it('should returns master product details and variant attributes', function (done) {
-        myGetRequest.url = config.baseUrl + '/Product-Variation?pid=' + masterPid;
+        var resourcePath = config.baseUrl + '/Product-Variation?';
+        myGetRequest.url = resourcePath + 'pid=' + masterPid;
 
         var expectedResBody = {
             'action': 'Product-Variation',
@@ -33,7 +34,6 @@ describe('ProductVariation - Get product variation with only master product ID',
                 'options': [],
                 'searchable': true,
                 'selectedQuantity': 1,
-                'selectedVariantUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Product-Variation?pid=25604455',
                 'selectedProductUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Product-Show?pid=25604455',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
@@ -265,6 +265,44 @@ describe('ProductVariation - Get product variation with only master product ID',
                 'available': true,
                 'readyToOrder': false,
                 'promotions': null,
+                'quantities': [
+                    {
+                        'selected': true,
+                        'value': '1'
+                    },
+                    {
+                        'selected': false,
+                        'value': '2'
+                    },
+                    {
+                        'selected': false,
+                        'value': '3'
+                    },
+                    {
+                        'selected': false,
+                        'value': '4'
+                    },
+                    {
+                        'selected': false,
+                        'value': '5'
+                    },
+                    {
+                        'selected': false,
+                        'value': '6'
+                    },
+                    {
+                        'selected': false,
+                        'value': '7'
+                    },
+                    {
+                        'selected': false,
+                        'value': '8'
+                    },
+                    {
+                        'selected': false,
+                        'value': '9'
+                    }
+                ],
                 'rating': 0,
                 'productType': 'master'
             },
@@ -280,7 +318,7 @@ describe('ProductVariation - Get product variation with only master product ID',
         };
 
         // strip out all "url" properties from the expected response
-        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url', 'resetUrl', 'selectedVariantUrl', 'selectedProductUrl']);
+        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url', 'resetUrl', 'selectedProductUrl']);
 
         request(myGetRequest, function (error, response) {
             assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
@@ -288,65 +326,65 @@ describe('ProductVariation - Get product variation with only master product ID',
             var bodyAsJson = JSON.parse(response.body);
 
             // strip out all "url" properties from the actual response
-            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedVariantUrl', 'selectedProductUrl']);
+            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedProductUrl']);
 
             assert.deepEqual(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
 
             // Verify URL for product.variationAttributes of color = SLABLFB
             var attrColorBlue = bodyAsJson.product.variationAttributes[0].values[0];
-            assert.equal(attrColorBlue.url, myGetRequest.url + '&dwvar_25604455_color=SLABLFB', 'Actual color attribute = SLABLFB: url not as expected.');
+            assert.equal(attrColorBlue.url, resourcePath + 'dwvar_25604455_color=SLABLFB&pid=25604455&quantity=1', 'Actual color attribute = SLABLFB: url not as expected.');
 
             var colorBlueImages = attrColorBlue.images;
             assert.isTrue(colorBlueImages.swatch[0].url.endsWith('SLABLFB.CP.jpg'), 'color SLABLFB image swatch[0]: url not ended with SLABLFB.CP.jpg.');
 
             // Verify URL for product.variationAttributes of color = WHITEFB
             var attrColorWhite = bodyAsJson.product.variationAttributes[0].values[1];
-            assert.equal(attrColorWhite.url, myGetRequest.url + '&dwvar_25604455_color=WHITEFB', 'Actual color attribute = WHITEFB: url not as expected.');
+            assert.equal(attrColorWhite.url, resourcePath + 'dwvar_25604455_color=WHITEFB&pid=25604455&quantity=1', 'Actual color attribute = WHITEFB: url not as expected.');
 
             var colorWhiteImages = attrColorWhite.images;
             assert.isTrue(colorWhiteImages.swatch[0].url.endsWith('WHITEFB.CP.jpg'), 'color WHITEFB image swatch[0].url not ended with WHITEFB.CP.jpg.');
 
             // Verify URL for product.variationAttributes of Size of id = 145
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[0].url, myGetRequest.url + '&dwvar_25604455_size=145', 'Actual product.variationAttributes[1].values[0].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[0].url, resourcePath + 'dwvar_25604455_size=145&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[0].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 150
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[1].url, myGetRequest.url + '&dwvar_25604455_size=150', 'Actual product.variationAttributes[1].values[1].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[1].url, resourcePath + 'dwvar_25604455_size=150&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[1].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 155
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[2].url, myGetRequest.url + '&dwvar_25604455_size=155', 'Actual product.variationAttributes[1].values[2].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[2].url, resourcePath + 'dwvar_25604455_size=155&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[2].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 160
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[3].url, myGetRequest.url + '&dwvar_25604455_size=160', 'Actual product.variationAttributes[1].values[3].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[3].url, resourcePath + 'dwvar_25604455_size=160&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[3].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 165
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[4].url, myGetRequest.url + '&dwvar_25604455_size=165', 'Actual product.variationAttributes[1].values[4].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[4].url, resourcePath + 'dwvar_25604455_size=165&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[4].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 170
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[5].url, myGetRequest.url + '&dwvar_25604455_size=170', 'Actual product.variationAttributes[1].values[5].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[5].url, resourcePath + 'dwvar_25604455_size=170&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[5].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 175
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[6].url, myGetRequest.url + '&dwvar_25604455_size=175', 'Actual product.variationAttributes[1].values[6].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[6].url, resourcePath + 'dwvar_25604455_size=175&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[6].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 180
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[7].url, myGetRequest.url + '&dwvar_25604455_size=180', 'Actual product.variationAttributes[1].values[7].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[7].url, resourcePath + 'dwvar_25604455_size=180&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[7].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 185
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[8].url, myGetRequest.url + '&dwvar_25604455_size=185', 'Actual product.variationAttributes[1].values[8].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[8].url, resourcePath + 'dwvar_25604455_size=185&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[8].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 190
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[9].url, myGetRequest.url + '&dwvar_25604455_size=190', 'Actual product.variationAttributes[1].values[9].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[9].url, resourcePath + 'dwvar_25604455_size=190&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[9].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 200
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[10].url, myGetRequest.url + '&dwvar_25604455_size=200', 'Actual product.variationAttributes[1].values[10].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[10].url, resourcePath + 'dwvar_25604455_size=200&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[10].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 220
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[11].url, myGetRequest.url + '&dwvar_25604455_size=220', 'Actual product.variationAttributes[1].values[11].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[11].url, resourcePath + 'dwvar_25604455_size=220&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[11].url not as expected.');
 
             // Verify URL for product.variationAttributes of width = A (32/33)
-            assert.equal(bodyAsJson.product.variationAttributes[2].values[0].url, myGetRequest.url + '&dwvar_25604455_width=A', 'Actual product.variationAttributes[2].values[0].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[2].values[0].url, resourcePath + 'dwvar_25604455_width=A&pid=25604455&quantity=1', 'Actual product.variationAttributes[2].values[0].url not as expected.');
 
             // Verify URL for product.variationAttributes of width = B (34/35)
-            assert.equal(bodyAsJson.product.variationAttributes[2].values[1].url, myGetRequest.url + '&dwvar_25604455_width=B', 'Actual product.variationAttributes[2].values[1].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[2].values[1].url, resourcePath + 'dwvar_25604455_width=B&pid=25604455&quantity=1', 'Actual product.variationAttributes[2].values[1].url not as expected.');
 
             // Verify URL for product.variationAttributes of images
             var prodImages = bodyAsJson.product.images;

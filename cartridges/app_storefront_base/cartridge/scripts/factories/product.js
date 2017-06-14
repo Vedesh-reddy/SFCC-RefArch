@@ -23,17 +23,12 @@ ProductFactory.get = function (params) {
     var ProductBundle;
     var product;
 
-    if (typeof (params.options) === 'string') {
-        selectedOptions = JSON.parse(params.options);
-    } else if (!selectedOptions) {
-        selectedOptions = [];
-    }
-
     if (variationModel) {
         product = variationModel.getSelectedVariant() || apiProduct;
     } else {
         product = apiProduct;
     }
+
     var promotions = PromotionMgr.activeCustomerPromotions.getProductPromotions(product);
     promotions = promotions.length ? promotions : null;
     var productType = Product.getProductType(product);

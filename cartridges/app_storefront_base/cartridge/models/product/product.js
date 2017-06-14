@@ -3,7 +3,8 @@
 var base = require('./productBase');
 var ProductBase = base.productBase;
 var URLUtils = require('dw/web/URLUtils');
-var productHelper = require('~/cartridge/scripts/helpers/productHelpers');
+var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
+var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;
 
@@ -35,30 +36,74 @@ function hasRequiredAttrsSelected(variationModel) {
 /**
  * creates a url of the product's selected attributes
  * @param {dw.catalog.ProductVariationModel} variationModel - The product's variation model
- * @param {Array} allAttributes - a list of the product's available attributes
+ * @param {dw.catalog.ProductOptionModel} optionModel - The product's option model
  * @param {string} endPoint - the endpoint to use when generating urls for product attributes
  * @param {string} id - the current product's id
+ * @param {number} quantity - quantity to purchase
  * @returns {string} a url of the product's selected attributes
  */
-function getUrl(variationModel, allAttributes, endPoint, id) {
-    var params = {};
-    var url;
+function getUrl(variationModel, optionModel, endPoint, id, quantity) {
+    var params = ['quantity=' + quantity];
+    var action = endPoint || 'Product-Show';
+    var optionsQueryParams = productHelper.getSelectedOptionsUrl(optionModel).split('?')[1];
+    var url = variationModel ? variationModel.url(action) : URLUtils.url(action, 'pid', id);
 
-    if (allAttributes && variationModel) {
-        allAttributes.forEach(function (attribute) {
-            attribute.values.forEach(function (value) {
-                if (value.selected) {
-                    params[attribute.id] = attribute.value;
-                }
-            });
+    if (optionsQueryParams) {
+        optionsQueryParams.split('&').forEach(function (keyValue) {
+            params.push(keyValue);
         });
-
-        url = variationModel.url('Product-' + endPoint, params).relative().toString();
-    } else {
-        url = URLUtils.url('Product-' + endPoint, 'pid', id).relative().toString();
     }
 
-    return url;
+    return urlHelper.appendQueryParams(url.relative().toString(), params);
+}
+
+/**
+ * @typedef {Object} ProductOptions
+ *
+ * @property {string} id - Product option ID
+ * @property {string} name - Product option name
+ * @property {string} htmlName - HTML representation of product option name
+ * @property {ProductOptionValues} values - A product option's values
+ * @property {string} selectedValueId - Selected option value ID
+ */
+
+/**
+ * Compile quantity meta for pull-down menu selection
+ *
+ * @param {number} minOrderQty - Minimum order quantity
+ * @param {number} stepQuantity - Quantity increment from one value to the next
+ * @param {string} selectedQty - Quanity selected
+ * @param {string} pid - Product ID
+ * @param {number} size - Number of quantity values to include in drop-down menu
+ * @param {Object} attributes - Variation attribute query params
+ * @param {ProductOptions[]} options - Product options query params
+ * @return {Array} - Quantity options for PDP pull-down menu
+ */
+function getQuantities(minOrderQty, stepQuantity, selectedQty, pid, size, attributes, options) {
+    var listSize = (typeof size === 'number' && size > 0) ? size : DEFAULT_MAX_ORDER_QUANTITY;
+    var quantities = [];
+    var compareQty = parseInt(selectedQty, 10) || minOrderQty;
+    var endpoint = 'Product-Variation';
+    var baseUrl = URLUtils.url(endpoint, 'pid', pid).relative().toString();
+    var params = {
+        options: options || [],
+        variables: attributes || {}
+    };
+    var value;
+    var valueString;
+    var url;
+    for (var i = 1; i < listSize + 1; i++) {
+        value = minOrderQty * i * stepQuantity;
+        valueString = value.toString();
+        params.quantity = valueString;
+        url = urlHelper.appendQueryParams(baseUrl, params);
+        quantities.push({
+            value: valueString,
+            selected: value === compareQty,
+            url: url
+        });
+    }
+    return quantities;
 }
 
 /**
@@ -91,17 +136,19 @@ function FullProduct(product, productVariables, quantity, promotions, selectedOp
         types: ['large', 'small'],
         quantity: 'all'
     };
-    this.quantity = quantity;
+    this.quantity = quantity || this.product.minOrderQuantity.value;
     this.productVariables = productVariables;
+    this.selectedOptions = selectedOptions;
     this.variationAttributeConfig = {
         attributes: '*',
         endPoint: 'Variation'
     };
     this.useSimplePrice = false;
     this.apiPromotions = promotions;
-    this.currentOptionModel = productHelper.getCurrentOptionModel(this.product.optionModel,
-        selectedOptions);
-    this.options = productHelper.getOptions(this.currentOptionModel);
+    this.currentOptionModel = productHelper.getCurrentOptionModel(
+        this.product.optionModel,
+        this.selectedOptions
+    );
     this.initialize();
 }
 
@@ -120,22 +167,31 @@ FullProduct.prototype.initialize = function () {
     this.searchable = this.product.searchable;
     this.minOrderQuantity = this.product.minOrderQuantity.value || 1;
     this.maxOrderQuantity = DEFAULT_MAX_ORDER_QUANTITY;
-    this.readyToOrder = this.variationModel
-        ? hasRequiredAttrsSelected(this.variationModel)
-        : true;
-    this.selectedVariantUrl = getUrl(
-        this.variationModel,
-        this.variationAttributes,
-        this.variationAttributeConfig.endPoint,
-        this.id
-    );
+    this.readyToOrder = this.variationModel ? hasRequiredAttrsSelected(this.variationModel) : true;
+    this.selectedQuantity = this.quantity ? parseInt(this.quantity, 10) : this.minOrderQuantity;
     this.selectedProductUrl = getUrl(
         this.variationModel,
-        this.variationAttributes,
-        'Show',
-        this.id
+        this.currentOptionModel,
+        'Product-Show',
+        this.id,
+        this.selectedQuantity
     );
-    this.selectedQuantity = this.quantity ? parseInt(this.quantity, 10) : this.minOrderQuantity;
+
+    var queryParams = {
+        variables: this.productVariables,
+        quantity: this.quantity
+    };
+    this.options = productHelper.getOptions(this.currentOptionModel, queryParams);
+
+    this.quantities = getQuantities(
+        this.product.minOrderQuantity.value,
+        this.product.stepQuantity.value,
+        this.quantity,
+        this.product.ID,
+        this.maxOrderQuantity,
+        this.productVariables,
+        this.selectedOptions
+    );
 };
 
 /**
@@ -154,8 +210,8 @@ function ProductWrapper(product, productVariables, quantity, promotions, selecte
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
-        'attributes', 'availability', 'selectedVariantUrl', 'selectedProductUrl',
-        'selectedQuantity', 'options'];
+        'attributes', 'availability', 'selectedProductUrl',
+        'selectedQuantity', 'options', 'quantities'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

@@ -17,6 +17,9 @@ describe('bundleProduct', function () {
             'dw/web/Resource': {
                 msgf: function () { return 'some string with param'; },
                 msg: function () { return 'some string'; }
+            },
+            '*/cartridge/scripts/helpers/productHelpers': {
+                getSelectedOptionsUrl: function () { return ''; }
             }
         }),
         '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
@@ -160,6 +163,9 @@ describe('bundleProduct', function () {
         optionModel: optionModelMock,
         minOrderQuantity: {
             value: 2
+        },
+        stepQuantity: {
+            value: 1
         },
         attributeModel: attributeModel,
         getBundledProductQuantity: function () { return { value: 5 }; }

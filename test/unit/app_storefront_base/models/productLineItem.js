@@ -21,6 +21,9 @@ describe('Product Line Item', function () {
             'dw/web/Resource': {
                 msgf: function () { return 'some string with param'; },
                 msg: function () { return 'some string'; }
+            },
+            '*/cartridge/scripts/helpers/productHelpers': {
+                getSelectedOptionsUrl: function () { return ''; }
             }
         }),
         'dw/util/StringUtils': {
@@ -35,7 +38,7 @@ describe('Product Line Item', function () {
         '*/cartridge/scripts/util/collections': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
-        '~/cartridge/scripts/helpers/productHelpers': {
+        '*/cartridge/scripts/helpers/productHelpers': {
             getOptions: function () { return [option1Mock]; },
             getCurrentOptionModel: function () {}
         }

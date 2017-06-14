@@ -1,6 +1,7 @@
 'use strict';
 
 var collections = require('*/cartridge/scripts/util/collections');
+var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
 var VariationAttributesModel = require('./productAttributes');
 var ImageModel = require('./productImages');
 var priceFactory = require('../../scripts/factories/price');
@@ -247,7 +248,7 @@ function ProductBase(product, productVariables, quantity, promotions) {
         types: ['medium'],
         quantity: 'single'
     };
-    this.quantity = quantity;
+    this.quantity = quantity || this.product.minOrderQuantity.value;
 
     this.variationAttributeConfig = {
         attributes: ['color'],
@@ -262,7 +263,6 @@ ProductBase.prototype = {
     initialize: function () {
         this.id = this.product.ID;
         this.productName = this.product.name;
-        this.options = this.options || this.product.optionModel.options;
         this.currentOptionModel = this.currentOptionModel || this.product.optionModel;
         this.price = priceFactory.getPrice(this.product, null, this.useSimplePrice,
             this.apiPromotions, this.currentOptionModel);
@@ -271,9 +271,14 @@ ProductBase.prototype = {
             ? new ImageModel(this.variationModel, this.imageConfig)
             : new ImageModel(this.product, this.imageConfig);
         this.rating = getRating(this.id);
+        var selectedOptionsQueryParams = productHelper.getSelectedOptionsUrl(
+            this.currentOptionModel);
         this.variationAttributes = this.variationModel
             ? (new VariationAttributesModel(
-                this.variationModel, this.variationAttributeConfig)).slice(0)
+                this.variationModel,
+                this.variationAttributeConfig,
+                selectedOptionsQueryParams,
+                this.quantity)).slice(0)
             : null;
         this.promotions = this.apiPromotions ? getPromotions(this.apiPromotions) : null;
         this.attributes = getAttributes(this.product);

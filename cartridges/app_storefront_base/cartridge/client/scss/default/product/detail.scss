@@ -120,7 +120,11 @@ label.availability {
     margin-top: 1.25em;
 
     .quantity {
+        bottom: 0;
+        min-width: 6.25em;
         padding-left: 0.938em;
         padding-right: 0.938em;
+        position: absolute;
+        right: 0;
     }
 }

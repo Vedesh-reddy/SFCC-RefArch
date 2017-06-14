@@ -5,7 +5,6 @@
 .item-attributes {
     vertical-align: top;
     padding-left: 0;
-    max-width: 65%;
 }
 
 .line-item-attributes,
@@ -55,6 +54,8 @@
     height: 5.625em;
     width: 5.625em;
     margin-right: 0.938em;
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
 .non-adjusted-price {
