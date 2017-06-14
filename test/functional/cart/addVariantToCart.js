@@ -79,7 +79,7 @@ describe('Cart - Add Variant To Cart', () => {
     it('should display the correct number of rows', () => {
         cartPage
             .getItemList()
-            .then(rows => assert.equal(1, rows.value.length));
+            .then(rows => assert.equal(1, rows.value.length, jenkins));
     });
 
     it('should display the correct name', () => {
