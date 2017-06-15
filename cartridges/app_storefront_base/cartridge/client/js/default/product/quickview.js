@@ -42,8 +42,17 @@ function getModalHtmlElement() {
  */
 function parseHtml(html) {
     var $html = $(html);
-    var body = $html[2].outerHTML;
-    var footer = $html[4].innerHTML;
+
+    var htmlArray = [];
+    $.each($html, function (key, htmlElement) {
+        // striping out comments that are not present on production
+        if (!String(htmlElement).includes('Comment') && !String(htmlElement).includes('Text')) {
+            htmlArray.push(htmlElement);
+        }
+    });
+
+    var body = htmlArray[0].outerHTML;
+    var footer = htmlArray[1].innerHTML;
 
     return { body: body, footer: footer };
 }
