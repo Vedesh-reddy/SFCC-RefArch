@@ -53,7 +53,7 @@ describe('Cart - Add Variant To Cart', () => {
                 const variant1Selection = new Map();
                 catalog = testDataMgr.parsedData.catalog;
                 const variantIds = productVariationMaster.getVariantProductIds();
-                
+
                 // No-Iron Textured Dress Shirt (Color: White, Size: 14 1/2, Width: 32/33)
                 variant1.instance = products.getProduct(catalog, variantIds[0]);
                 // No-Iron Textured Dress Shirt (Color: White, Size: 17 1/2, Width: 34/35)
@@ -77,7 +77,7 @@ describe('Cart - Add Variant To Cart', () => {
     it('should display the correct number of rows', () => {
         cartPage
             .getItemList()
-            .then(rows => assert.equal(1, rows.value.length, jenkins));
+            .then(rows => assert.equal(1, rows.value.length));
     });
 
     it('should display the correct name', () => {
