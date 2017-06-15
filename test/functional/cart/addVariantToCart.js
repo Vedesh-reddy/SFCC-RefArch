@@ -11,6 +11,7 @@ describe('Cart - Add Variant To Cart', () => {
     let catalog;
     let productVariationMaster;
     let resourcePath;
+
     const variant1 = {
         instance: undefined,
         color: {
