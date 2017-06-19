@@ -9,7 +9,7 @@
             <span class="summary-details order-number">${pdict.order.orderNumber}</span>
             <br/>
             <span class="summary-section-label order-date-label">${Resource.msg('label.order.date', 'confirmation', null)}</span>
-            <span class="summary-details order-date"><isprint value="${pdict.order.creationDate}" style="DATE_LONG"/></span>
+            <span class="summary-details order-date"><isprint value="${pdict.order.creationDate}" style="DATE_SHORT"/></span>
         </p>
 
         <isinclude template="checkout/shipping/shippingSummary" />
