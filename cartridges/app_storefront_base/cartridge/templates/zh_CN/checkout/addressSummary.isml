@@ -8,7 +8,7 @@
        <isif condition="${address && address.stateCode}">${address.stateCode}</isif>
     </span>
     <span class="city">
-        <isif condition="${address && address.city}">${address.city},</isif>
+        <isif condition="${address && address.city}">${address.city}</isif>
     </span>
 
     <div class="address1">
@@ -21,10 +21,10 @@
 
     <div>
         <span class="firstName">
-            <isif condition="${address && address.firstName}">${address.firstName}</isif>
+            <isif condition="${address && address.firstName}">${address.lastName}</isif>
         </span>
         <span class="lastName">
-            <isif condition="${address && address.lastName}">${address.lastName}</isif>
+            <isif condition="${address && address.lastName}">${address.firstName}</isif>
         </span>
     </div>
 </div>
