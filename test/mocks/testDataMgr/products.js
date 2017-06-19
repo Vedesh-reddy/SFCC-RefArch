@@ -141,7 +141,7 @@ export class Category {
     }
 
     getDisplayName(locale = defaultLocale) {
-        let parsedLocale;
+        let parsedLocale = locale;
         if (locale === 'en_GB') { parsedLocale = defaultLocale; }
         return this.displayName[parsedLocale];
     }

@@ -7,12 +7,12 @@ import * as customers from '../customers';
 
 export const defaultLocale = 'x_default';
 export const supportedLocales = [
-    'en_US',
-    'en_GB',
-    'fr_FR',
-    'it_IT',
-    'ja_JP',
-    'zh_CN'
+    'en_US'
+    // 'en_GB',
+    // 'fr_FR',
+    // 'it_IT',
+    // 'ja_JP',
+    // 'zh_CN'
 ];
 export const PRIMARY_CONTENT = '.container';
 export const CATEGORYSLOT = '.category-slot .category-tile';
