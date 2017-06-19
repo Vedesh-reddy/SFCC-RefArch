@@ -227,6 +227,7 @@ module.exports = function () {
     });
 
     $('body').on('change', '.quantity-form > .quantity', function () {
+        var preSelectQty = $(this).data('pre-select-qty');
         var quantity = $(this).val();
         var productID = $(this).data('pid');
         var url = $(this).data('action');
@@ -244,6 +245,7 @@ module.exports = function () {
         $.ajax({
             url: url,
             type: 'get',
+            context: this,
             dataType: 'json',
             success: function (data) {
                 $('.quantity[data-uuid="' + uuid + '"]').val(quantity);
@@ -252,6 +254,7 @@ module.exports = function () {
                 updateApproachingDiscounts(data.approachingDiscounts);
                 updateAvailability(data, uuid);
                 validateBasket(data);
+                $(this).data('pre-select-qty', quantity);
                 $.spinner().stop();
             },
             error: function (err) {
@@ -259,6 +262,7 @@ module.exports = function () {
                     window.location.href = err.responseJSON.redirectUrl;
                 } else {
                     createErrorNotification(err.responseJSON.errorMessage);
+                    $(this).val(parseInt(preSelectQty, 10));
                     $.spinner().stop();
                 }
             }

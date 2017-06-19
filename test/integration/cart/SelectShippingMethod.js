@@ -221,7 +221,7 @@ describe('Cart: Selecting Shipping Methods', function () {
         myRequest.url = config.baseUrl + '/Cart-AddProduct';
         myRequest.form = {
             pid: variantPid1,
-            childPids: [],
+            childProducts: [],
             quantity: qty1
         };
 
@@ -234,7 +234,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             .then(function () {
                 myRequest.form = {
                     pid: variantPid2,
-                    childPids: [],
+                    childProducts: [],
                     quantity: qty2
                 };
 

@@ -4,6 +4,7 @@
             data-uuid="${lineItem.UUID}"
             data-pid="${lineItem.id}"
             data-action="${pdict.actionUrls.updateQuantityUrl}"
+            data-pre-select-qty="${lineItem.quantity}"
             id="quantity"
             name="quantity">
         <isloop begin="${lineItem.quantityOptions.minOrderQuantity}"

@@ -18,7 +18,7 @@ describe('Add one Simple Product with Options to Cart', function () {
             resolveWithFullResponse: true,
             form: {
                 pid: pid,
-                childPids: '',
+                childProducts: [],
                 quantity: quantity,
                 options: optionsString
             }

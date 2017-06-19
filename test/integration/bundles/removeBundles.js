@@ -9,7 +9,11 @@ describe('Remove bundle from product line item', function () {
     var UUID;
     var bundlePid = 'womens-jewelry-bundle';
     var qty = 1;
-    var childPids = '013742002836,013742002805,013742002799';
+    var childProducts = [
+        { pid: '013742002836' },
+        { pid: '013742002805' },
+        { pid: '013742002799' }
+    ];
 
     var myRequest = {
         url: config.baseUrl + '/Cart-AddProduct',
@@ -19,7 +23,7 @@ describe('Remove bundle from product line item', function () {
         jar: cookieJar,
         form: {
             pid: bundlePid,
-            childPids: childPids,
+            childProducts: childProducts,
             quantity: qty,
             options: []
         }

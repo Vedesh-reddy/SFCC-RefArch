@@ -12,8 +12,8 @@ var CartModel = require('*/cartridge/models/cart');
 var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 
 var collections = require('*/cartridge/scripts/util/collections');
-var CartHelper = require('*/cartridge/scripts/cart/cartHelpers');
-var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+var shippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
@@ -28,8 +28,8 @@ server.get('MiniCart', server.middleware.include, function (req, res, next) {
 server.post('AddProduct', function (req, res, next) {
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
     var productId = req.form.pid;
-    var childPids = Object.hasOwnProperty.call(req.form, 'childPids')
-        ? decodeURIComponent(req.form.childPids).split(',')
+    var childProducts = Object.hasOwnProperty.call(req.form, 'childProducts')
+        ? JSON.parse(req.form.childProducts)
         : [];
     var options = req.form.options ? JSON.parse(req.form.options) : [];
     var quantity;
@@ -40,9 +40,13 @@ server.post('AddProduct', function (req, res, next) {
         Transaction.wrap(function () {
             if (!req.form.pidsObj) {
                 quantity = parseInt(req.form.quantity, 10);
-                result =
-                    CartHelper.addProductToCart(currentBasket, productId, quantity, childPids,
-                        options);
+                result = cartHelper.addProductToCart(
+                    currentBasket,
+                    productId,
+                    quantity,
+                    childProducts,
+                    options
+                );
             } else {
                 // product set
                 pidsObj = JSON.parse(req.form.pidsObj);
@@ -54,8 +58,13 @@ server.post('AddProduct', function (req, res, next) {
                 pidsObj.forEach(function (PIDObj) {
                     quantity = parseInt(PIDObj.qty, 10);
                     var pidOptions = PIDObj.options ? JSON.parse(PIDObj.options) : {};
-                    var PIDObjResult = CartHelper.addProductToCart(currentBasket, PIDObj.pid,
-                        quantity, childPids, pidOptions);
+                    var PIDObjResult = cartHelper.addProductToCart(
+                        currentBasket,
+                        PIDObj.pid,
+                        quantity,
+                        childProducts,
+                        pidOptions
+                    );
                     if (PIDObjResult.error) {
                         result.error = PIDObjResult.error;
                         result.message = PIDObjResult.message;
@@ -63,7 +72,7 @@ server.post('AddProduct', function (req, res, next) {
                 });
             }
             if (!result.error) {
-                CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
+                cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
                 HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
             }
         });
@@ -94,7 +103,7 @@ server.get(
                 if (currentBasket.currencyCode !== req.session.currency.currencyCode) {
                     currentBasket.updateCurrency();
                 }
-                CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
+                cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
                 HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
             });
@@ -112,7 +121,7 @@ server.get('Get', function (req, res, next) {
 
     if (currentBasket) {
         Transaction.wrap(function () {
-            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
+            cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
@@ -178,34 +187,60 @@ server.get('UpdateQuantity', function (req, res, next) {
         return next();
     }
 
-    var isProductLineItemFound = false;
-    var error = false;
-
-    Transaction.wrap(function () {
-        if (req.querystring.pid && req.querystring.uuid) {
-            var productLineItems = currentBasket.getAllProductLineItems(req.querystring.pid);
-            for (var i = 0; i < productLineItems.length; i++) {
-                var item = productLineItems[i];
-                if ((req.querystring.quantity && item.UUID === req.querystring.uuid)) {
-                    var updatedQuantity = parseInt(req.querystring.quantity, 10);
-
-                    if (updatedQuantity >= item.product.minOrderQuantity.value &&
-                        updatedQuantity <= item.product.availabilityModel.inventoryRecord.ATS.value
-                    ) {
-                        item.setQuantityValue(updatedQuantity);
-                        isProductLineItemFound = true;
-                        break;
-                    } else {
-                        error = true;
-                        return;
-                    }
-                }
-            }
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
-        }
+    var productId = req.querystring.pid;
+    var updateQuantity = parseInt(req.querystring.quantity, 10);
+    var uuid = req.querystring.uuid;
+    var productLineItems = currentBasket.productLineItems;
+    var matchingLineItem = collections.find(productLineItems, function (item) {
+        return item.productID === productId && item.UUID === uuid;
     });
+    var availableToSell = 0;
 
-    if (isProductLineItemFound && !error) {
+    var totalQtyRequested = 0;
+    var qtyAlreadyInCart = 0;
+    var minOrderQuantity = 0;
+    var canBeUpdated = false;
+    var bundleItems;
+
+    if (matchingLineItem) {
+        if (matchingLineItem.product.bundle) {
+            bundleItems = matchingLineItem.bundledProductLineItems;
+            canBeUpdated = collections.every(bundleItems, function (item) {
+                var quantityToUpdate = updateQuantity *
+                    matchingLineItem.product.getBundledProductQuantity(item.product).value;
+                qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
+                    item.productID,
+                    productLineItems,
+                    item.UUID
+                );
+                totalQtyRequested = quantityToUpdate + qtyAlreadyInCart;
+                availableToSell = item.product.availabilityModel.inventoryRecord.ATS.value;
+                minOrderQuantity = item.product.minOrderQuantity.value;
+                return (totalQtyRequested <= availableToSell) &&
+                    (quantityToUpdate >= minOrderQuantity);
+            });
+        } else {
+            availableToSell = matchingLineItem.product.availabilityModel.inventoryRecord.ATS.value;
+            qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
+                productId,
+                productLineItems,
+                matchingLineItem.UUID
+            );
+            totalQtyRequested = updateQuantity + qtyAlreadyInCart;
+            minOrderQuantity = matchingLineItem.product.minOrderQuantity.value;
+            canBeUpdated = (totalQtyRequested <= availableToSell) &&
+                (updateQuantity >= minOrderQuantity);
+        }
+    }
+
+    if (canBeUpdated) {
+        Transaction.wrap(function () {
+            matchingLineItem.setQuantityValue(updateQuantity);
+            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        });
+    }
+
+    if (matchingLineItem && canBeUpdated) {
         var basketModel = new CartModel(currentBasket);
         res.json(basketModel);
     } else {
@@ -237,13 +272,13 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     var methodID = req.querystring.methodID || req.form.methodID;
     var shipment;
     if (shipUUID) {
-        shipment = ShippingHelper.getShipmentByUUID(currentBasket, shipUUID);
+        shipment = shippingHelper.getShipmentByUUID(currentBasket, shipUUID);
     } else {
         shipment = currentBasket.defaultShipment;
     }
 
     Transaction.wrap(function () {
-        ShippingHelper.selectShippingMethod(shipment, methodID);
+        shippingHelper.selectShippingMethod(shipment, methodID);
 
         if (currentBasket && !shipment.shippingMethod) {
             error = true;
@@ -274,7 +309,7 @@ server.get('MiniCartShow', function (req, res, next) {
             if (currentBasket.currencyCode !== req.session.currency.currencyCode) {
                 currentBasket.updateCurrency();
             }
-            CartHelper.ensureAllShipmentsHaveMethods(currentBasket);
+            cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }

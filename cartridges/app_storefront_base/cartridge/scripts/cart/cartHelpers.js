@@ -24,19 +24,20 @@ var arrayHelper = require('~/cartridge/scripts/util/array');
  * Replaces Bundle master product items with their selected variants
  *
  * @param {dw.order.ProductLineItem} apiLineItem - Cart line item containing Bundle
- * @param {string[]} childPids - List of bundle product item ID's with chosen product variant ID's
+ * @param {string[]} childProducts - List of bundle product item ID's with chosen product variant
+ *     ID's
  */
-function updateBundleProducts(apiLineItem, childPids) {
+function updateBundleProducts(apiLineItem, childProducts) {
     var bundle = apiLineItem.product;
     var bundleProducts = bundle.getBundledProducts();
     var bundlePids = collections.map(bundleProducts, function (product) { return product.ID; });
-    var selectedPids = childPids.filter(function (pid) {
-        return bundlePids.indexOf(pid) === -1;
+    var selectedProducts = childProducts.filter(function (product) {
+        return bundlePids.indexOf(product.pid) === -1;
     });
     var bundleLineItems = apiLineItem.getBundledProductLineItems();
 
-    selectedPids.forEach(function (productId) {
-        var variant = ProductMgr.getProduct(productId);
+    selectedProducts.forEach(function (product) {
+        var variant = ProductMgr.getProduct(product.pid);
 
         collections.forEach(bundleLineItems, function (item) {
             if (item.productID === variant.masterProduct.ID) {
@@ -75,12 +76,15 @@ function hasSameOptions(existingOptions, selectedOptions) {
  *
  * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Bundle item IDs
  *     currently in the Cart
- * @param {string[]} childPids - List of product IDs for the submitted Bundle under consideration
+ * @param {string[]} childProducts - List of bundle items for the submitted Bundle under
+ *     consideration
  * @return {boolean} - Whether provided Bundle items are in the list of submitted bundle item IDs
  */
-function allBundleItemsSame(productLineItems, childPids) {
+function allBundleItemsSame(productLineItems, childProducts) {
     return collections.every(productLineItems, function (item) {
-        return childPids.indexOf(item.productID) !== -1;
+        return arrayHelper.find(childProducts, function (childProduct) {
+            return item.productID === childProduct.pid;
+        });
     });
 }
 
@@ -90,7 +94,7 @@ function allBundleItemsSame(productLineItems, childPids) {
  * @param {dw.order.Basket} currentBasket -
  * @param {dw.catalog.Product} product -
  * @param {number} quantity - Quantity to add
- * @param {string[]}  childPids - the products' sub-products
+ * @param {string[]}  childProducts - the products' sub-products
  * @param {dw.catalog.ProductOptionModel} optionModel - the product's option model
  * @param {dw.order.Shipment} defaultShipment - the cart's default shipment method
  * @return {dw.order.ProductLineItem} - The added product line item
@@ -99,7 +103,7 @@ function addLineItem(
     currentBasket,
     product,
     quantity,
-    childPids,
+    childProducts,
     optionModel,
     defaultShipment
 ) {
@@ -109,8 +113,8 @@ function addLineItem(
         defaultShipment
     );
 
-    if (product.bundle && childPids.length) {
-        updateBundleProducts(productLineItem, childPids);
+    if (product.bundle && childProducts.length) {
+        updateBundleProducts(productLineItem, childProducts);
     }
 
     productLineItem.setQuantityValue(quantity);
@@ -119,21 +123,83 @@ function addLineItem(
 }
 
 /**
+ * Sets a flag to exclude the quantity for a product line item matching the provided UUID.  When
+ * updating a quantity for an already existing line item, we want to exclude the line item's
+ * quantity and use the updated quantity instead.
+ * @param {string} selectedUuid - Line item UUID to exclude
+ * @param {string} itemUuid - Line item in-process to consider for exclusion
+ * @return {boolean} - Whether to include the line item's quantity
+ */
+function excludeUuid(selectedUuid, itemUuid) {
+    return selectedUuid
+        ? itemUuid !== selectedUuid
+        : true;
+}
+
+/**
+ * Calculate the quantities for any existing instance of a product, either as a single line item
+ * with the same or different options, as well as inclusion in product bundles.  Providing an
+ * optional "uuid" parameter, typically when updating the quantity in the Cart, will exclude the
+ * quantity for the matching line item, as the updated quantity will be used instead.  "uuid" is not
+ * used when adding a product to the Cart.
+ *
+ * @param {string} productId - ID of product to be added or updated
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} lineItems - Cart product line items
+ * @param {string} [uuid] - When provided, excludes the quantity for the matching line item
+ * @return {number} - Total quantity of all instances of requested product in the Cart and being
+ *     requested
+ */
+function getQtyAlreadyInCart(productId, lineItems, uuid) {
+    var qtyAlreadyInCart = 0;
+
+    collections.forEach(lineItems, function (item) {
+        if (item.bundledProductLineItems.length) {
+            collections.forEach(item.bundledProductLineItems, function (bundleItem) {
+                if (bundleItem.productID === productId && excludeUuid(uuid, bundleItem.UUID)) {
+                    qtyAlreadyInCart += bundleItem.quantityValue;
+                }
+            });
+        } else if (item.productID === productId && excludeUuid(uuid, item.UUID)) {
+            qtyAlreadyInCart += item.quantityValue;
+        }
+    });
+    return qtyAlreadyInCart;
+}
+
+/**
+ * Find all line items that contain the product specified.  A product can appear in different line
+ * items that have different option selections or in product bundles.
+ *
+ * @param {string} productId - Product ID to match
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Collection of the Cart's
+ *     product line items
+ * @return {dw.order.ProductLineItem[]} - Filtered list of product line items matching productId
+ */
+function getMatchingProducts(productId, productLineItems) {
+    var matchingProducts = [];
+    collections.forEach(productLineItems, function (item) {
+        if (item.productID === productId) {
+            matchingProducts.push(item);
+        }
+    });
+    return matchingProducts;
+}
+
+/**
  * Adds a product to the cart. If the product is already in the cart it increases the quantity of
  * that product.
  * @param {dw.order.Basket} currentBasket - Current users's basket
  * @param {string} productId - the productId of the product being added to the cart
  * @param {number} quantity - the number of products to the cart
- * @param {string[]} childPids - the products' sub-products
+ * @param {string[]} childProducts - the products' sub-products
  * @param {SelectedOption[]} options - product options
  *  @return {Object} returns an error object
  */
-function addProductToCart(currentBasket, productId, quantity, childPids, options) {
+function addProductToCart(currentBasket, productId, quantity, childProducts, options) {
     var availableToSell;
     var defaultShipment = currentBasket.defaultShipment;
     var product = ProductMgr.getProduct(productId);
     var productInCart;
-    var matchingProducts = [];
     var productLineItems = currentBasket.productLineItems;
     var productQuantityInCart;
     var quantityToSet;
@@ -143,15 +209,45 @@ function addProductToCart(currentBasket, productId, quantity, childPids, options
         message: Resource.msg('text.alert.addedtobasket', 'product', null)
     };
 
-    for (var i = 0, j = currentBasket.productLineItems.length; i < j; i++) {
-        if (productLineItems[i].productID === productId) {
-            matchingProducts.push(productLineItems[i]);
-        }
+    var totalQtyRequested = 0;
+    var canBeAdded = false;
+
+    if (product.bundle) {
+        var atsValueByChildPid = {};
+        childProducts.forEach(function (childProduct) {
+            var apiChildProduct = ProductMgr.getProduct(childProduct.pid);
+            atsValueByChildPid[childProduct.pid] =
+                apiChildProduct.availabilityModel.inventoryRecord.ATS.value;
+        });
+
+        canBeAdded = childProducts.every(function (childProduct) {
+            var bundleQuantity = quantity;
+            var itemQuantity = bundleQuantity * childProduct.quantity;
+            var childPid = childProduct.pid;
+            totalQtyRequested = itemQuantity + getQtyAlreadyInCart(childPid, productLineItems);
+            return totalQtyRequested <= atsValueByChildPid[childPid];
+        });
+    } else {
+        totalQtyRequested = quantity + getQtyAlreadyInCart(productId, productLineItems);
+        canBeAdded = totalQtyRequested <= product.availabilityModel.inventoryRecord.ATS.value;
     }
+
+    if (!canBeAdded) {
+        result.error = true;
+        result.message = Resource.msgf(
+            'error.alert.selected.quantity.cannot.be.added.for',
+            'product',
+            null,
+            product.name
+        );
+        return result;
+    }
+
+    var matchingProducts = getMatchingProducts(productId, productLineItems);
 
     productInCart = arrayHelper.find(matchingProducts, function (matchingProduct) {
         return product.bundle
-            ? allBundleItemsSame(matchingProduct.bundledProductLineItems, childPids)
+            ? allBundleItemsSame(matchingProduct.bundledProductLineItems, childProducts)
             : hasSameOptions(matchingProduct.optionProductLineItems, options || []);
     });
 
@@ -173,7 +269,7 @@ function addProductToCart(currentBasket, productId, quantity, childPids, options
             currentBasket,
             product,
             quantity,
-            childPids,
+            childProducts,
             optionModel,
             defaultShipment
         );
@@ -196,5 +292,6 @@ function ensureAllShipmentsHaveMethods(basket) {
 
 module.exports = {
     addProductToCart: addProductToCart,
-    ensureAllShipmentsHaveMethods: ensureAllShipmentsHaveMethods
+    ensureAllShipmentsHaveMethods: ensureAllShipmentsHaveMethods,
+    getQtyAlreadyInCart: getQtyAlreadyInCart
 };

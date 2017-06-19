@@ -17,12 +17,16 @@ describe('Add bundles to cart', function () {
 
         var bundlePid = 'womens-jewelry-bundle';
         var qty = 1;
-        var childPids = '013742002836,013742002805,013742002799';
+        var childProducts = [
+            { pid: '013742002836' },
+            { pid: '013742002805' },
+            { pid: '013742002799' }
+        ];
 
         myRequest.url = config.baseUrl + '/Cart-AddProduct';
         myRequest.form = {
             pid: bundlePid,
-            childPids: childPids,
+            childProducts: childProducts,
             quantity: qty
         };
         return request(myRequest, function (error, response) {

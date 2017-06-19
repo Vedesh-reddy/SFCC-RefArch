@@ -370,10 +370,16 @@ function handlePostCartAdd(response) {
  *
  * @return {string[]} - List of selected bundle product item ID's
  */
-function getChildPids() {
-    return $('.bundle-item .product-id').map(function () {
-        return $(this).text();
-    }).get().join(',');
+function getChildProducts() {
+    var childProducts = [];
+    $('.bundle-item').each(function () {
+        childProducts.push({
+            pid: $(this).find('.product-id').text(),
+            quantity: parseInt($(this).find('label.quantity').data('quantity'), 10)
+        });
+    });
+
+    return childProducts.length ? JSON.stringify(childProducts) : [];
 }
 
 /**
@@ -484,7 +490,7 @@ module.exports = {
             var form = {
                 pid: pid,
                 pidsObj: pidsObj,
-                childPids: getChildPids(),
+                childProducts: getChildProducts(),
                 quantity: getQuantitySelected($(this))
             };
 

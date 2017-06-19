@@ -127,8 +127,8 @@ function ProductWrapper(product, quantity, promotions, productFactory) {
         productFactory
     );
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating', 'bundledProducts',
-        'available', 'online', 'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder',
-        'promotions', 'longDescription', 'shortDescription', 'quantities'];
+        'available', 'availability', 'online', 'searchable', 'minOrderQuantity', 'maxOrderQuantity',
+        'readyToOrder', 'promotions', 'longDescription', 'shortDescription', 'quantities'];
     items.forEach(function (item) {
         this[item] = productBundle[item];
     }, this);
