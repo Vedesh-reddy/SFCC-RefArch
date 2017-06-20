@@ -84,7 +84,7 @@ describe('forms', function () {
         assert.isUndefined(currentForm.firstName.error);
         assert.isTrue(currentForm.firstName.mandatory);
         assert.equal(currentForm.firstName.label, 'hello');
-        assert.equal(currentForm.firstName.attributes, 'name = "dwfrm_address_firstName" required value = "Jon" maxLength = "50" minLength = "1" pattern = "/[a-zA-Z]*/"');
+        assert.equal(currentForm.firstName.attributes, 'name="dwfrm_address_firstName" required value="Jon" maxLength="50" minLength="1" pattern="/[a-zA-Z]*/"');
         assert.equal(currentForm.firstName.formType, 'formField');
     });
 
@@ -116,7 +116,7 @@ describe('forms', function () {
         assert.equal(currentForm.boolField.htmlValue, true);
         assert.isFalse(currentForm.boolField.valid);
         assert.equal(currentForm.boolField.error, 'Found an issue');
-        assert.equal(currentForm.boolField.attributes, 'name = "dwfrm_address_boolField"');
+        assert.equal(currentForm.boolField.attributes, 'name="dwfrm_address_boolField"');
         assert.equal(currentForm.boolField.formType, 'formField');
     });
 
@@ -149,7 +149,7 @@ describe('forms', function () {
         assert.isTrue(currentForm.intField.valid);
         assert.isUndefined(currentForm.intField.error);
         assert.isTrue(currentForm.intField.mandatory);
-        assert.equal(currentForm.intField.attributes, 'name = "dwfrm_address_intField" required value = "" max = "999" min = "1"');
+        assert.equal(currentForm.intField.attributes, 'name="dwfrm_address_intField" required value="" max="999" min="1"');
         assert.equal(currentForm.intField.formType, 'formField');
     });
 
@@ -180,7 +180,7 @@ describe('forms', function () {
         assert.isTrue(currentForm.dateField.valid);
         assert.isUndefined(currentForm.dateField.error);
         assert.isTrue(currentForm.dateField.mandatory);
-        assert.equal(currentForm.dateField.attributes, 'name = "dwfrm_address_dateField" required value = ""');
+        assert.equal(currentForm.dateField.attributes, 'name="dwfrm_address_dateField" required value=""');
         assert.equal(currentForm.dateField.formType, 'formField');
     });
 
@@ -310,7 +310,7 @@ describe('forms', function () {
         assert.isUndefined(currentForm.innerForm.firstName.error);
         assert.isTrue(currentForm.innerForm.firstName.mandatory);
         assert.equal(currentForm.innerForm.firstName.label, 'hello');
-        assert.equal(currentForm.innerForm.firstName.attributes, 'name = "dwfrm_address_innerForm_firstName" required value = "Jon" maxLength = "50" minLength = "1" pattern = "/[a-zA-Z]*/"');
+        assert.equal(currentForm.innerForm.firstName.attributes, 'name="dwfrm_address_innerForm_firstName" required value="Jon" maxLength="50" minLength="1" pattern="/[a-zA-Z]*/"');
         assert.equal(currentForm.innerForm.formType, 'formGroup');
         assert.equal(currentForm.innerForm.firstName.formType, 'formField');
     });
@@ -341,9 +341,9 @@ describe('forms', function () {
         } };
         var forms = formsRequire(session);
         var currentForm = forms.getForm('shippingaddress');
-        assert.equal(currentForm.intField.attributes, 'name = "dwfrm_shippingaddress_intField" required value = "10" max = "999" min = "1"');
+        assert.equal(currentForm.intField.attributes, 'name="dwfrm_shippingaddress_intField" required value="10" max="999" min="1"');
         currentForm.clear();
-        assert.equal(currentForm.intField.attributes, 'name = "dwfrm_shippingaddress_intField" required value = "0" max = "999" min = "1"');
+        assert.equal(currentForm.intField.attributes, 'name="dwfrm_shippingaddress_intField" required value="0" max="999" min="1"');
     });
     it('should update htmlValue when value is updated', function () {
         var session = { forms: {
