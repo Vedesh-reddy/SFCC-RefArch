@@ -26,7 +26,6 @@ function proxyModel() {
     });
 }
 
-// module.exports = proxyModel();
 module.exports = {
     templateStub: templateStub,
     proxyModel: proxyModel

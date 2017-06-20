@@ -32,12 +32,11 @@ var transaction = {
 };
 
 var hookMgr = {
-    callHook: function (extensionPoint, functionName, currentBasket) { // eslint-disable-line no-unused-vars
-    }
+    callHook: function () {}
 };
 
 var resource = {
-    msg: function (param1, param2, param3) { // eslint-disable-line no-unused-vars
+    msg: function (param1) {
         return param1;
     }
 };
@@ -48,10 +47,10 @@ var status = {
 };
 
 var orderMgr = {
-    createOrder: function (basket) { // eslint-disable-line no-unused-vars
+    createOrder: function () {
         return { order: 'new order' };
     },
-    placeOrder: function (order) { // eslint-disable-line no-unused-vars
+    placeOrder: function () {
         return status.OK;
     }
 };
