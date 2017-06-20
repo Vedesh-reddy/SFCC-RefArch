@@ -41,9 +41,10 @@ function getModalHtmlElement() {
  * @return {QuickViewHtml} - QuickView content components
  */
 function parseHtml(html) {
-    var $html = $(html);
-    var body = $html[2].outerHTML;
-    var footer = $html[4].innerHTML;
+    var $html = $('<div>').append($.parseHTML(html));
+
+    var body = $html.find('.product-quickview');
+    var footer = $html.find('.modal-footer');
 
     return { body: body, footer: footer };
 }
