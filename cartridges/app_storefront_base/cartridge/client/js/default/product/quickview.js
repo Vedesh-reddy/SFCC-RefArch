@@ -41,18 +41,10 @@ function getModalHtmlElement() {
  * @return {QuickViewHtml} - QuickView content components
  */
 function parseHtml(html) {
-    var $html = $(html);
+    var $html = $('<div>').append($.parseHTML(html));
 
-    var htmlArray = [];
-    $.each($html, function (key, htmlElement) {
-        // striping out comments that are not present on production
-        if (!String(htmlElement).includes('Comment') && !String(htmlElement).includes('Text')) {
-            htmlArray.push(htmlElement);
-        }
-    });
-
-    var body = htmlArray[0].outerHTML;
-    var footer = htmlArray[1].innerHTML;
+    var body = $html.find('.product-quickview');
+    var footer = $html.find('.modal-footer');
 
     return { body: body, footer: footer };
 }
