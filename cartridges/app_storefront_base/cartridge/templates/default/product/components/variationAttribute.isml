@@ -25,14 +25,10 @@ Template Notes:
                               ${attr.id}-value
                               swatch-circle
                               swatch-value
-                              <isif condition="${attrValue.selected}">selected</isif>
+                              ${attrValue.selected ? 'selected' : ''}
+                              ${attrValue.selectable ? 'selectable' : 'unselectable'}
                           "
                           style="background-image: url(${attrValue.images['swatch'][0].url})"
-                          <isif condition="${attrValue.isSelectable}">
-                              selectable
-                          <iselse>
-                              unselectable
-                          </isif>
                     >
                     </span>
                 </a>
@@ -47,8 +43,8 @@ Template Notes:
             </option>
             <isloop items="${attr.values}" var="attrValue">
                 <option value="${attrValue.url}" data-attr-value="${attrValue.value}"
-                    <isif condition="${!attrValue.selectable}">disabled</isif>
-                    <isif condition="${attrValue.selected}">selected</isif>
+                    ${!attrValue.selectable ? 'disabled' : ''}
+                    ${attrValue.selected ? 'selected' : ''}
                 >
                     ${attrValue.displayValue}
                 </option>

@@ -2,7 +2,7 @@
     action="${URLUtils.url('Address-SaveAddress', 'addressId', pdict.addressId)}"
     class="address-form"
     method="POST"
-    name="address-form" ${pdict.addressForm.attributes}>
+    <isprint value="${pdict.addressForm.attributes}" encoding="off" />>
     <!-- Address Title -->
     <div class="form-group
         ${pdict.addressForm.addressId.mandatory === true ? 'required' : ''}">
@@ -81,8 +81,9 @@
                 <select class="form-control" id="country"
                     <isprint value="${pdict.addressForm.country.attributes}" encoding="off" />
                     autocomplete="country">
+                    <option label=" "></option>
                     <isloop items=${pdict.addressForm.country.options} var="country">
-                        <option id="${country.id}" <isif condition="${country.selected}">selected</isif>>${country.htmlValue}</option>
+                        <option id="${country.id}" <isif condition="${country.selected}">selected</isif> label="${country.label}">${country.htmlValue}</option>
                     </isloop>
                 </select>
                 <div class="form-control-feedback"></div>
@@ -98,9 +99,9 @@
                 </label>
                 <select class="form-control" id="state"
                     <isprint value="${pdict.addressForm.states.stateCode.attributes}" encoding="off" />
-                    autocomplete="region">
+                    autocomplete="address-level1">
                     <isloop items=${pdict.addressForm.states.stateCode.options} var="state">
-                        <option id="${state.id}" <isif condition="${state.selected}">selected</isif>>${state.htmlValue}</option>
+                        <option id="${state.id}" <isif condition="${state.selected}">selected</isif> label="${state.label || ' '}">${state.htmlValue}</option>
                     </isloop>
                 </select>
                 <div class="form-control-feedback"></div>
@@ -119,7 +120,7 @@
                 </label>
                 <input type="text" class="form-control" id="city"
                     <isprint value="${pdict.addressForm.city.attributes}" encoding="off" />
-                    autocomplete="locality">
+                    autocomplete="address-level2">
                 <div class="form-control-feedback"></div>
             </div>
         </div>
