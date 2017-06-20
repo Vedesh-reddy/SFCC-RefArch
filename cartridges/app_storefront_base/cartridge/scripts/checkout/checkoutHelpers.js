@@ -686,6 +686,7 @@ function getRenderedPaymentInstruments(req, accountModel) {
 }
 
 module.exports = {
+    getFirstNonDefaultShipmentWithProductLineItems: getFirstNonDefaultShipmentWithProductLineItems,
     ensureNoEmptyShipments: ensureNoEmptyShipments,
     getShippingFormKeys: getShippingFormKeys,
     getProductLineItem: getProductLineItem,
