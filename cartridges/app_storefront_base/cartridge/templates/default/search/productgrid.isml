@@ -1,9 +1,11 @@
-<isloop items="${pdict.productSearch.productIds}" var="productId">
-    <isif condition="${pdict.productSearch.category}">
-        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true', 'reviews', 'true', 'cgid', pdict.productSearch.category.id, 'compare', 'true')}" />
-    <iselse>
-        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', productId, 'swatches', 'true', 'reviews', 'true', 'compare', 'false')}" />
-    </isif>
+<isloop items="${pdict.productSearch.productIds}" var="product">
+    <isobject object="${product.productSearchHit}" view="searchhit">
+        <isif condition="${pdict.productSearch.category}">
+            <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.productID, 'swatches', 'true', 'reviews', 'true', 'cgid', pdict.productSearch.category.id, 'compare', 'true')}" />
+        <iselse>
+            <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.productID, 'swatches', 'true', 'reviews', 'true', 'compare', 'false')}" />
+        </isif>
+    </isobject>
 </isloop>
 
 <!--- More button --->

@@ -149,7 +149,12 @@ function ProductSearch(productSearch, httpParams) {
     this.selectedFilters = getSelectedFilters(this.refinements);
     this.resetLink = getResetLink(productSearch, httpParams);
     this.bannerImageUrl = productSearch.category ? getBannerImageUrl(productSearch.category) : null;
-    this.productIds = collections.pluck(paging.pageElements, 'productID');
+    this.productIds = collections.map(paging.pageElements, function (item) {
+        return {
+            productID: item.productID,
+            productSearchHit: item
+        };
+    });
     this.showMoreUrl = getShowMoreUrl(paging, productSearch);
 
     if (productSearch.category) {

@@ -192,6 +192,13 @@ FullProduct.prototype.initialize = function () {
         this.productVariables,
         this.selectedOptions
     );
+
+    Object.defineProperty(this, 'raw', {
+        enumerable: false,
+        configurable: false,
+        writable: false,
+        value: this.product
+    });
 };
 
 /**
@@ -211,7 +218,7 @@ function ProductWrapper(product, productVariables, quantity, promotions, selecte
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
         'attributes', 'availability', 'selectedProductUrl',
-        'selectedQuantity', 'options', 'quantities'];
+        'selectedQuantity', 'options', 'quantities', 'raw'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

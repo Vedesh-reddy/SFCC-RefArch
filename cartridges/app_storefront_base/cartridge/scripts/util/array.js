@@ -1,21 +1,20 @@
 'use strict';
 
 /**
- * Returns an array of all property keys for an object
- * @param {Array} array - the target object
+ * Returns a value of the first element in the array that satisfies the provided testing function.
+ * Otherwise undefined is returned.
+ * @param {Array} array - Array of elements to find the match in.
  * @param {Array} matcher - function that returns true if match is found
- * @return {scope} the array of property keys
+ * @return {Object|undefined} element that matches provided testing function or undefined.
  */
 function find(array, matcher) {
-    var result;
-
     for (var i = 0, l = array.length; i < l; i++) {
         if (matcher(array[i], i)) {
             return array[i];
         }
     }
 
-    return result;
+    return undefined;
 }
 
 module.exports = {

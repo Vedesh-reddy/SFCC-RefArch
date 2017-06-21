@@ -25,12 +25,27 @@ describe('Collections utilities', function () {
                 return item > 3;
             }));
         });
+
+        it('should throw if callback is not a function', function () {
+            var test = function () { collections.every(collection, {}); };
+            assert.throws(test, TypeError);
+        });
     });
 
     describe('map', function () {
         it('should map collection to an array', function () {
             var collection = new ArrayList([1, 2, 3]);
             var result = collections.map(collection, function (item) {
+                return item + 10;
+            });
+
+            assert.deepEqual(result, [11, 12, 13]);
+        });
+
+        it('should map iterator to an array', function () {
+            var collection = new ArrayList([1, 2, 3]);
+            var iterator = collection.iterator();
+            var result = collections.map(iterator, function (item) {
                 return item + 10;
             });
 

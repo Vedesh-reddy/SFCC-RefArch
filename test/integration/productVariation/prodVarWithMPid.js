@@ -323,7 +323,7 @@ describe('ProductVariation - Get product variation with only master product ID',
             var bodyAsJson = JSON.parse(response.body);
 
             // strip out all "url" properties from the actual response
-            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedProductUrl']);
+            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedProductUrl', 'raw']);
 
             assert.deepEqual(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
 
