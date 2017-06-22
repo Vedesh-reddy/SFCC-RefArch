@@ -1,8 +1,33 @@
 'use strict';
 
+/**
+ * Zips the pref[n|v] http query params
+ *
+ * The Platform allows the use of multiple preference names and values to filter search results,
+ * eg.: http://<sandbox>.com/../Search-Show?prefn1=refinementColor&prefv1=Blue&prefn2=size&prefv2=16
+ *
+ * @param {Object} preferences - HTTP query parameters map specific to selected refinement values
+ * @return {Object} Map of provided preference name/value pairs
+ */
+function parsePreferences(preferences) {
+    var params = {};
+    var count = Object.keys(preferences).length / 2;
+    var key = '';
+    var value = '';
+
+    for (var i = 1; i < count + 1; i++) {
+        key = preferences['prefn' + i];
+        value = preferences['prefv' + i];
+        params[key] = value;
+    }
+
+    return params;
+}
+
 var querystring = function (raw) {
     var pair;
     var left;
+    var preferences = {};
 
     if (raw && raw.length > 0) {
         var qs = raw.substring(raw.indexOf('?') + 1).split('&');
@@ -37,14 +62,25 @@ var querystring = function (raw) {
                     });
                     continue; // eslint-disable-line no-continue
                 }
+            } else if (left.indexOf('pref') === 0) {
+                preferences[left] = decodeURIComponent(pair[1]);
+                continue; // eslint-disable-line no-continue
             }
+
             this[left] = decodeURIComponent(pair[1]);
         }
+    }
+
+    if (Object.keys(preferences).length) {
+        this.preferences = parsePreferences(preferences);
     }
 };
 
 querystring.prototype.toString = function () {
     var result = [];
+    var prefKeyIdx = 1;
+    var preferences = {};
+
     Object.keys(this).forEach(function (key) {
         if (key === 'variables') {
             Object.keys(this.variables).forEach(function (variable) {
@@ -57,6 +93,13 @@ querystring.prototype.toString = function () {
                 result.push('dwopt_' +
                     option.productId + '_' +
                     option.optionId + '=' + option.selectedValueId);
+            });
+        } else if (key === 'preferences') {
+            preferences = this.preferences;
+            Object.keys(preferences).forEach(function (prefKey) {
+                result.push('prefn' + prefKeyIdx + '=' + encodeURIComponent(prefKey));
+                result.push('prefv' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey]));
+                prefKeyIdx++;
             });
         } else {
             result.push(key + '=' + this[key]);

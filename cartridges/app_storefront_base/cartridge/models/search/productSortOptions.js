@@ -1,6 +1,7 @@
 'use strict';
 
 var collections = require('*/cartridge/scripts/util/collections');
+var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
 
 var ACTION_ENDPOINT = 'Search-UpdateGrid';
 
@@ -10,14 +11,20 @@ var ACTION_ENDPOINT = 'Search-UpdateGrid';
  *
  * @param {dw.catalog.ProductSearchModel} productSearch - Product search instance
  * @param {dw.util.List.<dw.catalog.SortingOption>} sortingOptions - List of sorting rule options
+ * @param {dw.web.PagingModel} pagingModel - The paging model for the current search context
  * @return {SortingOption} - Sorting option
  */
-function getSortingOptions(productSearch, sortingOptions) {
+function getSortingOptions(productSearch, sortingOptions, pagingModel) {
     return collections.map(sortingOptions, function (option) {
+        var baseUrl = productSearch.urlSortingRule(ACTION_ENDPOINT, option.sortingRule);
+        var pagingParams = {
+            start: '0',
+            sz: pagingModel.end + 1
+        };
         return {
             displayName: option.displayName,
             id: option.ID,
-            url: productSearch.urlSortingRule(ACTION_ENDPOINT, option.sortingRule)
+            url: urlHelper.appendQueryParams(baseUrl.toString(), pagingParams).toString()
         };
     });
 }
@@ -42,9 +49,16 @@ function getSortRuleDefault(productSearch, rootCategory) {
  * @param {string|null} sortingRuleId - HTTP Param srule value
  * @param {dw.util.List.<dw.catalog.SortingOption>} sortingOptions - Sorting rule options
  * @param {dw.catalog.Category} rootCategory - Catalog's root category
+ * @param {dw.web.PagingModel} pagingModel - The paging model for the current search context
  */
-function ProductSortOptions(productSearch, sortingRuleId, sortingOptions, rootCategory) {
-    this.options = getSortingOptions(productSearch, sortingOptions);
+function ProductSortOptions(
+    productSearch,
+    sortingRuleId,
+    sortingOptions,
+    rootCategory,
+    pagingModel
+) {
+    this.options = getSortingOptions(productSearch, sortingOptions, pagingModel);
     this.ruleId = sortingRuleId || getSortRuleDefault(productSearch, rootCategory);
 }
 

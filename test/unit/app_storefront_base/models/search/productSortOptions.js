@@ -5,9 +5,19 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var mockCollections = require('../../../../mocks/util/collections');
 
 describe('ProductSortOptions model', function () {
+    var sortRuleUrlWithParams = 'some url with params';
     var ProductSortOptions = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/search/productSortOptions', {
         '*/cartridge/scripts/util/collections': {
             map: mockCollections.map
+        },
+        '*/cartridge/scripts/helpers/urlHelpers': {
+            appendQueryParams: function () {
+                return {
+                    toString: function () {
+                        return sortRuleUrlWithParams;
+                    }
+                };
+            }
         }
     });
 
@@ -18,7 +28,11 @@ describe('ProductSortOptions model', function () {
                 ID: 'defaultRule1'
             }
         },
-        urlSortingRule: function () { return sortRuleUrl; }
+        urlSortingRule: function () {
+            return {
+                toString: function () { return sortRuleUrl; }
+            };
+        }
     };
     var sortingRuleId = 'provided sort rule ID';
     var sortingOption1 = {
@@ -37,22 +51,23 @@ describe('ProductSortOptions model', function () {
             ID: 'defaultRule2'
         }
     };
+    var pagingModel = { end: 5 };
 
     it('should set a list of sorting rule options', function () {
-        var productSortOptions = new ProductSortOptions(productSearch, null, sortingOptions, null);
+        var productSortOptions = new ProductSortOptions(productSearch, null, sortingOptions, null, pagingModel);
         assert.deepEqual(productSortOptions.options, [{
             displayName: sortingOption1.displayName,
             id: sortingOption1.ID,
-            url: sortRuleUrl
+            url: sortRuleUrlWithParams
         }, {
             displayName: sortingOption2.displayName,
             id: sortingOption2.ID,
-            url: sortRuleUrl
+            url: sortRuleUrlWithParams
         }]);
     });
 
     it('should set rule ID to provided sort rule ID', function () {
-        var productSortOptions = new ProductSortOptions(productSearch, sortingRuleId, sortingOptions, null);
+        var productSortOptions = new ProductSortOptions(productSearch, sortingRuleId, sortingOptions, null, pagingModel);
         assert.isTrue(productSortOptions.ruleId === sortingRuleId);
     });
 
@@ -61,12 +76,12 @@ describe('ProductSortOptions model', function () {
             category: null,
             urlSortingRule: productSearch.urlSortingRule
         };
-        var productSortOptions = new ProductSortOptions(productSearchWithNoCategory, null, sortingOptions, rootCategory);
+        var productSortOptions = new ProductSortOptions(productSearchWithNoCategory, null, sortingOptions, rootCategory, pagingModel);
         assert.isTrue(productSortOptions.ruleId === rootCategory.defaultSortingRule.ID);
     });
 
     it('should set rule ID to product search\'s category\'s default sort rule ID when no rule provided', function () {
-        var productSortOptions = new ProductSortOptions(productSearch, null, sortingOptions, null);
+        var productSortOptions = new ProductSortOptions(productSearch, null, sortingOptions, null, pagingModel);
         assert.isTrue(productSortOptions.ruleId === productSearch.category.defaultSortingRule.ID);
     });
 });

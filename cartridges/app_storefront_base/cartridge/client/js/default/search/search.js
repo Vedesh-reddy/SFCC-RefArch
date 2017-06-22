@@ -1,8 +1,5 @@
 'use strict';
 
-// Initial page size set to default page size
-var currentPageSize = 12;
-
 /**
  * Update DOM elements with Ajax results
  *
@@ -13,29 +10,6 @@ var currentPageSize = 12;
 function updateDom($results, selector) {
     var $updates = $results.find(selector);
     $(selector).empty().html($updates.html());
-}
-
-/**
- * Update or append page size param to provided URL
- *
- * @param {string} sourceUrl - URL to update
- * @return {string} - Modified URL
- */
-function updateUrlWithSize(sourceUrl) {
-    return sourceUrl.indexOf('sz=') > -1
-        ? sourceUrl.replace(/sz=(\d+)/, 'sz=' + currentPageSize)
-        : sourceUrl + '&sz=' + currentPageSize;
-}
-
-/**
- * Replace product grid HTML with updated code
- *
- * @param {string} response - Updated HTML code
- * @return {undefined}
- */
-function updateProductGrid(response) {
-    $('.product-grid').empty().html(response);
-    $.spinner().stop();
 }
 
 /**
@@ -67,9 +41,6 @@ function parseResults(response) {
     var specialHandlers = {
         '.refinements': handleRefinements
     };
-    var resultsCount = 0;
-    var displayedCount = 0;
-    var $btnShowMore = {};
 
     // Update DOM elements that do not require special handling
     [
@@ -85,21 +56,6 @@ function parseResults(response) {
     Object.keys(specialHandlers).forEach(function (selector) {
         specialHandlers[selector]($results);
     });
-
-    // Hide/show "More" button depending on how many products were returned
-    resultsCount = parseInt($('.result-count')
-        .eq(0)
-        .text()
-        .trim()
-        .match(/^(\d+)/)[0], 10);
-    displayedCount = $('.product-tile').length;
-    $btnShowMore = $('.show-more button');
-
-    if (resultsCount > displayedCount) {
-        $btnShowMore.show();
-    } else {
-        $btnShowMore.hide();
-    }
 }
 
 /**
@@ -121,6 +77,20 @@ function getContent($element, $target) {
         error: function () {
             $.spinner().stop();
         }
+    });
+}
+
+/**
+ * Update sort option URLs from Ajax response
+ *
+ * @param {string} response - Ajax response HTML code
+ * @return {undefined}
+ */
+function updateSortOptions(response) {
+    var $tempDom = $('<div>').append($(response));
+    var sortOptions = $tempDom.find('.grid-footer').data('sort-options').options;
+    sortOptions.forEach(function (option) {
+        $('option.' + option.id).val(option.url);
     });
 }
 
@@ -154,9 +124,12 @@ module.exports = {
             $.spinner().start();
             $(this).trigger('search:sort', this.value);
             $.ajax({
-                url: updateUrlWithSize(this.value),
+                url: this.value,
                 method: 'GET',
-                success: updateProductGrid,
+                success: function (response) {
+                    $('.product-grid').empty().html(response);
+                    $.spinner().stop();
+                },
                 error: function () {
                     $.spinner().stop();
                 }
@@ -169,7 +142,6 @@ module.exports = {
         $('.container').on('click', '.show-more button', function (e) {
             e.stopPropagation();
             var showMoreUrl = $(this).data('url');
-            currentPageSize = showMoreUrl.match(/sz=(\d+)/)[1];
 
             e.preventDefault();
 
@@ -178,7 +150,11 @@ module.exports = {
             $.ajax({
                 url: showMoreUrl,
                 method: 'GET',
-                success: updateProductGrid,
+                success: function (response) {
+                    $('.grid-footer').replaceWith(response);
+                    updateSortOptions(response);
+                    $.spinner().stop();
+                },
                 error: function () {
                     $.spinner().stop();
                 }
@@ -194,7 +170,7 @@ module.exports = {
             $.spinner().start();
             $(this).trigger('search:filter', e);
             $.ajax({
-                url: updateUrlWithSize(e.currentTarget.href),
+                url: e.currentTarget.href,
                 method: 'GET',
                 success: function (response) {
                     parseResults(response);

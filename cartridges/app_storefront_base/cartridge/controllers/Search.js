@@ -6,45 +6,50 @@ var CatalogMgr = require('dw/catalog/CatalogMgr');
 var search = require('*/cartridge/scripts/search/search');
 var ProductSearchModel = require('dw/catalog/ProductSearchModel');
 var ProductSearch = require('*/cartridge/models/search/productSearch');
-var ProductSortOptions = require('*/cartridge/models/search/productSortOptions');
 var cache = require('*/cartridge/scripts/middleware/cache');
 
 /**
  * Set search configuration values
  *
- * @param {dw.catalog.ProductSearchModel} dwProductSearch - API search instance
+ * @param {dw.catalog.ProductSearchModel} apiProductSearch - API search instance
  * @param {Object} params - Provided HTTP query parameters
  * @return {dw.catalog.ProductSearchModel} - API search instance
  */
-function setupSearch(dwProductSearch, params) {
+function setupSearch(apiProductSearch, params) {
     var sortingRule = params.srule ? CatalogMgr.getSortingRule(params.srule) : null;
     var selectedCategory = CatalogMgr.getCategory(params.cgid);
     selectedCategory = selectedCategory && selectedCategory.online ? selectedCategory : null;
 
-    search.setProductProperties(dwProductSearch, params, selectedCategory, sortingRule);
-    search.addRefinementValues(dwProductSearch, params.preferences);
+    search.setProductProperties(apiProductSearch, params, selectedCategory, sortingRule);
 
-    return dwProductSearch;
+    if (params.preferences) {
+        search.addRefinementValues(apiProductSearch, params.preferences);
+    }
+
+    return apiProductSearch;
 }
 
 /**
  * Retrieve a category's template filepath if available
  *
- * @param {dw.catalog.ProductSearchModel} dwProductSearch - API search instance
+ * @param {dw.catalog.ProductSearchModel} apiProductSearch - API search instance
  * @return {string} - Category's template filepath
  */
-function getCategoryTemplate(dwProductSearch) {
-    return dwProductSearch.category ? dwProductSearch.category.template : '';
+function getCategoryTemplate(apiProductSearch) {
+    return apiProductSearch.category ? apiProductSearch.category.template : '';
 }
 
 server.get('UpdateGrid', cache.applyPromotionSenstiveCache, function (req, res, next) {
-    var params = search.parseParams(req.querystring);
-    var dwProductSearch = new ProductSearchModel();
-    var productSearch = {};
-
-    dwProductSearch = setupSearch(dwProductSearch, params);
-    dwProductSearch.search();
-    productSearch = new ProductSearch(dwProductSearch, params);
+    var apiProductSearch = new ProductSearchModel();
+    apiProductSearch = setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch.search();
+    var productSearch = new ProductSearch(
+        apiProductSearch,
+        req.querystring,
+        req.querystring.srule,
+        CatalogMgr.getSortingOptions(),
+        CatalogMgr.getSiteCatalog().getRoot()
+    );
 
     res.render('/search/productgrid', {
         productSearch: productSearch
@@ -56,21 +61,19 @@ server.get('UpdateGrid', cache.applyPromotionSenstiveCache, function (req, res, 
 server.get('Show', cache.applyPromotionSenstiveCache, function (req, res, next) {
     var categoryTemplate = '';
     var productSearch;
-    var productSort;
     var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')
         && req.httpHeaders['x-requested-with'] === 'XMLHttpRequest';
     var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
-    var params = search.parseParams(req.querystring);
-    var dwProductSearch = new ProductSearchModel();
+    var apiProductSearch = new ProductSearchModel();
     var maxSlots = 4;
 
-    dwProductSearch = setupSearch(dwProductSearch, params);
-    dwProductSearch.search();
+    apiProductSearch = setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch.search();
 
-    categoryTemplate = getCategoryTemplate(dwProductSearch);
-    productSearch = new ProductSearch(dwProductSearch, params);
-    productSort = new ProductSortOptions(
-        dwProductSearch,
+    categoryTemplate = getCategoryTemplate(apiProductSearch);
+    productSearch = new ProductSearch(
+        apiProductSearch,
+        req.querystring,
         req.querystring.srule,
         CatalogMgr.getSortingOptions(),
         CatalogMgr.getSiteCatalog().getRoot()
@@ -80,26 +83,24 @@ server.get('Show', cache.applyPromotionSenstiveCache, function (req, res, next) 
         productSearch.isCategorySearch
         && !productSearch.isRefinedCategorySearch
         && categoryTemplate
-        && dwProductSearch.category.parent.ID === 'root'
+        && apiProductSearch.category.parent.ID === 'root'
     ) {
         if (isAjax) {
             res.render(resultsTemplate, {
                 productSearch: productSearch,
-                maxSlots: maxSlots,
-                productSort: productSort
+                maxSlots: maxSlots
             });
         } else {
             res.render(categoryTemplate, {
                 productSearch: productSearch,
                 maxSlots: maxSlots,
-                category: dwProductSearch.category
+                category: apiProductSearch.category
             });
         }
     } else {
         res.render(resultsTemplate, {
             productSearch: productSearch,
-            maxSlots: maxSlots,
-            productSort: productSort
+            maxSlots: maxSlots
         });
     }
 

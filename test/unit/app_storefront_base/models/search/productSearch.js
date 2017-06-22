@@ -5,19 +5,19 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 var mockCollections = require('../../../../mocks/util/collections');
 
-
 describe('ProductSearch model', function () {
     var endpointSearchShow = 'Search-Show';
     var endpointShowMore = 'Search-UpdateGrid';
     var pluckValue = 'plucked';
     var spySetPageSize = sinon.spy();
     var spySetStart = sinon.spy();
-    var stubAppendPageSize = sinon.stub();
+    var stubAppendPaging = sinon.stub();
     var stubGetPageSize = sinon.stub();
     var defaultPageSize = 12;
     var pagingModelInstance = {
-        appendPageSize: stubAppendPageSize,
+        appendPaging: stubAppendPaging,
         getPageSize: stubGetPageSize,
+        getEnd: function () { return 10; },
         setPageSize: spySetPageSize,
         setStart: spySetStart
     };
@@ -32,14 +32,22 @@ describe('ProductSearch model', function () {
         value: 3,
         selected: false
     }];
-    var ProductSearch = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/search/productSearch.js', {
+    var ProductSearch = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/search/productSearch', {
         '*/cartridge/scripts/util/collections': {
             map: mockCollections.map,
             pluck: function () { return pluckValue; }
         },
-        '~/cartridge/scripts/factories/searchRefinements': {
+        '*/cartridge/scripts/factories/searchRefinements': {
             get: function () { return refinementValues; }
         },
+        '*/cartridge/models/search/productSortOptions': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/search/productSortOptions', {
+            '*/cartridge/scripts/util/collections': {
+                map: mockCollections.map
+            },
+            '*/cartridge/scripts/helpers/urlHelpers': {
+                appendQueryParams: function () {}
+            }
+        }),
         'dw/web/URLUtils': {
             url: function (endpoint, param, value) { return [endpoint, param, value].join(' '); }
         },
@@ -80,22 +88,22 @@ describe('ProductSearch model', function () {
         });
 
         it('should return refinements with a display name', function () {
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.deepEqual(result.refinements[0].displayName, displayName);
         });
 
         it('should return refinements with a categoryRefinement value', function () {
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.deepEqual(result.refinements[0].isCategoryRefinement, categoryRefinement);
         });
 
         it('should return refinements with an attribute refinement value', function () {
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.deepEqual(result.refinements[0].isAttributeRefinement, attrRefinement);
         });
 
         it('should return an object with refinement values', function () {
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.deepEqual(result.refinements[0].values, refinementValues);
         });
     });
@@ -114,13 +122,13 @@ describe('ProductSearch model', function () {
 
         it('should retrieve filter values that have been selected', function () {
             var selectedFilter = refinementValues.find(function (value) { return value.selected === true; });
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.equal(result.selectedFilters[0], selectedFilter);
         });
 
         it('should retrieve filter values that have been selected', function () {
             var selectedFilter = refinementValues.find(function (value) { return value.selected === true; });
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.equal(result.selectedFilters[0], selectedFilter);
         });
     });
@@ -145,14 +153,14 @@ describe('ProductSearch model', function () {
 
         it('should return a reset link for keyword searches', function () {
             expectedLink = [endpointSearchShow, 'q', httpParams.q].join(' ');
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.equal(result.resetLink, expectedLink);
         });
 
         it('should return a reset link for category searches', function () {
             apiProductSearch.categorySearch = true;
             expectedLink = [endpointSearchShow, 'cgid', httpParams.cgid].join(' ');
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.equal(result.resetLink, expectedLink);
         });
     });
@@ -185,13 +193,13 @@ describe('ProductSearch model', function () {
         });
 
         it('should use a slot image for a category banner if specified', function () {
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.equal(result.bannerImageUrl, slotImageUrl);
         });
 
         it('should use a regular image for its banner image if no slot image specified', function () {
             apiProductSearch.category.custom = null;
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.equal(result.bannerImageUrl, nonSlotImageUrl);
         });
     });
@@ -208,12 +216,12 @@ describe('ProductSearch model', function () {
         });
 
         it('should call the PagingModel.setStart() method', function () {
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.isTrue(spySetStart.called);
         });
 
         it('should call the PagingModel.setPageSize() method', function () {
-            result = new ProductSearch(apiProductSearch, httpParams);
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.isTrue(spySetPageSize.called);
         });
     });
@@ -232,25 +240,25 @@ describe('ProductSearch model', function () {
             };
 
             stubGetPageSize.returns(currentPageSize);
-            stubAppendPageSize.returns(expectedUrl);
+            stubAppendPaging.returns(expectedUrl);
         });
 
         afterEach(function () {
             stubGetPageSize.reset();
         });
 
-        it('should increment the page size parameter in the url', function () {
-            var expectedMorePageSize = currentPageSize + defaultPageSize;
+        it('should return a url string if not on final results page', function () {
+            expectedUrl = 'some url';
             apiProductSearch.count = 14;
-            result = new ProductSearch(apiProductSearch, httpParams);
-            assert.isTrue(stubAppendPageSize.calledWith(endpointShowMore, expectedMorePageSize));
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
+            assert.equal(result.showMoreUrl, expectedUrl);
         });
 
-        it('should page size parameter to the current page size in the url', function () {
-            var expectedMorePageSize = currentPageSize;
+        it('should return an empty string if last results page', function () {
+            expectedUrl = '';
             apiProductSearch.count = 10;
-            result = new ProductSearch(apiProductSearch, httpParams);
-            assert.isTrue(stubAppendPageSize.calledWith(endpointShowMore, expectedMorePageSize));
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
+            assert.equal(result.showMoreUrl, expectedUrl);
         });
     });
 });

@@ -1,55 +1,5 @@
 'use strict';
 
-
-/**
- * Zips the pref[n|v] http query params
- *
- * The Platform allows the use of multiple preference names and values to filter search results,
- * eg.: http://<sandbox>.com/../Search-Show?prefn1=refinementColor&prefv1=Blue&prefn2=size&prefv2=16
- *
- * @param {Object} preferences - HTTP query parameters map specific to selected refinement values
- * @return {Object} Map of provided preference name/value pairs
- */
-function parsePreferences(preferences) {
-    var params = {};
-    var count = Object.keys(preferences).length / 2;
-    var key = '';
-    var value = '';
-
-    for (var i = 1; i < count + 1; i++) {
-        key = preferences['prefn' + i];
-        value = preferences['prefv' + i];
-        params[key] = value;
-    }
-
-    return params;
-}
-
-/**
- * Parse the refinement query parameters
- *
- * @param {Object} httpParams - Query string map
- * @return {Object} - Parsed query params
- */
-function parseParams(httpParams) {
-    var params = {};
-    var preferences = {};
-
-    Object.keys(httpParams).forEach(function (key) {
-        var value = httpParams[key];
-
-        if (key.indexOf('pref') === 0) {
-            preferences[key] = value;
-        } else {
-            params[key] = value;
-        }
-    });
-
-    params.preferences = parsePreferences(preferences);
-
-    return params;
-}
-
 /**
  * Sets the relevant product search model properties, depending on the parameters provided
  *
@@ -99,6 +49,5 @@ function addRefinementValues(search, preferences) {
 
 module.exports = {
     addRefinementValues: addRefinementValues,
-    parseParams: parseParams,
     setProductProperties: setProductProperties
 };

@@ -25,31 +25,6 @@ describe('search script', function () {
         });
     });
 
-    describe('parseParams', function () {
-        var mockParams = {
-            key1: 'value1',
-            key2: 'value2',
-            prefn1: 'pref1',
-            prefv1: 'pref1Value',
-            prefn2: 'pref2',
-            prefv2: 'pref2Value'
-        };
-
-        var result = search.parseParams(mockParams);
-
-        it('should parse simple key values', function () {
-            assert.equal(result.key1, mockParams.key1);
-            assert.equal(result.key2, mockParams.key2);
-        });
-
-        it('should parse complex preference values', function () {
-            assert.deepEqual(result.preferences, {
-                pref1: 'pref1Value',
-                pref2: 'pref2Value'
-            });
-        });
-    });
-
     describe('setProductProperties', function () {
         var mockProductSearch = {
             setSearchPhrase: function () {},
