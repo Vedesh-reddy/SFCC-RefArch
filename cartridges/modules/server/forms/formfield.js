@@ -16,23 +16,26 @@ function formField(field) {
             if (result.mandatory) {
                 attributes += ' required';
             }
-            if (!result.checked && !result.selected && !field.options) {
+            if (field.options && field.options.optionsCount > 0) {
+                return attributes;
+            }
+            if (!result.checked && !result.selected) {
                 var value = field.htmlValue == null ? '' : field.htmlValue;
                 attributes += ' value="' + value + '"';
             }
-            if (result.maxValue && !field.options) {
+            if (result.maxValue) {
                 attributes += ' max="' + result.maxValue + '"';
             }
-            if (result.minValue && !field.options) {
+            if (result.minValue) {
                 attributes += ' min="' + result.minValue + '"';
             }
-            if (result.maxLength && !field.options) {
+            if (result.maxLength) {
                 attributes += ' maxLength="' + result.maxLength + '"';
             }
-            if (result.minLength && !field.options) {
+            if (result.minLength) {
                 attributes += ' minLength="' + result.minLength + '"';
             }
-            if (result.regEx && !field.options) {
+            if (result.regEx) {
                 attributes += ' pattern="' + result.regEx + '"';
             }
             return attributes;
