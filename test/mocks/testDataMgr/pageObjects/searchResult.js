@@ -18,8 +18,8 @@ export const valuesContent2 = ' .values.content li:nth-child(2)';
 export const valuesContent3 = ' .values.content li:nth-child(3)';
 export const valuesContent8 = ' .values.content li:nth-child(8)';
 
-export const priceRefinementTitle = '.refinement-price.active' + valuesContent2;
-export const priceRefinementTitleBrowser = '.refinement-price' + valuesContent2;
+export const priceRefinementTitle = '.refinement-price.active' + valuesContent3;
+export const priceRefinementTitleBrowser = '.refinement-price' + valuesContent3;
 export const price3RefinementAppium = '.refinement-price.active' + valuesContent3 + buttonfaCircleO;
 export const price3RefinementTitleBrowser = '.refinement-price' + valuesContent3;
 export const priceRefinementAppium = priceRefinementTitle + buttonfaCircleO;

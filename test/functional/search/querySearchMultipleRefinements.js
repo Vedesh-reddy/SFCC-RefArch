@@ -17,7 +17,7 @@ import * as Resource from '../../mocks/dw/web/Resource';
 
 describe('Query Search and multiple refinements -  general product', () => {
     const locale = config.locale;
-    const product2ID = '25502027';
+    const product2ID = '12416789';
     const localeStr = locale === 'x_default' ? 'en_US' : locale;
     const productGeneral = {
         x_default: 'pants',
@@ -63,7 +63,7 @@ describe('Query Search and multiple refinements -  general product', () => {
                     .then(() => browser.waitForExist(search.refinementBarColor))
                     .then(() => browser.click(search.refinementBarColor))
                     .then(() => browser.waitForExist(search.refinementBarColorActive))
-                    .then(() => browser.click(search.blackColorRefinementSelector))
+                    .then(() => browser.click(search.blueColorRefinementSelector))
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.waitForExist(search.refinementBarPrice))
                     .then(() => browser.click(search.refinementBarPrice))
@@ -83,7 +83,7 @@ describe('Query Search and multiple refinements -  general product', () => {
                     .then(() => browser.pause(2000));
             }
             // access desktop/laptop
-            return browser.click(search.blackColorRefinementSelector)
+            return browser.click(search.blueColorRefinementSelector)
                 .then(() => common.waitUntilAjaxCallEnded())
                 .then(() => browser.click(search.priceRefinementBrowser))
                 .then(() => common.waitUntilAjaxCallEnded())
@@ -96,8 +96,8 @@ describe('Query Search and multiple refinements -  general product', () => {
         })
     );
 
-    it('#1 should return 2 results for pants when refine by Color, Price and New Arrival', () => {
-        const searchResultMsg2 = Resource.msgf('label.resultsfor', 'search', null, '2');
+    it('#1 should return 1 results for pants when refine by Color, Price and New Arrival', () => {
+        const searchResultMsg2 = Resource.msgf('label.resultsfor', 'search', null, '1');
         const expectedString2 = searchResultMsg2 + ' ' + productGeneral[locale];
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
@@ -118,7 +118,7 @@ describe('Query Search and multiple refinements -  general product', () => {
     });
 
     it('#3 should return the correct images when refined by Color, Price and New Arrival', () => {
-        const product1ImageSrc = 'images/medium/PG.10208897.JJ0QRXX.PZ.jpg';
+        const product1ImageSrc = 'images/medium/B0274206_GYX_0.jpg';
         return productTile.getProductTileImageSrc(product2ID)
             .then(imageSrc => {
                 return assert.isTrue(imageSrc.endsWith(product1ImageSrc),

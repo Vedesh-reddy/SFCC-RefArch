@@ -81,8 +81,8 @@ describe('Query Search and single Refinement - general product', () => {
             });
     });
 
-    it('#3 should return 8 results for pants when select price refinements $20-$49.00', () => {
-        const searchResultMsg3 = Resource.msgf('label.resultsfor', 'search', null, '8');
+    it('#3 should return 8 results for pants when select price refinements $50-$99.00', () => {
+        const searchResultMsg3 = Resource.msgf('label.resultsfor', 'search', null, '48');
         const expectedString3 = searchResultMsg3 + ' ' + productGeneral[locale];
         return browser.isVisible(search.filterButton)
             .then((isTrue) => {
@@ -101,7 +101,7 @@ describe('Query Search and single Refinement - general product', () => {
                 return browser.click(search.priceRefinementBrowser)
                     .then(() => common.waitUntilAjaxCallEnded())
                     .then(() => browser.getAttribute(search.priceRefinementTitleBrowser, 'title'))
-                    .then(title => assert.equal(title, 'Currently Refined by Price: $20 - $49.99'))
+                    .then(title => assert.equal(title, 'Currently Refined by Price: $50 - $99.99'))
                     .then(() => verifySearchResults(search.searchResult, expectedString3));
             });
     });
