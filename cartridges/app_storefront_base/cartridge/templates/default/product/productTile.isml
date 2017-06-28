@@ -1,82 +1,15 @@
 <div class="product-tile">
-    <div class="image-container">
-        <a href="${pdict.urls.product}">
-            <img class="tile-image"
-                 src="${product.images.medium[0].url}"
-                 alt="${product.productName}"
-                 title="${product.images.medium[0].title}" />
-        </a>
-        <isif condition="${showQuickView}">
-            <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}">
-                <img src="${URLUtils.staticURL('/images/quickview.png')}"
-                     alt="${Resource.msg('image.quickview.product.tile', 'common', null)}"
-                     title="${Resource.msg('image.quickview.product.tile', 'common', null)}" />
-            </a>
-        </isif>
-    </div>
+    <isinclude template="product/components/productTileImage" />
     <div class="tile-body">
         <isif condition="${pdict.display.swatches}">
-            <div class="color-swatches">
-                <div class="swatches">
-                    <isif condition="${product.variationAttributes && product.variationAttributes.length > 0}">
-                        <isloop items="${product.variationAttributes[0].values}" var="swatch" status="loopstate">
-                            <isif condition="${loopstate.count < 4
-                                && swatch.images != null
-                                && swatch.images.swatch[0] != null
-                                && swatch.images.swatch[0].url != null}">
-                                <a href="${swatch.url}">
-                                    <span>
-                                        <img class="swatch swatch-circle"
-                                             data-index="${loopstate.count-1}"
-                                             style="background-image: url(${swatch.images.swatch[0].url})"
-                                             src="${swatch.images.swatch[0].url}"
-                                             alt="${swatch.images.swatch[0].alt}"/>
-                                    </span>
-                                </a>
-                            <iselse/>
-                                <span>
-                                    <a href="${pdict.urls.product}">...</a>
-                                </span>
-                                <isbreak>
-                            </isif>
-                        </isloop>
-                    </isif>
-                </div>
-            </div>
+            <isinclude template="product/components/productTileSwatch" />
         </isif>
 
-        <div class="pdp-link">
-            <a class="link" href="${pdict.urls.product}">${product.productName}</a>
-        </div>
+        <isinclude template="product/components/productTileName" />
+
         <isset name="price" value="${product.price}" scope="page" />
-        <isinclude template="/product/components/pricing/main" />
-        <div class="reviews-compare">
-            <div class="col-12">
-                <div class="row">
-                    <div class="reviews col-xs-12 col-md-6">
-                        <isif condition="${pdict.display.reviews}">
-                            <isloop items="${[1, 2, 3, 4, 5]}" var="star">
-                                <i class="fa
-                                    <isif condition="${product.rating >= star}">
-                                        fa-star
-                                    <iselseif condition="${parseInt(product.rating) < star}">
-                                        fa-star-o
-                                    <iselse>
-                                        fa-star-half-o
-                                    </isif>
-                                    " aria-hidden="true">
-                                </i>
-                            </isloop>
-                        </isif>
-                    </div>
-                    <div class="compare col-md-6 hidden-xs-down">
-                        <isif condition="${pdict.display.compare}">
-                            <input type="checkbox" id="${product.id}" value="true" />
-                            <label for="${product.id}">${Resource.msg('checkbox.tile.compare', 'product', null)}</label>
-                        </isif>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <isinclude template="product/components/pricing/main" />
+
+        <isinclude template="product/productTileFooter" />
     </div>
 </div>

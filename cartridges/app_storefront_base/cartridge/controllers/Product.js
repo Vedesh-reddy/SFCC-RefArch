@@ -125,21 +125,15 @@ server.get('ShowTile', cache.applyPromotionSenstiveCache, function (req, res, ne
     // The req parameter has a property called querystring. In this use case the querystring could
     // have the following:
     // pid - the Product ID
-    // compare - boolean to determine if the compare feature should be shown in the tile.
-    // comparisonPage - boolean to determine if this tile will be rendered for product comparison
-    // reviews - boolean to determine if the reviews should be shown in the tile.
+    // ratings - boolean to determine if the reviews should be shown in the tile.
     // swatches - boolean to determine if the swatches should be shown in the tile.
     //
     // pview - string to determine if the product factory returns a model for
     //         a tile or a pdp/quickview display
-    var productTileParams = {
-        pid: req.querystring.pid,
-        compare: req.querystring.compare,
-        comparisonPage: req.querystring.comparisonPage,
-        reviews: req.querystring.reviews,
-        swatches: req.querystring.swatches,
-        pview: 'tile'
-    };
+    var productTileParams = { pview: 'tile' };
+    Object.keys(req.querystring).forEach(function (key) {
+        productTileParams[key] = req.querystring[key];
+    });
 
     var product;
     var productUrl;
@@ -163,19 +157,24 @@ server.get('ShowTile', cache.applyPromotionSenstiveCache, function (req, res, ne
         quickViewUrl = URLUtils.url('Home-Show');
     }
 
-    res.render('product/gridTile.isml', {
+    var context = {
         product: product,
         urls: {
             product: productUrl,
             quickView: quickViewUrl
         },
-        display: {
-            swatches: req.querystring.swatches,
-            reviews: req.querystring.reviews,
-            compare: req.querystring.compare === 'true',
-            comparisonPage: !!productTileParams.comparisonPage
+        display: {}
+    };
+
+    Object.keys(req.querystring).forEach(function (key) {
+        if (req.querystring[key] === 'true') {
+            context.display[key] = true;
+        } else if (req.querystring[key] === 'false') {
+            context.display[key] = false;
         }
     });
+
+    res.render('product/gridTile.isml', context);
 
     next();
 });

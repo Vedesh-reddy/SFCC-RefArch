@@ -4,7 +4,7 @@
 
     <isloop items="${slotcontent.content}" var="product" status="loopstate">
 
-        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.ID, 'pview', 'tile', 'reviews', true, 'swatches', true)}"/>
+        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.ID, 'pview', 'tile', 'ratings', true, 'swatches', true)}"/>
 
         <isif condition="${loopstate.count == 1}" >
             <div class="card col-6 col-sm-4 hp-product-content">

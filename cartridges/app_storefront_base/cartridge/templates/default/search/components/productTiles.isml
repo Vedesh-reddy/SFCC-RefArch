@@ -1,0 +1,9 @@
+<isloop items="${pdict.productSearch.productIds}" var="product">
+    <isobject object="${product.productSearchHit}" view="searchhit">
+        <isif condition="${pdict.productSearch.category}">
+            <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.productID, 'swatches', 'true', 'ratings', 'true', 'cgid', pdict.productSearch.category.id)}" />
+        <iselse>
+            <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.productID, 'swatches', 'true', 'ratings', 'true')}" />
+        </isif>
+    </isobject>
+</isloop>

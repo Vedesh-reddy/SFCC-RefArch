@@ -1,0 +1,15 @@
+<div class="image-container">
+    <a href="${pdict.urls.product}">
+        <img class="tile-image"
+             src="${product.images.medium[0].url}"
+             alt="${product.productName}"
+             title="${product.images.medium[0].title}" />
+    </a>
+    <isif condition="${showQuickView}">
+        <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}">
+            <img src="${URLUtils.staticURL('/images/quickview.png')}"
+                 alt="${Resource.msg('image.quickview.product.tile', 'common', null)}"
+                 title="${Resource.msg('image.quickview.product.tile', 'common', null)}" />
+        </a>
+    </isif>
+</div>
