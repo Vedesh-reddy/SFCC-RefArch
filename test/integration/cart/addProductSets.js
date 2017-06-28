@@ -107,15 +107,6 @@ describe('Add Product Set to cart', function () {
                                         'selected': false
                                     },
                                     {
-                                        'ID': '005',
-                                        'displayName': 'Store Pickup',
-                                        'description': 'Store Pickup',
-                                        'estimatedArrivalTime': null,
-                                        'default': false,
-                                        'shippingCost': '$0.00',
-                                        'selected': false
-                                    },
-                                    {
                                         'ID': '012',
                                         'displayName': 'Express',
                                         'description': 'Orders shipped outside continental US received in 2-3 business days',

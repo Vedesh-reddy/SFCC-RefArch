@@ -108,7 +108,6 @@
             </div>
         </div>
     </div>
-
     <isinclude template="checkout/shipping/shippingAddressTemplate" />
 
 </isdecorate>

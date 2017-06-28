@@ -386,3 +386,45 @@ span.ship-to-city-st-zip {
     width: 48px;
     height: 33px;
 }
+
+#pick-up-in-store {
+    form {
+        margin-top: 1rem;
+    }
+
+    .btn-storelocator-search {
+        margin-bottom: 0.625rem;
+
+        @include media-breakpoint-up(sm) {
+            margin-top: 2rem;
+            margin-bottom: 0;
+        }
+    }
+
+    .separated {
+        border-bottom: 0.063em dashed #ccc;
+    }
+
+    .results {
+        margin: 0 -1rem;
+
+        .form-check {
+            margin: 0;
+        }
+
+        .form-check-label {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+    }
+
+    .striped {
+        > div:nth-of-type(odd) {
+            background-color: $table-bg-accent;
+        }
+    }
+}
+
+.no-store-selected {
+    display: none;
+}

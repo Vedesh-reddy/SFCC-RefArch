@@ -157,15 +157,6 @@ describe('Remove product variant from line item', function () {
                             'selected': false
                         },
                         {
-                            'description': 'Store Pickup',
-                            'displayName': 'Store Pickup',
-                            'ID': '005',
-                            'shippingCost': '$0.00',
-                            'estimatedArrivalTime': null,
-                            'default': false,
-                            'selected': false
-                        },
-                        {
                             'description': 'Orders shipped outside continental US received in 2-3 business days',
                             'displayName': 'Express',
                             'ID': '012',
@@ -423,15 +414,6 @@ describe('Remove product variant from line item', function () {
                             'ID': '004',
                             'shippingCost': '$0.00',
                             'estimatedArrivalTime': '3-7 Business Days',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Store Pickup',
-                            'displayName': 'Store Pickup',
-                            'ID': '005',
-                            'shippingCost': '$0.00',
-                            'estimatedArrivalTime': null,
                             'default': false,
                             'selected': false
                         },

@@ -9,6 +9,7 @@ var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var TotalsModel = require('~/cartridge/models/totals');
 
 var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
+var COHelpers = require('~/cartridge/scripts/checkout/checkoutHelpers');
 
 var DEFAULT_MODEL_CONFIG = {
     numberOfLineItems: '*'
@@ -28,6 +29,8 @@ var RESOURCES = {
     accountAddresses: Resource.msg('msg.account.addresses', 'checkout', null),
     shippingTo: Resource.msg('msg.shipping.to', 'checkout', null),
     pickupInStore: Resource.msg('msg.pickup.in.store', 'checkout', null),
+    storePickUp: Resource.msg('label.store.pick.up', 'checkout', null),
+    shippingAddress: Resource.msg('label.order.shipping.address', 'confirmation', null),
     addressIncomplete: Resource.msg('heading.address.incomplete', 'checkout', null)
 };
 
@@ -120,6 +123,7 @@ function OrderModel(lineItemContainer, options) {
         this.orderEmail = null;
         this.orderStatus = null;
         this.usingMultiShipping = null;
+        this.isPickUpInStore = null;
         this.shippable = null;
     } else {
         var safeOptions = options || {};
@@ -159,6 +163,7 @@ function OrderModel(lineItemContainer, options) {
             : null;
         this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
                 lineItemContainer.productQuantityTotal : null;
+        this.isPickUpInStore = COHelpers.isPickUpInStore(lineItemContainer);
 
         if (modelConfig.numberOfLineItems === '*') {
             this.totals = totalsModel;

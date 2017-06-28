@@ -26,7 +26,7 @@
                             ${Resource.msg('msg.guest.checkout2', 'checkout', null)}
                         </p>
                         <a
-                            href="${URLUtils.https('Checkout-Start')}"
+                            href="${URLUtils.https('Checkout-Begin')}"
                             class="btn btn-block btn-primary checkout-as-guest">
                             ${Resource.msg('button.checkout.as.guest', 'checkout', null)}
                         </a>

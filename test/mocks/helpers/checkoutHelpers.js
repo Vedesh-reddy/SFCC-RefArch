@@ -79,11 +79,12 @@ function proxyModel() {
         'dw/util/Template': {},
         'dw/system/Transaction': transaction,
 
-        '~/cartridge/models/address': addressModel,
+        '*/cartridge/models/address': addressModel,
         '~/cartridge/models/order': orderModel,
 
         '~/cartridge/scripts/renderTemplateHelper': renderTemplateHelper,
-        '~/cartridge/scripts/checkout/shippingHelpers': shippingHelpers
+        '~/cartridge/scripts/checkout/shippingHelpers': shippingHelpers,
+        '*/cartridge/scripts/formErrors': require('../../../cartridges/app_storefront_base/cartridge/scripts/formErrors')
     });
 }
 

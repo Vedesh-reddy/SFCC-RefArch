@@ -9,7 +9,7 @@
                 <form action="${URLUtils.url('Checkout-ToggleMultiShip')}">
                     <fieldset>
                         <div class="form-check">
-                            <label for="usingMultiShipping" class="form-check-label checkout-checkbox">
+                            <label class="form-check-label checkout-checkbox">
                                 <input name="usingMultiShipping" class="form-check-input" type="checkbox" <isif condition="${pdict.order.usingMultiShipping && pdict.order.shipping.length > 1}">checked</isif>>
                                 ${Resource.msg('check.shipping.multiship', 'checkout', null)}
                             </label>
@@ -17,12 +17,14 @@
                     </fieldset>
                 </form>
             </isif>
-            <ul class="nav nav-tabs nav-fill single-shipping" role="tablist">
+            <ul class="nav nav-tabs nav-fill single-shipping" role="tablist" data-shipping-tab-active="${!pdict.order.isPickUpInStore ? true : false}"
+                data-inventory-list-url="${URLUtils.url('Checkout-ResetInventoryList')}"
+            >
                 <li class="nav-item">
-                    <a class="nav-link shipping-tab active" data-toggle="tab" href="#shipping-address" role="tab">${Resource.msg('action.shipping.form', 'checkout', null)}</a>
+                    <a class="nav-link shipping-tab ${!pdict.order.isPickUpInStore ? 'active' : ''}" data-toggle="tab" href="#shipping-address" role="tab">${Resource.msg('action.shipping.form', 'checkout', null)}</a>
                 </li>
                 <li class="nav-item disable">
-                    <a class="nav-link shipping-tab" data-toggle="tab" href="#pick-up-in-store" role="tab">${Resource.msg('action.in.store.pick.up', 'checkout', null)}</a>
+                    <a class="nav-link pick-up-in-store-tab ${pdict.order.isPickUpInStore ? 'active' : ''}" data-toggle="tab" href="#pick-up-in-store" role="tab">${Resource.msg('action.in.store.pick.up', 'checkout', null)}</a>
                 </li>
             </ul>
         </div>

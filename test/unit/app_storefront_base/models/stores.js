@@ -30,6 +30,7 @@ describe('stores', function () {
 
     it('should return Stores Model with stores found', function () {
         var storesResults = [{
+            ID: 'Any ID',
             name: 'Downtown TV Shop',
             address1: '333 Washington St',
             address2: '',
@@ -37,6 +38,9 @@ describe('stores', function () {
             postalCode: '02108',
             phone: '333-333-3333',
             stateCode: 'MA',
+            countryCode: {
+                value: 'us'
+            },
             latitude: 42.5273334,
             longitude: -71.13758250000001,
             storeHours: {
@@ -48,6 +52,7 @@ describe('stores', function () {
         assert.deepEqual(stores, {
             stores: [
                 {
+                    ID: 'Any ID',
                     name: 'Downtown TV Shop',
                     address1: '333 Washington St',
                     address2: '',
@@ -57,6 +62,7 @@ describe('stores', function () {
                     postalCode: '02108',
                     phone: '333-333-3333',
                     stateCode: 'MA',
+                    countryCode: 'us',
                     storeHours: 'Mon - Sat: 10am - 9pm'
                 }
             ],
@@ -72,11 +78,15 @@ describe('stores', function () {
 
     it('should return Stores Model with stores that do not have a phone or state', function () {
         var storesResults = [{
+            ID: 'Any ID',
             name: 'Downtown TV Shop',
             address1: '333 Washington St',
             address2: '',
             city: 'Boston',
             postalCode: '02108',
+            countryCode: {
+                value: 'us'
+            },
             latitude: 42.5273334,
             longitude: -71.13758250000001
         }];
@@ -85,13 +95,15 @@ describe('stores', function () {
         assert.deepEqual(stores, {
             stores: [
                 {
+                    ID: 'Any ID',
                     name: 'Downtown TV Shop',
                     address1: '333 Washington St',
                     address2: '',
                     city: 'Boston',
                     latitude: 42.5273334,
                     longitude: -71.13758250000001,
-                    postalCode: '02108'
+                    postalCode: '02108',
+                    countryCode: 'us'
                 }
             ],
             locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
@@ -121,6 +133,7 @@ describe('stores', function () {
 
     it('should return Stores Model without google maps api', function () {
         var storesResults = [{
+            ID: 'Any ID',
             name: 'Downtown TV Shop',
             address1: '333 Washington St',
             address2: '',
@@ -128,6 +141,9 @@ describe('stores', function () {
             postalCode: '02108',
             phone: '333-333-3333',
             stateCode: 'MA',
+            countryCode: {
+                value: 'us'
+            },
             latitude: 42.5273334,
             longitude: -71.13758250000001
         }];
@@ -137,6 +153,7 @@ describe('stores', function () {
         assert.deepEqual(stores, {
             stores: [
                 {
+                    ID: 'Any ID',
                     name: 'Downtown TV Shop',
                     address1: '333 Washington St',
                     address2: '',
@@ -144,6 +161,7 @@ describe('stores', function () {
                     latitude: 42.5273334,
                     longitude: -71.13758250000001,
                     postalCode: '02108',
+                    countryCode: 'us',
                     phone: '333-333-3333',
                     stateCode: 'MA'
                 }

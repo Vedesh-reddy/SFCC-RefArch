@@ -6,17 +6,6 @@ var checkoutHelpers = require('../../../../mocks/helpers/checkoutHelpers');
 
 
 describe('checkoutHelpers', function () {
-    describe('getShippingFormKeys', function () {
-        it('should return values defined for shipping form keys', function () {
-            var expectedkeys = 'firstName,lastName,address1,address2,city,postalCode,country,phone,states.stateCode';
-
-            var shippingFormKeys = checkoutHelpers.getShippingFormKeys();
-            assert.isNotNull(shippingFormKeys);
-            assert.equal(shippingFormKeys.length, 9);
-            assert.equal(shippingFormKeys, expectedkeys);
-        });
-    });
-
     describe('prepareShippingForm', function () {
         it('should return a processed shipping form object', function () {
             var shippingForm = checkoutHelpers.prepareShippingForm();
@@ -34,14 +23,14 @@ describe('checkoutHelpers', function () {
     describe('validateShippingForm', function () {
         it('should return empty object when no invalid form field - with state field', function () {
             var shippingForm = {
-                firstName: { valid: true },
-                lastName: { valid: true },
-                address1: { valid: true },
-                address2: { valid: true },
-                city: { valid: true },
-                states: { valid: true },
-                postalCode: { valid: true },
-                country: { valid: true }
+                firstName: { valid: true, formType: 'formField' },
+                lastName: { valid: true, formType: 'formField' },
+                address1: { valid: true, formType: 'formField' },
+                address2: { valid: true, formType: 'formField' },
+                city: { valid: true, formType: 'formField' },
+                states: { valid: true, formType: 'formField' },
+                postalCode: { valid: true, formType: 'formField' },
+                country: { valid: true, formType: 'formField' }
             };
 
             var invalidFields = checkoutHelpers.validateShippingForm(shippingForm);
@@ -50,13 +39,13 @@ describe('checkoutHelpers', function () {
 
         it('should return empty object when no invalid form field - without state field', function () {
             var shippingForm = {
-                firstName: { valid: true },
-                lastName: { valid: true },
-                address1: { valid: true },
-                address2: { valid: true },
-                city: { valid: true },
-                postalCode: { valid: true },
-                country: { valid: true }
+                firstName: { valid: true, formType: 'formField' },
+                lastName: { valid: true, formType: 'formField' },
+                address1: { valid: true, formType: 'formField' },
+                address2: { valid: true, formType: 'formField' },
+                city: { valid: true, formType: 'formField' },
+                postalCode: { valid: true, formType: 'formField' },
+                country: { valid: true, formType: 'formField' }
             };
 
             var invalidFields = checkoutHelpers.validateShippingForm(shippingForm);
@@ -65,21 +54,23 @@ describe('checkoutHelpers', function () {
 
         it('should return an object containing invalid form field', function () {
             var shippingForm = {
-                firstName: { valid: true },
-                lastName: { valid: true },
-                address1: { valid: true },
+                firstName: { valid: true, formType: 'formField' },
+                lastName: { valid: true, formType: 'formField' },
+                address1: { valid: true, formType: 'formField' },
                 address2: {
                     valid: false,
                     htmlName: 'htmlNameAddress2',
-                    error: 'address2 is an invalid field.'
+                    error: 'address2 is an invalid field.',
+                    formType: 'formField'
                 },
-                city: { valid: true },
-                states: { valid: true },
-                postalCode: { valid: true },
+                city: { valid: true, formType: 'formField' },
+                states: { valid: true, formType: 'formField' },
+                postalCode: { valid: true, formType: 'formField' },
                 country: {
                     valid: false,
                     htmlName: 'htmlNameCountry',
-                    error: 'country is an invalid field.'
+                    error: 'country is an invalid field.',
+                    formType: 'formField'
                 }
             };
 
@@ -414,14 +405,14 @@ describe('checkoutHelpers', function () {
     describe('validateBillingForm', function () {
         it('should return empty object when no invalid form field - with state field', function () {
             var billingForm = {
-                firstName: { valid: true },
-                lastName: { valid: true },
-                address1: { valid: true },
-                address2: { valid: true },
-                city: { valid: true },
-                states: { valid: true },
-                postalCode: { valid: true },
-                country: { valid: true }
+                firstName: { valid: true, formType: 'formField' },
+                lastName: { valid: true, formType: 'formField' },
+                address1: { valid: true, formType: 'formField' },
+                address2: { valid: true, formType: 'formField' },
+                city: { valid: true, formType: 'formField' },
+                states: { valid: true, formType: 'formField' },
+                postalCode: { valid: true, formType: 'formField' },
+                country: { valid: true, formType: 'formField' }
             };
 
             var invalidFields = checkoutHelpers.validateBillingForm(billingForm);
@@ -430,13 +421,13 @@ describe('checkoutHelpers', function () {
 
         it('should return empty object when no invalid form field - without state field', function () {
             var billingForm2 = {
-                firstName: { valid: true },
-                lastName: { valid: true },
-                address1: { valid: true },
-                address2: { valid: true },
-                city: { valid: true },
-                postalCode: { valid: true },
-                country: { valid: true }
+                firstName: { valid: true, formType: 'formField' },
+                lastName: { valid: true, formType: 'formField' },
+                address1: { valid: true, formType: 'formField' },
+                address2: { valid: true, formType: 'formField' },
+                city: { valid: true, formType: 'formField' },
+                postalCode: { valid: true, formType: 'formField' },
+                country: { valid: true, formType: 'formField' }
             };
 
             var invalidFields = checkoutHelpers.validateBillingForm(billingForm2);
@@ -445,21 +436,23 @@ describe('checkoutHelpers', function () {
 
         it('should return an object containing invalid form field', function () {
             var billingForm3 = {
-                firstName: { valid: true },
-                lastName: { valid: true },
-                address1: { valid: true },
+                firstName: { valid: true, formType: 'formField' },
+                lastName: { valid: true, formType: 'formField' },
+                address1: { valid: true, formType: 'formField' },
                 address2: {
                     valid: false,
                     htmlName: 'htmlNameAddress2',
-                    error: 'address2 is an invalid field.'
+                    error: 'address2 is an invalid field.',
+                    formType: 'formField'
                 },
-                city: { valid: true },
-                states: { valid: true },
-                postalCode: { valid: true },
+                city: { valid: true, formType: 'formField' },
+                states: { valid: true, formType: 'formField' },
+                postalCode: { valid: true, formType: 'formField' },
                 country: {
                     valid: false,
                     htmlName: 'htmlNameCountry',
-                    error: 'country is an invalid field.'
+                    error: 'country is an invalid field.',
+                    formType: 'formField'
                 }
             };
 

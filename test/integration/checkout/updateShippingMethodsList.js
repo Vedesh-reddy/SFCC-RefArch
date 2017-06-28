@@ -89,13 +89,6 @@
                                      'ID': '003',
                                      'shippingCost': '$15.99',
                                      'estimatedArrivalTime': 'Next Day'
-                                 },
-                                 {
-                                     'description': 'Store Pickup',
-                                     'displayName': 'Store Pickup',
-                                     'ID': '005',
-                                     'shippingCost': '$0.00',
-                                     'estimatedArrivalTime': null
                                  }
                              ],
                              'shippingAddress': {
@@ -225,13 +218,6 @@
                                      'ID': '003',
                                      'shippingCost': '$19.99',
                                      'estimatedArrivalTime': 'Next Day'
-                                 },
-                                 {
-                                     'description': 'Store Pickup',
-                                     'displayName': 'Store Pickup',
-                                     'ID': '005',
-                                     'shippingCost': '$0.00',
-                                     'estimatedArrivalTime': null
                                  }
                              ],
                              'shippingAddress': {
@@ -318,14 +304,14 @@
                  });
          });
 
-         it('should return 2 applicableShippingMethods for AK state', function (done) {
+         it('should return 1 applicableShippingMethods for AK state', function (done) {
              var ExpectedResBody = {
                  'order': {
                      'totals': {
                          'subTotal': '$49.99',
-                         'grandTotal': '$52.49',
-                         'totalTax': '$2.50',
-                         'totalShippingCost': '$0.00',
+                         'grandTotal': '$70.33',
+                         'totalTax': '$3.35',
+                         'totalShippingCost': '$16.99',
                          'orderLevelDiscountTotal': {
                              'formatted': '$0.00',
                              'value': 0
@@ -340,13 +326,6 @@
                      'shipping': [
                          {
                              'applicableShippingMethods': [
-                                 {
-                                     'description': 'Store Pickup',
-                                     'displayName': 'Store Pickup',
-                                     'ID': '005',
-                                     'shippingCost': '$0.00',
-                                     'estimatedArrivalTime': null
-                                 },
                                  {
                                      'description': 'Orders shipped outside continental US received in 2-3 business days',
                                      'displayName': 'Express',
@@ -367,11 +346,11 @@
                                  'phone': null
                              },
                              'selectedShippingMethod': {
-                                 'ID': '005',
-                                 'displayName': 'Store Pickup',
-                                 'description': 'Store Pickup',
-                                 'estimatedArrivalTime': null,
-                                 'shippingCost': '$0.00'
+                                 'ID': '012',
+                                 'displayName': 'Express',
+                                 'description': 'Orders shipped outside continental US received in 2-3 business days',
+                                 'estimatedArrivalTime': '2-3 Business Days',
+                                 'shippingCost': '$16.99'
                              }
                          }
                      ]
@@ -437,7 +416,7 @@
                  });
          });
 
-         it('should return 4 applicableShippingMethods for MA state', function (done) {
+         it('should return 3 applicableShippingMethods for MA state', function (done) {
              var ExpectedResBody = {
                  'order': {
                      'totals': {
@@ -479,13 +458,6 @@
                                      'ID': '003',
                                      'shippingCost': '$15.99',
                                      'estimatedArrivalTime': 'Next Day'
-                                 },
-                                 {
-                                     'description': 'Store Pickup',
-                                     'displayName': 'Store Pickup',
-                                     'ID': '005',
-                                     'shippingCost': '$0.00',
-                                     'estimatedArrivalTime': null
                                  }
                              ],
                              'shippingAddress': {
@@ -612,13 +584,6 @@
                                      'ID': '003',
                                      'shippingCost': '$19.99',
                                      'estimatedArrivalTime': 'Next Day'
-                                 },
-                                 {
-                                     'description': 'Store Pickup',
-                                     'displayName': 'Store Pickup',
-                                     'ID': '005',
-                                     'shippingCost': '$0.00',
-                                     'estimatedArrivalTime': null
                                  }
                              ],
                              'shippingAddress': {
@@ -708,9 +673,9 @@
                  'order': {
                      'totals': {
                          'subTotal': '$49.99',
-                         'grandTotal': '$52.49',
-                         'totalTax': '$2.50',
-                         'totalShippingCost': '$0.00',
+                         'grandTotal': '$58.78',
+                         'totalTax': '$2.80',
+                         'totalShippingCost': '$5.99',
                          'orderLevelDiscountTotal': {
                              'formatted': '$0.00',
                              'value': 0
@@ -725,13 +690,6 @@
                      'shipping': [
                          {
                              'applicableShippingMethods': [
-                                 {
-                                     'description': 'Store Pickup',
-                                     'displayName': 'Store Pickup',
-                                     'ID': '005',
-                                     'shippingCost': '$0.00',
-                                     'estimatedArrivalTime': null
-                                 },
                                  {
                                      'description': 'Order shipped by USPS received within 7-10 business days',
                                      'displayName': 'USPS',
@@ -752,11 +710,11 @@
                                  'phone': null
                              },
                              'selectedShippingMethod': {
-                                 'ID': '005',
-                                 'displayName': 'Store Pickup',
-                                 'description': 'Store Pickup',
-                                 'estimatedArrivalTime': null,
-                                 'shippingCost': '$0.00'
+                                 'ID': '021',
+                                 'displayName': 'USPS',
+                                 'description': 'Order shipped by USPS received within 7-10 business days',
+                                 'estimatedArrivalTime': '7-10 Business Days',
+                                 'shippingCost': '$5.99'
                              }
                          }
                      ]

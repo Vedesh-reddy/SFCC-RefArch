@@ -16,8 +16,11 @@ var TotalsModel = require('*/cartridge/models/totals');
 
 var URLUtils = require('dw/web/URLUtils');
 var UUIDUtils = require('dw/util/UUIDUtils');
+var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
+var StoreMgr = require('dw/catalog/StoreMgr');
 
 var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
@@ -43,7 +46,7 @@ server.get(
         }
 
         if (req.currentCustomer.profile) {
-            res.redirect(URLUtils.url('Checkout-Start'));
+            res.redirect(URLUtils.url('Checkout-Begin'));
         } else {
             var rememberMe = false;
             var userName = '';
@@ -305,7 +308,7 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
         });
     } catch (err) {
         res.json({
-            redirectUrl: URLUtils.url('Checkout-Start').toString(),
+            redirectUrl: URLUtils.url('Checkout-Begin').toString(),
             error: true
         });
         return next();
@@ -317,6 +320,26 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
         order: new OrderModel(basket)
     });
     return next();
+});
+
+server.post('ResetInventoryList', server.middleware.https, function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var pli;
+    var plis = currentBasket.defaultShipment.productLineItems;
+
+    Transaction.wrap(function () {
+        currentBasket.defaultShipment.setShippingMethod(null);
+
+        for (var i = 0, ii = plis.length; i < ii; i++) {
+            pli = plis[i];
+            pli.custom.fromStoreId = null;
+            pli.setProductInventoryList(null);
+        }
+    });
+
+    res.json({});
+
+    next();
 });
 
 
@@ -441,7 +464,7 @@ server.post(
                     // Copy over preferredAddress (use addressUUID for matching)
                     COHelpers.copyBillingAddressToBasket(
                         req.currentCustomer.addressBook.preferredAddress);
-                } else {
+                } else if (!COHelpers.isPickUpInStore(basket)) {
                     // Copy over first shipping address (use shipmentUUID for matching)
                     COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress);
                 }
@@ -474,7 +497,7 @@ server.post(
 
 // Main entry point for Checkout
 server.get(
-    'Start',
+    'Begin',
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
@@ -547,7 +570,12 @@ server.get(
 
         var accountModel = new AccountModel(req.currentCustomer);
 
+        var storesModel = StoreHelpers.getModel(req);
+        var plis = currentBasket.productLineItems;
+        storesModel.availableStores = StoreHelpers.getFilteredStores(storesModel, plis);
+
         res.render('checkout/checkout', {
+            stores: storesModel,
             order: orderModel,
             customer: accountModel,
             forms: {
@@ -627,13 +655,32 @@ server.post(
             result.shippingBillingSame =
                 form.shippingAddress.shippingAddressUseAsBillingAddress.value;
 
-            result.shippingMethod =
-                form.shippingAddress.shippingMethodID.value.toString();
+            result.shippingMethod = form.shippingAddress.shippingMethodID.value
+                ? form.shippingAddress.shippingMethodID.value.toString()
+                : null;
 
             res.setViewData(result);
 
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
                 var shippingData = res.getViewData();
+                var storeID = req.form.storeID;
+                var plis = currentBasket.defaultShipment.productLineItems;
+                var pli;
+
+                if (storeID) {
+                    var store = StoreMgr.getStore(storeID);
+                    var storeinventory = ProductInventoryMgr.getInventoryList(
+                        store.custom.inventoryListId
+                    );
+
+                    Transaction.wrap(function () {
+                        for (var i = 0, ii = plis.length; i < ii; i++) {
+                            pli = plis[i];
+                            pli.custom.fromStoreId = storeID;
+                            pli.setProductInventoryList(storeinventory);
+                        }
+                    });
+                }
 
                 COHelpers.copyShippingAddressToShipment(
                     shippingData,
@@ -646,7 +693,7 @@ server.post(
                         // Copy over preferredAddress (use addressUUID for matching)
                         COHelpers.copyBillingAddressToBasket(
                             req.currentCustomer.addressBook.preferredAddress);
-                    } else {
+                    } else if (!COHelpers.isPickUpInStore(currentBasket)) {
                         // Copy over first shipping address (use shipmentUUID for matching)
                         COHelpers.copyBillingAddressToBasket(
                             currentBasket.defaultShipment.shippingAddress);

@@ -2,7 +2,7 @@
     <p>${Resource.msg('msg.find.store','storelocator',null)}</p>
 
     <button type="submit" class="btn btn-primary btn-block btn-lg detect-location" data-action="${pdict.actionUrl}">
-        ${Resource.msg('button.detect.location','storelocator',null)}
+        ${Resource.msg('button.use.my.location','storelocator',null)}
     </button>
 
     <form action="${pdict.actionUrl}" class="store-locator" method="get" name="storelocator">
@@ -12,7 +12,7 @@
         </div>
 
         <button class="btn btn-block btn-storelocator-search" type="submit" name="submit" value="submit">
-            ${Resource.msg('button.search','storelocator',null)}
+            ${Resource.msg('button.find.stores','storelocator',null)}
         </button>
     </form>
 </div>

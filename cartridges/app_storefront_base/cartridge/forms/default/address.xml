@@ -30,7 +30,7 @@
     </field>
 
     <!-- use global state list -->
-    <include formid="states" name="states"/>
+    <include formid="states" name="states" missing-error="error.message.required" parse-error="error.message.required" value-error="error.message.required"/>
 
     <!-- phone is mandatory for addresses -->
     <field formid="phone" label="label.input.phonenumber" description="address.phone.example" type="string" mandatory="true"

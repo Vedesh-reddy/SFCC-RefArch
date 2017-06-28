@@ -159,15 +159,6 @@ describe('Update quantity for product variant', function () {
                             'selected': false
                         },
                         {
-                            'description': 'Store Pickup',
-                            'displayName': 'Store Pickup',
-                            'ID': '005',
-                            'shippingCost': '$0.00',
-                            'estimatedArrivalTime': null,
-                            'default': false,
-                            'selected': false
-                        },
-                        {
                             'description': 'Orders shipped outside continental US received in 2-3 business days',
                             'displayName': 'Express',
                             'ID': '012',

@@ -39,6 +39,11 @@ function proxyModel() {
             getShippingModels: function () {
                 return ['shipping model'];
             }
+        },
+        '~/cartridge/scripts/checkout/checkoutHelpers': {
+            isPickUpInStore: function () {
+                return false;
+            }
         }
     });
 }

@@ -45,6 +45,26 @@ function getAddressFromRequest(req) {
 }
 
 /**
+ * Returns the first shipping method (and maybe prevent in store pickup)
+ * @param {dw.util.Collection} methods - Applicable methods from ShippingShipmentModel
+ * @param {boolean} filterPickupInStore - whether to exclude PUIS method
+ * @returns {dw.order.ShippingMethod} - the first shipping method (maybe non-PUIS)
+ */
+function getFirstApplicableShippingMethod(methods, filterPickupInStore) {
+    var method;
+    var iterator = methods.iterator();
+    while (iterator.hasNext()) {
+        method = iterator.next();
+        // TODO: remove reference to '005' replace with constant
+        if (!filterPickupInStore || (filterPickupInStore && method.ID !== '005')) {
+            break;
+        }
+    }
+
+    return method;
+}
+
+/**
  * Sets the shipping method of the basket's default shipment
  * @param {dw.order.Shipment} shipment - Any shipment for the current basket
  * @param {string} shippingMethodID - The shipping method ID of the desired shipping method
@@ -93,12 +113,13 @@ function selectShippingMethod(shipment, shippingMethodID, shippingMethods, addre
     }
 
     if (!isShipmentSet) {
-        if (collections.find(applicableShippingMethods, function (method) {
-            return method.ID === defaultShippingMethod.ID;
+        if (collections.find(applicableShippingMethods, function (sMethod) {
+            return sMethod.ID === defaultShippingMethod.ID;
         })) {
             shipment.setShippingMethod(defaultShippingMethod);
         } else if (applicableShippingMethods.length > 0) {
-            shipment.setShippingMethod(collections.first(applicableShippingMethods));
+            var firstMethod = getFirstApplicableShippingMethod(applicableShippingMethods, true);
+            shipment.setShippingMethod(firstMethod);
         } else {
             shipment.setShippingMethod(null);
         }
@@ -116,8 +137,8 @@ function ensureShipmentHasMethod(shipment) {
         var defaultMethod = ShippingMgr.getDefaultShippingMethod();
 
         if (!defaultMethod) {
-            // If no defaultMethod set, just use the first one
-            shippingMethod = methods[0];
+			// If no defaultMethod set, just use the first one
+            shippingMethod = getFirstApplicableShippingMethod(methods, true);
         } else {
             // Look for defaultMethod in applicableMethods
             shippingMethod = collections.find(methods, function (method) {
@@ -127,7 +148,7 @@ function ensureShipmentHasMethod(shipment) {
 
         // If found, use it.  Otherwise return the first one
         if (!shippingMethod && methods && methods.length > 0) {
-            shippingMethod = methods[0];
+            shippingMethod = getFirstApplicableShippingMethod(methods, true);
         }
 
         if (shippingMethod) {

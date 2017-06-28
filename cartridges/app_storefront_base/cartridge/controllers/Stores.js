@@ -1,62 +1,15 @@
 'use strict';
 
+var URLUtils = require('dw/web/URLUtils');
+var BasketMgr = require('dw/order/BasketMgr');
+
+var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
+
 var server = require('server');
 var cache = require('*/cartridge/scripts/middleware/cache');
 
-/**
- * Searches for stores and creates a plain object of the stores returned by the search
- * @param {Object} req - local instance of request object
- * @returns {Object} a plain object containing the results of the search
- */
-function getModel(req) {
-    var StoresModel = require('*/cartridge/models/stores');
-    var StoreMgr = require('dw/catalog/StoreMgr');
-    var URLUtils = require('dw/web/URLUtils');
-    var Site = require('dw/system/Site');
-
-    var countryCode = req.geolocation.countryCode;
-    var distanceUnit = countryCode === 'US' ? 'mi' : 'km';
-    var radius = req.querystring.radius ? parseInt(req.querystring.radius, 10) : 15;
-
-    var lat;
-    var long;
-    var searchKey;
-    var storesMgrResult;
-
-    if (req.querystring.postalCode) {
-        // find by postal code
-        searchKey = req.querystring.postalCode;
-        storesMgrResult = StoreMgr.searchStoresByPostalCode(
-            countryCode,
-            searchKey,
-            distanceUnit,
-            radius
-        );
-        searchKey = { postalCode: searchKey };
-    } else if (req.querystring.lat && req.querystring.long) {
-        // find by coordinates (detect location)
-        lat = parseFloat(req.querystring.lat);
-        long = parseFloat(req.querystring.long);
-
-        storesMgrResult = StoreMgr.searchStoresByCoordinates(lat, long, distanceUnit, radius);
-        searchKey = { lat: lat, long: long };
-    } else {
-        // initial load dw geolocation
-        lat = req.geolocation.latitude;
-        long = req.geolocation.longitude;
-
-        storesMgrResult = StoreMgr.searchStoresByCoordinates(lat, long, distanceUnit, radius);
-        searchKey = { lat: lat, long: long };
-    }
-
-    var actionUrl = URLUtils.url('Stores-FindStores').toString();
-    var apiKey = Site.getCurrent().getCustomPreferenceValue('mapAPI');
-
-    return new StoresModel(storesMgrResult.keySet(), searchKey, radius, actionUrl, apiKey);
-}
-
 server.get('Find', server.middleware.https, cache.applyDefaultCache, function (req, res, next) {
-    res.render('storelocator/storelocator', getModel(req));
+    res.render('storelocator/storelocator', StoreHelpers.getModel(req));
     next();
 });
 
@@ -70,7 +23,48 @@ server.get('Find', server.middleware.https, cache.applyDefaultCache, function (r
 // postalCode - The postal code that the user used to search.
 // radius - The radius that the user selected to refine the search
 server.get('FindStores', function (req, res, next) {
-    res.json(getModel(req));
+    res.json(StoreHelpers.getModel(req));
+    next();
+});
+
+/**
+ * Find stores within radius of location, which have all SKUs from Basket in stock
+ */
+server.get('FindAvailableStores', server.middleware.https, function (req, res, next) {
+    var currentBasket = BasketMgr.getCurrentBasket();
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return;
+    }
+
+    var pliQtys;
+    if (req.querystring.pid) {
+        var pliQty = {
+            productID: req.querystring.pid
+        };
+        if (req.querystring.qty) {
+            pliQty.quantityValue = req.querystring.qty - 0;
+        } else {
+            pliQty.quantityValue = 1;
+        }
+        pliQtys = [pliQty];
+    } else {
+        pliQtys = currentBasket.productLineItems;
+    }
+
+    var storesModel = StoreHelpers.getModel(req);
+    var availableStores = StoreHelpers.getFilteredStores(storesModel, pliQtys);
+
+    res.json({
+        availableStores: availableStores
+    });
+
     next();
 });
 

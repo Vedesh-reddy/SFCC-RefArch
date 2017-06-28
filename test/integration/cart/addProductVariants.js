@@ -197,15 +197,6 @@ describe('Add Product variants to cart', function () {
                                         'shippingCost': '$21.99'
                                     },
                                     {
-                                        'description': 'Store Pickup',
-                                        'displayName': 'Store Pickup',
-                                        'ID': '005',
-                                        'estimatedArrivalTime': null,
-                                        'default': false,
-                                        'selected': false,
-                                        'shippingCost': '$0.00'
-                                    },
-                                    {
                                         'description': 'Orders shipped outside continental US received in 2-3 business days',
                                         'displayName': 'Express',
                                         'ID': '012',

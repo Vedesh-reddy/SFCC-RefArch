@@ -68,13 +68,6 @@ describe('Cart: Selecting Shipping Methods', function () {
                         'estimatedArrivalTime': 'Next Day'
                     },
                     {
-                        'description': 'Store Pickup',
-                        'displayName': 'Store Pickup',
-                        'ID': '005',
-                        'shippingCost': '$0.00',
-                        'estimatedArrivalTime': null
-                    },
-                    {
                         'description': 'Orders shipped outside continental US received in 2-3 business days',
                         'displayName': 'Express',
                         'ID': '012',
@@ -364,7 +357,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             });
     });
 
-    it('should set the shipping method to Store Pickup', function () {
+    it('should set to default method Ground when shipping method is set to Store Pickup', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$145.95',
@@ -382,7 +375,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             'discountsHtml': '\n'
         };
 
-        var shipMethodId = '005';   // 001 = Store Pickup
+        var shipMethodId = '005';   // 005 = Store Pickup
 
         myRequest.method = 'POST';
         myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;

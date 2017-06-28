@@ -17,10 +17,13 @@ describe('Store Locator', function () {
             var ExpectedResBody = {
                 'stores': [
                     {
+                        'ID': 'store1',
                         'name': 'Demandware',
                         'address1': '10 Presidential Way',
                         'address2': null,
                         'city': 'Woburn',
+                        'countryCode': 'US',
+                        'inventoryListId': 'inventory_store_store1',
                         'latitude': 42.5273334,
                         'longitude': -71.13758250000001,
                         'postalCode': '01801',
@@ -28,10 +31,13 @@ describe('Store Locator', function () {
                         'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\nSun: 12pm - 6pm'
                     },
                     {
+                        'ID': 'store4',
                         'name': 'Champaign Electronic Shop',
                         'address1': '1001 Cambridge St',
                         'address2': null,
                         'city': 'Cambridge',
+                        'countryCode': 'US',
+                        'inventoryListId': 'inventory_store_store4',
                         'latitude': 42.3729794,
                         'longitude': -71.09346089999997,
                         'postalCode': '02141',
@@ -39,10 +45,13 @@ describe('Store Locator', function () {
                         'stateCode': 'MA'
                     },
                     {
+                        'ID': 'store10',
                         'name': 'Downtown TV Shop',
                         'address1': '333 Washington St',
                         'address2': null,
                         'city': 'Boston',
+                        'countryCode': 'US',
+                        'inventoryListId': 'inventory_store_store10',
                         'latitude': 42.3569512,
                         'longitude': -71.05902600000002,
                         'postalCode': '02108',
@@ -51,10 +60,13 @@ describe('Store Locator', function () {
                         'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\n            Sun: 12pm - 6pm'
                     },
                     {
+                        'ID': 'store5',
                         'name': 'Short Electro',
                         'address1': '584 Columbus Ave',
                         'address2': null,
                         'city': 'Boston',
+                        'countryCode': 'US',
+                        'inventoryListId': 'inventory_store_store5',
                         'latitude': 42.3403189,
                         'longitude': -71.0817859,
                         'postalCode': '02118',
@@ -63,10 +75,13 @@ describe('Store Locator', function () {
                         'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\n            Sun: 12pm - 6pm'
                     },
                     {
+                        'ID': 'store6',
                         'name': 'Khale Street Electronics',
                         'address1': '150 Winthrop Ave',
                         'address2': null,
                         'city': 'Lawrence',
+                        'countryCode': 'US',
+                        'inventoryListId': 'inventory_store_store6',
                         'latitude': 42.6895548,
                         'longitude': -71.14878340000001,
                         'postalCode': '01843',
@@ -193,10 +208,13 @@ describe('Store Locator', function () {
             var ExpectedResBody = {
                 'stores': [
                     {
+                        'ID': 'store6',
                         'name': 'Khale Street Electronics',
                         'address1': '150 Winthrop Ave',
                         'address2': null,
+                        'inventoryListId': 'inventory_store_store6',
                         'city': 'Lawrence',
+                        'countryCode': 'US',
                         'latitude': 42.6895548,
                         'longitude': -71.14878340000001,
                         'postalCode': '01843',
@@ -204,10 +222,13 @@ describe('Store Locator', function () {
                         'stateCode': 'MA'
                     },
                     {
+                        'ID': 'store1',
                         'name': 'Demandware',
                         'address1': '10 Presidential Way',
                         'address2': null,
                         'city': 'Woburn',
+                        'countryCode': 'US',
+                        'inventoryListId': 'inventory_store_store1',
                         'latitude': 42.5273334,
                         'longitude': -71.13758250000001,
                         'postalCode': '01801',
@@ -215,10 +236,13 @@ describe('Store Locator', function () {
                         'storeHours': 'Mon - Sat: 10am - 9pm<br />\r\nSun: 12pm - 6pm'
                     },
                     {
+                        'ID': 'store4',
                         'name': 'Champaign Electronic Shop',
                         'address1': '1001 Cambridge St',
                         'address2': null,
                         'city': 'Cambridge',
+                        'countryCode': 'US',
+                        'inventoryListId': 'inventory_store_store4',
                         'latitude': 42.3729794,
                         'longitude': -71.09346089999997,
                         'postalCode': '02141',

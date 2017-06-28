@@ -164,7 +164,7 @@ server.post(
             res.json({
                 success: true,
                 redirectUrl: checkoutLogin
-                    ? URLUtils.url('Checkout-Start').toString()
+                    ? URLUtils.url('Checkout-Begin').toString()
                     : URLUtils.url('Account-Show').toString()
             });
         } else {

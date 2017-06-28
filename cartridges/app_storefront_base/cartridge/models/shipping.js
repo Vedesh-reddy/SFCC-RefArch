@@ -2,8 +2,6 @@
 
 var ShippingMgr = require('dw/order/ShippingMgr');
 
-var collections = require('*/cartridge/scripts/util/collections');
-
 var AddressModel = require('~/cartridge/models/address');
 var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
 var ShippingMethodModel = require('~/cartridge/models/shipping/shippingMethod');
@@ -27,7 +25,19 @@ function getApplicableShippingMethods(shipment, address) {
         shippingMethods = shipmentShippingModel.getApplicableShippingMethods();
     }
 
-    return collections.map(shippingMethods, function (shippingMethod) {
+    // Filter out whatever the method associated with in store pickup
+    var filteredMethods = [];
+    var iterator = shippingMethods.iterator();
+    var method;
+    while (iterator.hasNext()) {
+        method = iterator.next();
+        // TODO: remove reference to '005' replace with constant
+        if (method.ID !== '005') {
+            filteredMethods.push(method);
+        }
+    }
+
+    return filteredMethods.map(function (shippingMethod) {
         return new ShippingMethodModel(shippingMethod, shipment);
     });
 }

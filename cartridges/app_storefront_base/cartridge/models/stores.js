@@ -12,6 +12,7 @@ function createStoresObject(storesObject) {
     return Object.keys(storesObject).map(function (key) {
         var store = storesObject[key];
         var storeObj = {
+            ID: store.ID,
             name: store.name,
             address1: store.address1,
             address2: store.address2,
@@ -29,8 +30,20 @@ function createStoresObject(storesObject) {
             storeObj.stateCode = store.stateCode;
         }
 
+        if (store.countryCode) {
+            storeObj.countryCode = store.countryCode.value;
+        }
+
+        if (store.stateCode) {
+            storeObj.stateCode = store.stateCode;
+        }
+
         if (store.storeHours) {
             storeObj.storeHours = store.storeHours.markup;
+        }
+
+        if (store.inventoryListID || (store.custom && store.custom.inventoryListId)) {
+            storeObj.inventoryListId = store.inventoryListID || store.custom.inventoryListId;
         }
 
         return storeObj;
