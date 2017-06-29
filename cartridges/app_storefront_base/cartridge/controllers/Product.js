@@ -2,8 +2,8 @@
 
 var server = require('server');
 var URLUtils = require('dw/web/URLUtils');
-var priceHelper = require('../scripts/helpers/pricing');
-var ProductFactory = require('../scripts/factories/product');
+var priceHelper = require('*/cartridge/scripts/helpers/pricing');
+var ProductFactory = require('*/cartridge/scripts/factories/product');
 var Resource = require('dw/web/Resource');
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var ProductMgr = require('dw/catalog/ProductMgr');
