@@ -361,7 +361,7 @@ function handlePostCartAdd(response) {
 
     setTimeout(function () {
         $('.add-to-basket-alert').remove();
-    }, 10000);
+    }, 5000);
 }
 
 /**
