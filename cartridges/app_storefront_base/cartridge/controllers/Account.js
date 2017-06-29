@@ -336,7 +336,7 @@ server.post(
             return next();
         }
 
-        var formErrors = require('~/cartridge/scripts/formErrors');
+        var formErrors = require('*/cartridge/scripts/formErrors');
 
         var profileForm = server.forms.getForm('profile');
 
@@ -450,7 +450,7 @@ server.post(
             return next();
         }
 
-        var formErrors = require('~/cartridge/scripts/formErrors');
+        var formErrors = require('*/cartridge/scripts/formErrors');
 
         var profileForm = server.forms.getForm('profile');
         var newPasswords = profileForm.login.newpasswords;
