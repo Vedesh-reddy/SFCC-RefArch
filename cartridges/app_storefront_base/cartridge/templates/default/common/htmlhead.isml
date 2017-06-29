@@ -16,7 +16,7 @@
 <meta name="keywords" content=" <isif condition="${!empty(pdict.CurrentPageMetaData.keywords)}">${pdict.CurrentPageMetaData.keywords}</isif> ${Resource.msg('global.storename','locale',null)}"/>
 
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/global.css')}" />
-<isloop items="${ require('~/cartridge/scripts/assets.js').styles }" var="style">
+<isloop items="${ require('*/cartridge/scripts/assets.js').styles }" var="style">
     <link rel="stylesheet" href="${style}" />
 </isloop>
 

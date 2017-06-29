@@ -1,6 +1,6 @@
 <isdecorate template="common/layout/page">
     <isscript>
-        var assets = require('~/cartridge/scripts/assets.js');
+        var assets = require('*/cartridge/scripts/assets.js');
         assets.addJs('/js/productTile.js');
         assets.addCss('/css/homePage.css');
     </isscript>
