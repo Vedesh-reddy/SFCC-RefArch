@@ -1,6 +1,6 @@
 <isdecorate template="common/layout/checkout">
     <isscript>
-        var assets = require('~/cartridge/scripts/assets.js');
+        var assets = require('*/cartridge/scripts/assets.js');
         assets.addCss('/css/checkout/checkoutLogin.css');
         assets.addJs('/js/checkoutLogin.js');
     </isscript>
