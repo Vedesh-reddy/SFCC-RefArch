@@ -13,15 +13,15 @@ function getModalHtmlElement() {
         + '<div class="modal fade" id="quickViewModal" role="dialog">'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
-        + '<div class="modal-content container">'
-        + '<div class="modal-header row">'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
         + '    <a class="full-pdp-link" href="">View Full Details</a>'
         + '    <button type="button" class="close pull-right" data-dismiss="modal">'
         + '        <span>Close</span>&times;'
         + '    </button>'
         + '</div>'
-        + '<div class="modal-body row"></div>'
-        + '<div class="modal-footer row"></div>'
+        + '<div class="modal-body"></div>'
+        + '<div class="modal-footer"></div>'
         + '</div>'
         + '</div>'
         + '</div>';
@@ -44,7 +44,7 @@ function parseHtml(html) {
     var $html = $('<div>').append($.parseHTML(html));
 
     var body = $html.find('.product-quickview');
-    var footer = $html.find('.modal-footer');
+    var footer = $html.find('.modal-footer').children();
 
     return { body: body, footer: footer };
 }
