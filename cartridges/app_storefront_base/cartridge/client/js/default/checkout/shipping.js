@@ -83,8 +83,9 @@ function updateShippingAddressFormValues(shipping) {
         $('input[name$=_address2]', form).val(shipping.shippingAddress.address2);
         $('input[name$=_city]', form).val(shipping.shippingAddress.city);
         $('input[name$=_postalCode]', form).val(shipping.shippingAddress.postalCode);
-        $('select[name$=_stateCode]', form).val(shipping.shippingAddress.stateCode);
-        $('select[name$=_countryCode]', form).val(shipping.shippingAddress.countryCode);
+        $('select[name$=_stateCode],input[name$=_stateCode]', form)
+            .val(shipping.shippingAddress.stateCode);
+        $('select[name$=_countryCode]', form).val(shipping.shippingAddress.countryCode.value);
         $('input[name$=_phone]', form).val(shipping.shippingAddress.phone);
     });
 }

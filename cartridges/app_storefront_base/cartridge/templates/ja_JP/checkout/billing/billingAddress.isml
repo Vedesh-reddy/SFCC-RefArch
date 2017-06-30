@@ -9,12 +9,14 @@
             <select class="form-control billingCountry" id="billingCountry"
                 <isprint value=${billingFields.country.attributes} encoding="off"/>
                 autocomplete="billing country">
+                    <option label=" "></option>
                     <isloop items=${billingFields.country.options} var="country">
                         <option id="${country.id}" value="${country.id}"
                             ${pdict.order.billing.billingAddress.address
                                 && country.id === pdict.order.billing.billingAddress.address.countryCode.value
                                 ? "selected"
                                 : "" }
+                            label="${country.label}"
                         >
                             ${country.htmlValue}
                         </option>
@@ -55,6 +57,7 @@
                                 && state.id === pdict.order.billing.billingAddress.address.stateCode
                                 ? "selected"
                                 : "" }
+                            label="${state.label}"
                         >
                             ${state.htmlValue}
                         </option>
@@ -100,7 +103,7 @@
 
 <div class="row">
     <div class="col-sm-12">
-        <div class="form-group 
+        <div class="form-group
             ${billingFields.address2.mandatory === true ? 'required' : ''}
             ${billingFields.address2.htmlName}">
             <label class="form-control-label" for="billingAddressTwo">${Resource.msg('field.billing.address.two','address',null)}</label>

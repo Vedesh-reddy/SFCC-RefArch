@@ -19,7 +19,8 @@
            regexp="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)"
            binding="postalCode"
            range-error="error.message.between5and10"
-           missing-error="error.message.required"/>
+           missing-error="error.message.required"
+           parse-error="error.message.parse.zip"/>
 
     <!-- use set of supported countries -->
     <field formid="country" label="label.input.country" type="string" mandatory="true" binding="countryCode"
@@ -34,8 +35,10 @@
 
     <!-- phone is mandatory for addresses -->
     <field formid="phone" label="label.input.phonenumber" description="address.phone.example" type="string" mandatory="true"
-           binding="phone" min-length="10" max-length="20" missing-error="error.message.required"
-           range-error="error.message.between10and20"/>
+           binding="phone" min-length="10" max-length="20"
+           missing-error="error.message.required"
+           range-error="error.message.between10and20"
+           parse-error="error.message.parse.phone"/>
 
     <!-- actions provided by the edit shipping address dialog -->
     <action formid="apply" valid-form="true"/>

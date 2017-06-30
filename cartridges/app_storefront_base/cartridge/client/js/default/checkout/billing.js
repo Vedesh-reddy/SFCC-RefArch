@@ -98,8 +98,9 @@ function updateBillingAddressFormValues(order) {
     $('input[name$=_address2]', form).val(billing.billingAddress.address.address2);
     $('input[name$=_city]', form).val(billing.billingAddress.address.city);
     $('input[name$=_postalCode]', form).val(billing.billingAddress.address.postalCode);
-    $('select[name$=_stateCode]', form).val(billing.billingAddress.address.stateCode);
-    $('select[name$=_countryCode]', form).val(billing.billingAddress.address.countryCode);
+    $('select[name$=_stateCode],input[name$=_stateCode]', form)
+        .val(billing.billingAddress.address.stateCode);
+    $('select[name$=_country]', form).val(billing.billingAddress.address.countryCode.value);
     $('input[name$=_phone]', form).val(billing.billingAddress.address.phone);
     $('input[name$=_email]', form).val(order.orderEmail);
 
