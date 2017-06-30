@@ -21,8 +21,8 @@ var Transaction = require('dw/system/Transaction');
 var AddressModel = require('*/cartridge/models/address');
 var formErrors = require('*/cartridge/scripts/formErrors');
 
-var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
-var ShippingHelper = require('~/cartridge/scripts/checkout/shippingHelpers');
+var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
+var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
 // static functions needed for Checkout Controller logic
 

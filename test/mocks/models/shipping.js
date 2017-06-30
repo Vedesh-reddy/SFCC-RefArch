@@ -12,11 +12,11 @@ var ShippingMgr = require('../dw/order/ShippingMgr');
 
 function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/shipping', {
-        '~/cartridge/models/address': AddressModel,
-        '~/cartridge/models/productLineItems': ProductLineItemsModel,
-        '~/cartridge/models/shipping/shippingMethod': ShippingMethodModel,
+        '*/cartridge/models/address': AddressModel,
+        '*/cartridge/models/productLineItems': ProductLineItemsModel,
+        '*/cartridge/models/shipping/shippingMethod': ShippingMethodModel,
         '*/cartridge/scripts/util/collections': collections,
-        '~/cartridge/scripts/util/formatting': {},
+        '*/cartridge/scripts/util/formatting': {},
         'dw/util/StringUtils': {
             formatMoney: function () {
                 return 'formattedMoney';

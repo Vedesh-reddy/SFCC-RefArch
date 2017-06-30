@@ -27,13 +27,13 @@ describe('productFactory', function () {
         'dw/campaign/PromotionMgr': {
             activeCustomerPromotions: { getProductPromotions: function () { return []; } }
         },
-        './../../models/product/product': productModel,
-        './../../models/product/productBase': function () { return { message: 'product base' }; },
-        './../../models/productLineItem/productLineItem': function () { return { message: 'productLineItem' }; },
-        './../../models/productLineItem/bundleLineItem': function () { return { message: 'bundleLineItem' }; },
-        './../../models/product/productBundle': function () { return { message: 'productBundle' }; },
-        './../../models/product/productSet': function () { return { message: 'productSet' }; },
-        './../../models/product/productSetBase': function () { return { message: 'productSetBase' }; }
+        '*/cartridge/models/product/product': productModel,
+        '*/cartridge/models/product/productBase': function () { return { message: 'product base' }; },
+        '*/cartridge/models/productLineItem/productLineItem': function () { return { message: 'productLineItem' }; },
+        '*/cartridge/models/productLineItem/bundleLineItem': function () { return { message: 'bundleLineItem' }; },
+        '*/cartridge/models/product/productBundle': function () { return { message: 'productBundle' }; },
+        '*/cartridge/models/product/productSet': function () { return { message: 'productSet' }; },
+        '*/cartridge/models/product/productSetBase': function () { return { message: 'productSetBase' }; }
     });
 
     it('should return full product model', function () {

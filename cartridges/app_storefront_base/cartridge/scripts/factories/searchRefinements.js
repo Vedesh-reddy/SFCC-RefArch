@@ -11,16 +11,16 @@ var collections = require('*/cartridge/scripts/util/collections');
  */
 function getAttributeRefinementValueModel(refinementDefinition) {
     if (refinementDefinition.priceRefinement) {
-        return require('~/cartridge/models/search/attributeRefinementValue/price');
+        return require('*/cartridge/models/search/attributeRefinementValue/price');
     } else if (refinementDefinition.attributeID === 'refinementColor') {
-        return require('~/cartridge/models/search/attributeRefinementValue/color');
+        return require('*/cartridge/models/search/attributeRefinementValue/color');
     } else if (refinementDefinition.attributeID === 'size') {
-        return require('~/cartridge/models/search/attributeRefinementValue/size');
+        return require('*/cartridge/models/search/attributeRefinementValue/size');
     } else if (refinementDefinition.categoryRefinement) {
-        return require('~/cartridge/models/search/attributeRefinementValue/category');
+        return require('*/cartridge/models/search/attributeRefinementValue/category');
     }
 
-    return require('~/cartridge/models/search/attributeRefinementValue/boolean');
+    return require('*/cartridge/models/search/attributeRefinementValue/boolean');
 }
 
 /**

@@ -1,6 +1,6 @@
 'use strict';
 
-var BaseAttributeValue = require('~/cartridge/models/search/attributeRefinementValue/base');
+var BaseAttributeValue = require('*/cartridge/models/search/attributeRefinementValue/base');
 var Resource = require('dw/web/Resource');
 
 

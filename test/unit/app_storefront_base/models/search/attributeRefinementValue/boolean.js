@@ -9,7 +9,7 @@ describe('BooleanAttributeValue model', function () {
     var booleanAttributeValue = {};
 
     var BooleanAttributeValue = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/boolean', {
-        '~/cartridge/models/search/attributeRefinementValue/base': proxyquire(
+        '*/cartridge/models/search/attributeRefinementValue/base': proxyquire(
             '../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
                 'dw/web/Resource': {
                     msgf: function () { return 'some product title'; }

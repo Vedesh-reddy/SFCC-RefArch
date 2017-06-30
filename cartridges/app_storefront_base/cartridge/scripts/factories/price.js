@@ -2,10 +2,10 @@
 
 var money = require('dw/value/Money');
 var collections = require('*/cartridge/scripts/util/collections');
-var priceHelper = require('../helpers/pricing');
-var DefaultPrice = require('../../models/price/default');
-var RangePrice = require('../../models/price/range');
-var TieredPrice = require('../../models/price/tiered');
+var priceHelper = require('*/cartridge/scripts/helpers/pricing');
+var DefaultPrice = require('*/cartridge/models/price/default');
+var RangePrice = require('*/cartridge/models/price/range');
+var TieredPrice = require('*/cartridge/models/price/tiered');
 var PROMOTION_CLASS_PRODUCT = require('dw/campaign/Promotion').PROMOTION_CLASS_PRODUCT;
 
 

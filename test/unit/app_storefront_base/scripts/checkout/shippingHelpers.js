@@ -12,7 +12,7 @@ var shippingHelpers = proxyquire('../../../../../cartridges/app_storefront_base/
 
     'dw/order/ShippingMgr': require('../../../../mocks/dw/order/ShippingMgr'),
 
-    '~/cartridge/models/shipping': require('../../../../mocks/models/shipping')
+    '*/cartridge/models/shipping': require('../../../../mocks/models/shipping')
 });
 
 function MockBasket() {}

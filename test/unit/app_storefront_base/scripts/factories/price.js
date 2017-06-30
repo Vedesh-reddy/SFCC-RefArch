@@ -22,7 +22,7 @@ describe('priceFactory', function () {
         '*/cartridge/scripts/util/collections': {
             find: mockCollections.find
         },
-        '../helpers/pricing': {
+        '*/cartridge/scripts/helpers/pricing': {
             getRootPriceBook: function () { return { ID: '123' }; }
         },
         'dw/campaign/PromotionMgr': {
@@ -30,9 +30,9 @@ describe('priceFactory', function () {
                 getProductPromotions: stubGetProductPromotions
             }
         },
-        '../../models/price/default': spyDefaultPrice,
-        '../../models/price/range': stubRangePrice,
-        '../../models/price/tiered': spyTieredPrice,
+        '*/cartridge/models/price/default': spyDefaultPrice,
+        '*/cartridge/models/price/range': stubRangePrice,
+        '*/cartridge/models/price/tiered': spyTieredPrice,
         'dw/campaign/Promotion': {
             PROMOTION_CLASS_PRODUCT: PROMOTION_CLASS_PRODUCT
         },

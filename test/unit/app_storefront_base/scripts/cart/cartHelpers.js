@@ -76,13 +76,13 @@ describe('cartHelpers', function () {
         '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
-        '~/cartridge/scripts/checkout/shippingHelpers': {},
+        '*/cartridge/scripts/checkout/shippingHelpers': {},
         'dw/system/Transaction': {
             wrap: function (item) {
                 item();
             }
         },
-        '~/cartridge/scripts/util/array': { find: findStub },
+        '*/cartridge/scripts/util/array': { find: findStub },
         'dw/web/Resource': {
             msg: function () {
                 return 'someString';
@@ -91,7 +91,7 @@ describe('cartHelpers', function () {
                 return 'someString';
             }
         },
-        '~/cartridge/scripts/helpers/productHelpers': {
+        '*/cartridge/scripts/helpers/productHelpers': {
             getOptions: function () {},
             getCurrentOptionModel: function () {}
         }

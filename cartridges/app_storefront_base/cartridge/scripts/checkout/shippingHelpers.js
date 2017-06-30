@@ -4,7 +4,7 @@ var collections = require('*/cartridge/scripts/util/collections');
 
 var ShippingMgr = require('dw/order/ShippingMgr');
 
-var ShippingModel = require('~/cartridge/models/shipping');
+var ShippingModel = require('*/cartridge/models/shipping');
 
 
 // Public (class) static model functions

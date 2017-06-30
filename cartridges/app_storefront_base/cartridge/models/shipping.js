@@ -2,9 +2,9 @@
 
 var ShippingMgr = require('dw/order/ShippingMgr');
 
-var AddressModel = require('~/cartridge/models/address');
-var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
-var ShippingMethodModel = require('~/cartridge/models/shipping/shippingMethod');
+var AddressModel = require('*/cartridge/models/address');
+var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
+var ShippingMethodModel = require('*/cartridge/models/shipping/shippingMethod');
 
 
 /**

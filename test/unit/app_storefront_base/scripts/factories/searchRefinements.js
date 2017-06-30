@@ -14,11 +14,11 @@ var mockGetCategory = sinon.stub();
 var searchRefinements = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/searchRefinements', {
     'dw/catalog/CatalogMgr': { getCategory: mockGetCategory },
     '*/cartridge/scripts/util/collections': mockCollections,
-    '~/cartridge/models/search/attributeRefinementValue/price': mockPriceRefinementValue,
-    '~/cartridge/models/search/attributeRefinementValue/color': mockColorRefinementValue,
-    '~/cartridge/models/search/attributeRefinementValue/size': mockSizeRefinementValue,
-    '~/cartridge/models/search/attributeRefinementValue/boolean': mockBooleanRefinementValue,
-    '~/cartridge/models/search/attributeRefinementValue/category': function (temp1, temp2, category) {
+    '*/cartridge/models/search/attributeRefinementValue/price': mockPriceRefinementValue,
+    '*/cartridge/models/search/attributeRefinementValue/color': mockColorRefinementValue,
+    '*/cartridge/models/search/attributeRefinementValue/size': mockSizeRefinementValue,
+    '*/cartridge/models/search/attributeRefinementValue/boolean': mockBooleanRefinementValue,
+    '*/cartridge/models/search/attributeRefinementValue/category': function (temp1, temp2, category) {
         return {
             online: true,
             name: category.name,

@@ -9,7 +9,7 @@ var Template = require('dw/util/Template');
 var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
 
-var OrderModel = require('~/cartridge/models/order');
+var OrderModel = require('*/cartridge/models/order');
 
 /**
 * Returns a list of orders for the current customer

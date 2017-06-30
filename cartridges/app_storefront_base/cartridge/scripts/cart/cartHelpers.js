@@ -4,9 +4,9 @@ var ProductMgr = require('dw/catalog/ProductMgr');
 var Resource = require('dw/web/Resource');
 
 var collections = require('*/cartridge/scripts/util/collections');
-var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
-var productHelper = require('~/cartridge/scripts/helpers/productHelpers');
-var arrayHelper = require('~/cartridge/scripts/util/array');
+var ShippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
+var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
+var arrayHelper = require('*/cartridge/scripts/util/array');
 
 /**
  * @typedef ProductOption
