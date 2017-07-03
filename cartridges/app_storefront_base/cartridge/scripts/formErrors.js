@@ -8,7 +8,7 @@ module.exports = function getFormErrors(form) {
     }
     Object.keys(form).forEach(function (key) {
         if (form[key]) {
-            if (form[key].formType === 'formField' && form[key].error) {
+            if (form[key].formType === 'formField' && !form[key].valid) {
                 results[form[key].htmlName] = form[key].error;
             }
             if (form[key].formType === 'formGroup') {

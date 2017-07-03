@@ -1,4 +1,4 @@
-<form 
+<form
     action="${URLUtils.url('Address-SaveAddress', 'addressId', pdict.addressId)}"
     class="address-form"
     method="POST"
@@ -27,13 +27,13 @@
                     <isprint value="${pdict.addressForm.country.attributes}" encoding="off" />
                     autocomplete="country">
                     <isloop items=${pdict.addressForm.country.options} var="country">
-                        <option id="${country.id}" <isif condition="${country.selected}">selected</isif>>${country.htmlValue}</option>
+                        <option id="${country.id}" <isif condition="${country.selected}">selected</isif> label="${country.label}">${country.htmlValue}</option>
                     </isloop>
                 </select>
                 <div class="form-control-feedback"></div>
             </div>
         </div>
-        
+
         <!-- ZIP Code -->
         <div class="col-6">
             <div class="form-group
@@ -63,7 +63,7 @@
                     <isprint value="${pdict.addressForm.states.stateCode.attributes}" encoding="off" />
                     autocomplete="region">
                     <isloop items=${pdict.addressForm.states.stateCode.options} var="state">
-                        <option id="${state.id}" <isif condition="${state.selected}">selected</isif>>${state.htmlValue}</option>
+                        <option id="${state.id}" <isif condition="${state.selected}">selected</isif> label="${state.label}">${state.htmlValue}</option>
                     </isloop>
                 </select>
                 <div class="form-control-feedback"></div>
@@ -84,7 +84,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Address 1 -->
     <div class="form-group
         ${pdict.addressForm.address1.mandatory === true ? 'required' : ''}">
@@ -108,7 +108,7 @@
             autocomplete="billing address-line2">
         <div class="form-control-feedback"></div>
     </div>
-    
+
     <!-- Name -->
     <div class="row">
         <!-- Last Name -->
@@ -139,7 +139,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Phone Number -->
     <div class="form-group
         ${pdict.addressForm.phone.mandatory === true ? 'required' : ''}">

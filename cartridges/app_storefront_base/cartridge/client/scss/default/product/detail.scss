@@ -10,7 +10,8 @@
     @include swatch(2.5em, $white);
 }
 
-.product-detail [disabled] .swatch-circle {
+.product-detail [disabled] .swatch-circle,
+.product-detail .swatch-circle.unselectable {
     cursor: not-allowed;
 
     &.color-value.selected::after {

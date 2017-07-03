@@ -19,7 +19,8 @@
            regexp="(^([0-9]){3}[-]([0-9]){4}$)"
            binding="postalCode"
            range-error="error.message.between5and10"
-           missing-error="error.message.required"/>
+           missing-error="error.message.required"
+           parse-error="error.message.parse.zip"/>
 
     <!-- use set of supported countries -->
     <field formid="country" label="label.input.country" type="string" mandatory="true" binding="countryCode"
@@ -28,14 +29,17 @@
             <option optionid="jp" label="select.option.country.japan" value="jp"/>
         </options>
     </field>
-    
+
     <!-- use global state list -->
     <include formid="states" name="states"/>
 
     <!-- phone is mandatory for addresses -->
     <field formid="phone" label="label.input.phonenumber" description="address.phone.example" type="string" mandatory="true"
-           binding="phone" min-length="10" max-length="20" missing-error="error.message.required"
-           range-error="error.message.between10and20" regexp="(^(0\d{1,4}- ?)?\d{1,4}-\d{4}$)"/>
+           binding="phone" min-length="10" max-length="20"
+           missing-error="error.message.required"
+           range-error="error.message.between10and20"
+           parse-error="error.message.parse.phone"
+           regexp="(^(0\d{1,4}- ?)?\d{1,4}-\d{4}$)"/>
 
     <!-- actions provided by the edit shipping address dialog -->
     <action formid="apply" valid-form="true"/>
