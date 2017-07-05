@@ -19,7 +19,10 @@ describe('billingForm', function () {
             method: 'POST',
             rejectUnauthorized: false,
             resolveWithFullResponse: true,
-            jar: cookieJar
+            jar: cookieJar,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         };
 
         before(function () {

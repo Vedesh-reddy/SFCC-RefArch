@@ -2,14 +2,14 @@
 
 var Resource = require('dw/web/Resource');
 
-var AddressModel = require('~/cartridge/models/address');
-var BillingModel = require('~/cartridge/models/billing');
-var PaymentModel = require('~/cartridge/models/payment');
-var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
-var TotalsModel = require('~/cartridge/models/totals');
+var AddressModel = require('*/cartridge/models/address');
+var BillingModel = require('*/cartridge/models/billing');
+var PaymentModel = require('*/cartridge/models/payment');
+var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
+var TotalsModel = require('*/cartridge/models/totals');
 
-var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
-var COHelpers = require('~/cartridge/scripts/checkout/checkoutHelpers');
+var ShippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
+var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
 var DEFAULT_MODEL_CONFIG = {
     numberOfLineItems: '*'

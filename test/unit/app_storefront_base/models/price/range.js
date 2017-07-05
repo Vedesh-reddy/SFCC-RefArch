@@ -8,7 +8,7 @@ var sinon = require('sinon');
 describe('Range Price Model', function () {
     var defaultPrice = sinon.spy();
     var RangePrice = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/price/range.js', {
-        './default': defaultPrice
+        '*/cartridge/models/price/default': defaultPrice
     });
     var minPrice = '$5';
     var maxPrice = '$15';

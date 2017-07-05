@@ -26,6 +26,9 @@ describe('Remove bundle from product line item', function () {
             childProducts: childProducts,
             quantity: qty,
             options: []
+        },
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
         }
     };
 

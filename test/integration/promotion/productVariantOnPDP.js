@@ -15,7 +15,10 @@ describe('Product Variant Promotion on Product Details Page', function () {
     var myGetRequest = {
         url: '',
         method: 'GET',
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
 
     it('should return a response containing promotion message and sale price ', function (done) {

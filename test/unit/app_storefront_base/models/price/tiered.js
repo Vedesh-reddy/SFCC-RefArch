@@ -34,7 +34,7 @@ describe('Tiered Price Model', function () {
     };
     var TieredPrice = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/price/tiered.js', {
         '*/cartridge/scripts/util/collections': { map: mockCollections.map },
-        './default': stubDefaultPrice
+        '*/cartridge/models/price/default': stubDefaultPrice
     });
 
     afterEach(function () {

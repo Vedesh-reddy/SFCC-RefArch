@@ -1,6 +1,6 @@
 'use strict';
 
-var ProductLineItem = require('./productLineItem').productLineItem;
+var ProductLineItem = require('*/cartridge/models/productLineItem/productLineItem').productLineItem;
 var collections = require('*/cartridge/scripts/util/collections');
 
 /**

@@ -1,6 +1,6 @@
 'use strict';
 
-var ProductBase = require('./productBase').productBase;
+var ProductBase = require('*/cartridge/models/product/productBase').productBase;
 var collections = require('*/cartridge/scripts/util/collections');
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;

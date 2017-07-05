@@ -8,10 +8,10 @@ var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 var PromotionMgr = require('dw/campaign/PromotionMgr');
 
-var TotalsModel = require('~/cartridge/models/totals');
-var ProductLineItemsModel = require('~/cartridge/models/productLineItems');
+var TotalsModel = require('*/cartridge/models/totals');
+var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 
-var ShippingHelpers = require('~/cartridge/scripts/checkout/shippingHelpers');
+var ShippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
 
 /**
  * Generates an object of approaching discounts

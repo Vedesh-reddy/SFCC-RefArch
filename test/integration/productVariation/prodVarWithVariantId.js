@@ -13,7 +13,10 @@ describe('ProductVariation - Get product variation with variant ID', function ()
     var myGetRequest = {
         url: '',
         method: 'GET',
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
 
     it('should returns variant for the selected attributes', function (done) {

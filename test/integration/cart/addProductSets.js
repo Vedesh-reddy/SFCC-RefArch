@@ -36,6 +36,9 @@ describe('Add Product Set to cart', function () {
             jar: cookieJar,
             form: {
                 pidsObj: pidsObjString
+            },
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
             }
         };
 

@@ -16,7 +16,10 @@ describe('ProductVariation - Get product variation with master product ID and al
     var myGetRequest = {
         url: '',
         method: 'GET',
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
 
     it('should returns variant for the selected attributes', function (done) {

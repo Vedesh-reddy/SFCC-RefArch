@@ -2,9 +2,9 @@
 
 var collections = require('*/cartridge/scripts/util/collections');
 var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
-var VariationAttributesModel = require('./productAttributes');
-var ImageModel = require('./productImages');
-var priceFactory = require('../../scripts/factories/price');
+var VariationAttributesModel = require('*/cartridge/models/product/productAttributes');
+var ImageModel = require('*/cartridge/models/product/productImages');
+var priceFactory = require('*/cartridge/scripts/factories/price');
 var Resource = require('dw/web/Resource');
 
 /**

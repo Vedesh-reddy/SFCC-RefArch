@@ -7,13 +7,13 @@ var toProductMock = require('../../../../util');
 
 describe('bundleProduct', function () {
     var ProductBundle = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBundle', {
-        './productBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
-            './productImages': function () {},
-            './productAttributes': function () { return []; },
+        '*/cartridge/models/product/productBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
+            '*/cartridge/models/product/productImages': function () {},
+            '*/cartridge/models/product/productAttributes': function () { return []; },
             '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
                 'dw/util/ArrayList': ArrayList
             }),
-            '../../scripts/factories/price': { getPrice: function () {} },
+            '*/cartridge/scripts/factories/price': { getPrice: function () {} },
             'dw/web/Resource': {
                 msgf: function () { return 'some string with param'; },
                 msg: function () { return 'some string'; }

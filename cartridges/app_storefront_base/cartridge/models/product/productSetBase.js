@@ -1,9 +1,9 @@
 'use strict';
 
-var base = require('./productBase');
+var base = require('*/cartridge/models/product/productBase');
 var ProductBase = base.productBase;
 var collections = require('*/cartridge/scripts/util/collections');
-var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurrency;
+var formatCurrency = require('*/cartridge/scripts/util/formatting').formatCurrency;
 
 /**
  * Returns the products in the set

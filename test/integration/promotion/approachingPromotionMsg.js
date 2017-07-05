@@ -30,21 +30,30 @@ describe('Approaching order level promotion', function () {
         method: 'GET',
         rejectUnauthorized: false,
         resolveWithFullResponse: true,
-        jar: cookieJar
+        jar: cookieJar,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
     var myNewRequest = {
         url: '',
         method: 'GET',
         rejectUnauthorized: false,
         resolveWithFullResponse: true,
-        jar: cookieJar
+        jar: cookieJar,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
     var myShippingRequest = {
         url: '',
         method: 'POST',
         rejectUnauthorized: false,
         resolveWithFullResponse: true,
-        jar: cookieJar
+        jar: cookieJar,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
     var orderDiscountMsg = 'Purchase $24.00 or more and receive 20% off on your order';
     var shippingDiscountMsg = 'Purchase $24.00 or more and receive Free Shipping with USPS (7-10 Business Days)';

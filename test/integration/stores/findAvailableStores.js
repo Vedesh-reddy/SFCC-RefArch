@@ -24,7 +24,10 @@ describe('Find available stores for products', function () {
             method: 'POST',
             rejectUnauthorized: false,
             resolveWithFullResponse: true,
-            jar: cookieJar
+            jar: cookieJar,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         };
 
         var cookieString;
@@ -112,7 +115,10 @@ describe('Find available stores for products', function () {
             method: 'POST',
             rejectUnauthorized: false,
             resolveWithFullResponse: true,
-            jar: cookieJar
+            jar: cookieJar,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         };
 
         var cookieString;
@@ -212,7 +218,10 @@ describe('Find available stores for products', function () {
             method: 'POST',
             rejectUnauthorized: false,
             resolveWithFullResponse: true,
-            jar: cookieJar
+            jar: cookieJar,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         };
 
         var cookieString;
@@ -292,7 +301,10 @@ describe('Find available stores for products', function () {
             method: 'POST',
             rejectUnauthorized: false,
             resolveWithFullResponse: true,
-            jar: cookieJar
+            jar: cookieJar,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         };
 
         var cookieString;
@@ -377,7 +389,10 @@ describe('Find available stores for products', function () {
             method: 'POST',
             rejectUnauthorized: false,
             resolveWithFullResponse: true,
-            jar: cookieJar
+            jar: cookieJar,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
         };
 
         var cookieString;

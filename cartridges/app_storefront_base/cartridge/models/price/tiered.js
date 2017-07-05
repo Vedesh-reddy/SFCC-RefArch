@@ -1,6 +1,6 @@
 'use strict';
 
-var DefaultPrice = require('./default');
+var DefaultPrice = require('*/cartridge/models/price/default');
 var collections = require('*/cartridge/scripts/util/collections');
 
 /**

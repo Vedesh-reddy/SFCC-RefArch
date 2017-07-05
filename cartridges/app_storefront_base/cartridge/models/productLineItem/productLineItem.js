@@ -1,8 +1,8 @@
 'use strict';
 
 var formatMoney = require('dw/util/StringUtils').formatMoney;
-var ProductBase = require('./../product/productBase').productBase;
-var renderTemplateHelper = require('~/cartridge/scripts/renderTemplateHelper');
+var ProductBase = require('*/cartridge/models/product/productBase').productBase;
+var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 var collections = require('*/cartridge/scripts/util/collections');
 var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
 

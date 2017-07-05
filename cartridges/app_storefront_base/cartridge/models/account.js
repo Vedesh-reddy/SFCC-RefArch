@@ -1,6 +1,6 @@
 'use strict';
 
-var AddressModel = require('~/cartridge/models/address');
+var AddressModel = require('*/cartridge/models/address');
 var URLUtils = require('dw/web/URLUtils');
 
 /**

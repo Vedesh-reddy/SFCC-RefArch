@@ -1,7 +1,7 @@
 'use strict';
 
 var collections = require('*/cartridge/scripts/util/collections');
-var ProductFactory = require('../scripts/factories/product');
+var ProductFactory = require('*/cartridge/scripts/factories/product');
 
 /**
  * Creates an array of product line items

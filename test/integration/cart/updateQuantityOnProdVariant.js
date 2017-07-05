@@ -21,7 +21,10 @@ describe('Update quantity for product variant', function () {
         method: 'POST',
         rejectUnauthorized: false,
         resolveWithFullResponse: true,
-        jar: cookieJar
+        jar: cookieJar,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
 
     var cookieString;

@@ -12,7 +12,10 @@ describe('Store Locator', function () {
             var myRequest = {
                 url: url,
                 method: 'GET',
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             };
             var ExpectedResBody = {
                 'stores': [
@@ -127,7 +130,10 @@ describe('Store Locator', function () {
             var myRequest = {
                 url: url,
                 method: 'GET',
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             };
             var ExpectedResBody = {
                 'stores': [],
@@ -155,7 +161,10 @@ describe('Store Locator', function () {
             var myRequest = {
                 url: url,
                 method: 'GET',
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             };
             var ExpectedResBody = {
                 'stores': [],
@@ -178,7 +187,10 @@ describe('Store Locator', function () {
             var myRequest = {
                 url: url,
                 method: 'GET',
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             };
             var ExpectedResBody = {
                 'stores': [],
@@ -203,7 +215,10 @@ describe('Store Locator', function () {
             var myRequest = {
                 url: url,
                 method: 'GET',
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             };
             var ExpectedResBody = {
                 'stores': [
@@ -287,7 +302,10 @@ describe('Store Locator', function () {
             var myRequest = {
                 url: url,
                 method: 'GET',
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             };
             var ExpectedResBody = {
                 'stores': [],
@@ -310,7 +328,10 @@ describe('Store Locator', function () {
             var myRequest = {
                 url: url,
                 method: 'GET',
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             };
             var ExpectedResBody = {
                 'stores': [],
@@ -337,7 +358,10 @@ describe('Store Locator', function () {
             var myRequest = {
                 url: url,
                 method: 'GET',
-                rejectUnauthorized: false
+                rejectUnauthorized: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
             };
 
             request(myRequest, function (error, response) {

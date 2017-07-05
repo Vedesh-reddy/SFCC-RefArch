@@ -7,7 +7,7 @@ var collections = require('../util/collections');
 function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/productLineItems', {
         '*/cartridge/scripts/util/collections': collections,
-        '../scripts/factories/product': { get: function () { return 'productLineItem'; } }
+        '*/cartridge/scripts/factories/product': { get: function () { return 'productLineItem'; } }
     });
 }
 

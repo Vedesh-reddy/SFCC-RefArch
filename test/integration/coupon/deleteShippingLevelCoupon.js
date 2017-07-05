@@ -17,7 +17,10 @@ describe('Shipping Level Coupon -  remove coupon', function () {
         method: 'POST',
         rejectUnauthorized: false,
         resolveWithFullResponse: true,
-        jar: cookieJar
+        jar: cookieJar,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
 
     myRequest.url = config.baseUrl + '/Cart-AddProduct';

@@ -66,7 +66,7 @@ function createShipmentShippingModel() {
 
 function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/models/shipping/shippingMethod', {
-        '~/cartridge/scripts/util/formatting': {
+        '*/cartridge/scripts/util/formatting': {
             formatCurrency: function () {
                 return '$0.00';
             }

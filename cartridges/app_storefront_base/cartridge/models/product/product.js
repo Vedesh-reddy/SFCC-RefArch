@@ -1,6 +1,6 @@
 'use strict';
 
-var base = require('./productBase');
+var base = require('*/cartridge/models/product/productBase');
 var ProductBase = base.productBase;
 var URLUtils = require('dw/web/URLUtils');
 var productHelper = require('*/cartridge/scripts/helpers/productHelpers');

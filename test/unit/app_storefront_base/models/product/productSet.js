@@ -7,14 +7,14 @@ var toProductMock = require('../../../../util');
 
 describe('productSet', function () {
     var ProductSet = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productSet', {
-        './productSetBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productSetBase', {
-            './productBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
-                './productImages': function () {},
-                './productAttributes': function () { return []; },
+        '*/cartridge/models/product/productSetBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productSetBase', {
+            '*/cartridge/models/product/productBase': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productBase', {
+                '*/cartridge/models/product/productImages': function () {},
+                '*/cartridge/models/product/productAttributes': function () { return []; },
                 '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
                     'dw/util/ArrayList': ArrayList
                 }),
-                '../../scripts/factories/price': { getPrice: function () {} },
+                '*/cartridge/scripts/factories/price': { getPrice: function () {} },
                 'dw/web/Resource': {
                     msgf: function (params) { return params; },
                     msg: function (params) { return params; }
@@ -26,7 +26,7 @@ describe('productSet', function () {
             '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
                 'dw/util/ArrayList': ArrayList
             }),
-            '~/cartridge/scripts/util/formatting': {
+            '*/cartridge/scripts/util/formatting': {
                 formatCurrency: function () {
                     return 'formatted money';
                 }

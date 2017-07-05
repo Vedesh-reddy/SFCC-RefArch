@@ -18,7 +18,10 @@ describe('Cart: Selecting Shipping Methods', function () {
         form: {},
         rejectUnauthorized: false,
         resolveWithFullResponse: true,
-        jar: cookieJar
+        jar: cookieJar,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
 
     var cookieString;

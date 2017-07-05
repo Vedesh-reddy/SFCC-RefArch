@@ -21,6 +21,9 @@ describe('Add one Simple Product with Options to Cart', function () {
                 childProducts: [],
                 quantity: quantity,
                 options: optionsString
+            },
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
             }
         };
 

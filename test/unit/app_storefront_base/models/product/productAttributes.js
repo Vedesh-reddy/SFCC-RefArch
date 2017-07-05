@@ -7,7 +7,7 @@ var toProductMock = require('../../../../util');
 
 describe('productAttributes', function () {
     var ProductAttributes = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/product/productAttributes', {
-        './productImages': function () {},
+        '*/cartridge/models/product/productImages': function () {},
         '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),

@@ -19,7 +19,10 @@ describe('Search As You Type - general product', function () {
     var myRequest = {
         url: '',
         method: 'GET',
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
 
     it('should remove line item', function (done) {

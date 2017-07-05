@@ -2,7 +2,7 @@
 
 var collections = require('*/cartridge/scripts/util/collections');
 var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
-var ImageModel = require('./productImages');
+var ImageModel = require('*/cartridge/models/product/productImages');
 
 /**
  * Determines whether a product attribute has image swatches.  Currently, the only attribute that

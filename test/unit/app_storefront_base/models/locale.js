@@ -6,7 +6,7 @@ var allowedLocales;
 
 describe('locale', function () {
     var LocaleModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/locale', {
-        '~/cartridge/models/countries': [{
+        '*/cartridge/models/countries': [{
             'id': 'en_US',
             'currencyCode': 'USD'
         }, {

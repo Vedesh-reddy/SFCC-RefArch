@@ -56,9 +56,9 @@ function proxyModel() {
                 };
             }
         },
-        '~/cartridge/models/totals': TotalsModel,
-        '~/cartridge/models/productLineItems': ProductLineItemsModel,
-        '~/cartridge/scripts/checkout/shippingHelpers': ShippingHelpers,
+        '*/cartridge/models/totals': TotalsModel,
+        '*/cartridge/models/productLineItems': ProductLineItemsModel,
+        '*/cartridge/scripts/checkout/shippingHelpers': ShippingHelpers,
         'dw/web/URLUtils': URLUtils,
         'dw/util/StringUtils': {
             formatMoney: function () {

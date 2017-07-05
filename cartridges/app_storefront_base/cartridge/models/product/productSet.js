@@ -1,6 +1,6 @@
 'use strict';
 
-var ProductSetBase = require('./productSetBase').productSetBase;
+var ProductSetBase = require('*/cartridge/models/product/productSetBase').productSetBase;
 
 var DEFAULT_MAX_ORDER_QUANTITY = 9;
 

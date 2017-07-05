@@ -10,7 +10,10 @@ describe('ProductVariation - Get product variation with only master product ID',
     var myGetRequest = {
         url: '',
         method: 'GET',
-        rejectUnauthorized: false
+        rejectUnauthorized: false,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
     };
 
     it('should returns master product details and variant attributes', function (done) {

@@ -2,7 +2,7 @@
 
 var ShippingMgr = require('dw/order/ShippingMgr');
 
-var formatCurrency = require('~/cartridge/scripts/util/formatting').formatCurrency;
+var formatCurrency = require('*/cartridge/scripts/util/formatting').formatCurrency;
 
 /**
  * Returns shippingCost property for a specific Shipment / ShippingMethod pair

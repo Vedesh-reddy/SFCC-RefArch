@@ -29,18 +29,18 @@ function proxyModel() {
             }
         },
         'dw/system/HookMgr': function () {},
-        '~/cartridge/models/address': AddressModel,
-        '~/cartridge/models/billing': BillingModel,
-        '~/cartridge/models/shipping': ShippingModel,
-        '~/cartridge/models/payment': PaymentModel,
-        '~/cartridge/models/totals': TotalsModel,
-        '~/cartridge/models/productLineItems': ProductLineItemsModel,
-        '~/cartridge/scripts/checkout/shippingHelpers': {
+        '*/cartridge/models/address': AddressModel,
+        '*/cartridge/models/billing': BillingModel,
+        '*/cartridge/models/shipping': ShippingModel,
+        '*/cartridge/models/payment': PaymentModel,
+        '*/cartridge/models/totals': TotalsModel,
+        '*/cartridge/models/productLineItems': ProductLineItemsModel,
+        '*/cartridge/scripts/checkout/shippingHelpers': {
             getShippingModels: function () {
                 return ['shipping model'];
             }
         },
-        '~/cartridge/scripts/checkout/checkoutHelpers': {
+        '*/cartridge/scripts/checkout/checkoutHelpers': {
             isPickUpInStore: function () {
                 return false;
             }
