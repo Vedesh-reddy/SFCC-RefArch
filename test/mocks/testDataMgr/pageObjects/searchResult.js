@@ -42,3 +42,10 @@ export const sortOrderProductAtoZ = '.custom-select option:nth-child(3)';
 export const buttonClose = '.close';
 export const size8RefinementSelector = refinementBarSizeActive + valuesContent8 + faSquareO;
 export const size8RefinementBrowser = '.refinement-size' + valuesContent8 + faSquareO;
+
+// search as you type
+export const suggestionsContainer = '.suggestions .container';
+export const suggestionsHeader = '.justify-content-end.header';
+export const suggestionsItem = '.justify-content-end.items';
+export const suggestionsHref = suggestionsItem + ' .name a';
+export const suggestionsSrc = suggestionsItem + ' img';
