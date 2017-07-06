@@ -5,7 +5,7 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 var mockCollections = require('../../../../mocks/util/collections');
 
-describe.only('ProductSearch model', function () {
+describe('ProductSearch model', function () {
     var endpointSearchShow = 'Search-Show';
     var endpointSearchUpdateGrid = 'Search-UpdateGrid';
     var pluckValue = 'plucked';
