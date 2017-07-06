@@ -39,7 +39,7 @@ function getCategoryTemplate(apiProductSearch) {
     return apiProductSearch.category ? apiProductSearch.category.template : '';
 }
 
-server.get('UpdateGrid', cache.applyPromotionSenstiveCache, function (req, res, next) {
+server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var apiProductSearch = new ProductSearchModel();
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
@@ -58,7 +58,7 @@ server.get('UpdateGrid', cache.applyPromotionSenstiveCache, function (req, res, 
     next();
 });
 
-server.get('Show', cache.applyPromotionSenstiveCache, function (req, res, next) {
+server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var categoryTemplate = '';
     var productSearch;
     var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')
