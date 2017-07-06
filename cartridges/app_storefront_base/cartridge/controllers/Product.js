@@ -90,12 +90,12 @@ function showProductPage(querystring, res) {
     });
 }
 
-server.get('Show', cache.applyPromotionSenstiveCache, function (req, res, next) {
+server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
     showProductPage(req.querystring, res);
     next();
 });
 
-server.get('ShowInCategory', cache.applyPromotionSenstiveCache, function (req, res, next) {
+server.get('ShowInCategory', cache.applyPromotionSensitiveCache, function (req, res, next) {
     showProductPage(req.querystring, res);
     next();
 });
@@ -121,7 +121,7 @@ server.get('Variation', function (req, res, next) {
     next();
 });
 
-server.get('ShowTile', cache.applyPromotionSenstiveCache, function (req, res, next) {
+server.get('ShowTile', cache.applyPromotionSensitiveCache, function (req, res, next) {
     // The req parameter has a property called querystring. In this use case the querystring could
     // have the following:
     // pid - the Product ID
@@ -179,7 +179,7 @@ server.get('ShowTile', cache.applyPromotionSenstiveCache, function (req, res, ne
     next();
 });
 
-server.get('ShowQuickView', cache.applyPromotionSenstiveCache, function (req, res, next) {
+server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
