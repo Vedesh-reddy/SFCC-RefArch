@@ -4,6 +4,7 @@ var collections = require('*/cartridge/scripts/util/collections');
 var searchRefinementsFactory = require('*/cartridge/scripts/factories/searchRefinements');
 var URLUtils = require('dw/web/URLUtils');
 var ProductSortOptions = require('*/cartridge/models/search/productSortOptions');
+var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
 
 var ACTION_ENDPOINT = 'Search-Show';
 var DEFAULT_PAGE_SIZE = 12;
@@ -101,7 +102,7 @@ function getPagingModel(productHits, count, pageSize, startIndex) {
     var paging = new PagingModel(productHits, count);
 
     paging.setStart(startIndex || 0);
-    paging.setPageSize(pageSize);
+    paging.setPageSize(pageSize || DEFAULT_PAGE_SIZE);
 
     return paging;
 }
@@ -118,17 +119,26 @@ function getShowMoreUrl(productSearch, httpParams) {
     var currentStart = httpParams.start || 0;
     var pageSize = httpParams.sz || DEFAULT_PAGE_SIZE;
     var hitsCount = productSearch.count;
+    var nextStart;
+
     var paging = getPagingModel(
         productSearch.productSearchHits,
         hitsCount,
-        pageSize,
+        DEFAULT_PAGE_SIZE,
         currentStart
     );
-    var endIdx = paging.getEnd();
-    var nextStart = endIdx + 1 < hitsCount ? endIdx + 1 : null;
 
-    if (!nextStart) {
+    if (pageSize > hitsCount) {
         return '';
+    } else if (pageSize > DEFAULT_PAGE_SIZE) {
+        nextStart = pageSize;
+    } else {
+        var endIdx = paging.getEnd();
+        nextStart = endIdx + 1 < hitsCount ? endIdx + 1 : null;
+
+        if (!nextStart) {
+            return '';
+        }
     }
 
     paging.setStart(nextStart);
@@ -136,6 +146,22 @@ function getShowMoreUrl(productSearch, httpParams) {
     var baseUrl = productSearch.url(showMoreEndpoint);
     var finalUrl = paging.appendPaging(baseUrl);
     return finalUrl;
+}
+
+/**
+ * Forms a URL that can be used as a permalink with filters, sort, and page size preserved
+ *
+ * @param {dw.catalog.ProductSearchModel} productSearch - Product search object
+ * @param {number} pageSize - 'sz' query param
+ * @param {number} startIdx - 'start' query param
+ * @return {string} - Permalink URL
+ */
+function getPermalink(productSearch, pageSize, startIdx) {
+    var showMoreEndpoint = 'Search-Show';
+    var params = { start: '0', sz: pageSize + startIdx };
+    var url = productSearch.url(showMoreEndpoint).toString();
+    var appended = urlHelper.appendQueryParams(url, params).toString();
+    return appended;
 }
 
 /**
@@ -150,7 +176,7 @@ function getShowMoreUrl(productSearch, httpParams) {
  * @param {dw.catalog.Category} rootCategory - Search result's root category if applicable
  */
 function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, rootCategory) {
-    this.pageSize = httpParams.sz || DEFAULT_PAGE_SIZE;
+    this.pageSize = parseInt(httpParams.sz, 10) || DEFAULT_PAGE_SIZE;
 
     var startIdx = httpParams.start || 0;
     var paging = getPagingModel(
@@ -160,6 +186,7 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
         startIdx
     );
 
+    this.pageNumber = paging.currentPage;
     this.count = productSearch.count;
     this.isCategorySearch = productSearch.categorySearch;
     this.isRefinedCategorySearch = productSearch.refinedCategorySearch;
@@ -186,6 +213,11 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
         paging
     );
     this.showMoreUrl = getShowMoreUrl(productSearch, httpParams);
+    this.permalink = getPermalink(
+        productSearch,
+        parseInt(this.pageSize, 10),
+        parseInt(startIdx, 10)
+    );
 
     if (productSearch.category) {
         this.category = {

@@ -125,6 +125,7 @@ module.exports = {
             $(this).trigger('search:sort', this.value);
             $.ajax({
                 url: this.value,
+                data: { selectedUrl: this.value },
                 method: 'GET',
                 success: function (response) {
                     $('.product-grid').empty().html(response);
@@ -149,6 +150,7 @@ module.exports = {
             $(this).trigger('search:showMore', e);
             $.ajax({
                 url: showMoreUrl,
+                data: { selectedUrl: showMoreUrl },
                 method: 'GET',
                 success: function (response) {
                     $('.grid-footer').replaceWith(response);
@@ -171,6 +173,10 @@ module.exports = {
             $(this).trigger('search:filter', e);
             $.ajax({
                 url: e.currentTarget.href,
+                data: {
+                    page: $('.grid-footer').data('page-number'),
+                    selectedUrl: e.currentTarget.href
+                },
                 method: 'GET',
                 success: function (response) {
                     parseResults(response);

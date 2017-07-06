@@ -48,7 +48,7 @@ describe('Bundle Product Line Item', function () {
         '*/cartridge/scripts/util/collections': proxyquire('../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
-        '*/cartridge/models/product/productLineItem': ProductLineItem
+        '*/cartridge/models/productLineItem/productLineItem': ProductLineItem
     });
 
     var productFactoryMock = {

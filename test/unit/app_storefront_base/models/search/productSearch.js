@@ -5,14 +5,17 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 var mockCollections = require('../../../../mocks/util/collections');
 
-describe('ProductSearch model', function () {
+describe.only('ProductSearch model', function () {
     var endpointSearchShow = 'Search-Show';
-    var endpointShowMore = 'Search-UpdateGrid';
+    var endpointSearchUpdateGrid = 'Search-UpdateGrid';
     var pluckValue = 'plucked';
     var spySetPageSize = sinon.spy();
     var spySetStart = sinon.spy();
     var stubAppendPaging = sinon.stub();
     var stubGetPageSize = sinon.stub();
+    var stubAppendQueryParams = sinon.stub();
+    stubAppendQueryParams.returns({ toString: function () {} });
+
     var defaultPageSize = 12;
     var pagingModelInstance = {
         appendPaging: stubAppendPaging,
@@ -48,6 +51,9 @@ describe('ProductSearch model', function () {
                 appendQueryParams: function () {}
             }
         }),
+        '*/cartridge/scripts/helpers/urlHelpers': {
+            appendQueryParams: stubAppendQueryParams
+        },
         'dw/web/URLUtils': {
             url: function (endpoint, param, value) { return [endpoint, param, value].join(' '); }
         },
@@ -64,6 +70,7 @@ describe('ProductSearch model', function () {
     afterEach(function () {
         spySetStart.reset();
         spySetPageSize.reset();
+        stubAppendQueryParams.reset();
     });
 
     describe('.getRefinements()', function () {
@@ -226,7 +233,7 @@ describe('ProductSearch model', function () {
         });
     });
 
-    describe('.getShowMoreUrl', function () {
+    describe('.getShowMoreUrl()', function () {
         var currentPageSize = 12;
         var expectedUrl = 'some url';
 
@@ -236,7 +243,7 @@ describe('ProductSearch model', function () {
                 refinements: {
                     refinementDefinitions: []
                 },
-                url: function () { return endpointShowMore; }
+                url: function () { return endpointSearchUpdateGrid; }
             };
 
             stubGetPageSize.returns(currentPageSize);
@@ -259,6 +266,33 @@ describe('ProductSearch model', function () {
             apiProductSearch.count = 10;
             result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
             assert.equal(result.showMoreUrl, expectedUrl);
+        });
+    });
+
+    describe('.getPermaLink()', function () {
+        var expectedPermalink = 'permalink url';
+        var mockToString = function () { return expectedPermalink; };
+        stubAppendQueryParams.returns({ toString: mockToString });
+
+        beforeEach(function () {
+            httpParams = {
+                start: '100'
+            };
+        });
+
+        it('should produce a permalink URL', function () {
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
+            assert.equal(result.permalink, expectedPermalink);
+        });
+
+        it('should append sz query param to a url = to start and default page size', function () {
+            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
+            assert.isTrue(stubAppendQueryParams.calledWith(endpointSearchUpdateGrid));
+            assert.deepEqual(stubAppendQueryParams.args[0][1], {
+                start: '0',
+                // start of 100 + default page size of 12
+                sz: 112
+            });
         });
     });
 });
