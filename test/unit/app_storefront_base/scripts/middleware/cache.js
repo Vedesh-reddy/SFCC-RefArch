@@ -36,7 +36,7 @@ describe('middleware', function () {
         assert.isFalse(res.personalized);
     });
     it('Should set the varyby value to price_promotion', function () {
-        cacheMiddleware.applyPromotionSenstiveCache(null, res, next);
+        cacheMiddleware.applyPromotionSensitiveCache(null, res, next);
         assert.isTrue(res.cachePeriod === 30);
         assert.isTrue(res.cachePeriodUnit === 'minutes');
         assert.isTrue(res.personalized);

@@ -20,7 +20,7 @@ function applyDefaultCache(req, res, next) {
  * @param {Function} next - Next call in the middleware chain
  * @returns {void}
 */
-function applyPromotionSenstiveCache(req, res, next) {
+function applyPromotionSensitiveCache(req, res, next) {
     res.cachePeriod = 30; // eslint-disable-line no-param-reassign
     res.cachePeriodUnit = 'minutes'; // eslint-disable-line no-param-reassign
     res.personalized = true; // eslint-disable-line no-param-reassign
@@ -42,6 +42,6 @@ function applyInventorySensitiveCache(req, res, next) {
 
 module.exports = {
     applyDefaultCache: applyDefaultCache,
-    applyPromotionSenstiveCache: applyPromotionSenstiveCache,
+    applyPromotionSensitiveCache: applyPromotionSensitiveCache,
     applyInventorySensitiveCache: applyInventorySensitiveCache
 };
