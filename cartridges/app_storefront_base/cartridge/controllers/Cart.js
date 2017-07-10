@@ -18,8 +18,14 @@ var shippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
-    var currentBasket = BasketMgr.getCurrentOrNewBasket();
-    var quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.productLineItems);
+    var currentBasket = BasketMgr.getCurrentBasket();
+    var quantityTotal;
+
+    if (currentBasket) {
+        quantityTotal = ProductLineItemsModel.getTotalQuantity(currentBasket.productLineItems);
+    } else {
+        quantityTotal = 0;
+    }
 
     res.render('/components/header/minicart', { quantityTotal: quantityTotal });
     next();
