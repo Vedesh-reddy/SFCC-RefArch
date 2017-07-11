@@ -169,6 +169,7 @@ function Request(request, customer, session) {
     this.querystring = new QueryString(request.httpQueryString);
     this.form = getFormData(request.httpParameterMap, this.querystring);
     this.https = request.isHttpSecure();
+    this.body = request.requestBodyAsString();
     this.locale = getCurrentLocale(request.locale, session.currency);
     this.includeRequest = request.includeRequest;
     if (request.geolocation) {

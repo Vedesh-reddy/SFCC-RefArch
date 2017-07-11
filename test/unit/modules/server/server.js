@@ -140,6 +140,26 @@ describe('server', function () {
         server.append('test', function () {}, function () {});
         assert.equal(exports.__routes.test.chain.length, 4);
     });
+    it('should replace existing route with a new one', function () {
+        var spy = sinon.spy();
+        var spy2 = sinon.spy();
+        server.get('test', spy);
+        var exports = server.exports();
+
+        server.extend(exports);
+        server.replace('test', spy2);
+        var newExports = server.exports();
+        newExports.test();
+        assert.isTrue(spy.notCalled);
+        assert.isTrue(spy2.called);
+    });
+    it('should throw when replacing non-existing route', function () {
+        var testFn = function () {
+            server.replace('blah', function () {});
+        };
+        assert.throws(testFn, 'Route with this name does not exist');
+    });
+
     it('should throw when trying to create two routes with the same name', function () {
         server.get('test', function () {});
         assert.throws(function () { server.post('test', function () {}); });
