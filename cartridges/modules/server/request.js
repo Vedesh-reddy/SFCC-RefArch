@@ -11,7 +11,7 @@ var SimpleCache = require('./simpleCache');
  * @return {Object} Object containing key value pairs submitted from the form
  */
 function getFormData(items, qs) {
-    if (!items) {
+    if (!items || !items.parameterNames) {
         return {};
     }
     var allKeys = items.parameterNames;
@@ -169,6 +169,7 @@ function Request(request, customer, session) {
     this.querystring = new QueryString(request.httpQueryString);
     this.form = getFormData(request.httpParameterMap, this.querystring);
     this.https = request.isHttpSecure();
+    this.body = request.httpParameterMap.requestBodyAsString;
     this.locale = getCurrentLocale(request.locale, session.currency);
     this.includeRequest = request.includeRequest;
     if (request.geolocation) {

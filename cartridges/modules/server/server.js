@@ -179,6 +179,27 @@ Server.prototype = {
 
         this.routes[name].chain = this.routes[name].chain.concat(middlewareChain);
     },
+
+    /**
+     * Replace a given route with the new one
+     * @param {string} name - Name of the route to replace
+     * @param {Function[]} arguments - List of functions for the route
+     * @returns {void}
+     */
+    replace: function replace(name) {
+        var args = Array.prototype.slice.call(arguments);
+
+        checkParams(args);
+
+        if (!this.routes[name]) {
+            throw new Error('Route with this name does not exist');
+        }
+
+        delete this.routes[name];
+
+        this.use.apply(this, arguments);
+    },
+
     /**
      * Returns a given route from the server
      * @param {string} name - Name of the route

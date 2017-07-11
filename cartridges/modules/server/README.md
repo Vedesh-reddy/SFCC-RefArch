@@ -101,6 +101,23 @@ Your new template still has the `pdict.value` variable with a value of `Hello Wo
 
 We recommend that you never modify anything in app_storefront_base, but instead to create your own cartridge and overlay it in the Business Manager cartridge path. This enables you to upgrade to a newer version of SiteGenesis without having to manually cherry-pick changes and perform manual merges. This doesn't mean that every new version of SiteGenesis will not modify your client's site, but upgrade and feature adoption process is much quicker and less painful.
 
+### Replacing a route
+Sometimes you might want to reuse the route's name, but do not want any of the existing functionality. In those cases, you can use `replace` command to completely remove and re-add a new route.
+
+```js
+var page = require('app_storefront_base/cartridge/controller/Page');
+var server = require('server);
+
+server.extend(page);
+
+server.replace('Show', server.middleware.get, function(req, res, next){
+    res.render('myNewTemplate');
+    next();
+});
+
+module.exports = server.exports();
+```
+
 ## Middleware chain events
 
 The server module also emits events at every step of execution and you can subscribe and unsubscribe events from a given route. Here's the list of currently supported events:

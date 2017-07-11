@@ -11,6 +11,9 @@ function createFakeRequest(overrides) {
         httpHost: 'localhost',
         httpPath: '/Product-Show',
         httpQueryString: '',
+        httpParameterMap: {
+            requestBodyAsString: ''
+        },
         isHttpSecure: function () {
             return false;
         },
