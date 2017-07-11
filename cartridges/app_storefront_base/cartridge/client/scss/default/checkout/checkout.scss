@@ -296,12 +296,12 @@ span.ship-to-city-st-zip {
             }
         }
 
-        // [data-address-mode=details] {
-        //     .btn-show-details,
-        //     .btn-add-new {
-        //         display: none;
-        //     }
-        // }
+        [data-address-mode=details] {
+            .btn-show-details,
+            .btn-add-new {
+                display: none;
+            }
+        }
     }
 
     // Place Order -----------------------------

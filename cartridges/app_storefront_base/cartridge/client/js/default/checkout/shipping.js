@@ -85,7 +85,7 @@ function updateShippingAddressFormValues(shipping) {
         $('input[name$=_postalCode]', form).val(shipping.shippingAddress.postalCode);
         $('select[name$=_stateCode],input[name$=_stateCode]', form)
             .val(shipping.shippingAddress.stateCode);
-        $('select[name$=_countryCode]', form).val(shipping.shippingAddress.countryCode.value);
+        $('select[name$=_country]', form).val(shipping.shippingAddress.countryCode.value);
         $('input[name$=_phone]', form).val(shipping.shippingAddress.phone);
     });
 }
@@ -742,7 +742,7 @@ module.exports = {
                 $('.shipping-address-block input[name$=_city]').val('');
                 $('.shipping-address-block input[name$=_postalCode]').val('');
                 $('.shipping-address-block select[name$=_stateCode]').val('');
-                $('.shipping-address-block select[name$=_countryCode]').val('');
+                $('.shipping-address-block select[name$=_country]').val('');
                 $('.shipping-address-block input[name$=_phone]').val('');
 
                 $('.shipping-method-list input:radio[name$="_shippingMethodID"]:first')
