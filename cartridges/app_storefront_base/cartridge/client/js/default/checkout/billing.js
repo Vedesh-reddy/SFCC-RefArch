@@ -122,7 +122,9 @@ function clearBillingAddressFormValues() {
     updateBillingAddressFormValues({
         billing: {
             billingAddress: {
-                address: {}
+                address: {
+                    countryCode: {}
+                }
             }
         }
     });

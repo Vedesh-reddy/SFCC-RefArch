@@ -163,6 +163,7 @@ module.exports = {
                 var $option = $($el.parents('form').find('.addressSelector option')[0]);
                 $option.attr('value', 'new');
                 $option.text('New Address');
+                $option.prop('selected', 'selected');
                 $el.parents('[data-address-mode]').attr('data-address-mode', 'new');
             } else {
                 // Handle shipping address case
