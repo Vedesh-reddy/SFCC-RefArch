@@ -229,9 +229,11 @@ module.exports = {
 
             // Copy fields
             var attrs = selectedOption.data();
+            var element;
 
             Object.keys(attrs).forEach(function (attr) {
-                $('[name$=' + attr + ']', form).val(attrs[attr]);
+                element = attr === 'countryCode' ? 'country' : attr;
+                $('[name$=' + element + ']', form).val(attrs[attr]);
             });
         });
     },

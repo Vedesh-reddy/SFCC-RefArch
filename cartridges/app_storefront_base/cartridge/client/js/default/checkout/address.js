@@ -130,9 +130,7 @@ function getAddressFieldsFromUI(form) {
         city: $('input[name$=_city]', form).val(),
         postalCode: $('input[name$=_postalCode]', form).val(),
         stateCode: $('select[name$=_stateCode]', form).val(),
-        countryCode: {
-            value: $('select[name$=_country]', form).val()
-        },
+        countryCode: $('select[name$=_country]', form).val(),
         phone: $('input[name$=_phone]', form).val()
     };
     return address;

@@ -76,6 +76,7 @@ function updateShippingAddressFormValues(shipping) {
     $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
         var form = el.form;
         if (!form) return;
+        var countryCode = shipping.shippingAddress.countryCode;
 
         $('input[name$=_firstName]', form).val(shipping.shippingAddress.firstName);
         $('input[name$=_lastName]', form).val(shipping.shippingAddress.lastName);
@@ -85,7 +86,13 @@ function updateShippingAddressFormValues(shipping) {
         $('input[name$=_postalCode]', form).val(shipping.shippingAddress.postalCode);
         $('select[name$=_stateCode],input[name$=_stateCode]', form)
             .val(shipping.shippingAddress.stateCode);
-        $('select[name$=_country]', form).val(shipping.shippingAddress.countryCode.value);
+
+        if (countryCode && typeof countryCode === 'object') {
+            $('select[name$=_country]', form).val(shipping.shippingAddress.countryCode.value);
+        } else {
+            $('select[name$=_country]', form).val(shipping.shippingAddress.countryCode);
+        }
+
         $('input[name$=_phone]', form).val(shipping.shippingAddress.phone);
     });
 }
@@ -522,9 +529,11 @@ module.exports = {
             var attrs = selectedOption.data();
             var shipmentUUID = selectedOption[0].value;
             var originalUUID = $('input[name=shipmentUUID]', form).val();
+            var element;
 
             Object.keys(attrs).forEach(function (attr) {
-                $('[name$=' + attr + ']', form).val(attrs[attr]);
+                element = attr === 'countryCode' ? 'country' : attr;
+                $('[name$=' + element + ']', form).val(attrs[attr]);
             });
 
             $('[name$=stateCode]', form).trigger('change');
