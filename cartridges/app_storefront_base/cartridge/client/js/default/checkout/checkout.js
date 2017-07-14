@@ -135,7 +135,7 @@ var formHelpers = require('./formErrors');
                                 'city',
                                 'stateCode',
                                 'postalCode',
-                                'country'
+                                'countryCode'
                             ].forEach(function (selector) {
                                 var addressAttr = store[selector];
                                 $singleShipForm.find('[name$=' + (selector === 'countryCode'
