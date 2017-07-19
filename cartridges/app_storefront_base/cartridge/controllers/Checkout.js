@@ -18,6 +18,7 @@ var URLUtils = require('dw/web/URLUtils');
 var UUIDUtils = require('dw/util/UUIDUtils');
 var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
 var StoreMgr = require('dw/catalog/StoreMgr');
+var Site = require('dw/system/Site');
 
 var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
@@ -574,6 +575,8 @@ server.get(
         var plis = currentBasket.productLineItems;
         storesModel.availableStores = StoreHelpers.getFilteredStores(storesModel, plis);
 
+        var pickupEnabled = Site.getCurrent().getCustomPreferenceValue('enableStorePickUp');
+
         res.render('checkout/checkout', {
             stores: storesModel,
             order: orderModel,
@@ -583,7 +586,8 @@ server.get(
                 billingForm: billingForm
             },
             expirationYears: creditCardExpirationYears,
-            currentStage: currentStage
+            currentStage: currentStage,
+            pickUpInStoreEnabled: pickupEnabled
         });
 
         return next();
