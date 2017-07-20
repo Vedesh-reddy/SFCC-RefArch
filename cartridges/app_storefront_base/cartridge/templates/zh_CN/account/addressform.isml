@@ -27,7 +27,7 @@
                     <isprint value="${pdict.addressForm.country.attributes}" encoding="off" />
                     autocomplete="country">
                     <isloop items=${pdict.addressForm.country.options} var="country">
-                        <option id="${country.id}" <isif condition="${country.selected}" label="${country.label}">selected</isif>>${country.htmlValue}</option>
+                        <option id="${country.id}" value="${country.htmlValue}" <isif condition="${country.selected}">selected</isif>>${country.label}</option>
                     </isloop>
                 </select>
                 <div class="form-control-feedback"></div>

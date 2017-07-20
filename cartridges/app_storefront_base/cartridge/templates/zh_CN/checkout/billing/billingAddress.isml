@@ -12,14 +12,13 @@
                 autocomplete="billing country">
                     <option label=" "></option>
                     <isloop items=${billingFields.country.options} var="country">
-                        <option id="${country.id}" value="${country.id}"
+                        <option id="${country.id}" value="${country.htmlValue}"
                             ${pdict.order.billing.billingAddress.address
                                 && country.id === pdict.order.billing.billingAddress.address.countryCode.value
                                 ? "selected"
                                 : "" }
-                            label="${country.label}"
                         >
-                            ${country.htmlValue}
+                            ${country.label}
                         </option>
                     </isloop>
             </select>
