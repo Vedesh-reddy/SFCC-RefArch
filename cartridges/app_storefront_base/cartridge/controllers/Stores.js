@@ -1,11 +1,8 @@
 'use strict';
 
-var URLUtils = require('dw/web/URLUtils');
-var BasketMgr = require('dw/order/BasketMgr');
+var server = require('server');
 
 var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
-
-var server = require('server');
 var cache = require('*/cartridge/scripts/middleware/cache');
 
 server.get('Find', server.middleware.https, cache.applyDefaultCache, function (req, res, next) {
@@ -31,6 +28,9 @@ server.get('FindStores', function (req, res, next) {
  * Find stores within radius of location, which have all SKUs from Basket in stock
  */
 server.get('FindAvailableStores', server.middleware.https, function (req, res, next) {
+    var URLUtils = require('dw/web/URLUtils');
+    var BasketMgr = require('dw/order/BasketMgr');
+
     var currentBasket = BasketMgr.getCurrentBasket();
     if (!currentBasket) {
         res.json({

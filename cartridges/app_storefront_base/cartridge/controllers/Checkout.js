@@ -2,33 +2,7 @@
 
 var server = require('server');
 
-var BasketMgr = require('dw/order/BasketMgr');
-var CustomerMgr = require('dw/customer/CustomerMgr');
-var HookMgr = require('dw/system/HookMgr');
-var Resource = require('dw/web/Resource');
-var PaymentMgr = require('dw/order/PaymentMgr');
-var Transaction = require('dw/system/Transaction');
-
-var AccountModel = require('*/cartridge/models/account');
-var OrderModel = require('*/cartridge/models/order');
-var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
-var TotalsModel = require('*/cartridge/models/totals');
-
-var URLUtils = require('dw/web/URLUtils');
-var UUIDUtils = require('dw/util/UUIDUtils');
-var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
-var StoreMgr = require('dw/catalog/StoreMgr');
-var Site = require('dw/system/Site');
-
-var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
-var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
-
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-
-var collections = require('*/cartridge/scripts/util/collections');
-
-var array = require('*/cartridge/scripts/util/array');
-
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 /**
@@ -40,6 +14,11 @@ server.get(
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
+        var BasketMgr = require('dw/order/BasketMgr');
+        var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
+        var TotalsModel = require('*/cartridge/models/totals');
+        var URLUtils = require('dw/web/URLUtils');
+
         var currentBasket = BasketMgr.getCurrentBasket();
         if (!currentBasket) {
             res.redirect(URLUtils.url('Cart-Show'));
@@ -78,6 +57,10 @@ server.get(
 
 
 server.get('Get', server.middleware.https, function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var AccountModel = require('*/cartridge/models/account');
+    var OrderModel = require('*/cartridge/models/order');
+
     var currentBasket = BasketMgr.getCurrentBasket();
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
     if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
@@ -97,7 +80,14 @@ server.get('Get', server.middleware.https, function (req, res, next) {
 
 
 server.post('ToggleMultiShip', server.middleware.https, function (req, res, next) {
-    /** vvv Extract to server.middleware for all Checkout / Ajax functions **/
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Transaction = require('dw/system/Transaction');
+    var AccountModel = require('*/cartridge/models/account');
+    var OrderModel = require('*/cartridge/models/order');
+    var URLUtils = require('dw/web/URLUtils');
+    var collections = require('*/cartridge/scripts/util/collections');
+
     var currentBasket = BasketMgr.getCurrentBasket();
     if (!currentBasket) {
         res.json({
@@ -109,7 +99,6 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
         });
         return;
     }
-    /** ^^^ Extract to middleware for all Checkout / Ajax functinos **/
 
     var shipments = currentBasket.shipments;
     var defaultShipment = currentBasket.defaultShipment;
@@ -147,6 +136,15 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 });
 
 server.post('SelectShippingMethod', server.middleware.https, function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Resource = require('dw/web/Resource');
+    var Transaction = require('dw/system/Transaction');
+    var AccountModel = require('*/cartridge/models/account');
+    var OrderModel = require('*/cartridge/models/order');
+    var URLUtils = require('dw/web/URLUtils');
+    var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -217,6 +215,14 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
 
 server.post('UpdateShippingMethodsList', server.middleware.https, function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Transaction = require('dw/system/Transaction');
+    var AccountModel = require('*/cartridge/models/account');
+    var OrderModel = require('*/cartridge/models/order');
+    var URLUtils = require('dw/web/URLUtils');
+    var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -283,6 +289,14 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
 
 
 server.post('CreateNewAddress', server.middleware.https, function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var Transaction = require('dw/system/Transaction');
+    var AccountModel = require('*/cartridge/models/account');
+    var OrderModel = require('*/cartridge/models/order');
+    var URLUtils = require('dw/web/URLUtils');
+    var UUIDUtils = require('dw/util/UUIDUtils');
+    var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+
     var basket = BasketMgr.getCurrentBasket();
     if (!basket) {
         res.json({
@@ -324,6 +338,9 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
 });
 
 server.post('ResetInventoryList', server.middleware.https, function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var Transaction = require('dw/system/Transaction');
+
     var currentBasket = BasketMgr.getCurrentBasket();
     var pli;
     var plis = currentBasket.defaultShipment.productLineItems;
@@ -349,6 +366,13 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
+        var BasketMgr = require('dw/order/BasketMgr');
+        var Transaction = require('dw/system/Transaction');
+        var AccountModel = require('*/cartridge/models/account');
+        var OrderModel = require('*/cartridge/models/order');
+        var UUIDUtils = require('dw/util/UUIDUtils');
+        var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+
         var data = res.getViewData();
         if (data && data.csrfError) {
             res.json();
@@ -502,6 +526,14 @@ server.get(
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
+        var BasketMgr = require('dw/order/BasketMgr');
+        var Transaction = require('dw/system/Transaction');
+        var AccountModel = require('*/cartridge/models/account');
+        var OrderModel = require('*/cartridge/models/order');
+        var URLUtils = require('dw/web/URLUtils');
+        var Site = require('dw/system/Site');
+        var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
+
         var currentBasket = BasketMgr.getCurrentBasket();
         if (!currentBasket) {
             res.redirect(URLUtils.url('Cart-Show'));
@@ -603,6 +635,10 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
+        var BasketMgr = require('dw/order/BasketMgr');
+        var Transaction = require('dw/system/Transaction');
+        var URLUtils = require('dw/web/URLUtils');
+
         var data = res.getViewData();
         if (data && data.csrfError) {
             res.json();
@@ -666,6 +702,11 @@ server.post(
             res.setViewData(result);
 
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+                var AccountModel = require('*/cartridge/models/account');
+                var OrderModel = require('*/cartridge/models/order');
+                var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
+                var StoreMgr = require('dw/catalog/StoreMgr');
+
                 var shippingData = res.getViewData();
                 var storeID = req.form.storeID;
                 var plis = currentBasket.defaultShipment.productLineItems;
@@ -826,6 +867,17 @@ server.post(
             res.setViewData(viewData);
 
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+                var BasketMgr = require('dw/order/BasketMgr');
+                var CustomerMgr = require('dw/customer/CustomerMgr');
+                var HookMgr = require('dw/system/HookMgr');
+                var Resource = require('dw/web/Resource');
+                var PaymentMgr = require('dw/order/PaymentMgr');
+                var Transaction = require('dw/system/Transaction');
+                var AccountModel = require('*/cartridge/models/account');
+                var OrderModel = require('*/cartridge/models/order');
+                var URLUtils = require('dw/web/URLUtils');
+                var array = require('*/cartridge/scripts/util/array');
+
                 var currentBasket = BasketMgr.getCurrentBasket();
 
                 if (!currentBasket) {
@@ -1023,6 +1075,12 @@ server.post(
 
 
 server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Resource = require('dw/web/Resource');
+    var Transaction = require('dw/system/Transaction');
+    var URLUtils = require('dw/web/URLUtils');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {

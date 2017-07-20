@@ -2,22 +2,12 @@
 
 var server = require('server');
 
-var BasketMgr = require('dw/order/BasketMgr');
-var HookMgr = require('dw/system/HookMgr');
-var Resource = require('dw/web/Resource');
-var Transaction = require('dw/system/Transaction');
-var URLUtils = require('dw/web/URLUtils');
-
-var CartModel = require('*/cartridge/models/cart');
-var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
-
-var collections = require('*/cartridge/scripts/util/collections');
-var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
-var shippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
-
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
+
     var currentBasket = BasketMgr.getCurrentBasket();
     var quantityTotal;
 
@@ -32,6 +22,14 @@ server.get('MiniCart', server.middleware.include, function (req, res, next) {
 });
 
 server.post('AddProduct', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Resource = require('dw/web/Resource');
+    var Transaction = require('dw/system/Transaction');
+    var CartModel = require('*/cartridge/models/cart');
+    var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
+    var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
     var productId = req.form.pid;
     var childProducts = Object.hasOwnProperty.call(req.form, 'childProducts')
@@ -102,6 +100,12 @@ server.get(
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
+        var BasketMgr = require('dw/order/BasketMgr');
+        var HookMgr = require('dw/system/HookMgr');
+        var Transaction = require('dw/system/Transaction');
+        var CartModel = require('*/cartridge/models/cart');
+        var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+
         var currentBasket = BasketMgr.getCurrentBasket();
 
         if (currentBasket) {
@@ -123,6 +127,12 @@ server.get(
 );
 
 server.get('Get', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Transaction = require('dw/system/Transaction');
+    var CartModel = require('*/cartridge/models/cart');
+    var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (currentBasket) {
@@ -140,6 +150,13 @@ server.get('Get', function (req, res, next) {
 });
 
 server.get('RemoveProductLineItem', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Resource = require('dw/web/Resource');
+    var Transaction = require('dw/system/Transaction');
+    var URLUtils = require('dw/web/URLUtils');
+    var CartModel = require('*/cartridge/models/cart');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -181,6 +198,15 @@ server.get('RemoveProductLineItem', function (req, res, next) {
 });
 
 server.get('UpdateQuantity', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Resource = require('dw/web/Resource');
+    var Transaction = require('dw/system/Transaction');
+    var URLUtils = require('dw/web/URLUtils');
+    var CartModel = require('*/cartridge/models/cart');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -261,6 +287,14 @@ server.get('UpdateQuantity', function (req, res, next) {
 
 
 server.post('SelectShippingMethod', server.middleware.https, function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Resource = require('dw/web/Resource');
+    var Transaction = require('dw/system/Transaction');
+    var URLUtils = require('dw/web/URLUtils');
+    var CartModel = require('*/cartridge/models/cart');
+    var shippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {
@@ -308,6 +342,12 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 });
 
 server.get('MiniCartShow', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Transaction = require('dw/system/Transaction');
+    var CartModel = require('*/cartridge/models/cart');
+    var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (currentBasket) {
@@ -331,6 +371,13 @@ server.get(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
+        var BasketMgr = require('dw/order/BasketMgr');
+        var HookMgr = require('dw/system/HookMgr');
+        var Resource = require('dw/web/Resource');
+        var Transaction = require('dw/system/Transaction');
+        var URLUtils = require('dw/web/URLUtils');
+        var CartModel = require('*/cartridge/models/cart');
+
         var data = res.getViewData();
         if (data && data.csrfError) {
             res.json();
@@ -401,6 +448,14 @@ server.get(
 
 
 server.get('RemoveCouponLineItem', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var HookMgr = require('dw/system/HookMgr');
+    var Resource = require('dw/web/Resource');
+    var Transaction = require('dw/system/Transaction');
+    var URLUtils = require('dw/web/URLUtils');
+    var CartModel = require('*/cartridge/models/cart');
+    var collections = require('*/cartridge/scripts/util/collections');
+
     var currentBasket = BasketMgr.getCurrentBasket();
 
     if (!currentBasket) {

@@ -3,9 +3,6 @@
 var server = require('server');
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
-var search = require('*/cartridge/scripts/search/search');
-var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-var ProductSearch = require('*/cartridge/models/search/productSearch');
 var cache = require('*/cartridge/scripts/middleware/cache');
 
 /**
@@ -16,6 +13,8 @@ var cache = require('*/cartridge/scripts/middleware/cache');
  * @return {dw.catalog.ProductSearchModel} - API search instance
  */
 function setupSearch(apiProductSearch, params) {
+    var search = require('*/cartridge/scripts/search/search');
+
     var sortingRule = params.srule ? CatalogMgr.getSortingRule(params.srule) : null;
     var selectedCategory = CatalogMgr.getCategory(params.cgid);
     selectedCategory = selectedCategory && selectedCategory.online ? selectedCategory : null;
@@ -40,6 +39,9 @@ function getCategoryTemplate(apiProductSearch) {
 }
 
 server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
+    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+    var ProductSearch = require('*/cartridge/models/search/productSearch');
+
     var apiProductSearch = new ProductSearchModel();
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
@@ -59,6 +61,9 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
 });
 
 server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
+    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+    var ProductSearch = require('*/cartridge/models/search/productSearch');
+
     var categoryTemplate = '';
     var productSearch;
     var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')

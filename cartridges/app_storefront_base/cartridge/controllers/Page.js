@@ -2,12 +2,6 @@
 
 var server = require('server');
 
-var ContentMgr = require('dw/content/ContentMgr');
-var Logger = require('dw/system/Logger');
-var Locale = require('dw/util/Locale');
-var Site = require('dw/system/Site');
-
-var ContentModel = require('*/cartridge/models/content');
 var cache = require('*/cartridge/scripts/middleware/cache');
 
 server.get(
@@ -15,6 +9,10 @@ server.get(
     server.middleware.include,
     cache.applyDefaultCache,
     function (req, res, next) {
+        var ContentMgr = require('dw/content/ContentMgr');
+        var Logger = require('dw/system/Logger');
+        var ContentModel = require('*/cartridge/models/content');
+
         var apiContent = ContentMgr.getContent(req.querystring.cid);
 
         if (apiContent) {
@@ -62,6 +60,8 @@ server.get(
 server.get('SetLocale', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var Currency = require('dw/util/Currency');
+    var Site = require('dw/system/Site');
+
     var QueryString = server.querystring;
     var currency;
     var currentSite = Site.getCurrent();
@@ -98,6 +98,9 @@ server.get('SetLocale', function (req, res, next) {
 
 server.get('Locale', function (req, res, next) {
     var LocaleModel = require('*/cartridge/models/locale');
+    var Locale = require('dw/util/Locale');
+    var Site = require('dw/system/Site');
+
     var currentSite = Site.getCurrent();
     var siteId = currentSite.getID();
     var allowedLocales = currentSite.allowedLocales;
@@ -112,6 +115,10 @@ server.get('Locale', function (req, res, next) {
 });
 
 server.get('Show', cache.applyDefaultCache, function (req, res, next) {
+    var ContentMgr = require('dw/content/ContentMgr');
+    var Logger = require('dw/system/Logger');
+    var ContentModel = require('*/cartridge/models/content');
+
     var apiContent = ContentMgr.getContent(req.querystring.cid);
 
     if (apiContent) {

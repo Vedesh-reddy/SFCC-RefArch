@@ -1,11 +1,8 @@
 'use strict';
 
 var server = require('server');
-var CustomerMgr = require('dw/customer/CustomerMgr');
-var AddressModel = require('*/cartridge/models/address');
-var collections = require('*/cartridge/scripts/util/collections');
+
 var URLUtils = require('dw/web/URLUtils');
-var Transaction = require('dw/system/Transaction');
 var Resource = require('dw/web/Resource');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
@@ -16,6 +13,10 @@ var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
  * @returns {List} a plain list of objects of the current customer's addresses
  */
 function getList(customerNo) {
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+    var AddressModel = require('*/cartridge/models/address');
+    var collections = require('*/cartridge/scripts/util/collections');
+
     var customer = CustomerMgr.getCustomerByCustomerNumber(customerNo);
     var rawAddressBook = customer.addressBook.getAddresses();
     var addressBook = collections.map(rawAddressBook, function (rawAddress) {
@@ -81,6 +82,9 @@ server.get(
     csrfProtection.generateToken,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
+        var CustomerMgr = require('dw/customer/CustomerMgr');
+        var AddressModel = require('*/cartridge/models/address');
+
         var addressId = req.querystring.addressId;
         var customer = CustomerMgr.getCustomerByCustomerNumber(
             req.currentCustomer.profile.customerNo
@@ -117,13 +121,15 @@ server.get(
 );
 
 server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, res, next) {
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+    var Transaction = require('dw/system/Transaction');
+    var formErrors = require('*/cartridge/scripts/formErrors');
+
     var data = res.getViewData();
     if (data && data.csrfError) {
         res.json();
         return next();
     }
-
-    var formErrors = require('*/cartridge/scripts/formErrors');
 
     var addressForm = server.forms.getForm('address');
     var addressFormObj = addressForm.toObject();
@@ -189,6 +195,9 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
 });
 
 server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+    var Transaction = require('dw/system/Transaction');
+
     var data = res.getViewData();
     if (data && !data.loggedin) {
         res.json();
@@ -229,6 +238,9 @@ server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, re
 });
 
 server.get('SetDefault', userLoggedIn.validateLoggedIn, function (req, res, next) {
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+    var Transaction = require('dw/system/Transaction');
+
     var addressId = req.querystring.addressId;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
         req.currentCustomer.profile.customerNo

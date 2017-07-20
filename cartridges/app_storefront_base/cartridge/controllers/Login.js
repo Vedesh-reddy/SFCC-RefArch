@@ -1,9 +1,8 @@
 'use strict';
 
 var server = require('server');
-var CustomerMgr = require('dw/customer/CustomerMgr');
+
 var URLUtils = require('dw/web/URLUtils');
-var Resource = require('dw/web/Resource');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.get(
@@ -11,6 +10,8 @@ server.get(
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
+        var Resource = require('dw/web/Resource');
+
         var rememberMe = false;
         var userName = '';
         var actionUrl = URLUtils.url('Account-Login');
@@ -45,7 +46,8 @@ server.get(
 );
 
 server.get('Logout', function (req, res, next) {
-    // TODO clear form elements?
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+
     CustomerMgr.logoutCustomer(false);
     res.redirect(URLUtils.url('Home-Show'));
     next();

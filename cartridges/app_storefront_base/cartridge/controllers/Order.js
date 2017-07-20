@@ -2,19 +2,15 @@
 
 var server = require('server');
 
-var CustomerMgr = require('dw/customer/CustomerMgr');
-var OrderMgr = require('dw/order/OrderMgr');
 var Resource = require('dw/web/Resource');
-var Transaction = require('dw/system/Transaction');
 var URLUtils = require('dw/web/URLUtils');
-
-var OrderModel = require('*/cartridge/models/order');
-
-var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
 server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
+    var OrderMgr = require('dw/order/OrderMgr');
+    var OrderModel = require('*/cartridge/models/order');
+
     var order = OrderMgr.getOrder(req.querystring.ID);
     var token = req.querystring.token ? req.querystring.token : null;
 
@@ -57,6 +53,9 @@ server.post(
     csrfProtection.validateRequest,
     csrfProtection.generateToken,
     function (req, res, next) {
+        var OrderMgr = require('dw/order/OrderMgr');
+        var OrderModel = require('*/cartridge/models/order');
+
         var order;
         var validForm = true;
 
@@ -129,6 +128,8 @@ server.get(
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
+        var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+
         var ordersResult = OrderHelpers.getOrders(req.currentCustomer, req.querystring);
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
@@ -159,6 +160,9 @@ server.get(
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
+        var OrderMgr = require('dw/order/OrderMgr');
+        var OrderModel = require('*/cartridge/models/order');
+
         var order = OrderMgr.getOrder(req.querystring.orderID);
         var orderCustomerNo = req.currentCustomer.profile.customerNo;
         var currentCustomerNo = order.customer.profile.customerNo;
@@ -204,6 +208,8 @@ server.get(
     server.middleware.https,
     userLoggedIn.validateLoggedInAjax,
     function (req, res, next) {
+        var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+
         var data = res.getViewData();
         if (data && !data.loggedin) {
             res.json();
@@ -229,6 +235,8 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
+        var OrderMgr = require('dw/order/OrderMgr');
+
         var data = res.getViewData();
         if (data && data.csrfError) {
             res.json();
@@ -261,6 +269,10 @@ server.post(
             res.setViewData(registrationObj);
 
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+                var CustomerMgr = require('dw/customer/CustomerMgr');
+                var Transaction = require('dw/system/Transaction');
+                var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+
                 var registrationData = res.getViewData();
 
                 var login = registrationData.email;

@@ -1,16 +1,7 @@
 'use strict';
 
 var server = require('server');
-var array = require('*/cartridge/scripts/util/array');
-var collections = require('*/cartridge/scripts/util/collections');
-var URLUtils = require('dw/web/URLUtils');
-var CustomerMgr = require('dw/customer/CustomerMgr');
-var HookMgr = require('dw/system/HookMgr');
-var Transaction = require('dw/system/Transaction');
-var Resource = require('dw/web/Resource');
-var PaymentMgr = require('dw/order/PaymentMgr');
-var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
-var AccountModel = require('*/cartridge/models/account');
+
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
@@ -21,6 +12,11 @@ var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
  * @returns {boolean} a boolean representing card validation
  */
 function verifyCard(card, form) {
+    var collections = require('*/cartridge/scripts/util/collections');
+    var Resource = require('dw/web/Resource');
+    var PaymentMgr = require('dw/order/PaymentMgr');
+    var PaymentStatusCodes = require('dw/order/PaymentStatusCodes');
+
     var paymentCard = PaymentMgr.getPaymentCard(card.cardType);
     var error = false;
     var cardNumber = card.cardNumber;
@@ -90,6 +86,10 @@ function getExpirationYears() {
 }
 
 server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
+    var URLUtils = require('dw/web/URLUtils');
+    var Resource = require('dw/web/Resource');
+    var AccountModel = require('*/cartridge/models/account');
+
     res.render('account/payment/payment', {
         paymentInstruments: AccountModel.getCustomerPaymentInstruments(
             req.currentCustomer.wallet.paymentInstruments
@@ -114,6 +114,9 @@ server.get(
     csrfProtection.generateToken,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
+        var URLUtils = require('dw/web/URLUtils');
+        var Resource = require('dw/web/Resource');
+
         var creditCardExpirationYears = getExpirationYears();
         var paymentForm = server.forms.getForm('creditcard');
         paymentForm.clear();
@@ -145,12 +148,14 @@ server.get(
 );
 
 server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, res, next) {
+    var formErrors = require('*/cartridge/scripts/formErrors');
+    var HookMgr = require('dw/system/HookMgr');
+
     var data = res.getViewData();
     if (data && data.csrfError) {
         res.json();
         return next();
     }
-    var formErrors = require('*/cartridge/scripts/formErrors');
 
     var paymentForm = server.forms.getForm('creditcard');
     var result = getDetailsObject(paymentForm);
@@ -159,6 +164,10 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
     if (paymentForm.valid && !verifyCard(result, paymentForm, paymentInstruments)) {
         res.setViewData(result);
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var URLUtils = require('dw/web/URLUtils');
+            var CustomerMgr = require('dw/customer/CustomerMgr');
+            var Transaction = require('dw/system/Transaction');
+
             var formInfo = res.getViewData();
             var customer = CustomerMgr.getCustomerByCustomerNumber(
                 req.currentCustomer.profile.customerNo
@@ -195,6 +204,8 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
 });
 
 server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
+    var array = require('*/cartridge/scripts/util/array');
+
     var data = res.getViewData();
     if (data && !data.loggedin) {
         res.json();
@@ -208,6 +219,10 @@ server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, re
     });
     res.setViewData(paymentToDelete);
     this.on('route:BeforeComplete', function () { // eslint-disable-line no-shadow
+        var CustomerMgr = require('dw/customer/CustomerMgr');
+        var Transaction = require('dw/system/Transaction');
+        var Resource = require('dw/web/Resource');
+
         var payment = res.getViewData();
         var customer = CustomerMgr.getCustomerByCustomerNumber(
             req.currentCustomer.profile.customerNo

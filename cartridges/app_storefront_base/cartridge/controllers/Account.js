@@ -1,20 +1,6 @@
 'use strict';
 
 var server = require('server');
-var OrderMgr = require('dw/order/OrderMgr');
-var Order = require('dw/order/Order');
-var Transaction = require('dw/system/Transaction');
-var CustomerMgr = require('dw/customer/CustomerMgr');
-var Resource = require('dw/web/Resource');
-var URLUtils = require('dw/web/URLUtils');
-var Mail = require('dw/net/Mail');
-var Template = require('dw/util/Template');
-var Site = require('dw/system/Site');
-var HashMap = require('dw/util/HashMap');
-
-var AccountModel = require('*/cartridge/models/account');
-var AddressModel = require('*/cartridge/models/address');
-var OrderModel = require('*/cartridge/models/order');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
@@ -25,6 +11,12 @@ var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
  * @returns {Object} a plain object of the current customer's account
  */
 function getModel(req) {
+    var OrderMgr = require('dw/order/OrderMgr');
+    var Order = require('dw/order/Order');
+    var AccountModel = require('*/cartridge/models/account');
+    var AddressModel = require('*/cartridge/models/address');
+    var OrderModel = require('*/cartridge/models/order');
+
     var orderModel;
     var preferredAddressModel;
 
@@ -77,6 +69,8 @@ function validateEmail(email) {
  * @returns {string} password reset token string
  */
 function getPasswordResetToken(customer) {
+    var Transaction = require('dw/system/Transaction');
+
     var passwordResetToken;
     Transaction.wrap(function () {
         passwordResetToken = customer.profile.credentials.createResetPasswordToken();
@@ -90,6 +84,13 @@ function getPasswordResetToken(customer) {
  * @param {Object} resettingCustomer - the customer requesting password reset
  */
 function sendPasswordResetEmail(email, resettingCustomer) {
+    var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
+    var Mail = require('dw/net/Mail');
+    var Template = require('dw/util/Template');
+    var Site = require('dw/system/Site');
+    var HashMap = require('dw/util/HashMap');
+
     var template;
     var content;
     var passwordResetToken = getPasswordResetToken(resettingCustomer);
@@ -123,6 +124,9 @@ server.get(
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
+        var Resource = require('dw/web/Resource');
+        var URLUtils = require('dw/web/URLUtils');
+
         var accountModel = getModel(req);
         res.render('account/accountdashboard', {
             account: accountModel,
@@ -143,6 +147,11 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
+        var Transaction = require('dw/system/Transaction');
+        var CustomerMgr = require('dw/customer/CustomerMgr');
+        var Resource = require('dw/web/Resource');
+        var URLUtils = require('dw/web/URLUtils');
+
         var data = res.getViewData();
         if (data && data.csrfError) {
             res.json();
@@ -180,6 +189,9 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
+        var CustomerMgr = require('dw/customer/CustomerMgr');
+        var Resource = require('dw/web/Resource');
+
         var data = res.getViewData();
         if (data && data.csrfError) {
             res.json();
@@ -236,6 +248,9 @@ server.post(
             res.setViewData(registrationFormObj);
 
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+                var Transaction = require('dw/system/Transaction');
+                var URLUtils = require('dw/web/URLUtils');
+
                 // getting variables for the BeforeComplete function
                 var registrationForm = res.getViewData(); // eslint-disable-line
 
@@ -301,6 +316,9 @@ server.get(
     csrfProtection.generateToken,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
+        var Resource = require('dw/web/Resource');
+        var URLUtils = require('dw/web/URLUtils');
+
         var accountModel = getModel(req);
         var profileForm = server.forms.getForm('profile');
         profileForm.clear();
@@ -330,6 +348,11 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
+        var Transaction = require('dw/system/Transaction');
+        var CustomerMgr = require('dw/customer/CustomerMgr');
+        var Resource = require('dw/web/Resource');
+        var URLUtils = require('dw/web/URLUtils');
+
         var data = res.getViewData();
         if (data && data.csrfError) {
             res.json();
@@ -420,6 +443,9 @@ server.get(
     csrfProtection.generateToken,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
+        var Resource = require('dw/web/Resource');
+        var URLUtils = require('dw/web/URLUtils');
+
         var profileForm = server.forms.getForm('profile');
         profileForm.clear();
         res.render('account/password', {
@@ -444,6 +470,11 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
+        var Transaction = require('dw/system/Transaction');
+        var CustomerMgr = require('dw/customer/CustomerMgr');
+        var Resource = require('dw/web/Resource');
+        var URLUtils = require('dw/web/URLUtils');
+
         var data = res.getViewData();
         if (data && data.csrfError) {
             res.json();
@@ -511,6 +542,10 @@ server.post(
 );
 
 server.post('PasswordResetDialogForm', server.middleware.https, function (req, res, next) {
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+    var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
+
     var email = req.form.loginEmail;
     var errorMsg;
     var isValid;
@@ -560,6 +595,9 @@ server.get('PasswordReset', server.middleware.https, function (req, res, next) {
 });
 
 server.get('SetNewPassword', server.middleware.https, function (req, res, next) {
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+    var URLUtils = require('dw/web/URLUtils');
+
     var passwordForm = server.forms.getForm('newpasswords');
     passwordForm.clear();
     var token = req.querystring.token;
@@ -573,6 +611,9 @@ server.get('SetNewPassword', server.middleware.https, function (req, res, next) 
 });
 
 server.post('SaveNewPassword', server.middleware.https, function (req, res, next) {
+    var Transaction = require('dw/system/Transaction');
+    var Resource = require('dw/web/Resource');
+
     var passwordForm = server.forms.getForm('newpasswords');
     var token = req.querystring.token;
 
@@ -593,6 +634,13 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
         };
         res.setViewData(result);
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var CustomerMgr = require('dw/customer/CustomerMgr');
+            var URLUtils = require('dw/web/URLUtils');
+            var Mail = require('dw/net/Mail');
+            var Template = require('dw/util/Template');
+            var Site = require('dw/system/Site');
+            var HashMap = require('dw/util/HashMap');
+
             var formInfo = res.getViewData();
             var status;
             var resettingCustomer;

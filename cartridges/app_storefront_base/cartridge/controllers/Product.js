@@ -1,13 +1,7 @@
 'use strict';
 
 var server = require('server');
-var URLUtils = require('dw/web/URLUtils');
-var priceHelper = require('*/cartridge/scripts/helpers/pricing');
-var ProductFactory = require('*/cartridge/scripts/factories/product');
-var Resource = require('dw/web/Resource');
-var CatalogMgr = require('dw/catalog/CatalogMgr');
-var ProductMgr = require('dw/catalog/ProductMgr');
-var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
+
 var cache = require('*/cartridge/scripts/middleware/cache');
 
 /**
@@ -18,6 +12,10 @@ var cache = require('*/cartridge/scripts/middleware/cache');
  * @returns {Array} an array of breadcrumb objects
  */
 function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
+    var URLUtils = require('dw/web/URLUtils');
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var ProductMgr = require('dw/catalog/ProductMgr');
+
     var primaryCategory;
     var product;
     if (pid) {
@@ -55,6 +53,8 @@ function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
  * @returns {ProductDetailPageResourceMap} - String resource map
  */
 function getResources() {
+    var Resource = require('dw/web/Resource');
+
     return {
         info_selectforstock: Resource.msg('info.selectforstock', 'product',
             'Select Styles for Availability')
@@ -67,6 +67,9 @@ function getResources() {
  * @param {Object} res - response object
  */
 function showProductPage(querystring, res) {
+    var URLUtils = require('dw/web/URLUtils');
+    var ProductFactory = require('*/cartridge/scripts/factories/product');
+
     var params = querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
@@ -101,6 +104,10 @@ server.get('ShowInCategory', cache.applyPromotionSensitiveCache, function (req, 
 });
 
 server.get('Variation', function (req, res, next) {
+    var priceHelper = require('*/cartridge/scripts/helpers/pricing');
+    var ProductFactory = require('*/cartridge/scripts/factories/product');
+    var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
+
     var params = req.querystring;
     var product = ProductFactory.get(params);
 
@@ -122,6 +129,9 @@ server.get('Variation', function (req, res, next) {
 });
 
 server.get('ShowTile', cache.applyPromotionSensitiveCache, function (req, res, next) {
+    var URLUtils = require('dw/web/URLUtils');
+    var ProductFactory = require('*/cartridge/scripts/factories/product');
+
     // The req parameter has a property called querystring. In this use case the querystring could
     // have the following:
     // pid - the Product ID
@@ -180,6 +190,9 @@ server.get('ShowTile', cache.applyPromotionSensitiveCache, function (req, res, n
 });
 
 server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, res, next) {
+    var URLUtils = require('dw/web/URLUtils');
+    var ProductFactory = require('*/cartridge/scripts/factories/product');
+
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
