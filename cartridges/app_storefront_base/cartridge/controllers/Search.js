@@ -64,6 +64,9 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
 
+    var URLUtils = require('dw/web/URLUtils');
+    var StringUtils = require('dw/util/StringUtils');
+
     var categoryTemplate = '';
     var productSearch;
     var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')
@@ -71,6 +74,7 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
     var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
     var apiProductSearch = new ProductSearchModel();
     var maxSlots = 4;
+    var reportingURL;
 
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
@@ -84,6 +88,14 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
+    if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
+        reportingURL = URLUtils.url('ReportingEvent-Start',
+            'ID', 'ProductSearch',
+            'Phrase', productSearch.searchKeywords,
+            'ResultCount', StringUtils.formatNumber(productSearch.count, '#,##0', 'en_US')
+        );
+    }
+
     if (
         productSearch.isCategorySearch
         && !productSearch.isRefinedCategorySearch
@@ -93,19 +105,22 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
         if (isAjax) {
             res.render(resultsTemplate, {
                 productSearch: productSearch,
-                maxSlots: maxSlots
+                maxSlots: maxSlots,
+                reportingURL: reportingURL
             });
         } else {
             res.render(categoryTemplate, {
                 productSearch: productSearch,
                 maxSlots: maxSlots,
-                category: apiProductSearch.category
+                category: apiProductSearch.category,
+                reportingURL: reportingURL
             });
         }
     } else {
         res.render(resultsTemplate, {
             productSearch: productSearch,
-            maxSlots: maxSlots
+            maxSlots: maxSlots,
+            reportingURL: reportingURL
         });
     }
 
