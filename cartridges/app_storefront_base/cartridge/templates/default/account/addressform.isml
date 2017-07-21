@@ -82,7 +82,7 @@
                     <isprint value="${pdict.addressForm.country.attributes}" encoding="off" />
                     autocomplete="country">
                     <isloop items=${pdict.addressForm.country.options} var="country">
-                        <option id="${country.id}" <isif condition="${country.selected}">selected</isif> label="${country.label}">${country.htmlValue}</option>
+                        <option id="${country.id}" value="${country.htmlValue}" <isif condition="${country.selected}">selected</isif>>${country.label}</option>
                     </isloop>
                 </select>
                 <div class="form-control-feedback"></div>
@@ -100,7 +100,7 @@
                     <isprint value="${pdict.addressForm.states.stateCode.attributes}" encoding="off" />
                     autocomplete="address-level1">
                     <isloop items=${pdict.addressForm.states.stateCode.options} var="state">
-                        <option id="${state.id}" <isif condition="${state.selected}">selected</isif> label="${state.label || ' '}">${state.htmlValue}</option>
+                        <option id="${state.id}" value="${state.htmlValue}" <isif condition="${state.selected}">selected</isif>>${state.label || ' '}</option>
                     </isloop>
                 </select>
                 <div class="form-control-feedback"></div>

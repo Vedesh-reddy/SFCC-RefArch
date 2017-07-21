@@ -112,14 +112,13 @@
                 <isprint value=${billingFields.states.stateCode.attributes} encoding="off"/>
                 autocomplete="billing address-level1">
                     <isloop items=${billingFields.states.stateCode.options} var="state">
-                        <option id="${state.id}"  value="${state.id}"
+                        <option id="${state.id}"  value="${state.htmlValue}"
                             ${pdict.order.billing.billingAddress.address
                                 && state.id === pdict.order.billing.billingAddress.address.stateCode
                                 ? "selected"
                                 : "" }
-                            label="${state.label}"
                         >
-                            ${state.htmlValue}
+                            ${state.label}
                         </option>
                     </isloop>
             </select>
@@ -136,14 +135,13 @@
                 autocomplete="billing country">
                     <option label=" "></option>
                     <isloop items=${billingFields.country.options} var="country">
-                        <option id="${country.id}" value="${country.id}"
+                        <option id="${country.id}" value="${country.htmlValue}"
                             ${pdict.order.billing.billingAddress.address
                                 && country.id === pdict.order.billing.billingAddress.address.countryCode.value
                                 ? "selected"
                                 : "" }
-                            label="${country.label}"
                         >
-                            ${country.htmlValue}
+                            ${country.label}
                         </option>
                     </isloop>
             </select>

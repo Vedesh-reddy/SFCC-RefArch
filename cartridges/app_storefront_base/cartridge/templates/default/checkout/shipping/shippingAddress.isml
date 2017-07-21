@@ -81,7 +81,7 @@
                 autocomplete="shipping country">
                     <option label=" "></option>
                     <isloop items=${addressFields.country.options} var="country">
-                        <option id="${country.id}" ${country.id === shippingAddress.countryCode.value ? 'selected' : ''} label="${country.label}">${country.htmlValue}</option>
+                        <option id="${country.id}" value="${country.htmlValue}" ${country.id === shippingAddress.countryCode.value ? 'selected' : ''}>${country.label}</option>
                     </isloop>
             </select>
             <div class="form-control-feedback"><isprint value="${addressFields.country.error}" ></div>
@@ -98,7 +98,7 @@
                 <isprint value=${addressFields.states.stateCode.attributes} encoding="off"/>
                 autocomplete="shipping address-level1">
                 <isloop items=${addressFields.states.stateCode.options} var="state">
-                    <option id="${state.id}" ${state.id===shippingAddress.stateCode ? 'selected' : ''} label="${state.label || ' '}">${state.htmlValue}</option>
+                    <option id="${state.id}" value="${state.htmlValue}" ${state.id===shippingAddress.stateCode ? 'selected' : ''}>${state.label || ' '}</option>
                 </isloop>
             </select>
             <div class="form-control-feedback"><isprint value="${addressFields.states.stateCode.error}" ></div>
