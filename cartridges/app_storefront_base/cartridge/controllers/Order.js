@@ -29,18 +29,22 @@ server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
     var orderModel = new OrderModel(order, { config: config });
     var passwordForm;
 
+    var reportingURLs = OrderHelpers.getReportingUrls(order);
+
     if (!req.currentCustomer.profile) {
         passwordForm = server.forms.getForm('newpasswords');
         passwordForm.clear();
         res.render('checkout/confirmation/confirmation', {
             order: orderModel,
             returningCustomer: false,
-            passwordForm: passwordForm
+            passwordForm: passwordForm,
+            reportingURLs: reportingURLs
         });
     } else {
         res.render('checkout/confirmation/confirmation', {
             order: orderModel,
-            returningCustomer: true
+            returningCustomer: true,
+            reportingURLs: reportingURLs
         });
     }
 

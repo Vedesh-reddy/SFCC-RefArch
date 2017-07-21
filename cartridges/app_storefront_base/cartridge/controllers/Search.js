@@ -74,7 +74,7 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
     var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
     var apiProductSearch = new ProductSearchModel();
     var maxSlots = 4;
-    var reportingURL;
+    var reportingURLs = [];
 
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
@@ -89,11 +89,11 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
     );
 
     if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
-        reportingURL = URLUtils.url('ReportingEvent-Start',
+        reportingURLs.push(URLUtils.url('ReportingEvent-Start',
             'ID', 'ProductSearch',
             'Phrase', productSearch.searchKeywords,
             'ResultCount', StringUtils.formatNumber(productSearch.count, '#,##0', 'en_US')
-        );
+        ));
     }
 
     if (
@@ -106,21 +106,21 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
             res.render(resultsTemplate, {
                 productSearch: productSearch,
                 maxSlots: maxSlots,
-                reportingURL: reportingURL
+                reportingURLs: reportingURLs
             });
         } else {
             res.render(categoryTemplate, {
                 productSearch: productSearch,
                 maxSlots: maxSlots,
                 category: apiProductSearch.category,
-                reportingURL: reportingURL
+                reportingURLs: reportingURLs
             });
         }
     } else {
         res.render(resultsTemplate, {
             productSearch: productSearch,
             maxSlots: maxSlots,
-            reportingURL: reportingURL
+            reportingURLs: reportingURLs
         });
     }
 
