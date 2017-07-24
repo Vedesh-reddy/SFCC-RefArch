@@ -64,7 +64,7 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var URLUtils = require('dw/web/URLUtils');
-    var StringUtils = require('dw/util/StringUtils');
+    var formatHelpers = require('*/cartridge/scripts/helpers/formatHelpers');
 
     var categoryTemplate = '';
     var productSearch;
@@ -91,7 +91,7 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
         reportingURLs.push(URLUtils.url('ReportingEvent-Start',
             'ID', 'ProductSearch',
             'Phrase', productSearch.searchKeywords,
-            'ResultCount', StringUtils.formatNumber(productSearch.count, '#,##0', 'en_US')
+            'ResultCount', formatHelpers.formatNumber(productSearch.count)
         ));
     }
 
