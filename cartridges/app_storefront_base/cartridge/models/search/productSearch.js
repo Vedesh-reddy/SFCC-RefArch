@@ -222,7 +222,11 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
     if (productSearch.category) {
         this.category = {
             name: productSearch.category.displayName,
-            id: productSearch.category.ID
+            id: productSearch.category.ID,
+            enableCompare: Object.prototype.hasOwnProperty
+                .call(productSearch.category.custom, 'enableCompare')
+                    ? productSearch.category.custom.enableCompare
+                    : true
         };
     }
 }
