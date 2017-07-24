@@ -128,6 +128,11 @@ function sendConfirmationEmail(registeredUser) {
     confirmationEmail.send();
 }
 
+/**
+ * Build the urls that report on the order
+ * @param {dw.order.Order} order - the order object
+ * @returns {Array} - an array of urls that are used to report on the current order
+ */
 function getReportingUrls(order) {
     var reportingURLs = [];
 

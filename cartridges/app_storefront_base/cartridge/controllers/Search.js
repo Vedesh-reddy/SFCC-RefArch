@@ -63,7 +63,6 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
 server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
-
     var URLUtils = require('dw/web/URLUtils');
     var StringUtils = require('dw/util/StringUtils');
 
