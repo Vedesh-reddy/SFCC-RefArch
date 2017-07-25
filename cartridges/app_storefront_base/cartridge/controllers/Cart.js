@@ -105,8 +105,10 @@ server.get(
         var Transaction = require('dw/system/Transaction');
         var CartModel = require('*/cartridge/models/cart');
         var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
 
         var currentBasket = BasketMgr.getCurrentBasket();
+        var reportingURLs;
 
         if (currentBasket) {
             Transaction.wrap(function () {
@@ -118,6 +120,12 @@ server.get(
                 HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
             });
         }
+
+        if (currentBasket && currentBasket.allLineItems.length) {
+            reportingURLs = reportingUrls.getBasketOpenReportingURLs(currentBasket);
+        }
+
+        res.setViewData({ reportingURLs: reportingURLs });
 
         var basketModel = new CartModel(currentBasket);
 
@@ -347,8 +355,10 @@ server.get('MiniCartShow', function (req, res, next) {
     var Transaction = require('dw/system/Transaction');
     var CartModel = require('*/cartridge/models/cart');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
 
     var currentBasket = BasketMgr.getCurrentBasket();
+    var reportingURLs;
 
     if (currentBasket) {
         Transaction.wrap(function () {
@@ -359,6 +369,13 @@ server.get('MiniCartShow', function (req, res, next) {
             HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
         });
     }
+
+    if (currentBasket && currentBasket.allLineItems.length) {
+        reportingURLs = reportingUrls.getBasketOpenReportingURLs(currentBasket);
+    }
+
+    res.setViewData({ reportingURLs: reportingURLs });
+
 
     var basketModel = new CartModel(currentBasket);
 

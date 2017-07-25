@@ -3,6 +3,10 @@
         var assets = require('*/cartridge/scripts/assets.js');
         assets.addCss('/css/cart.css');
     </isscript>
+    
+    <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
+        <isinclude template="reporting/reportingUrls" />
+    </isif>
 
     <div class="cart-error-messaging cart-error">
         <isif condition="${pdict.valid.error && pdict.items.length !== 0}">

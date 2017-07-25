@@ -1,5 +1,8 @@
 <isset name="miniCart" value="${true}" scope="page" />
 <div class="container cart">
+    <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
+        <isinclude template="reporting/reportingUrls" />
+    </isif>
     <div>
         <div class="row">
             <div class="col-6">

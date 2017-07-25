@@ -63,8 +63,7 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
 server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
-    var URLUtils = require('dw/web/URLUtils');
-    var formatHelpers = require('*/cartridge/scripts/helpers/formatHelpers');
+    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
 
     var categoryTemplate = '';
     var productSearch;
@@ -73,7 +72,7 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
     var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
     var apiProductSearch = new ProductSearchModel();
     var maxSlots = 4;
-    var reportingURLs = [];
+    var reportingURLs;
 
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
@@ -88,11 +87,7 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
     );
 
     if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
-        reportingURLs.push(URLUtils.url('ReportingEvent-Start',
-            'ID', 'ProductSearch',
-            'Phrase', productSearch.searchKeywords,
-            'ResultCount', formatHelpers.formatNumber(productSearch.count)
-        ));
+        reportingURLs = reportingUrls.getProductSearchReportingURLs(productSearch);
     }
 
     if (
