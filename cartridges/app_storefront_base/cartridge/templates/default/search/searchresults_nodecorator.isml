@@ -1,3 +1,7 @@
+<isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
+    <isinclude template="reporting/reportingUrls" />
+</isif>
+
 <div class="hero slant-down search-banner"
     <!--- If no image, default is specified in search.scss > .search-banner --->
     <isif condition="${pdict.productSearch.bannerImageUrl}">

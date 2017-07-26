@@ -124,7 +124,6 @@ function sendConfirmationEmail(registeredUser) {
     confirmationEmail.send();
 }
 
-
 module.exports = {
     getOrders: getOrders,
     sendConfirmationEmail: sendConfirmationEmail

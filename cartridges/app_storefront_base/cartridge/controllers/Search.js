@@ -63,6 +63,7 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
 server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
+    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
 
     var categoryTemplate = '';
     var productSearch;
@@ -71,6 +72,7 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
     var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
     var apiProductSearch = new ProductSearchModel();
     var maxSlots = 4;
+    var reportingURLs;
 
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
@@ -84,6 +86,10 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
+    if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
+        reportingURLs = reportingUrls.getProductSearchReportingURLs(productSearch);
+    }
+
     if (
         productSearch.isCategorySearch
         && !productSearch.isRefinedCategorySearch
@@ -93,19 +99,22 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
         if (isAjax) {
             res.render(resultsTemplate, {
                 productSearch: productSearch,
-                maxSlots: maxSlots
+                maxSlots: maxSlots,
+                reportingURLs: reportingURLs
             });
         } else {
             res.render(categoryTemplate, {
                 productSearch: productSearch,
                 maxSlots: maxSlots,
-                category: apiProductSearch.category
+                category: apiProductSearch.category,
+                reportingURLs: reportingURLs
             });
         }
     } else {
         res.render(resultsTemplate, {
             productSearch: productSearch,
-            maxSlots: maxSlots
+            maxSlots: maxSlots,
+            reportingURLs: reportingURLs
         });
     }
 

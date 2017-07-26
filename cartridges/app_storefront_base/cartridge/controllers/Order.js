@@ -8,6 +8,7 @@ var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
 server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
+    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
     var OrderMgr = require('dw/order/OrderMgr');
     var OrderModel = require('*/cartridge/models/order');
 
@@ -29,18 +30,22 @@ server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
     var orderModel = new OrderModel(order, { config: config });
     var passwordForm;
 
+    var reportingURLs = reportingUrls.getOrderReportingURLs(order);
+
     if (!req.currentCustomer.profile) {
         passwordForm = server.forms.getForm('newpasswords');
         passwordForm.clear();
         res.render('checkout/confirmation/confirmation', {
             order: orderModel,
             returningCustomer: false,
-            passwordForm: passwordForm
+            passwordForm: passwordForm,
+            reportingURLs: reportingURLs
         });
     } else {
         res.render('checkout/confirmation/confirmation', {
             order: orderModel,
-            returningCustomer: true
+            returningCustomer: true,
+            reportingURLs: reportingURLs
         });
     }
 
