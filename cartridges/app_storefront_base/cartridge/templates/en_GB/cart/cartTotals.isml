@@ -17,16 +17,6 @@
     </div>
 </div>
 
-<!-- Sale Tax -->
-<div class="row">
-    <div class="col-8">
-        <p>${Resource.msg('label.sales.tax','cart',null)}</p>
-    </div>
-    <div class="col-4">
-        <p class="text-right tax-total">${pdict.totals.totalTax}</p>
-    </div>
-</div>
-
 <!--- Order Discount --->
 <div class="row order-discount <isif condition="${pdict.totals.orderLevelDiscountTotal.value === 0}">hide-order-discount</isif>">
     <div class="col-8">
