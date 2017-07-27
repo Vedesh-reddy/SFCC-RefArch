@@ -17,7 +17,7 @@
     </div>
 </div>
 
-<!-- Sale Tax -->
+<!-- Sales Tax -->
 <div class="row">
     <div class="col-8">
         <p>${Resource.msg('label.sales.tax','cart',null)}</p>
