@@ -137,4 +137,9 @@ describe('Reporting URLs', function () {
         var result = reportingUrls.getCheckoutReportingURLs(basket.UUID, 1, 'someName');
         assert.equal(result.length, 1);
     });
+
+    it('should get Account Open reporting URLs', function () {
+        var result = reportingUrls.getAccountOpenReportingURLs(5);
+        assert.equal(result.length, 1);
+    });
 });

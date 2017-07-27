@@ -309,7 +309,9 @@ server.post(
                             OrderHelpers.sendConfirmationEmail(registeredUser);
                             res.json({
                                 success: true,
-                                redirectUrl: URLUtils.url('Account-Show').toString()
+                                redirectUrl: URLUtils.url('Account-Show',
+                                    'registration', 'submitted'
+                                ).toString()
                             });
                         }
                     });

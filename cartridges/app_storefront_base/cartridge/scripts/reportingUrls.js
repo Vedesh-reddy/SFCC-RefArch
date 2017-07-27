@@ -253,6 +253,22 @@ function getCheckoutReportingURLs(UUID, step, stepName) {
     return result;
 }
 
+/**
+ * Build the urls that report on account open
+ * @param {number} registeredCustomerCount - The number of registered customers in the system
+ * @returns {Array} - an array of urls that are used to report
+ */
+function getAccountOpenReportingURLs(registeredCustomerCount) {
+    var result = [];
+
+    result.push(URLUtils.url('ReportingEvent-Start',
+        'ID', 'AccountOpen',
+        'TotalUserCount', formatHelpers.formatNumber(registeredCustomerCount)
+    ));
+
+    return result;
+}
+
 module.exports = {
     getItemPromoReportingURLs: getItemPromoReportingURLs,
     getShippingPromoReportingURLs: getShippingPromoReportingURLs,
@@ -260,5 +276,6 @@ module.exports = {
     getBasketOpenReportingURLs: getBasketOpenReportingURLs,
     getOrderReportingURLs: getOrderReportingURLs,
     getProductSearchReportingURLs: getProductSearchReportingURLs,
-    getCheckoutReportingURLs: getCheckoutReportingURLs
+    getCheckoutReportingURLs: getCheckoutReportingURLs,
+    getAccountOpenReportingURLs: getAccountOpenReportingURLs
 };
