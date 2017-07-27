@@ -30,7 +30,7 @@ function getModel(req) {
         'creationDate desc',
         customerNo,
         Order.ORDER_STATUS_REPLACED
-	);
+    );
 
     var order = customerOrders.first();
 
@@ -124,8 +124,18 @@ server.get(
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
+        var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
+        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var reportingURLs;
+
+        // Get reporting event Account Open url
+        if (req.querystring.registration && req.querystring.registration === 'submitted') {
+            reportingURLs = reportingUrls.getAccountOpenReportingURLs(
+                CustomerMgr.registeredCustomerCount
+            );
+        }
 
         var accountModel = getModel(req);
         res.render('account/accountdashboard', {
@@ -136,7 +146,8 @@ server.get(
                     htmlValue: Resource.msg('global.home', 'common', null),
                     url: URLUtils.home().toString()
                 }
-            ]
+            ],
+            reportingURLs: reportingURLs
         });
         next();
     }
@@ -292,7 +303,9 @@ server.post(
                 if (registrationForm.validForm) {
                     res.json({
                         success: true,
-                        redirectUrl: URLUtils.url('Account-Show').toString()
+                        redirectUrl: URLUtils.url('Account-Show',
+                            'registration', 'submitted'
+                        ).toString()
                     });
                 } else {
                     res.json({

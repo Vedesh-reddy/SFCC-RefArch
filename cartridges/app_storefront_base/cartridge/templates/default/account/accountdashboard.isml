@@ -1,4 +1,9 @@
 <isdecorate template="common/layout/page">
+
+    <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
+        <isinclude template="reporting/reportingUrls" />
+    </isif>
+
     <isscript>
         var assets = require('*/cartridge/scripts/assets.js');
         assets.addCss('/css/account/dashboard.css');
