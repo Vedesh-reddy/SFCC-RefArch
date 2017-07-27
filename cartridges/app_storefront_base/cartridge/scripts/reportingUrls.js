@@ -233,11 +233,32 @@ function getProductSearchReportingURLs(productSearch) {
     return result;
 }
 
+/**
+ * Build the urls that report on the checkout
+ * @param {string} UUID - the target basket's uuid
+ * @param {number} step - the step in the checkout
+ * @param {string} stepName - the name of the step in checkout
+ * @returns {Array} - an array of urls that are used to report
+ */
+function getCheckoutReportingURLs(UUID, step, stepName) {
+    var result = [];
+
+    result.push(URLUtils.url('ReportingEvent-Start',
+        'ID', 'Checkout',
+        'BasketID', UUID,
+        'Step', formatHelpers.formatNumber(step),
+        'Name', stepName
+    ));
+
+    return result;
+}
+
 module.exports = {
     getItemPromoReportingURLs: getItemPromoReportingURLs,
     getShippingPromoReportingURLs: getShippingPromoReportingURLs,
     getOrderPromoReportingURLs: getOrderPromoReportingURLs,
     getBasketOpenReportingURLs: getBasketOpenReportingURLs,
     getOrderReportingURLs: getOrderReportingURLs,
-    getProductSearchReportingURLs: getProductSearchReportingURLs
+    getProductSearchReportingURLs: getProductSearchReportingURLs,
+    getCheckoutReportingURLs: getCheckoutReportingURLs
 };

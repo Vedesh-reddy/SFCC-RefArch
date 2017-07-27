@@ -9,6 +9,10 @@
         assets.addCss('/css/checkout/checkout.css');
     </isscript>
 
+    <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
+        <isinclude template="reporting/reportingUrls" />
+    </isif>
+
     <h1 class="page-title">
         ${Resource.msg('title.checkout','checkout',null)}
     </h1>

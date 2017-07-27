@@ -18,8 +18,10 @@ server.get(
         var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
         var TotalsModel = require('*/cartridge/models/totals');
         var URLUtils = require('dw/web/URLUtils');
+        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
 
         var currentBasket = BasketMgr.getCurrentBasket();
+        var reportingURLs;
         if (!currentBasket) {
             res.redirect(URLUtils.url('Cart-Show'));
             return next();
@@ -43,11 +45,19 @@ server.get(
                 rememberMe = true;
                 userName = req.currentCustomer.credentials.username;
             }
+
+            reportingURLs = reportingUrls.getCheckoutReportingURLs(
+                currentBasket.UUID,
+                1,
+                'CheckoutMethod'
+            );
+
             res.render('/checkout/checkoutLogin', {
                 rememberMe: rememberMe,
                 userName: userName,
                 actionUrl: actionUrl,
-                details: details
+                details: details,
+                reportingURLs: reportingURLs
             });
         }
 
@@ -533,6 +543,7 @@ server.get(
         var URLUtils = require('dw/web/URLUtils');
         var Site = require('dw/system/Site');
         var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
+        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
 
         var currentBasket = BasketMgr.getCurrentBasket();
         if (!currentBasket) {
@@ -608,6 +619,12 @@ server.get(
         storesModel.availableStores = StoreHelpers.getFilteredStores(storesModel, plis);
 
         var pickupEnabled = Site.getCurrent().getCustomPreferenceValue('enableStorePickUp');
+        var reportingURLs;
+        reportingURLs = reportingUrls.getCheckoutReportingURLs(
+            currentBasket.UUID,
+            2,
+            'Shipping'
+        );
 
         res.render('checkout/checkout', {
             stores: storesModel,
@@ -619,7 +636,8 @@ server.get(
             },
             expirationYears: creditCardExpirationYears,
             currentStage: currentStage,
-            pickUpInStoreEnabled: pickupEnabled
+            pickUpInStoreEnabled: pickupEnabled,
+            reportingURLs: reportingURLs
         });
 
         return next();

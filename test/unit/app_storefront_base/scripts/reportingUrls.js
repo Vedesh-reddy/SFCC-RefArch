@@ -132,4 +132,9 @@ describe('Reporting URLs', function () {
         var result = reportingUrls.getProductSearchReportingURLs(productSearch);
         assert.equal(result.length, 1);
     });
+
+    it('should get checkout reporting URLs', function () {
+        var result = reportingUrls.getCheckoutReportingURLs(basket.UUID, 1, 'someName');
+        assert.equal(result.length, 1);
+    });
 });
