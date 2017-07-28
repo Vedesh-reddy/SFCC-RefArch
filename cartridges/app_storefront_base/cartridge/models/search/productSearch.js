@@ -220,18 +220,9 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
     );
 
     if (productSearch.category) {
-        var enableCompare = true;
-        if (productSearch.category.custom) {
-            enableCompare = Object.prototype.hasOwnProperty
-                .call(productSearch.category.custom, 'enableCompare')
-                ? productSearch.category.custom.enableCompare
-                : true;
-        }
-
         this.category = {
             name: productSearch.category.displayName,
-            id: productSearch.category.ID,
-            enableCompare: enableCompare
+            id: productSearch.category.ID
         };
     }
 }
