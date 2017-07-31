@@ -168,6 +168,7 @@ module.exports = {
         // Handle refinement value selection and reset click
         $('.container').on('click', '.refinements li a, .refinement-bar a.reset', function (e) {
             e.preventDefault();
+            e.stopPropagation();
 
             $.spinner().start();
             $(this).trigger('search:filter', e);
