@@ -1,6 +1,6 @@
 'use strict';
 
-var countries = require('*/cartridge/models/countries');
+var countries = require('countries');
 
 var ApiLocale = require('dw/util/Locale');
 

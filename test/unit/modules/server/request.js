@@ -1,8 +1,49 @@
 'use strict';
 
-var Request = require('../../../../cartridges/modules/server/request');
 var assert = require('chai').assert;
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
+var sinon = require('sinon');
+
 var ArrayList = require('../../../mocks/dw.util.Collection');
+
+var Request = proxyquire('../../../../cartridges/modules/server/request', {
+    'dw/util/Locale': {
+        getLocale: function () {
+            return { ID: 'en_US' };
+        }
+    },
+    'dw/util/Currency': {
+        getCurrency: function () {
+            return 'currency';
+        }
+    },
+    '../countries': [
+        {
+            'id': 'en_US',
+            'currencyCode': 'USD'
+        }, {
+            'id': 'en_GB',
+            'currencyCode': 'GBP'
+        }, {
+            'id': 'ja_JP',
+            'currencyCode': 'JPY'
+        }, {
+            'id': 'zh_CN',
+            'currencyCode': 'CNY'
+        }, {
+            'id': 'fr_FR',
+            'currencyCode': 'EUR'
+        }, {
+            'id': 'it_IT',
+            'currencyCode': 'EUR'
+        }]
+});
+
+var session = {
+    setCurrency: function () { return; }
+};
+
+var setCurrencyStub = sinon.stub(session, 'setCurrency');
 
 function createFakeRequest(overrides) {
     overrides = overrides || {}; // eslint-disable-line no-param-reassign
@@ -101,7 +142,8 @@ function createFakeRequest(overrides) {
                     }
                 },
                 partial: false
-            }
+            },
+            setCurrency: setCurrencyStub
         }
     };
     Object.keys(overrides).forEach(function (key) {
@@ -111,6 +153,10 @@ function createFakeRequest(overrides) {
 }
 
 describe('request', function () {
+    afterEach(function () {
+        setCurrencyStub.reset();
+    });
+
     it('should parse empty query string', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.isObject(req.querystring);
@@ -308,5 +354,9 @@ describe('request', function () {
         };
 
         assert.deepEqual(req.session.clickStream, expectedResult);
+    });
+    it('should call setCurrency once', function () {
+        new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        assert.isTrue(setCurrencyStub.calledOnce);
     });
 });

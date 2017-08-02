@@ -153,6 +153,28 @@ function getCustomerObject(customer) {
 }
 
 /**
+ * set currency of the current locale if there's a mismatch
+ * @param {Object} request - Global request object
+ * @param {dw.system.Session} session - Global session object
+ */
+function setCurrency(request, session) {
+    var Locale = require('dw/util/Locale');
+    var currency = require('dw/util/Currency');
+    var countries = require('../countries');
+    var currentLocale = Locale.getLocale(request.locale);
+
+    var currentCountry = !currentLocale
+        ? countries[0]
+        : countries.filter(function (country) {
+            return country.id === currentLocale.ID;
+        })[0];
+
+    if (session.currency.currencyCode !== currentCountry.currencyCode) {
+        session.setCurrency(currency.getCurrency(currentCountry.currencyCode));
+    }
+}
+
+/**
  * @constructor
  * @classdesc Local instance of request object with customer object in it
  *
@@ -162,6 +184,8 @@ function getCustomerObject(customer) {
  * @param {dw.system.Session} session - Global session object
  */
 function Request(request, customer, session) {
+    setCurrency(request, session);
+
     this.httpMethod = request.httpMethod;
     this.host = request.httpHost;
     this.path = request.httpPath;
