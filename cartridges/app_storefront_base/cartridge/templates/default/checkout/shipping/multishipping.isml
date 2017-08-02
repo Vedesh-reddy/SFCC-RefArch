@@ -7,7 +7,7 @@
                         <isinclude template="checkout/productCard/productShippingCard" />
                     </div>
                     <div class="card-block">
-                        <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-AddNewAddress')}" data-address-mode="new" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
+                        <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('Checkout-AddNewAddress')}" data-address-mode="new" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
                             <input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
                             <input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
                             <input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />

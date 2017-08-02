@@ -31,7 +31,7 @@ module.exports = function () {
 
     $('.mini-cart').on('mouseleave focusout', function (event) {
         if ((event.type === 'focusout' && $('.mini-cart').has(event.target).length > 0)
-            || (event.type === 'mouseleave' && event.target === $('.mini-cart .quantity')[0])
+            || (event.type === 'mouseleave' && $(event.target).is('.mini-cart .quantity'))
             || $('body').hasClass('modal-open')) {
             event.stopPropagation();
             return;

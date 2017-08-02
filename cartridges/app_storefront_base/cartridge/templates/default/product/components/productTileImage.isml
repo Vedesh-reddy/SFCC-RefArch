@@ -5,7 +5,7 @@
              alt="${product.productName}"
              title="${product.images.medium[0].title}" />
     </a>
-    <isif condition="${showQuickView}">
+    <isif condition="${pdict.display.showQuickView !== false}">
         <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}">
             <img src="${URLUtils.staticURL('/images/quickview.png')}"
                  alt="${Resource.msg('image.quickview.product.tile', 'common', null)}"

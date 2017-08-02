@@ -14,7 +14,7 @@
             <label class="form-control-label" for="shippingCountry">
                 ${Resource.msg('field.shipping.address.country','address',null)}
             </label>
-            <select class="form-control shippingCountry" id="shippingCountry"
+            <select class="form-control shippingCountry custom-select" id="shippingCountry"
                 <isprint value=${addressFields.country.attributes} encoding="off"/>
                 autocomplete="shipping country">
                     <option label=" "></option>
@@ -48,7 +48,7 @@
             <label class="form-control-label" for="shippingState">
                 ${Resource.msg('field.shipping.address.state','address',null)}
             </label>
-            <select class="form-control shippingState" id="shippingState"
+            <select class="form-control shippingState custom-select" id="shippingState"
                 <isprint value=${addressFields.states.stateCode.attributes} encoding="off"/>
                 autocomplete="shipping address-level1">
                 <isloop items=${addressFields.states.stateCode.options} var="state">

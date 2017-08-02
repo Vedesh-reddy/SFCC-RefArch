@@ -15,11 +15,13 @@ function Images(product, imageConfig) {
 
         if (imageConfig.quantity === 'single') {
             var firstImage = collections.first(images);
-            result = [{
-                alt: firstImage.alt,
-                url: firstImage.URL.toString(),
-                title: firstImage.title
-            }];
+            if (firstImage) {
+                result = [{
+                    alt: firstImage.alt,
+                    url: firstImage.URL.toString(),
+                    title: firstImage.title
+                }];
+            }
         } else {
             result = collections.map(images, function (image) {
                 return {

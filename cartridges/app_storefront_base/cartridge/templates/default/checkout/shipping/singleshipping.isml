@@ -3,7 +3,7 @@
         <!--- Shipping Address Form--->
         <div class="tab-pane ${!pdict.order.isPickUpInStore ? 'active' : ''} card-block"
                 id="shipping-address" class="shipping-address" role="tabpanel">
-            <form autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" data-address-mode="${pdict.order.shipping[0].matchingAddressId ? 'edit' : 'new'}" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
+            <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" data-address-mode="${pdict.order.shipping[0].matchingAddressId ? 'edit' : 'new'}" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
                 <input name="shipmentUUID" type="hidden" value="${pdict.order.shipping[0].UUID}" />
                 <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
 
@@ -48,7 +48,7 @@
 
         <!--- In Store Pick up--->
         <div class="tab-pane ${pdict.order.isPickUpInStore ? 'active' : ''}" id="pick-up-in-store" data-is-in-pick-up="${pdict.order.isPickUpInStore ? 'active' : ''}" role="tabpanel">
-            <form action="${URLUtils.https('Stores-FindAvailableStores')}" class="store-locator" method="get" name="storelocator">
+            <form novalidate action="${URLUtils.https('Stores-FindAvailableStores')}" class="store-locator" method="get" name="storelocator">
                 <isif condition="${pdict.stores.searchKey.lat && pdict.stores.searchKey.long}">
                     <input type="hidden" name="lat" value="${pdict.stores.searchKey.lat}">
                     <input type="hidden" name="long" value="${pdict.stores.searchKey.long}">

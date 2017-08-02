@@ -1,5 +1,5 @@
 <div class="row">
     <isloop items="${slotcontent.content}" var="product" begin="0" end="${end}">
-        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.ID, 'swatches', 'true', 'ratings', 'true')}" />
+        <isinclude url="${URLUtils.url('Product-ShowTile', 'pid', product.ID, 'swatches', true, 'ratings', true, 'showQuickView', false)}" />
     </isloop>
 </div>

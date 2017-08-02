@@ -75,7 +75,7 @@
             ${billingFields.country.mandatory === true ? 'required' : ''}
             ${billingFields.country.htmlName}">
             <label class="form-control-label" for="billingCountry">${Resource.msg('field.billing.address.country','address',null)}</label>
-            <select class="form-control billingCountry" id="billingCountry"
+            <select class="form-control billingCountry custom-select" id="billingCountry"
                 <isprint value=${billingFields.country.attributes} encoding="off"/>
                 autocomplete="billing country">
                     <option label=" "></option>

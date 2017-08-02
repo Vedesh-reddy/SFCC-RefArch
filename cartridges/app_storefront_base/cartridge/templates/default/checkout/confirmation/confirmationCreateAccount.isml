@@ -8,7 +8,7 @@
                 action="${URLUtils.url('Order-CreateAccount', 'ID', pdict.order.orderNumber)}"
                 class="checkout-registration"
                 method="POST"
-                name="checkout-register-form" ${pdict.passwordForm.attributes}>
+                name="checkout-register-form" ${pdict.passwordForm.attributes} novalidate>
                 <div class="form-group
                     <isif condition="${pdict.passwordForm.newpassword.mandatory === true}">required</isif>">
                     <label class="form-control-label" for="newPassword">

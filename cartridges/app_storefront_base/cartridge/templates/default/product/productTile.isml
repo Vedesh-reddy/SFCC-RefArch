@@ -1,7 +1,7 @@
 <div class="product-tile">
     <isinclude template="product/components/productTileImage" />
     <div class="tile-body">
-        <isif condition="${pdict.display.swatches}">
+        <isif condition="${pdict.display.swatches !== false}">
             <isinclude template="product/components/productTileSwatch" />
         </isif>
 
@@ -10,6 +10,8 @@
         <isset name="price" value="${product.price}" scope="page" />
         <isinclude template="product/components/pricing/main" />
 
-        <isinclude template="product/productTileFooter" />
+        <isif condition="${pdict.display.ratings !== false}">
+            <isinclude template="product/productTileFooter" />
+        </isif>
     </div>
 </div>
