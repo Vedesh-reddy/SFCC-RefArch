@@ -39,7 +39,7 @@
            missing-error="error.message.required"
            range-error="error.message.between10and20"
            parse-error="error.message.parse.phone"
-           regexp="(^(0\d{1,4}- ?)?\d{1,4}-\d{4}$)"/>
+           regexp="^(0([1-9]{1}-?[1-9]\d{3}|[1-9]{2}-?\d{3}|[1-9]{2}\d{1}-?\d{2}|[1-9]{2}\d{2}-?\d{1})-?\d{4}|0[789]0-?\d{4}-?\d{4}|050-?\d{4}-?\d{4})$"/>
 
     <!-- actions provided by the edit shipping address dialog -->
     <action formid="apply" valid-form="true"/>
