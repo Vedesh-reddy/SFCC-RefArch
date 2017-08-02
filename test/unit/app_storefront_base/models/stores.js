@@ -22,7 +22,7 @@ describe('stores', function () {
             };
         }
     });
-    var actionUrl = '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Stores-FindStores';
+    var actionUrl = '/on/demandware.store/Sites-MobileFirst-Site/en_US/Stores-FindStores';
     var apiKey = 'YOUR_API_KEY';
     var searchKey = { lat: 42.4019, long: -71.1193 };
     var radius = 100;

@@ -39,7 +39,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                 'online': true,
                 'options': [],
                 'searchable': true,
-                'selectedProductUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Product-Show?pid=25604455&dwvar_25604455_color=SLABLFB&dwvar_25604455_size=155',
+                'selectedProductUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-Show?pid=25604455&dwvar_25604455_color=SLABLFB&dwvar_25604455_size=155',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
                 'selectedQuantity': 1,

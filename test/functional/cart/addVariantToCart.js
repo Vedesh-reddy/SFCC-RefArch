@@ -7,7 +7,7 @@ import * as testDataMgr from '../../mocks/testDataMgr/main';
 import * as products from '../../mocks/testDataMgr/products';
 import * as Resource from '../../mocks/dw/web/Resource';
 
-describe('Cart - Add Variant To Cart', () => {
+describe.skip('Cart - Add Variant To Cart', () => {
     let catalog;
     let productVariationMaster;
     let resourcePath;

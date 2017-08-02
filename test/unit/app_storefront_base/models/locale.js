@@ -91,7 +91,7 @@ describe('locale', function () {
             country: 'GB'
 
         };
-        var siteId = 'siteGenesis';
+        var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
 
         assert.deepEqual(localeModel, {
@@ -134,7 +134,7 @@ describe('locale', function () {
             country: 'FR'
 
         };
-        var siteId = 'siteGenesis';
+        var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -174,7 +174,7 @@ describe('locale', function () {
             country: 'IT'
 
         };
-        var siteId = 'siteGenesis';
+        var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -214,7 +214,7 @@ describe('locale', function () {
             country: 'JA'
 
         };
-        var siteId = 'siteGenesis';
+        var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -254,7 +254,7 @@ describe('locale', function () {
             country: 'CN'
 
         };
-        var siteId = 'siteGenesis';
+        var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -295,7 +295,7 @@ describe('locale', function () {
             country: 'US'
 
         };
-        var siteId = 'siteGenesis';
+        var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {

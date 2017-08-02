@@ -76,7 +76,7 @@ describe('billingForm', function () {
                 fieldErrors: [],
                 serverErrors: [],
                 saveCard: false
-                /* ,redirectUrl: '/s/SiteGenesis/cart?lang=en_US' */
+                /* ,redirectUrl: '/s/MobileFirst/cart?lang=en_US' */
             };
 
             return request(myRequest)

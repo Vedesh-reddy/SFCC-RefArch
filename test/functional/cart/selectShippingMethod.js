@@ -58,14 +58,14 @@ describe('Cart - Selecting Shipping Methods', () => {
 
         after(() => cartPage.emptyCart());
 
-        it('Should have the correct number shipping methods on the list.', function () {
+        it.skip('Should have the correct number shipping methods on the list.', function () {
             return browser.elements(cartPage.SHIPPING_METHOD_OPTIONS)
                 .then(methodList => {
                     return assert.equal(methodList.value.length, expectedShipMethodList.length, 'Expected the number of shipping methods = ' + expectedShipMethodList.length);
                 });
         });
 
-        it('Should have the correct shipping method names on the list.', function () {
+        it.skip('Should have the correct shipping method names on the list.', function () {
             return cartPage.getShippingMethodAtIndex(1)
                 .then(method => {
                     return assert.equal(method, expectedShipMethodList[0], 'Expected first shipping method = ' + expectedShipMethodList[0]);
@@ -223,7 +223,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 });
         });
 
-        it('Should be able to select different shipping method - Store Pickup.', function () {
+        it.skip('Should be able to select different shipping method - Store Pickup.', function () {
             const shipCostMap = {
                 'x_default': '$0.00',
                 'en_GB': '£0.00',
@@ -288,7 +288,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 });
         });
 
-        it('Should be able to select different shipping method - Express.', function () {
+        it.skip('Should be able to select different shipping method - Express.', function () {
             const shipCostMap = {
                 'x_default': '$22.99',
                 'en_GB': '£17.24',
@@ -353,7 +353,7 @@ describe('Cart - Selecting Shipping Methods', () => {
                 });
         });
 
-        it('Should be able to select different shipping method - USPS.', function () {
+        it.skip('Should be able to select different shipping method - USPS.', function () {
             const shipCostMap = {
                 'x_default': '$7.99',
                 'en_GB': '£5.99',

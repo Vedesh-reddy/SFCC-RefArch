@@ -21,7 +21,7 @@ import * as search from '../../mocks/testDataMgr/pageObjects/searchResult';
 import * as compareProducts from '../../mocks/testDataMgr/pageObjects/compareProducts';
 import * as testDataMgr from '../../mocks/testDataMgr/main';
 
-describe('Select 4 products for Compare', () => {
+describe.skip('Select 4 products for Compare', () => {
     const topTitle = '.page-title';
     const selector1 = [compareProducts.dataPid + ':nth-child(1)', compareProducts.compareCheckbox].join(' ');
     const selector2 = [compareProducts.dataPid + ':nth-child(2)', compareProducts.compareCheckbox].join(' ');

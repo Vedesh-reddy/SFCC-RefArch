@@ -53,15 +53,15 @@ export const SHIPPING_METHOD_ARRIVAL_TIME = '.shipping-method-arrival-time';
 export const SHIPPING_METHOD_PRICE = '.shipping-method-price';
 
 // keys (IDs) for fields in shipping form
-export const SHIPPING_FIRST_NAME = 'FirstName';
-export const SHIPPING_LAST_NAME = 'LastName';
-export const SHIPPING_ADDRESS_ONE = 'AddressOne';
-export const SHIPPING_ADDRESS_TWO = 'AddressTwo';
-export const SHIPPING_COUNTRY = 'Country';
-export const SHIPPING_STATE = 'State';
-export const SHIPPING_ADDRESS_CITY = 'AddressCity';
-export const SHIPPING_ZIP_CODE = 'ZipCode';
-export const SHIPPING_PHONE_NUMBER = 'PhoneNumber';
+export const SHIPPING_FIRST_NAME = ' #shippingFirstName';
+export const SHIPPING_LAST_NAME = ' #shippingLastName';
+export const SHIPPING_ADDRESS_ONE = ' #shippingAddressOne';
+export const SHIPPING_ADDRESS_TWO = ' #shippingAddressTwo';
+export const SHIPPING_COUNTRY = ' #shippingCountry';
+export const SHIPPING_STATE = ' #shippingState';
+export const SHIPPING_ADDRESS_CITY = ' #shippingAddressCity';
+export const SHIPPING_ZIP_CODE = ' #shippingZipCode';
+export const SHIPPING_PHONE_NUMBER = ' #shippingPhoneNumber';
 
 // keys (IDs) for fields in billing form
 export const BILLING_FIRST_NAME = 'FirstName';
@@ -89,10 +89,12 @@ export function fillOutShippingForm(shippingData, locale) {
     fieldTypes.set(SHIPPING_LAST_NAME, 'input');
     fieldTypes.set(SHIPPING_ADDRESS_ONE, 'input');
     fieldTypes.set(SHIPPING_ADDRESS_TWO, 'input');
-    fieldTypes.set(SHIPPING_COUNTRY, 'selectByVisibleText');
 
     if (locale && locale === 'x_default') {
-        fieldTypes.set(SHIPPING_STATE, 'selectByVisibleText');
+        fieldTypes.set(SHIPPING_COUNTRY, 'selectByValue');
+    }
+    if (locale && locale === 'x_default') {
+        fieldTypes.set(SHIPPING_STATE, 'selectByValue');
     }
 
     fieldTypes.set(SHIPPING_ADDRESS_CITY, 'input');
@@ -100,7 +102,7 @@ export function fillOutShippingForm(shippingData, locale) {
     fieldTypes.set(SHIPPING_PHONE_NUMBER, 'input');
 
     _.each(shippingData, (value, key) => {
-        let prefix = '.single-shipping #shipping';
+        let prefix = '.single-shipping';
         let selector = prefix + key;
         fieldsPromise.push(formHelpers.populateField(selector, value, fieldTypes.get(key)));
     });
@@ -114,11 +116,13 @@ export function fillOutBillingForm(billingData, locale) {
     fieldTypes.set(BILLING_LAST_NAME, 'input');
     fieldTypes.set(BILLING_ADDRESS_ONE, 'input');
     fieldTypes.set(BILLING_ADDRESS_TWO, 'input');
-    fieldTypes.set(BILLING_COUNTRY, 'selectByVisibleText');
-
     if (locale && locale === 'x_default') {
-        fieldTypes.set(SHIPPING_STATE, 'selectByVisibleText');
+        fieldTypes.set(BILLING_COUNTRY, 'selectByValue');
     }
+    if (locale && locale === 'x_default') {
+        fieldTypes.set(BILLING_STATE, 'selectByValue');
+    }
+
 
     fieldTypes.set(BILLING_ADDRESS_CITY, 'input');
     fieldTypes.set(BILLING_ZIP_CODE, 'input');
