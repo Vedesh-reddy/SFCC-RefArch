@@ -61,6 +61,10 @@ server.get('SetLocale', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var Currency = require('dw/util/Currency');
     var Site = require('dw/system/Site');
+    var BasketMgr = require('dw/order/BasketMgr');
+    var Transaction = require('dw/system/Transaction');
+
+    var currentBasket = BasketMgr.getCurrentBasket();
 
     var QueryString = server.querystring;
     var currency;
@@ -77,6 +81,12 @@ server.get('SetLocale', function (req, res, next) {
         if (allowedCurrencies.indexOf(req.querystring.CurrencyCode) > -1
             && (req.querystring.CurrencyCode !== req.session.currency.currencyCode)) {
             req.session.setCurrency(currency);
+
+            if (currentBasket && currentBasket.currencyCode !== currency.currencyCode) {
+                Transaction.wrap(function () {
+                    currentBasket.updateCurrency();
+                });
+            }
         }
 
         var redirectUrl = URLUtils.url(req.querystring.action).toString();
