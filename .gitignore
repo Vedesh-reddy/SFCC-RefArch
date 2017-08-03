@@ -8,5 +8,6 @@ cartridges.zip
 .idea/
 dw.json
 sitegenesisdata/
+mobilefirstdata/
 .DS_Store
 test/appium/webdriver/config.json

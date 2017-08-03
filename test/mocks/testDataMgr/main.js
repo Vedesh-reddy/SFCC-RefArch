@@ -25,7 +25,7 @@ export const creditCard2 = {
     cvn: 987
 };
 
-let demoDataDir = 'sitegenesisdata/demo_data_no_hires_images';
+let demoDataDir = 'sitegenesisdata/demo_data_mfra';
 let subjectMeta = {
     customers: {
         files: [demoDataDir + '/sites/SiteGenesis/customers.xml'],
