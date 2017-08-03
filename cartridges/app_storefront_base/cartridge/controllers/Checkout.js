@@ -576,6 +576,13 @@ server.get(
         Transaction.wrap(function () {
             COHelpers.ensureNoEmptyShipments(req);
         });
+
+        if (currentBasket.currencyCode !== req.session.currency.currencyCode) {
+            Transaction.wrap(function () {
+                currentBasket.updateCurrency();
+            });
+        }
+
         COHelpers.recalculateBasket(currentBasket);
 
         var shippingForm = COHelpers.prepareShippingForm(currentBasket);
