@@ -442,6 +442,7 @@ server.post(
             if (!COHelpers.isShippingAddressInitialized()) {
                 // First use always applies to defaultShipment
                 COHelpers.copyShippingAddressToShipment(result, basket.defaultShipment);
+                shipment = basket.defaultShipment;
             } else {
                 try {
                     Transaction.wrap(function () {
