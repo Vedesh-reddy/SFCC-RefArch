@@ -64,7 +64,7 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a href="${URLUtils.url('Address-AddAddress')}" class="btn btn-save btn-block btn-primary">${Resource.msg('button.addnew','account',null)}</a>
+                        <a href="${URLUtils.url('Address-AddAddress')}" class="btn btn-save text-large-wrap btn-block btn-primary">${Resource.msg('button.addnew','account',null)}</a>
                     </div>
                 </div>
             </div>
