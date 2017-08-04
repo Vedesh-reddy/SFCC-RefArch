@@ -49,7 +49,7 @@
 			formid="phone"
 			label="label.input.phone.profile"
 			mandatory="true"
-			regexp="^(0([1-9]{1}-?[1-9]\d{3}|[1-9]{2}-?\d{3}|[1-9]{2}\d{1}-?\d{2}|[1-9]{2}\d{2}-?\d{1})-?\d{4}|0[789]0-?\d{4}-?\d{4}|050-?\d{4}-?\d{4})$"
+			regexp="^(0([1-9]{1}[-,\s]?[1-9]\d{3}|[1-9]{2}-?\d{3}|[1-9]{2}\d{1}-?\d{2}|[1-9]{2}\d{2}-?\d{1})[-,\s]?\d{4}|0[789]0-?\d{4}-?\d{4}|050-?\d{4}-?\d{4})$"
 			missing-error="error.message.required"
 			parse-error="error.message.parse.phone.profile.form"
 			type="string"/>
