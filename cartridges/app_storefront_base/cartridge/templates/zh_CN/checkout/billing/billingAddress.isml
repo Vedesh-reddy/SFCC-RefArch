@@ -50,7 +50,10 @@
             ${billingFields.states.stateCode.htmlName}">
             <label class="form-control-label" for="billingState">${Resource.msg('field.billing.address.state','address',null)}</label>
             <input class="form-control billingState" id="billingState" name="${billingFields.states.stateCode.htmlName}"
-                value="${billingFields.states.stateCode.htmlValue}"
+                value="${pdict.order.billing.billingAddress.address
+                    && pdict.order.billing.billingAddress.address.stateCode
+                    ? pdict.order.billing.billingAddress.address.stateCode
+                    : ''}"
                 <isprint value="${billingFields.states.stateCode.attributes}" encoding="off" />
                 autocomplete="shipping address-level1">
             </input>
