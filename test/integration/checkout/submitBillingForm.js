@@ -69,28 +69,6 @@ describe('billingForm', function () {
                     countryCode: { value: 'us' }
                 },
                 paymentMethod: { value: 'CREDIT_CARD', htmlName: 'CREDIT_CARD' },
-                paymentInformation: {
-                    cardType: {
-                        value: 'Visa',
-                        htmlName: 'dwfrm_billing_creditCardFields_cardType'
-                    },
-                    cardNumber: {
-                        value: '4111111111111111',
-                        htmlName: 'dwfrm_billing_creditCardFields_cardNumber'
-                    },
-                    securityCode: {
-                        value: '342',
-                        htmlName: 'dwfrm_billing_creditCardFields_securityCode'
-                    },
-                    expirationMonth: {
-                        value: 2,
-                        htmlName: 'dwfrm_billing_creditCardFields_expirationMonth'
-                    },
-                    expirationYear: {
-                        value: 2020,
-                        htmlName: 'dwfrm_billing_creditCardFields_expirationYear'
-                    }
-                },
                 email: { value: 'blahblah@gmail.com' },
                 phone: { value: '9786543213' },
                 error: true,
