@@ -63,12 +63,23 @@ function updateOrderProductSummaryInformation(order) {
         } else {
             $('h5 > span').text('');
         }
+
+        var stateRequiredAttr = $('#shippingState').attr('required');
+        var isRequired = stateRequiredAttr !== undefined && stateRequiredAttr !== false;
+        var stateExists = (shipping.shippingAddress && shipping.shippingAddress.stateCode)
+            ? shipping.shippingAddress.stateCode
+            : false;
+        var stateBoolean = false;
+        if ((isRequired && stateExists) || (!isRequired)) {
+            stateBoolean = true;
+        }
+
         if (shipping.shippingAddress
             && shipping.shippingAddress.firstName
             && shipping.shippingAddress.lastName
             && shipping.shippingAddress.address1
             && shipping.shippingAddress.city
-            && shipping.shippingAddress.stateCode
+            && stateBoolean
             && shipping.shippingAddress.countryCode
             && shipping.shippingAddress.phone) {
             $('.ship-to-name', tmpl).text(nameLine);
