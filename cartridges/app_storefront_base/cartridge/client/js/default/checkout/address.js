@@ -148,7 +148,7 @@ module.exports = {
         });
     },
 
-    hideDeatils: function () {
+    hideDetails: function () {
         $('.btn-hide-details').on('click', function () {
             $(this).parents('[data-address-mode]').attr('data-address-mode', 'edit');
         });
