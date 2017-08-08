@@ -142,6 +142,7 @@ module.exports = {
         optionValueForAddress: optionValueForAddress,
         getAddressFieldsFromUI: getAddressFieldsFromUI
     },
+
     showDetails: function () {
         $('.btn-show-details').on('click', function () {
             $(this).parents('[data-address-mode]').attr('data-address-mode', 'details');

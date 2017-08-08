@@ -680,7 +680,7 @@ module.exports = {
                     if (restoreState) {
                         var restoreStateObj = JSON.parse(restoreState);
                         // TODO: This should test whatever might trigger a server-side save
-                        //  which is stateCode, as of now
+                        //  which is stateCode, as of now, 8/8/2017
                         var originalStateCode = restoreStateObj.shippingAddress.stateCode;
                         var stateCode = $('[name$=_stateCode]', form).val();
                         updateShippingAddressFormValues(restoreStateObj);
