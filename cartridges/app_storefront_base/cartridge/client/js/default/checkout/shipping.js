@@ -678,9 +678,18 @@ module.exports = {
                     // Should clear out changes / restore previous state
                     var restoreState = $rootEl.data('saved-state');
                     if (restoreState) {
-                        updateShippingAddressFormValues(JSON.parse(restoreState));
+                        var restoreStateObj = JSON.parse(restoreState);
+                        // TODO: This should test whatever might trigger a server-side save
+                        //  which is stateCode, as of now, 8/8/2017
+                        var originalStateCode = restoreStateObj.shippingAddress.stateCode;
+                        var stateCode = $('[name$=_stateCode]', form).val();
+                        updateShippingAddressFormValues(restoreStateObj);
+                        if (stateCode !== originalStateCode) {
+                            $('[data-action=save]', form).trigger('click');
+                        } else {
+                            $(form).attr('data-address-mode', 'edit');
+                        }
                     }
-                    $(form).attr('data-address-mode', 'edit');
                     break;
                 case 'save':
                     // Save address to checkoutAddressBook
