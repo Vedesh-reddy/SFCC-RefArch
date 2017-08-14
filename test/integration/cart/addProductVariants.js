@@ -144,11 +144,11 @@ describe('Add Product variants to cart', function () {
                     'action': 'Cart-AddProduct',
                     'cart': {
                         'actionUrls': {
-                            'removeCouponLineItem': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveCouponLineItem',
-                            'removeProductLineItemUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-RemoveProductLineItem',
-                            'updateQuantityUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-UpdateQuantity',
-                            'submitCouponCodeUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-AddCoupon',
-                            'selectShippingUrl': '/on/demandware.store/Sites-SiteGenesis-Site/en_US/Cart-SelectShippingMethod'
+                            'removeCouponLineItem': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveCouponLineItem',
+                            'removeProductLineItemUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveProductLineItem',
+                            'updateQuantityUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-UpdateQuantity',
+                            'submitCouponCodeUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-AddCoupon',
+                            'selectShippingUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-SelectShippingMethod'
                         },
                         'approachingDiscounts': [],
                         'numOfShipments': 1,

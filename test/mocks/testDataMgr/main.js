@@ -25,10 +25,10 @@ export const creditCard2 = {
     cvn: 987
 };
 
-let demoDataDir = 'sitegenesisdata/demo_data_mfra';
+let demoDataDir = 'mobilefirstdata/demo_data_mfra';
 let subjectMeta = {
     customers: {
-        files: [demoDataDir + '/sites/SiteGenesis/customers.xml'],
+        files: [demoDataDir + '/sites/MobileFirst/customers.xml'],
         processor: customers.parseCustomers
     },
     catalog: {
@@ -57,8 +57,8 @@ let subjectMeta = {
     },
     promotions: {
         files: [
-            demoDataDir + '/sites/SiteGenesis/promotions.xml',
-            demoDataDir + '/sites/SiteGenesisGlobal/promotions.xml'
+            demoDataDir + '/sites/MobileFirst/promotions.xml',
+            demoDataDir + '/sites/MobileFirstGlobal/promotions.xml'
         ],
         processor: promotions.parsePromotions
     }
@@ -285,10 +285,10 @@ export function getVariationMasterInstances() {
 
 /**
  * Promotions are Site-specific, so we need to specify the Site when calling functions that retrieve them.  If not
- * specified, we default to "SiteGenesis".  There is a getCurrentSiteName() helper function in helpers/common.js.
+ * specified, we default to "MobileFirst".  There is a getCurrentSiteName() helper function in helpers/common.js.
  *
  */
-const defaultSite = 'SiteGenesis';
+const defaultSite = 'MobileFirst';
 
 export function getPromotionById(id, site = defaultSite) {
     return promotions.getPromotion(parsedData.promotions[site].promotions, id);

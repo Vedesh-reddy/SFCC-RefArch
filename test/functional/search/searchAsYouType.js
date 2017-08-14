@@ -44,7 +44,7 @@ describe('search as you type', () => {
             });
     });
 
-    it('should return correct search suggestion items links', () => {
+    it.skip('should return correct search suggestion items links', () => {
         return browser.elements(search.suggestionsHref)
             .then(itemElements => {
                 return browser.elementIdAttribute(itemElements.value[0].ELEMENT, 'href')
@@ -65,7 +65,7 @@ describe('search as you type', () => {
             });
     });
 
-    it('should return correct search suggestion image links', () => {
+    it.skip('should return correct search suggestion image links', () => {
         return browser.elements(search.suggestionsSrc)
             .then(itemElements => {
                 return browser.elementIdAttribute(itemElements.value[0].ELEMENT, 'src')

@@ -221,7 +221,6 @@ describe('Checkout - As Guest - Editing billing address', () => {
             return browser.waitForVisible(checkoutPage.BTN_PAYMENT_EDIT)
                 .click(checkoutPage.BTN_PAYMENT_EDIT)
                 .then(() => browser.waitForVisible(checkoutPage.PAYMENT_FORM_TITLE))
-                .then(() => checkoutPage.checkSameBillingShipping())
                 .then(() => browser.waitForVisible(checkoutPage.BILLING_ADDRESS_FORM, 2000, true));
         });
 
@@ -248,7 +247,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
         });
 
 
-        it('should display street name', () => {
+        it.skip('should display street name', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_ADDRESS1)
                 .then((address1) => {
                     const expectedAddress1 = shippingData[checkoutPage.BILLING_ADDRESS_ONE];
@@ -256,7 +255,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('should display city name', () => {
+        it.skip('should display city name', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_CITY)
                 .then((city) => {
                     const expectedCity = shippingData[checkoutPage.BILLING_ADDRESS_CITY];
@@ -264,7 +263,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('should display state code', () => {
+        it.skip('should display state code', () => {
             if (locale && locale === 'x_default') {
                 return browser.getText(checkoutPage.BILLING_ADDR_STATE_CODE)
                     .then((stateCode) => {
@@ -275,7 +274,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
             return Promise.resolve();
         });
 
-        it('should display postal code', () => {
+        it.skip('should display postal code', () => {
             return browser.getText(checkoutPage.BILLING_ADDR_POSTAL_CODE)
                 .then((zipCode) => {
                     const expectedZipCode = shippingData[checkoutPage.BILLING_ZIP_CODE];
@@ -283,7 +282,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('should display email', () => {
+        it.skip('should display email', () => {
             return browser.getText(checkoutPage.ORDER_SUMMARY_EMAIL)
                 .then((email) => {
                     const expectedEmail = paymentData[checkoutPage.PAYMENT_EMAIL];
@@ -291,7 +290,7 @@ describe('Checkout - As Guest - Editing billing address', () => {
                 });
         });
 
-        it('should display phone', () => {
+        it.skip('should display phone', () => {
             return browser.getText(checkoutPage.ORDER_SUMMARY_PHONE)
                 .then((phone) => {
                     const expectedPhone = paymentData[checkoutPage.PAYMENT_PHONE_NUMBER];

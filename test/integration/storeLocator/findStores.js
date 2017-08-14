@@ -21,7 +21,7 @@ describe('Store Locator', function () {
                 'stores': [
                     {
                         'ID': 'store1',
-                        'name': 'Demandware',
+                        'name': 'Commerce Cloud',
                         'address1': '10 Presidential Way',
                         'address2': null,
                         'city': 'Woburn',
@@ -92,7 +92,7 @@ describe('Store Locator', function () {
                         'stateCode': 'MA'
                     }
                 ],
-                'locations': '[{"name":"Demandware","latitude":42.5273334,"longitude"' +
+                'locations': '[{"name":"Commerce Cloud","latitude":42.5273334,"longitude"' +
                 ':-71.13758250000001},{"name":"Champaign Electronic Shop","latitude":42.3729794,' +
                 '"longitude":-71.09346089999997},{"name":"Downtown TV Shop","latitude"' +
                 ':42.3569512,"longitude":-71.05902600000002},{"name":"Short Electro",' +
@@ -238,7 +238,7 @@ describe('Store Locator', function () {
                     },
                     {
                         'ID': 'store1',
-                        'name': 'Demandware',
+                        'name': 'Commerce Cloud',
                         'address1': '10 Presidential Way',
                         'address2': null,
                         'city': 'Woburn',
@@ -266,7 +266,7 @@ describe('Store Locator', function () {
                     }
                 ],
                 'locations': '[{"name":"Khale Street Electronics","latitude":42.6895548,' +
-                '"longitude":-71.14878340000001},{"name":"Demandware","latitude":42.5273334,' +
+                '"longitude":-71.14878340000001},{"name":"Commerce Cloud","latitude":42.5273334,' +
                 '"longitude":-71.13758250000001},{"name":"Champaign Electronic Shop",' +
                 '"latitude":42.3729794,"longitude":-71.09346089999997}]',
                 'searchKey': {

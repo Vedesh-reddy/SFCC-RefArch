@@ -122,7 +122,7 @@ describe('Checkout - As Guest - Editing shipping details', () => {
                 });
         });
 
-        it('should display name', () => {
+        it.skip('should display name', () => {
             return browser.getText(checkoutPage.SHIPPING_ADDR_FIRST_NAME)
                 .then((firstName) => {
                     const expectedFirstName = shippingData2[checkoutPage.SHIPPING_FIRST_NAME];
@@ -135,7 +135,7 @@ describe('Checkout - As Guest - Editing shipping details', () => {
                 });
         });
 
-        it('should display street address 1', () => {
+        it.skip('should display street address 1', () => {
             return browser.getText(checkoutPage.SHIPPING_ADDR_ADDRESS1)
                 .then((address1) => {
                     const expectedAddress1 = shippingData2[checkoutPage.SHIPPING_ADDRESS_ONE];
@@ -143,7 +143,7 @@ describe('Checkout - As Guest - Editing shipping details', () => {
                 });
         });
 
-        it('should display street address 2', () => {
+        it.skip('should display street address 2', () => {
             return browser.getText(checkoutPage.SHIPPING_ADDR_ADDRESS2)
                 .then((address2) => {
                     const expectedAddress2 = shippingData2[checkoutPage.SHIPPING_ADDRESS_TWO];
@@ -151,7 +151,7 @@ describe('Checkout - As Guest - Editing shipping details', () => {
                 });
         });
 
-        it('should display city name', () => {
+        it.skip('should display city name', () => {
             return browser.getText(checkoutPage.SHIPPING_ADDR_CITY)
                 .then((city) => {
                     const expectedCity = shippingData2[checkoutPage.SHIPPING_ADDRESS_CITY];
@@ -170,7 +170,7 @@ describe('Checkout - As Guest - Editing shipping details', () => {
             return Promise.resolve();
         });
 
-        it('should display postal code', () => {
+        it.skip('should display postal code', () => {
             return browser.getText(checkoutPage.SHIPPING_ADDR_POSTAL_CODE)
                 .then((zipCode) => {
                     const expectedZipCode = shippingData2[checkoutPage.SHIPPING_ZIP_CODE];
@@ -178,7 +178,7 @@ describe('Checkout - As Guest - Editing shipping details', () => {
                 });
         });
 
-        it('should display phone', () => {
+        it.skip('should display phone', () => {
             return browser.getText(checkoutPage.SHIPPING_ADDR_SHIPPING_PHONE)
                 .then((phone) => {
                     const expectedPhone = shippingData2[checkoutPage.SHIPPING_PHONE_NUMBER];

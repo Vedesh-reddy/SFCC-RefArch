@@ -76,7 +76,7 @@ describe('Find available stores for products', function () {
 
             var expectedAvailableStores = [
                 {
-                    'name': 'Demandware',
+                    'name': 'Commerce Cloud',
                     'address1': '10 Presidential Way',
                     'address2': null,
                     'city': 'Woburn',

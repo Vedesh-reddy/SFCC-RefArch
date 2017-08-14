@@ -18,7 +18,7 @@ import * as pricingHelpers from '../../../../mocks/testDataMgr/helpers/pricing';
 Verify the order confirmation page having the correct information.
  */
 
-describe('Checkout - Order confirmation page', () => {
+describe.skip('Checkout - Order confirmation page', () => {
     const locale = config.locale;
     const userEmail = config.userEmail;
 
