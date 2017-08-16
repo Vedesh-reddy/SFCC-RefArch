@@ -287,6 +287,9 @@ server.post(
                 var newCustomerProfile;
                 var registeredUser;
 
+                delete registrationData.email;
+                delete registrationData.password;
+
                 // attempt to create a new user and log that user in.
                 try {
                     Transaction.wrap(function () {
