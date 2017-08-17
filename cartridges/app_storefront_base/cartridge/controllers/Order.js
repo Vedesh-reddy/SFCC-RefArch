@@ -15,6 +15,7 @@ server.get(
         var reportingUrls = require('*/cartridge/scripts/reportingUrls');
         var OrderMgr = require('dw/order/OrderMgr');
         var OrderModel = require('*/cartridge/models/order');
+        var Locale = require('dw/util/Locale');
 
         var order = OrderMgr.getOrder(req.querystring.ID);
         var token = req.querystring.token ? req.querystring.token : null;
@@ -35,7 +36,12 @@ server.get(
             numberOfLineItems: '*'
         };
 
-        var orderModel = new OrderModel(order, { config: config });
+        var currentLocale = Locale.getLocale(req.locale.id);
+
+        var orderModel = new OrderModel(
+            order,
+            { config: config, countryCode: currentLocale.country }
+        );
         var passwordForm;
 
         var reportingURLs = reportingUrls.getOrderReportingURLs(order);
@@ -69,6 +75,7 @@ server.post(
     function (req, res, next) {
         var OrderMgr = require('dw/order/OrderMgr');
         var OrderModel = require('*/cartridge/models/order');
+        var Locale = require('dw/util/Locale');
 
         var order;
         var validForm = true;
@@ -94,7 +101,13 @@ server.post(
             var config = {
                 numberOfLineItems: '*'
             };
-            var orderModel = new OrderModel(order, { config: config });
+
+            var currentLocale = Locale.getLocale(req.locale.id);
+
+            var orderModel = new OrderModel(
+                order,
+                { config: config, countryCode: currentLocale.country }
+            );
 
             // check the email and postal code of the form
             if (req.form.trackOrderEmail !== orderModel.orderEmail) {
@@ -144,7 +157,11 @@ server.get(
     function (req, res, next) {
         var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
 
-        var ordersResult = OrderHelpers.getOrders(req.currentCustomer, req.querystring);
+        var ordersResult = OrderHelpers.getOrders(
+            req.currentCustomer,
+            req.querystring,
+            req.locale.id
+        );
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
         var breadcrumbs = [
@@ -176,6 +193,7 @@ server.get(
     function (req, res, next) {
         var OrderMgr = require('dw/order/OrderMgr');
         var OrderModel = require('*/cartridge/models/order');
+        var Locale = require('dw/util/Locale');
 
         var order = OrderMgr.getOrder(req.querystring.orderID);
         var orderCustomerNo = req.currentCustomer.profile.customerNo;
@@ -200,7 +218,12 @@ server.get(
                 numberOfLineItems: '*'
             };
 
-            var orderModel = new OrderModel(order, { config: config });
+            var currentLocale = Locale.getLocale(req.locale.id);
+
+            var orderModel = new OrderModel(
+                order,
+                { config: config, countryCode: currentLocale.country }
+            );
             var exitLinkText = Resource.msg('link.orderdetails.orderhistory', 'account', null);
             var exitLinkUrl =
                 URLUtils.https('Order-History', 'orderFilter', req.querystring.orderFilter);
@@ -230,7 +253,11 @@ server.get(
             return next();
         }
 
-        var ordersResult = OrderHelpers.getOrders(req.currentCustomer, req.querystring);
+        var ordersResult = OrderHelpers.getOrders(
+            req.currentCustomer,
+            req.querystring,
+            req.locale.id
+        );
         var orders = ordersResult.orders;
         var filterValues = ordersResult.filterValues;
 

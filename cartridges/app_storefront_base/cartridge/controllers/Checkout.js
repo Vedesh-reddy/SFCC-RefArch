@@ -70,6 +70,7 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
     var AccountModel = require('*/cartridge/models/account');
     var OrderModel = require('*/cartridge/models/order');
+    var Locale = require('dw/util/Locale');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
@@ -78,7 +79,12 @@ server.get('Get', server.middleware.https, function (req, res, next) {
         usingMultiShipping = false;
     }
 
-    var basketModel = new OrderModel(currentBasket, { usingMultiShipping: usingMultiShipping });
+    var currentLocale = Locale.getLocale(req.locale.id);
+
+    var basketModel = new OrderModel(
+        currentBasket,
+        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country }
+    );
 
     res.json({
         order: basketModel,
@@ -97,6 +103,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
     var OrderModel = require('*/cartridge/models/order');
     var URLUtils = require('dw/web/URLUtils');
     var collections = require('*/cartridge/scripts/util/collections');
+    var Locale = require('dw/util/Locale');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     if (!currentBasket) {
@@ -133,9 +140,12 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
         });
     }
 
-    var basketModel = new OrderModel(currentBasket, {
-        usingMultiShipping: usingMultiShipping
-    });
+    var currentLocale = Locale.getLocale(req.locale.id);
+
+    var basketModel = new OrderModel(
+        currentBasket,
+        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country }
+    );
 
     res.json({
         customer: new AccountModel(req.currentCustomer),
@@ -154,6 +164,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     var OrderModel = require('*/cartridge/models/order');
     var URLUtils = require('dw/web/URLUtils');
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+    var Locale = require('dw/util/Locale');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -211,9 +222,12 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
         });
     } else {
         var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
-        var basketModel = new OrderModel(currentBasket, {
-            usingMultiShipping: usingMultiShipping
-        });
+        var currentLocale = Locale.getLocale(req.locale.id);
+
+        var basketModel = new OrderModel(
+            currentBasket,
+            { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country }
+        );
 
         res.json({
             customer: new AccountModel(req.currentCustomer),
@@ -232,6 +246,7 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
     var OrderModel = require('*/cartridge/models/order');
     var URLUtils = require('dw/web/URLUtils');
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+    var Locale = require('dw/util/Locale');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -284,9 +299,12 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
     });
 
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
-    var basketModel = new OrderModel(currentBasket, {
-        usingMultiShipping: usingMultiShipping
-    });
+    var currentLocale = Locale.getLocale(req.locale.id);
+
+    var basketModel = new OrderModel(
+        currentBasket,
+        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country }
+    );
 
     res.json({
         customer: new AccountModel(req.currentCustomer),
@@ -306,6 +324,7 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     var URLUtils = require('dw/web/URLUtils');
     var UUIDUtils = require('dw/util/UUIDUtils');
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+    var Locale = require('dw/util/Locale');
 
     var basket = BasketMgr.getCurrentBasket();
     if (!basket) {
@@ -339,10 +358,12 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
         return next();
     }
 
+    var currentLocale = Locale.getLocale(req.locale.id);
+
     res.json({
         uuid: uuid,
         customer: new AccountModel(req.currentCustomer),
-        order: new OrderModel(basket)
+        order: new OrderModel(basket, { countryCode: currentLocale.country })
     });
     return next();
 });
@@ -382,6 +403,7 @@ server.post(
         var OrderModel = require('*/cartridge/models/order');
         var UUIDUtils = require('dw/util/UUIDUtils');
         var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+        var Locale = require('dw/util/Locale');
 
         var data = res.getViewData();
         if (data && data.csrfError) {
@@ -507,10 +529,16 @@ server.post(
             }
 
             COHelpers.recalculateBasket(basket);
-            var basketModel = new OrderModel(basket, {
-                usingMultiShipping: usingMultiShipping,
-                shippable: allValid
-            });
+
+            var currentLocale = Locale.getLocale(req.locale.id);
+            var basketModel = new OrderModel(
+                basket,
+                {
+                    usingMultiShipping: usingMultiShipping,
+                    shippable: allValid,
+                    countryCode: currentLocale.country
+                }
+            );
 
             var accountModel = new AccountModel(req.currentCustomer);
 
@@ -545,6 +573,7 @@ server.get(
         var Site = require('dw/system/Site');
         var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
         var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var Locale = require('dw/util/Locale');
 
         var currentBasket = BasketMgr.getCurrentBasket();
         if (!currentBasket) {
@@ -559,6 +588,7 @@ server.get(
 
         var currentCustomer = req.currentCustomer.raw;
         var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+        var currentLocale = Locale.getLocale(req.locale.id);
         var preferredAddress;
 
         // only true if customer is registered
@@ -605,12 +635,15 @@ server.get(
             }
         }
 
-        var orderModel = new OrderModel(currentBasket, {
-            customer: currentCustomer,
-            currencyCode: req.geolocation.countryCode,
-            usingMultiShipping: usingMultiShipping,
-            shippable: allValid
-        });
+        var orderModel = new OrderModel(
+            currentBasket,
+            {
+                customer: currentCustomer,
+                usingMultiShipping: usingMultiShipping,
+                shippable: allValid,
+                countryCode: currentLocale.country
+            }
+        );
 
         // Get rid of this from top-level ... should be part of OrderModel???
         var currentYear = new Date().getFullYear();
@@ -732,6 +765,7 @@ server.post(
                 var OrderModel = require('*/cartridge/models/order');
                 var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
                 var StoreMgr = require('dw/catalog/StoreMgr');
+                var Locale = require('dw/util/Locale');
 
                 var shippingData = res.getViewData();
                 var storeID = req.form.storeID;
@@ -778,10 +812,15 @@ server.post(
 
                 COHelpers.recalculateBasket(currentBasket);
 
-                var basketModel = new OrderModel(currentBasket, {
-                    usingMultiShipping: usingMultiShipping,
-                    shippable: true
-                });
+                var currentLocale = Locale.getLocale(req.locale.id);
+                var basketModel = new OrderModel(
+                    currentBasket,
+                    {
+                        usingMultiShipping: usingMultiShipping,
+                        shippable: true,
+                        countryCode: currentLocale.country
+                    }
+                );
 
                 res.json({
                     customer: new AccountModel(req.currentCustomer),
@@ -903,6 +942,7 @@ server.post(
                 var OrderModel = require('*/cartridge/models/order');
                 var URLUtils = require('dw/web/URLUtils');
                 var array = require('*/cartridge/scripts/util/array');
+                var Locale = require('dw/util/Locale');
 
                 var currentBasket = BasketMgr.getCurrentBasket();
                 var billingData = res.getViewData();
@@ -1085,9 +1125,13 @@ server.post(
                     req.session.privacyCache.set('usingMultiShipping', false);
                     usingMultiShipping = false;
                 }
-                var basketModel = new OrderModel(currentBasket, {
-                    usingMultiShipping: usingMultiShipping
-                });
+
+                var currentLocale = Locale.getLocale(req.locale.id);
+
+                var basketModel = new OrderModel(
+                    currentBasket,
+                    { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country }
+                );
 
                 var accountModel = new AccountModel(req.currentCustomer);
                 var renderedStoredPaymentInstrument = COHelpers.getRenderedPaymentInstruments(
@@ -1230,7 +1274,7 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
         return next();
     }
 
-    COHelpers.sendConfirmationEmail(order);
+    COHelpers.sendConfirmationEmail(order, req.locale.id);
 
     // Reset usingMultiShip after successful Order placement
     req.session.privacyCache.set('usingMultiShipping', false);

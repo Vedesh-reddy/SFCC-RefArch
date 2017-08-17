@@ -44,6 +44,11 @@ function proxyModel() {
             isPickUpInStore: function () {
                 return false;
             }
+        },
+        'dw/util/Locale': {
+            getLocale: function () {
+                return 'US';
+            }
         }
     });
 }

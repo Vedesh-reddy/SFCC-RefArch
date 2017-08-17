@@ -112,6 +112,7 @@ function getAssociatedAddress(basket, customer) {
  * @param {Object} options - The current order's line items
  * @param {Object} options.config - Object to help configure the orderModel
  * @param {string} options.config.numberOfLineItems - helps determine the number of lineitems needed
+ * @param {string} options.countryCode - the current request country code
  * @constructor
  */
 function OrderModel(lineItemContainer, options) {
@@ -127,16 +128,15 @@ function OrderModel(lineItemContainer, options) {
         this.shippable = null;
     } else {
         var safeOptions = options || {};
-
+        var countryCode = safeOptions.countryCode || null;
         var modelConfig = safeOptions.config || DEFAULT_MODEL_CONFIG;
         var customer = safeOptions.customer || lineItemContainer.customer;
-        var currencyCode = safeOptions.currencyCode || lineItemContainer.currencyCode;
         var usingMultiShipping = (safeOptions.usingMultiShipping
             || lineItemContainer.shipments.length > 1);
 
         var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer, customer);
 
-        var paymentModel = new PaymentModel(lineItemContainer, customer, currencyCode);
+        var paymentModel = new PaymentModel(lineItemContainer, customer, countryCode);
 
         var billingAddressModel = new AddressModel(lineItemContainer.billingAddress);
 
