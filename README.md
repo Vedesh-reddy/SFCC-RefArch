@@ -17,7 +17,7 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 
 4 Create `dw.json` file in the root of the project that would contain hostname, username and password to your sandbox. Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
 
-5 Use https://bitbucket.org/demandware/sitegenesisdata to zip and import site date on your sandbox.
+5 Use https://bitbucket.org/demandware/mobilefirstdata to zip and import site date on your sandbox.
 
 6 Add the `app_storefront_base` cartridge to your cartridge path.
 
