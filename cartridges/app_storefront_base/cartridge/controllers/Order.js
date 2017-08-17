@@ -7,50 +7,59 @@ var URLUtils = require('dw/web/URLUtils');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 
-server.get('Confirm', csrfProtection.generateToken, function (req, res, next) {
-    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
-    var OrderMgr = require('dw/order/OrderMgr');
-    var OrderModel = require('*/cartridge/models/order');
+server.get(
+    'Confirm',
+    server.middleware.https,
+    csrfProtection.generateToken,
+    function (req, res, next) {
+        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var OrderMgr = require('dw/order/OrderMgr');
+        var OrderModel = require('*/cartridge/models/order');
 
-    var order = OrderMgr.getOrder(req.querystring.ID);
-    var token = req.querystring.token ? req.querystring.token : null;
+        var order = OrderMgr.getOrder(req.querystring.ID);
+        var token = req.querystring.token ? req.querystring.token : null;
 
-    if (!order || !token || token !== order.orderToken) {
-        res.render('/error', {
-            message: Resource.msg('error.confirmation.error', 'confirmation', null)
-        });
+        if (!order
+            || !token
+            || token !== order.orderToken
+            || order.customer.ID !== req.currentCustomer.raw.ID
+        ) {
+            res.render('/error', {
+                message: Resource.msg('error.confirmation.error', 'confirmation', null)
+            });
+
+            return next();
+        }
+
+        var config = {
+            numberOfLineItems: '*'
+        };
+
+        var orderModel = new OrderModel(order, { config: config });
+        var passwordForm;
+
+        var reportingURLs = reportingUrls.getOrderReportingURLs(order);
+
+        if (!req.currentCustomer.profile) {
+            passwordForm = server.forms.getForm('newpasswords');
+            passwordForm.clear();
+            res.render('checkout/confirmation/confirmation', {
+                order: orderModel,
+                returningCustomer: false,
+                passwordForm: passwordForm,
+                reportingURLs: reportingURLs
+            });
+        } else {
+            res.render('checkout/confirmation/confirmation', {
+                order: orderModel,
+                returningCustomer: true,
+                reportingURLs: reportingURLs
+            });
+        }
 
         return next();
     }
-
-    var config = {
-        numberOfLineItems: '*'
-    };
-
-    var orderModel = new OrderModel(order, { config: config });
-    var passwordForm;
-
-    var reportingURLs = reportingUrls.getOrderReportingURLs(order);
-
-    if (!req.currentCustomer.profile) {
-        passwordForm = server.forms.getForm('newpasswords');
-        passwordForm.clear();
-        res.render('checkout/confirmation/confirmation', {
-            order: orderModel,
-            returningCustomer: false,
-            passwordForm: passwordForm,
-            reportingURLs: reportingURLs
-        });
-    } else {
-        res.render('checkout/confirmation/confirmation', {
-            order: orderModel,
-            returningCustomer: true,
-            reportingURLs: reportingURLs
-        });
-    }
-
-    return next();
-});
+);
 
 server.post(
     'Track',
