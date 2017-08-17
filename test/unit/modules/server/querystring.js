@@ -47,4 +47,13 @@ describe('querystring', function () {
             assert.equal(paramsOutput, 'prefn1=pref1&prefn2=pref2&prefv1=pref1Value&prefv2=pref2Value');
         });
     });
+
+    describe('handling special characters', function () {
+        var params = '?trackOrderNumber=01&trackOrderPostal=EC1A+1BB';
+        var result = new QueryString(params);
+
+        it('should handle the \'+\' with a \'%20\' which leads to a \' \'', function () {
+            assert.equal(result.trackOrderPostal, 'EC1A 1BB');
+        });
+    });
 });

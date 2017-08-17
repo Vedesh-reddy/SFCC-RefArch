@@ -30,7 +30,7 @@ var querystring = function (raw) {
     var preferences = {};
 
     if (raw && raw.length > 0) {
-        var qs = raw.substring(raw.indexOf('?') + 1).split('&');
+        var qs = raw.substring(raw.indexOf('?') + 1).replace(/\+/g, '%20').split('&');
         for (var i = qs.length - 1; i >= 0; i--) {
             pair = qs[i].split('=');
             left = decodeURIComponent(pair[0]);
