@@ -512,15 +512,18 @@ function handlePayments(order, orderNumber) {
 /**
  * Sends a confirmation to the current user
  * @param {dw.order.Order} order - The current user's order
+ * @param {string} locale - the current request's locale id
  * @returns {void}
  */
-function sendConfirmationEmail(order) {
+function sendConfirmationEmail(order, locale) {
     var OrderModel = require('*/cartridge/models/order');
+    var Locale = require('dw/util/Locale');
 
     var confirmationEmail = new Mail();
     var context = new HashMap();
+    var currentLocale = Locale.getLocale(locale);
 
-    var orderModel = new OrderModel(order);
+    var orderModel = new OrderModel(order, { countryCode: currentLocale.country });
 
     var orderObject = { order: orderModel };
 

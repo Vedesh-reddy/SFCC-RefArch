@@ -16,6 +16,7 @@ function getModel(req) {
     var AccountModel = require('*/cartridge/models/account');
     var AddressModel = require('*/cartridge/models/address');
     var OrderModel = require('*/cartridge/models/order');
+    var Locale = require('dw/util/Locale');
 
     var orderModel;
     var preferredAddressModel;
@@ -35,11 +36,13 @@ function getModel(req) {
     var order = customerOrders.first();
 
     if (order) {
+        var currentLocale = Locale.getLocale(req.locale.id);
+
         var config = {
             numberOfLineItems: 'single'
         };
 
-        orderModel = new OrderModel(order, { config: config });
+        orderModel = new OrderModel(order, { config: config, countryCode: currentLocale.country });
     } else {
         orderModel = null;
     }
