@@ -42,11 +42,18 @@ $menu-item-margin: 0.625em;
             padding: 1em;
             top: 85%;
             left: 0;
-            margin-left: -50%;
 
             a {
                 white-space: nowrap;
                 margin-bottom: 0.5em;
+            }
+
+            &::before {
+                left: 1.5rem;
+            }
+
+            &::after {
+                left: 1.5rem;
             }
         }
 
