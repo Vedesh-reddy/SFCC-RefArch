@@ -169,7 +169,8 @@ function setCurrency(request, session) {
             return country.id === currentLocale.ID;
         })[0];
 
-    if (session.currency.currencyCode !== currentCountry.currencyCode) {
+    if (session.currency && currentCountry
+        && session.currency.currencyCode !== currentCountry.currencyCode) {
         session.setCurrency(currency.getCurrency(currentCountry.currencyCode));
     }
 }
@@ -186,6 +187,7 @@ function setCurrency(request, session) {
 function Request(request, customer, session) {
     setCurrency(request, session);
 
+    this.raw = request;
     this.httpMethod = request.httpMethod;
     this.host = request.httpHost;
     this.path = request.httpPath;
