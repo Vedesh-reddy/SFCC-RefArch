@@ -77,7 +77,7 @@ server.post('AddProduct', function (req, res, next) {
             }
             if (!result.error) {
                 cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+                HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
             }
         });
     }
@@ -117,7 +117,7 @@ server.get(
                 }
                 cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
-                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+                HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
             });
         }
 
@@ -147,7 +147,7 @@ server.get('Get', function (req, res, next) {
         Transaction.wrap(function () {
             cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
         });
     }
 
@@ -191,7 +191,7 @@ server.get('RemoveProductLineItem', function (req, res, next) {
                 }
             }
         }
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
     });
 
     if (isProductLineItemFound) {
@@ -276,7 +276,7 @@ server.get('UpdateQuantity', function (req, res, next) {
     if (canBeUpdated) {
         Transaction.wrap(function () {
             matchingLineItem.setQuantityValue(updateQuantity);
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
         });
     }
 
@@ -333,7 +333,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
             return;
         }
 
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
     });
 
     if (!error) {
@@ -366,7 +366,7 @@ server.get('MiniCartShow', function (req, res, next) {
                 currentBasket.updateCurrency();
             }
             cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
         });
     }
 
@@ -453,7 +453,7 @@ server.get(
         }
 
         Transaction.wrap(function () {
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
         });
 
         var basketModel = new CartModel(currentBasket);
@@ -495,7 +495,7 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
         if (couponLineItem) {
             Transaction.wrap(function () {
                 currentBasket.removeCouponLineItem(couponLineItem);
-                HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+                HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
             });
 
             var basketModel = new CartModel(currentBasket);

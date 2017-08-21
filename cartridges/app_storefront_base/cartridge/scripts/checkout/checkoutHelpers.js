@@ -295,7 +295,7 @@ function ensureNoEmptyShipments(req) {
 function recalculateBasket(currentBasket) {
     // Calculate the basket
     Transaction.wrap(function () {
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
     });
 }
 

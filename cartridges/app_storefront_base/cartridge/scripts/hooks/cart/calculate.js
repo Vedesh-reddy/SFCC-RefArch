@@ -16,6 +16,7 @@ var ShippingLocation = require('dw/order/ShippingLocation');
 var TaxMgr = require('dw/order/TaxMgr');
 var Logger = require('dw/system/Logger');
 var Status = require('dw/system/Status');
+var HookMgr = require('dw/system/HookMgr');
 
 /**
  * @function calculate
@@ -60,7 +61,7 @@ exports.calculate = function (basket) {
 
     // apply product specific shipping costs
     // and calculate total shipping costs
-    ShippingMgr.applyShippingCost(basket);
+    HookMgr.callHook('dw.order.calculateShipping', 'calculateShipping', basket);
 
     // ===================================================
     // =====   APPLY PROMOTION DISCOUNTS			 =====
@@ -78,7 +79,7 @@ exports.calculate = function (basket) {
     // =====         CALCULATE TAX                   =====
     // ===================================================
 
-    calculateTax(basket);
+    HookMgr.callHook('dw.order.calculateTax', 'calculateTax', basket);
 
     // ===================================================
     // =====         CALCULATE BASKET TOTALS         =====
@@ -188,6 +189,11 @@ function calculateGiftCertificatePrices (basket) {
     }
 }
 
+exports.calculateShipping = function(basket) {
+    ShippingMgr.applyShippingCost(basket);
+    return new Status(Status.OK);
+}
+
 /**
  * @function calculateTax <p>
  *
@@ -207,7 +213,7 @@ function calculateGiftCertificatePrices (basket) {
  *
  * @param {object} basket The basket containing the elements for which taxes need to be calculated
  */
-function calculateTax (basket) {
+exports.calculateTax = function(basket) {
     var shipments = basket.getShipments().iterator();
     while (shipments.hasNext()) {
         var shipment = shipments.next();
@@ -298,4 +304,6 @@ function calculateTax (basket) {
             basketShippingPriceAdjustment.updateTax(basketPriceAdjustmentsTaxRate);
         }
     }
+
+    return new Status(Status.OK);
 }

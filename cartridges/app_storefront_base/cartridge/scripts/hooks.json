@@ -1,7 +1,15 @@
 {
     "hooks": [
         {
-            "name": "dw.ocapi.shop.basket.calculate",
+            "name": "dw.order.calculate",
+            "script": "./hooks/cart/calculate.js"
+        },
+        {
+            "name": "dw.order.calculateShipping",
+            "script": "./hooks/cart/calculate.js"
+        },
+        {
+            "name": "dw.order.calculateTax",
             "script": "./hooks/cart/calculate.js"
         },
         {

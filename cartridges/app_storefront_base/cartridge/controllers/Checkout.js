@@ -136,7 +136,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
             });
             COHelpers.ensureNoEmptyShipments(req);
 
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
         });
     }
 
@@ -208,7 +208,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
             ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
 
-            HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
         });
     } catch (err) {
         error = err;
@@ -295,7 +295,7 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
 
         ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
 
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
     });
 
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
@@ -1102,7 +1102,7 @@ server.post(
 
                 // Calculate the basket
                 Transaction.wrap(function () {
-                    HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+                    HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
                 });
 
                 // Re-calculate the payments.
@@ -1217,7 +1217,7 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
 
     // Calculate the basket
     Transaction.wrap(function () {
-        HookMgr.callHook('dw.ocapi.shop.basket.calculate', 'calculate', currentBasket);
+        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
     });
 
     // Re-validates existing payment instruments
