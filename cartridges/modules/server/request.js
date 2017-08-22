@@ -169,10 +169,28 @@ function setCurrency(request, session) {
             return country.id === currentLocale.ID;
         })[0];
 
-    if (session.currency && currentCountry
-        && session.currency.currencyCode !== currentCountry.currencyCode) {
+    if (session.currency
+        && currentCountry
+        && session.currency.currencyCode !== currentCountry.currencyCode
+    ) {
         session.setCurrency(currency.getCurrency(currentCountry.currencyCode));
     }
+}
+
+/**
+ * get a local instance of the geo location object
+ * @param {Object} request - Global request object
+ * @returns {Object} object containing geo location information
+ */
+function getGeolocationObject(request) {
+    var Locale = require('dw/util/Locale');
+    var currentLocale = Locale.getLocale(request.locale);
+
+    return {
+        countryCode: request.geolocation ? request.geolocation.countryCode : currentLocale.country,
+        latitude: request.geolocation ? request.geolocation.latitude : 90.0000,
+        longitude: request.geolocation ? request.geolocation.longitude : 0.0000
+    };
 }
 
 /**
@@ -198,13 +216,7 @@ function Request(request, customer, session) {
     this.body = request.httpParameterMap.requestBodyAsString;
     this.locale = getCurrentLocale(request.locale, session.currency);
     this.includeRequest = request.includeRequest;
-    if (request.geolocation) {
-        this.geolocation = {
-            countryCode: request.geolocation.countryCode,
-            latitude: request.geolocation.latitude,
-            longitude: request.geolocation.longitude
-        };
-    }
+    this.geolocation = getGeolocationObject(request);
     this.currentCustomer = getCustomerObject(customer);
     this.setLocale = function (localeID) {
         return request.setLocale(localeID);

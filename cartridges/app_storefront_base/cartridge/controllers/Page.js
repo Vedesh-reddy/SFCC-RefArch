@@ -82,7 +82,7 @@ server.get('SetLocale', function (req, res, next) {
             && (req.querystring.CurrencyCode !== req.session.currency.currencyCode)) {
             req.session.setCurrency(currency);
 
-            if (currentBasket && currentBasket.currencyCode !== currency.currencyCode) {
+            if (currentBasket && currency && currentBasket.currencyCode !== currency.currencyCode) {
                 Transaction.wrap(function () {
                     currentBasket.updateCurrency();
                 });
