@@ -205,8 +205,9 @@ function getGeolocationObject(request) {
 function Request(request, customer, session) {
     setCurrency(request, session);
 
-    this.raw = request;
     this.httpMethod = request.httpMethod;
+    this.remoteAddress = request.getHttpRemoteAddress();
+    this.referer = request.getHttpReferer();
     this.host = request.httpHost;
     this.path = request.httpPath;
     this.httpHeaders = request.httpHeaders;
