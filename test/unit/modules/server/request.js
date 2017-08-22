@@ -58,6 +58,12 @@ function createFakeRequest(overrides) {
         isHttpSecure: function () {
             return false;
         },
+        getHttpReferer: function () {
+            return 'https://www.salesforce.com';
+        },
+        getHttpRemoteAddress: function () {
+            return '0.0.0.0';
+        },
         geolocation: {
             countryCode: 'US',
             latitude: 42.4019,
@@ -383,5 +389,15 @@ describe('request', function () {
         assert.equal(req.geolocation.countryCode, 'US');
         assert.equal(req.geolocation.latitude, 90.0000);
         assert.equal(req.geolocation.longitude, 0.0000);
+    });
+
+    it('should contain the correct referer', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.referer, 'https://www.salesforce.com');
+    });
+
+    it('should contain the correct remote address', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.remoteAddress, '0.0.0.0');
     });
 });
