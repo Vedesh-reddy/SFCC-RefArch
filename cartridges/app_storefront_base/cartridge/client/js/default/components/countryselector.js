@@ -1,5 +1,7 @@
 'use strict';
 
+var keyboardAccessibility = require('./keyboardAccessibility');
+
 module.exports = function () {
     $('.country-selector a').click(function (e) {
         e.preventDefault();
@@ -29,5 +31,42 @@ module.exports = function () {
                 $.spinner().stop();
             }
         });
+    });
+
+    keyboardAccessibility('.navbar-header .country-selector',
+        {
+            40: function ($countryOptions) { // down
+                if ($(this).is(':focus')) {
+                    $countryOptions.first().focus();
+                } else {
+                    $(':focus').next().focus();
+                }
+            },
+            38: function ($countryOptions) { // up
+                if ($countryOptions.first().is(':focus') || $(this).is(':focus')) {
+                    $(this).focus();
+                    $(this).removeClass('show');
+                } else {
+                    $(':focus').prev().focus();
+                }
+            },
+            27: function () { // escape
+                $(this).focus();
+                $(this).removeClass('show');
+            },
+            9: function () { // tab
+                $(this).removeClass('show');
+            }
+        },
+        function () {
+            if (!($(this).hasClass('show'))) {
+                $(this).addClass('show');
+            }
+            return $(this).find('.dropdown-country-selector').children('a');
+        }
+    );
+
+    $('.navbar-header .country-selector').on('focusin', function () {
+        $(this).addClass('show');
     });
 };
