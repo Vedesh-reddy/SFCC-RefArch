@@ -206,8 +206,6 @@ function Request(request, customer, session) {
     setCurrency(request, session);
 
     this.httpMethod = request.httpMethod;
-    this.remoteAddress = request.getHttpRemoteAddress();
-    this.referer = request.getHttpReferer();
     this.host = request.httpHost;
     this.path = request.httpPath;
     this.httpHeaders = request.httpHeaders;
@@ -258,5 +256,17 @@ function Request(request, customer, session) {
             session.setCurrency(value);
         }
     };
+
+    Object.defineProperty(this, 'remoteAddress', {
+        get: function () {
+            return request.getHttpRemoteAddress();
+        }
+    });
+
+    Object.defineProperty(this, 'referer', {
+        get: function () {
+            return request.getHttpReferer();
+        }
+    });
 }
 module.exports = Request;
