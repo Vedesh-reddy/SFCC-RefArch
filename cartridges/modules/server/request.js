@@ -160,7 +160,7 @@ function getCustomerObject(customer) {
 function setCurrency(request, session) {
     var Locale = require('dw/util/Locale');
     var currency = require('dw/util/Currency');
-    var countries = require('*/cartridge/config/countries.json');
+    var countries = require('*/cartridge/config/countries');
     var currentLocale = Locale.getLocale(request.locale);
 
     var currentCountry = !currentLocale
