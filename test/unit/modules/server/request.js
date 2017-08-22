@@ -276,7 +276,7 @@ describe('request', function () {
         );
     });
 
-    it('should not fail if customer doesn not exist', function () {
+    it('should not fail if customer does not exist', function () {
         var req = new Request(createFakeRequest({ customer: null }), null, createFakeRequest().session);
         assert.equal(req.host, 'localhost');
     });
