@@ -256,5 +256,17 @@ function Request(request, customer, session) {
             session.setCurrency(value);
         }
     };
+
+    Object.defineProperty(this, 'remoteAddress', {
+        get: function () {
+            return request.getHttpRemoteAddress();
+        }
+    });
+
+    Object.defineProperty(this, 'referer', {
+        get: function () {
+            return request.getHttpReferer();
+        }
+    });
 }
 module.exports = Request;
