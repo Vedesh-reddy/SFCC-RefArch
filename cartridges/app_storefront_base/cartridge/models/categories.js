@@ -9,7 +9,7 @@ var URLUtils = require('dw/web/URLUtils');
  * @returns {string} - Url of the category
  */
 function getCategoryUrl(category) {
-    return category.custom && category.custom.alternativeUrl
+    return category.custom && 'alternativeUrl' in category.custom && category.custom.alternativeUrl
         ? category.custom.alternativeUrl
         : URLUtils.http('Search-Show', 'cgid', category.getID()).toString();
 }
