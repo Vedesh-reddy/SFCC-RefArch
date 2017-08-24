@@ -194,6 +194,24 @@ function getGeolocationObject(request) {
 }
 
 /**
+ * Get request body as string if it is a POST or PUT
+ * @param {Object} request - Global request object
+ * @returns {string|Null} the request body as string
+ */
+function getRequestBodyAsString(request) {
+    var result = null;
+
+    if (request
+        && (request.httpMethod === 'POST' || request.httpMethod === 'PUT')
+        && request.httpParameterMap
+    ) {
+        result = request.httpParameterMap.requestBodyAsString;
+    }
+
+    return result;
+}
+
+/**
  * @constructor
  * @classdesc Local instance of request object with customer object in it
  *
@@ -212,7 +230,7 @@ function Request(request, customer, session) {
     this.querystring = new QueryString(request.httpQueryString);
     this.form = getFormData(request.httpParameterMap, this.querystring);
     this.https = request.isHttpSecure();
-    this.body = request.httpParameterMap.requestBodyAsString;
+    this.body = getRequestBodyAsString(request);
     this.locale = getCurrentLocale(request.locale, session.currency);
     this.includeRequest = request.includeRequest;
     this.geolocation = getGeolocationObject(request);
