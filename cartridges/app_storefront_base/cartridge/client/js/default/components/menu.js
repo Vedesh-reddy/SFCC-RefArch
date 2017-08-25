@@ -203,7 +203,7 @@ module.exports = function () {
         }
     });
 
-    $('.navbar-header .user').on('mouseleave mousedown', function () {
+    $('.navbar-header .user').on('mouseleave', function () {
         $('.navbar-header .user .popover').removeClass('show');
     });
 };
