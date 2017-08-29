@@ -79,7 +79,8 @@ function getSelectedFilters(refinements) {
 function getBannerImageUrl(category) {
     var url = null;
 
-    if (category.custom && category.custom.slotBannerImage) {
+    if (category.custom && 'slotBannerImage' in category.custom &&
+        category.custom.slotBannerImage) {
         url = category.custom.slotBannerImage.getURL();
     } else if (category.image) {
         url = category.image.getURL();

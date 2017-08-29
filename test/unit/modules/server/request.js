@@ -400,4 +400,23 @@ describe('request', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.equal(req.remoteAddress, '0.0.0.0');
     });
+
+    it('should not get body as string for a GET request', function () {
+        var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.body, null);
+    });
+
+    it('should get body as string for a POST request', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.httpMethod = 'POST';
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.body, '');
+    });
+
+    it('should get body as string for a PUT request', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.httpMethod = 'PUT';
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.body, '');
+    });
 });
