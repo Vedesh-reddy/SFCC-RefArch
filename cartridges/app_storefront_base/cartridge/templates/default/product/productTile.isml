@@ -8,7 +8,11 @@
         <isinclude template="product/components/productTileName" />
 
         <isset name="price" value="${product.price}" scope="page" />
-        <isinclude template="product/components/pricing/main" />
+        <isif condition="${product.productType === 'set'}">
+            <isinclude template="product/components/pricing/setPrice" />
+        <iselse>
+            <isinclude template="product/components/pricing/main" />
+        </isif>
 
         <isif condition="${pdict.display.ratings !== false}">
             <isinclude template="product/productTileFooter" />

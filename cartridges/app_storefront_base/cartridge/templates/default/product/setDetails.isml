@@ -42,10 +42,10 @@
         <div class="col-12 col-sm-6 offset-sm-6 bundle-footer">
             <!-- Quantity -->
             <div class="col-12 prices-add-to-cart-actions">
+                <isset name="product" value="${productCopy}" scope="page" />
                 <!-- Prices -->
                 <isinclude template="product/components/pricing/setPrice" />
                 <!-- Cart and [Optionally] Apple Pay -->
-                <isset name="product" value="${productCopy}" scope="page" />
                 <isinclude template="product/components/addToCartGlobal" />
             </div>
         </div>

@@ -46,7 +46,6 @@ function ProductSet(product, quantity, promotions, productFactory) {
         quantity: 'all'
     };
     this.quantity = quantity;
-    this.useSimplePrice = false;
     this.apiPromotions = promotions;
     this.initialize();
 }
