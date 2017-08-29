@@ -19,7 +19,7 @@
                 autocomplete="shipping country">
                     <option label=" "></option>
                     <isloop items=${addressFields.country.options} var="country">
-                        <option id="${country.id}" value="${country.htmlValue}" ${country.id === shippingAddress.countryCode.value ? 'selected' : ''}>${country.label}</option>
+                        <option id="${country.id}" value="${country.htmlValue}" ${shippingAddress.countryCode && country.id === shippingAddress.countryCode.value ? 'selected' : ''}>${country.label}</option>
                     </isloop>
             </select>
             <div class="form-control-feedback"><isprint value="${addressFields.country.error}" ></div>

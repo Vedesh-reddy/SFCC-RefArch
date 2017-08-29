@@ -17,7 +17,7 @@ var Request = proxyquire('../../../../cartridges/modules/server/request', {
             return 'currency';
         }
     },
-    '../countries': [
+    '*/cartridge/config/countries': [
         {
             'id': 'en_US',
             'currencyCode': 'USD'
