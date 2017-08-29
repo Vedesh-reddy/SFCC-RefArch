@@ -32,5 +32,15 @@ module.exports = {
     json: function json(data, response) {
         response.setContentType('application/json');
         response.print(JSON.stringify(data, null, 2));
+    },
+     /**
+     * Render XML as an output
+     * @param {String} xmlString - The XML string
+     * @param {Object} response - Response object
+     * @returns {void}
+     */
+    xml: function xml(xmlString, response) {
+        response.setContentType('application/xml');
+        response.print(xmlString);
     }
 };
