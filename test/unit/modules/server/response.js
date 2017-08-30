@@ -40,7 +40,7 @@ describe('response', function () {
         var response = new Response({});
         response.xml('<?xml version="1.0" encoding="UTF-8" standalone="yes"?>');
         assert.isTrue(response.isXml);
-        assert.equal(response.viewData, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>');
+        assert.equal(response.viewData.xml, '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>');
     });
     it('should correctly set url', function () {
         var response = new Response({});

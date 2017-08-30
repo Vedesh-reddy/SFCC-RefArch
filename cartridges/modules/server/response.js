@@ -46,7 +46,7 @@ Response.prototype = {
      */
     xml: function xml(xmlString) {
         this.isXml = true;
-        this.viewData = xmlString;
+        this.viewData = assign(this.viewData, { xml: xmlString });
     },
     /**
      * Redirects to a given url right away
