@@ -36,7 +36,7 @@ module.exports = {
     },
     /**
     * Render XML as an output
-    * @param {Object} viewData - The XML string
+    * @param {Object} viewData - Object to be turned into XML
     * @param {Object} response - Response object
     * @returns {void}
     */
