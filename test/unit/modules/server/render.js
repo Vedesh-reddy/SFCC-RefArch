@@ -24,8 +24,6 @@ describe('render', function () {
                 renderTemplate: ismlRender
             }
         });
-
-        render.XML = {};
     });
 
     afterEach(function () {
