@@ -40,6 +40,15 @@ Response.prototype = {
         this.viewData = assign(this.viewData, data);
     },
     /**
+     * Stores data to be rendered as XML
+     * @param {string} xmlString - The XML to print.
+     * @returns {void}
+     */
+    xml: function xml(xmlString) {
+        this.isXml = true;
+        this.viewData = assign(this.viewData, { xml: xmlString });
+    },
+    /**
      * Redirects to a given url right away
      * @param {string} url - Url to be redirected to
      * @returns {void}

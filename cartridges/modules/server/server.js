@@ -95,6 +95,8 @@ Server.prototype = {
                 render.template(res.view, res.viewData, res);
             } else if (res.isJson) {
                 render.json(res.viewData, res);
+            } else if (res.isXml) {
+                render.xml(res.viewData, res);
             } else {
                 throw new Error('Cannot render template without name or data');
             }

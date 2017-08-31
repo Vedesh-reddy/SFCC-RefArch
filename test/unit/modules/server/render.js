@@ -9,6 +9,16 @@ describe('render', function () {
     var ismlRender = sinon.spy();
 
     beforeEach(function () {
+        global.XML = function (xmlString) {
+            var parseString = require('xml2js').parseString;
+
+            return parseString(xmlString, 'text/xml', function (error) {
+                if (error) {
+                    throw new Error(error);
+                }
+            });
+        };
+
         render = proxyquire('../../../../cartridges/modules/server/render', {
             'dw/template/ISML': {
                 renderTemplate: ismlRender
@@ -42,6 +52,37 @@ describe('render', function () {
 
         assert.isTrue(response.setContentType.calledWith('application/json'));
         assert.isTrue(response.print.calledOnce);
+    });
+
+    it('should render valid xml output', function () {
+        var response = {
+            print: sinon.spy(),
+            setContentType: sinon.spy()
+        };
+
+        render.xml({
+            key1: 'value1',
+            key2: 'value2',
+            xml: '<xmlKey></xmlKey>'
+        }, response);
+
+        assert.isTrue(response.setContentType.calledWith('application/xml'));
+        assert.isTrue(response.print.calledOnce);
+    });
+
+    it('should throw an exception when invalid XML is provided', function () {
+        var response = {
+            print: function () { /* DUMMY FUNCTION */ },
+            setContentType: function () { /* DUMMY FUNCTION */ }
+        };
+
+        try {
+            render.xml({
+                xml: '<x>I am not valid XML<y>'
+            }, response);
+        } catch (e) {
+            assert.isNotNull(e);
+        }
     });
 
     it('should render error page when template failed', function () {
