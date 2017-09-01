@@ -72,7 +72,7 @@
                         </isif>
 
                         <!-- Size Chart -->
-                        <isif condition="${product.variationAttributes}">
+                        <isif condition="${product.variationAttributes && product.sizeChartId}">
                             <div class="size-chart col-md-10 col-12">
                                 <isinclude template="product/components/sizeChart" />
                             </div>

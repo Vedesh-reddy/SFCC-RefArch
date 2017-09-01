@@ -22,6 +22,8 @@ ProductFactory.get = function (params) {
     var ProductSet;
     var ProductBundle;
     var product;
+    var category;
+    var sizeChartId;
 
     if (variationModel) {
         product = variationModel.getSelectedVariant() || apiProduct;
@@ -92,8 +94,12 @@ ProductFactory.get = function (params) {
                 );
                 break;
             default:
+                category = product.getPrimaryCategory()
+                    ? product.getPrimaryCategory()
+                    : product.getMasterProduct().getPrimaryCategory();
+                sizeChartId = category.custom.sizeChartID;
                 product = new Product(product, params.variables, params.quantity, promotions,
-                    selectedOptions);
+                    selectedOptions, sizeChartId);
                 break;
         }
     }

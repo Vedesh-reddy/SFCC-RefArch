@@ -214,4 +214,20 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
     next();
 });
 
+server.get('SizeChart', function (req, res, next) {
+    var ContentMgr = require('dw/content/ContentMgr');
+
+    var apiContent = ContentMgr.getContent(req.querystring.cid);
+
+    if (apiContent) {
+        res.json({
+            success: true,
+            content: apiContent.custom.body.markup
+        });
+    } else {
+        res.json({});
+    }
+    next();
+});
+
 module.exports = server.exports();

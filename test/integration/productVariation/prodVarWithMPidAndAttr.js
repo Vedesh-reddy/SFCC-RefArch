@@ -43,6 +43,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
                 'selectedQuantity': 1,
+                'sizeChartId': null,
                 'variationAttributes': [
                     {
                         'attributeId': 'color',

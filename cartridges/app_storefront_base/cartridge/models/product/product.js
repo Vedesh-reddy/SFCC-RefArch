@@ -124,8 +124,16 @@ function getQuantities(minOrderQty, stepQuantity, selectedQty, pid, size, attrib
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
  *                                                                  product
  * @param {SelectedOption[]} selectedOptions - Dictionary object of selected options
+ * @param {string} sizeChartId - the size chart ID associated with the category of the product
  */
-function FullProduct(product, productVariables, quantity, promotions, selectedOptions) {
+function FullProduct(
+    product,
+    productVariables,
+    quantity,
+    promotions,
+    selectedOptions,
+    sizeChartId
+) {
     this.variationModel = this.getVariationModel(product, productVariables);
     if (this.variationModel) {
         this.product = this.variationModel.selectedVariant || product;
@@ -149,6 +157,7 @@ function FullProduct(product, productVariables, quantity, promotions, selectedOp
         this.product.optionModel,
         this.selectedOptions
     );
+    this.sizeChartId = sizeChartId;
     this.initialize();
 }
 
@@ -210,15 +219,23 @@ FullProduct.prototype.initialize = function () {
  * @param {number} quantity - quantity of products selected
  * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
  * @param {SelectedOption[]} selectedOptions - Dictionary object of selected options
+ * @param {string} sizeChartId - the size chart ID associated with the category of the product
  */
-function ProductWrapper(product, productVariables, quantity, promotions, selectedOptions) {
+function ProductWrapper(
+    product,
+    productVariables,
+    quantity,
+    promotions,
+    selectedOptions,
+    sizeChartId
+) {
     var fullProduct = new FullProduct(product, productVariables, quantity, promotions,
-        selectedOptions);
+        selectedOptions, sizeChartId);
     var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
         'variationAttributes', 'available', 'shortDescription', 'longDescription', 'online',
         'searchable', 'minOrderQuantity', 'maxOrderQuantity', 'readyToOrder', 'promotions',
         'attributes', 'availability', 'selectedProductUrl',
-        'selectedQuantity', 'options', 'quantities', 'raw'];
+        'selectedQuantity', 'options', 'quantities', 'sizeChartId', 'raw'];
     items.forEach(function (item) {
         this[item] = fullProduct[item];
     }, this);

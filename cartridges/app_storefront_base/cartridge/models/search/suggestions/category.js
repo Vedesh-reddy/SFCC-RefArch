@@ -22,7 +22,7 @@ function CategorySuggestions(suggestions, maxItems) {
     var categorySuggestions = suggestions.categorySuggestions;
     var iter = categorySuggestions.suggestedCategories;
 
-    this.available = categorySuggestions.hasSuggestions();    
+    this.available = categorySuggestions.hasSuggestions();
 
     for (var i = 0; i < maxItems; i++) {
         var category = null;

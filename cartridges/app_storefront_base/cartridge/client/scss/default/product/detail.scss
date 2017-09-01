@@ -129,3 +129,17 @@ label.availability {
         right: 0;
     }
 }
+
+.size-chart {
+    .size-chart-collapsable {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.5s;
+        transition-timing-function: cubic-bezier(0, 1, 0, 1);
+
+        &.active {
+            max-height: 100%;
+            transition-timing-function: ease-in-out;
+        }
+    }
+}

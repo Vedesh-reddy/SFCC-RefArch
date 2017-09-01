@@ -1,1 +1,2 @@
-<a href="${"#"}" class="size-chart">${Resource.msg('link.size_chart', 'product', null)}</a>
+<a href="${URLUtils.url('Product-SizeChart', 'cid', product.sizeChartId)}">${Resource.msg('link.size_chart', 'product', null)}</a>
+<div class="size-chart-collapsable"></div>

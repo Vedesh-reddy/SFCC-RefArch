@@ -40,6 +40,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                 'selectedProductUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-Show?pid=25604455',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
+                'sizeChartId': null,
                 'variationAttributes': [
                     {
                         'attributeId': 'color',

@@ -5,10 +5,20 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var toProductMock = require('../../../../util');
 
 describe('productFactory', function () {
+    var getPrimaryCategory = function () {
+        return {
+            custom: {
+                sizeChartID: 7890
+            }
+        };
+    };
+
     var getVariationModel = function () {
         return {
             getSelectedVariant: function () {
-                return {};
+                return {
+                    getPrimaryCategory: getPrimaryCategory
+                };
             }
         };
     };
