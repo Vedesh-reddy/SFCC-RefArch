@@ -10,13 +10,17 @@ var ProductFactory = require('*/cartridge/scripts/factories/product');
  * @returns {Array} an array of product line items.
  */
 function createProductLineItemsObject(allLineItems) {
-    var lineItems = collections.map(allLineItems, function (item) {
+    var lineItems = [];
+    collections.forEach(allLineItems, function (item) {
+        if (!item.product) { return; }
+
         var options = collections.map(item.optionProductLineItems, function (optionItem) {
             return {
                 optionId: optionItem.optionID,
                 selectedValueId: optionItem.optionValueID
             };
         });
+
         var params = {
             pid: item.product.ID,
             quantity: item.quantity.value,
@@ -26,7 +30,7 @@ function createProductLineItemsObject(allLineItems) {
             options: options
         };
 
-        return ProductFactory.get(params);
+        lineItems.push(ProductFactory.get(params));
     });
 
     return lineItems;

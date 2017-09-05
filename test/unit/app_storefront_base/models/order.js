@@ -87,6 +87,19 @@ describe('Order', function () {
         assert.equal(result.orderEmail, 'some Email');
     });
 
+
+    it('should handle a single lineitem basket object ', function () {
+        var result = new Order(createApiBasket(), { config: {
+            numberOfLineItems: 'single'
+        } });
+
+        assert.equal(result.shippedToFirstName, 'someString');
+        assert.equal(result.shippedToLastName, 'someString');
+        assert.equal(result.orderNumber, 'some String');
+        assert.equal(result.creationDate, 'some Date');
+        assert.equal(result.orderEmail, 'some Email');
+    });
+
     // !!! NOT APPLICABLE
     //  ... every lineItemContainer (basket/order) has a defaultShipment
     it('should handle a basket that does not have a defaultShipment', function () {

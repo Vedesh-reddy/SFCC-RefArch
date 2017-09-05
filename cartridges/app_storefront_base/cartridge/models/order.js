@@ -57,7 +57,7 @@ function getCheckoutStepInformation(lineItemContainer) {
  * @return {Object} returns an object with image properties
 */
 function getFirstProductLineItem(productLineItemsModel) {
-    if (productLineItemsModel) {
+    if (productLineItemsModel && productLineItemsModel.items[0]) {
         var firstItemImage = productLineItemsModel.items[0].images.small[0];
         return {
             imageURL: firstItemImage.url,
@@ -174,7 +174,8 @@ function OrderModel(lineItemContainer, options) {
             this.items = productLineItemsModel;
             this.billing = billingModel;
             this.shipping = shippingModels;
-        } else if (modelConfig.numberOfLineItems === 'single') {
+        } else if (modelConfig.numberOfLineItems === 'single'
+                && shippingModels[0].shippingAddress) {
             this.firstLineItem = getFirstProductLineItem(productLineItemsModel);
             this.shippedToFirstName = shippingModels[0].shippingAddress.firstName;
             this.shippedToLastName = shippingModels[0].shippingAddress.lastName;
