@@ -28,7 +28,8 @@ module.exports = function () {
             });
         }
     });
-
+    $('.product-detail').on('click', function () {});
+    $('.cart-page').on('click', function () {});
     $('.mini-cart').on('mouseleave focusout', function (event) {
         if ((event.type === 'focusout' && $('.mini-cart').has(event.target).length > 0)
             || (event.type === 'mouseleave' && $(event.target).is('.mini-cart .quantity'))
