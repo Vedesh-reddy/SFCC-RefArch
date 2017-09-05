@@ -22,7 +22,6 @@ function createProductLineItemsObject(allLineItems) {
             };
         });
 
-
         var params = {
             pid: item.product.ID,
             quantity: item.quantity.value,
