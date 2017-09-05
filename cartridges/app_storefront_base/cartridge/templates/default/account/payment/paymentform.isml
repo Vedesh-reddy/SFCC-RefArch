@@ -57,11 +57,13 @@
             <label class="form-control-label" for="cardNumber">
                 <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="off" />
             </label>
-            <input type="text" class="form-control" id="cardNumber"
-                <isprint value="${pdict.paymentForm.cardNumber.attributes}" encoding="off" />
-                autocomplete="cc-number">
-            <div class="form-control-feedback">
-                <isprint value="${pdict.paymentForm.cardNumber.error}" encoding="off" />
+            <div class="card-number-wrapper" data-type="visa">
+                <input type="text" class="form-control" id="cardNumber"
+                    <isprint value="${pdict.paymentForm.cardNumber.attributes}" encoding="off" />
+                    autocomplete="cc-number">
+                <div class="form-control-feedback">
+                    <isprint value="${pdict.paymentForm.cardNumber.error}" encoding="off" />
+                </div>
             </div>
         </div>
     </isif>

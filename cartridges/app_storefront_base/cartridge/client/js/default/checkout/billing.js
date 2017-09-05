@@ -1,6 +1,7 @@
 'use strict';
 
 var addressHelpers = require('./address');
+var cleave = require('../components/cleave');
 
 /**
  * updates the billing address selector within billing forms
@@ -111,7 +112,7 @@ function updateBillingAddressFormValues(order) {
         $('select[name$=expirationYear]', form).val(instrument.expirationYear);
         // Force security code and card number clear
         $('input[name$=securityCode]', form).val('');
-        $('input[name$=cardNumber]', form).val('');
+        $('input[name$=cardNumber]').data('cleave').setRawValue('');
     }
 }
 
@@ -183,7 +184,7 @@ function updatePaymentInformation(order) {
  * clears the credit card form
  */
 function clearCreditCardForm() {
-    $('input[name$="_cardNumber"]').val('');
+    $('input[name$="_cardNumber"]').data('cleave').setRawValue('');
     $('select[name$="_expirationMonth"]').val('');
     $('select[name$="_expirationYear"]').val('');
     $('input[name$="_securityCode"]').val('');
@@ -233,27 +234,24 @@ module.exports = {
 
             Object.keys(attrs).forEach(function (attr) {
                 element = attr === 'countryCode' ? 'country' : attr;
-                $('[name$=' + element + ']', form).val(attrs[attr]);
+                if (element === 'cardNumber') {
+                    $('.cardNumber').data('cleave').setRawValue(attrs[attr]);
+                } else {
+                    $('[name$=' + element + ']', form).val(attrs[attr]);
+                }
             });
         });
     },
 
     handleCreditCardNumber: function () {
-        $('#checkout-main').on('keyup', '#cardNumber', function () {
-            var firstDigit = $(this).val()[0];
+        cleave.handleCreditCardNumber('.cardNumber', '#cardType');
+    },
 
-            var cardMap = {
-                4: 'Visa',
-                5: 'Master Card',
-                3: 'Amex',
-                6: 'Discover'
-            };
+    santitizeForm: function () {
+        $('body').on('checkout:serializeBilling', function (e, data) {
+            var serializedForm = cleave.santitizeForm(data.form);
 
-            if (cardMap[firstDigit]) {
-                $('#cardType').val(cardMap[firstDigit]);
-            } else {
-                $('#cardType').val('Visa');
-            }
+            data.callback(serializedForm);
         });
     },
 

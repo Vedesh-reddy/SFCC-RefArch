@@ -3,6 +3,7 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "../components/formFields";
+@import "../components/creditCardField";
 
 $checkout-font-weight: 600;
 
@@ -358,37 +359,6 @@ span.ship-to-city-st-zip {
 
 [data-customer-type=guest] .single-shipping .shipment-selector-block {
     display: none;
-}
-
-.credit-card-selection {
-    display: none;
-
-    &[data-card-type] {
-        display: inline-block;
-    }
-
-    &[data-card-type="Visa"] {
-        background-position: -162px -110px;
-    }
-
-    &[data-card-type="MasterCard"] {
-        background-position: -295px -110px;
-    }
-
-    &[data-card-type="Amex"] {
-        background-position: -230px -15px;
-    }
-
-    &[data-card-type="Discover"] {
-        background-position: -95px -110px;
-    }
-
-    margin: 0;
-    padding: 0;
-    line-height: 0;
-    background-repeat: no-repeat;
-    width: 48px;
-    height: 33px;
 }
 
 #pick-up-in-store {

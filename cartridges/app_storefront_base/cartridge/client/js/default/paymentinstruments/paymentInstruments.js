@@ -1,6 +1,7 @@
 'use strict';
 
 var formValidation = require('../components/form-validation');
+var cleave = require('../components/cleave');
 
 var url;
 
@@ -45,11 +46,14 @@ module.exports = {
             url = $form.attr('action');
             $form.spinner().start();
             $('form.payment-form').trigger('payment:submit', e);
+
+            var formData = cleave.serializeData($form);
+
             $.ajax({
                 url: url,
                 type: 'post',
                 dataType: 'json',
-                data: $form.serialize(),
+                data: formData,
                 success: function (data) {
                     $form.spinner().stop();
                     if (!data.success) {
@@ -67,5 +71,9 @@ module.exports = {
             });
             return false;
         });
+    },
+
+    handleCreditCardNumber: function () {
+        cleave.handleCreditCardNumber('#cardNumber', '#cardType');
     }
 };

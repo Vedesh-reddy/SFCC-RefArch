@@ -151,6 +151,15 @@ var formHelpers = require('./formErrors');
 
                             shippingFormData = $singleShipForm.serialize();
                             shippingFormData += '&storeID=' + store.ID;
+
+                            $('body').trigger('checkout:serializeShipping', {
+                                form: $singleShipForm,
+                                data: shippingFormData,
+                                callback: function (data) {
+                                    shippingFormData = data;
+                                }
+                            });
+
                             // Populate Single Shipping Method element
                             form = $singleShipForm;
                             if (shippingFormData.indexOf('shippingMethodID') > -1) {
@@ -163,6 +172,14 @@ var formHelpers = require('./formErrors');
                             }
                         } else {
                             shippingFormData = form.serialize();
+
+                            $('body').trigger('checkout:serializeShipping', {
+                                form: form,
+                                data: shippingFormData,
+                                callback: function (data) {
+                                    shippingFormData = data;
+                                }
+                            });
                         }
 
                         $.ajax({
@@ -190,6 +207,12 @@ var formHelpers = require('./formErrors');
                     formHelpers.clearPreviousErrors('.payment-form');
 
                     var paymentForm = $('#dwfrm_billing').serialize();
+
+                    $('body').trigger('checkout:serializeBilling', {
+                        form: $('#dwfrm_billing'),
+                        data: paymentForm,
+                        callback: function (data) { paymentForm = data; }
+                    });
 
                     if ($('.data-checkout-stage').data('customer-type') === 'registered') {
                         // if payment method is credit card

@@ -18,7 +18,7 @@ module.exports = function (formElement, payload) {
                     } else {
                         feedbackElement.html(payload.fields[key]);
                     }
-                    feedbackElement.parent('.form-group').addClass('has-danger');
+                    feedbackElement.parents('.form-group').addClass('has-danger');
                 }
             }
         });
