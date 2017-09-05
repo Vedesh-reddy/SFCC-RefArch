@@ -21,7 +21,7 @@ function appendToUrl(url, params) {
  */
 function maps() {
     var map;
-    //Init U.S. Map in the center of the viewport
+    // Init U.S. Map in the center of the viewport
     var latlng = new google.maps.LatLng(37.09024, -95.712891);
     var mapOptions = {
         scrollwheel: false,
@@ -33,7 +33,7 @@ function maps() {
     var mapdiv = $('.map-canvas').attr('data-locations');
 
     mapdiv = JSON.parse(mapdiv);
-    
+
     var bounds = new google.maps.LatLngBounds();
 
     Object.keys(mapdiv).forEach(function (key) {
@@ -44,15 +44,13 @@ function maps() {
             map: map,
             title: item.name
         });
-        //Create a minimum bound based on a set of storeLocations
+        // Create a minimum bound based on a set of storeLocations
         bounds.extend(marker.position);
     });
-    //Return the init map when there is no store has been found.
-    if (mapdiv && mapdiv.length === 0){
-      return false;
-    };
-    //Fit the all the store marks in the center of a minimum bounds.
-    map.fitBounds(bounds);
+    // Fit the all the store marks in the center of a minimum bounds when any store has been found.
+    if (mapdiv && mapdiv.length !== 0) {
+        map.fitBounds(bounds);
+    }
 }
 
 /**
