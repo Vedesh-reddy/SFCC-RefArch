@@ -11,7 +11,7 @@ module.exports = function () {
         }
     });
 
-    $('.mini-cart').on('mouseenter focusin', function () {
+    $('.mini-cart').on('mouseenter focusin', function (e) {
         if ($('.search:visible').length === 0) {
             return;
         }
@@ -22,14 +22,24 @@ module.exports = function () {
             $('.mini-cart .popover').addClass('show');
             $('.mini-cart .popover').spinner().start();
             $.get(url, function (data) {
+            	e.preventDefault();
                 $('.mini-cart .popover').empty();
                 $('.mini-cart .popover').append(data);
                 $.spinner().stop();
             });
         }
     });
-    $('.product-detail').on('click', function () {});
-    $('.cart-page').on('click', function () {});
+    
+    //$('.product-detail').on('click', function () {});
+    //$('.cart-page').on('click', function () {});
+    
+    $('body').on('click touchstart', function (e) {
+    	if ($('.mini-cart').has(e.target).length <= 0) {
+    		$('.mini-cart .popover').empty();
+     		$('.mini-cart .popover').removeClass('show');
+    	}
+    });
+    
     $('.mini-cart').on('mouseleave focusout', function (event) {
         if ((event.type === 'focusout' && $('.mini-cart').has(event.target).length > 0)
             || (event.type === 'mouseleave' && $(event.target).is('.mini-cart .quantity'))
