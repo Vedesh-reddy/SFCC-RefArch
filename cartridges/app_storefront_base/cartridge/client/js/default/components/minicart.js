@@ -11,7 +11,7 @@ module.exports = function () {
         }
     });
 
-    $('.mini-cart').on('mouseenter focusin', function (e) {
+    $('.mini-cart').on('mouseenter focusin', function () {
         if ($('.search:visible').length === 0) {
             return;
         }
@@ -22,7 +22,6 @@ module.exports = function () {
             $('.mini-cart .popover').addClass('show');
             $('.mini-cart .popover').spinner().start();
             $.get(url, function (data) {
-            	e.preventDefault();
                 $('.mini-cart .popover').empty();
                 $('.mini-cart .popover').append(data);
                 $.spinner().stop();
@@ -33,7 +32,7 @@ module.exports = function () {
     //$('.product-detail').on('click', function () {});
     //$('.cart-page').on('click', function () {});
     
-    $('body').on('click touchstart', function (e) {
+    $('body').on('touchstart', function (e) {
     	if ($('.mini-cart').has(e.target).length <= 0) {
     		$('.mini-cart .popover').empty();
      		$('.mini-cart .popover').removeClass('show');
