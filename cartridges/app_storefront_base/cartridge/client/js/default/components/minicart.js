@@ -29,13 +29,12 @@ module.exports = function () {
         }
     });
     
-    //$('.product-detail').on('click', function () {});
-    //$('.cart-page').on('click', function () {});
-    
     $('body').on('touchstart', function (e) {
-    	if ($('.mini-cart').has(e.target).length <= 0) {
+    	if ($('.mini-cart').has(e.target).length <= 0 && !$(e.target).hasClass('popover-bottom')) {
     		$('.mini-cart .popover').empty();
      		$('.mini-cart .popover').removeClass('show');
+     		event.stopPropagation();
+            return;
     	}
     });
     
