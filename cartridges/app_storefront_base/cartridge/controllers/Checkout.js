@@ -57,7 +57,8 @@ server.get(
                 userName: userName,
                 actionUrl: actionUrl,
                 details: details,
-                reportingURLs: reportingURLs
+                reportingURLs: reportingURLs,
+                oAuthReentryEndpoint: 2
             });
         }
 
