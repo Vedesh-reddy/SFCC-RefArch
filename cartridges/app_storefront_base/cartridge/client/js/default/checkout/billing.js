@@ -249,7 +249,7 @@ module.exports = {
 
     santitizeForm: function () {
         $('body').on('checkout:serializeBilling', function (e, data) {
-            var serializedForm = cleave.santitizeForm(data.form);
+            var serializedForm = cleave.serializeData(data.form);
 
             data.callback(serializedForm);
         });
