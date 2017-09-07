@@ -27,13 +27,18 @@ function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
     var category = cgid && cgid !== 'root'
         ? CatalogMgr.getCategory(cgid)
         : primaryCategory;
-    breadcrumbs.push({
-        htmlValue: category.displayName,
-        url: URLUtils.url('Search-Show', 'cgid', category.ID)
-    });
-    if (category.parent && category.parent.ID !== 'root') {
-        return getAllBreadcrumbs(category.parent.ID, null, breadcrumbs);
+
+    if (category) {
+        breadcrumbs.push({
+            htmlValue: category.displayName,
+            url: URLUtils.url('Search-Show', 'cgid', category.ID)
+        });
+
+        if (category.parent && category.parent.ID !== 'root') {
+            return getAllBreadcrumbs(category.parent.ID, null, breadcrumbs);
+        }
     }
+
     return breadcrumbs;
 }
 
