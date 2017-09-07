@@ -18,8 +18,12 @@
             <div class="col-sm-6">
                 <!---Profile--->
                 <isinclude template="account/profilecard"/>
-                <!---Password--->
-                <isinclude template="account/passwordcard"/>
+
+                <isif condition="${!pdict.account.isExternallyAuthenticated}">
+                    <!---Password--->
+                    <isinclude template="account/passwordcard"/>
+                </isif>
+
                 <!---Address Book--->
                 <isinclude template="account/addressbookcard"/>
             </div>
