@@ -121,6 +121,7 @@ function account(currentCustomer, addressModel, orderModel) {
     this.orderHistory = orderModel;
     this.payment = getPayment(currentCustomer.wallet);
     this.registeredUser = currentCustomer.raw.authenticated && currentCustomer.raw.registered;
+    this.isExternallyAuthenticated = currentCustomer.raw.externallyAuthenticated;
     this.customerPaymentInstruments = currentCustomer.wallet
         && currentCustomer.wallet.paymentInstruments
         ? getCustomerPaymentInstruments(currentCustomer.wallet.paymentInstruments)
