@@ -1,5 +1,5 @@
 <div class="mini-cart-total hidden-sm-up">
-    <a class="mini-cart-link" href="${URLUtils.https('Cart-Show')}" data-url="${URLUtils.https('Cart-Show')}" title="${Resource.msg('minicart.viewcart','common',null)}">
+    <a class="mini-cart-link" href="${URLUtils.https('Cart-Show')} title="${Resource.msg('minicart.viewcart','common',null)}">
         <i class="minicart-icon fa fa-shopping-bag"></i>
         <span class="minicart-quantity">
             <isprint value="${pdict.quantityTotal}" formatter="##" />
