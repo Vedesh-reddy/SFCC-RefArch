@@ -1,21 +1,15 @@
-<label class="hidden-xs-down hidden-md-up pull-left">
-    ${Resource.msg('label.filters.applied', 'search', null)}:
-</label>
-<ul class="pull-left">
+<ul>
     <isloop items="${pdict.productSearch.selectedFilters}" var="refinement">
         <isif condition="${refinement.type === 'color'}">
-            <a class="filter-value swatch-filter swatch-filter-${refinement.presentationId} pull-left" href="${refinement.url}">
-                <li title="${refinement.title}">
-                    <i class="fa fa-times-circle"></i>
-                </li>
-            </a>
+            <li class="swatch-filter swatch-filter-${refinement.presentationId}" title="${refinement.title}">
+                <a href="${refinement.url}"></a>
+            </li>
         <iselse>
-            <a class="filter-value pull-left" href="${refinement.url}">
-                <li title="${refinement.title}">
+            <li class="filter-value" title="${refinement.title}">
+                <a href="${refinement.url}">
                     ${refinement.displayValue}
-                    <i class="fa fa-close"></i>
-                </li>
-            </a>
+                </a>
+            </li>
         </isif>
     </isloop>
 </ul>

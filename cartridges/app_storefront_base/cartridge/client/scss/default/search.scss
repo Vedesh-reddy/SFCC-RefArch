@@ -202,42 +202,74 @@
 }
 
 .filter-bar {
-    label {
-        line-height: 2.188em;
+    ul {
+        padding-left: $grid-gutter-width-base / 2;
     }
 
-    a.filter-value {
-        border: 0.063em solid $black;
-        margin-bottom: 0.938em;
-        margin-left: 0.938em;
-        padding: 0.313em;
+    li {
+        list-style: none;
+        float: left;
+        margin-left: 0.3125em;
+        margin-right: 0.3125em;
 
-        &.swatch-filter {
-            font-size: 1.563em;
-            line-height: 1.38em;
-            margin-left: 0.6em;
-            padding: 0;
-            text-align: center;
-            width: 1.38em;
+        &:first-child {
+            margin-left: 0;
         }
 
-        &:not(.swatch-filter) {
-            border-radius: 0.188em;
-        }
+        &.filter-value {
+            border: 1px solid #ccc;
+            padding: 0.3125em;
+            border-radius: 3px;
+            position: relative;
 
-        @include media-breakpoint-down(xs) {
-            &:first-child {
-                margin-left: 0;
+            a {
+                color: black;
+                padding-right: 0.6375em;
+            }
+
+            &::after {
+                content: "\f00d";
+                font: normal normal normal 14px/1 FontAwesome;
+                text-rendering: auto;
+                position: absolute;
+                right: 2px;
+                top: 10px;
             }
         }
 
-        li {
-            list-style-type: none;
-        }
-    }
+        &.swatch-filter {
+            font-size: 1.38em;
+            position: relative;
+            margin-top: 4px;
 
-    ul {
-        padding-left: 0;
+            a {
+                width: 100%;
+                height: 100%;
+                display: block;
+            }
+
+            &::before {
+                content: "";
+                background-color: white;
+                width: 0.8em;
+                height: 0.8em;
+                border-radius: 0.4em;
+                position: absolute;
+                left: 0.2em;
+                top: 0.2em;
+            }
+
+            &::after {
+                content: "\f057";
+                font: normal normal normal 14px/1 FontAwesome;
+                display: inline;
+                text-rendering: auto;
+                position: absolute;
+                left: 4px;
+                top: 3px;
+                font-size: 1em;
+            }
+        }
     }
 }
 

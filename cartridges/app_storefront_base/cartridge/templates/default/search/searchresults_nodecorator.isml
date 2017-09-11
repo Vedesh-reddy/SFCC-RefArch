@@ -73,11 +73,9 @@
                         <div class="col-sm-12 col-md-9">
                             <div class="container">
                                 <!--- Selected filters bar --->
-                                <isif condition="${pdict.productSearch.selectedFilters.length > 0}" />
-                                    <div class="filter-bar hidden-md-up">
-                                        <isinclude template="search/filterbar" />
-                                    </div>
-                                </isif>
+                                <div class="row filter-bar hidden-md-up">
+                                    <isinclude template="search/filterbar" />
+                                </div>
 
                                 <!--- Product Grid --->
                                 <div class="row product-grid">

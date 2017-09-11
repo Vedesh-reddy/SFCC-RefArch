@@ -48,7 +48,8 @@ function parseResults(response) {
         '.header-bar',
         '.header.page-title',
         '.product-grid',
-        '.show-more'
+        '.show-more',
+        '.filter-bar'
     ].forEach(function (selector) {
         updateDom($results, selector);
     });
@@ -166,28 +167,31 @@ module.exports = {
 
     applyFilter: function () {
         // Handle refinement value selection and reset click
-        $('.container').on('click', '.refinements li a, .refinement-bar a.reset', function (e) {
-            e.preventDefault();
-            e.stopPropagation();
+        $('.container').on(
+            'click',
+            '.refinements li a, .refinement-bar a.reset, .filter-value a, .swatch-filter a',
+            function (e) {
+                e.preventDefault();
+                e.stopPropagation();
 
-            $.spinner().start();
-            $(this).trigger('search:filter', e);
-            $.ajax({
-                url: e.currentTarget.href,
-                data: {
-                    page: $('.grid-footer').data('page-number'),
-                    selectedUrl: e.currentTarget.href
-                },
-                method: 'GET',
-                success: function (response) {
-                    parseResults(response);
-                    $.spinner().stop();
-                },
-                error: function () {
-                    $.spinner().stop();
-                }
+                $.spinner().start();
+                $(this).trigger('search:filter', e);
+                $.ajax({
+                    url: e.currentTarget.href,
+                    data: {
+                        page: $('.grid-footer').data('page-number'),
+                        selectedUrl: e.currentTarget.href
+                    },
+                    method: 'GET',
+                    success: function (response) {
+                        parseResults(response);
+                        $.spinner().stop();
+                    },
+                    error: function () {
+                        $.spinner().stop();
+                    }
+                });
             });
-        });
     },
 
     showContentTab: function () {
