@@ -17,5 +17,6 @@
         <isinclude template="/common/scripts" />
         <div class="error-messaging"></div>
         <div class="modal-background"></div>
+        <iscontentasset aid="cookie_hint" />
     </body>
 </html>

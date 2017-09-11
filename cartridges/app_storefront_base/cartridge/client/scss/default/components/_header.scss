@@ -160,3 +160,24 @@ a.normal {
 .dropdown-country-selector {
     margin-top: -0.0625em;
 }
+
+.cookie-warning-messaging.cookie-warning {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 0);
+    text-align: center;
+    display: none;
+}
+
+.valid-cookie-warning {
+    background-color: $blue;
+    color: $white;
+    white-space: nowrap;
+
+    p {
+        margin-top: 0;
+        margin-bottom: 0.2em;
+        padding-right: 2em;
+    }
+}
