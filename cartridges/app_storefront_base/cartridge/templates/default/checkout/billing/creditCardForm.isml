@@ -11,7 +11,7 @@
             <isif condition=${creditFields.cardNumber.mandatory === true}>required</isif>
             ${creditFields.cardNumber.htmlName}">
             <label class="form-control-label" for="cardNumber">${Resource.msg('field.credit.card.number','creditCard',null)}</label>
-            <div class="card-number-wrapper" data-type="visa">
+            <div class="card-number-wrapper">
                 <input type="text" class="form-control cardNumber" id="cardNumber"
                     value="${pdict.order.billing.payment.selectedPaymentInstruments
                         && pdict.order.billing.payment.selectedPaymentInstruments.length > 0

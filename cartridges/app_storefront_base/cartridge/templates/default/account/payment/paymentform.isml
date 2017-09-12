@@ -57,7 +57,7 @@
             <label class="form-control-label" for="cardNumber">
                 <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="off" />
             </label>
-            <div class="card-number-wrapper" data-type="visa">
+            <div class="card-number-wrapper">
                 <input type="text" class="form-control" id="cardNumber"
                     <isprint value="${pdict.paymentForm.cardNumber.attributes}" encoding="off" />
                     autocomplete="cc-number">

@@ -129,10 +129,10 @@ describe('locale', function () {
                         'displayCountry': 'Italia',
                         'localID': 'it_IT',
                         'displayName': 'italiano'
-                        
                     }
                 ],
-                'name': 'United Kingdom'
+                'name': 'United Kingdom',
+                'displayName': 'English (UK)'
             }
         });
     });
@@ -178,7 +178,8 @@ describe('locale', function () {
                         'displayName': 'italiano'
                     }
                 ],
-                'name': 'France'
+                'name': 'France',
+                'displayName': 'français'
             }
         });
     });
@@ -222,7 +223,8 @@ describe('locale', function () {
                         'displayName': 'français'
                     }
                 ],
-                'name': 'Italia'
+                'name': 'Italia',
+                'displayName': 'italiano'
             }
         });
     });
@@ -266,7 +268,8 @@ describe('locale', function () {
                         'displayName': 'italiano'
                     }
                 ],
-                'name': '日本'
+                'name': '日本',
+                'displayName': '日本の'
             }
         });
     });
@@ -310,7 +313,8 @@ describe('locale', function () {
                         'displayName': 'italiano'
                     }
                 ],
-                'name': '中国'
+                'name': '中国',
+                'displayName': '日本'
             }
         });
     });

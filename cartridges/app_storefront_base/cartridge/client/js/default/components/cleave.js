@@ -16,11 +16,9 @@ module.exports = {
 
                 var cardType = creditCardTypes[Object.keys(creditCardTypes).indexOf(type) > -1
                     ? type
-                    : 'visa'];
+                    : 'unknown'];
                 $(cardTypeSelector).val(cardType);
-                $('.card-number-wrapper').attr('data-type', cardType === 'Visa'
-                    ? 'visa'
-                    : type);
+                $('.card-number-wrapper').attr('data-type', type);
             }
         });
 
