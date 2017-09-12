@@ -140,6 +140,20 @@ describe('server', function () {
         server.append('test', function () {}, function () {});
         assert.equal(exports.__routes.test.chain.length, 4);
     });
+    it('The extended chain with append should be executed last.', function () {
+        server.get('test', function () {});
+        var exports = server.exports();
+        server.extend(exports);
+        server.append('test', function () {}, function () { return 'EXECUTED'; });
+        assert.equal(server.getRoute('test').chain[3](), 'EXECUTED');
+    });
+    it('The extended chain with prepend should be executed first.', function () {
+        server.get('test', function () {});
+        var exports = server.exports();
+        server.extend(exports);
+        server.prepend('test', function () { return 'EXECUTED'; });
+        assert.equal(server.getRoute('test').chain[0](), 'EXECUTED');
+    });
     it('should replace existing route with a new one', function () {
         var spy = sinon.spy();
         var spy2 = sinon.spy();

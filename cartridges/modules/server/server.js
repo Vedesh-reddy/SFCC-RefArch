@@ -164,11 +164,28 @@ Server.prototype = {
         this.routes = newRoutes;
     },
     /**
-     * Modify a given route by appending additional middleware to it
+     * Modify a given route by prepending additional middleware to it
      * @param {string} name - Name of the route to modify
      * @param {Function[]} arguments - List of functions to be appended
      * @returns {void}
      */
+    prepend: function prepend(name) {
+        var args = Array.prototype.slice.call(arguments);
+        var middlewareChain = Array.prototype.slice.call(arguments, 1);
+
+        checkParams(args);
+
+        if (!this.routes[name]) {
+            throw new Error('Route with this name does not exist');
+        }
+
+        this.routes[name].chain = middlewareChain.concat(this.routes[name].chain);
+    }, /**
+    * Modify a given route by appending additional middleware to it
+    * @param {string} name - Name of the route to modify
+    * @param {Function[]} arguments - List of functions to be appended
+    * @returns {void}
+    */
     append: function append(name) {
         var args = Array.prototype.slice.call(arguments);
         var middlewareChain = Array.prototype.slice.call(arguments, 1);
