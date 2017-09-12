@@ -23,7 +23,8 @@ function getLocaleLinks(allowedLocales, siteId, currentLocaleID) {
                 localID: locale.id,
                 country: apiLocale.country,
                 displayCountry: apiLocale.displayCountry,
-                currencyCode: locale.currencyCode
+                currencyCode: locale.currencyCode,
+                displayName: apiLocale.displayName
             };
             localeOptions.push(localeOption);
         }
@@ -48,7 +49,8 @@ function Locale(currentLocale, allowedLocales, siteId) {
         countryCode: currentLocale.country,
         name: currentLocale.displayCountry,
         localLinks: getLocaleLinks(allowedLocales, siteId, currentLocale.ID),
-        currencyCode: currentCountry.currencyCode
+        currencyCode: currentCountry.currencyCode,
+        displayName: currentLocale.displayName
     };
 }
 
