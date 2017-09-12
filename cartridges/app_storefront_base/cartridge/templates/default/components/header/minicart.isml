@@ -1,4 +1,4 @@
-<div class="mini-cart-total hidden-sm-up">
+<div class="mini-cart-total hide-link-med">
     <a class="mini-cart-link" href="${URLUtils.https('Cart-Show')}" title="${Resource.msg('minicart.viewcart','common',null)}">
         <i class="minicart-icon fa fa-shopping-bag"></i>
         <span class="minicart-quantity">
@@ -7,7 +7,7 @@
     </a>
 </div>
 
-<div class="mini-cart-total hidden-xs-down">
+<div class="mini-cart-total hide-no-link">
     <i class="minicart-icon fa fa-shopping-bag"></i>
         <span class="minicart-quantity">
             <isprint value="${pdict.quantityTotal}" formatter="##" />
