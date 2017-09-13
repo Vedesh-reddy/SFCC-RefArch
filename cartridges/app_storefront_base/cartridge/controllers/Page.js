@@ -26,6 +26,8 @@ server.get(
         } else {
             Logger.warn('Content asset with ID {0} was included but not found',
                     req.querystring.cid);
+
+            res.render('/components/content/offlinecontent');
         }
         next();
     }
