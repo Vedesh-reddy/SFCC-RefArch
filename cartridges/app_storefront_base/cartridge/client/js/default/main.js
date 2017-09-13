@@ -3,6 +3,7 @@ var processInclude = require('./util');
 
 $(document).ready(function () {
     processInclude(require('./components/menu'));
+    processInclude(require('./components/cookie'));
     processInclude(require('./components/footer'));
     processInclude(require('./components/minicart'));
     processInclude(require('./components/collapsable-item'));
