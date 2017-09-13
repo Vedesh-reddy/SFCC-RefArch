@@ -11,7 +11,7 @@ module.exports = function () {
         }
     });
 
-    $('.mini-cart').on('mouseenter focusin', function () {
+    $('.mini-cart').on('mouseenter focusin touchstart', function () {
         if ($('.search:visible').length === 0) {
             return;
         }
@@ -28,7 +28,12 @@ module.exports = function () {
             });
         }
     });
-
+    $('body').on('touchstart click', function (e) {
+        if ($('.mini-cart').has(e.target).length <= 0) {
+            $('.mini-cart .popover').empty();
+            $('.mini-cart .popover').removeClass('show');
+        }
+    });
     $('.mini-cart').on('mouseleave focusout', function (event) {
         if ((event.type === 'focusout' && $('.mini-cart').has(event.target).length > 0)
             || (event.type === 'mouseleave' && $(event.target).is('.mini-cart .quantity'))

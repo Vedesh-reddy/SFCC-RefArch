@@ -96,3 +96,22 @@
         width: 90%;
     }
 }
+
+.hide-link-med {
+
+    @include media-breakpoint-only(sm) {
+        display: none;
+    }
+}
+
+.hide-no-link {
+
+    @include media-breakpoint-up(lg) {
+        display: none;
+    }
+
+    @include media-breakpoint-down(xs) {
+        display: none;
+    }
+}
+
