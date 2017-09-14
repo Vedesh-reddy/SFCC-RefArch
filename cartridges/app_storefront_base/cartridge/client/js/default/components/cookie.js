@@ -22,7 +22,7 @@ function getCookie(cookieName) {
 }
 
 module.exports = function () {
-    if (('.valid-cookie-warning').length > 0) {
+    if ($('.valid-cookie-warning').length > 0) {
         var previousSessionID = window.localStorage.getItem('previousSid');
         var currentSessionID = getCookie('sid');
         if (!previousSessionID && currentSessionID) {
