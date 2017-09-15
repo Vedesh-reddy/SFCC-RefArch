@@ -42,11 +42,13 @@ describe('Content Suggestions model', function () {
 
     it('should produce a ContentSuggestions instance', function () {
         var suggestions = {
-            suggestedContent: {
-                next: nextSuggestionStub,
-                hasNext: function () { return true; }
-            },
-            hasSuggestions: function () { return true; }
+            contentSuggestions: {
+                suggestedContent: {
+                    next: nextSuggestionStub,
+                    hasNext: function () { return true; }
+                },
+                hasSuggestions: function () { return true; }
+            }
         };
 
         var contentSuggestions = new ContentSuggestions(suggestions, 3);

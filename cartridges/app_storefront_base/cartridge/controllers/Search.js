@@ -163,10 +163,9 @@ server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) 
         suggestions = new SuggestModel();
         suggestions.setSearchPhrase(searchTerms);
         suggestions.setMaxSuggestions(maxSuggestions);
-        categorySuggestions = new CategorySuggestions(suggestions.categorySuggestions,
-            maxSuggestions);
-        contentSuggestions = new ContentSuggestions(suggestions.contentSuggestions, maxSuggestions);
-        productSuggestions = new ProductSuggestions(suggestions.productSuggestions, maxSuggestions);
+        categorySuggestions = new CategorySuggestions(suggestions, maxSuggestions);
+        contentSuggestions = new ContentSuggestions(suggestions, maxSuggestions);
+        productSuggestions = new ProductSuggestions(suggestions, maxSuggestions);
 
         if (productSuggestions.available || contentSuggestions.available
             || categorySuggestions.available) {

@@ -51,11 +51,13 @@ describe('Category Suggestions model', function () {
 
     it('should produce a CategorySuggestions instance', function () {
         var suggestions = {
-            suggestedCategories: {
-                next: nextCategoryStub,
-                hasNext: function () { return true; }
-            },
-            hasSuggestions: function () { return true; }
+            categorySuggestions: {
+                suggestedCategories: {
+                    next: nextCategoryStub,
+                    hasNext: function () { return true; }
+                },
+                hasSuggestions: function () { return true; }
+            }
         };
 
         var categorySuggestions = new CategorySuggestions(suggestions, 3);

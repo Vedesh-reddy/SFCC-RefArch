@@ -81,13 +81,22 @@ function getPhrases(suggestedPhrases, maxItems) {
  * @constructor
  * @classdesc ProductSuggestions class
  *
- * @param {dw.suggest.ProductSuggestions} suggestions - Product suggestions
+ * @param {dw.suggest.SuggestModel} suggestions - Suggest Model
  * @param {number} maxItems - Maximum number of items to retrieve
  */
 function ProductSuggestions(suggestions, maxItems) {
-    this.available = suggestions.hasSuggestions();
-    this.phrases = getPhrases(suggestions.suggestedPhrases, maxItems);
-    this.products = getProducts(suggestions.suggestedProducts, maxItems);
+    if (!suggestions.productSuggestions) {
+        this.available = false;
+        this.phrases = [];
+        this.products = [];
+        return;
+    }
+
+    var productSuggestions = suggestions.productSuggestions;
+
+    this.available = productSuggestions.hasSuggestions();
+    this.phrases = getPhrases(productSuggestions.suggestedPhrases, maxItems);
+    this.products = getProducts(productSuggestions.suggestedProducts, maxItems);
 }
 
 module.exports = ProductSuggestions;
