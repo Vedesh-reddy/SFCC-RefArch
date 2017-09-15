@@ -83,6 +83,11 @@
                             <isinclude template="product/components/availability" />
                         </div>
 
+                        <!-- In store inventory -->
+                        <div class="get-in-store-inventory col-md-10 col-20 pdp-in-store-inventory">
+                            <isinclude template="product/components/inStoreInventory" />
+                        </div>
+
                         <!-- Applicable Promotions -->
                         <div class="col-md-10 col-12 promotions">
                             <isinclude template="product/components/promotions" />

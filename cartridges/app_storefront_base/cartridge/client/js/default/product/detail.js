@@ -121,5 +121,11 @@ module.exports = {
                 $sizeChart.removeClass('active');
             }
         });
+    },
+    showInStoreInventory: function () {
+        $('.get-in-store-inventory').on('click', function (e) {
+            alert("get in store inventory");
+            e.stopPropagation();
+        });
     }
 };
