@@ -97,5 +97,29 @@ module.exports = {
                     .html(allReady ? response.message : response.resources.info_selectforstock);
             }
         });
+    },
+    sizeChart: function () {
+        var $sizeChart = $('.size-chart-collapsable');
+        $('.size-chart a').on('click', function (e) {
+            e.preventDefault();
+            var url = $(this).attr('href');
+            if ($sizeChart.is(':empty')) {
+                $.ajax({
+                    url: url,
+                    type: 'get',
+                    dataType: 'json',
+                    success: function (data) {
+                        $sizeChart.append(data.content);
+                    }
+                });
+            }
+            $sizeChart.toggleClass('active');
+        });
+
+        $('body').on('click touchstart', function (e) {
+            if ($('.size-chart').has(e.target).length <= 0) {
+                $sizeChart.removeClass('active');
+            }
+        });
     }
 };
