@@ -239,6 +239,7 @@ server.get('SizeChart', function (req, res, next) {
 server.get('GetStores', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
+    var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 
     var actionUrl = URLUtils.url('Product-GetStores').toString();
     var storesModel = StoreHelpers.getModel(req, actionUrl);
@@ -248,8 +249,12 @@ server.get('GetStores', function (req, res, next) {
     }];
 
     storesModel.stores = StoreHelpers.getFilteredStores(storesModel, product);
+
+    var context = { stores: storesModel.stores };
+    var storeTemplate = 'storelocator/storelocatorresults';
+
     storesModel.storesResultsHtml = storesModel.stores
-        ? StoreHelpers.createStoresResultsHtml(storesModel.stores)
+        ? renderTemplateHelper.getRenderedHtml(context, storeTemplate)
         : null;
 
     res.json({ stores: storesModel });
