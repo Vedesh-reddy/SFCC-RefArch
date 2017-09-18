@@ -73,6 +73,8 @@ function getResources() {
  */
 function showProductPage(querystring, res) {
     var URLUtils = require('dw/web/URLUtils');
+    var Site = require('dw/system/Site');
+
     var ProductFactory = require('*/cartridge/scripts/factories/product');
 
     var params = querystring;
@@ -94,7 +96,11 @@ function showProductPage(querystring, res) {
         product: product,
         addToCartUrl: addToCartUrl,
         resources: getResources(),
-        breadcrumbs: breadcrumbs
+        breadcrumbs: breadcrumbs,
+        pickUpInStore: {
+            actionUrl: URLUtils.url('Product-GetStores').toString(),
+            enabled: Site.getCurrent().getCustomPreferenceValue('enableStorePickUp')
+        }
     });
 }
 
@@ -227,6 +233,26 @@ server.get('SizeChart', function (req, res, next) {
     } else {
         res.json({});
     }
+    next();
+});
+
+server.get('GetStores', function (req, res, next) {
+    var URLUtils = require('dw/web/URLUtils');
+    var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
+
+    var actionUrl = URLUtils.url('Product-GetStores').toString();
+    var storesModel = StoreHelpers.getModel(req, actionUrl);
+    var product = [{
+        productID: req.querystring.pid,
+        quantityValue: req.querystring.qty
+    }];
+
+    storesModel.stores = StoreHelpers.getFilteredStores(storesModel, product);
+    storesModel.storesResultsHtml = storesModel.stores
+        ? StoreHelpers.createStoresResultsHtml(storesModel.stores)
+        : null;
+
+    res.json({ stores: storesModel });
     next();
 });
 

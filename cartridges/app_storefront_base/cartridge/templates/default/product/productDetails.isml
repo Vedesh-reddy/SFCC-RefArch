@@ -84,9 +84,11 @@
                         </div>
 
                         <!-- In store inventory -->
-                        <div class="get-in-store-inventory col-md-10 col-20 pdp-in-store-inventory">
-                            <isinclude template="product/components/inStoreInventory" />
-                        </div>
+                        <isif condition="${pdict.pickUpInStore.enabled}">
+                            <div class="col-md-10 pdp-in-store-inventory">
+                                <isinclude template="product/components/inStoreInventory" />
+                            </div>
+                        </isif>
 
                         <!-- Applicable Promotions -->
                         <div class="col-md-10 col-12 promotions">

@@ -124,7 +124,32 @@ module.exports = {
     },
     showInStoreInventory: function () {
         $('.get-in-store-inventory').on('click', function (e) {
-            alert('get in store inventory');
+            // TODO: create modal
+            // alert('get in store inventory');
+            e.stopPropagation();
+        });
+    },
+    getStores: function () {
+        // TODO: Change the trigger to the search button
+        $('.get-in-store-inventory').on('click', function (e) {
+            $.spinner().start();
+            $.ajax({
+                url: $(this).data('action-url'),
+                data: { pid: $('.product-id').text(), qty: $('.quantity-select').val() },
+                method: 'GET',
+                success: function (response) {
+                    if (response.stores.length) {
+                        // TODO: display available stores
+                    } else {
+                        // TODO: Display "no stores found" message
+                    }
+                    $.spinner().stop();
+                },
+                error: function () {
+                    $.spinner().stop();
+                }
+            });
+
             e.stopPropagation();
         });
     }

@@ -1,7 +1,7 @@
-<div class="row pdp-in-store-inventory"> 
+<div class="row pdp-in-store-inventory">
     <div class="row">
         <div class="col-12 col-sm-12">
-            <button class="btn btn-secondary btn-block get-in-store-inventory btn-outline-primary" type="button">Availability: Select Store</button>
+            <button class="btn btn-secondary btn-block get-in-store-inventory btn-outline-primary" data-action-url="${pdict.pickUpInStore.actionUrl}" type="button">Availability: Select Store</button>
         </div>
     </div>
 </div>
