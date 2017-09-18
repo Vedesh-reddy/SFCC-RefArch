@@ -21,7 +21,6 @@ describe('stores', function () {
                 }
             };
         },
-
         '*/cartridge/scripts/renderTemplateHelper': {
             getRenderedHtml: function () { return 'someString'; }
             },
