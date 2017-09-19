@@ -1,7 +1,11 @@
+<isif condition="${lineItem.isBonusProductLineItem}" />
+	<div><span>${Resource.msg('msg.bonus.product','cart',null)}</span></div>
+</isif>
 <div class="line-item-header">
     <div class="line-item-name">
         ${lineItem.productName}
     </div>
+    <isif condition="${lineItem.isBonusProductLineItem === false}" />
     <div class="remove-line-item hidden-lg-up">
         <button type="button" class="remove-btn remove-product" data-toggle="modal"
                 data-target="#removeProductModal" data-pid="${lineItem.id}"
@@ -22,4 +26,5 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
+	</isif>
 </div>

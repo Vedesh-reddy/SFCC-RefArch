@@ -94,7 +94,8 @@ function CartModel(basket) {
         var shippingModels = ShippingHelpers.getShippingModels(basket);
         var productLineItemsModel = new ProductLineItemsModel(basket.productLineItems);
         var totalsModel = new TotalsModel(basket);
-
+        
+        this.hasBonusProduct = basket.bonusLineItems && basket.bonusLineItems.length ? true : false;
         this.actionUrls = getCartActionUrls();
         this.numOfShipments = basket.shipments.length;
         this.totals = totalsModel;
