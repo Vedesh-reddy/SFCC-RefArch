@@ -45,6 +45,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             'selectShippingUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-SelectShippingMethod'
         },
         'approachingDiscounts': [],
+        'hasBonusProduct': false,
         'numOfShipments': 1,
         'shipments': [
             {

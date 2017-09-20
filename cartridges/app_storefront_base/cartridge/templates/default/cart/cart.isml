@@ -3,7 +3,7 @@
         var assets = require('*/cartridge/scripts/assets.js');
         assets.addCss('/css/cart.css');
     </isscript>
-    
+
     <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
         <isinclude template="reporting/reportingUrls" />
     </isif>
@@ -61,7 +61,7 @@
                         </isif>
                     </isloop>
 					<isinclude template="cart/changeBonusProductButton">
-                    <isinclude template="cart/cartApproachingDiscount" />
+                    <isinclude template="cart/cartApproachingDiscount"/>
                 </div>
                 <!---totals, and checkout actions--->
                 <div class="col-sm-5 col-md-4 totals">
