@@ -1,7 +1,7 @@
 <div class="store-details">
     <div class="store-name">${store.name}</div>
     <address>
-        <a class="store-map" href="https://maps.google.com/?daddr=${store.latitude},${store.longitude}">
+        <a class="store-map" target='_blank' href="https://maps.google.com/?daddr=${store.latitude},${store.longitude}">
             ${store.address1}
 
             <isif condition="${store.address2}">

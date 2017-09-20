@@ -36,13 +36,32 @@ function maps() {
 
     var bounds = new google.maps.LatLngBounds();
 
+    // Customized google map marker icon with svg format
+    var markerImg = {
+        path: 'M13.5,30.1460153 L16.8554555,25.5 L20.0024287,25.5 C23.039087,25.5 25.5,' +
+            '23.0388955 25.5,20.0024287 L25.5,5.99757128 C25.5,2.96091298 23.0388955,0.5 ' +
+            '20.0024287,0.5 L5.99757128,0.5 C2.96091298,0.5 0.5,2.96110446 0.5,5.99757128 ' +
+            'L0.5,20.0024287 C0.5,23.039087 2.96110446,25.5 5.99757128,25.5 L10.1445445,' +
+            '25.5 L13.5,30.1460153 Z',
+        fillColor: '#0070d2',
+        fillOpacity: 1,
+        scale: 1.1,
+        strokeColor: 'white',
+        strokeWeight: 1,
+        anchor: new google.maps.Point(13, 30),
+        labelOrigin: new google.maps.Point(12, 12)
+    };
+
     Object.keys(mapdiv).forEach(function (key) {
         var item = mapdiv[key];
+        var lable = parseInt(key, 10) + 1;
         var storeLocation = new google.maps.LatLng(item.latitude, item.longitude);
         var marker = new google.maps.Marker({
             position: storeLocation,
             map: map,
-            title: item.name
+            title: item.name,
+            icon: markerImg,
+            label: { text: lable.toString(), color: 'white', fontSize: '16px' }
         });
         // Create a minimum bound based on a set of storeLocations
         bounds.extend(marker.position);
