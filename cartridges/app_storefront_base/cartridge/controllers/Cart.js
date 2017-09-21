@@ -178,17 +178,32 @@ server.get('RemoveProductLineItem', function (req, res, next) {
     }
 
     var isProductLineItemFound = false;
+    var bonusProductsUUIDs = new Array();
 
     Transaction.wrap(function () {
         if (req.querystring.pid && req.querystring.uuid) {
             var productLineItems = currentBasket.getAllProductLineItems(req.querystring.pid);
+            var bonusProductLineItems = currentBasket.bonusLineItems;
+            
             for (var i = 0; i < productLineItems.length; i++) {
                 var item = productLineItems[i];
+       
                 if ((item.UUID === req.querystring.uuid)) {
+                	for (var i = 0; i < bonusProductLineItems.length; i++) {
+                    	var bonusItem = bonusProductLineItems[i];
+                    	 var mainProductItem = bonusItem.getQualifyingProductLineItemForBonusProduct();
+                    	 var mainPid = mainProductItem.productID;
+                    	 var itemPid = item.productID;
+                    	 if (mainProductItem.productID === item.productID) {
+                    		 bonusProductsUUIDs.push(bonusItem.UUID);
+                    	 }
+                    }
+                }
+                
                     currentBasket.removeProductLineItem(item);
                     isProductLineItemFound = true;
                     break;
-                }
+                
             }
         }
         HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
@@ -196,7 +211,11 @@ server.get('RemoveProductLineItem', function (req, res, next) {
 
     if (isProductLineItemFound) {
         var basketModel = new CartModel(currentBasket);
-        res.json(basketModel);
+        var basketModelPlus = {
+        		basket: basketModel,
+        		toBeDeletedUUIDs: bonusProductsUUIDs
+        };
+        res.json(basketModelPlus);
     } else {
         res.setStatusCode(500);
         res.json({ errorMessage: Resource.msg('error.cannot.remove.product', 'cart', null) });
