@@ -1,4 +1,8 @@
 var assert = require('chai').assert;
+var chaiSubset = require('chai-subset');
+var chai = require('chai');
+chai.use(chaiSubset);
+
 var request = require('request');
 var config = require('../it.config');
 
@@ -92,12 +96,23 @@ describe('Store Locator', function () {
                         'stateCode': 'MA'
                     }
                 ],
-                'locations': '[{"name":"Commerce Cloud","latitude":42.5273334,"longitude"' +
-                ':-71.13758250000001},{"name":"Champaign Electronic Shop","latitude":42.3729794,' +
-                '"longitude":-71.09346089999997},{"name":"Downtown TV Shop","latitude"' +
-                ':42.3569512,"longitude":-71.05902600000002},{"name":"Short Electro",' +
-                '"latitude":42.3403189,"longitude":-71.0817859},{"name":"Khale Street ' +
-                'Electronics","latitude":42.6895548,"longitude":-71.14878340000001}]',
+                'locations': [
+                    { 'name': 'Commerce Cloud',
+                        'latitude': 42.5273334,
+                        'longitude': -71.13758250000001 },
+                    { 'name': 'Champaign Electronic Shop',
+                        'latitude': 42.3729794,
+                        'longitude': -71.09346089999997 },
+                    { 'name': 'Downtown TV Shop',
+                        'latitude': 42.3569512,
+                        'longitude': -71.05902600000002 },
+                    { 'name': 'Short Electro',
+                        'latitude': 42.3403189,
+                        'longitude': -71.0817859 },
+                    { 'name': 'Khale Street Electronics',
+                        'latitude': 42.6895548,
+                        'longitude': -71.14878340000001 }
+                ],
                 'searchKey': {
                     'postalCode': '01803'
                 },
@@ -115,8 +130,9 @@ describe('Store Locator', function () {
                 assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var bodyAsJson = JSON.parse(response.body);
+                var bodyAsJsonLocations = JSON.parse(bodyAsJson.locations);
                 assert.deepEqual(bodyAsJson.stores, ExpectedResBody.stores, 'Actual response.stores not as expected.');
-                assert.deepEqual(bodyAsJson.locations, ExpectedResBody.locations, 'Actual response.locations not as expected.');
+                assert.containSubset(bodyAsJsonLocations, ExpectedResBody.locations);
                 assert.deepEqual(bodyAsJson.searchKey, ExpectedResBody.searchKey, 'Actual response.searchKey not as expected.');
                 assert.deepEqual(bodyAsJson.radius, ExpectedResBody.radius, 'Actual response.radius not as expected.');
                 assert.deepEqual(bodyAsJson.radiusOptions, ExpectedResBody.radiusOptions, 'Actual response.radiusOptions not as expected.');
@@ -265,10 +281,17 @@ describe('Store Locator', function () {
                         'stateCode': 'MA'
                     }
                 ],
-                'locations': '[{"name":"Khale Street Electronics","latitude":42.6895548,' +
-                '"longitude":-71.14878340000001},{"name":"Commerce Cloud","latitude":42.5273334,' +
-                '"longitude":-71.13758250000001},{"name":"Champaign Electronic Shop",' +
-                '"latitude":42.3729794,"longitude":-71.09346089999997}]',
+                'locations': [
+                    { 'name': 'Khale Street Electronics',
+                        'latitude': 42.6895548,
+                        'longitude': -71.14878340000001 },
+                    { 'name': 'Commerce Cloud',
+                        'latitude': 42.5273334,
+                        'longitude': -71.13758250000001 },
+                    { 'name': 'Champaign Electronic Shop',
+                        'latitude': 42.3729794,
+                        'longitude': -71.09346089999997 }
+                ],
                 'searchKey': {
                     'lat': 42.6895548,
                     'long': -71.14878340000001
@@ -287,8 +310,9 @@ describe('Store Locator', function () {
                 assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var bodyAsJson = JSON.parse(response.body);
+                var bodyAsJsonLocations = JSON.parse(bodyAsJson.locations);
                 assert.deepEqual(bodyAsJson.stores, ExpectedResBody.stores, 'Actual response.stores not as expected.');
-                assert.deepEqual(bodyAsJson.locations, ExpectedResBody.locations, 'Actual response.locations not as expected.');
+                assert.containSubset(bodyAsJsonLocations, ExpectedResBody.locations);
                 assert.deepEqual(bodyAsJson.searchKey, ExpectedResBody.searchKey, 'Actual response.searchKey not as expected.');
                 assert.deepEqual(bodyAsJson.radius, ExpectedResBody.radius, 'Actual response.radius not as expected.');
                 assert.deepEqual(bodyAsJson.radiusOptions, ExpectedResBody.radiusOptions, 'Actual response.radiusOptions not as expected.');

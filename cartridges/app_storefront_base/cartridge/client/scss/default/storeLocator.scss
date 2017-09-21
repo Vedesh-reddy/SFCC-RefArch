@@ -43,6 +43,20 @@
     }
 }
 
+.gm-style-iw {
+    .store-details {
+        margin-left: 0;
+        font-family: $font-family-sans-serif;
+        font-size: 1rem;
+        font-weight: normal;
+        line-height: 1.5;
+    }
+
+    a {
+        color: $blue;
+    }
+}
+
 .map-canvas {
     display: none;
 

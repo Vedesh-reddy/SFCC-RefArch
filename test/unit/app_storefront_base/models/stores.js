@@ -20,6 +20,9 @@ describe('stores', function () {
                     return { text: 'someString' };
                 }
             };
+        },
+        '*/cartridge/scripts/renderTemplateHelper': {
+            getRenderedHtml: function () { return 'someString'; }
         }
     });
     var actionUrl = '/on/demandware.store/Sites-MobileFirst-Site/en_US/Stores-FindStores';
@@ -66,7 +69,7 @@ describe('stores', function () {
                     storeHours: 'Mon - Sat: 10am - 9pm'
                 }
             ],
-            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001,"infoWindowHtml":"someString"}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
@@ -106,7 +109,7 @@ describe('stores', function () {
                     countryCode: 'us'
                 }
             ],
-            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001,"infoWindowHtml":"someString"}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,
@@ -166,7 +169,7 @@ describe('stores', function () {
                     stateCode: 'MA'
                 }
             ],
-            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001}]',
+            locations: '[{"name":"Downtown TV Shop","latitude":42.5273334,"longitude":-71.13758250000001,"infoWindowHtml":"someString"}]',
             searchKey: searchKey,
             radius: radius,
             actionUrl: actionUrl,

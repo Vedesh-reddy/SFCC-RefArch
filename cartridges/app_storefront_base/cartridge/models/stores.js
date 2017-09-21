@@ -2,6 +2,7 @@
 
 var HashMap = require('dw/util/HashMap');
 var Template = require('dw/util/Template');
+var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 
 /**
  * Creates an array of objects containing store information
@@ -53,16 +54,19 @@ function createStoresObject(storesObject) {
 /**
  * Creates an array of objects containing the coordinates of the store's returned by the search
  * @param {dw.util.Set} storesObject - a set of <dw.catalog.Store> objects
- * @returns {Array} an array of coordinates  objects
+ * @returns {Array} an array of coordinates objects with store info
  */
 function createGeoLocationObject(storesObject) {
+    var context;
+    var template = 'storelocator/storeinfowindow';
     return Object.keys(storesObject).map(function (key) {
         var store = storesObject[key];
-
+        context = { store: store };
         return {
             name: store.name,
             latitude: store.latitude,
-            longitude: store.longitude
+            longitude: store.longitude,
+            infoWindowHtml: renderTemplateHelper.getRenderedHtml(context, template)
         };
     });
 }

@@ -63,6 +63,15 @@ function maps() {
             icon: markerImg,
             label: { text: lable.toString(), color: 'white', fontSize: '16px' }
         });
+
+        var infowindow = new google.maps.InfoWindow({
+            content: item.infoWindowHtml
+        });
+
+        marker.addListener('click', function () {
+            infowindow.open(map, marker);
+        });
+
         // Create a minimum bound based on a set of storeLocations
         bounds.extend(marker.position);
     });
