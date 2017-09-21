@@ -60,8 +60,8 @@
                             <isinclude template="cart/productCard/cartProductCard" />
                         </isif>
                     </isloop>
-					<isinclude template="cart/changeBonusProductButton">
-                    <isinclude template="cart/cartApproachingDiscount"/>
+                    <isinclude template="cart/changeBonusProductButton" />
+                    <isinclude template="cart/cartApproachingDiscount" />
                 </div>
                 <!---totals, and checkout actions--->
                 <div class="col-sm-5 col-md-4 totals">
