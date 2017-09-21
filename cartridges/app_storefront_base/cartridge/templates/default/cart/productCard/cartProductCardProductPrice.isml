@@ -1,5 +1,5 @@
 <div class="col-lg-7 product-card-footer">
-    <isif condition="${lineItem.isBonusProductLineItem === false}"/>
+    <isif condition="${!lineItem.isBonusProductLineItem}"/>
         <div class="row">
             <!---item price--->
             <div class="col-4">

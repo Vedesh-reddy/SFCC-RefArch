@@ -178,32 +178,31 @@ server.get('RemoveProductLineItem', function (req, res, next) {
     }
 
     var isProductLineItemFound = false;
-    var bonusProductsUUIDs = new Array();
+    var bonusProductsUUIDs = [];
 
     Transaction.wrap(function () {
         if (req.querystring.pid && req.querystring.uuid) {
             var productLineItems = currentBasket.getAllProductLineItems(req.querystring.pid);
             var bonusProductLineItems = currentBasket.bonusLineItems;
-            
-            for (var i = 0; i < productLineItems.length; i++) {
-                var item = productLineItems[i];
-       
+            var mainProdItem;
+            for (var j = 0; j < productLineItems.length; j++) {
+                var item = productLineItems[j];
+
                 if ((item.UUID === req.querystring.uuid)) {
-                	for (var i = 0; i < bonusProductLineItems.length; i++) {
-                    	var bonusItem = bonusProductLineItems[i];
-                    	 var mainProductItem = bonusItem.getQualifyingProductLineItemForBonusProduct();
-                    	 var mainPid = mainProductItem.productID;
-                    	 var itemPid = item.productID;
-                    	 if (mainProductItem.productID === item.productID) {
-                    		 bonusProductsUUIDs.push(bonusItem.UUID);
-                    	 }
+                    if (bonusProductLineItems && bonusProductLineItems.length > 0) {
+                        var bonusItem = bonusProductLineItems[j];
+                        for (var i = 0; i < bonusProductLineItems.length; i++) {
+                            mainProdItem = bonusItem.getQualifyingProductLineItemForBonusProduct();
+                            if (mainProdItem !== null
+                                && (mainProdItem.productID === item.productID)) {
+                                bonusProductsUUIDs.push(bonusItem.UUID);
+                            }
+                        }
                     }
                 }
-                
-                    currentBasket.removeProductLineItem(item);
-                    isProductLineItemFound = true;
-                    break;
-                
+                currentBasket.removeProductLineItem(item);
+                isProductLineItemFound = true;
+                break;
             }
         }
         HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
@@ -212,8 +211,8 @@ server.get('RemoveProductLineItem', function (req, res, next) {
     if (isProductLineItemFound) {
         var basketModel = new CartModel(currentBasket);
         var basketModelPlus = {
-        		basket: basketModel,
-        		toBeDeletedUUIDs: bonusProductsUUIDs
+            basket: basketModel,
+            toBeDeletedUUIDs: bonusProductsUUIDs
         };
         res.json(basketModelPlus);
     } else {

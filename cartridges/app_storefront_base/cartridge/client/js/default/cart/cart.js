@@ -207,11 +207,11 @@ module.exports = function () {
                     $('body').removeClass('modal-open');
                     $('html').removeClass('veiled');
                 } else {
-                	if (data.toBeDeletedUUIDs && data.toBeDeletedUUIDs.length > 0 ){
-                		for (var i = 0; i < data.toBeDeletedUUIDs.length; i++) {
-                			 $('.uuid-' + data.toBeDeletedUUIDs[i]).remove();
-                    	}
-                	}
+                    if (data.toBeDeletedUUIDs && data.toBeDeletedUUIDs.length > 0) {
+                        for (var i = 0; i < data.toBeDeletedUUIDs.length; i++) {
+                            $('.uuid-' + data.toBeDeletedUUIDs[i]).remove();
+                        }
+                    }
                     $('.uuid-' + uuid).remove();
                     $('.coupons-and-promos').empty().append(data.basket.totals.discountsHtml);
                     updateCartTotals(data.basket);
