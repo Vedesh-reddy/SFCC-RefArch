@@ -47,6 +47,69 @@ function updateBundleProducts(apiLineItem, childProducts) {
     });
 }
 
+
+/**
+ * @typedef urlObject
+ * @type Object
+ * @property {string} url - Option ID
+ * @property {string} configureProductsUrl - url that will be used to get selected bonus products
+ * @property {string} adToCartUrl - url to use to add products to the cart
+ */
+
+/**
+ * Gets the newly added bonus discount line item
+ * @param {dw.order.Basket} currentBasket -
+ * @param {dw.util.Collection} previousBonusDiscountLineItems - contains BonusDiscountLineItems
+ *                                                              already processed
+ * @param {Object} urlObject - Object with data to be used in the choice of bonus products modal
+ * @param {string} uuid - BonusDiscountLineItem's uuid to use to attach bonus products
+ * @return {Object} - either the object that represents data needed for the choice of
+ *                    bonus products modal window or undefined
+ */
+function getNewBonusDiscountLineItem(
+    currentBasket,
+    previousBonusDiscountLineItems,
+    urlObject,
+    uuid) {
+    var newBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
+    var newBonusDiscountLineItem;
+    var result = {};
+
+    newBonusDiscountLineItem = collections.find(newBonusDiscountLineItems, function (item) {
+        return !previousBonusDiscountLineItems.contains(item);
+    });
+    if (newBonusDiscountLineItem) {
+        result.bonuspids = [];
+        var iterBonusProducts = newBonusDiscountLineItem.bonusProducts.iterator();
+        while (iterBonusProducts.hasNext()) {
+            var newBProduct = iterBonusProducts.next();
+            result.bonuspids.push(newBProduct.ID);
+        }
+
+        result.uuid = uuid;
+        result.maxBonusItems = newBonusDiscountLineItem.maxBonusItems;
+        result.addToCartUrl = urlObject.addToCartUrl;
+        result.configureProductstUrl = urlObject.configureProductstUrl;
+        result.url = urlObject.url + '?pids=' + result.bonuspids.toString();
+        result.newBonusDiscountLineItem = newBonusDiscountLineItem; // todo see if we need this
+
+        result.labels = {};
+        result.labels.selectbonus =
+            Resource.msg('label.choiceofbonus.selectbonus', 'product', null);
+        result.labels.close =
+            Resource.msg('link.choiceofbonus.close', 'product', null);
+        result.labels.selectattrs =
+            Resource.msg('label.choiceofbonus.selectattrs', 'product', null);
+        result.labels.selectprods =
+            Resource.msgf('label.choiceofbonus.selectproducts',
+                'product',
+                null,
+                newBonusDiscountLineItem.maxBonusItems);
+    }
+
+    return newBonusDiscountLineItem ? result : undefined;
+}
+
 /**
  * @typedef SelectedOption
  * @type Object
@@ -173,16 +236,24 @@ function getQtyAlreadyInCart(productId, lineItems, uuid) {
  * @param {string} productId - Product ID to match
  * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Collection of the Cart's
  *     product line items
+ * @return {Object} properties includes,
+ *                  matchingProducts - collection of matching products
+ *                  uuid - string value for the last product line item
  * @return {dw.order.ProductLineItem[]} - Filtered list of product line items matching productId
  */
 function getMatchingProducts(productId, productLineItems) {
     var matchingProducts = [];
+    var uuid;
     collections.forEach(productLineItems, function (item) {
         if (item.productID === productId) {
             matchingProducts.push(item);
+            uuid = item.UUID;
         }
     });
-    return matchingProducts;
+    return {
+        matchingProducts: matchingProducts,
+        uuid: uuid
+    };
 }
 
 /**
@@ -243,8 +314,8 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
         return result;
     }
 
-    var matchingProducts = getMatchingProducts(productId, productLineItems);
-
+    var matchingProductsObj = getMatchingProducts(productId, productLineItems);
+    var matchingProducts = matchingProductsObj.matchingProducts;
     productInCart = arrayHelper.find(matchingProducts, function (matchingProduct) {
         return product.bundle
             ? allBundleItemsSame(matchingProduct.bundledProductLineItems, childProducts)
@@ -258,6 +329,7 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
 
         if (availableToSell >= quantityToSet) {
             productInCart.setQuantityValue(quantityToSet);
+            result.uuid = productInCart.UUID;
         } else {
             result.error = true;
             result.message = availableToSell === productQuantityInCart
@@ -265,7 +337,8 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
                 : Resource.msg('error.alert.selected.quantity.cannot.be.added', 'product', null);
         }
     } else {
-        addLineItem(
+        var productLineItem;
+        productLineItem = addLineItem(
             currentBasket,
             product,
             quantity,
@@ -273,6 +346,8 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
             optionModel,
             defaultShipment
         );
+
+        result.uuid = productLineItem.UUID;
     }
 
     return result;
@@ -293,5 +368,6 @@ function ensureAllShipmentsHaveMethods(basket) {
 module.exports = {
     addProductToCart: addProductToCart,
     ensureAllShipmentsHaveMethods: ensureAllShipmentsHaveMethods,
-    getQtyAlreadyInCart: getQtyAlreadyInCart
+    getQtyAlreadyInCart: getQtyAlreadyInCart,
+    getNewBonusDiscountLineItem: getNewBonusDiscountLineItem
 };
