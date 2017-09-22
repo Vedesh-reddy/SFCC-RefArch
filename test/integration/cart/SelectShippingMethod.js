@@ -45,7 +45,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             'selectShippingUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-SelectShippingMethod'
         },
         'approachingDiscounts': [],
-        'hasBonusProduct': false,
+        'hasBonusProduct': 0,
         'numOfShipments': 1,
         'shipments': [
             {
@@ -250,7 +250,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             });
     });
 
-    it('should set the shipping method to Overnight', function () {
+    it(' 1>. should set the shipping method to Overnight', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$166.94',
@@ -288,7 +288,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             });
     });
 
-    it('should set the shipping method to Ground', function () {
+    it(' 2>. should set the shipping method to Ground', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$164.84',
@@ -326,7 +326,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             });
     });
 
-    it('should set the shipping method to 2-Day Express', function () {
+    it(' 3>. should set the shipping method to 2-Day Express', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$158.54',
@@ -361,7 +361,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             });
     });
 
-    it('should set to default method Ground when shipping method is set to Store Pickup', function () {
+    it(' 4>. should set to default method Ground when shipping method is set to Store Pickup', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$145.95',
@@ -399,7 +399,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             });
     });
 
-    it('should set the shipping method to Express', function () {
+    it(' 5>. should set the shipping method to Express', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$170.09',
@@ -437,7 +437,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             });
     });
 
-    it('should set the shipping method to USPS', function () {
+    it(' 6>. should set the shipping method to USPS', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$154.34',
@@ -466,16 +466,13 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
-
-                assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
-                assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
+                assert.containSubset(bodyAsJson, expectedResponseCommon, 'Actual response not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
                 assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId, 'Actual response selectedShippingMethod not as expected.');
             });
     });
 
-    it('should default to default shipping method for method with excluded Products', function () {
+    it(' 7>. should default to default shipping method for method with excluded Products', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$164.84',
@@ -514,7 +511,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             });
     });
 
-    it('should default to default shipping method for non-exist method', function () {
+    it(' 8>. should default to default shipping method for non-exist method', function () {
         var expectTotals = {
             'subTotal': '$139.00',
             'grandTotal': '$164.84',

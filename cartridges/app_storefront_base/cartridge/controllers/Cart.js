@@ -199,10 +199,10 @@ server.get('RemoveProductLineItem', function (req, res, next) {
                             }
                         }
                     }
+                    currentBasket.removeProductLineItem(item);
+                    isProductLineItemFound = true;
+                    break;
                 }
-                currentBasket.removeProductLineItem(item);
-                isProductLineItemFound = true;
-                break;
             }
         }
         HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
