@@ -210,6 +210,7 @@ module.exports = function () {
                     if (data.toBeDeletedUUIDs && data.toBeDeletedUUIDs.length > 0) {
                         for (var i = 0; i < data.toBeDeletedUUIDs.length; i++) {
                             $('.uuid-' + data.toBeDeletedUUIDs[i]).remove();
+                            $('.bonus-product').remove();
                         }
                     }
                     $('.uuid-' + uuid).remove();

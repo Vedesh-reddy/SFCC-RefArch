@@ -187,11 +187,10 @@ server.get('RemoveProductLineItem', function (req, res, next) {
             var mainProdItem;
             for (var j = 0; j < productLineItems.length; j++) {
                 var item = productLineItems[j];
-
                 if ((item.UUID === req.querystring.uuid)) {
                     if (bonusProductLineItems && bonusProductLineItems.length > 0) {
-                        var bonusItem = bonusProductLineItems[j];
                         for (var i = 0; i < bonusProductLineItems.length; i++) {
+                            var bonusItem = bonusProductLineItems[i];
                             mainProdItem = bonusItem.getQualifyingProductLineItemForBonusProduct();
                             if (mainProdItem !== null
                                 && (mainProdItem.productID === item.productID)) {
