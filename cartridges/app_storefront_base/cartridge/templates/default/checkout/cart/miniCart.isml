@@ -38,6 +38,7 @@
             </isloop>
         </div>
     </div>
+    <isinclude template="cart/changeBonusProductButton" />
     <div class="mini-cart-footer">
         <div class="row estimated-total">
             <div class="col-8">
