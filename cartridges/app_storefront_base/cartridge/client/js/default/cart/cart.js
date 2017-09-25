@@ -210,10 +210,12 @@ module.exports = function () {
                     if (data.toBeDeletedUUIDs && data.toBeDeletedUUIDs.length > 0) {
                         for (var i = 0; i < data.toBeDeletedUUIDs.length; i++) {
                             $('.uuid-' + data.toBeDeletedUUIDs[i]).remove();
-                            $('.bonus-product').remove();
                         }
                     }
                     $('.uuid-' + uuid).remove();
+                    if (!data.basket.hasBonusProduct) {
+                        $('.bonus-product').remove();
+                    }
                     $('.coupons-and-promos').empty().append(data.basket.totals.discountsHtml);
                     updateCartTotals(data.basket);
                     updateApproachingDiscounts(data.basket.approachingDiscounts);

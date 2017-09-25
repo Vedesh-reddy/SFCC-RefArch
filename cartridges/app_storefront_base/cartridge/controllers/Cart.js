@@ -185,12 +185,12 @@ server.get('RemoveProductLineItem', function (req, res, next) {
             var productLineItems = currentBasket.getAllProductLineItems(req.querystring.pid);
             var bonusProductLineItems = currentBasket.bonusLineItems;
             var mainProdItem;
-            for (var j = 0; j < productLineItems.length; j++) {
-                var item = productLineItems[j];
+            for (var i = 0; i < productLineItems.length; i++) {
+                var item = productLineItems[i];
                 if ((item.UUID === req.querystring.uuid)) {
                     if (bonusProductLineItems && bonusProductLineItems.length > 0) {
-                        for (var i = 0; i < bonusProductLineItems.length; i++) {
-                            var bonusItem = bonusProductLineItems[i];
+                        for (var j = 0; j < bonusProductLineItems.length; j++) {
+                            var bonusItem = bonusProductLineItems[j];
                             mainProdItem = bonusItem.getQualifyingProductLineItemForBonusProduct();
                             if (mainProdItem !== null
                                 && (mainProdItem.productID === item.productID)) {

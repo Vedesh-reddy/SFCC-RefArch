@@ -2,6 +2,9 @@ var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
 var jsonHelpers = require('../helpers/jsonUtils');
+var chai = require('chai');
+var chaiSubset = require('chai-subset');
+chai.use(chaiSubset);
 
 describe('Cart: Selecting Shipping Methods', function () {
     this.timeout(5000);
@@ -45,7 +48,7 @@ describe('Cart: Selecting Shipping Methods', function () {
             'selectShippingUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-SelectShippingMethod'
         },
         'approachingDiscounts': [],
-        'hasBonusProduct': 0,
+        'hasBonusProduct': false,
         'numOfShipments': 1,
         'shipments': [
             {
