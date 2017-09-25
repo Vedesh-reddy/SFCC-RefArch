@@ -21,6 +21,8 @@ function appendToUrl(url, params) {
  */
 function maps() {
     var map;
+    var infowindow = new google.maps.InfoWindow();
+
     // Init U.S. Map in the center of the viewport
     var latlng = new google.maps.LatLng(37.09024, -95.712891);
     var mapOptions = {
@@ -64,11 +66,10 @@ function maps() {
             label: { text: lable.toString(), color: 'white', fontSize: '16px' }
         });
 
-        var infowindow = new google.maps.InfoWindow({
-            content: item.infoWindowHtml
-        });
-
         marker.addListener('click', function () {
+            infowindow.setOptions({
+                content: item.infoWindowHtml
+            });
             infowindow.open(map, marker);
         });
 
