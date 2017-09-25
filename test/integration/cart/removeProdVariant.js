@@ -1,7 +1,9 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
-var jsonHelpers = require('../helpers/jsonUtils');
+var chai = require('chai');
+var chaiSubset = require('chai-subset');
+chai.use(chaiSubset);
 
 describe('Remove product variant from line item', function () {
     this.timeout(50000);
@@ -86,224 +88,74 @@ describe('Remove product variant from line item', function () {
             });
     });
 
-    it('should remove line item', function () {
+    it(' 1>. should remove line item', function () {
         // removing product variant on line item 2
 
-        var newTotal = qty1 + qty3;
-        var expectQty1 = qty1;
-        var expectQty3 = qty3;
-
-        var variantUuid1 = prodIdUuidMap[variantPid1];
         var variantUuid2 = prodIdUuidMap[variantPid2];
-        var variantUuid3 = prodIdUuidMap[variantPid3];
-
-        var expectedResponse = {
-            'action': 'Cart-RemoveProductLineItem',
-            'valid': {
-                'error': false,
-                'message': null
-            },
-            'actionUrls': {
-                'removeCouponLineItem': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveCouponLineItem',
-                'removeProductLineItemUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveProductLineItem',
-                'updateQuantityUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-UpdateQuantity',
-                'submitCouponCodeUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-AddCoupon',
-                'selectShippingUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-SelectShippingMethod'
-            },
-            'approachingDiscounts': [],
-            'numOfShipments': 1,
+        var expectedItems = {
             'totals': {
                 'subTotal': '$137.97',
-                'grandTotal': '$153.26',
-                'totalTax': '$7.30',
                 'totalShippingCost': '$7.99',
-                'orderLevelDiscountTotal': {
-                    'formatted': '$0.00',
-                    'value': 0
-                },
-                'shippingLevelDiscountTotal': {
-                    'formatted': '$0.00',
-                    'value': 0
-                },
-                'discounts': [],
-                'discountsHtml': '\n'
+                'grandTotal': '$153.26',
+                'totalTax': '$7.30'
             },
             'shipments': [
                 {
-                    'selectedShippingMethod': '001',
                     'shippingMethods': [
                         {
-                            'description': 'Order received within 7-10 business days',
-                            'displayName': 'Ground',
                             'ID': '001',
+                            'displayName': 'Ground',
                             'shippingCost': '$7.99',
-                            'estimatedArrivalTime': '7-10 Business Days',
-                            'default': true,
                             'selected': true
-                        },
-                        {
-                            'description': 'Order received in 2 business days',
-                            'displayName': '2-Day Express',
-                            'ID': '002',
-                            'shippingCost': '$11.99',
-                            'estimatedArrivalTime': '2 Business Days',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Order received the next business day',
-                            'displayName': 'Overnight',
-                            'ID': '003',
-                            'shippingCost': '$19.99',
-                            'estimatedArrivalTime': 'Next Day',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Orders shipped outside continental US received in 2-3 business days',
-                            'displayName': 'Express',
-                            'ID': '012',
-                            'shippingCost': '$22.99',
-                            'estimatedArrivalTime': '2-3 Business Days',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Order shipped by USPS received within 7-10 business days',
-                            'displayName': 'USPS',
-                            'ID': '021',
-                            'shippingCost': '$7.99',
-                            'estimatedArrivalTime': '7-10 Business Days',
-                            'default': false,
-                            'selected': false
                         }
-                    ]
+                    ],
+                    'selectedShippingMethod': '001'
                 }
             ],
             'items': [
                 {
-                    'id': variantPid1,
                     'productName': '3/4 Sleeve V-Neck Top',
                     'price': {
-                        'list': null,
                         'sales': {
-                            'currency': 'USD',
-                            'formatted': '$24.00',
-                            'value': 24
+                            'value': 24,
+                            'currency': 'USD'
                         }
                     },
-                    'productType': 'variant',
-                    'images': {
-                        'small': [{
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwb2c2588a/images/small/PG.10221714.JJ8UTXX.PZ.jpg',
-                            'alt': '3/4 Sleeve V-Neck Top, Icy Mint, small',
-                            'title': '3/4 Sleeve V-Neck Top, Icy Mint'
-                        }]
-                    },
-                    'rating': 1,
-                    'renderedPromotions': '',
                     'variationAttributes': [
                         {
-                            'attributeId': 'color',
                             'displayName': 'Color',
-                            'displayValue': 'Icy Mint',
-                            'id': 'color'
+                            'displayValue': 'Icy Mint'
                         },
                         {
-                            'attributeId': 'size',
                             'displayName': 'Size',
-                            'displayValue': 'XS',
-                            'id': 'size'
+                            'displayValue': 'XS'
                         }
                     ],
-                    'quantityOptions': {
-                        'minOrderQuantity': 1,
-                        'maxOrderQuantity': 10
-                    },
-                    'priceTotal': {
-                        'price': '$48.00',
-                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$48.00</div>\n\n'
-                    },
-                    'isBonusProductLineItem': false,
-                    'promotions': null,
-                    'isGift': false,
-                    'UUID': variantUuid1,
-                    'attributes': null,
-                    'availability': {
-                        'inStockDate': null,
-                        'messages': ['In Stock']
-                    },
-                    'quantity': expectQty1,
-                    'isOrderable': true,
-                    'options': [],
-                    'isAvailableForInStorePickup': false
+                    'quantity': 2
                 },
                 {
-                    'id': variantPid3,
                     'productName': 'Solid Silk Tie',
                     'price': {
-                        'list': {
-                            'currency': 'USD',
-                            'formatted': '$39.50',
-                            'value': 39.5
-                        },
                         'sales': {
-                            'currency': 'USD',
-                            'formatted': '$29.99',
-                            'value': 29.99
+                            'value': 29.99,
+                            'currency': 'USD'
+                        },
+                        'list': {
+                            'value': 39.5,
+                            'currency': 'USD'
                         }
                     },
-                    'productType': 'variant',
-                    'images': {
-                        'small': [{
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw00caafab/images/small/PG.949432114S.REDSI.PZ.jpg',
-                            'alt': 'Solid Silk Tie, Red, small',
-                            'title': 'Solid Silk Tie, Red'
-                        }]
-                    },
-                    'rating': 0,
-                    'renderedPromotions': '',
                     'variationAttributes': [
                         {
-                            'attributeId': 'color',
                             'displayName': 'Color',
-                            'displayValue': 'Red',
-                            'id': 'color'
+                            'displayValue': 'Red'
                         }
                     ],
-                    'quantityOptions': {
-                        'minOrderQuantity': 1,
-                        'maxOrderQuantity': 10
-                    },
-                    'priceTotal': {
-                        'price': '$89.97',
-                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$89.97</div>\n\n'
-                    },
-                    'isBonusProductLineItem': false,
-                    'promotions': null,
-                    'isGift': false,
-                    'UUID': variantUuid3,
-                    'attributes': null,
-                    'availability': {
-                        'inStockDate': null,
-                        'messages': ['In Stock']
-                    },
-                    'quantity': expectQty3,
-                    'isOrderable': true,
-                    'options': [],
-                    'isAvailableForInStorePickup': false
+                    'quantity': 3
                 }
-            ],
-            'numItems': newTotal,
-            'locale': 'en_US',
-            'resources': {
-                'numberOfItems': newTotal + ' Items',
-                'emptyCartMsg': 'Your Shopping Cart is Empty'
-            }
-        };
+            ]
 
-        // ----- strip out all 'src' properties from the expected response
-        var expectedRespStripped = jsonHelpers.deleteProperties(expectedResponse, ['src']);
+        };
 
         myRequest.method = 'GET';
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + variantPid2 + '&uuid=' + variantUuid2;
@@ -313,22 +165,18 @@ describe('Remove product variant from line item', function () {
                 assert.equal(removedItemResponse.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var bodyAsJson = JSON.parse(removedItemResponse.body);
-
-                // ----- strip out all 'src' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'queryString']);
-
-                assert.deepEqual(actualRespBodyStripped, expectedRespStripped, 'Actual response not as expected.');
+                assert.containSubset(bodyAsJson.basket, expectedItems, 'Actual response dose not contain expected expectedResponse.');
 
                 // Verify path to image source
-                var prodImageSrc1 = bodyAsJson.items[0].images.small[0].url;
-                var prodImageSrc2 = bodyAsJson.items[1].images.small[0].url;
+                var prodImageSrc1 = bodyAsJson.basket.items[0].images.small[0].url;
+                var prodImageSrc2 = bodyAsJson.basket.items[1].images.small[0].url;
                 assert.isTrue(prodImageSrc1.endsWith('/images/small/PG.10221714.JJ8UTXX.PZ.jpg'), 'product 1 item image: src not end with /images/small/PG.10221714.JJ8UTXX.PZ.jpg.');
                 assert.isTrue(prodImageSrc2.endsWith('/images/small/PG.949432114S.REDSI.PZ.jpg'), 'product 2 item image: src not end with /images/small/PG.949432114S.REDSI.PZ.jpg.');
             });
     });
 
 
-    it('should return error if PID and UUID does not match', function () {
+    it(' 2>. should return error if PID and UUID does not match', function () {
         var variantUuid3 = prodIdUuidMap[variantPid3];
 
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + variantPid1 + '&uuid=' + variantUuid3;
@@ -348,37 +196,13 @@ describe('Remove product variant from line item', function () {
             });
     });
 
-    it('should remove all line items', function () {
+    it(' 3>. should remove all line items', function () {
         var expectedRemoveAllResp = {
-            'action': 'Cart-RemoveProductLineItem',
-            'valid': {
-                'error': true,
-                'message': null
-            },
-            'actionUrls': {
-                'removeCouponLineItem': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveCouponLineItem',
-                'removeProductLineItemUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveProductLineItem',
-                'updateQuantityUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-UpdateQuantity',
-                'submitCouponCodeUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-AddCoupon',
-                'selectShippingUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-SelectShippingMethod'
-            },
-            'approachingDiscounts': [],
-            'numOfShipments': 1,
             'totals': {
                 'subTotal': '$0.00',
                 'grandTotal': '$0.00',
                 'totalTax': '$0.00',
-                'totalShippingCost': '$0.00',
-                'orderLevelDiscountTotal': {
-                    'formatted': '$0.00',
-                    'value': 0
-                },
-                'shippingLevelDiscountTotal': {
-                    'formatted': '$0.00',
-                    'value': 0
-                },
-                'discounts': [],
-                'discountsHtml': '\n'
+                'totalShippingCost': '$0.00'
             },
             'shipments': [
                 {
@@ -392,58 +216,11 @@ describe('Remove product variant from line item', function () {
                             'estimatedArrivalTime': '7-10 Business Days',
                             'default': true,
                             'selected': true
-                        },
-                        {
-                            'description': 'Order received in 2 business days',
-                            'displayName': '2-Day Express',
-                            'ID': '002',
-                            'shippingCost': '$0.00',
-                            'estimatedArrivalTime': '2 Business Days',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Order received the next business day',
-                            'displayName': 'Overnight',
-                            'ID': '003',
-                            'shippingCost': '$0.00',
-                            'estimatedArrivalTime': 'Next Day',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Super Saver Delivery (arrives in 3-7 business days)',
-                            'displayName': 'Super Saver',
-                            'ID': '004',
-                            'shippingCost': '$0.00',
-                            'estimatedArrivalTime': '3-7 Business Days',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Orders shipped outside continental US received in 2-3 business days',
-                            'displayName': 'Express',
-                            'ID': '012',
-                            'shippingCost': '$0.00',
-                            'estimatedArrivalTime': '2-3 Business Days',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Order shipped by USPS received within 7-10 business days',
-                            'displayName': 'USPS',
-                            'ID': '021',
-                            'shippingCost': '$0.00',
-                            'estimatedArrivalTime': '7-10 Business Days',
-                            'default': false,
-                            'selected': false
                         }
                     ]
                 }
             ],
-            'items': [],
             'numItems': 0,
-            'locale': 'en_US',
             'resources': {
                 'numberOfItems': '0 Items',
                 'emptyCartMsg': 'Your Shopping Cart is Empty'
@@ -466,12 +243,12 @@ describe('Remove product variant from line item', function () {
             .then(function (response2) {
                 assert.equal(response2.statusCode, 200, 'Expected statusCode from remove all product line item to be 200.');
 
-                var bodyAsJson2 = jsonHelpers.deleteProperties(JSON.parse(response2.body), ['queryString']);
-                assert.deepEqual(bodyAsJson2, expectedRemoveAllResp, 'Actual response from removing all items not as expected.');
+                var bodyAsJson2 = JSON.parse(response2.body);
+                assert.containSubset(bodyAsJson2.basket, expectedRemoveAllResp, 'Actual response from removing all items does not contain expectedRemoveAllResp.');
             });
     });
 
-    it('should return error if product does not exist in cart', function () {
+    it(' 4>. should return error if product does not exist in cart', function () {
         var variantPidNotExist = '701643421084abc';
         var variantUuidNotExist = '529f59ef63a0d238b8575c4f8fabc';
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + variantPidNotExist + '&uuid=' + variantUuidNotExist;

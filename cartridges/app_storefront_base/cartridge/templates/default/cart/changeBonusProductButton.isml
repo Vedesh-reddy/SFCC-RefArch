@@ -1,0 +1,6 @@
+<!--- ChangeBonusProductButton --->
+<isif condition="${pdict.hasBonusProduct}">
+	<div class="card bonus-product">
+		<a href="#" class="btn btn-outline-primary">${Resource.msg('btn.change.bonus.product','cart',null)}</a>
+	</div>
+</isif>

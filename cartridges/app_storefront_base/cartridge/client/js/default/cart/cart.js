@@ -193,25 +193,33 @@ module.exports = function () {
             type: 'get',
             dataType: 'json',
             success: function (data) {
-                if (data.items.length === 0) {
+                if (data.basket.items.length === 0) {
                     $('.cart').empty().append('<div class="row"> ' +
                         '<div class="col-12 text-center"> ' +
-                        '<h1>' + data.resources.emptyCartMsg + '</h1> ' +
+                        '<h1>' + data.basket.resources.emptyCartMsg + '</h1> ' +
                         '</div> ' +
                         '</div>'
                     );
-                    $('.number-of-items').empty().append(data.resources.numberOfItems);
-                    $('.minicart-quantity').empty().append(data.numItems);
+                    $('.number-of-items').empty().append(data.basket.resources.numberOfItems);
+                    $('.minicart-quantity').empty().append(data.basket.numItems);
                     $('.mini-cart .popover').empty();
                     $('.mini-cart .popover').removeClass('show');
                     $('body').removeClass('modal-open');
                     $('html').removeClass('veiled');
                 } else {
+                    if (data.toBeDeletedUUIDs && data.toBeDeletedUUIDs.length > 0) {
+                        for (var i = 0; i < data.toBeDeletedUUIDs.length; i++) {
+                            $('.uuid-' + data.toBeDeletedUUIDs[i]).remove();
+                        }
+                    }
                     $('.uuid-' + uuid).remove();
-                    $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
-                    updateCartTotals(data);
-                    updateApproachingDiscounts(data.approachingDiscounts);
-                    validateBasket(data);
+                    if (!data.basket.hasBonusProduct) {
+                        $('.bonus-product').remove();
+                    }
+                    $('.coupons-and-promos').empty().append(data.basket.totals.discountsHtml);
+                    updateCartTotals(data.basket);
+                    updateApproachingDiscounts(data.basket.approachingDiscounts);
+                    validateBasket(data.basket);
                 }
                 $.spinner().stop();
             },

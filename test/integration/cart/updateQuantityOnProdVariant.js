@@ -2,6 +2,9 @@ var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
 var jsonHelpers = require('../helpers/jsonUtils');
+var chai = require('chai');
+var chaiSubset = require('chai-subset');
+chai.use(chaiSubset);
 
 describe('Update quantity for product variant', function () {
     this.timeout(45000);
@@ -86,7 +89,7 @@ describe('Update quantity for product variant', function () {
             });
     });
 
-    it('should update line item quantity', function () {
+    it('1. should update line item quantity', function () {
         // updating quantity of poduct variant 2
 
         var newQty2 = 5;
@@ -101,201 +104,56 @@ describe('Update quantity for product variant', function () {
 
         var expectedUpdateRep = {
             'action': 'Cart-UpdateQuantity',
-            'valid': {
-                'error': false,
-                'message': null
-            },
-            'actionUrls': {
-                'removeCouponLineItem': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveCouponLineItem',
-                'removeProductLineItemUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveProductLineItem',
-                'updateQuantityUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-UpdateQuantity',
-                'submitCouponCodeUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-AddCoupon',
-                'selectShippingUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-SelectShippingMethod'
-            },
-            'approachingDiscounts': [],
-            'numOfShipments': 1,
             'totals': {
                 'subTotal': '$257.97',
                 'grandTotal': '$281.36',
                 'totalTax': '$13.40',
-                'totalShippingCost': '$9.99',
-                'orderLevelDiscountTotal': {
-                    'formatted': '$0.00',
-                    'value': 0
-                },
-                'shippingLevelDiscountTotal': {
-                    'formatted': '$0.00',
-                    'value': 0
-                },
-                'discounts': [],
-                'discountsHtml': '\n'
+                'totalShippingCost': '$9.99'
             },
-            'shipments': [
-                {
-                    'selectedShippingMethod': '001',
-                    'shippingMethods': [
-                        {
-                            'description': 'Order received within 7-10 business days',
-                            'displayName': 'Ground',
-                            'ID': '001',
-                            'shippingCost': '$9.99',
-                            'estimatedArrivalTime': '7-10 Business Days',
-                            'default': true,
-                            'selected': true
-                        },
-                        {
-                            'description': 'Order received in 2 business days',
-                            'displayName': '2-Day Express',
-                            'ID': '002',
-                            'shippingCost': '$15.99',
-                            'estimatedArrivalTime': '2 Business Days',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Order received the next business day',
-                            'displayName': 'Overnight',
-                            'ID': '003',
-                            'shippingCost': '$21.99',
-                            'estimatedArrivalTime': 'Next Day',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Orders shipped outside continental US received in 2-3 business days',
-                            'displayName': 'Express',
-                            'ID': '012',
-                            'shippingCost': '$28.99',
-                            'estimatedArrivalTime': '2-3 Business Days',
-                            'default': false,
-                            'selected': false
-                        },
-                        {
-                            'description': 'Order shipped by USPS received within 7-10 business days',
-                            'displayName': 'USPS',
-                            'ID': '021',
-                            'shippingCost': '$9.99',
-                            'estimatedArrivalTime': '7-10 Business Days',
-                            'default': false,
-                            'selected': false
-                        }
-                    ]
-                }
-            ],
             'items': [
                 {
                     'id': variantPid1,
                     'productName': '3/4 Sleeve V-Neck Top',
                     'price': {
-                        'list': null,
                         'sales': {
                             'currency': 'USD',
-                            'formatted': '$24.00',
                             'value': 24
                         }
                     },
-                    'productType': 'variant',
-                    'images': {
-                        'small': [{
-                            'alt': '3/4 Sleeve V-Neck Top, Icy Mint, small',
-                            'title': '3/4 Sleeve V-Neck Top, Icy Mint',
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwb2c2588a/images/small/PG.10221714.JJ8UTXX.PZ.jpg'
-                        }]
-                    },
-                    'rating': 1,
-                    'renderedPromotions': '',
                     'variationAttributes': [
                         {
-                            'attributeId': 'color',
                             'displayName': 'Color',
-                            'displayValue': 'Icy Mint',
-                            'id': 'color'
+                            'displayValue': 'Icy Mint'
                         },
                         {
-                            'attributeId': 'size',
                             'displayName': 'Size',
-                            'displayValue': 'XS',
-                            'id': 'size'
+                            'displayValue': 'XS'
                         }
                     ],
-                    'quantityOptions': {
-                        'minOrderQuantity': 1,
-                        'maxOrderQuantity': 10
-                    },
-                    'priceTotal': {
-                        'price': '$48.00',
-                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$48.00</div>\n\n'
-                    },
-                    'isBonusProductLineItem': false,
-                    'promotions': null,
-                    'isGift': false,
                     'UUID': variantUuid1,
-                    'attributes': null,
-                    'availability': {
-                        'inStockDate': null,
-                        'messages': ['In Stock']
-                    },
-                    'quantity': expectQty1,
-                    'isOrderable': true,
-                    'options': [],
-                    'isAvailableForInStorePickup': false
+                    'quantity': expectQty1
                 },
                 {
                     'id': variantPid2,
                     'productName': '3/4 Sleeve V-Neck Top',
                     'price': {
-                        'list': null,
                         'sales': {
                             'currency': 'USD',
-                            'formatted': '$24.00',
                             'value': 24
                         }
                     },
-                    'productType': 'variant',
-                    'images': {
-                        'small': [{
-                            'alt': '3/4 Sleeve V-Neck Top, Butter, small',
-                            'title': '3/4 Sleeve V-Neck Top, Butter',
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwef3c390f/images/small/PG.10221714.JJ370XX.PZ.jpg'
-                        }]
-                    },
-                    'rating': 3,
-                    'renderedPromotions': '',
                     'variationAttributes': [
                         {
-                            'attributeId': 'color',
                             'displayName': 'Color',
-                            'displayValue': 'Butter',
-                            'id': 'color'
+                            'displayValue': 'Butter'
                         },
                         {
-                            'attributeId': 'size',
                             'displayName': 'Size',
-                            'displayValue': 'M',
-                            'id': 'size'
+                            'displayValue': 'M'
                         }
                     ],
-                    'quantityOptions': {
-                        'minOrderQuantity': 1,
-                        'maxOrderQuantity': 10
-                    },
-                    'priceTotal': {
-                        'price': '$120.00',
-                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$120.00</div>\n\n'
-                    },
-                    'isBonusProductLineItem': false,
-                    'promotions': null,
-                    'isGift': false,
                     'UUID': variantUuid2,
-                    'attributes': null,
-                    'availability': {
-                        'inStockDate': null,
-                        'messages': ['In Stock']
-                    },
-                    'quantity': expectQty2,
-                    'isOrderable': true,
-                    'options': [],
-                    'isAvailableForInStorePickup': false
+                    'quantity': expectQty2
                 },
                 {
                     'id': variantPid3,
@@ -303,55 +161,21 @@ describe('Update quantity for product variant', function () {
                     'price': {
                         'list': {
                             'currency': 'USD',
-                            'formatted': '$39.50',
                             'value': 39.5
                         },
                         'sales': {
                             'currency': 'USD',
-                            'formatted': '$29.99',
                             'value': 29.99
                         }
                     },
-                    'productType': 'variant',
-                    'images': {
-                        'small': [{
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw00caafab/images/small/PG.949432114S.REDSI.PZ.jpg',
-                            'alt': 'Solid Silk Tie, Red, small',
-                            'title': 'Solid Silk Tie, Red'
-                        }]
-                    },
-                    'rating': 0,
-                    'renderedPromotions': '',
                     'variationAttributes': [
                         {
-                            'attributeId': 'color',
                             'displayName': 'Color',
-                            'displayValue': 'Red',
-                            'id': 'color'
+                            'displayValue': 'Red'
                         }
                     ],
-                    'quantityOptions': {
-                        'minOrderQuantity': 1,
-                        'maxOrderQuantity': 10
-                    },
-
-                    'priceTotal': {
-                        'price': '$89.97',
-                        'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$89.97</div>\n\n'
-                    },
-                    'isBonusProductLineItem': false,
-                    'promotions': null,
-                    'isGift': false,
                     'UUID': variantUuid3,
-                    'attributes': null,
-                    'availability': {
-                        'inStockDate': null,
-                        'messages': ['In Stock']
-                    },
-                    'quantity': expectQty3,
-                    'isOrderable': true,
-                    'options': [],
-                    'isAvailableForInStorePickup': false
+                    'quantity': expectQty3
                 }
             ],
             'numItems': newTotal,
@@ -362,9 +186,6 @@ describe('Update quantity for product variant', function () {
             }
         };
 
-        // ----- strip out all 'src' properties from the expected response
-        var expectedUpdateRepStripped = jsonHelpers.deleteProperties(expectedUpdateRep, ['src']);
-
         myRequest.method = 'GET';
         myRequest.url = config.baseUrl + '/Cart-UpdateQuantity?pid=' + variantPid2 + '&uuid=' + variantUuid2 + '&quantity=' + newQty2;
 
@@ -373,10 +194,8 @@ describe('Update quantity for product variant', function () {
                 assert.equal(updateRsp.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var bodyAsJson = jsonHelpers.deleteProperties(JSON.parse(updateRsp.body), ['queryString']);
-                // ----- strip out all 'src' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src']);
 
-                assert.deepEqual(actualRespBodyStripped, expectedUpdateRepStripped, 'Actual response not as expected.');
+                assert.containSubset(bodyAsJson, expectedUpdateRep, 'Actual response does not contain expectedUpdateRep.');
 
                 // Verify path to image source
                 var prodImageSrc1 = bodyAsJson.items[0].images.small[0].url;
@@ -388,7 +207,7 @@ describe('Update quantity for product variant', function () {
             });
     });
 
-    it('should return error if update line item quantity is 0', function () {
+    it('2. should return error if update line item quantity is 0', function () {
         var variantUuid1 = prodIdUuidMap[variantPid1];
 
         myRequest.method = 'GET';
@@ -403,7 +222,7 @@ describe('Update quantity for product variant', function () {
             });
     });
 
-    it('should return error if update line item quantity is negative', function () {
+    it('3. should return error if update line item quantity is negative', function () {
         var variantUuid1 = prodIdUuidMap[variantPid1];
 
         myRequest.method = 'GET';

@@ -1,6 +1,9 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
+var chai = require('chai');
+var chaiSubset = require('chai-subset');
+chai.use(chaiSubset);
 
 describe('Add Product Set to cart', function () {
     this.timeout(5000);
@@ -327,37 +330,6 @@ describe('Add Product Set to cart', function () {
                     assert.equal(shipMethod.shippingCost, ExpectedShipMethod.shippingCost);
                 }
 
-                function verifyItemCommonProperties(item, expectedItem) {
-                    assert.equal(item.id, expectedItem.id);
-                    assert.equal(item.productName, expectedItem.productName);
-                    assert.equal(item.price.sales.value, expectedItem.price.sales.value);
-                    assert.equal(item.price.sales.currency, expectedItem.price.sales.currency);
-                    assert.equal(item.price.sales.formatted, expectedItem.price.sales.formatted);
-
-                    assert.equal(item.productType, expectedItem.productType);
-                    assert.equal(item.images.small[0].alt, expectedItem.images.small[0].alt);
-                    assert.isTrue(item.images.small[0].url.endsWith(expectedItem.images.small[0].url));
-                    assert.equal(item.images.small[0].title, expectedItem.images.small[0].title);
-                    assert.equal(item.rating, expectedItem.rating);
-                    assert.equal(item.variationAttributes[0].displayName, expectedItem.variationAttributes[0].displayName);
-                    assert.equal(item.variationAttributes[0].displayValue, expectedItem.variationAttributes[0].displayValue);
-                    assert.equal(item.variationAttributes[0].attributeId, expectedItem.variationAttributes[0].attributeId);
-                    assert.equal(item.variationAttributes[0].id, expectedItem.variationAttributes[0].id);
-
-                    assert.equal(item.quantityOptions.minOrderQuantity, expectedItem.quantityOptions.minOrderQuantity);
-                    assert.equal(item.quantityOptions.maxOrderQuantity, expectedItem.quantityOptions.maxOrderQuantity);
-                    assert.equal(item.priceTotal.price, expectedItem.priceTotal.price);
-                    assert.equal(item.priceTotal.renderedPrice, expectedItem.priceTotal.renderedPrice);
-                    assert.equal(item.isBonusProductLineItem, expectedItem.isBonusProductLineItem);
-                    assert.equal(item.isGift, expectedItem.isGift);
-                    assert.isNotNull(item.UUID);
-                    assert.equal(item.quantity, expectedItem.quantity);
-                    assert.equal(item.isOrderable, expectedItem.isOrderable);
-                    assert.equal(item.promotions, expectedItem.promotions);
-                    assert.equal(item.renderedPromotions, expectedItem.renderedPromotions);
-                    assert.equal(item.attributes, expectedItem.attributes);
-                }
-
                 // ----- Verify quantityTotal, message, action, queryString
                 assert.equal(bodyAsJson.quantityTotal, expectedResponse.quantityTotal);
                 assert.equal(bodyAsJson.message, expectedResponse.message);
@@ -404,39 +376,69 @@ describe('Add Product Set to cart', function () {
                 assert.lengthOf(bodyAsJson.cart.items, 3);
 
                 // Verify items in cart - item 1
-                var itemIdx = 0;
-                var item = bodyAsJson.cart.items[itemIdx];
-                var expectedItem = expectedResponse.cart.items[itemIdx];
+                var expectedItem0 = {
+                    id: '726819487824',
+                    productName: 'Platinum V Neck Suit Dress',
+                    price:
+                    {
+                        sales: {
+                            value: 99,
+                            currency: 'USD',
+                            formatted: '$99.00'
+                        }
+                    },
+                    variationAttributes:
+                    [{ displayName: 'Color',
+                        displayValue: 'Black'
+                    },
+                    { displayName: 'Size',
+                        displayValue: '6'
+                    }
+                    ]
+                };
 
-                verifyItemCommonProperties(item, expectedItem);
-
-                assert.equal(item.price.list, expectedItem.price.list);
-                assert.equal(item.variationAttributes[1].displayName, expectedItem.variationAttributes[1].displayName);
-                assert.equal(item.variationAttributes[1].displayValue, expectedItem.variationAttributes[1].displayValue);
-                assert.equal(item.variationAttributes[1].attributeId, expectedItem.variationAttributes[1].attributeId);
-                assert.equal(item.variationAttributes[1].id, expectedItem.variationAttributes[1].id);
+                assert.containSubset(bodyAsJson.cart.items[0], expectedItem0);
 
                 // Verify items in cart - item 2
-                itemIdx = 1;
-                item = bodyAsJson.cart.items[itemIdx];
-                expectedItem = expectedResponse.cart.items[itemIdx];
-
-                verifyItemCommonProperties(item, expectedItem);
-
-                assert.equal(item.price.list, expectedItem.price.list);
-                assert.equal(item.variationAttributes[1].displayName, expectedItem.variationAttributes[1].displayName);
-                assert.equal(item.variationAttributes[1].displayValue, expectedItem.variationAttributes[1].displayValue);
-                assert.equal(item.variationAttributes[1].attributeId, expectedItem.variationAttributes[1].attributeId);
-                assert.equal(item.variationAttributes[1].id, expectedItem.variationAttributes[1].id);
+                var expectedItem1 = {
+                    id: '69309284-2',
+                    productName: 'Modern Striped Dress Shirt',
+                    price: {
+                        sales: {
+                            value: 135,
+                            currency: 'USD'
+                        }
+                    },
+                    variationAttributes:
+                    [{
+                        displayName: 'color',
+                        displayValue: 'Blue'
+                    },
+                    { displayName: 'size',
+                        displayValue: '15L'
+                    }
+                    ]
+                };
+                assert.containSubset(bodyAsJson.cart.items[1], expectedItem1);
 
                 // Verify items in cart - item 3
-                itemIdx = 2;
-                item = bodyAsJson.cart.items[itemIdx];
-                expectedItem = expectedResponse.cart.items[itemIdx];
-
-                verifyItemCommonProperties(item, expectedItem);
-
-                assert.equal(item.price.list, expectedItem.price.list);
+                var expectedItem2 = {
+                    id: '799927335059',
+                    productName: 'Classic Wrap',
+                    price: {
+                        sales: {
+                            value: 34,
+                            currency: 'USD'
+                        }
+                    },
+                    variationAttributes:
+                    [{ displayName: 'Color',
+                        displayValue: 'Ivory'
+                    }
+                    ],
+                    quantity: 1
+                };
+                assert.containSubset(bodyAsJson.cart.items[2], expectedItem2);
 
                 // ----- Verify number of items
                 assert.equal(bodyAsJson.cart.numItems, expectedResponse.cart.numItems);
