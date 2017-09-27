@@ -250,14 +250,14 @@ server.get('GetStores', function (req, res, next) {
 
     storesModel.stores = StoreHelpers.getFilteredStores(storesModel, product);
 
-    var context = { stores: storesModel.stores };
-    var storeTemplate = 'storelocator/storelocatorresults';
+    var context = storesModel;
+    var storeTemplate = 'product/components/inStoreInventoryFind';
 
     storesModel.storesResultsHtml = storesModel.stores
         ? renderTemplateHelper.getRenderedHtml(context, storeTemplate)
         : null;
 
-    res.json({ stores: storesModel });
+    res.json(storesModel);
     next();
 });
 

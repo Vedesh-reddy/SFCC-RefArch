@@ -1,7 +1,5 @@
 'use strict';
 
-var HashMap = require('dw/util/HashMap');
-var Template = require('dw/util/Template');
 var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 var storeHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
 

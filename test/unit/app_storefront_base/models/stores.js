@@ -21,10 +21,9 @@ describe('stores', function () {
                 }
             };
         },
-
         '*/cartridge/scripts/renderTemplateHelper': {
             getRenderedHtml: function () { return 'someString'; }
-            },
+        },
 
         '*/cartridge/scripts/helpers/storeHelpers': {
             createStoresResultsHtml: function () {
