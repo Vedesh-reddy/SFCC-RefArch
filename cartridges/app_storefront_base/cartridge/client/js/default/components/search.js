@@ -115,7 +115,7 @@ function positionSuggestions(scope) {
 }
 
 /**
- * Process Ajax response for Search-GetSuggestions
+ * Process Ajax response for SearchServices-GetSuggestions
  *
  * @param {Object|string} response - Empty object literal if null response or string with rendered
  *                                   suggestions template contents

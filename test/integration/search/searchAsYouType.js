@@ -5,7 +5,7 @@ var cheerio = require('cheerio');
 
 /**
  * Test Case :
- * Verify 'Search-GetSuggestions?q=tops' call submitted successful and the response contains the following :
+ * Verify 'SearchServices-GetSuggestions?q=tops' call submitted successful and the response contains the following :
  * - Do you mean? Tops
  * - Products : Log Sleeve Turtleneck Top; Cowl Neck Top; Paisley Turtleneck Top
  * - Categories : Tops; Top Sellers
@@ -26,9 +26,9 @@ describe('Search As You Type - general product', function () {
     };
 
     it('should remove line item', function (done) {
-        myRequest.url = config.baseUrl + '/Search-GetSuggestions?q=' + product;
+        myRequest.url = config.baseUrl + '/SearchServices-GetSuggestions?q=' + product;
         request(myRequest, function (error, response) {
-            assert.equal(response.statusCode, 200, 'Expected GET Search-GetSuggestions call statusCode to be 200.');
+            assert.equal(response.statusCode, 200, 'Expected GET SearchServices-GetSuggestions call statusCode to be 200.');
             var $ = cheerio.load(response.body);
 
             var prod = $('.container a');
