@@ -156,7 +156,7 @@ describe('locale', function () {
                 'name': 'United Kingdom',
                 'displayName': 'English (UK)',
                 'language': 'en',
-                'displayLanguage': 'English',
+                'displayLanguage': 'English'
             }
         });
     });
@@ -190,7 +190,7 @@ describe('locale', function () {
                         'displayCountry': '日本',
                         'localID': 'ja_JP',
                         'displayName': '日本の',
-                        'language': 'jp',
+                        'language': 'ja',
                         'displayLanguage': '日本語'
                     }, {
                         'country': 'CN',
@@ -247,7 +247,7 @@ describe('locale', function () {
                         'displayCountry': '日本',
                         'localID': 'ja_JP',
                         'displayName': '日本の',
-                        'language': 'jp',
+                        'language': 'ja',
                         'displayLanguage': '日本語'
                     }, {
                         'country': 'CN',
@@ -361,7 +361,7 @@ describe('locale', function () {
                         'displayCountry': '日本',
                         'localID': 'ja_JP',
                         'displayName': '日本の',
-                        'language': 'jp',
+                        'language': 'ja',
                         'displayLanguage': '日本語'
                     }, {
                         'country': 'FR',
