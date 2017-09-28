@@ -34,7 +34,9 @@ describe('locale', function () {
                             country: 'US',
                             displayCountry: 'United States',
                             currencyCode: 'USD',
-                            displayName: 'English (US)'
+                            displayName: 'English (US)',
+                            language: 'en',
+                            displayLanguage: 'English'
                         };
                         break;
                     case 'en_GB':
@@ -42,7 +44,9 @@ describe('locale', function () {
                             country: 'GB',
                             displayCountry: 'United Kingdom',
                             currencyCode: 'GBP',
-                            displayName: 'English (UK)'
+                            displayName: 'English (UK)',
+                            language: 'en',
+                            displayLanguage: 'English'
                         };
                         break;
                     case 'fr_FR':
@@ -50,7 +54,9 @@ describe('locale', function () {
                             country: 'FR',
                             displayCountry: 'France',
                             currencyCode: 'EUR',
-                            displayName: 'français'
+                            displayName: 'français',
+                            language: 'fr',
+                            displayLanguage: 'Français'
                         };
                         break;
                     case 'it_IT':
@@ -58,7 +64,9 @@ describe('locale', function () {
                             country: 'IT',
                             displayCountry: 'Italia',
                             currencyCode: 'EUR',
-                            displayName: 'italiano'
+                            displayName: 'italiano',
+                            language: 'it',
+                            displayLanguage: 'Italiano'
 
                         };
                         break;
@@ -67,7 +75,9 @@ describe('locale', function () {
                             country: 'JP',
                             displayCountry: '日本',
                             currencyCode: 'JPY',
-                            displayName: '日本の'
+                            displayName: '日本の',
+                            language: 'ja',
+                            displayLanguage: '日本語'
                         };
                         break;
                     case 'zh_CN':
@@ -75,7 +85,9 @@ describe('locale', function () {
                             country: 'CN',
                             displayCountry: '中国',
                             currencyCode: 'CNY',
-                            displayName: '日本'
+                            displayName: '日本',
+                            language: 'zh',
+                            displayLanguage: '中国語'
                         };
                         break;
                     default:
@@ -95,7 +107,9 @@ describe('locale', function () {
             ID: 'en_GB',
             displayCountry: 'United Kingdom',
             country: 'GB',
-            displayName: 'English (UK)'
+            displayName: 'English (UK)',
+            language: 'en',
+            displayLanguage: 'English'
         };
         var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
@@ -110,40 +124,50 @@ describe('locale', function () {
                         'currencyCode': 'JPY',
                         'displayCountry': '日本',
                         'localID': 'ja_JP',
-                        'displayName': '日本の'
+                        'displayName': '日本の',
+                        'language': 'ja',
+                        'displayLanguage': '日本語'
                     }, {
                         'country': 'CN',
                         'currencyCode': 'CNY',
                         'displayCountry': '中国',
                         'localID': 'zh_CN',
-                        'displayName': '日本'
+                        'displayName': '日本',
+                        'language': 'zh',
+                        'displayLanguage': '中国語'
                     }, {
                         'country': 'FR',
                         'currencyCode': 'EUR',
                         'displayCountry': 'France',
                         'localID': 'fr_FR',
-                        'displayName': 'français'
+                        'displayName': 'français',
+                        'language': 'fr',
+                        'displayLanguage': 'Français'
                     }, {
                         'country': 'IT',
                         'currencyCode': 'EUR',
                         'displayCountry': 'Italia',
                         'localID': 'it_IT',
-                        'displayName': 'italiano'
+                        'displayName': 'italiano',
+                        'language': 'it',
+                        'displayLanguage': 'Italiano'
                     }
                 ],
                 'name': 'United Kingdom',
-                'displayName': 'English (UK)'
+                'displayName': 'English (UK)',
+                'language': 'en',
+                'displayLanguage': 'English',
             }
         });
     });
-
-
     it('should return proper fr_FR info', function () {
         var currentLocale = {
             ID: 'fr_FR',
             displayCountry: 'France',
             country: 'FR',
-            displayName: 'français'
+            displayName: 'français',
+            language: 'fr',
+            displayLanguage: 'Français'
         };
         var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
@@ -157,29 +181,39 @@ describe('locale', function () {
                         'currencyCode': 'GBP',
                         'displayCountry': 'United Kingdom',
                         'localID': 'en_GB',
-                        'displayName': 'English (UK)'
+                        'displayName': 'English (UK)',
+                        'language': 'en',
+                        'displayLanguage': 'English'
                     }, {
                         'country': 'JP',
                         'currencyCode': 'JPY',
                         'displayCountry': '日本',
                         'localID': 'ja_JP',
-                        'displayName': '日本の'
+                        'displayName': '日本の',
+                        'language': 'jp',
+                        'displayLanguage': '日本語'
                     }, {
                         'country': 'CN',
                         'currencyCode': 'CNY',
                         'displayCountry': '中国',
                         'localID': 'zh_CN',
-                        'displayName': '日本'
+                        'displayName': '日本',
+                        'language': 'zh',
+                        'displayLanguage': '中国語'
                     }, {
                         'country': 'IT',
                         'currencyCode': 'EUR',
                         'displayCountry': 'Italia',
                         'localID': 'it_IT',
-                        'displayName': 'italiano'
+                        'displayName': 'italiano',
+                        'language': 'it',
+                        'displayLanguage': 'Italiano'
                     }
                 ],
                 'name': 'France',
-                'displayName': 'français'
+                'displayName': 'français',
+                'language': 'fr',
+                'displayLanguage': 'Français'
             }
         });
     });
@@ -188,7 +222,9 @@ describe('locale', function () {
             ID: 'it_IT',
             displayCountry: 'Italia',
             country: 'IT',
-            displayName: 'italiano'
+            displayName: 'italiano',
+            language: 'it',
+            displayLanguage: 'Italiano'
         };
         var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
@@ -202,29 +238,39 @@ describe('locale', function () {
                         'currencyCode': 'GBP',
                         'displayCountry': 'United Kingdom',
                         'localID': 'en_GB',
-                        'displayName': 'English (UK)'
+                        'displayName': 'English (UK)',
+                        'language': 'en',
+                        'displayLanguage': 'English'
                     }, {
                         'country': 'JP',
                         'currencyCode': 'JPY',
                         'displayCountry': '日本',
                         'localID': 'ja_JP',
-                        'displayName': '日本の'
+                        'displayName': '日本の',
+                        'language': 'jp',
+                        'displayLanguage': '日本語'
                     }, {
                         'country': 'CN',
                         'currencyCode': 'CNY',
                         'displayCountry': '中国',
                         'localID': 'zh_CN',
-                        'displayName': '日本'
+                        'displayName': '日本',
+                        'language': 'zh',
+                        'displayLanguage': '中国語'
                     }, {
                         'country': 'FR',
                         'currencyCode': 'EUR',
                         'displayCountry': 'France',
                         'localID': 'fr_FR',
-                        'displayName': 'français'
+                        'displayName': 'français',
+                        'language': 'fr',
+                        'displayLanguage': 'Français'
                     }
                 ],
                 'name': 'Italia',
-                'displayName': 'italiano'
+                'displayName': 'italiano',
+                'language': 'it',
+                'displayLanguage': 'Italiano'
             }
         });
     });
@@ -233,7 +279,9 @@ describe('locale', function () {
             ID: 'ja_JP',
             displayCountry: '日本',
             country: 'JA',
-            displayName: '日本の'
+            displayName: '日本の',
+            language: 'ja',
+            displayLanguage: '日本語'
         };
         var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
@@ -247,29 +295,39 @@ describe('locale', function () {
                         'currencyCode': 'GBP',
                         'displayCountry': 'United Kingdom',
                         'localID': 'en_GB',
-                        'displayName': 'English (UK)'
+                        'displayName': 'English (UK)',
+                        'language': 'en',
+                        'displayLanguage': 'English'
                     }, {
                         'country': 'CN',
                         'currencyCode': 'CNY',
                         'displayCountry': '中国',
                         'localID': 'zh_CN',
-                        'displayName': '日本'
+                        'displayName': '日本',
+                        'language': 'zh',
+                        'displayLanguage': '中国語'
                     }, {
                         'country': 'FR',
                         'currencyCode': 'EUR',
                         'displayCountry': 'France',
                         'localID': 'fr_FR',
-                        'displayName': 'français'
+                        'displayName': 'français',
+                        'language': 'fr',
+                        'displayLanguage': 'Français'
                     }, {
                         'country': 'IT',
                         'currencyCode': 'EUR',
                         'displayCountry': 'Italia',
                         'localID': 'it_IT',
-                        'displayName': 'italiano'
+                        'displayName': 'italiano',
+                        'language': 'it',
+                        'displayLanguage': 'Italiano'
                     }
                 ],
                 'name': '日本',
-                'displayName': '日本の'
+                'displayName': '日本の',
+                'language': 'ja',
+                'displayLanguage': '日本語'
             }
         });
     });
@@ -278,7 +336,9 @@ describe('locale', function () {
             ID: 'zh_CN',
             displayCountry: '中国',
             country: 'CN',
-            displayName: '日本'
+            displayName: '日本',
+            language: 'zh',
+            displayLanguage: '中国語'
         };
         var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
@@ -292,29 +352,39 @@ describe('locale', function () {
                         'currencyCode': 'GBP',
                         'displayCountry': 'United Kingdom',
                         'localID': 'en_GB',
-                        'displayName': 'English (UK)'
+                        'displayName': 'English (UK)',
+                        'language': 'en',
+                        'displayLanguage': 'English'
                     }, {
                         'country': 'JP',
                         'currencyCode': 'JPY',
                         'displayCountry': '日本',
                         'localID': 'ja_JP',
-                        'displayName': '日本の'
+                        'displayName': '日本の',
+                        'language': 'jp',
+                        'displayLanguage': '日本語'
                     }, {
                         'country': 'FR',
                         'currencyCode': 'EUR',
                         'displayCountry': 'France',
                         'localID': 'fr_FR',
-                        'displayName': 'français'
+                        'displayName': 'français',
+                        'language': 'fr',
+                        'displayLanguage': 'Français'
                     }, {
                         'country': 'IT',
                         'currencyCode': 'EUR',
                         'displayCountry': 'Italia',
                         'localID': 'it_IT',
-                        'displayName': 'italiano'
+                        'displayName': 'italiano',
+                        'language': 'it',
+                        'displayLanguage': 'Italiano'
                     }
                 ],
                 'name': '中国',
-                'displayName': '日本'
+                'displayName': '日本',
+                'language': 'zh',
+                'displayLanguage': '中国語'
             }
         });
     });
@@ -324,8 +394,9 @@ describe('locale', function () {
             ID: 'en_US',
             displayCountry: 'United States',
             country: 'US',
-            displayName: 'English (US)'
-
+            displayName: 'English (US)',
+            language: 'en',
+            displayLanguage: 'English'
         };
         var siteId = 'MobileFirst';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
@@ -335,7 +406,9 @@ describe('locale', function () {
                 'currencyCode': 'USD',
                 'localLinks': [],
                 'name': 'United States',
-                'displayName': 'English (US)'
+                'displayName': 'English (US)',
+                'language': 'en',
+                'displayLanguage': 'English'
             }
         });
     });
