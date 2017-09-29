@@ -56,7 +56,7 @@ var urlUtils = {
     }
 };
 
-var productInventoryMgr = require('../dw/catalog/productInventoryMgr');
+var productInventoryMgr = require('../dw/catalog/ProductInventoryMgr');
 
 var hashMap = function () {
     return {

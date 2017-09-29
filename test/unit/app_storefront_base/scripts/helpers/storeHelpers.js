@@ -191,7 +191,6 @@ describe('storeHelpers', function () {
             ];
 
             var storesModelArray = storeHelpers.getFilteredStores(storeModel, pliQty);
-            // console.log('storeModelArray = ' + JSON.stringify(storesModelArray, null, 4));
             assert.deepEqual(storesModelArray, expectedStoresModelArray);
         });
     });
