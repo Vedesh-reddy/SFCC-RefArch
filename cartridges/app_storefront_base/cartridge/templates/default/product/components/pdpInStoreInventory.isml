@@ -5,7 +5,7 @@
     ${Resource.msg('button.availability.select.store','storelocator',null)}
 </button>
 
-<div class="card selected-store-with-inventory" style="display: none">
+<div class="card selected-store-with-inventory display-none">
     <div class="card-header">
         <h5 class="pull-left">${Resource.msg('msg.in.store.inventory.selected.store.title','storelocator',null)}</h5>
 

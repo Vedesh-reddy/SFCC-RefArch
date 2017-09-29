@@ -225,9 +225,7 @@ module.exports = {
 
             $('.btn-get-in-store-inventory').hide();
             $('#inStoreInventoryModal').modal('hide');
-            $('.selected-store-with-inventory').show();
-
-            //return false;
+            $('.selected-store-with-inventory').removeClass('display-none');
         }));
     },
     changeStore: function () {
