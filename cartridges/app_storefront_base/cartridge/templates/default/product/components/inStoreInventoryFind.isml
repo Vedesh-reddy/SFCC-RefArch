@@ -13,7 +13,7 @@
                     <!-- zip code for store lookup -->
                     <div class="form-group">
                         <label for="postal-code">${Resource.msg('field.zip.code','storelocator',null)}</label>
-                        <!-- <input type="text" class="form-control" id="postal-code" name="postalCode">   -->
+
                         <input type="text" class="form-control" id="postal-code" name="postalCode" value="${pdict.searchKey.postalCode ? pdict.searchKey.postalCode : ''}">
                     </div>
 
@@ -43,16 +43,24 @@
 
             <div class="col-sm-7" id="stores-with-inventory">
                 <div class="results-card">
-                    <div class="store-locator-no-results"
-                        <isif condition="${pdict.stores.length > 0}">style="display: none"</isif>
-                    >
-                        <p class="alert alert-danger">${Resource.msg('error.no.results', 'storelocator', null)}</p>
 
+                    <!-- Determine whether or not to display no result message -->
+                    <isset name="noResultDisplayStyling" value="" scope="page"/>
+                    <isif condition="${pdict.stores.length > 0}">
+                        <isset name="noResultDisplayStyling" value="display-none" scope="page"/>
+                    </isif>
+
+                    <div class="store-locator-no-results ${noResultDisplayStyling}">
+                        <p class="alert alert-danger">${Resource.msg('error.no.results', 'storelocator', null)}</p>
                     </div>
 
-                    <div class="results striped" data-has-results="${pdict.stores.length}"
-                        <isif condition="${!pdict.stores || pdict.stores.length === 0}">style="display: none"</isif>
-                    >
+                    <!-- Determine whether or not to display store result -->
+                    <isset name="storeResulstDisplayStyling" value="" scope="page"/>
+                    <isif condition="${!pdict.stores || pdict.stores.length === 0}">
+                        <isset name="storeResulstDisplayStyling" value="display-none" scope="page"/>
+                    </isif>
+
+                    <div class="results striped ${storeResulstDisplayStyling}" data-has-results="${pdict.stores.length}">
                         <isloop items="${pdict.stores}" var="store" status="loopstate">
                             <div class="store">
                                 <isinclude template="product/components/inStoreInventoryStoreDetails" />
@@ -67,7 +75,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <div class="mt-auto">
-                    <button type="submit" class="btn btn-primary btn-block" id="btn-select-store" disabled>
+                    <button type="submit" class="btn btn-primary btn-block btn-select-store" disabled>
                         ${Resource.msg('button.select.store','storelocator',null)}
                     </button>
                 </div>

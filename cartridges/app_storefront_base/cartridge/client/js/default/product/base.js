@@ -274,7 +274,7 @@ function handleVariantResponse(response, $productContainer) {
     }).trigger('product:statusUpdate', response.product);
 
     // Enable "Availability: Select Store" button if all required attributes have been selected
-    $('#btn-get-in-store-inventory').trigger('product:updateSelectStore', {
+    $('.btn-get-in-store-inventory').trigger('product:updateSelectStore', {
         product: response.product, $productContainer: $productContainer
     });
 

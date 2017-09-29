@@ -48,7 +48,7 @@ function fillModalElement(selectedPostalCode, selectedRadius) {
 
     $.spinner().start();
     $.ajax({
-        url: $('#btn-get-in-store-inventory').data('action-url'),
+        url: $('.btn-get-in-store-inventory').data('action-url'),
         data: requestData,
         method: 'GET',
         success: function (response) {
@@ -196,12 +196,12 @@ module.exports = {
     },
     updateSelectStore: function () {
         $('body').on('product:updateSelectStore', function (e, response) {
-            $('#btn-get-in-store-inventory', response.$productContainer).attr('disabled',
+            $('.btn-get-in-store-inventory', response.$productContainer).attr('disabled',
                 (!response.product.readyToOrder || !response.product.available));
         });
     },
     showInStoreInventory: function () {
-        $('#btn-get-in-store-inventory').on('click', function (e) {
+        $('.btn-get-in-store-inventory').on('click', function (e) {
             getModalHtmlElement();
             fillModalElement();
             e.stopPropagation();
@@ -215,7 +215,7 @@ module.exports = {
         }));
     },
     selectStoreWithInventory: function () {
-        $('body').on('click', '#btn-select-store', (function (e) {
+        $('body').on('click', '.btn-select-store', (function (e) {
             e.preventDefault();
             var selectedStoreID = $('input[name=store-id]:checked').attr('value');
             var storeDetailsHtml = $('#' + selectedStoreID + ' .store-details')[0].innerHTML;
@@ -223,11 +223,11 @@ module.exports = {
             $('.selected-store-with-inventory .card-block').empty();
             $('.selected-store-with-inventory .card-block').append(storeDetailsHtml);
 
-            $('#btn-get-in-store-inventory').hide();
+            $('.btn-get-in-store-inventory').hide();
             $('#inStoreInventoryModal').modal('hide');
             $('.selected-store-with-inventory').show();
 
-            return false;
+            //return false;
         }));
     },
     changeStore: function () {
@@ -238,12 +238,12 @@ module.exports = {
     removeStoreSelection: function () {
         $('body').on('click', '#remove-store-selection', (function () {
             $('.selected-store-with-inventory').hide();
-            $('#btn-get-in-store-inventory').show();
+            $('.btn-get-in-store-inventory').show();
         }));
     },
     updateSelectStoreButton: function () {
         $('body').on('change', '.select-store-input', (function () {
-            $('#btn-select-store').prop('disabled', false);
+            $('.btn-select-store').prop('disabled', false);
         }));
     },
     getStoresWithInventoryOnRadiusChange: function () {

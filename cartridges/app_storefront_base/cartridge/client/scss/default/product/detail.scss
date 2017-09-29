@@ -173,7 +173,7 @@ label.availability {
     font-weight: 600;
 }
 
-#btn-get-in-store-inventory {
+.btn-get-in-store-inventory {
     .btn-storelocator-search {
         margin-bottom: 0.625rem;
         display: block;
@@ -223,7 +223,7 @@ label.availability {
     }
 
     .separated {
-        border-bottom: 0.063em dashed #ccc;
+        border-bottom: 0.063em dashed $grey3;
     }
 
     .results {
@@ -258,9 +258,15 @@ label.availability {
     }
 }
 
+.display-none {
+    //style: {
+        display: none;
+    //}
+}
+
 .modal-header {
     background-color: $grey2;
-    border-bottom: 2px solid #ccc;
+    border-bottom: 2px solid $grey3;
     border-top-left-radius: 0.1875rem;
     border-top-right-radius: 0.1875rem;
 
