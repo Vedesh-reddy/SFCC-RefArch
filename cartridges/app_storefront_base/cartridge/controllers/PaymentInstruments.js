@@ -251,11 +251,4 @@ server.get('Header', server.middleware.include, function (req, res, next) {
     next();
 });
 
-server.get('Menu', server.middleware.include, function (req, res, next) {
-    res.render('account/menu', { name:
-        req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
-    });
-    next();
-});
-
 module.exports = server.exports();

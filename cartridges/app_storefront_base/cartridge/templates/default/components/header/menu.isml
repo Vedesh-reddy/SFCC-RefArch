@@ -30,7 +30,7 @@
                     </isif>
                 </isloop>
             </isif>
-            <isinclude url="${URLUtils.url('Account-Menu')}" />
+            <isinclude url="${URLUtils.url('Account-Header')}" />
             <isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', true)}" />
         </ul>
     </div>
