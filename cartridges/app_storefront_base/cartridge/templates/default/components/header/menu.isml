@@ -1,5 +1,6 @@
-<nav class="navbar bg-inverse col-12">
-    <div class="close-menu clearfix">
+<!-- back and close button on mobile devices only-->
+<nav class="navbar bg-inverse col-12 ">
+    <div class="close-menu clearfix hidden-lg-up">
         <div class="back pull-left">
             <a href="${'#'}" role="button">
                 <span class="caret-left"></span>
@@ -13,6 +14,7 @@
             </a>
         </div>
     </div>
+    <!-- navigation menu for all screens-->
     <div aria-label="Main menu" role="navigation">
         <ul class="nav navbar-nav" role="menu">
             <isif condition="${pdict.categories}">
@@ -30,8 +32,11 @@
                     </isif>
                 </isloop>
             </isif>
-            <isinclude url="${URLUtils.url('Account-Header')}" />
-            <isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', true)}" />
+            <!-- mobile devices login and locale menu -->
+           <div class = "login Locale hidden-lg-up">
+           		<isinclude url="${URLUtils.url('Account-Header')}" /> 
+            	<isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', true)}" />
+           </div>
         </ul>
     </div>
 </nav>
