@@ -1,6 +1,78 @@
 'use strict';
 var base = require('./base');
 
+/**
+ * Generates the modal window on the first call.
+ *
+ */
+function getModalHtmlElement() {
+    if ($('#inStoreInventoryModal').length !== 0) {
+        $('#inStoreInventoryModal').remove();
+    }
+    var htmlString = '<!-- Modal -->'
+        + '<div class="modal " id="inStoreInventoryModal" role="dialog">'
+        + '<div class="modal-dialog in-store-inventory-dialog">'
+        + '<!-- Modal content-->'
+        + '<div class="modal-content">'
+        + '<div class="modal-header justify-content-end">'
+        + '    <button type="button" class="close pull-right" data-dismiss="modal">'
+        + '        <span>Close</span>&times;'
+        + '    </button>'
+        + '</div>'
+        + '<div class="modal-body"></div>'
+        + '<div class="modal-footer"></div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    $('body').append(htmlString);
+    $('#inStoreInventoryModal').modal('show');
+}
+
+/**
+ * Replaces the content in the modal window with find stores components and
+ * the result store list.
+ * @param {string} selectedPostalCode - the postal code to be used for the search
+ * @param {string} selectedRadius - the radius code to be used for the search
+ *
+ */
+function fillModalElement(selectedPostalCode, selectedRadius) {
+    var requestData = { pid: $('.product-id').text(), qty: $('.quantity-select').val() };
+
+    if (selectedRadius) {
+        requestData.radius = selectedRadius;
+    }
+
+    if (selectedPostalCode) {
+        requestData.postalCode = selectedPostalCode;
+    }
+
+    $.spinner().start();
+    $.ajax({
+        url: $('.btn-get-in-store-inventory').data('action-url'),
+        data: requestData,
+        method: 'GET',
+        success: function (response) {
+            $('.modal-body').empty();
+            $('.modal-body').html(response.storesResultsHtml);
+
+            $('#inStoreInventoryModal').modal('show');
+            $.spinner().stop();
+        },
+        error: function () {
+            $.spinner().stop();
+        }
+    });
+}
+
+/**
+ * Obtain the selected postal code and radius to fill the modal window.
+ */
+function getStoreList() {
+    var selectedPostalCode = $('#postal-code').val();
+    var selectedRadius = $('#radius').val();
+    fillModalElement(selectedPostalCode, selectedRadius);
+}
+
 module.exports = {
     selectAttributes: base.selectAttribute,
 
@@ -121,5 +193,60 @@ module.exports = {
                 $sizeChart.removeClass('active');
             }
         });
+    },
+    updateSelectStore: function () {
+        $('body').on('product:updateSelectStore', function (e, response) {
+            $('.btn-get-in-store-inventory', response.$productContainer).attr('disabled',
+                (!response.product.readyToOrder || !response.product.available));
+        });
+    },
+    showInStoreInventory: function () {
+        $('.btn-get-in-store-inventory').on('click', function (e) {
+            getModalHtmlElement();
+            fillModalElement();
+            e.stopPropagation();
+        });
+    },
+    getStoresWithInventory: function () {
+        $(document).on('submit', '.store-locator', (function (e) {
+            e.preventDefault();
+            getStoreList();
+            return false;
+        }));
+    },
+    selectStoreWithInventory: function () {
+        $('body').on('click', '.btn-select-store', (function (e) {
+            e.preventDefault();
+            var selectedStoreID = $('input[name=store-id]:checked').attr('value');
+            var storeDetailsHtml = $('#' + selectedStoreID + ' .store-details')[0].innerHTML;
+
+            $('.selected-store-with-inventory .card-block').empty();
+            $('.selected-store-with-inventory .card-block').append(storeDetailsHtml);
+
+            $('.btn-get-in-store-inventory').hide();
+            $('#inStoreInventoryModal').modal('hide');
+            $('.selected-store-with-inventory').removeClass('display-none');
+        }));
+    },
+    changeStore: function () {
+        $('body').on('click', '.change-store', (function () {
+            $('#inStoreInventoryModal').modal('show');
+        }));
+    },
+    removeStoreSelection: function () {
+        $('body').on('click', '#remove-store-selection', (function () {
+            $('.selected-store-with-inventory').hide();
+            $('.btn-get-in-store-inventory').show();
+        }));
+    },
+    updateSelectStoreButton: function () {
+        $('body').on('change', '.select-store-input', (function () {
+            $('.btn-select-store').prop('disabled', false);
+        }));
+    },
+    getStoresWithInventoryOnRadiusChange: function () {
+        $('body').on('change', '.radius', (function () {
+            getStoreList();
+        }));
     }
 };

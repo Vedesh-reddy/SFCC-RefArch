@@ -1,0 +1,23 @@
+<button class="btn btn-secondary btn-block btn-outline-primary btn-get-in-store-inventory"
+        data-action-url="${pdict.pickUpInStore.actionUrl}"
+        type="submit"
+        ${!product.readyToOrder || !product.available ? "disabled" : ""}>
+    ${Resource.msg('button.availability.select.store','storelocator',null)}
+</button>
+
+<div class="card selected-store-with-inventory display-none">
+    <div class="card-header">
+        <h5 class="pull-left">${Resource.msg('msg.in.store.inventory.selected.store.title','storelocator',null)}</h5>
+
+        <span class="close" id="remove-store-selection">&times;</span>
+    </div>
+
+    <!-- for placing the selected store details on PDP page-->
+    <div class="card-block">
+    </div>
+
+    <button class="btn btn-secondary btn-block change-store btn-outline-primary" data-action-url="${pdict.pickUpInStore.actionUrl}" type="submit">
+        ${Resource.msg('button.change.store','storelocator',null)}
+    </button>
+
+</div>

@@ -23,6 +23,12 @@ describe('stores', function () {
         },
         '*/cartridge/scripts/renderTemplateHelper': {
             getRenderedHtml: function () { return 'someString'; }
+        },
+
+        '*/cartridge/scripts/helpers/storeHelpers': {
+            createStoresResultsHtml: function () {
+                return 'someString';
+            }
         }
     });
     var actionUrl = '/on/demandware.store/Sites-MobileFirst-Site/en_US/Stores-FindStores';

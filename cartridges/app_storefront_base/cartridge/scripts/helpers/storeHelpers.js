@@ -2,9 +2,10 @@
 /**
  * Searches for stores and creates a plain object of the stores returned by the search
  * @param {Object} req - local instance of request object
+ * @param {dw.web.URL} url - a relative url
  * @returns {Object} a plain object containing the results of the search
  */
-function getModel(req) {
+function getModel(req, url) {
     var StoresModel = require('*/cartridge/models/stores');
     var StoreMgr = require('dw/catalog/StoreMgr');
     var Site = require('dw/system/Site');
@@ -45,7 +46,7 @@ function getModel(req) {
         searchKey = { lat: lat, long: long };
     }
 
-    var actionUrl = URLUtils.url('Stores-FindStores').toString();
+    var actionUrl = url || URLUtils.url('Stores-FindStores').toString();
     var apiKey = Site.getCurrent().getCustomPreferenceValue('mapAPI');
 
     return new StoresModel(storesMgrResult.keySet(), searchKey, radius, actionUrl, apiKey);
@@ -97,7 +98,28 @@ function getFilteredStores(storesModel, pliQtys) {
     return availableStores;
 }
 
+/**
+ * create the stores results html
+ * @param {Array} storesInfo - an array of objects that contains store information
+ * @returns {string} The rendered HTML
+ */
+function createStoresResultsHtml(storesInfo) {
+    var HashMap = require('dw/util/HashMap');
+    var Template = require('dw/util/Template');
+
+    var context = new HashMap();
+    var object = { stores: storesInfo };
+
+    Object.keys(object).forEach(function (key) {
+        context.put(key, object[key]);
+    });
+
+    var template = new Template('storelocator/storelocatorresults');
+    return template.render(context).text;
+}
+
 module.exports = exports = {
     getModel: getModel,
-    getFilteredStores: getFilteredStores
+    getFilteredStores: getFilteredStores,
+    createStoresResultsHtml: createStoresResultsHtml
 };
