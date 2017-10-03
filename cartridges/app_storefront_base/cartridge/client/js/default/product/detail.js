@@ -235,7 +235,7 @@ module.exports = {
     },
     removeStoreSelection: function () {
         $('body').on('click', '#remove-store-selection', (function () {
-            $('.selected-store-with-inventory').hide();
+            $('.selected-store-with-inventory').addClass('display-none');
             $('.btn-get-in-store-inventory').show();
         }));
     },

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="d-flex flex-column col-sm-5" >
 
-                <form action="${pdict.stores.actionUrl}" class="store-locator" method="get" name="instoreinventory">
+                <form action="${pdict.actionUrl}" class="store-locator" method="get" name="instoreinventory">
 
                     <!-- zip code for store lookup -->
                     <div class="form-group">
