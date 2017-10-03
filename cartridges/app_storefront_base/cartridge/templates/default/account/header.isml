@@ -1,5 +1,5 @@
 <isif condition="${pdict.name === null}">
-<!-- large screen guest user login -->
+    <!-- large screen guest user login -->
     <div class="user hidden-md-down">
         <a href="${URLUtils.https('Login-Show')}">
             <i class="fa fa-sign-in" aria-hidden="true"></i>
@@ -14,7 +14,7 @@
         </a>
     </li>
 <iselse/>
-<!--  large screen logged in user -->
+    <!--  large screen logged in user -->
     <div class="user hidden-md-down" tabindex="0">
         <i class="fa fa-sign-in" aria-hidden="true"></i>
         <span class="user-message">${pdict.name}</span>
