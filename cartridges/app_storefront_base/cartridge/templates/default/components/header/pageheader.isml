@@ -27,7 +27,7 @@
                     </div>
                     <div class="navbar-header">
                         <div class="pull-left">
-                            <div class="hidden-sm-down">
+                            <div class="hidden-md-down">
                                 <isinclude url="${URLUtils.url('Account-Header')}" />
                                 <isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', false)}" />
                             </div>

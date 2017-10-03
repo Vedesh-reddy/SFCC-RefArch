@@ -1,5 +1,5 @@
-<nav class="navbar bg-inverse col-12">
-    <div class="close-menu clearfix">
+<nav class="navbar bg-inverse col-12 ">
+    <div class="close-menu clearfix hidden-lg-up">
         <div class="back pull-left">
             <a href="${'#'}" role="button">
                 <span class="caret-left"></span>
@@ -30,8 +30,10 @@
                     </isif>
                 </isloop>
             </isif>
-            <isinclude url="${URLUtils.url('Account-Menu')}" />
-            <isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', true)}" />
+            <div class = "hidden-lg-up">
+                <isinclude url="${URLUtils.url('Account-Header')}" />
+                <isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', true)}" />
+            </div>
         </ul>
     </div>
 </nav>
