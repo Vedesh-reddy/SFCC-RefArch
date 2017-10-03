@@ -188,6 +188,7 @@ label.availability {
 
 #stores-with-inventory {
     overflow-y: auto;
+    overflow-x: hidden;
     height: 25em;
     border-left: 0.0625em solid $grey3;
 
