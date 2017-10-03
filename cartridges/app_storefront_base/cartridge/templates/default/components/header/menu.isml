@@ -30,7 +30,7 @@
                     </isif>
                 </isloop>
             </isif>
-            <div class = "login Locale hidden-lg-up">
+            <div class = "hidden-lg-up">
                 <isinclude url="${URLUtils.url('Account-Header')}" />
                 <isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', true)}" />
             </div>
