@@ -1,4 +1,4 @@
-<select name="shipmentSelector" class="addressSelector form-control custom-select" data-create-shipment-url="${URLUtils.https('Checkout-CreateNewAddress')}">
+<select name="shipmentSelector" class="addressSelector form-control custom-select" data-create-shipment-url="${URLUtils.https('CheckoutAddressServices-CreateNewAddress')}">
     <option value="new"
         data-first-name="" data-last-name=""
         data-address1="" data-address2=""

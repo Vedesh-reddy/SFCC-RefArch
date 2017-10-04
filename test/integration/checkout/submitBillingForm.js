@@ -29,7 +29,7 @@ describe('billingForm', function () {
             return request(myRequest)
                 .then(function (csrfResponse) {
                     var csrfJsonResponse = JSON.parse(csrfResponse.body);
-                    myRequest.url = config.baseUrl + '/Checkout-SubmitPayment?' +
+                    myRequest.url = config.baseUrl + '/CheckoutServices-SubmitPayment?' +
                         csrfJsonResponse.csrf.tokenName + '=' +
                         csrfJsonResponse.csrf.token;
                 });
@@ -83,7 +83,7 @@ describe('billingForm', function () {
                 .then(function (response) {
                     var bodyAsJson = JSON.parse(response.body);
                     var strippedBody = jsonHelpers.deleteProperties(bodyAsJson, ['redirectUrl', 'action', 'queryString']);
-                    assert.equal(response.statusCode, 200, 'Expected Checkout-SubmitPayment statusCode to be 200.');
+                    assert.equal(response.statusCode, 200, 'Expected CheckoutServices-SubmitPayment statusCode to be 200.');
                     assert.deepEqual(strippedBody, ExpectedResBody, 'Expecting actual response to be equal match expected response');
                     done();
                 });

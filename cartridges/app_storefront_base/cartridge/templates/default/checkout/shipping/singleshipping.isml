@@ -3,7 +3,7 @@
         <!--- Shipping Address Form--->
         <div class="tab-pane ${!pdict.order.isPickUpInStore ? 'active' : ''} card-block"
                 id="shipping-address" class="shipping-address" role="tabpanel">
-            <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('Checkout-SubmitShipping')}" class="address" data-address-mode="${pdict.order.shipping[0].matchingAddressId ? 'edit' : 'new'}" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
+            <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('CheckoutShippingServices-SubmitShipping')}" class="address" data-address-mode="${pdict.order.shipping[0].matchingAddressId ? 'edit' : 'new'}" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
                 <input name="shipmentUUID" type="hidden" value="${pdict.order.shipping[0].UUID}" />
                 <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
 
