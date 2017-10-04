@@ -1,7 +1,6 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
-var jsonHelpers = require('../helpers/jsonUtils');
 var chai = require('chai');
 var chaiSubset = require('chai-subset');
 chai.use(chaiSubset);
@@ -29,26 +28,8 @@ describe('Cart: Selecting Shipping Methods', function () {
 
     var cookieString;
 
-    // This is not a complete expected response as properties 'totals', 'selectedShippingMethod' have different
-    // values depending on on the selected shipping method and thus they are not included here.
-    // Leaving the commented out 'src' property here for reference because it should be included in the
-    // 'image' property in the response but the string can not be used for comparison as it because
-    // the path has randomly generated code.
     var expectedResponseCommon = {
         'action': 'Cart-SelectShippingMethod',
-        'valid': {
-            'error': false,
-            'message': null
-        },
-        'actionUrls': {
-            'removeCouponLineItem': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveCouponLineItem',
-            'removeProductLineItemUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveProductLineItem',
-            'updateQuantityUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-UpdateQuantity',
-            'submitCouponCodeUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-AddCoupon',
-            'selectShippingUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-SelectShippingMethod'
-        },
-        'approachingDiscounts': [],
-        'hasBonusProduct': false,
         'numOfShipments': 1,
         'shipments': [
             {
@@ -90,130 +71,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                     }
                 ]
             }
-        ],
-        'items': [
-            {
-                'id': '740357440196',
-                'productName': 'Prancer',
-                'price': {
-                    'list': null,
-                    'sales': {
-                        'currency': 'USD',
-                        'formatted': '$99.00',
-                        'value': 99
-                    }
-                },
-                'productType': 'variant',
-                'images': {
-                    'small': [{
-                        'alt': 'Prancer, Pink, small',
-                        'title': 'Prancer, Pink',
-                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwd56b7098/images/small/PG.CJPRANCER.LPNKMPA.PZ.jpg'
-                    }]
-                },
-                'rating': 1,
-                'renderedPromotions': '',
-                'variationAttributes': [
-                    {
-                        'attributeId': 'color',
-                        'displayName': 'Color',
-                        'displayValue': 'Pink',
-                        'id': 'color'
-                    },
-                    {
-                        'attributeId': 'size',
-                        'displayName': 'Size',
-                        'displayValue': '7.5',
-                        'id': 'size'
-                    },
-                    {
-                        'attributeId': 'width',
-                        'displayName': 'Width',
-                        'displayValue': 'M',
-                        'id': 'width'
-                    }
-                ],
-                'quantityOptions': {
-                    'minOrderQuantity': 1,
-                    'maxOrderQuantity': 10
-                },
-
-                'priceTotal': {
-                    'price': '$99.00',
-                    'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$99.00</div>\n\n'
-                },
-                'promotions': null,
-                'isBonusProductLineItem': false,
-                'isGift': false,
-                'UUID': '',
-                'attributes': null,
-                'availability': {
-                    'inStockDate': null,
-                    'messages': ['In Stock']
-                },
-                'quantity': 1,
-                'isOrderable': true,
-                'options': [],
-                'isAvailableForInStorePickup': false
-            },
-            {
-                'id': '013742335538',
-                'productName': 'Light Hematite Bracelet',
-                'price': {
-                    'list': null,
-                    'sales': {
-                        'currency': 'USD',
-                        'formatted': '$40.00',
-                        'value': 40
-                    }
-                },
-                'productType': 'variant',
-                'images': {
-                    'small': [{
-                        'alt': 'Light Hematite Bracelet, Hematite, small',
-                        'title': 'Light Hematite Bracelet, Hematite',
-                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw2351fe8c/images/small/PG.54055310VC.HEMATML.PZ.jpg'
-                    }]
-                },
-                'rating': 0,
-                'renderedPromotions': '',
-                'variationAttributes': [
-                    {
-                        'attributeId': 'color',
-                        'displayName': 'Color',
-                        'displayValue': 'Hematite',
-                        'id': 'color'
-                    }
-                ],
-                'quantityOptions': {
-                    'minOrderQuantity': 1,
-                    'maxOrderQuantity': 10
-                },
-                'priceTotal': {
-                    'price': '$40.00',
-                    'renderedPrice': '\n\n\n<div class="strike-through\nnon-adjusted-price"\n>\n    null\n</div>\n<div class="pricing line-item-total-price-amount item-total-null">$40.00</div>\n\n'
-                },
-                'promotions': null,
-                'isBonusProductLineItem': false,
-                'isGift': false,
-                'UUID': '',
-                'attributes': null,
-                'availability': {
-                    'inStockDate': null,
-                    'messages': ['In Stock']
-                },
-                'quantity': 1,
-                'isOrderable': true,
-                'options': [],
-                'isAvailableForInStorePickup': false
-            }
-        ],
-        'numItems': 2,
-        'locale': 'en_US',
-        'resources': {
-            'numberOfItems': '2 Items',
-            'emptyCartMsg': 'Your Shopping Cart is Empty'
-        }
+        ]
     };
 
     before(function () {
@@ -242,14 +100,6 @@ describe('Cart: Selecting Shipping Methods', function () {
                 cookieJar.setCookie(cookie, myRequest.url);
 
                 return request(myRequest);
-            })
-
-            // ----- Get UUID information
-            .then(function (response) {
-                var bodyAsJson = JSON.parse(response.body);
-
-                expectedResponseCommon.items[0].UUID = bodyAsJson.cart.items[0].UUID;
-                expectedResponseCommon.items[1].UUID = bodyAsJson.cart.items[1].UUID;
             });
     });
 
@@ -282,12 +132,9 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
-
-                assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
-                assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
-                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId, 'Actual response selectedShippingMethod not as expected.');
+                assert.containSubset(bodyAsJson, expectedResponseCommon, 'Actual response not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals);
+                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId);
             });
     });
 
@@ -319,13 +166,8 @@ describe('Cart: Selecting Shipping Methods', function () {
                 assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
 
                 var bodyAsJson = JSON.parse(response.body);
-
-                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
-
-                assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
-                assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
-                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId, 'Actual response selectedShippingMethod not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals);
+                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId);
             });
     });
 
@@ -358,9 +200,8 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response not as expected.');
-                assert.deepEqual(bodyAsJson.shippingMethods, expectedResponseCommon.shippingMethods, 'Actual response not as expected.');
-                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId, 'Actual response not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals, 'Actual response not as expected.');
+                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId);
             });
     });
 
@@ -393,12 +234,8 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
-
-                assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
-                assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
-                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId, 'Actual response selectedShippingMethod not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals);
+                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId);
             });
     });
 
@@ -431,12 +268,8 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
-
-                assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
-                assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
-                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId, 'Actual response selectedShippingMethod not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals);
+                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId);
             });
     });
 
@@ -469,9 +302,8 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                assert.containSubset(bodyAsJson, expectedResponseCommon, 'Actual response not as expected.');
-                assert.containSubset(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
-                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId, 'Actual response selectedShippingMethod not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals);
+                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, shipMethodId);
             });
     });
 
@@ -505,12 +337,8 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
-
-                assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
-                assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
-                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, groundShipMethodId, 'Actual response selectedShippingMethod not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals);
+                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, groundShipMethodId);
             });
     });
 
@@ -544,12 +372,8 @@ describe('Cart: Selecting Shipping Methods', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
 
-                // ----- strip out all 'totals', 'selectedShippingMethod' properties from the actual response
-                var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['src', 'totals', 'selectedShippingMethod', 'selected', 'default', 'queryString']);
-
-                assert.deepEqual(actualRespBodyStripped, expectedResponseCommon, 'Actual response not as expected.');
-                assert.deepEqual(bodyAsJson.totals, expectTotals, 'Actual response total not as expected.');
-                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, groundShipMethodId, 'Actual response selectedShippingMethod not as expected.');
+                assert.containSubset(bodyAsJson.totals, expectTotals);
+                assert.equal(bodyAsJson.shipments[0].selectedShippingMethod, groundShipMethodId);
             });
     });
 });
