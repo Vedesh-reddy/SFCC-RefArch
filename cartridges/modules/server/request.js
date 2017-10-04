@@ -270,7 +270,10 @@ function getRequestBodyAsString(request) {
  * @param {dw.system.Session} session - Global session object
  */
 function Request(request, customer, session) {
-    setCurrency(request, session);
+    // Avoid currency check for remote includes
+    if (!request.includeRequest) {
+        setCurrency(request, session);
+    }
 
     this.httpMethod = request.httpMethod;
     this.host = request.httpHost;
