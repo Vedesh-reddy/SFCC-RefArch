@@ -8,19 +8,22 @@ var Response = require('./response');
 var Route = require('./route');
 var render = require('./render');
 
+var rq = new Request(
+    typeof request !== 'undefined' ? request : {},
+    typeof customer !== 'undefined' ? customer : {},
+    typeof session !== 'undefined' ? session : {});
+
 //--------------------------------------------------
 // Private helpers
 //--------------------------------------------------
 
 /**
  * Validate that first item is a string and all of the following items are functions
- * @param {Array} args - Arguments that were passed into function
+ * @param {string} name - Arguments that were passed into function
+ * @param {Array} middlewareChain - middleware chain
  * @returns {void}
  */
-function checkParams(args) {
-    var middlewareChain = args.slice(1);
-    var name = args[0];
-
+function checkParams(name, middlewareChain) {
     if (typeof name !== 'string') {
         throw new Error('First argument should be a string');
     }
@@ -52,14 +55,9 @@ Server.prototype = {
     use: function use(name) {
         var args = Array.isArray(arguments) ? arguments : Array.prototype.slice.call(arguments);
         var middlewareChain = args.slice(1);
-        var rq =
-            new Request(typeof request !== 'undefined' ? request : {},
-            typeof customer !== 'undefined' ? customer : {},
-            typeof session !== 'undefined' ? session : {}
-            );
-        var rs = new Response(typeof response !== 'undefined' ? response : {});
+        checkParams(args[0], middlewareChain);
 
-        checkParams(args);
+        var rs = new Response(typeof response !== 'undefined' ? response : {});
 
         if (this.routes[name]) {
             throw new Error('Route with this name already exists');
@@ -173,7 +171,7 @@ Server.prototype = {
         var args = Array.prototype.slice.call(arguments);
         var middlewareChain = Array.prototype.slice.call(arguments, 1);
 
-        checkParams(args);
+        checkParams(args[0], middlewareChain);
 
         if (!this.routes[name]) {
             throw new Error('Route with this name does not exist');
@@ -190,7 +188,7 @@ Server.prototype = {
         var args = Array.prototype.slice.call(arguments);
         var middlewareChain = Array.prototype.slice.call(arguments, 1);
 
-        checkParams(args);
+        checkParams(args[0], middlewareChain);
 
         if (!this.routes[name]) {
             throw new Error('Route with this name does not exist');
@@ -207,8 +205,8 @@ Server.prototype = {
      */
     replace: function replace(name) {
         var args = Array.prototype.slice.call(arguments);
-
-        checkParams(args);
+        var middlewareChain = Array.prototype.slice.call(arguments, 1);
+        checkParams(args[0], middlewareChain);
 
         if (!this.routes[name]) {
             throw new Error('Route with this name does not exist');
