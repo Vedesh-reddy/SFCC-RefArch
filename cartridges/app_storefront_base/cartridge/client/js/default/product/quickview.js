@@ -91,6 +91,8 @@ module.exports = {
     },
     colorAttribute: base.colorAttribute,
     selectAttribute: base.selectAttribute,
+    bonusProductSelection: base.bonusProductSelection,
+    bonusProductAttributes: base.bonusProductAttributes,
     availability: base.availability,
     addToCart: base.addToCart,
     showSpinner: function () {

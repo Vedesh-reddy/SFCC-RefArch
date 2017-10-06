@@ -125,8 +125,43 @@
     }
 }
 
-.quick-view-dialog {
+#chooseBonusProductModal {
+    .modal-footer {
+        .container {
+            margin-left: 0;
+            width: 100%;
+            margin-right: 0;
+        }
+    }
+
+    .select-cbp-container {
+        margin-top: auto;
+        margin-bottom: auto;
+    }
+
+    .product-name-wrapper {
+        width: 100%;
+    }
+
+    .bonus-quantity-select {
+        min-width: 4em;
+    }
+}
+
+.quick-view-dialog,
+.choose-bonus-product-dialog {
     max-width: 56.25em;
+
+    .selectable-bonus-product-line-item {
+        margin-top: 0.2em;
+        margin-bottom: 0.2em;
+        padding-top: 0.3em;
+        padding-bottom: 0.3em;
+    }
+
+    .beenSelected {
+        background-color: $grey2;
+    }
 
     .modal-header {
         background-color: $grey2;

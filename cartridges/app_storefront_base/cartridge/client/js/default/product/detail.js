@@ -77,7 +77,8 @@ module.exports = {
     selectAttributes: base.selectAttribute,
 
     colorAttribute: base.colorAttribute,
-
+    bonusProductSelection: base.bonusProductSelection,
+    bonusProductAttributes: base.bonusProductAttributes,
     availability: base.availability,
 
     addToCart: base.addToCart,
