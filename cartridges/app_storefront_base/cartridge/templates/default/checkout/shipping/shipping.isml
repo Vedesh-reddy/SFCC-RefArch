@@ -6,7 +6,7 @@
 
         <div class="card-block form-nav shipping-nav">
             <isif condition="${pdict.order.items.items.length>1}">
-                <form action="${URLUtils.url('Checkout-ToggleMultiShip')}" novalidate>
+                <form action="${URLUtils.url('CheckoutShippingServices-ToggleMultiShip')}" novalidate>
                     <fieldset>
                         <div class="form-check">
                             <label class="form-check-label checkout-checkbox">
@@ -18,7 +18,7 @@
                 </form>
             </isif>
             <ul class="nav nav-tabs nav-fill single-shipping" role="tablist" data-shipping-tab-active="${!pdict.order.isPickUpInStore ? true : false}"
-                data-inventory-list-url="${URLUtils.url('Checkout-ResetInventoryList')}"
+                data-inventory-list-url="${URLUtils.url('CheckoutServices-ResetInventoryList')}"
             >
                 <li class="nav-item">
                     <a class="nav-link shipping-tab ${!pdict.order.isPickUpInStore ? 'active' : ''}" data-toggle="tab" href="#shipping-address" role="tab">${Resource.msg('action.shipping.form', 'checkout', null)}</a>

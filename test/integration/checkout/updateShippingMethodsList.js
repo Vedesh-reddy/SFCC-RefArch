@@ -125,7 +125,7 @@ describe('Select different State in Shipping Form', function () {
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList';
+            myRequest.url = config.baseUrl + '/CheckoutShippingServices-UpdateShippingMethodsList';
             myRequest.form = {
                 'stateCode': 'MA',
                 'postalCode': '09876'
@@ -259,7 +259,7 @@ describe('Select different State in Shipping Form', function () {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList';
+            myRequest.url = config.baseUrl + '/CheckoutShippingServices-UpdateShippingMethodsList';
             myRequest.form = {
                 'stateCode': 'MA',
                 'postalCode': '09876'
@@ -375,7 +375,7 @@ describe('Select different State in Shipping Form', function () {
                 resolveWithFullResponse: true,
                 jar: cookieJar
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList';
+            myRequest.url = config.baseUrl + '/CheckoutShippingServices-UpdateShippingMethodsList';
             myRequest.form = {
                 'stateCode': 'AK',
                 'postalCode': '09876'
@@ -507,7 +507,7 @@ describe('Select different State in Shipping Form', function () {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList';
+            myRequest.url = config.baseUrl + '/CheckoutShippingServices-UpdateShippingMethodsList';
             myRequest.form = {
                 'stateCode': 'MA',
                 'postalCode': '09876'
@@ -639,7 +639,7 @@ describe('Select different State in Shipping Form', function () {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList';
+            myRequest.url = config.baseUrl + '/CheckoutShippingServices-UpdateShippingMethodsList';
             myRequest.form = {
                 'stateCode': 'MA',
                 'postalCode': '09876'
@@ -757,7 +757,7 @@ describe('Select different State in Shipping Form', function () {
                     'X-Requested-With': 'XMLHttpRequest'
                 }
             };
-            myRequest.url = config.baseUrl + '/Checkout-UpdateShippingMethodsList';
+            myRequest.url = config.baseUrl + '/CheckoutShippingServices-UpdateShippingMethodsList';
             myRequest.form = {
                 'stateCode': 'AP',
                 'postalCode': '09876'
