@@ -20,7 +20,7 @@
                                             <div class="row">
                                                 <isset name="isQuickView" value="${false}" scope="page"/>
                                                 <div class="col-12 product-options">
-                                                    <div class="row product-option" data-option-id="${option.id}">
+                                                    <div class="row">
                                                         <div class="col-12">
                                                             <isinclude template="product/components/choiceofbonusproducts/variationAttributeBonusProducts" />
                                                         </div>
