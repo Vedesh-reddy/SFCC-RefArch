@@ -62,15 +62,13 @@ function updateBundleProducts(apiLineItem, childProducts) {
  * @param {dw.util.Collection} previousBonusDiscountLineItems - contains BonusDiscountLineItems
  *                                                              already processed
  * @param {Object} urlObject - Object with data to be used in the choice of bonus products modal
- * @param {string} uuid - BonusDiscountLineItem's uuid to use to attach bonus products
  * @return {Object} - either the object that represents data needed for the choice of
  *                    bonus products modal window or undefined
  */
 function getNewBonusDiscountLineItem(
     currentBasket,
     previousBonusDiscountLineItems,
-    urlObject,
-    uuid) {
+    urlObject) {
     var newBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
     var newBonusDiscountLineItem;
     var result = {};
@@ -86,7 +84,7 @@ function getNewBonusDiscountLineItem(
             result.bonuspids.push(newBProduct.ID);
         }
 
-        result.uuid = uuid;
+        result.uuid = newBonusDiscountLineItem.UUID;
         result.maxBonusItems = newBonusDiscountLineItem.maxBonusItems;
         result.addToCartUrl = urlObject.addToCartUrl;
         result.configureProductstUrl = urlObject.configureProductstUrl;

@@ -97,8 +97,7 @@ server.post('AddProduct', function (req, res, next) {
         cartHelper.getNewBonusDiscountLineItem(
             currentBasket,
             previousBonusDiscountLineItems,
-            urlObject,
-            result.uuid
+            urlObject
     );
 
     res.json({
@@ -578,7 +577,6 @@ server.post('AddBonusProducts', function (req, res, next) {
     var collections = require('*/cartridge/scripts/util/collections');
     var Resource = require('dw/web/Resource');
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
-    var previousBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
     var data = JSON.parse(req.querystring.pids);
     var newBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
     var qtyAllowed = data.totalQty;
@@ -600,7 +598,7 @@ server.post('AddBonusProducts', function (req, res, next) {
         });
     } else {
         var bonusDiscountLineItem = collections.find(newBonusDiscountLineItems, function (item) {
-            return previousBonusDiscountLineItems.contains(item);
+            return item.UUID === req.querystring.uuid;
         });
 
         if (currentBasket) {
