@@ -16,17 +16,16 @@ function getAllBreadcrumbs(cgid, pid, breadcrumbs) {
     var CatalogMgr = require('dw/catalog/CatalogMgr');
     var ProductMgr = require('dw/catalog/ProductMgr');
 
-    var primaryCategory;
+    var category;
     var product;
     if (pid) {
         product = ProductMgr.getProduct(pid);
-        primaryCategory = product.variant
+        category = product.variant
             ? product.masterProduct.primaryCategory
             : product.primaryCategory;
+    } else if (cgid) {
+        category = CatalogMgr.getCategory(cgid);
     }
-    var category = cgid && cgid !== 'root'
-        ? CatalogMgr.getCategory(cgid)
-        : primaryCategory;
 
     if (category) {
         breadcrumbs.push({
@@ -80,7 +79,7 @@ function showProductPage(querystring, res) {
     var params = querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
-    var breadcrumbs = getAllBreadcrumbs(querystring.cgid, product.id, []).reverse();
+    var breadcrumbs = getAllBreadcrumbs(null, product.id, []).reverse();
     var template = 'product/productDetails';
 
     if (product.productType === 'bundle') {
@@ -159,19 +158,14 @@ server.get('ShowTile', cache.applyPromotionSensitiveCache, function (req, res, n
     var product;
     var productUrl;
     var quickViewUrl;
-    var cgid = req.querystring.cgid;
 
     // TODO: remove this logic once the Product factory is
     // able to handle the different product types
     try {
         product = ProductFactory.get(productTileParams);
-        productUrl = cgid ?
-            URLUtils.url('Product-Show', 'pid', product.id, 'cgid', cgid).relative().toString() :
-            URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
-        quickViewUrl = cgid ?
-            URLUtils.url('Product-ShowQuickView', 'pid', product.id, 'cgid', cgid)
-                .relative().toString() :
-            URLUtils.url('Product-ShowQuickView', 'pid', product.id).relative().toString();
+        productUrl = URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
+        quickViewUrl = URLUtils.url('Product-ShowQuickView', 'pid', product.id)
+            .relative().toString();
     } catch (e) {
         product = false;
         productUrl = URLUtils.url('Home-Show');// TODO: change to coming soon page
