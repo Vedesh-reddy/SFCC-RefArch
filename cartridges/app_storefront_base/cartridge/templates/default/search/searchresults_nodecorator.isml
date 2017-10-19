@@ -67,7 +67,7 @@
                     <!--- Refinement bar --->
                     <div class="row">
                         <div class="refinement-bar col-md-3">
-                            <isinclude url="${URLUtils.url('Search-Refinebar')}"/>
+                            <isinclude url="${pdict.refineurl}"/>
                         </div>
 
                         <div class="col-sm-12 col-md-9">

@@ -74,9 +74,9 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
         CatalogMgr.getSortingOptions(),
         CatalogMgr.getSiteCatalog().getRoot()
     );
-
     res.render('/search/searchrefinebar', {
         productSearch: productSearch,
+        querystring:req.querystring
     });
 
     next();
