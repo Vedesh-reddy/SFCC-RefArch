@@ -60,7 +60,30 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
     next();
 });
 
-server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
+server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
+    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+    var ProductSearch = require('*/cartridge/models/search/productSearch');
+
+    var apiProductSearch = new ProductSearchModel();
+    apiProductSearch = setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch.search();
+    var productSearch = new ProductSearch(
+        apiProductSearch,
+        req.querystring,
+        req.querystring.srule,
+        CatalogMgr.getSortingOptions(),
+        CatalogMgr.getSiteCatalog().getRoot()
+    );
+
+    res.render('/search/searchrefinebar', {
+        productSearch: productSearch,
+    });
+
+    next();
+});
+
+
+server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var reportingUrls = require('*/cartridge/scripts/reportingUrls');
@@ -86,6 +109,15 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
+    var refineurl = dw.web.URLUtils.url('Search-Refinebar');
+    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax']
+    var allSubmittedParams = request.httpParameterMap.parameterNames.toArray();
+    allSubmittedParams.forEach(function(element) {
+        if (whitelistedParams.indexOf(element) > -1 || element.indexOf('pref') > -1) {
+            refineurl.append(element, request.httpParameterMap[element].stringValue)
+        }
+    });
+
     if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
         reportingURLs = reportingUrls.getProductSearchReportingURLs(productSearch);
     }
@@ -107,14 +139,16 @@ server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next)
                 productSearch: productSearch,
                 maxSlots: maxSlots,
                 category: apiProductSearch.category,
-                reportingURLs: reportingURLs
+                reportingURLs: reportingURLs,
+                refineurl: refineurl
             });
         }
     } else {
         res.render(resultsTemplate, {
             productSearch: productSearch,
             maxSlots: maxSlots,
-            reportingURLs: reportingURLs
+            reportingURLs: reportingURLs,
+            refineurl: refineurl
         });
     }
 
