@@ -7,7 +7,7 @@
                 style="background-image: url(${category.custom.slotBannerImage.getURL()})"
             </isif>
         >
-            <a href="${URLUtils.http('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
+            <a href="${URLUtils.url('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
                 <h1 class="page-title">
                     <isprint value="${category.displayName}" encoding="off"/>
                 </h1>

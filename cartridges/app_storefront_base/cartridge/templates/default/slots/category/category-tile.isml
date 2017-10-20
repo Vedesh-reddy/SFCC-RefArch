@@ -11,7 +11,7 @@
             <isloop items="${slotcontent.content}" var="category">
                 <isif condition="${'slotBannerImage' in category.custom && category.custom.slotBannerImage}">
                     <div class="col-sm-6 col-md-4 category-item">
-                        <a href="${URLUtils.http('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
+                        <a href="${URLUtils.url('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
                             <div class="category-tile">
                                 <img class="img-fluid" src="${category.custom.slotBannerImage.getURL()}" alt="${category.displayName}"/>
                                 <h3>

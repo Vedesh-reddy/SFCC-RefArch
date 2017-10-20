@@ -11,7 +11,7 @@ var URLUtils = require('dw/web/URLUtils');
 function getCategoryUrl(category) {
     return category.custom && 'alternativeUrl' in category.custom && category.custom.alternativeUrl
         ? category.custom.alternativeUrl
-        : URLUtils.http('Search-Show', 'cgid', category.getID()).toString();
+        : URLUtils.url('Search-Show', 'cgid', category.getID()).toString();
 }
 
 /**
