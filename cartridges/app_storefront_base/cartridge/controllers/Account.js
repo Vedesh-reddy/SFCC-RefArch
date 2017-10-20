@@ -172,7 +172,7 @@ server.post(
             return next();
         }
 
-        var email = req.form.loginEmail;
+        var email = req.form.loginEmail.toLowerCase();
         var password = req.form.loginPassword;
         var rememberMe = req.form.loginRememberMe
             ? (!!req.form.loginRememberMe)
@@ -250,8 +250,8 @@ server.post(
             firstName: registrationForm.customer.firstname.value,
             lastName: registrationForm.customer.lastname.value,
             phone: registrationForm.customer.phone.value,
-            email: registrationForm.customer.email.value,
-            emailConfirm: registrationForm.customer.emailconfirm.value,
+            email: registrationForm.customer.email.value.toLowerCase(),
+            emailConfirm: registrationForm.customer.emailconfirm.value.toLowerCase(),
             password: registrationForm.login.password.value,
             passwordConfirm: registrationForm.login.passwordconfirm.value,
             validForm: registrationForm.valid,
@@ -392,8 +392,8 @@ server.post(
             firstName: profileForm.customer.firstname.value,
             lastName: profileForm.customer.lastname.value,
             phone: profileForm.customer.phone.value,
-            email: profileForm.customer.email.value,
-            confirmEmail: profileForm.customer.emailconfirm.value,
+            email: profileForm.customer.email.value.toLowerCase(),
+            confirmEmail: profileForm.customer.emailconfirm.value.toLowerCase(),
             password: profileForm.login.password.value,
             profileForm: profileForm
         };
@@ -562,7 +562,7 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
     var Resource = require('dw/web/Resource');
     var URLUtils = require('dw/web/URLUtils');
 
-    var email = req.form.loginEmail;
+    var email = req.form.loginEmail.toLowerCase();
     var errorMsg;
     var isValid;
     var resettingCustomer;
