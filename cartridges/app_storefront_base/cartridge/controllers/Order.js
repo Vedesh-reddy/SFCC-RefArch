@@ -130,7 +130,7 @@ server.get(
                     : Resource.msg('link.orderdetails.myaccount', 'account', null);
 
                 exitLinkUrl = !req.currentCustomer.profile
-                    ? URLUtils.https('Home-Show')
+                    ? URLUtils.url('Home-Show')
                     : URLUtils.https('Account-Show');
 
                 res.render('account/orderdetails', {
