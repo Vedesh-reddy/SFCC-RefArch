@@ -5,7 +5,7 @@ var ArrayList = require('../../../mocks/dw.util.Collection');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 var urlUtilsMock = {
-    http: function (a, b, id) {
+    url: function (a, b, id) {
         return id;
     }
 };
