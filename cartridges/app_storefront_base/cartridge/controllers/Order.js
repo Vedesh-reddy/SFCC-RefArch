@@ -112,7 +112,8 @@ server.get(
             );
 
             // check the email and postal code of the form
-            if (req.querystring.trackOrderEmail.toLowerCase() !== orderModel.orderEmail) {
+            if (req.querystring.trackOrderEmail.toLowerCase()
+                    !== orderModel.orderEmail.toLowerCase()) {
                 validForm = false;
             }
 
