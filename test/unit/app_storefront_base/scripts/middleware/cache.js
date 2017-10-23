@@ -37,8 +37,8 @@ describe('middleware', function () {
     });
     it('Should set the varyby value to price_promotion', function () {
         cacheMiddleware.applyPromotionSensitiveCache(null, res, next);
-        assert.isTrue(res.cachePeriod === 30);
-        assert.isTrue(res.cachePeriodUnit === 'minutes');
+        assert.isTrue(res.cachePeriod === 24);
+        assert.isTrue(res.cachePeriodUnit === 'hours');
         assert.isTrue(res.personalized);
     });
 });

@@ -21,8 +21,22 @@ function applyDefaultCache(req, res, next) {
  * @returns {void}
 */
 function applyPromotionSensitiveCache(req, res, next) {
-    res.cachePeriod = 30; // eslint-disable-line no-param-reassign
-    res.cachePeriodUnit = 'minutes'; // eslint-disable-line no-param-reassign
+    res.cachePeriod = 24; // eslint-disable-line no-param-reassign
+    res.cachePeriodUnit = 'hours'; // eslint-disable-line no-param-reassign
+    res.personalized = true; // eslint-disable-line no-param-reassign
+    next();
+}
+
+/**
+ * Applies the default price promotion page cache.
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ * @param {Function} next - Next call in the middleware chain
+ * @returns {void}
+ */
+function applyShortPromotionSensitiveCache(req, res, next) {
+    res.cachePeriod = 1; // eslint-disable-line no-param-reassign
+    res.cachePeriodUnit = 'hours'; // eslint-disable-line no-param-reassign
     res.personalized = true; // eslint-disable-line no-param-reassign
     next();
 }
@@ -43,5 +57,6 @@ function applyInventorySensitiveCache(req, res, next) {
 module.exports = {
     applyDefaultCache: applyDefaultCache,
     applyPromotionSensitiveCache: applyPromotionSensitiveCache,
-    applyInventorySensitiveCache: applyInventorySensitiveCache
+    applyInventorySensitiveCache: applyInventorySensitiveCache,
+    applyShortPromotionSensitiveCache: applyShortPromotionSensitiveCache
 };
