@@ -76,7 +76,7 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
     );
     res.render('/search/searchrefinebar', {
         productSearch: productSearch,
-        querystring:req.querystring
+        querystring: req.querystring
     });
 
     next();
@@ -87,6 +87,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+    var URLUtils = require('dw/web/URLUtils');
 
     var categoryTemplate = '';
     var productSearch;
@@ -109,12 +110,11 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
-    var refineurl = dw.web.URLUtils.url('Search-Refinebar');
-    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax']
-    var allSubmittedParams = request.httpParameterMap.parameterNames.toArray();
-    allSubmittedParams.forEach(function(element) {
+    var refineurl = URLUtils.url('Search-Refinebar');
+    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax'];
+    Object.keys(req.querystring).forEach(function (element) {
         if (whitelistedParams.indexOf(element) > -1 || element.indexOf('pref') > -1) {
-            refineurl.append(element, request.httpParameterMap[element].stringValue)
+            refineurl.append(element, req.querystring[element]);
         }
     });
 
