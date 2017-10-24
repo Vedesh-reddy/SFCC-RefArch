@@ -438,6 +438,19 @@ server.post(
                         redirectUrl: URLUtils.url('Account-Show').toString()
                     });
                 } else {
+                    var existingCustomer = CustomerMgr.getCustomerByLogin(formInfo.email);
+
+                    // Check if the edited email is already in use by another customer
+                    if (existingCustomer) {
+                        formInfo.profileForm.customer.email.valid = false;
+                        formInfo.profileForm.customer.email.error =
+                            Resource.msg('error.message.username.taken', 'forms', null);
+                    } else {
+                        formInfo.profileForm.login.password.valid = false;
+                        formInfo.profileForm.login.password.error =
+                            Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
+                    }
+
                     res.json({
                         success: false,
                         fields: formErrors(profileForm)
