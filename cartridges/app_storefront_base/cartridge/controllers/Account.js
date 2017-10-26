@@ -299,7 +299,7 @@ server.post(
                         registrationForm.validForm = false;
                         registrationForm.form.customer.email.valid = false;
                         registrationForm.form.customer.email.error =
-                            Resource.msg('error.message.username.taken', 'forms', null);
+                            Resource.msg('error.message.username.invalid', 'forms', null);
                     }
                 }
 
@@ -409,21 +409,20 @@ server.post(
                 var customerLogin;
                 var status;
                 Transaction.wrap(function () {
-                    status = customer.profile.credentials.setPassword(
-                        formInfo.password,
-                        formInfo.password,
-                        true
+                    status = profile.credentials.setPassword(
+                            formInfo.password,
+                            formInfo.password,
+                            true
                     );
-                    if (!status.error) {
-                        customerLogin = profile.credentials.setLogin(
-                            formInfo.email,
-                            formInfo.password
-                        );
-                    } else {
-                        customerLogin = false;
+                    if (status.error) {
                         formInfo.profileForm.login.password.valid = false;
                         formInfo.profileForm.login.password.error =
                             Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
+                    } else {
+                        customerLogin = profile.credentials.setLogin(
+                                formInfo.email,
+                                formInfo.password
+                        );
                     }
                 });
                 if (customerLogin) {
@@ -438,19 +437,11 @@ server.post(
                         redirectUrl: URLUtils.url('Account-Show').toString()
                     });
                 } else {
-                    var existingCustomer = CustomerMgr.getCustomerByLogin(formInfo.email);
-
-                    // Check if the edited email is already in use by another customer
-                    if (existingCustomer) {
+                    if (!status.error) {
                         formInfo.profileForm.customer.email.valid = false;
                         formInfo.profileForm.customer.email.error =
-                            Resource.msg('error.message.username.taken', 'forms', null);
-                    } else {
-                        formInfo.profileForm.login.password.valid = false;
-                        formInfo.profileForm.login.password.error =
-                            Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
+                            Resource.msg('error.message.username.invalid', 'forms', null);
                     }
-
                     res.json({
                         success: false,
                         fields: formErrors(profileForm)
