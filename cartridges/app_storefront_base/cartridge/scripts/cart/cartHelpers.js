@@ -267,6 +267,7 @@ function getMatchingProducts(productId, productLineItems) {
 function addProductToCart(currentBasket, productId, quantity, childProducts, options) {
     var availableToSell;
     var defaultShipment = currentBasket.defaultShipment;
+    var perpetual;
     var product = ProductMgr.getProduct(productId);
     var productInCart;
     var productLineItems = currentBasket.productLineItems;
@@ -298,7 +299,10 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
         });
     } else {
         totalQtyRequested = quantity + getQtyAlreadyInCart(productId, productLineItems);
-        canBeAdded = totalQtyRequested <= product.availabilityModel.inventoryRecord.ATS.value;
+        perpetual = product.availabilityModel.inventoryRecord.perpetual;
+        canBeAdded =
+            (perpetual
+            || totalQtyRequested <= product.availabilityModel.inventoryRecord.ATS.value);
     }
 
     if (!canBeAdded) {
@@ -325,7 +329,7 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
         quantityToSet = quantity ? quantity + productQuantityInCart : productQuantityInCart + 1;
         availableToSell = productInCart.product.availabilityModel.inventoryRecord.ATS.value;
 
-        if (availableToSell >= quantityToSet) {
+        if (availableToSell >= quantityToSet || perpetual) {
             productInCart.setQuantityValue(quantityToSet);
             result.uuid = productInCart.UUID;
         } else {
