@@ -97,6 +97,14 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
     var apiProductSearch = new ProductSearchModel();
     var maxSlots = 4;
     var reportingURLs;
+    var searchRedirect = req.querystring.q
+        ? apiProductSearch.getSearchRedirect(req.querystring.q)
+        : null;
+
+    if (searchRedirect) {
+        res.redirect(searchRedirect.getLocation());
+        return next();
+    }
 
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
@@ -152,7 +160,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
         });
     }
 
-    next();
+    return next();
 });
 
 server.get('Content', cache.applyDefaultCache, function (req, res, next) {
