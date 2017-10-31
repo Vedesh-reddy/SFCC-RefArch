@@ -1,4 +1,5 @@
 <div class="product-tile">
+    <!-- dwMarker="product" dwContentID="${product.uuid}" -->
     <isinclude template="product/components/productTileImage" />
     <div class="tile-body">
         <isif condition="${pdict.display.swatches !== false}">
@@ -18,4 +19,5 @@
             <isinclude template="product/productTileFooter" />
         </isif>
     </div>
+    <!-- END_dwmarker -->
 </div>

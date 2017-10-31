@@ -283,6 +283,7 @@ ProductBase.prototype = {
         this.promotions = this.apiPromotions ? getPromotions(this.apiPromotions) : null;
         this.attributes = getAttributes(this.product);
         this.availability = getProductAvailability(this.quantity, this.product);
+        this.uuid = this.product.UUID;
     },
     /**
      * Normalize product and return Product variation model
@@ -317,7 +318,8 @@ function ProductWrapper(product, productVariables, promotions) {
         'variationAttributes',
         'promotions',
         'attributes',
-        'availability'
+        'availability',
+        'uuid'
     ];
 
     items.forEach(function (item) {
