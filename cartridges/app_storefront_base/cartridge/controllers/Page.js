@@ -40,21 +40,12 @@ server.get(
     function (req, res, next) {
         var catalogMgr = require('dw/catalog/CatalogMgr');
         var Categories = require('*/cartridge/models/categories');
-        var ProductSearch = require('dw/catalog/ProductSearchModel');
-        var collections = require('*/cartridge/scripts/util/collections');
         var siteRootCategory = catalogMgr.getSiteCatalog().getRoot();
-        var ps = new ProductSearch();
-        var topLevelCategories = null;
-        var categories = null;
 
-        ps.setCategoryID(siteRootCategory.getID());
-        ps.search();
-        topLevelCategories =
-            ps.getRefinements().getNextLevelCategoryRefinementValues(siteRootCategory);
-        categories = collections.map(topLevelCategories, function (item) {
-            return catalogMgr.getCategory(item.value);
-        });
-        res.render('/components/header/menu', new Categories(categories));
+        var topLevelCategories = siteRootCategory.hasOnlineSubCategories() ?
+                siteRootCategory.getOnlineSubCategories() : null;
+
+        res.render('/components/header/menu', new Categories(topLevelCategories));
         next();
     }
 );
