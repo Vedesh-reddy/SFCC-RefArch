@@ -26,7 +26,7 @@
     <field formid="country" label="label.input.country" type="string" mandatory="true" binding="countryCode"
            missing-error="error.message.required">
         <options>
-            <option optionid="jp" label="select.option.country.japan" value="jp"/>
+            <option optionid="JP" label="select.option.country.japan" value="JP"/>
         </options>
     </field>
 
