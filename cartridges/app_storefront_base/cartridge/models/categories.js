@@ -28,11 +28,15 @@ function categoryToObject(category) {
         url: getCategoryUrl(category),
         id: category.ID
     };
-    var subCategories = category.getOnlineSubCategories();
+    var subCategories = category.hasOnlineSubCategories() ?
+            category.getOnlineSubCategories() : null;
 
-    if (subCategories.getLength() > 0) {
+    if (subCategories) {
         collections.forEach(subCategories, function (subcategory) {
-            var converted = categoryToObject(subcategory);
+            var converted = null;
+            if (subcategory.hasOnlineProducts() || subcategory.hasOnlineSubCategories()) {
+                converted = categoryToObject(subcategory);
+            }
             if (converted) {
                 if (!result.subCategories) {
                     result.subCategories = [];
@@ -53,13 +57,14 @@ function categoryToObject(category) {
 
 /**
  * Represents a single category with all of it's children
- * @param {Array.<dw.catalog.Category>} items - Top level categories
+ * @param {dw.util.ArrayList <dw.catalog.Category>} items - Top level categories
  * @constructor
  */
 function categories(items) {
     this.categories = [];
-    items.forEach(function (item) {
-        if (item.custom && item.custom.showInMenu) {
+    collections.forEach(items, function (item) {
+        if (item.custom && item.custom.showInMenu &&
+                (item.hasOnlineProducts() || item.hasOnlineSubCategories())) {
             this.categories.push(categoryToObject(item));
         }
     }, this);
