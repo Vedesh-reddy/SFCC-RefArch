@@ -121,8 +121,16 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
     var refineurl = URLUtils.url('Search-Refinebar');
     var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax'];
     Object.keys(req.querystring).forEach(function (element) {
-        if (whitelistedParams.indexOf(element) > -1 || element.indexOf('pref') > -1) {
+        if (whitelistedParams.indexOf(element) > -1) {
             refineurl.append(element, req.querystring[element]);
+        }
+        if (element === 'preferences') {
+            var i = 1;
+            Object.keys(req.querystring[element]).forEach(function (preference) {
+                refineurl.append('prefn' + i, preference);
+                refineurl.append('prefv' + i, req.querystring[element][preference]);
+                i++;
+            });
         }
     });
 
@@ -140,7 +148,8 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
             res.render(resultsTemplate, {
                 productSearch: productSearch,
                 maxSlots: maxSlots,
-                reportingURLs: reportingURLs
+                reportingURLs: reportingURLs,
+                refineurl: refineurl
             });
         } else {
             res.render(categoryTemplate, {
