@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="row hidden-sm-up">
+        <div class="row d-sm-none">
             <div class="col-12">
                 <span class="grand-total-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.order.items.totalQuantity)}</span>
                 <span class="grand-total-price">${pdict.order.totals.subTotal}</span>

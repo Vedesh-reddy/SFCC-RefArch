@@ -1,7 +1,7 @@
 <!--- Close button --->
 <div class="filter-header">
-    <div class="header-bar hidden-md-up clearfix">
-        <div class="pull-left hidden-md-up result-count">
+    <div class="header-bar d-md-none clearfix">
+        <div class="pull-left d-md-none result-count">
             <isinclude template="search/results-count" />
         </div>
         <button class="pull-right close">

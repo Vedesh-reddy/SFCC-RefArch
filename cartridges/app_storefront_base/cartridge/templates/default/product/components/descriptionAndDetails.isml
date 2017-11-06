@@ -4,7 +4,7 @@
     </div>
 
     <isif condition="${product.attributes && product.attributes.length}">
-        <hr class="hidden-sm-up">
+        <hr class="d-sm-none">
     </isif>
 
     <div class="row description collapsable-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
@@ -15,7 +15,7 @@
     </div>
 
     <isif condition="${product.longDescription}">
-        <hr class="hidden-sm-up">
+        <hr class="d-sm-none">
     </isif>
 
     <div class="row details collapsable-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">

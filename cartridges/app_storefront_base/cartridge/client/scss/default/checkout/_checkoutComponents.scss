@@ -1,3 +1,4 @@
+@import "bootstrap/scss/functions";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 
@@ -156,7 +157,7 @@ $stored-payment-spacing: 1rem;
 }
 
 .selected-payment {
-    background-color: $gray-lighter;
+    background-color: $gray-200;
 }
 
 .saved-security-code {

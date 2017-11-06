@@ -7,7 +7,7 @@
         </a>
     </div>
     <!--  mobile devices guest user to login -->
-    <li class="nav-item hidden-lg-up" role="menuitem">
+    <li class="nav-item d-lg-none" role="menuitem">
         <a href="${URLUtils.https('Login-Show')}" class="nav-link">
             <i class="fa fa-sign-in" aria-hidden="true"></i>
             <span class="user-message">${Resource.msg('link.header.login', 'account', null)}</span>
@@ -24,7 +24,7 @@
         </div>
     </div>
     <!--  mobile devices login user -->
-    <li class="nav-item hidden-lg-up dropdown" role="menuitem">
+    <li class="nav-item d-lg-none dropdown" role="menuitem">
         <span class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
             <i class="fa fa-sign-in" aria-hidden="true"></i>
             <span class="user-message">${pdict.name}</span>

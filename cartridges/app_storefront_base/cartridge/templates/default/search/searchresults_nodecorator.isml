@@ -55,7 +55,7 @@
                             <isinclude template="search/sort-order-menu" />
                         </div>
 
-                        <div class="col-6 col-sm-3 text-right hidden-md-up">
+                        <div class="col-6 col-sm-3 text-right d-md-none">
                             <button type="button" class="btn btn-primary filter-results col-12">
                                 ${Resource.msg('button.filter', 'search', null)}
                             </button>
@@ -73,7 +73,7 @@
                         <div class="col-sm-12 col-md-9">
                             <div class="container">
                                 <!--- Selected filters bar --->
-                                <div class="row filter-bar hidden-md-up">
+                                <div class="row filter-bar d-md-none">
                                     <isinclude template="search/filterbar" />
                                 </div>
 

@@ -27,7 +27,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 hidden-lg-up"><hr class="line-item-divider"></div>
+        <div class="col-12 d-lg-none"><hr class="line-item-divider"></div>
         <isinclude template="cart/productCard/cartProductCardProductPrice" />
     </div>
 </div>

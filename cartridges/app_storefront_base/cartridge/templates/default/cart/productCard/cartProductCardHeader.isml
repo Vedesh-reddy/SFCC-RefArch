@@ -6,7 +6,7 @@
         ${lineItem.productName}
     </div>
     <isif condition="${!lineItem.isBonusProductLineItem}"/>
-        <div class="remove-line-item hidden-lg-up">
+        <div class="remove-line-item d-lg-none">
             <button type="button" class="remove-btn remove-product" data-toggle="modal"
                     data-target="#removeProductModal" data-pid="${lineItem.id}"
                     data-name="${lineItem.productName}"

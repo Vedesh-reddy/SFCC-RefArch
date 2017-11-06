@@ -1,6 +1,6 @@
 @import "../variables";
-@import "checkoutComponents";
 @import "bootstrap/scss/variables";
+@import "checkoutComponents";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "../components/formFields";
 @import "../components/creditCardField";
@@ -394,7 +394,7 @@ span.ship-to-city-st-zip {
 
     .striped {
         > div:nth-of-type(odd) {
-            background-color: $table-bg-accent;
+            background-color: $table-accent-bg;
         }
     }
 }

@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-12 hidden-sm-up">
+    <div class="col-12 d-sm-none">
         <p class="optional-promo">${Resource.msg('action.enter.promo.code','cart',null)}</p>
     </div>
 </div>

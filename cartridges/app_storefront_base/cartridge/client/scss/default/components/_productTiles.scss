@@ -200,7 +200,7 @@
         cursor: not-allowed;
 
         &.color-value.selected::after {
-            background-color: $gray-light;
+            background-color: $gray-700;
         }
     }
 

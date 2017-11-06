@@ -8,7 +8,7 @@
                     <div class="col-12">
                         <!-- Product Name -->
                         <div class="row">
-                            <div class="hidden-md-up col-sm-12">
+                            <div class="d-md-none col-sm-12">
                                 <h3 class="product-name">
                                     <a href="${URLUtils.url('Product-Show', 'pid', product.id)}">
                                         ${product.productName}
@@ -108,7 +108,7 @@
                 </div>
 
                 <isif condition="${product.attributes && product.attributes.length}">
-                    <hr class="hidden-sm-up">
+                    <hr class="d-sm-none">
                 </isif>
 
                 <div class="row description collapsable-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
@@ -119,7 +119,7 @@
                 </div>
 
                 <isif condition="${product.longDescription}">
-                    <hr class="hidden-sm-up">
+                    <hr class="d-sm-none">
                 </isif>
 
                 <div class="row details collapsable-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">

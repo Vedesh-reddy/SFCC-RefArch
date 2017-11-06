@@ -40,7 +40,7 @@
 
     .nav-link {
         font-size: 1.1rem;
-        color: $nav-tabs-active-link-hover-color;
+        color: $nav-tabs-link-hover-border-color;
 
         &.active {
             border-bottom: 0.188em solid $brand-primary;
@@ -57,6 +57,6 @@
 }
 
 dt {
-    color: $gray-light;
+    color: $gray-700;
     font-weight: normal;
 }
