@@ -3,7 +3,7 @@
         <div class="card-header">
             <h4>${Resource.msg('title.save.customer.information', 'confirmation', null)}</h4>
         </div>
-        <div class="card-block">
+        <div class="card-body">
             <form
                 action="${URLUtils.url('Order-CreateAccount', 'ID', pdict.order.orderNumber)}"
                 class="checkout-registration"

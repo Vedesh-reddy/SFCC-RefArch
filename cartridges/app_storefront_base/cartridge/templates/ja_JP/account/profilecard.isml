@@ -3,7 +3,7 @@
         <h4 class="pull-left">${Resource.msg('label.profile','account',null)}</h4>
         <a href="${URLUtils.url('Account-EditProfile')}" class="pull-right">${Resource.msg('link.edit','account',null)}</a>
     </div>
-    <div class="card-block">
+    <div class="card-body">
         <dl>
             <dt>${Resource.msg('label.profile.lastname','account',null)}</dt>
             <dd>${pdict.account.profile.lastName}</dd>

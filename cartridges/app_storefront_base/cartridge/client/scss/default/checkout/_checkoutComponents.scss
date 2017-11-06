@@ -17,7 +17,7 @@ $stored-payment-spacing: 1rem;
     font-weight: $checkout-font-weight;
 }
 
-.checkout-card-block {
+.checkout-card-body {
     padding: 0.625em;
 
     @include media-breakpoint-up(md) {

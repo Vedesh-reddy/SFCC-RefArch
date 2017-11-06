@@ -16,7 +16,7 @@
                     <div class="card-header">
                         <h4>${Resource.msg('label.profile.edit','account',null)}</h4>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <isinclude template="account/editprofileform"/>
                     </div>
                 </div>
