@@ -5,7 +5,7 @@
             <a href="${URLUtils.url('Account-EditProfile')}" class="pull-right">${Resource.msg('link.edit','account',null)}</a>
         </isif>
     </div>
-    <div class="card-block">
+    <div class="card-body">
         <dl>
             <dt>${Resource.msg('label.profile.firstname','account',null)}</dt>
             <dd>${pdict.account.profile.firstName}</dd>

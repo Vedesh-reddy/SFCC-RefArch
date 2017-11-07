@@ -30,7 +30,7 @@
                     <div class="card-header">
                         <isinclude template="storelocator/storelocatorradius" />
                     </div>
-                    <div class="card-block store-locator-no-results">
+                    <div class="card-body store-locator-no-results">
                         <p class="alert alert-danger">${Resource.msg('error.no.results','storelocator',null)}</p>
                     </div>
                     <div class="results" data-search-key="${JSON.stringify(pdict.searchKey)}" data-radius="${pdict.radius}" data-has-results="${pdict.stores.length}">

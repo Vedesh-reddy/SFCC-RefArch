@@ -221,8 +221,8 @@ module.exports = {
             var selectedStoreID = $('input[name=store-id]:checked').attr('value');
             var storeDetailsHtml = $('#' + selectedStoreID + ' .store-details')[0].innerHTML;
 
-            $('.selected-store-with-inventory .card-block').empty();
-            $('.selected-store-with-inventory .card-block').append(storeDetailsHtml);
+            $('.selected-store-with-inventory .card-body').empty();
+            $('.selected-store-with-inventory .card-body').append(storeDetailsHtml);
 
             $('.btn-get-in-store-inventory').hide();
             $('#inStoreInventoryModal').modal('hide');

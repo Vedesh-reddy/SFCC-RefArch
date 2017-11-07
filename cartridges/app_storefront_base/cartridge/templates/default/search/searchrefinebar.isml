@@ -29,7 +29,7 @@
                 <div class="card-header">
                     ${refinement.displayName}
                 </div>
-                <div class="card-block">
+                <div class="card-body">
                     <!--- CATEGORY REFINEMENTS --->
                     <isif condition="${refinement.isCategoryRefinement}">
                         <isset name="categories" value="${refinement.values}" scope="page" />

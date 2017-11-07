@@ -1,4 +1,4 @@
-<div class="card-block">
+<div class="card-body">
     <p>${Resource.msg('msg.find.store','storelocator',null)}</p>
 
     <button type="submit" class="btn btn-primary btn-block btn-lg detect-location" data-action="${pdict.actionUrl}">

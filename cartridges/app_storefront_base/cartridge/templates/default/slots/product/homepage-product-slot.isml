@@ -10,7 +10,7 @@
 
         <isif condition="${loopstate.count == 1}" >
             <div class="card col-6 col-sm-4 hp-product-content">
-                <div class="card-block">
+                <div class="card-body">
                     <iscontentasset aid="home-product-tile-content" />
                 </div>
             </div>

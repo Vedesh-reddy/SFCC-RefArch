@@ -10,7 +10,7 @@
             <a href="${URLUtils.url('Order-Details', 'orderID', order.orderNumber, 'orderFilter', pdict.orderFilter)}" class="pull-right">${Resource.msg('link.view','account',null)}</a>
         </div>
     </isif>
-    <div class="card-block card-info-group">
+    <div class="card-body card-info-group">
         <div class="row">
             <isif condition="${pdict.accountlanding}">
                 <div class="col-12">

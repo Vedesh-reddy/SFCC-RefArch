@@ -25,7 +25,7 @@
                     <div class="card-header">
                         <h4>${Resource.msg('heading.guest.checkout', 'checkout', null)}</h4>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <p>
                             ${Resource.msg('msg.guest.checkout1', 'checkout', null)}
                             ${Resource.msg('msg.guest.checkout2', 'checkout', null)}
@@ -41,7 +41,7 @@
                     <div class="card-header">
                         <h4>${Resource.msg('heading.returning.customers', 'checkout', null)}</h4>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <isinclude template="account/components/loginform" />
                         <isinclude template="account/components/oauth" />
                     </div>
@@ -50,7 +50,7 @@
                     <div class="card-header">
                         <h4>${Resource.msg('heading.create.account', 'checkout', null)}</h4>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <a href="${URLUtils.https('Login-Show', 'action', 'register')}" class="btn btn-block btn-outline-primary">
                             ${Resource.msg('button.create.customer.account', 'checkout', null)}
                         </a>

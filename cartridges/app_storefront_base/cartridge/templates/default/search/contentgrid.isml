@@ -20,7 +20,7 @@
             <div class="card-header clearfix">
                 <h4><a href="${contentAsset.url}">${contentAsset.name}</a></h4>
             </div>
-            <div class="card-block card-info-group">
+            <div class="card-body card-info-group">
                 ${contentAsset.description}
             </div>
         </div>

@@ -6,7 +6,7 @@
         </isif>
     </div>
     <isif condition="${pdict.account.payment}">
-        <div class="card-block card-info-group">
+        <div class="card-body card-info-group">
             <p>${Resource.msg('label.payment.credit','account',null)} ${pdict.account.payment.creditCardType}</p>
             <p>${pdict.account.payment.maskedCreditCardNumber}</p>
             <p>${Resource.msg('label.payment.ending','account',null)} ${pdict.account.payment.creditCardExpirationMonth}/${pdict.account.payment.creditCardExpirationYear}</p>

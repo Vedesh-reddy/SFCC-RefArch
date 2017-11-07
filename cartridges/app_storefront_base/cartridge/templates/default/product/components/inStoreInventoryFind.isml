@@ -1,4 +1,4 @@
-<div class="card-block">
+<div class="card-body">
 
     <div class="container ">
         <h3>${Resource.msg('msg.in.store.inventory.title','storelocator',null)}</h3>

@@ -1,7 +1,7 @@
 <div class="container single-shipping">
     <div class="tab-content">
         <!--- Shipping Address Form--->
-        <div class="tab-pane ${!pdict.order.isPickUpInStore ? 'active' : ''} card-block"
+        <div class="tab-pane ${!pdict.order.isPickUpInStore ? 'active' : ''} card-body"
                 id="shipping-address" class="shipping-address" role="tabpanel">
             <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('CheckoutShippingServices-SubmitShipping')}" class="address" data-address-mode="${pdict.order.shipping[0].matchingAddressId ? 'edit' : 'new'}" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
                 <input name="shipmentUUID" type="hidden" value="${pdict.order.shipping[0].UUID}" />

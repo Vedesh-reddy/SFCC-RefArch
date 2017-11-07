@@ -13,7 +13,7 @@
     </div>
 
     <!-- for placing the selected store details on PDP page-->
-    <div class="card-block">
+    <div class="card-body">
     </div>
 
     <button class="btn btn-secondary btn-block change-store btn-outline-primary" data-action-url="${pdict.pickUpInStore.actionUrl}" type="submit">
