@@ -8,11 +8,6 @@ var Response = require('./response');
 var Route = require('./route');
 var render = require('./render');
 
-var rq = new Request(
-    typeof request !== 'undefined' ? request : {},
-    typeof customer !== 'undefined' ? customer : {},
-    typeof session !== 'undefined' ? session : {});
-
 //--------------------------------------------------
 // Private helpers
 //--------------------------------------------------
@@ -55,6 +50,10 @@ Server.prototype = {
     use: function use(name) {
         var args = Array.isArray(arguments) ? arguments : Array.prototype.slice.call(arguments);
         var middlewareChain = args.slice(1);
+        var rq = new Request(
+            typeof request !== 'undefined' ? request : {},
+            typeof customer !== 'undefined' ? customer : {},
+            typeof session !== 'undefined' ? session : {});
         checkParams(args[0], middlewareChain);
 
         var rs = new Response(typeof response !== 'undefined' ? response : {});

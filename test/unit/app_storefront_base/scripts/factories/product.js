@@ -2,108 +2,434 @@
 
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-var toProductMock = require('../../../../util');
+var ArrayList = require('../../../../mocks/dw.util.Collection');
+var sinon = require('sinon');
 
-describe('productFactory', function () {
-    var getPrimaryCategory = function () {
-        return {
-            custom: {
-                sizeChartID: 7890
-            }
-        };
-    };
+var stubFullProduct = sinon.stub();
+stubFullProduct.returns('full product');
 
-    var getVariationModel = function () {
-        return {
-            getSelectedVariant: function () {
-                return {
-                    getPrimaryCategory: getPrimaryCategory
-                };
-            }
-        };
-    };
+var stubProductSet = sinon.stub();
+stubProductSet.returns('product set');
 
-    var productMgrMock = {
-        getProduct: {
-            return: getVariationModel,
-            type: 'function'
-        }
-    };
+var stubProductBundle = sinon.stub();
+stubProductBundle.returns('product bundle');
 
-    var productModel = function () { this.message = 'full product model'; };
-    productModel.getVariationModel = getVariationModel;
+var stubProductTile = sinon.stub();
+stubProductTile.returns('product tile');
+
+var stubProductLineItem = sinon.stub();
+stubProductLineItem.returns('product line item');
+
+var stubBundleLineItem = sinon.stub();
+stubBundleLineItem.returns('bundle line item');
+
+var productMock = {};
+
+var optionProductLineItems = new ArrayList([]);
+
+describe('Product Factory', function () {
+    var collections = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+        'dw/util/ArrayList': ArrayList
+    });
+
     var productFactory = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/product', {
-        'dw/catalog/ProductMgr': toProductMock(productMgrMock),
-        'dw/campaign/PromotionMgr': {
-            activeCustomerPromotions: { getProductPromotions: function () { return []; } }
+        '*/cartridge/scripts/util/collections': collections,
+        'dw/catalog/ProductMgr': {
+            getProduct: function () {
+                return productMock;
+            }
         },
-        '*/cartridge/models/product/product': productModel,
-        '*/cartridge/models/product/productBase': function () { return { message: 'product base' }; },
-        '*/cartridge/models/productLineItem/productLineItem': function () { return { message: 'productLineItem' }; },
-        '*/cartridge/models/productLineItem/bundleLineItem': function () { return { message: 'bundleLineItem' }; },
-        '*/cartridge/models/product/productBundle': function () { return { message: 'productBundle' }; },
-        '*/cartridge/models/product/productSet': function () { return { message: 'productSet' }; },
-        '*/cartridge/models/product/productSetBase': function () { return { message: 'productSetBase' }; }
+        'dw/campaign/PromotionMgr': {
+            activeCustomerPromotions: {
+                getProductPromotions: function () { return 'promotions'; }
+            }
+        },
+        '*/cartridge/scripts/helpers/productHelpers': {
+            getCurrentOptionModel: function () { return 'optionModel'; }
+        },
+        '*/cartridge/models/product/productTile': stubProductTile,
+        '*/cartridge/models/product/fullProduct': stubFullProduct,
+        '*/cartridge/models/product/productSet': stubProductSet,
+        '*/cartridge/models/product/productBundle': stubProductBundle,
+        '*/cartridge/models/productLineItem/productLineItem': stubProductLineItem,
+        '*/cartridge/models/productLineItem/bundleLineItem': stubBundleLineItem
     });
 
-    it('should return full product model', function () {
-        productModel.getProductType = function () { return 'variant'; };
-        var product = productFactory.get({ pid: 1234 });
-        assert.equal(product.message, 'full product model');
+    beforeEach(function () {
+        productMock = {
+            optionModel: {
+                options: new ArrayList([])
+            },
+            variationModel: {
+                master: false,
+                selectedVariant: false,
+                productVariationAttributes: new ArrayList([{
+                    color: {
+                        ID: 'someID',
+                        value: 'blue'
+                    }
+                }]),
+                getAllValues: function () {
+                    return new ArrayList([{
+                        value: 'someValue'
+                    }]);
+                },
+                setSelectedAttributeValue: function () {},
+                getSelectedVariant: function () {}
+            },
+            master: false,
+            variant: false,
+            variationGroup: false,
+            productSet: false,
+            bundle: false,
+            optionProduct: false
+        };
     });
 
-    it('should return productLineItem model', function () {
-        productModel.getProductType = function () { return 'variant'; };
-        var product = productFactory.get({
-            pid: 1234,
-            pview: 'productLineItem'
-        });
-        assert.equal(product.message, 'productLineItem');
+    it('should return full product model for product type master', function () {
+        var params = {
+            pid: 'someID'
+        };
+        productMock.master = true;
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: null,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'master'
+        };
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
     });
 
-    it('should return productLineItem model', function () {
-        productModel.getProductType = function () { return 'bundle'; };
-        var product = productFactory.get({
-            pid: 1234,
-            pview: 'productLineItem'
-        });
-        assert.equal(product.message, 'bundleLineItem');
+    it('should return full product model for product type variant', function () {
+        var params = {
+            pid: 'someID'
+        };
+        productMock.variant = true;
+
+        var options = {
+            variationModel: null,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'variant'
+        };
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
     });
 
-    it('should return product base', function () {
-        productModel.getProductType = function () { return 'variant'; };
-        var product = productFactory.get({
-            pid: 1234,
+    it('should return full product model for product type variationGroup', function () {
+        var params = {
+            pid: 'someID'
+        };
+        productMock.variationGroup = true;
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: null,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'variationGroup'
+        };
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
+    });
+
+    it('should return full product model for product type optionProduct', function () {
+        var params = {
+            pid: 'someID'
+        };
+        productMock.optionProduct = true;
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: null,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'optionProduct'
+        };
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
+    });
+
+    it('should return full product model for product type standard', function () {
+        var params = {
+            pid: 'someID'
+        };
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: null,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'standard'
+        };
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
+    });
+
+    it('should return set product model for product type productSet', function () {
+        var params = {
+            pid: 'someID'
+        };
+        productMock.productSet = true;
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: null,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'set'
+        };
+
+        assert.equal(result, 'product set');
+        assert.isTrue(stubProductSet.calledWith({}, options.apiProduct, options, productFactory));
+    });
+
+    it('should return bundle product model for product type bundle', function () {
+        var params = {
+            pid: 'someID'
+        };
+        productMock.bundle = true;
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: null,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'bundle'
+        };
+
+        assert.equal(result, 'product bundle');
+        assert.isTrue(stubProductBundle.calledWith({}, options.apiProduct, options, productFactory));
+    });
+
+    it('should return full product model for product type master with variables and variation model type master', function () {
+        var params = {
+            pid: 'someID',
+            variables: {
+                color: {
+                    value: 'blue'
+                }
+            }
+        };
+        productMock.master = true;
+        productMock.variationModel.master = true;
+        productMock.variationModel.productVariationAttributes = new ArrayList([{ ID: 'color' }]);
+        productMock.variationModel.getAllValues = function () {
+            return new ArrayList([{
+                ID: 'someID',
+                value: 'blue'
+            }]);
+        };
+
+        var options = {
+            variationModel: productMock.variationModel,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: { color: { value: 'blue' } },
+            apiProduct: productMock,
+            productType: 'master'
+        };
+
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
+    });
+
+    it('should return full product model for product type master with variables', function () {
+        var params = {
+            pid: 'someID',
+            variables: {
+                color: {
+                    value: null
+                }
+            }
+        };
+        productMock.master = true;
+        productMock.variationModel.master = true;
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: productMock.variationModel,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: { color: { value: null } },
+            apiProduct: productMock,
+            productType: 'master'
+        };
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
+    });
+
+    it('should return full product model for product type master without variables', function () {
+        var params = {
+            pid: 'someID'
+        };
+        productMock.master = true;
+        productMock.variationModel.master = true;
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: productMock.variationModel,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'master'
+        };
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
+    });
+
+    it('should return product tile model', function () {
+        var params = {
+            pid: 'someID',
             pview: 'tile'
-        });
-        assert.equal(product.message, 'product base');
+        };
+        productMock.master = true;
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'product tile');
+        assert.isTrue(stubProductTile.calledWith({}, productMock, 'master'));
     });
 
-    it('should return product bundle model', function () {
-        productModel.getProductType = function () { return 'bundle'; };
+    it('should return product line item model', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'productLineItem',
+            lineItem: {
+                optionProductLineItems: new ArrayList([])
+            }
+        };
+        var result = productFactory.get(params);
 
-        var product = productFactory.get({ pid: 1234 });
-        assert.equal(product.message, 'productBundle');
+        assert.equal(result, 'product line item');
     });
 
-    it('should return product base model for bundle tile view', function () {
-        productModel.getProductType = function () { return 'bundle'; };
+    it('should return product line item model for a line item that has options', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'productLineItem',
+            lineItem: {
+                optionProductLineItems: new ArrayList([{
+                    productName: 'someName'
+                }])
+            }
+        };
+        var result = productFactory.get(params);
 
-        var product = productFactory.get({ pid: 1234, pview: 'tile' });
-        assert.equal(product.message, 'product base');
+        assert.equal(result, 'product line item');
     });
 
-    it('should return product set base model for tile view', function () {
-        productModel.getProductType = function () { return 'set'; };
+    it('should return product line item model for a line item that has options', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'productLineItem',
+            lineItem: {
+                optionProductLineItems: new ArrayList([])
+            }
+        };
 
-        var product = productFactory.get({ pid: 1234, pview: 'tile' });
-        assert.equal(product.message, 'productSetBase');
+        productMock.optionModel = {
+            options: new ArrayList([{ displayName: 'someName' }]),
+            getSelectedOptionValue: function () {
+                return { displayValue: 'someValue' };
+            }
+        };
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'product line item');
     });
 
-    it('should return product set model', function () {
-        productModel.getProductType = function () { return 'set'; };
+    it('should return product line item model when variables are present and lineItem has no options ', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'productLineItem',
+            lineItem: {
+                optionProductLineItems: optionProductLineItems
+            },
+            variables: {
+                color: {
+                    value: 'blue'
+                }
+            }
+        };
 
-        var product = productFactory.get({ pid: 1234 });
-        assert.equal(product.message, 'productSet');
+        productMock.variationModel.selectedVariant = true;
+        productMock.optionModel = {
+            options: new ArrayList([{ displayName: 'someName' }]),
+            getSelectedOptionValue: function () {
+                return { displayValue: 'someValue' };
+            }
+        };
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'product line item');
+        assert.isTrue(stubProductLineItem.calledWith({}, productMock));
+    });
+
+    it('should return bundle line item model', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'productLineItem',
+            lineItem: {}
+        };
+        productMock.bundle = true;
+        var result = productFactory.get(params);
+        var options = {
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            lineItem: {},
+            productType: 'bundle'
+        };
+
+        assert.equal(result, 'bundle line item');
+        assert.isTrue(stubBundleLineItem.calledWith({}, productMock, options, productFactory));
     });
 });
