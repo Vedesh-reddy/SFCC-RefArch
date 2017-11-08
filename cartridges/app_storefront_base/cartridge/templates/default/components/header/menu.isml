@@ -13,7 +13,7 @@
             </a>
         </div>
     </div>
-    <div aria-label="Main menu" role="navigation">
+    <div class="menu-group" aria-label="Main menu" role="navigation">
         <ul class="nav navbar-nav" role="menu">
             <isif condition="${pdict.categories}">
                 <isloop items="${pdict.categories}" var="category">
