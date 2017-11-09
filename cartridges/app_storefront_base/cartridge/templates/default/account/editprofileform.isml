@@ -7,7 +7,7 @@
         </label>
         <input type="text" class="form-control" id="firstName"
             <isprint value="${pdict.profileForm.customer.firstname.attributes}" encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -17,7 +17,7 @@
         </label>
         <input type="text" class="form-control" id="lastName"
             <isprint value="${pdict.profileForm.customer.lastname.attributes}" encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -27,7 +27,7 @@
         </label>
         <input type="text" class="form-control" id="phone"
             <isprint value="${pdict.profileForm.customer.phone.attributes}" encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -37,7 +37,7 @@
         </label>
         <input type="email" class="form-control" id="email"
             <isprint value="${pdict.profileForm.customer.email.attributes}" encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -46,7 +46,7 @@
             <isprint value="${pdict.profileForm.customer.emailconfirm.label}" encoding="off" />
         </label>
         <input type="email" class="form-control" id="confirmEmail" <isprint value="${pdict.profileForm.customer.emailconfirm.attributes}" encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -55,7 +55,7 @@
             <isprint value="${pdict.profileForm.login.password.label}" encoding="off" />
         </label>
         <input type="password" class="form-control" id="password" <isprint value="${pdict.profileForm.login.password.attributes}" encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>

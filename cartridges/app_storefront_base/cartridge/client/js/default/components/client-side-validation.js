@@ -6,7 +6,6 @@
  * @returns {boolean} - Flag to indicate if form is valid
  */
 function validateForm(event) {
-    $(this).find('.form-group.has-danger').removeClass('has-danger');
     var valid = true;
     if (this.checkValidity && !this.checkValidity()) {
         // safari
@@ -31,11 +30,7 @@ function validateForm(event) {
  * @returns {void}
  */
 function clearForm(form) {
-    $(form)
-        .find('.form-group.has-danger')
-        .removeClass('has-danger')
-        .find('.form-control-feedback')
-        .text('');
+    $(form).find('.form-control.is-invalid').removeClass('is-invalid');
 }
 
 module.exports = {
@@ -45,7 +40,7 @@ module.exports = {
             this.setCustomValidity('');
             if (!this.validity.valid) {
                 var validationMessage = this.validationMessage;
-                $(this).parents('.form-group').addClass('has-danger');
+                $(this).addClass('is-invalid');
                 if (this.validity.patternMismatch && $(this).data('pattern-mismatch')) {
                     validationMessage = $(this).data('pattern-mismatch');
                 }
@@ -60,7 +55,7 @@ module.exports = {
                 if (this.validity.valueMissing && $(this).data('missing-error')) {
                     validationMessage = $(this).data('missing-error');
                 }
-                $(this).parents('.form-group').children('.form-control-feedback')
+                $(this).parents('.form-group').children('.invalid-feedback')
                     .text(validationMessage);
             }
         });

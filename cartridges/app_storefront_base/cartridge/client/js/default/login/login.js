@@ -114,7 +114,7 @@ module.exports = {
     clearResetForm: function () {
         $('#login .modal').on('hidden.bs.modal', function () {
             $('#reset-password-email').val('');
-            $('.modal-dialog .form-group.has-danger').removeClass('has-danger');
+            $('.modal-dialog .form-control.is-invalid').removeClass('is-invalid');
         });
     }
 };

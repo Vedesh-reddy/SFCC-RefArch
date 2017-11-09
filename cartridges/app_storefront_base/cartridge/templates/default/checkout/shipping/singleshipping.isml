@@ -15,7 +15,7 @@
                             </label>
 
                             <isinclude template="checkout/shipping/shipmentSelector" />
-                            <div class="form-control-feedback"></div>
+                            <div class="invalid-feedback"></div>
                             <div class="row">
                                 <a class="col-6 text-center btn-show-details">${Resource.msg('action.update.address', 'checkout', null)}</a>
                                 <a class="col-6 text-center btn-add-new">${Resource.msg('action.add.new', 'checkout', null)}</a>

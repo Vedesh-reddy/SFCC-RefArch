@@ -13,7 +13,7 @@
             class="form-control"
             id="registration-form-fname"
             <isprint value=${pdict.profileForm.customer.firstname.attributes} encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -26,7 +26,7 @@
             class="form-control"
             id="registration-form-lname"
             <isprint value=${pdict.profileForm.customer.lastname.attributes} encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -39,7 +39,7 @@
             class="form-control"
             id="registration-form-phone"
             <isprint value=${pdict.profileForm.customer.phone.attributes} encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -52,7 +52,7 @@
             class="form-control"
             id="registration-form-email"
             <isprint value=${pdict.profileForm.customer.email.attributes} encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -65,7 +65,7 @@
             class="form-control"
             id="registration-form-email-confirm"
             <isprint value=${pdict.profileForm.customer.emailconfirm.attributes} encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -79,7 +79,7 @@
             id="registration-form-password"
             autocomplete="off"
             <isprint value=${pdict.profileForm.login.password.attributes} encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group
@@ -93,7 +93,7 @@
             id="registration-form-password-confirm"
             autocomplete="off"
             <isprint value=${pdict.profileForm.login.passwordconfirm.attributes} encoding="off" />>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-check">

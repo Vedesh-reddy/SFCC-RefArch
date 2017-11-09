@@ -9,7 +9,7 @@
         id="trackorder-form-zip"
         name="trackOrderPostal"
         pattern="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)">
-    <div class="form-control-feedback"></div>
+    <div class="invalid-feedback"></div>
 </div>
 
       
