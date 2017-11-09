@@ -75,7 +75,15 @@ describe('Full Product Model', function () {
         var object = {};
         fullProduct(object, productMock, optionsMock);
 
-        assert.isTrue(decorators.stubs.stubImages.calledOnce);
+        assert.isTrue(decorators.stubs.stubImages.calledWith(object, optionsMock.variationModel));
+    });
+
+    it('should call images for full product when there is no variation model', function () {
+        var object = {};
+        optionsMock.variationModel = null;
+        fullProduct(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubImages.calledWith(object, productMock));
     });
 
     it('should call quantity for full product', function () {
@@ -153,6 +161,24 @@ describe('Full Product Model', function () {
         fullProduct(object, productMock, optionsMock);
 
         assert.isTrue(decorators.stubs.stubCurrentUrl.calledOnce);
+    });
+
+    it('should not call sizeChart for full product when no primary category for api product', function () {
+        var object = {};
+        optionsMock.productType = 'master';
+        productMock.getPrimaryCategory = function () { return null; };
+        fullProduct(object, productMock, optionsMock);
+
+        assert.isFalse(decorators.stubs.stubSizeChart.calledOnce);
+    });
+
+    it('should call sizeChart for full product when no primary category for api product', function () {
+        var object = {};
+        optionsMock.productType = 'variant';
+        productMock.getPrimaryCategory = function () { return null; };
+        fullProduct(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubSizeChart.calledOnce);
     });
 
     it('should call readyToOrder for full product', function () {
