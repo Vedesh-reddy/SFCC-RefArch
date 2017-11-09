@@ -43,7 +43,7 @@
 
                     <isif condition="${pdict.productSearch.productIds.length > 0}">
                         <div class="row grid-header">
-                            <div class="result-count text-center col-12 col-md-9 col-sm-6 push-sm-3">
+                            <div class="result-count text-center col-12 col-md-9 col-sm-6 order-sm-2">
                     <iselse>
                         <div class="row grid-header justify-content-center">
                             <div class="result-count col">
@@ -51,11 +51,11 @@
                         <isinclude template="search/results-count" />
                     </div>
                     <isif condition="${pdict.productSearch.productIds.length > 0}">
-                        <div class="col-6 col-sm-3 pull-md-9 pull-sm-6">
+                        <div class="col-6 col-sm-3 order-sm-1">
                             <isinclude template="search/sort-order-menu" />
                         </div>
 
-                        <div class="col-6 col-sm-3 text-right d-md-none">
+                        <div class="col-6 col-sm-3 text-right d-md-none order-sm-3">
                             <button type="button" class="btn btn-primary filter-results col-12">
                                 ${Resource.msg('button.filter', 'search', null)}
                             </button>
