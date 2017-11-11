@@ -16,7 +16,19 @@
                 </isif>
 
                 <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
-                   <isinclude template="checkout/productCard/productCard" />
+                    <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
+                        <div class="card ${miniCart ? 'bonus-product-line-item' : ''} uuid-${lineItem.UUID}">
+                            <div class="card-body">
+                                <isinclude template="checkout/productCard/bonusProductCard" />
+                            </div>
+                        </div>
+                    <iselse/>
+                        <div class="card uuid-${lineItem.UUID}">
+                            <div class="card-body">
+                                <isinclude template="checkout/productCard/productCard" />
+                            </div>
+                        </div>
+                    </isif>
                 </isloop>
 
                 <isif condition="${pdict.order.shipping.length > 1}">

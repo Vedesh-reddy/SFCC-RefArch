@@ -5,10 +5,12 @@ var PromotionMgr = require('dw/campaign/PromotionMgr');
 var collections = require('*/cartridge/scripts/util/collections');
 var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
 var productTile = require('*/cartridge/models/product/productTile');
+var bonusProduct = require('*/cartridge/models/product/bonusProduct');
 var fullProduct = require('*/cartridge/models/product/fullProduct');
 var productSet = require('*/cartridge/models/product/productSet');
 var productBundle = require('*/cartridge/models/product/productBundle');
 var productLineItem = require('*/cartridge/models/productLineItem/productLineItem');
+var bonusProductLineItem = require('*/cartridge/models/productLineItem/bonusProductLineItem');
 var bundleProductLineItem = require('*/cartridge/models/productLineItem/bundleLineItem');
 
 /**
@@ -151,6 +153,47 @@ module.exports = {
             case 'tile':
                 product = productTile(product, apiProduct, getProductType(apiProduct));
                 break;
+            case 'bonusProductLineItem':
+                promotions = PromotionMgr.activeCustomerPromotions.getProductPromotions(apiProduct);
+                options = {
+                    promotions: promotions,
+                    quantity: params.quantity,
+                    variables: params.variables,
+                    lineItem: params.lineItem,
+                    productType: getProductType(apiProduct)
+                };
+
+                switch (productType) {
+                    case 'bundle':
+                        // product = bundleProductLineItem(product, apiProduct, options, this);
+                        break;
+                    default:
+                        var variationsBundle = getVariationModel(apiProduct, params.variables);
+                        if (variationsBundle) {
+                            apiProduct = variationsBundle.getSelectedVariant() || apiProduct; // eslint-disable-line
+                        }
+
+                        var optionModelBundle = apiProduct.optionModel;
+                        var optionLineItemsBundle = params.lineItem.optionProductLineItems;
+                        var currentOptionModelBundle = productHelper.getCurrentOptionModel(
+                            optionModelBundle,
+                            getLineItemOptions(optionLineItemsBundle, productId)
+                        );
+                        var lineItemOptionsBundle = optionLineItemsBundle.length
+                            ? getLineItemOptionNames(optionLineItemsBundle)
+                            : getDefaultOptions(optionModelBundle, optionModelBundle.options);
+
+
+                        options.variationModel = variationsBundle;
+                        options.lineItemOptions = lineItemOptionsBundle;
+                        options.currentOptionModel = currentOptionModelBundle;
+
+                        product = bonusProductLineItem(product, apiProduct, options);
+
+                        break;
+                }
+
+                break;
             case 'productLineItem':
                 promotions = PromotionMgr.activeCustomerPromotions.getProductPromotions(apiProduct);
                 options = {
@@ -168,28 +211,43 @@ module.exports = {
 
                         break;
                     default:
-                        var variations = getVariationModel(apiProduct, params.variables);
-                        if (variations) {
-                            apiProduct = variations.getSelectedVariant() || apiProduct; // eslint-disable-line
+                        var variationsPLI = getVariationModel(apiProduct, params.variables);
+                        if (variationsPLI) {
+                            apiProduct = variationsPLI.getSelectedVariant() || apiProduct; // eslint-disable-line
                         }
 
-                        var optionModel = apiProduct.optionModel;
-                        var optionLineItems = params.lineItem.optionProductLineItems;
-                        var currentOptionModel = productHelper.getCurrentOptionModel(
-                            optionModel,
-                            getLineItemOptions(optionLineItems, productId)
+                        var optionModelPLI = apiProduct.optionModel;
+                        var optionLineItemsPLI = params.lineItem.optionProductLineItems;
+                        var currentOptionModelPLI = productHelper.getCurrentOptionModel(
+                            optionModelPLI,
+                            getLineItemOptions(optionLineItemsPLI, productId)
                         );
-                        var lineItemOptions = optionLineItems.length
-                            ? getLineItemOptionNames(optionLineItems)
-                            : getDefaultOptions(optionModel, optionModel.options);
+                        var lineItemOptionsPLI = optionLineItemsPLI.length
+                            ? getLineItemOptionNames(optionLineItemsPLI)
+                            : getDefaultOptions(optionModelPLI, optionModelPLI.options);
 
 
-                        options.variationModel = variations;
-                        options.lineItemOptions = lineItemOptions;
-                        options.currentOptionModel = currentOptionModel;
-
+                        options.variationModel = variationsPLI;
+                        options.lineItemOptions = lineItemOptionsPLI;
+                        options.currentOptionModel = currentOptionModelPLI;
                         product = productLineItem(product, apiProduct, options);
 
+                        break;
+                }
+
+                break;
+            case 'bonus':
+                options = getConfig(apiProduct, params);
+
+                switch (productType) {
+                    case 'set':
+                        // product = productSet(product, options.apiProduct, options, this);
+                        break;
+                    case 'bundle':
+                        // product = productBundle(product, options.apiProduct, options, this);
+                        break;
+                    default:
+                        product = bonusProduct(product, options.apiProduct, options, params.duuid);
                         break;
                 }
 

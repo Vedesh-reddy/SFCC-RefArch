@@ -60,7 +60,6 @@
                             <isinclude template="cart/productCard/cartProductCard" />
                         </isif>
                     </isloop>
-                    <isinclude template="cart/changeBonusProductButton" />
                     <isinclude template="cart/cartApproachingDiscount" />
                 </div>
                 <!---totals, and checkout actions--->

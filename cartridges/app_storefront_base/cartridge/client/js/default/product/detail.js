@@ -5,8 +5,11 @@ module.exports = {
     selectAttributes: base.selectAttribute,
 
     colorAttribute: base.colorAttribute,
-    bonusProductSelection: base.bonusProductSelection,
-    bonusProductAttributes: base.bonusProductAttributes,
+    removeBonusProduct: base.removeBonusProduct,
+    selectBonusProduct: base.selectBonusProduct,
+    enableBonusProductSelection: base.enableBonusProductSelection,
+    addBonusProductsToCart: base.addBonusProductsToCart,
+    showMoreBonusProducts: base.showMoreBonusProducts,
     availability: base.availability,
 
     addToCart: base.addToCart,

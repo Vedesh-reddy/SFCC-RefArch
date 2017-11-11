@@ -1,5 +1,7 @@
 'use strict';
 
+var base = require('../product/base');
+
 /**
  * appends params to a url
  * @param {string} url - Original url
@@ -264,6 +266,9 @@ module.exports = function () {
                 validateBasket(data);
                 $(this).data('pre-select-qty', quantity);
                 $.spinner().stop();
+                if ($(this).parents('.product-info').hasClass('bonus-product-line-item') && $('.cart-page').length) {
+                    location.reload();
+                }
             },
             error: function (err) {
                 if (err.responseJSON.redirectUrl) {
@@ -405,6 +410,28 @@ module.exports = function () {
                     createErrorNotification(err.responseJSON.errorMessage);
                     $.spinner().stop();
                 }
+            }
+        });
+    });
+    $('body').on('click', '.cart-page .bonus-product-button', function () {
+        $.spinner().start();
+        $.ajax({
+            url: $(this).data('url'),
+            method: 'GET',
+            dataType: 'json',
+            success: function (data) {
+                base.editBonusProducts(data);
+                base.selectAttribute();
+                base.colorAttribute();
+                base.removeBonusProduct();
+                base.selectBonusProduct();
+                base.enableBonusProductSelection();
+                base.showMoreBonusProducts();
+                base.addBonusProductsToCart();
+                $.spinner().stop();
+            },
+            error: function () {
+                $.spinner().stop();
             }
         });
     });

@@ -11,15 +11,43 @@ var ProductFactory = require('*/cartridge/scripts/factories/product');
  */
 function createProductLineItemsObject(allLineItems) {
     var lineItems = [];
+
     collections.forEach(allLineItems, function (item) {
         if (!item.product) { return; }
-
         var options = collections.map(item.optionProductLineItems, function (optionItem) {
             return {
                 optionId: optionItem.optionID,
                 selectedValueId: optionItem.optionValueID
             };
         });
+
+        var bonusProducts = null;
+
+        if (!item.bonusProductLineItem
+                && item.custom.bonusProductLineItemUUID
+                && item.custom.preOrderUUID) {
+            bonusProducts = [];
+            collections.forEach(allLineItems, function (bonusItem) {
+                if (!!item.custom.preOrderUUID && bonusItem.custom.bonusProductLineItemUUID === item.custom.preOrderUUID) {
+                    var bpliOptions = collections.map(bonusItem.optionProductLineItems, function (boptionItem) {
+                        return {
+                            optionId: boptionItem.optionID,
+                            selectedValueId: boptionItem.optionValueID
+                        };
+                    });
+                    var params = {
+                        pid: bonusItem.product.ID,
+                        quantity: bonusItem.quantity.value,
+                        variables: null,
+                        pview: 'bonusProductLineItem',
+                        lineItem: bonusItem,
+                        options: bpliOptions
+                    };
+
+                    bonusProducts.push(ProductFactory.get(params));
+                }
+            });
+        }
 
         var params = {
             pid: item.product.ID,
@@ -29,10 +57,12 @@ function createProductLineItemsObject(allLineItems) {
             lineItem: item,
             options: options
         };
-
-        lineItems.push(ProductFactory.get(params));
+        var newLineItem = ProductFactory.get(params);
+        newLineItem.bonusProducts = bonusProducts;
+        if (newLineItem.bonusProductLineItemUUID === 'bonus' || newLineItem.bonusProductLineItemUUID === null) {
+            lineItems.push(newLineItem);
+        }
     });
-
     return lineItems;
 }
 

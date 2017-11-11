@@ -2,11 +2,14 @@
 
 var ProductMgr = require('dw/catalog/ProductMgr');
 var Resource = require('dw/web/Resource');
+var Transaction = require('dw/system/Transaction');
+var URLUtils = require('dw/web/URLUtils');
 
 var collections = require('*/cartridge/scripts/util/collections');
 var ShippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
 var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
 var arrayHelper = require('*/cartridge/scripts/util/array');
+var BONUS_PRODUCTS_PAGE_SIZE = 6;
 
 /**
  * @typedef ProductOption
@@ -62,49 +65,55 @@ function updateBundleProducts(apiLineItem, childProducts) {
  * @param {dw.util.Collection} previousBonusDiscountLineItems - contains BonusDiscountLineItems
  *                                                              already processed
  * @param {Object} urlObject - Object with data to be used in the choice of bonus products modal
+ * @param {string} pliUUID - the uuid of the qualifying product line item.
  * @return {Object} - either the object that represents data needed for the choice of
  *                    bonus products modal window or undefined
  */
 function getNewBonusDiscountLineItem(
     currentBasket,
     previousBonusDiscountLineItems,
-    urlObject) {
-    var newBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
+    urlObject,
+    pliUUID) {
+    var bonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
     var newBonusDiscountLineItem;
     var result = {};
 
-    newBonusDiscountLineItem = collections.find(newBonusDiscountLineItems, function (item) {
+    newBonusDiscountLineItem = collections.find(bonusDiscountLineItems, function (item) {
         return !previousBonusDiscountLineItems.contains(item);
     });
+
+    collections.forEach(bonusDiscountLineItems, function (item) {
+        if (!previousBonusDiscountLineItems.contains(item)) {
+            Transaction.wrap(function () {
+                item.custom.bonusProductLineItemUUID = pliUUID; // eslint-disable-line no-param-reassign
+            });
+        }
+    });
+
     if (newBonusDiscountLineItem) {
+        result.bonusChoiceRuleBased = newBonusDiscountLineItem.bonusChoiceRuleBased;
         result.bonuspids = [];
         var iterBonusProducts = newBonusDiscountLineItem.bonusProducts.iterator();
         while (iterBonusProducts.hasNext()) {
             var newBProduct = iterBonusProducts.next();
             result.bonuspids.push(newBProduct.ID);
         }
-
         result.uuid = newBonusDiscountLineItem.UUID;
+        result.pliUUID = pliUUID;
         result.maxBonusItems = newBonusDiscountLineItem.maxBonusItems;
         result.addToCartUrl = urlObject.addToCartUrl;
-        result.configureProductstUrl = urlObject.configureProductstUrl;
-        result.url = urlObject.url + '?pids=' + result.bonuspids.toString();
-        result.newBonusDiscountLineItem = newBonusDiscountLineItem; // todo see if we need this
-
-        result.labels = {};
-        result.labels.selectbonus =
-            Resource.msg('label.choiceofbonus.selectbonus', 'product', null);
-        result.labels.close =
-            Resource.msg('link.choiceofbonus.close', 'product', null);
-        result.labels.selectattrs =
-            Resource.msg('label.choiceofbonus.selectattrs', 'product', null);
-        result.labels.selectprods =
-            Resource.msgf('label.choiceofbonus.selectproducts',
-                'product',
-                null,
-                newBonusDiscountLineItem.maxBonusItems);
+        result.showProductsUrl = urlObject.configureProductstUrl;
+        result.showProductsUrlListBased = URLUtils.url('Product-ShowBonusProducts', 'DUUID', newBonusDiscountLineItem.UUID, 'pids', result.bonuspids.toString(), 'maxpids', newBonusDiscountLineItem.maxBonusItems).toString();
+        result.showProductsUrlRuleBased = URLUtils.url('Product-ShowBonusProducts', 'DUUID', newBonusDiscountLineItem.UUID, 'pagesize', BONUS_PRODUCTS_PAGE_SIZE, 'pagestart', 0, 'maxpids', newBonusDiscountLineItem.maxBonusItems).toString();
+        result.pageSize = BONUS_PRODUCTS_PAGE_SIZE;
+        result.configureProductstUrl = URLUtils.url('Product-ShowBonusProducts', 'pids', result.bonuspids.toString(), 'maxpids', newBonusDiscountLineItem.maxBonusItems).toString();
+        result.newBonusDiscountLineItem = newBonusDiscountLineItem;
+        result.labels = {
+            close: Resource.msg('link.choiceofbonus.close', 'product', null),
+            selectprods: Resource.msgf('modal.header.selectproducts', 'product', null, null),
+            maxprods: Resource.msgf('label.choiceofbonus.selectproducts', 'product', null, newBonusDiscountLineItem.maxBonusItems)
+        };
     }
-
     return newBonusDiscountLineItem ? result : undefined;
 }
 
@@ -371,5 +380,6 @@ module.exports = {
     addProductToCart: addProductToCart,
     ensureAllShipmentsHaveMethods: ensureAllShipmentsHaveMethods,
     getQtyAlreadyInCart: getQtyAlreadyInCart,
-    getNewBonusDiscountLineItem: getNewBonusDiscountLineItem
+    getNewBonusDiscountLineItem: getNewBonusDiscountLineItem,
+    BONUS_PRODUCTS_PAGE_SIZE: BONUS_PRODUCTS_PAGE_SIZE
 };

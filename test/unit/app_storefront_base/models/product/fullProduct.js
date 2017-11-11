@@ -55,6 +55,7 @@ describe('Full Product Model', function () {
         decorators.stubs.stubBundleReadyToOrder.reset();
         decorators.stubs.stubSetIndividualProducts.reset();
         decorators.stubs.stubBundledProducts.reset();
+        decorators.stubs.stubBonusUnitPrice.reset();
     });
 
     it('should call base for full product', function () {

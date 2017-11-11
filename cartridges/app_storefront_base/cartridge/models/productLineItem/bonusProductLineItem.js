@@ -17,28 +17,21 @@ var productLineItemDecorators = require('*/cartridge/models/productLineItem/deco
  *
  * @returns {Object} - Decorated product model
  */
-module.exports = function productLineItem(product, apiProduct, options) {
+module.exports = function bonusProductLineItem(product, apiProduct, options) {
     productDecorators.base(product, apiProduct, options.productType);
-    productDecorators.price(product, apiProduct, options.promotions, false, options.currentOptionModel);
     productDecorators.images(product, apiProduct, { types: ['small'], quantity: 'single' });
     productDecorators.variationAttributes(product, options.variationModel, {
         attributes: 'selected'
     });
-    productDecorators.availability(product, options.quantity, apiProduct.minOrderQuantity.value, apiProduct.availabilityModel);
-
     productLineItemDecorators.quantity(product, options.quantity);
-    productLineItemDecorators.gift(product, options.lineItem);
-    productLineItemDecorators.appliedPromotions(product, options.lineItem);
-    productLineItemDecorators.renderedPromotions(product); // must get applied promotions first
     productLineItemDecorators.uuid(product, options.lineItem);
     productLineItemDecorators.orderable(product, apiProduct, options.quantity);
     productLineItemDecorators.shipment(product, options.lineItem);
-    productLineItemDecorators.bonusProductLineItem(product, options.lineItem);
     productLineItemDecorators.priceTotal(product, options.lineItem);
-    productLineItemDecorators.quantityOptions(product, apiProduct, options.quantity);
     productLineItemDecorators.options(product, options.lineItemOptions);
     productLineItemDecorators.bonusProductLineItemUUID(product, options.lineItem);
     productLineItemDecorators.preOrderUUID(product, options.lineItem);
-    productLineItemDecorators.discountBonusLineItems(product, options.lineItem.UUID);
+    productLineItemDecorators.bonusUnitPrice(product, options.lineItem, apiProduct);
+
     return product;
 };
