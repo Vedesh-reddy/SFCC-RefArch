@@ -1,4 +1,4 @@
-<button class="btn btn-secondary btn-block btn-outline-primary btn-get-in-store-inventory"
+<button class="btn btn-block btn-outline-primary btn-get-in-store-inventory"
         data-action-url="${pdict.pickUpInStore.actionUrl}"
         type="submit"
         ${!product.readyToOrder || !product.available ? "disabled" : ""}>
@@ -16,7 +16,7 @@
     <div class="card-body">
     </div>
 
-    <button class="btn btn-secondary btn-block change-store btn-outline-primary" data-action-url="${pdict.pickUpInStore.actionUrl}" type="submit">
+    <button class="btn btn-block change-store btn-outline-primary" data-action-url="${pdict.pickUpInStore.actionUrl}" type="submit">
         ${Resource.msg('button.change.store','storelocator',null)}
     </button>
 

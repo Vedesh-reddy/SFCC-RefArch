@@ -10,7 +10,7 @@
                 <p class="payment-to-remove"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">${Resource.msg('button.cancel','payment',null)}</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">${Resource.msg('button.cancel','payment',null)}</button>
                 <button
                     type="button"
                     class="btn btn-primary delete-confirmation-btn"
