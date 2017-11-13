@@ -6,13 +6,14 @@ $fa-font-path: "../fonts";
 // flag icons location in relation to target location of the css file.
 $flag-icon-css-path: "../fonts/flags/";
 
-$white: #fff !default;
-$black: #000 !default;
-$blue: #0070d2 !default;
-$light-blue: #7ed0ee !default;
-$brand-success: #008827 !default;
-$brand-danger: #c00 !default;
-$brand-primary: #00a1e0 !default;
+$white: #fff;
+$black: #000;
+$blue: #0070d2;
+$primary: #00a1e0;
+$light-blue: #7ed0ee;
+$brand-success: #008827;
+$brand-danger: #c00;
+$brand-primary: $primary;
 
 // Consolidated values
 $grey1: #f9f9f9;
@@ -26,19 +27,18 @@ $grey8: #333;
 $grey-transparent-1: rgba(0, 0, 0, 0.65);
 $grey-transparent-2: rgba(0, 0, 0, 0.25);
 
-$blue: $brand-primary !default;
-$light-gray: $grey1 !default;
-$slightly-darker-gray: $grey4 !default;
-$dark-gray: $grey6 !default;
-$darker-gray: $grey7 !default;
-$brand-color: $brand-primary !default;
-$horizontal-rule-grey: $grey3 !default;
-$product-number-grey: $grey3 !default;
-$horizontal-border-grey: $grey4 !default;
-$menu-link: $grey6 !default;
-$close-menu-bg: $grey2 !default;
-$link-color: $dark-gray !default;
-$hr-border-color: $grey3 !default;
+$light-gray: $grey1;
+$slightly-darker-gray: $grey4;
+$dark-gray: $grey6;
+$darker-gray: $grey7;
+$brand-color: $brand-primary;
+$horizontal-rule-grey: $grey3;
+$product-number-grey: $grey3;
+$horizontal-border-grey: $grey4;
+$menu-link: $grey6;
+$close-menu-bg: $grey2;
+$link-color: $dark-gray;
+$hr-border-color: $grey3;
 
 $grid-breakpoints: (
     xs: 0,
@@ -54,30 +54,30 @@ $container-max-widths: (
     xl: 1140px
 );
 
-$border-radius: 0.1875rem !default;
-$border-radius-lg: $border-radius !default;
-$border-radius-sm: $border-radius !default;
+$border-radius: 0.1875rem;
+$border-radius-lg: $border-radius;
+$border-radius-sm: $border-radius;
 
-$alert-danger-bg: $brand-danger !default;
-$alert-success-bg: $brand-success !default;
-$state-danger-text: #fff !default;
-$alert-success-text: #fff !default;
+$alert-danger-bg: $brand-danger;
+$alert-success-bg: $brand-success;
+$state-danger-text: #fff;
+$alert-success-text: #fff;
 
 // Font sizes
 $base16-14px: 0.875em;
 
 // Bootstrap overrides
-$body-bg: $grey1 !default;
-$card-cap-bg: $white !default;
+$body-bg: $grey1;
+$card-cap-bg: $white;
 
 // Tabs
-$nav-tabs-border-width: 0 !default;
-$nav-tabs-border-radius: 0 !default;
-$nav-tabs-active-link-hover-bg: transparent !default;
+$nav-tabs-border-width: 0;
+$nav-tabs-border-radius: 0;
+$nav-tabs-active-link-hover-bg: transparent;
 
 // breadcrumb
-$breadcrumb-bg: transparent !default;
+$breadcrumb-bg: transparent;
 
 // table border
-$table-border-color: $grey3 !default;
+$table-border-color: $grey3;
 
