@@ -35,6 +35,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
             bottom: 0;
             transition: $slide-out-animation;
             display: block;
+            max-width: 100%;
 
             &.in {
                 min-width: 50%;
@@ -117,13 +118,8 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         }
 
         @include media-breakpoint-down($breakpoint-name) {
-            .nav-item {
-                margin: 0 -1em;
-                padding-left: 1em;
-
-                + .nav-item {
-                    border-top: 1px solid $grey2;
-                }
+            .nav-item + .nav-item {
+                border-top: 1px solid $grey2;
             }
 
             .dropdown {
@@ -132,11 +128,15 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
             }
 
             .dropdown-toggle {
-                padding-right: 5em;
+                padding-left: 1rem;
 
                 &::after {
                     @include caret-right();
                 }
+            }
+
+            .nav-item .nav-link {
+                padding-left: 1rem;
             }
 
             .show > .dropdown-menu {
@@ -204,6 +204,10 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
         &.top-category {
             font-weight: bold;
+
+            > .nav-link {
+                padding-left: 0;
+            }
         }
     }
 }

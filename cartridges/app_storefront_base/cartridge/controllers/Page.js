@@ -110,10 +110,11 @@ server.get('Locale', function (req, res, next) {
     var currentLocale = Locale.getLocale(req.locale.id);
     var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
 
-    res.render('/components/header/countryselector', {
-        localeModel: localeModel,
-        showInMenu: req.querystring.showInMenu
-    });
+    var template = req.querystring.mobile
+        ? '/components/header/mobileCountrySelector'
+        : '/components/header/countrySelector';
+
+    res.render(template, { localeModel: localeModel });
     next();
 });
 

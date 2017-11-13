@@ -52,10 +52,10 @@ module.exports = function () {
             },
             27: function () { // escape
                 $(this).focus();
-                $(this).removeClass('show');
+                $(this).removeClass('show').children('.dropdown-menu').removeClass('show');
             },
             9: function () { // tab
-                $(this).removeClass('show');
+                $(this).removeClass('show').children('.dropdown-menu').removeClass('show');
             }
         },
         function () {
@@ -67,6 +67,6 @@ module.exports = function () {
     );
 
     $('.navbar-header .country-selector').on('focusin', function () {
-        $(this).addClass('show');
+        $(this).addClass('show').children('.dropdown-menu').addClass('show');
     });
 };

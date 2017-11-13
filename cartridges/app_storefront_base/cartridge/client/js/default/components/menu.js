@@ -23,34 +23,34 @@ module.exports = function () {
         {
             40: function (menuItem) { // down
                 if (menuItem.hasClass('nav-item')) { // top level
-                    $('.navbar-nav .show').removeClass('show');
-                    menuItem.addClass('show');
+                    $('.navbar-nav .show').removeClass('show').children('.dropdown-menu').removeClass('show');
+                    menuItem.addClass('show').children('.dropdown-menu').addClass('show');
                     $(this).attr('aria-expanded', 'true');
-                    menuItem.children('ul').children().first().children()
+                    menuItem.find('ul > li > a')
                         .first()
                         .focus();
                 } else {
-                    menuItem.removeClass('show');
+                    menuItem.removeClass('show').children('.dropdown-menu').removeClass('show');
                     $(this).attr('aria-expanded', 'false');
                     menuItem.next().children().first().focus();
                 }
             },
             39: function (menuItem) { // right
                 if (menuItem.hasClass('nav-item')) { // top level
-                    menuItem.removeClass('show');
+                    menuItem.removeClass('show').children('.dropdown-menu').removeClass('show');
                     $(this).attr('aria-expanded', 'false');
                     menuItem.next().children().first().focus();
                 } else if (menuItem.hasClass('dropdown')) {
-                    menuItem.addClass('show');
+                    menuItem.addClass('show').children('.dropdown-menu').addClass('show');
                     $(this).attr('aria-expanded', 'true');
-                    menuItem.children('ul').children().first().children()
+                    menuItem.find('ul > li > a')
                         .first()
                         .focus();
                 }
             },
             38: function (menuItem) { // up
                 if (menuItem.hasClass('nav-item')) { // top level
-                    menuItem.removeClass('show');
+                    menuItem.removeClass('show').children('.dropdown-menu').removeClass('show');
                     $(this).attr('aria-expanded', 'false');
                 } else if (menuItem.prev().length === 0) {
                     menuItem.parent().parent().removeClass('show')
@@ -64,11 +64,13 @@ module.exports = function () {
             },
             37: function (menuItem) { // left
                 if (menuItem.hasClass('nav-item')) { // top level
-                    menuItem.removeClass('show');
+                    menuItem.removeClass('show').children('.dropdown-menu').removeClass('show');
                     $(this).attr('aria-expanded', 'false');
                     menuItem.prev().children().first().focus();
                 } else {
-                    menuItem.closest('.show').removeClass('show').children()
+                    menuItem.closest('.show').removeClass('show')
+                        .closest('li.show').removeClass('show')
+                        .children()
                         .first()
                         .focus()
                         .attr('aria-expanded', 'false');
@@ -77,7 +79,8 @@ module.exports = function () {
             27: function (menuItem) { // escape
                 var parentMenu = menuItem.hasClass('show')
                     ? menuItem
-                    : menuItem.closest('.show');
+                    : menuItem.closest('li.show');
+                parentMenu.children('.show').removeClass('show');
                 parentMenu.removeClass('show').children('.nav-link')
                     .attr('aria-expanded', 'false');
                 parentMenu.children().first().focus();
@@ -120,12 +123,14 @@ module.exports = function () {
                         });
                         if ($(this).hasClass('show')) {
                             $(this).removeClass('show');
+                            $(this).children('ul.dropdown-menu').removeClass('show');
                             $(this).children('.nav-link').attr('aria-expanded', 'false');
                         }
                     }
                 });
                 // need to close all the dropdowns that are not direct parent of current dropdown
                 $(this).parent().addClass('show');
+                $(this).siblings('.dropdown-menu').addClass('show');
                 $(this).attr('aria-expanded', 'true');
             }
         })
@@ -133,6 +138,7 @@ module.exports = function () {
         .on('mouseleave', function () {
             if (isDesktop(this)) {
                 $(this).removeClass('show');
+                $(this).children('.dropdown-menu').removeClass('show');
                 $(this).children('.nav-link').attr('aria-expanded', 'false');
             }
         });
