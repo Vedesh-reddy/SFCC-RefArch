@@ -1,8 +1,17 @@
 'use strict';
 
+/**
+ * Remove all validation. Should be called every time before revalidating form
+ * @param {element} form - Form to be cleared
+ * @returns {void}
+ */
+function clearFormErrors(form) {
+    $(form).find('.form-control.is-invalid').removeClass('is-invalid');
+}
+
 module.exports = function (formElement, payload) {
     // clear form validation first
-    $('.form-group.has-danger', formElement).removeClass('has-danger');
+    clearFormErrors(formElement);
     $('.alert', formElement).remove();
 
     if (typeof payload === 'object' && payload.fields) {
@@ -10,7 +19,7 @@ module.exports = function (formElement, payload) {
             if (payload.fields[key]) {
                 var feedbackElement = $(formElement).find('[name="' + key + '"]')
                     .parent()
-                    .children('.form-control-feedback');
+                    .children('.invalid-feedback');
 
                 if (feedbackElement.length > 0) {
                     if (Array.isArray(payload[key])) {
@@ -18,7 +27,7 @@ module.exports = function (formElement, payload) {
                     } else {
                         feedbackElement.html(payload.fields[key]);
                     }
-                    feedbackElement.parents('.form-group').addClass('has-danger');
+                    feedbackElement.siblings('.form-control').addClass('is-invalid');
                 }
             }
         });

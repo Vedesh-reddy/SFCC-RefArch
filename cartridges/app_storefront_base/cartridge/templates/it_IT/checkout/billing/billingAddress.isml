@@ -12,7 +12,7 @@
                     : ''}"
                 <isprint value=${billingFields.firstName.attributes} encoding="off"/>
                 autocomplete="given-name" >
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
@@ -27,7 +27,7 @@
                     : ''}"
                 <isprint value=${billingFields.lastName.attributes} encoding="off"/>
                 autocomplete="family-name">
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
 </div>
@@ -45,7 +45,7 @@
                     : ''}"
                 <isprint value=${billingFields.address1.attributes} encoding="off"/>
                 autocomplete="billing address-line1">
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
 </div>
@@ -63,7 +63,7 @@
                     : ''}"
                 <isprint value=${billingFields.address2.attributes} encoding="off"/>
                 autocomplete="billing address-line2">
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
 </div>
@@ -82,7 +82,7 @@
                     : ''}"
                 <isprint value=${billingFields.postalCode.attributes} encoding="off"/>
                 autocomplete="billing postal-code">
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
@@ -97,7 +97,7 @@
                     : ''}"
                 <isprint value=${billingFields.city.attributes} encoding="off"/>
                 autocomplete="billing address-level2">
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
 </div>
@@ -122,7 +122,7 @@
                         </option>
                     </isloop>
             </select>
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
@@ -145,7 +145,7 @@
                         </option>
                     </isloop>
             </select>
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
 
         </div>
     </div>

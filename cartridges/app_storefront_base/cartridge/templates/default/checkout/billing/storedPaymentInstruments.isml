@@ -15,7 +15,7 @@
                 </span>
 
                 <input type="text" class="form-control saved-payment-security-code" id="saved-payment-security-code" maxlength="4">
-                <div class="form-control-feedback">${Resource.msg('error.message.security.code.required', 'checkout', null)}</div>
+                <div class="invalid-feedback">${Resource.msg('error.message.security.code.required', 'checkout', null)}</div>
             </div>
         </div>
         <div class="saved-payment-information col-6 col-md-9">

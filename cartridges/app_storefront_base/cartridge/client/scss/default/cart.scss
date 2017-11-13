@@ -225,6 +225,11 @@ $negative-spacer: -0.625rem;
     font-size: 0.813em;
 }
 
+.coupon-error {
+    color: $brand-danger;
+    margin-top: 0.25rem;
+}
+
 .coupon-missing-error {
     display: none;
 }
