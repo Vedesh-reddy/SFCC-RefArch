@@ -89,19 +89,6 @@ function isShippingAddressInitialized(shipment) {
 }
 
 /**
- * Returns true if Basket represents a pick up in store basket
- * @param {dw.order.Basket} basket - a ScriptAPI Basket object
- * @returns {boolean} - true, if pick up in store method is selected
- */
-function isPickUpInStore(basket) {
-    var isPickUpInStoreResult = false;
-    if (basket && basket.defaultShipment && basket.defaultShipment.shippingMethodID === '005') {
-        isPickUpInStoreResult = true;
-    }
-    return isPickUpInStoreResult;
-}
-
-/**
  * Copies a CustomerAddress to a Shipment as its Shipping Address
  * @param {dw.customer.CustomerAddress} address - The customer address
  * @param {dw.order.Shipment} [shipmentOrNull] - The target shipment
@@ -638,7 +625,6 @@ module.exports = {
     ensureNoEmptyShipments: ensureNoEmptyShipments,
     getProductLineItem: getProductLineItem,
     isShippingAddressInitialized: isShippingAddressInitialized,
-    isPickUpInStore: isPickUpInStore,
     prepareShippingForm: prepareShippingForm,
     prepareBillingForm: prepareBillingForm,
     copyCustomerAddressToShipment: copyCustomerAddressToShipment,
