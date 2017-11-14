@@ -189,7 +189,7 @@ server.post(
                     // Copy over preferredAddress (use addressUUID for matching)
                     COHelpers.copyBillingAddressToBasket(
                         req.currentCustomer.addressBook.preferredAddress);
-                } else if (!COHelpers.isPickUpInStore(basket)) {
+                } else {
                     // Copy over first shipping address (use shipmentUUID for matching)
                     COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress);
                 }
