@@ -89,7 +89,7 @@ label.availability {
 .promotions {
     font-weight: normal;
     text-align: center;
-    color: $brand-danger;
+    color: map-get($theme-colors, "danger");
     height: 85%;
 
     .callout {

@@ -63,7 +63,7 @@
 }
 
 .line-item-promo {
-    color: $brand-success;
+    color: map-get($theme-colors, "success");
     font-size: 0.813em;
 }
 

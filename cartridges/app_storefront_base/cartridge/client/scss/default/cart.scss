@@ -9,7 +9,7 @@ $negative-spacer: -0.625rem;
 .single-approaching-discount {
     border: 1px solid rgba(0, 0, 0, 0.125);
     background-color: $white;
-    color: $brand-success;
+    color: map-get($theme-colors, "success");
     margin-bottom: 0.3125rem;
 }
 
@@ -216,17 +216,17 @@ $negative-spacer: -0.625rem;
 }
 
 .coupon-applied {
-    color: $brand-success;
+    color: map-get($theme-colors, "success");
     font-size: 0.813em;
 }
 
 .coupon-not-applied {
-    color: $brand-danger;
+    color: map-get($theme-colors, "danger");
     font-size: 0.813em;
 }
 
 .coupon-error {
-    color: $brand-danger;
+    color: map-get($theme-colors, "danger");
     margin-top: 0.25rem;
 }
 
@@ -235,7 +235,7 @@ $negative-spacer: -0.625rem;
 }
 
 .applied-promotion-discount {
-    color: $brand-success;
+    color: map-get($theme-colors, "success");
     float: right;
 }
 

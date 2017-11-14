@@ -9,11 +9,15 @@ $flag-icon-css-path: "../fonts/flags/";
 $white: #fff;
 $black: #000;
 $blue: #0070d2;
+$green: #008827;
 $primary: #00a1e0;
+$red: #c00;
 $light-blue: #7ed0ee;
-$brand-success: #008827;
-$brand-danger: #c00;
-$brand-primary: $primary;
+
+$theme-colors: (
+    success: $green,
+    danger: $red
+);
 
 // Consolidated values
 $grey1: #f9f9f9;
@@ -31,7 +35,7 @@ $light-gray: $grey1;
 $slightly-darker-gray: $grey4;
 $dark-gray: $grey6;
 $darker-gray: $grey7;
-$brand-color: $brand-primary;
+$brand-color: $primary;
 $horizontal-rule-grey: $grey3;
 $product-number-grey: $grey3;
 $horizontal-border-grey: $grey4;
@@ -58,8 +62,6 @@ $border-radius: 0.1875rem;
 $border-radius-lg: $border-radius;
 $border-radius-sm: $border-radius;
 
-$alert-danger-bg: $brand-danger;
-$alert-success-bg: $brand-success;
 $state-danger-text: #fff;
 $alert-success-text: #fff;
 
