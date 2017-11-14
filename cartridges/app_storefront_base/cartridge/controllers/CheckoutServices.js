@@ -34,31 +34,6 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     next();
 });
 
-
-server.post('ResetInventoryList', server.middleware.https, function (req, res, next) {
-    var BasketMgr = require('dw/order/BasketMgr');
-    var Transaction = require('dw/system/Transaction');
-
-    var currentBasket = BasketMgr.getCurrentBasket();
-    var pli;
-    var plis = currentBasket.defaultShipment.productLineItems;
-
-    Transaction.wrap(function () {
-        currentBasket.defaultShipment.setShippingMethod(null);
-
-        for (var i = 0, ii = plis.length; i < ii; i++) {
-            pli = plis[i];
-            pli.custom.fromStoreId = null;
-            pli.setProductInventoryList(null);
-        }
-    });
-
-    res.json({});
-
-    next();
-});
-
-
 /**
  *  Handle Ajax payment (and billing) form submit
  */
