@@ -23,7 +23,9 @@ module.exports = function () {
         {
             40: function (menuItem) { // down
                 if (menuItem.hasClass('nav-item')) { // top level
-                    $('.navbar-nav .show').removeClass('show').children('.dropdown-menu').removeClass('show');
+                    $('.navbar-nav .show').removeClass('show')
+                        .children('.dropdown-menu')
+                        .removeClass('show');
                     menuItem.addClass('show').children('.dropdown-menu').addClass('show');
                     $(this).attr('aria-expanded', 'true');
                     menuItem.find('ul > li > a')

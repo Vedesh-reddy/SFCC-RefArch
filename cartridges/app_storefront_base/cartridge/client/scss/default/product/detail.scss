@@ -89,7 +89,7 @@ label.availability {
 .promotions {
     font-weight: normal;
     text-align: center;
-    color: $brand-danger;
+    color: $danger;
     height: 85%;
 
     .callout {
@@ -158,13 +158,13 @@ label.availability {
 
 .btn-storelocator-search {
     background-color: $light-gray;
-    border-color: $brand-color;
+    border-color: $primary;
     border-radius: 0;
-    color: $brand-color;
+    color: $primary;
     margin-bottom: 1rem;
 
     &:hover {
-        background-color: $brand-color;
+        background-color: $primary;
         color: $light-gray;
     }
 }
