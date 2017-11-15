@@ -17,16 +17,6 @@
                     </fieldset>
                 </form>
             </isif>
-            <ul class="nav nav-tabs nav-fill single-shipping" role="tablist" data-shipping-tab-active="${!pdict.order.isPickUpInStore ? true : false}"
-                data-inventory-list-url="${URLUtils.url('CheckoutServices-ResetInventoryList')}"
-            >
-                <li class="nav-item">
-                    <a class="nav-link shipping-tab ${!pdict.order.isPickUpInStore ? 'active' : ''}" data-toggle="tab" href="#shipping-address" role="tab">${Resource.msg('action.shipping.form', 'checkout', null)}</a>
-                </li>
-                <li class="nav-item disable pickup-tab${!pdict.pickUpInStoreEnabled ? ' not-available' : ''}">
-                    <a class="nav-link pick-up-in-store-tab ${pdict.order.isPickUpInStore ? 'active' : ''}" data-toggle="tab" href="#pick-up-in-store" role="tab">${Resource.msg('action.in.store.pick.up', 'checkout', null)}</a>
-                </li>
-            </ul>
         </div>
 
         <isinclude template="checkout/shipping/singleshipping" />

@@ -1,9 +1,10 @@
 <div class="container single-shipping">
     <div class="tab-content">
         <!--- Shipping Address Form--->
-        <div class="tab-pane ${!pdict.order.isPickUpInStore ? 'active' : ''} card-block"
-                id="shipping-address" class="shipping-address" role="tabpanel">
-            <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('CheckoutShippingServices-SubmitShipping')}" class="address" data-address-mode="${pdict.order.shipping[0].matchingAddressId ? 'edit' : 'new'}" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
+        <div class="card-block" id="shipping-address" class="shipping-address" role="tabpanel">
+            <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('CheckoutShippingServices-SubmitShipping')}" class="address" data-address-mode="${pdict.order.shipping[0].matchingAddressId ? 'edit' : 'new'}" 
+                <isprint value=${pdict.forms.shippingForm.attributes} encoding="off"/>
+            >
                 <input name="shipmentUUID" type="hidden" value="${pdict.order.shipping[0].UUID}" />
                 <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
 
@@ -45,80 +46,5 @@
                 <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
             </form>
         </div>
-
-        <!--- In Store Pick up--->
-        <div class="tab-pane ${pdict.order.isPickUpInStore ? 'active' : ''}" id="pick-up-in-store" data-is-in-pick-up="${pdict.order.isPickUpInStore ? 'active' : ''}" role="tabpanel">
-            <form novalidate action="${URLUtils.https('Stores-FindAvailableStores')}" class="store-locator" method="get" name="storelocator">
-                <isif condition="${pdict.stores.searchKey.lat && pdict.stores.searchKey.long}">
-                    <input type="hidden" name="lat" value="${pdict.stores.searchKey.lat}">
-                    <input type="hidden" name="long" value="${pdict.stores.searchKey.long}">
-                </isif>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary btn-block detect-location">
-                        ${Resource.msg('button.use.my.location','storelocator',null)}
-                    </button>
-                </div>
-                <div class="row separated">
-                    <div class="col-sm-6">
-                        <div class="form-group">
-                            <label for="postal-code">${Resource.msg('field.shipping.address.zip.code','address',null)}</label>
-                            <input type="text" class="form-control" id="postal-code" name="postalCode" value="${pdict.stores.searchKey.postalCode ? pdict.stores.searchKey.postalCode : ''}">
-                        </div>
-                    </div>
-                    <div class="col-sm-6">
-                        <button class="btn btn-block btn-outline-primary btn-storelocator-search" type="submit" name="submit" value="submit">
-                            ${Resource.msg('button.find.stores','storelocator',null)}
-                        </button>
-                    </div>
-                </div>
-                <div class="row form-group">
-                    <div class="col-12">
-                        <label for="radius">${Resource.msg('field.radius','storelocator',null)}</label>
-                        <select class="form-control custom-select radius" id="radius" name="radius">
-                            <isloop items="${pdict.stores.radiusOptions}" var="option">
-                                <option value="${option.toFixed(0)}" <isif condition="${option === pdict.stores.radius}">selected</isif>>${option.toFixed(0)}</option>
-                            </isloop>
-                        </select>
-                    </div>
-                </div>
-                <div class="no-store-selected">
-                    <p class="alert alert-danger">${Resource.msg('error.no.store.selected', 'storelocator', null)}</p>
-                </div>
-                <div class="store-locator-no-results"
-                    <isif condition="${pdict.stores.availableStores.length > 0}">style="display: none"</isif>>
-                    <p class="alert alert-danger">${Resource.msg('error.no.results', 'storelocator', null)}</p>
-                </div>
-                <div class="results striped"
-                    <isif condition="${!pdict.stores.availableStores || pdict.stores.availableStores.length === 0}">style="display: none"</isif>
-                    data-search-key="${JSON.stringify(pdict.stores.searchKey)}" data-radius="${pdict.stores.radius}" data-has-results="${pdict.stores.availableStores.length}">
-                    <isloop items="${pdict.stores.availableStores}" var="store">
-                        <div id="${store.ID}">
-                            <div class="form-check col-12 start-lines">
-                                <label class="form-check-label">
-                                    <input type="radio" class="form-check-input" name="store-id" value="${store.ID}" data-store="${JSON.stringify(store)}">
-                                    <h5 class="store-name">${store.name}</h5>
-                                    <p class="store-address">${store.address1} ${store.city}, ${store.stateCode}  ${store.postalCode}</p>
-                                    <p class="store-hours"><isprint value="${store.storeHours || ''}" encoding="off"></p>
-                                </label>
-                            </div>
-                        </div>
-                    </isloop>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!---------------------------------------------------------------------------------->
-<!-- Template used by client to redraw in store pickup stores                     -->
-<!---------------------------------------------------------------------------------->
-<div id="pickup-instore-template" style="display:none;" >
-    <div class="form-check col-12 start-lines">
-        <label class="form-check-label">
-            <input type="radio" class="form-check-input" name="store-id">
-            <h5 class="store-name"></h5>
-            <p class="store-address"></p>
-            <p class="store-hours"></p>
-        </label>
     </div>
 </div>

@@ -2,11 +2,7 @@
 <isloop var="shippingModel" items="${pdict.order.shipping}" status="shippingLoop">
     <isif condition="${shippingLoop.first}">
         <div class="single-shipping" data-shipment-summary="${shippingModel.UUID}">
-            <isif condition="${pdict.order.isPickUpInStore}">
-                <p class="summary-section-label shipping-addr-label">${Resource.msg('label.store.pick.up', 'checkout', null)}</p>
-            <iselse/>
-                <p class="summary-section-label shipping-addr-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</p>
-            </isif>
+            <p class="summary-section-label shipping-addr-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</p>
             <isif condition="${shippingModel.shippingAddress !== null}">
                 <isset name="address" value="${shippingModel.shippingAddress}" scope="page"/>
             <iselse>
@@ -15,33 +11,29 @@
             <div class="summary-details shipping">
                 <isinclude template="checkout/addressSummary" />
                 <div class="shipping-phone">
-                    <isif condition="${!pdict.order.isPickUpInStore}">
-                        ${shippingModel.shippingAddress ? shippingModel.shippingAddress.phone : ''}
-                    </isif>
+                    ${shippingModel.shippingAddress ? shippingModel.shippingAddress.phone : ''}
                 </div>
             </div>
             
             <!--- Shipping information --->
-            <isif condition="${!pdict.order.isPickUpInStore}">
-	            <p class="summary-section-label shipping-method-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</p>
-	            <div class="row summary-details leading-lines">
-	                <div class="col-8 start-lines">
-	                    <p class="shipping-method">
-	                        <span class="shipping-method-title">${shippingModel.selectedShippingMethod.displayName}</span>
-	                        <span class="shipping-method-arrival-time">
-	                            <isif condition="${shippingModel.selectedShippingMethod.estimatedArrivalTime}">
-	                                ( ${shippingModel.selectedShippingMethod.estimatedArrivalTime} )
-	                            </isif>
-	                        </span>
-	                    </p>
-	                </div>
-	                <div class="col-4 end-lines">
-	                    <p class="text-right pricing shipping-method-price">
-	                        ${shippingModel.selectedShippingMethod.shippingCost}
-	                    </p>
-	                </div>
-	            </div>
-            </isif>
+            <p class="summary-section-label shipping-method-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</p>
+            <div class="row summary-details leading-lines">
+                <div class="col-8 start-lines">
+                    <p class="shipping-method">
+                        <span class="shipping-method-title">${shippingModel.selectedShippingMethod.displayName}</span>
+                        <span class="shipping-method-arrival-time">
+                            <isif condition="${shippingModel.selectedShippingMethod.estimatedArrivalTime}">
+                                ( ${shippingModel.selectedShippingMethod.estimatedArrivalTime} )
+                            </isif>
+                        </span>
+                    </p>
+                </div>
+                <div class="col-4 end-lines">
+                    <p class="text-right pricing shipping-method-price">
+                        ${shippingModel.selectedShippingMethod.shippingCost}
+                    </p>
+                </div>
+            </div>
         </div>
     </isif>
 </isloop>
