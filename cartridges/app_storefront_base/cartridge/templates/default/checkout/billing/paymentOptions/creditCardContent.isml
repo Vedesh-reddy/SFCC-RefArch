@@ -16,7 +16,7 @@
 
             <!--- Add new credit card button --->
             <div class="row">
-                <button class="btn btn-secondary btn-block add-payment btn-outline-primary" type="button">${Resource.msg('button.add.payment', 'checkout', null)}</button>
+                <button class="btn btn-block add-payment btn-outline-primary" type="button">${Resource.msg('button.add.payment', 'checkout', null)}</button>
             </div>
         </div>
     </isif>
@@ -24,7 +24,7 @@
     <fieldset class="credit-card-form ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? 'checkout-hidden' : ''}">
         <isinclude template="checkout/billing/creditCardForm" />
         <isif condition="${pdict.customer.registeredUser}">
-            <button class="btn btn-secondary btn-block cancel-new-payment btn-outline-primary ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? '' : 'checkout-hidden'}" type="button">${Resource.msg('button.back.to.stored.payments', 'checkout', null)}</button>
+            <button class="btn btn-block cancel-new-payment btn-outline-primary ${pdict.customer.registeredUser && pdict.customer.customerPaymentInstruments.length ? '' : 'checkout-hidden'}" type="button">${Resource.msg('button.back.to.stored.payments', 'checkout', null)}</button>
         </isif>
     </fieldset>
 </div>

@@ -10,7 +10,7 @@
                 <p class="coupon-to-remove"></p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">${Resource.msg('button.cancel','cart',null)}</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">${Resource.msg('button.cancel','cart',null)}</button>
                 <button type="button" class="btn btn-primary delete-coupon-confirmation-btn"
                         data-dismiss="modal"
                         data-action="${pdict.actionUrls.removeCouponLineItem}">
