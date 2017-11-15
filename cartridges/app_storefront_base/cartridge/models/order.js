@@ -124,7 +124,6 @@ function OrderModel(lineItemContainer, options) {
         this.orderEmail = null;
         this.orderStatus = null;
         this.usingMultiShipping = null;
-        this.isPickUpInStore = null;
         this.shippable = null;
     } else {
         var safeOptions = options || {};
@@ -163,7 +162,6 @@ function OrderModel(lineItemContainer, options) {
             : null;
         this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
                 lineItemContainer.productQuantityTotal : null;
-        this.isPickUpInStore = COHelpers.isPickUpInStore(lineItemContainer);
 
         if (modelConfig.numberOfLineItems === '*') {
             this.totals = totalsModel;
