@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = {
-    inStorePickUp: require('*/cartridge/models/productLineItem/decorators/inStorePickUp'),
     gift: require('*/cartridge/models/productLineItem/decorators/gift'),
     bonusProductLineItem: require('*/cartridge/models/productLineItem/decorators/bonusProductLineItem'),
     appliedPromotions: require('*/cartridge/models/productLineItem/decorators/appliedPromotions'),
