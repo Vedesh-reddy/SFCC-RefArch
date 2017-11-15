@@ -43,10 +43,6 @@ function createStoresObject(storesObject) {
             storeObj.storeHours = store.storeHours.markup;
         }
 
-        if (store.inventoryListID || (store.custom && store.custom.inventoryListId)) {
-            storeObj.inventoryListId = store.inventoryListID || store.custom.inventoryListId;
-        }
-
         return storeObj;
     });
 }
