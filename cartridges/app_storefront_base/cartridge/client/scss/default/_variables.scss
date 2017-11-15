@@ -11,8 +11,9 @@ $black: #000;
 $blue: #0070d2;
 $green: #008827;
 $primary: #00a1e0;
+$red: #c00;
 $success: $green;
-$danger: #c00;
+$danger: $red;
 $light-blue: #7ed0ee;
 
 // Consolidated values
@@ -31,7 +32,6 @@ $light-gray: $grey1;
 $slightly-darker-gray: $grey4;
 $dark-gray: $grey6;
 $darker-gray: $grey7;
-$primary: $primary;
 $horizontal-rule-grey: $grey3;
 $product-number-grey: $grey3;
 $horizontal-border-grey: $grey4;
