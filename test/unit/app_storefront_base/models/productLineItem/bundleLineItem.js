@@ -60,7 +60,6 @@ describe('Product Line Item Model', function () {
         productDecorators.stubs.stubSetIndividualProducts.reset();
         productDecorators.stubs.stubBundledProducts.reset();
         productLineItemDecorators.stubs.stubQuantity.reset();
-        productLineItemDecorators.stubs.stubInStorePickUp.reset();
         productLineItemDecorators.stubs.stubGift.reset();
         productLineItemDecorators.stubs.stubAppliedPromotions.reset();
         productLineItemDecorators.stubs.stubRenderedPromotions.reset();
@@ -108,12 +107,6 @@ describe('Product Line Item Model', function () {
         bundleLineItem(object, productMock, optionsMock);
 
         assert.isTrue(productLineItemDecorators.stubs.stubQuantity.calledOnce);
-    });
-
-    it('should call inStorePickUp for bundle line item model', function () {
-        bundleLineItem(object, productMock, optionsMock);
-
-        assert.isTrue(productLineItemDecorators.stubs.stubInStorePickUp.calledOnce);
     });
 
     it('should call gift for bundle line item model', function () {
