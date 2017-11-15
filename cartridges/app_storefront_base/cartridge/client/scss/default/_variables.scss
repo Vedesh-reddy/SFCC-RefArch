@@ -11,13 +11,9 @@ $black: #000;
 $blue: #0070d2;
 $green: #008827;
 $primary: #00a1e0;
-$red: #c00;
+$success: $green;
+$danger: #c00;
 $light-blue: #7ed0ee;
-
-$theme-colors: (
-    success: $green,
-    danger: $red
-);
 
 // Consolidated values
 $grey1: #f9f9f9;
@@ -35,7 +31,7 @@ $light-gray: $grey1;
 $slightly-darker-gray: $grey4;
 $dark-gray: $grey6;
 $darker-gray: $grey7;
-$brand-color: $primary;
+$primary: $primary;
 $horizontal-rule-grey: $grey3;
 $product-number-grey: $grey3;
 $horizontal-border-grey: $grey4;

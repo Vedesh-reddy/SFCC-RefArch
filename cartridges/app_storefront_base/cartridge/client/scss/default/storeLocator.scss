@@ -4,12 +4,12 @@
 
 .btn-storelocator-search {
     background-color: $light-gray;
-    border-color: $brand-color;
+    border-color: $primary;
     border-radius: 0;
-    color: $brand-color;
+    color: $primary;
 
     &:hover {
-        background-color: $brand-color;
+        background-color: $primary;
         color: $light-gray;
     }
 }

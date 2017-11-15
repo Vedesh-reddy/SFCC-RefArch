@@ -2,6 +2,6 @@
 .form-group {
     &.required .form-control-label::before {
         content: "*";
-        color: map-get($theme-colors, "danger");
+        color: $danger;
     }
 }
