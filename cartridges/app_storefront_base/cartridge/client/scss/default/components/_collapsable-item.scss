@@ -35,7 +35,7 @@
         }
     }
 
-    div.collapsable-#{$size} a.title {
+    .container div.collapsable-#{$size} a.title {
         color: $black;
         text-decoration: none;
 
