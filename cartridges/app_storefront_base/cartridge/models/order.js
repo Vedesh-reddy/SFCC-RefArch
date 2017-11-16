@@ -9,7 +9,6 @@ var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 var TotalsModel = require('*/cartridge/models/totals');
 
 var ShippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
-var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
 var DEFAULT_MODEL_CONFIG = {
     numberOfLineItems: '*'
