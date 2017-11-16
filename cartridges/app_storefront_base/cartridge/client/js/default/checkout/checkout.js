@@ -1,6 +1,5 @@
 'use strict';
 
-var inStorePickUp = require('./inStorePickUp');
 var addressHelpers = require('./address');
 var shippingHelpers = require('./shipping');
 var billingHelpers = require('./billing');
@@ -94,9 +93,9 @@ var formHelpers = require('./formErrors');
                     //
                     var isMultiShip = $('#checkout-main').hasClass('multi-ship');
                     var formSelector = isMultiShip ?
-                            '.multi-shipping .active form' : '.single-shipping .active form';
+                            '.multi-shipping .active form' : '.single-shipping form';
                     var form = $(formSelector);
-                    var isPickupInStore = form.hasClass('store-locator');
+
                     if (isMultiShip && form.length === 0) {
                         // in case the multi ship form is already submitted
                         var url = $('#checkout-main').attr('data-checkout-get-url');
@@ -114,73 +113,15 @@ var formHelpers = require('./formErrors');
                             }
                         });
                     } else {
-                        var shippingFormData;
-                        if (isPickupInStore) {
-                            var $radio = form.find('input:checked');
-                            var store = $radio.data('store');
+                        var shippingFormData = form.serialize();
 
-                            if (!store) {
-                                $('.no-store-selected').show();
-                                defer.reject();
-                                return defer;
+                        $('body').trigger('checkout:serializeShipping', {
+                            form: form,
+                            data: shippingFormData,
+                            callback: function (data) {
+                                shippingFormData = data;
                             }
-
-                            $('.no-store-selected').hide();
-
-                            // Populate Single Shipping Form elements
-                            var $singleShipForm = $('.single-shipping form:not(.store-locator)');
-                            [
-                                'address1',
-                                'address2',
-                                'city',
-                                'stateCode',
-                                'postalCode',
-                                'countryCode'
-                            ].forEach(function (selector) {
-                                var addressAttr = store[selector];
-                                $singleShipForm.find('[name$=' + (selector === 'countryCode'
-                                    ? 'country'
-                                    : selector) + ']').val(addressAttr);
-                            });
-
-                            // TODO: This should be replaced by custom attributes?
-                            $singleShipForm.find('[name$=lastName]').val(store.name);
-                            $singleShipForm.find('[name$=firstName]').val(store.ID);
-                            // hard coded number?
-                            $singleShipForm.find('[name$=phone]').val('800-234-1234');
-
-                            shippingFormData = $singleShipForm.serialize();
-                            shippingFormData += '&storeID=' + store.ID;
-
-                            $('body').trigger('checkout:serializeShipping', {
-                                form: $singleShipForm,
-                                data: shippingFormData,
-                                callback: function (data) {
-                                    shippingFormData = data;
-                                }
-                            });
-
-                            // Populate Single Shipping Method element
-                            form = $singleShipForm;
-                            if (shippingFormData.indexOf('shippingMethodID') > -1) {
-                                shippingFormData = shippingFormData
-                                    .replace(/shippingMethodID=[^&]+/, 'shippingMethodID=005');
-                            } else {
-                                var inputName = $singleShipForm.find('[name$=shippingMethodID]')
-                                    .attr('name');
-                                shippingFormData += '&' + inputName + '=005';
-                            }
-                        } else {
-                            shippingFormData = form.serialize();
-
-                            $('body').trigger('checkout:serializeShipping', {
-                                form: form,
-                                data: shippingFormData,
-                                callback: function (data) {
-                                    shippingFormData = data;
-                                }
-                            });
-                        }
+                        });
 
                         $.ajax({
                             url: form.attr('action'),
@@ -523,7 +464,7 @@ var exports = {
     }
 };
 
-[billingHelpers, shippingHelpers, addressHelpers, inStorePickUp].forEach(function (library) {
+[billingHelpers, shippingHelpers, addressHelpers].forEach(function (library) {
     Object.keys(library).forEach(function (item) {
         exports[item] = library[item];
     });

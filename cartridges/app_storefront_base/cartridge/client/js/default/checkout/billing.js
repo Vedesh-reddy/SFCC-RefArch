@@ -24,29 +24,27 @@ function updateBillingAddressSelector(order, customer) {
             order,
             { type: 'billing' }));
 
-        if (!order.isPickUpInStore) {
-            // Separator -
-            $billingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
-                order.resources.shippingAddresses, false, order, {
-                    // className: 'multi-shipping',
-                    type: 'billing'
-                }
-            ));
+        // Separator -
+        $billingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
+            order.resources.shippingAddresses, false, order, {
+                // className: 'multi-shipping',
+                type: 'billing'
+            }
+        ));
 
-            shippings.forEach(function (aShipping) {
-                var isSelected = order.billing.matchingAddressId === aShipping.UUID;
-                hasSelectedAddress = hasSelectedAddress || isSelected;
-                // Shipping Address option
-                $billingAddressSelector.append(
-                    addressHelpers.methods.optionValueForAddress(aShipping, isSelected, order,
-                        {
-                            // className: 'multi-shipping',
-                            type: 'billing'
-                        }
-                    )
-                );
-            });
-        }
+        shippings.forEach(function (aShipping) {
+            var isSelected = order.billing.matchingAddressId === aShipping.UUID;
+            hasSelectedAddress = hasSelectedAddress || isSelected;
+            // Shipping Address option
+            $billingAddressSelector.append(
+                addressHelpers.methods.optionValueForAddress(aShipping, isSelected, order,
+                    {
+                        // className: 'multi-shipping',
+                        type: 'billing'
+                    }
+                )
+            );
+        });
 
         if (customer.addresses && customer.addresses.length > 0) {
             $billingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
@@ -73,13 +71,7 @@ function updateBillingAddressSelector(order, customer) {
         $(form).attr('data-address-mode', 'new');
     }
 
-    if (order.isPickUpInStore
-        && (!customer.addresses || customer.addresses.length < 1)
-        && !order.billing.billingAddress.address) {
-        $billingAddressSelector.hide();
-    } else {
-        $billingAddressSelector.show();
-    }
+    $billingAddressSelector.show();
 }
 
 /**
