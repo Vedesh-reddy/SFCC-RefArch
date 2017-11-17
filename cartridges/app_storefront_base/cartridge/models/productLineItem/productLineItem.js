@@ -27,7 +27,6 @@ module.exports = function productLineItem(product, apiProduct, options) {
     productDecorators.availability(product, options.quantity, apiProduct.minOrderQuantity.value, apiProduct.availabilityModel);
 
     productLineItemDecorators.quantity(product, options.quantity);
-    productLineItemDecorators.inStorePickUp(product, apiProduct, options.lineItem);
     productLineItemDecorators.gift(product, options.lineItem);
     productLineItemDecorators.appliedPromotions(product, options.lineItem);
     productLineItemDecorators.renderedPromotions(product); // must get applied promotions first

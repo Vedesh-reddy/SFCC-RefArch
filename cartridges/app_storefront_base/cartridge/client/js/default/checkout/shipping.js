@@ -208,13 +208,13 @@ function updateShippingSummaryInformation(shipping, order) {
 
         addressHelpers.methods.populateAddressSummary($addressContainer, address);
 
-        if (!order.isPickUpInStore && address && address.phone) {
+        if (address && address.phone) {
             $shippingPhone.text(address.phone);
         } else {
             $shippingPhone.empty();
         }
 
-        if (!order.isPickUpInStore && selectedShippingMethod) {
+        if (selectedShippingMethod) {
             $shippingAddressLabel.text(order.resources.shippingAddress);
             $shippingSummaryLabel.show();
             $summaryDetails.show();
@@ -378,7 +378,7 @@ function shippingFormResponse(defer, data) {
     var isMultiShip = $('#checkout-main').hasClass('multi-ship');
     var formSelector = isMultiShip
         ? '.multi-shipping .active form'
-        : '.single-shipping .active form';
+        : '.single-shipping form';
 
     // highlight fields with errors
     if (data.error) {
@@ -740,47 +740,6 @@ module.exports = {
                 // console.error('unhandled tab target: ' + testTarget);
             }
             return false;
-        });
-    },
-
-    selectSingleShip: function () {
-        $('.nav-link.shipping-tab').on('click', function () {
-            var isShippingTabActive = $('.nav-tabs.single-shipping')
-                .data('shipping-tab-active');
-
-            if (!isShippingTabActive) {
-                $.spinner().start();
-
-                $('.nav-tabs.single-shipping').data('shipping-tab-active', true);
-
-                $('.shipping-address-block input[name$=_firstName]').val('');
-                $('.shipping-address-block input[name$=_lastName]').val('');
-                $('.shipping-address-block input[name$=_address1]').val('');
-                $('.shipping-address-block input[name$=_address2]').val('');
-                $('.shipping-address-block input[name$=_city]').val('');
-                $('.shipping-address-block input[name$=_postalCode]').val('');
-                $('.shipping-address-block select[name$=_stateCode]').val('');
-                $('.shipping-address-block select[name$=_country]').val('');
-                $('.shipping-address-block input[name$=_phone]').val('');
-
-                $('.shipping-method-list input:radio[name$="_shippingMethodID"]:first')
-                    .attr('checked', true);
-
-                $.ajax({
-                    url: $('.nav-tabs.single-shipping').data('inventory-list-url'),
-                    type: 'post',
-                    success: function () {
-                        var url = $('.shipping-method-list')
-                            .data('select-shipping-method-url');
-                        var params = $('.shipping-method-list:checked').val();
-                        $.spinner().stop();
-                        selectShippingMethodAjax(url, { methodID: params });
-                    },
-                    error: function () {
-                        $.spinner().stop();
-                    }
-                });
-            }
         });
     },
 

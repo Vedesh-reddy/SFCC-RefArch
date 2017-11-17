@@ -53,52 +53,6 @@ function getModel(req, url) {
 }
 
 /**
- * Returns an array of storeModel objects which have inventory for one or more PLIs
- * @param {Object} storesModel - a StoresModel instance to filter from
- * @param {Array<Object>} pliQtys - an array of objects with productID and quantityValue pairs
- * @returns {Array} - an array of StoreModel instances
- */
-function getFilteredStores(storesModel, pliQtys) {
-    var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
-
-    var availableStores = [];
-    var store;
-    var inventoryList;
-    var inventoryListId;
-    var inventoryRecord;
-    var pli;
-    var productID;
-    var quantity;
-    var hasAvailableInventory;
-
-    // Loop through available stores and make sure there is availability for all SKUs
-    for (var i = 0, ii = storesModel.stores.length; i < ii; i++) {
-        store = storesModel.stores[i];
-        inventoryListId = store.inventoryListId;
-        hasAvailableInventory = false;
-        if (inventoryListId) {
-            inventoryList = ProductInventoryMgr.getInventoryList(inventoryListId);
-            for (var j = 0, jj = pliQtys.length; j < jj; j++) {
-                pli = pliQtys[j];
-                productID = pli.productID;
-                quantity = pli.quantityValue;
-                inventoryRecord = inventoryList.getRecord(productID);
-                if (inventoryRecord && inventoryRecord.ATS.value >= quantity) {
-                    hasAvailableInventory = true;
-                } else {
-                    hasAvailableInventory = false;
-                    break;
-                }
-            }
-            if (hasAvailableInventory) {
-                availableStores.push(store);
-            }
-        }
-    }
-    return availableStores;
-}
-
-/**
  * create the stores results html
  * @param {Array} storesInfo - an array of objects that contains store information
  * @returns {string} The rendered HTML
@@ -120,6 +74,5 @@ function createStoresResultsHtml(storesInfo) {
 
 module.exports = exports = {
     getModel: getModel,
-    getFilteredStores: getFilteredStores,
     createStoresResultsHtml: createStoresResultsHtml
 };

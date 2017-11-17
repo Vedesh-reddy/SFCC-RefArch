@@ -3,7 +3,6 @@
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
-var stubInStorePickUp = sinon.stub();
 var stubGift = sinon.stub();
 var stubBonusProductLineItem = sinon.stub();
 var stubAppliedPromotions = sinon.stub();
@@ -20,7 +19,6 @@ var stubBundledProductLineItems = sinon.stub();
 function proxyModel() {
     return {
         mocks: proxyquire('../../cartridges/app_storefront_base/cartridge/models/productLineItem/decorators/index', {
-            '*/cartridge/models/productLineItem/decorators/inStorePickUp': stubInStorePickUp,
             '*/cartridge/models/productLineItem/decorators/gift': stubGift,
             '*/cartridge/models/productLineItem/decorators/bonusProductLineItem': stubBonusProductLineItem,
             '*/cartridge/models/productLineItem/decorators/appliedPromotions': stubAppliedPromotions,
@@ -35,7 +33,6 @@ function proxyModel() {
             '*/cartridge/models/productLineItem/decorators/bundledProductLineItems': stubBundledProductLineItems
         }),
         stubs: {
-            stubInStorePickUp: stubInStorePickUp,
             stubGift: stubGift,
             stubBonusProductLineItem: stubBonusProductLineItem,
             stubAppliedPromotions: stubAppliedPromotions,

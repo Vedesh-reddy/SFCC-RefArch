@@ -78,8 +78,6 @@ server.get(
         var AccountModel = require('*/cartridge/models/account');
         var OrderModel = require('*/cartridge/models/order');
         var URLUtils = require('dw/web/URLUtils');
-        var Site = require('dw/system/Site');
-        var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
         var reportingUrls = require('*/cartridge/scripts/reportingUrls');
         var Locale = require('dw/util/Locale');
 
@@ -163,11 +161,6 @@ server.get(
 
         var accountModel = new AccountModel(req.currentCustomer);
 
-        var storesModel = StoreHelpers.getModel(req);
-        var plis = currentBasket.productLineItems;
-        storesModel.availableStores = StoreHelpers.getFilteredStores(storesModel, plis);
-
-        var pickupEnabled = Site.getCurrent().getCustomPreferenceValue('enableStorePickUp');
         var reportingURLs;
         reportingURLs = reportingUrls.getCheckoutReportingURLs(
             currentBasket.UUID,
@@ -176,7 +169,6 @@ server.get(
         );
 
         res.render('checkout/checkout', {
-            stores: storesModel,
             order: orderModel,
             customer: accountModel,
             forms: {
@@ -185,7 +177,6 @@ server.get(
             },
             expirationYears: creditCardExpirationYears,
             currentStage: currentStage,
-            pickUpInStoreEnabled: pickupEnabled,
             reportingURLs: reportingURLs
         });
 

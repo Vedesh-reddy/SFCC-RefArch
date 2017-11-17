@@ -9,7 +9,6 @@ var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 var TotalsModel = require('*/cartridge/models/totals');
 
 var ShippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
-var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
 var DEFAULT_MODEL_CONFIG = {
     numberOfLineItems: '*'
@@ -124,7 +123,6 @@ function OrderModel(lineItemContainer, options) {
         this.orderEmail = null;
         this.orderStatus = null;
         this.usingMultiShipping = null;
-        this.isPickUpInStore = null;
         this.shippable = null;
     } else {
         var safeOptions = options || {};
@@ -163,7 +161,6 @@ function OrderModel(lineItemContainer, options) {
             : null;
         this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
                 lineItemContainer.productQuantityTotal : null;
-        this.isPickUpInStore = COHelpers.isPickUpInStore(lineItemContainer);
 
         if (modelConfig.numberOfLineItems === '*') {
             this.totals = totalsModel;
