@@ -378,7 +378,7 @@ function shippingFormResponse(defer, data) {
     var isMultiShip = $('#checkout-main').hasClass('multi-ship');
     var formSelector = isMultiShip
         ? '.multi-shipping .active form'
-        : '.single-shipping .active form';
+        : '.single-shipping form';
 
     // highlight fields with errors
     if (data.error) {
