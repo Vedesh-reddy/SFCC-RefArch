@@ -1,88 +1,32 @@
 'use strict';
 
-var ProductSetBase = require('*/cartridge/models/product/productSetBase').productSetBase;
-
-var DEFAULT_MAX_ORDER_QUANTITY = 9;
+var decorators = require('*/cartridge/models/product/decorators/index');
 
 /**
- * Determines whether a product is available
+ * Decorate product with set product information
+ * @param {Object} product - Product Model to be decorated
+ * @param {dw.catalog.Product} apiProduct - Product information returned by the script API
+ * @param {Object} options - Options passed in from the factory
+ * @property {dw.catalog.ProductVarationModel} options.variationModel - Variation model returned by the API
+ * @property {Object} options.options - Options provided on the query string
+ * @property {dw.catalog.ProductOptionModel} options.optionModel - Options model returned by the API
+ * @property {dw.util.Collection} options.promotions - Active promotions for a given product
+ * @property {number} options.quantity - Current selected quantity
+ * @property {Object} options.variables - Variables passed in on the query string
+ * @param {Object} factory - Reference to product factory
  *
- * @param {string} quantity - Quantity value to check against product availability
- * @param {dw.catalog.Product} product - Product instance returned from the API
- * @returns {boolean} - True if available, False if not
+ * @returns {Object} - Set product
  */
-function isAvailable(quantity, product) {
-    var availabilityModel = product.availabilityModel;
-    var currentQuantity = parseFloat(quantity) || 1;
+module.exports = function setProduct(product, apiProduct, options, factory) {
+    decorators.base(product, apiProduct, options.productType);
+    decorators.price(product, apiProduct, options.promotions, false, options.options);
+    decorators.images(product, apiProduct, { types: ['large', 'small'], quantity: 'all' });
+    decorators.quantity(product, apiProduct, options.quantity);
+    decorators.description(product, apiProduct);
+    decorators.promotions(product, options.promotions);
+    decorators.currentUrl(product, options.variationModel, options.optionModel, 'Product-Show', apiProduct.ID, options.quantity);
+    decorators.setIndividualProducts(product, apiProduct, factory);
+    decorators.setReadyToOrder(product);
 
-    return availabilityModel.isOrderable(currentQuantity);
-}
-
-/**
- * Determines whether all products in the set are ready to
- * order, this is called from a .some function.
- *
- * @param {Object} individualProduct - current product in the array being iterated over.
- * @returns {boolean} - returns true is all of the readyToOrder values are true.
- */
-function isReadyToOrder(individualProduct) {
-    return individualProduct.readyToOrder;
-}
-
-/**
- * @constructor
- * @classdesc Set product class
- * @param {dw.catalog.Product} product - Product instance returned from the API
- * @param {number} quantity - quantity of products selected
- * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
- *                                                                 product
- * @param {Object} productFactory - Factory utility that returns a ProductModel instance
- */
-function ProductSet(product, quantity, promotions, productFactory) {
-    this.productFactory = productFactory;
-    this.product = product;
-    this.imageConfig = {
-        types: ['large', 'small'],
-        quantity: 'all'
-    };
-    this.quantity = quantity;
-    this.apiPromotions = promotions;
-    this.initialize();
-}
-
-ProductSet.prototype = Object.create(ProductSetBase.prototype);
-
-ProductSet.prototype.initialize = function () {
-    ProductSetBase.prototype.initialize.call(this);
-    this.available = isAvailable(this.quantity, this.product);
-    this.online = this.product.online;
-    this.searchable = this.product.searchable;
-    this.minOrderQuantity = this.product.minOrderQuantity.value || 1;
-    this.maxOrderQuantity = DEFAULT_MAX_ORDER_QUANTITY;
-    this.readyToOrder = this.individualProducts.every(isReadyToOrder);
+    return product;
 };
-
-/**
- * @constructor
- * @classdesc Set product class.
- * @param {dw.catalog.Product} product - Product instance returned from the API
- * @param {number} quantity - quantity of products selected
- * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
- * @param {Object} productFactory - Factory utility that returns a ProductModel instance
- */
-function ProductWrapper(product, quantity, promotions, productFactory) {
-    var productSet = new ProductSet(
-        product,
-        quantity,
-        promotions,
-        productFactory
-    );
-    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
-        'individualProducts', 'available', 'online', 'searchable', 'minOrderQuantity',
-        'maxOrderQuantity', 'readyToOrder', 'promotions'];
-    items.forEach(function (item) {
-        this[item] = productSet[item];
-    }, this);
-}
-
-module.exports = ProductWrapper;

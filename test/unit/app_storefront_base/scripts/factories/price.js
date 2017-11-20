@@ -13,6 +13,7 @@ describe('priceFactory', function () {
     var spyDefaultPrice = sinon.spy();
     var spyTieredPrice = sinon.spy();
     var stubRangePrice = sinon.stub();
+    var stubGetPromotionPrice = sinon.stub();
     var stubGetProductPromotions = sinon.stub();
     stubGetProductPromotions.returns([]);
 
@@ -23,7 +24,8 @@ describe('priceFactory', function () {
             find: mockCollections.find
         },
         '*/cartridge/scripts/helpers/pricing': {
-            getRootPriceBook: function () { return { ID: '123' }; }
+            getRootPriceBook: function () { return { ID: '123' }; },
+            getPromotionPrice: stubGetPromotionPrice
         },
         'dw/campaign/PromotionMgr': {
             activeCustomerPromotions: {
@@ -195,7 +197,8 @@ describe('priceFactory', function () {
         it('should assign list price to root pricebook price when available', function () {
             var pricebookListPrice = {
                 available: true,
-                value: '$20'
+                value: '$20',
+                valueOrNull: 20
             };
             product = {
                 master: false,
@@ -282,7 +285,8 @@ describe('priceFactory', function () {
         describe('with promotional prices', function () {
             var listPrice = {
                 available: true,
-                value: 50
+                value: 50,
+                valueOrNull: 50
             };
             var salesPrice = {
                 value: 30,
@@ -293,7 +297,8 @@ describe('priceFactory', function () {
             };
             var promotionalPrice = {
                 available: true,
-                value: 10
+                value: 10,
+                valueOrNull: 10
             };
             var promotions = [{
                 promotionClass: {
@@ -306,6 +311,11 @@ describe('priceFactory', function () {
 
             beforeEach(function () {
                 stubGetProductPromotions.returns(promotions);
+                stubGetPromotionPrice.returns({
+                    available: true,
+                    value: 10,
+                    valueOrNull: 10
+                });
             });
 
             afterEach(function () {
@@ -371,6 +381,33 @@ describe('priceFactory', function () {
                 price = priceFactory.getPrice(product, null, null, promotions, false);
                 assert.isTrue(spyDefaultPrice.calledWithNew());
                 assert.isTrue(spyDefaultPrice.calledWith(promotionalPrice, listPrice));
+            });
+
+            it('should set sales price to list price if sales price is null', function () {
+                product = {
+                    master: false,
+                    priceModel: {
+                        price: {
+                            value: null,
+                            valueOrNull: null,
+                            compareTo: function (otherPrice) {
+                                return this.value > otherPrice.value;
+                            }
+                        },
+                        priceInfo: { priceBook: {} },
+                        getPriceTable: function () {
+                            return {
+                                quantities: { length: 1 }
+                            };
+                        },
+                        getPriceBookPrice: function () { return listPrice; }
+                    },
+                    getPriceModel: function () { return this.priceModel; },
+                    optionModel: { option: 'model' }
+                };
+                price = priceFactory.getPrice(product, null, null, promotions, false);
+                assert.isTrue(spyDefaultPrice.calledWithNew());
+                assert.isTrue(spyDefaultPrice.calledWith(listPrice, {}));
             });
         });
     });

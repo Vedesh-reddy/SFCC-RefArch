@@ -286,11 +286,6 @@ function handleVariantResponse(response, $productContainer) {
         product: response.product, $productContainer: $productContainer
     }).trigger('product:statusUpdate', response.product);
 
-    // Enable "Availability: Select Store" button if all required attributes have been selected
-    $('.btn-get-in-store-inventory').trigger('product:updateSelectStore', {
-        product: response.product, $productContainer: $productContainer
-    });
-
     // Update attributes
     $productContainer.find('.main-attributes').empty()
         .html(getAttributesHtml(response.product.attributes));

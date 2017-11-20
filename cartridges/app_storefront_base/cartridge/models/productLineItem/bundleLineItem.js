@@ -1,88 +1,42 @@
 'use strict';
 
-var ProductLineItem = require('*/cartridge/models/productLineItem/productLineItem').productLineItem;
-var collections = require('*/cartridge/scripts/util/collections');
+var productDecorators = require('*/cartridge/models/product/decorators/index');
+var productLineItemDecorators = require('*/cartridge/models/productLineItem/decorators/index');
 
 /**
- * creates an array of bundled line items
- * @param {dw.util.Collection} bundledProductLineItems - Collection of products in the bundle
- * @param {Object} productFactory - Factory utility that returns a ProductModel instance
- * @returns {Array} an array of bundled line items
- */
-function getBundledProductLineItems(bundledProductLineItems, productFactory) {
-    var bundledLineItems = collections.map(
-            bundledProductLineItems,
-            function (bundledProductLineItem) {
-                return productFactory.get({
-                    pid: bundledProductLineItem.product.ID,
-                    pview: 'productLineItem',
-                    lineItem: bundledProductLineItem,
-                    quantity: bundledProductLineItem.quantity.value,
-                    variables: null
-                });
-            }
-        );
-    return bundledLineItems;
-}
-
-/**
- * @constructor
- * @classdesc A product model that represents a single product in the cart.
+ * Decorate product with product line item information
+ * @param {Object} product - Product Model to be decorated
+ * @param {dw.catalog.Product} apiProduct - Product information returned by the script API
+ * @param {Object} options - Options passed in from the factory
+ * @property {dw.catalog.ProductVarationModel} options.variationModel - Variation model returned by the API
+ * @property {Object} options.lineItemOptions - Options provided on the query string
+ * @property {dw.catalog.ProductOptionModel} options.currentOptionModel - Options model returned by the API
+ * @property {dw.util.Collection} options.promotions - Active promotions for a given product
+ * @property {number} options.quantity - Current selected quantity
+ * @property {Object} options.variables - Variables passed in on the query string
+ * @param {Object} factory - Reference to product factory
  *
- * @param {dw.catalog.Product} product - Product instance from the line item
- * @param {number} quantity - The quantity of this product line item currently in the baskets
- * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
- * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - a collection of promotions
- * @param {Object} productFactory - Factory utility that returns a ProductModel instance
+ * @returns {Object} - Decorated product model
  */
-function BundleLineItem(product, quantity, lineItem, promotions, productFactory) {
-    this.product = product || {};
-    this.imageConfig = {
-        types: ['small'],
-        quantity: 'single'
-    };
-    this.quantity = quantity;
-    this.useSimplePrice = false;
-    this.apiPromotions = promotions;
-    this.lineItem = lineItem;
-    this.initialize(productFactory);
-}
+module.exports = function productLineItem(product, apiProduct, options, factory) {
+    productDecorators.base(product, apiProduct, options.productType);
+    productDecorators.price(product, apiProduct, options.promotions, false, options.currentOptionModel);
+    productDecorators.images(product, apiProduct, { types: ['small'], quantity: 'single' });
 
-BundleLineItem.prototype = Object.create(ProductLineItem.prototype);
+    productDecorators.availability(product, options.quantity, apiProduct.minOrderQuantity.value, apiProduct.availabilityModel);
 
-BundleLineItem.prototype.initialize = function (productFactory) {
-    ProductLineItem.prototype.initialize.call(this);
-    this.bundledProductLineItems = getBundledProductLineItems(
-        this.lineItem.bundledProductLineItems,
-        productFactory
-    );
+    productLineItemDecorators.quantity(product, options.quantity);
+    productLineItemDecorators.gift(product, options.lineItem);
+    productLineItemDecorators.appliedPromotions(product, options.lineItem);
+    productLineItemDecorators.renderedPromotions(product); // must get applied promotions first
+    productLineItemDecorators.uuid(product, options.lineItem);
+    productLineItemDecorators.orderable(product, apiProduct, options.quantity);
+    productLineItemDecorators.shipment(product, options.lineItem);
+    productLineItemDecorators.bonusProductLineItem(product, options.lineItem);
+    productLineItemDecorators.priceTotal(product, options.lineItem);
+    productLineItemDecorators.quantityOptions(product, apiProduct, options.quantity);
+
+    productLineItemDecorators.bundledProductLineItems(product, options.lineItem, factory);
+
+    return product;
 };
-
-/**
- * @constructor
- * @classdesc Wrapper around BundleLineItem model
- *
- * @param {dw.catalog.Product} product - The Product instance from the line item
- * @param {number} quantity - The quantity of this product line item currently in the baskets
- * @param {dw.order.ProductLineItem} lineItem - API ProductLineItem instance
- * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - a collection of promotions
- * @param {Object} productFactory - Factory utility that returns a ProductModel instance
- */
-function BundleLineItemWrapper(product, quantity, lineItem, promotions, productFactory) {
-    var bundleLineItem = new BundleLineItem(
-        product,
-        quantity,
-        lineItem,
-        promotions,
-        productFactory
-    );
-    var items = ['id', 'productName', 'price', 'productType', 'images', 'rating',
-        'variationAttributes', 'quantityOptions', 'priceTotal', 'isBonusProductLineItem', 'isGift',
-        'UUID', 'quantity', 'isOrderable', 'promotions', 'appliedPromotions', 'renderedPromotions',
-        'attributes', 'availability', 'bundledProductLineItems'];
-    items.forEach(function (item) {
-        this[item] = bundleLineItem[item];
-    }, this);
-}
-
-module.exports = BundleLineItemWrapper;

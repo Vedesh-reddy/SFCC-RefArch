@@ -145,56 +145,6 @@ describe('storeHelpers', function () {
         });
     });
 
-    describe('getFilteredStores', function () {
-        it('should return an array of storeModel objects which have inventory', function () {
-            var storeModel = {
-                stores: [
-                    {
-                        storeId: 'store1',
-                        inventoryListId: 'inventoryListId0001'
-                    },
-                    {
-                        storeId: 'store2',
-                        inventoryListId: 'inventoryListId0002'
-                    },
-                    {
-                        storeId: 'store3',
-                        inventoryListId: 'inventoryListId0003'
-                    }
-                ]
-            };
-
-            var pliQty = [
-                {
-                    productID: '000001',
-                    quantityValue: 2
-                },
-                {
-                    productID: '000002',
-                    quantityValue: 1
-                },
-                {
-                    productID: '000003',
-                    quantityValue: 3
-                }
-            ];
-
-            var expectedStoresModelArray = [
-                {
-                    'storeId': 'store1',
-                    'inventoryListId': 'inventoryListId0001'
-                },
-                {
-                    'storeId': 'store3',
-                    'inventoryListId': 'inventoryListId0003'
-                }
-            ];
-
-            var storesModelArray = storeHelpers.getFilteredStores(storeModel, pliQty);
-            assert.deepEqual(storesModelArray, expectedStoresModelArray);
-        });
-    });
-
     describe('createStoresResultsHtml', function () {
         it('should return the rendered HTML', function () {
             var stores = [

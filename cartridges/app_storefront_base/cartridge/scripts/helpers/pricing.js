@@ -2,6 +2,8 @@
 
 var HashMap = require('dw/util/HashMap');
 var Template = require('dw/util/Template');
+var money = require('dw/value/Money');
+var collections = require('*/cartridge/scripts/util/collections');
 
 
 /**
@@ -31,6 +33,31 @@ function getHtmlContext(keyMap) {
 }
 
 /**
+ * Get a product's promotional price
+ *
+ * @param {dw.catalog.Product} product - Product under evaluation
+ * @param {dw.util.Collection.<dw.campaign.Promotion>} promotions - Promotions that apply to this
+ *     product
+ * @param {dw.catalog.ProductOptionModel} currentOptionModel - The product's option model
+ * @return {dw.value.Money} - Promotional price
+ */
+function getPromotionPrice(product, promotions, currentOptionModel) {
+    var PROMOTION_CLASS_PRODUCT = require('dw/campaign/Promotion').PROMOTION_CLASS_PRODUCT;
+    var price = money.NOT_AVAILABLE;
+    var promotion = collections.find(promotions, function (promo) {
+        return promo.promotionClass && promo.promotionClass.equals(PROMOTION_CLASS_PRODUCT);
+    });
+
+    if (promotion) {
+        price = currentOptionModel
+            ? promotion.getPromotionalPrice(product, currentOptionModel)
+            : promotion.getPromotionalPrice(product, product.optionModel);
+    }
+
+    return price;
+}
+
+/**
  * Render Template HTML
  *
  * @param {dw.util.HashMap} context - Context object that will fill template placeholders
@@ -52,5 +79,6 @@ function renderHtml(context, templatePath) {
 module.exports = {
     getHtmlContext: getHtmlContext,
     getRootPriceBook: getRootPriceBook,
-    renderHtml: renderHtml
+    renderHtml: renderHtml,
+    getPromotionPrice: getPromotionPrice
 };
