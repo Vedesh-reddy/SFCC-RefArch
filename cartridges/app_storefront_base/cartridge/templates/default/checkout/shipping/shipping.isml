@@ -4,7 +4,7 @@
             <h4>${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
         </div>
 
-        <div class="card-block form-nav shipping-nav">
+        <div class="card-body form-nav shipping-nav">
             <isif condition="${pdict.order.items.items.length>1}">
                 <form action="${URLUtils.url('CheckoutShippingServices-ToggleMultiShip')}" novalidate>
                     <fieldset>

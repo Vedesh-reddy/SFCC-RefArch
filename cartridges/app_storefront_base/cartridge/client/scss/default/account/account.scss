@@ -1,6 +1,6 @@
+@import "../variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-@import "../variables";
 @import "../components/formFields";
 
 .account-image {
@@ -9,12 +9,12 @@
 }
 
 .card-footer > a {
-    color: $brand-color;
+    color: $primary;
     text-decoration: underline;
 }
 
 .card-header > a {
-    color: $brand-color;
+    color: $primary;
     float: right;
     text-decoration: underline;
 }

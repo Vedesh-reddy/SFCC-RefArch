@@ -27,6 +27,15 @@ $pull: left, right;
     }
 }
 
+@each $bp in map-keys($grid-breakpoints) {
+    .hidden-#{$bp}-down {
+
+        @include media-breakpoint-down($bp) {
+            display: none !important;
+        }
+    }
+}
+
 .row.equal-height > [class^="col"] {
     display: flex;
 }

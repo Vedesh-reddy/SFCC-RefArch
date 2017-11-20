@@ -1,5 +1,5 @@
-<nav class="navbar bg-inverse col-12 ">
-    <div class="close-menu clearfix hidden-lg-up">
+<nav class="navbar navbar-expand-md bg-inverse col-12">
+    <div class="close-menu clearfix d-lg-none">
         <div class="back pull-left">
             <a href="${'#'}" role="button">
                 <span class="caret-left"></span>
@@ -13,7 +13,7 @@
             </a>
         </div>
     </div>
-    <div aria-label="Main menu" role="navigation">
+    <div class="menu-group" aria-label="Main menu" role="navigation">
         <ul class="nav navbar-nav" role="menu">
             <isif condition="${pdict.categories}">
                 <isloop items="${pdict.categories}" var="category">
@@ -30,10 +30,8 @@
                     </isif>
                 </isloop>
             </isif>
-            <div class = "hidden-lg-up">
-                <isinclude url="${URLUtils.url('Account-Header')}" />
-                <isinclude url="${URLUtils.url('Page-Locale', 'showInMenu', true)}" />
-            </div>
+            <isinclude url="${URLUtils.url('Account-Header', 'mobile', true)}" />
+            <isinclude url="${URLUtils.url('Page-Locale', 'mobile', true)}" />
         </ul>
     </div>
 </nav>

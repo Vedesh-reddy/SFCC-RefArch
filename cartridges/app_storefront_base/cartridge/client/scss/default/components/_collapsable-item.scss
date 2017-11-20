@@ -16,7 +16,7 @@
             }
 
             .content,
-            .card-block {
+            .card-body {
                 display: none;
             }
 
@@ -28,14 +28,14 @@
                 }
 
                 .content,
-                .card-block {
+                .card-body {
                     display: block;
                 }
             }
         }
     }
 
-    div.collapsable-#{$size} a.title {
+    .container div.collapsable-#{$size} a.title {
         color: $black;
         text-decoration: none;
 

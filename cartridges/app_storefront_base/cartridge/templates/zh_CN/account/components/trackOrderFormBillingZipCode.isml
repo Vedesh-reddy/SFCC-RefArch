@@ -8,7 +8,7 @@
         class="form-control"
         id="trackorder-form-zip"
         name="trackOrderPostal">
-    <div class="form-control-feedback"></div>
+    <div class="invalid-feedback"></div>
 </div>
 
       

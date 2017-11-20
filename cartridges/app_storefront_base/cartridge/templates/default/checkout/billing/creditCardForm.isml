@@ -20,7 +20,7 @@
                     <isprint value=${creditFields.cardNumber.attributes} encoding="off"/>
                     autocomplete="cc-number"
                 >
-                <div class="form-control-feedback"></div>
+                <div class="invalid-feedback"></div>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
                     </option>
                 </isloop>
             </select>
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
     <div class="col-6">
@@ -66,7 +66,7 @@
                     <isprint value="${year}" formatter="####" /></option>
                 </isloop>
             </select>
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
 </div>
@@ -86,7 +86,7 @@
 
             <input type="text" class="form-control securityCode" id="securityCode"
                 <isprint value=${creditFields.securityCode.attributes} encoding="off"/> >
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
 </div>
@@ -105,7 +105,7 @@
             </span>
             <input type="text" class="form-control email" id="email"
                 value="${pdict.order.orderEmail||''}" <isprint value=${creditFields.email.attributes} encoding="off"/> >
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
     <div class="col-sm-6">
@@ -123,7 +123,7 @@
                 value="${pdict.order.billing.billingAddress.address
                 ? pdict.order.billing.billingAddress.address.phone||''
                 : ''}" <isprint value=${creditFields.phone.attributes} encoding="off"/> >
-            <div class="form-control-feedback"></div>
+            <div class="invalid-feedback"></div>
         </div>
     </div>
 </div>

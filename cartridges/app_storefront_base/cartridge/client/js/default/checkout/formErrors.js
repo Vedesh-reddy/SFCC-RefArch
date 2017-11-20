@@ -9,10 +9,9 @@ function loadFormErrors(parentSelector, fieldErrors) { // eslint-disable-line
     // Display error messages and highlight form fields with errors.
     $.each(fieldErrors, function (attr) {
         $('*[name=' + attr + ']', parentSelector)
-            .parents('.form-group').first()
-            .addClass('has-danger')
-            .find('.form-control-feedback')
-            .html(fieldErrors[attr]);
+        .addClass('is-invalid')
+        .siblings('.invalid-feedback')
+        .html(fieldErrors[attr]);
     });
 }
 
@@ -21,8 +20,7 @@ function loadFormErrors(parentSelector, fieldErrors) { // eslint-disable-line
  * @param {string} parentSelector - the parent form selector.
  */
 function clearPreviousErrors(parentSelector) {
-    $('*[name]', parentSelector)
-        .parents('.form-group').removeClass('has-danger');
+    $(parentSelector).find('.form-control.is-invalid').removeClass('is-invalid');
     $('.error-message').hide();
 }
 

@@ -165,7 +165,7 @@ var formHelpers = require('./formErrors');
                                 if (cvvCode === '') {
                                     $('.saved-payment-instrument.' +
                                         'selected-payment ' +
-                                        '.saved-security-code').addClass('has-danger');
+                                        '.form-control').addClass('is-invalid');
                                     defer.reject();
                                     return defer;
                                 }

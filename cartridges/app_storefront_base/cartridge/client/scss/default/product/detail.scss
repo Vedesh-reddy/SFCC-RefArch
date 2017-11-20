@@ -1,6 +1,6 @@
+@import "../variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-@import "../variables";
 @import "../utilities/shapes";
 @import "../utilities/responsiveUtils";
 @import "../utilities/swatch";
@@ -15,7 +15,7 @@
     cursor: not-allowed;
 
     &.color-value.selected::after {
-        background-color: $gray-light;
+        background-color: $gray-700;
     }
 }
 
@@ -89,7 +89,7 @@ label.availability {
 .promotions {
     font-weight: normal;
     text-align: center;
-    color: $brand-danger;
+    color: $danger;
     height: 85%;
 
     .callout {

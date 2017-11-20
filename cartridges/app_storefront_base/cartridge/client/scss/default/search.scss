@@ -34,8 +34,8 @@
 }
 
 .filter-header {
-    margin-left: map-get($grid-gutter-widths, "sm") / 2 * -1;
-    margin-right: map-get($grid-gutter-widths, "sm") / 2 * -1;
+    margin-left: $grid-gutter-width / 2 * -1;
+    margin-right: $grid-gutter-width / 2 * -1;
 }
 
 .header-bar {
@@ -111,7 +111,6 @@
     overflow: auto;
 
     a.reset {
-        color: $brand-success;
 
         @include media-breakpoint-down(sm) {
             float: right;
@@ -203,7 +202,7 @@
 
 .filter-bar {
     ul {
-        padding-left: $grid-gutter-width-base / 2;
+        padding-left: $grid-gutter-width / 2;
     }
 
     li {

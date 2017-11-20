@@ -20,7 +20,7 @@
                                 <h4>${Resource.msg('label.payment.addnewpayment','payment',null)}</h4>
                         </isif>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <isinclude template="account/payment/paymentform"/>
                     </div>
                 </div>

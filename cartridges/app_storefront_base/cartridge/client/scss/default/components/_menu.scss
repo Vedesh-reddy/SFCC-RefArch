@@ -30,16 +30,12 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     @include media-breakpoint-down($size) {
         .menu-toggleable-left.navbar-toggleable-#{$size} {
             position: fixed;
-            z-index: 1;
             left: -100%;
             top: 0;
             bottom: 0;
             transition: $slide-out-animation;
             display: block;
-            $gutter: map-get($grid-gutter-widths, $size);
-
-            padding-left: $gutter / 2;
-            padding-right: $gutter / 2;
+            max-width: 100%;
 
             &.in {
                 min-width: 50%;
@@ -51,7 +47,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
 .navbar.bg-inverse {
     background-color: transparent !important;
-    padding: 0 1rem;
+    padding: 0;
 
     @include media-breakpoint-up($next-breakpoint) {
         .navbar-nav .nav-item + .nav-item {
@@ -87,16 +83,18 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
 .menu-toggleable-left {
     .close-menu {
-        height: 60px;
-        margin-right: -1rem;
-        margin-left: -1rem;
         padding: 15px;
         background-color: $close-menu-bg;
         border-bottom: 1px solid $grey3;
+        flex: 0 0 100%;
 
         @include media-breakpoint-up($next-breakpoint) {
             display: none;
         }
+    }
+
+    .menu-group {
+        flex: 0 0 100%;
     }
 
     li > .close-menu {
@@ -120,13 +118,8 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         }
 
         @include media-breakpoint-down($breakpoint-name) {
-            .nav-item {
-                margin: 0 -1em;
-                padding-left: 1em;
-
-                + .nav-item {
-                    border-top: 1px solid $grey2;
-                }
+            .nav-item + .nav-item {
+                border-top: 1px solid $grey2;
             }
 
             .dropdown {
@@ -135,11 +128,15 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
             }
 
             .dropdown-toggle {
-                padding-right: 5em;
+                padding-left: 1rem;
 
                 &::after {
                     @include caret-right();
                 }
+            }
+
+            .nav-item .nav-link {
+                padding-left: 1rem;
             }
 
             .show > .dropdown-menu {
@@ -207,6 +204,10 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
         &.top-category {
             font-weight: bold;
+
+            > .nav-link {
+                padding-left: 0;
+            }
         }
     }
 }

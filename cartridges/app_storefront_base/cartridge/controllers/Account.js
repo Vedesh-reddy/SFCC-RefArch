@@ -715,9 +715,9 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
     next();
 });
 
-
 server.get('Header', server.middleware.include, function (req, res, next) {
-    res.render('account/header', { name:
+    var template = req.querystring.mobile ? 'account/mobileHeader' : 'account/header';
+    res.render(template, { name:
         req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
     });
     next();

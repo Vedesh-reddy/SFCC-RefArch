@@ -21,7 +21,7 @@
             >
             <span>${Resource.msg('label.payment.credit','payment',null)}</span>
         </label>
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <!-- Name on Card -->
@@ -33,7 +33,7 @@
         <input type="text" class="form-control" id="cardOwner"
             <isprint value="${pdict.paymentForm.cardOwner.attributes}" encoding="off" />
             autocomplete="cc-name">
-        <div class="form-control-feedback">
+        <div class="invalid-feedback">
             <isprint value="${pdict.paymentForm.cardOwner.error}" encoding="off" />
         </div>
     </div>
@@ -61,7 +61,7 @@
                 <input type="text" class="form-control" id="cardNumber"
                     <isprint value="${pdict.paymentForm.cardNumber.attributes}" encoding="off" />
                     autocomplete="cc-number">
-                <div class="form-control-feedback">
+                <div class="invalid-feedback">
                     <isprint value="${pdict.paymentForm.cardNumber.error}" encoding="off" />
                 </div>
             </div>
@@ -81,7 +81,7 @@
                         <option id="${month.id}" value="${month.htmlValue}" <isif condition="${month.selected}">selected</isif> >${month.label}</option>
                     </isloop>
                 </select>
-                <div class="form-control-feedback">
+                <div class="invalid-feedback">
                     <isprint value="${pdict.paymentForm.expirationMonth.error}" encoding="off" />
                 </div>
             </div>
@@ -99,7 +99,7 @@
                         <option id="${year}" value="${year}" <isif condition="${year == pdict.paymentForm.expirationYear.value}">selected</isif> >${year}</option>
                     </isloop>
                 </select>
-                <div class="form-control-feedback"></div>
+                <div class="invalid-feedback"></div>
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
         <div class="card-header">
             <h4>${Resource.msg('title.save.customer.information', 'confirmation', null)}</h4>
         </div>
-        <div class="card-block">
+        <div class="card-body">
             <form
                 action="${URLUtils.url('Order-CreateAccount', 'ID', pdict.order.orderNumber)}"
                 class="checkout-registration"
@@ -19,7 +19,7 @@
                        class="form-control"
                        id="newPassword"
                        <isprint value="${pdict.passwordForm.newpassword.attributes}" encoding="off" />>
-                    <div class="form-control-feedback"></div>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <div class="form-group
                     <isif condition="${pdict.passwordForm.newpasswordconfirm.mandatory === true}">required</isif>">
@@ -31,7 +31,7 @@
                        class="form-control"
                        id="newPasswordConfirm"
                        <isprint value="${pdict.passwordForm.newpasswordconfirm.attributes}" encoding="off" />>
-                    <div class="form-control-feedback"></div>
+                    <div class="invalid-feedback"></div>
                 </div>
 
                 <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>

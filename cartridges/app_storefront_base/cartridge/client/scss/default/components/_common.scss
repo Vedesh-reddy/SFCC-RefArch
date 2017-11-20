@@ -13,7 +13,7 @@ input[placeholder] {
     text-overflow: ellipsis;
 }
 
-header ~ .container a:not(.btn-primary) {
+header ~ .container a:not(.btn-primary, .btn-outline-primary) {
     color: $blue;
 }
 
@@ -26,11 +26,11 @@ header ~ .container a:not(.btn-primary) {
 }
 
 .order-discount {
-    color: $brand-success;
+    color: $success;
 }
 
 .shipping-discount {
-    color: $brand-success;
+    color: $success;
 }
 
 .error-messaging {

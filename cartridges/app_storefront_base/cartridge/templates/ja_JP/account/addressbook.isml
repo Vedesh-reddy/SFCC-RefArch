@@ -27,7 +27,7 @@
                             <h4 class="address-heading pull-left">${address.address.ID == pdict.addressBook[0].address.ID ? pdict.addressBook[0].address.ID+' ('+Resource.msg('label.addressbook.defaultaddress','account',null)+')' : address.address.ID}</h4>
                             <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="pull-right">${Resource.msg('link.edit','account',null)}</a>
                         </div>
-                        <div class="card-block card-block-positioning">
+                        <div class="card-body card-body-positioning">
                             <div>${address.address.postalCode} ${address.address.stateCode} ${address.address.city}</div>
                             <div>${address.address.address1}</div>
                             <isif condition="${address.address.address2 !== null}">

@@ -1,13 +1,11 @@
 <div class="container single-shipping">
     <div class="tab-content">
         <!--- Shipping Address Form--->
-        <div class="card-block" id="shipping-address" class="shipping-address" role="tabpanel">
+        <div class="card-body" id="shipping-address" class="shipping-address" role="tabpanel">
             <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('CheckoutShippingServices-SubmitShipping')}" class="address" data-address-mode="${pdict.order.shipping[0].matchingAddressId ? 'edit' : 'new'}" 
-                <isprint value=${pdict.forms.shippingForm.attributes} encoding="off"/>
-            >
+                <isprint value=${pdict.forms.shippingForm.attributes} encoding="off"/>>
                 <input name="shipmentUUID" type="hidden" value="${pdict.order.shipping[0].UUID}" />
                 <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
-
                 <isif condition="${pdict.customer.addresses && pdict.customer.addresses.length > 0}">
                     <fieldset class="shipment-selector-block">
                         <div class="form-group">
@@ -16,7 +14,7 @@
                             </label>
 
                             <isinclude template="checkout/shipping/shipmentSelector" />
-                            <div class="form-control-feedback"></div>
+                            <div class="invalid-feedback"></div>
                             <div class="row">
                                 <a class="col-6 text-center btn-show-details">${Resource.msg('action.update.address', 'checkout', null)}</a>
                                 <a class="col-6 text-center btn-add-new">${Resource.msg('action.add.new', 'checkout', null)}</a>

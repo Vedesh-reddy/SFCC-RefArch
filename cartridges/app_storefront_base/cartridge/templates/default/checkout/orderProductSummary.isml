@@ -1,6 +1,6 @@
 <isset name="miniCart" value="${false}" scope="page" />
 <div class="card order-product-summary">
-    <div class="card-block">
+    <div class="card-body">
         <div class="row leading-lines">
             <div class="col-6 start-lines">
                 <span class="order-receipt-label grand-total-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.order.items.totalQuantity)}</span>

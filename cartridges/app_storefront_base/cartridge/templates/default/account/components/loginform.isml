@@ -4,7 +4,7 @@
             ${Resource.msg('label.input.login.email', 'login', null)}
         </label>
         <input type="email" id="login-form-email" class="form-control" name="loginEmail" value="${pdict.userName}">
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-group required">
@@ -12,7 +12,7 @@
                 ${Resource.msg('label.input.login.password', 'login', null)}
         </label>
         <input type="password" id="login-form-password" class="form-control" name="loginPassword">
-        <div class="form-control-feedback"></div>
+        <div class="invalid-feedback"></div>
     </div>
 
     <div class="form-check clearfix">
@@ -25,7 +25,7 @@
         </div>
 
         <div class="pull-right forgot-password text-right">
-            <a class="hidden-sm-up" href="${URLUtils.url('Account-PasswordReset')}" title="${Resource.msg('link.login.forgotpassword', 'login', null)}">
+            <a class="d-sm-none" href="${URLUtils.url('Account-PasswordReset')}" title="${Resource.msg('link.login.forgotpassword', 'login', null)}">
                 ${Resource.msg('link.login.forgotpassword', 'login', null)}
             </a>
 

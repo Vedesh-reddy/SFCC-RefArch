@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="row hidden-sm-up">
+        <div class="row d-sm-none">
             <div class="col-12">
                 <span class="grand-total-label">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.order.items.totalQuantity)}</span>
                 <span class="grand-total-price">${pdict.order.totals.subTotal}</span>
@@ -53,7 +53,7 @@
                         <h4 class="pull-left">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
                         <span class="edit-button pull-right">${Resource.msg('action.edit.step', 'checkout', null)}</span>
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <isinclude template="checkout/shipping/shippingSummary" />
                     </div>
                 </div>
@@ -66,7 +66,7 @@
                         <span class="edit-button pull-right">${Resource.msg('action.edit.step', 'checkout', null)}</span>
                     </div>
 
-                    <div class="card-block">
+                    <div class="card-body">
                         <isinclude template="checkout/billing/billingSummary" />
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                     <div class="card-header">
                         <h4>${Resource.msg('heading.order.summary', 'checkout', null)}</h4>
                     </div>
-                    <div class="card-block order-total-summary">
+                    <div class="card-body order-total-summary">
                         <isinclude template="checkout/orderTotalSummary" />
                     </div>
                 </div>

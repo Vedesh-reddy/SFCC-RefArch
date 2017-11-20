@@ -6,7 +6,7 @@
                     <div class="card-header">
                         <isinclude template="checkout/productCard/productShippingCard" />
                     </div>
-                    <div class="card-block">
+                    <div class="card-body">
                         <form novalidate autocomplete="on" method="POST" action="${URLUtils.url('CheckoutAddressServices-AddNewAddress')}" data-address-mode="new" class="address" <isprint value=${pdict.forms.shippingForm.attributes} encoding="off" /> >
                             <input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
                             <input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
@@ -21,7 +21,7 @@
                                         </label>
 
                                         <isinclude template="checkout/shipping/shipmentSelector" />
-                                        <div class="form-control-feedback"></div>
+                                        <div class="invalid-feedback"></div>
                                         <div class="row">
                                             <a class="col-6 text-center btn-show-details">${Resource.msg('action.update.address', 'checkout', null)}</a>
                                             <a class="col-6 text-center btn-add-new">${Resource.msg('action.add.new', 'checkout', null)}</a>
@@ -43,23 +43,23 @@
                             <div class="view-address-block">
                                 <isinclude template="checkout/shipping/shippingCard" />
                             </div>
-                            <a class="btn btn-outline-primary col-12" data-action="enter">
+                            <button class="btn btn-outline-primary col-12" data-action="enter">
                                 ${Resource.msg('button.enter.address', 'checkout', null)}
-                            </a>
+                            </button>
                             <div class="row">
-                                <a class="btn btn-outline-primary offset-1 col-5" data-action="cancel">
+                                <button class="btn btn-outline-primary offset-1 col-5" data-action="cancel">
                                     ${Resource.msg('button.cancel', 'checkout', null)}
-                                </a>
-                                <a class="btn btn-outline-primary col-5" data-action="save">
+                                </button>
+                                <button class="btn btn-outline-primary col-5" data-action="save">
                                     ${Resource.msg('button.save', 'checkout', null)}
-                                </a>
+                                </button>
                             </div>
-                            <a class="btn btn-outline-primary col-12" data-action="save">
+                            <button class="btn btn-outline-primary col-12" data-action="save">
                                 ${Resource.msg('button.save', 'checkout', null)}
-                            </a>
-                            <a class="btn btn-outline-primary col-12" data-action="edit">
+                            </button>
+                            <button class="btn btn-outline-primary col-12" data-action="edit">
                                 ${Resource.msg('button.edit', 'checkout', null)}
-                            </a>
+                            </button>
                         </form>
                     </div>
                 </div>

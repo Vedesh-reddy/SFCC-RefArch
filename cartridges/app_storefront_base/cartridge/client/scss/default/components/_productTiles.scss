@@ -170,7 +170,7 @@
         border-top-right-radius: 0.1875rem;
 
         .full-pdp-link {
-            color: $brand-color;
+            color: $primary;
         }
 
         .close {
@@ -200,7 +200,7 @@
         cursor: not-allowed;
 
         &.color-value.selected::after {
-            background-color: $gray-light;
+            background-color: $gray-700;
         }
     }
 
@@ -243,6 +243,6 @@
 
     .promotions {
         text-align: center;
-        color: $brand-danger;
+        color: $red;
     }
 }

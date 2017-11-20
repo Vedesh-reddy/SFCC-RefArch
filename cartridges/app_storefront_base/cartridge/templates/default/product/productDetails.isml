@@ -14,13 +14,13 @@
             <div class="row">
                 <div class="col-12">
                     <!---Breadcrumbs--->
-                    <div class="product-breadcrumb hidden-md-up">
+                    <div class="product-breadcrumb d-md-none">
                         <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
                     </div>
 
                     <!-- Product Name -->
                     <div class="row">
-                        <div class="hidden-md-up col-sm-12">
+                        <div class="d-md-none col-sm-12">
                             <h1 class="product-name">${product.productName}</h1>
                         </div>
                     </div>

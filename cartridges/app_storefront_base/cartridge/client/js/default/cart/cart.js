@@ -318,13 +318,13 @@ module.exports = function () {
         $('.coupon-missing-error').hide();
         $('.coupon-error-message').empty();
         if (!$('.coupon-code-field').val()) {
-            $('.promo-code-form').addClass('has-danger');
+            $('.promo-code-form .form-control').addClass('is-invalid');
             $('.coupon-missing-error').show();
             $.spinner().stop();
             return false;
         }
         var $form = $('.promo-code-form');
-        $form.removeClass('has-danger');
+        $('.promo-code-form .form-control').removeClass('is-invalid');
         $('.coupon-error-message').empty();
 
         $.ajax({
@@ -334,7 +334,7 @@ module.exports = function () {
             data: $form.serialize(),
             success: function (data) {
                 if (data.error) {
-                    $('.promo-code-form').addClass('has-danger');
+                    $('.promo-code-form .form-control').addClass('is-invalid');
                     $('.coupon-error-message').empty().append(data.errorMessage);
                 } else {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
