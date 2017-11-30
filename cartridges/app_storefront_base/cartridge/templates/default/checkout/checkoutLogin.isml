@@ -42,7 +42,7 @@
                         <h4>${Resource.msg('heading.returning.customers', 'checkout', null)}</h4>
                     </div>
                     <div class="card-body">
-                        <isinclude template="account/components/loginform" />
+                        <isinclude template="account/components/loginForm" />
                         <isinclude template="account/components/oauth" />
                     </div>
                 </div>

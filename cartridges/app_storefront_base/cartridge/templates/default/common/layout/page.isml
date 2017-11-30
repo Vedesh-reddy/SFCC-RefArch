@@ -5,14 +5,14 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <isinclude template="/common/htmlhead" />
+        <isinclude template="/common/htmlHead" />
         <isactivedatahead/>
     </head>
     <body>
         <div class="page" data-action="${pdict.action}" data-querystring="${pdict.queryString}" >
-            <isinclude template="/components/header/pageheader" />
+            <isinclude template="/components/header/pageHeader" />
             <isreplace/>
-            <isinclude template="/components/footer/pagefooter" />
+            <isinclude template="/components/footer/pageFooter" />
         </div>
         <div class="error-messaging"></div>
         <div class="modal-background"></div>

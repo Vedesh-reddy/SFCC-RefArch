@@ -16,18 +16,18 @@ server.get(
         var apiContent = ContentMgr.getContent(req.querystring.cid);
 
         if (apiContent) {
-            var content = new ContentModel(apiContent, 'components/content/contentassetinc');
+            var content = new ContentModel(apiContent, 'components/content/contentAssetInc');
             if (content.template) {
                 res.render(content.template, { content: content });
             } else {
                 Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
-                res.render('/components/content/offlinecontent');
+                res.render('/components/content/offlineContent');
             }
         } else {
             Logger.warn('Content asset with ID {0} was included but not found',
                     req.querystring.cid);
 
-            res.render('/components/content/offlinecontent');
+            res.render('/components/content/offlineContent');
         }
         next();
     }
@@ -126,12 +126,12 @@ server.get('Show', cache.applyDefaultCache, function (req, res, next) {
     var apiContent = ContentMgr.getContent(req.querystring.cid);
 
     if (apiContent) {
-        var content = new ContentModel(apiContent, 'content/contentasset');
+        var content = new ContentModel(apiContent, 'content/contentAsset');
         if (content.template) {
             res.render(content.template, { content: content });
         } else {
             Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
-            res.render('/components/content/offlinecontent');
+            res.render('/components/content/offlineContent');
         }
     } else {
         Logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);

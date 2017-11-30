@@ -1,7 +1,7 @@
 'use strict';
 
-var field = require('./formfield');
-var action = require('./formaction');
+var field = require('./formField');
+var action = require('./formAction');
 
 /**
  * Convert dw.web.Form or dw.web.FormGroup to plain JS object

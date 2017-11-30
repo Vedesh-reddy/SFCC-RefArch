@@ -141,7 +141,7 @@ server.get(
         }
 
         var accountModel = getModel(req);
-        res.render('account/accountdashboard', {
+        res.render('account/accountDashboard', {
             account: accountModel,
             accountlanding: true,
             breadcrumbs: [
@@ -619,7 +619,7 @@ server.get('SetNewPassword', server.middleware.https, function (req, res, next) 
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var URLUtils = require('dw/web/URLUtils');
 
-    var passwordForm = server.forms.getForm('newpasswords');
+    var passwordForm = server.forms.getForm('newPasswords');
     passwordForm.clear();
     var token = req.querystring.token;
     var resettingCustomer = CustomerMgr.getCustomerByToken(token);
@@ -635,7 +635,7 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
     var Transaction = require('dw/system/Transaction');
     var Resource = require('dw/web/Resource');
 
-    var passwordForm = server.forms.getForm('newpasswords');
+    var passwordForm = server.forms.getForm('newPasswords');
     var token = req.querystring.token;
 
     if (passwordForm.newpassword.value !== passwordForm.newpasswordconfirm.value) {
@@ -677,7 +677,7 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
                 passwordForm.newpasswordconfirm.valid = false;
                 passwordForm.newpasswordconfirm.error =
                     Resource.msg('error.message.resetpassword.invalidformentry', 'forms', null);
-                res.render('account/password/newpassword', {
+                res.render('account/password/newPassword', {
                     passwordForm: passwordForm,
                     token: token
                 });
@@ -710,7 +710,7 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
             }
         });
     } else {
-        res.render('account/password/newpassword', { passwordForm: passwordForm, token: token });
+        res.render('account/password/newPassword', { passwordForm: passwordForm, token: token });
     }
     next();
 });

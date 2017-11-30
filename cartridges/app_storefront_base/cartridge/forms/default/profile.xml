@@ -93,6 +93,6 @@
 			value-error="error.message.currentpasswordnomatch"
 			type="string" />
 		
-		<include formid="newpasswords" name="newpasswords"/>
+		<include formid="newpasswords" name="newPasswords"/>
 	</group>
 </form>

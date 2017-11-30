@@ -3,7 +3,7 @@
         <div class="col-12">
             <!---Breadcrumbs--->
             <div class="product-breadcrumb d-md-none">
-                <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
             </div>
 
             <!-- Product Name -->
@@ -17,7 +17,7 @@
 
     <div class="row">
         <!-- Product Images Carousel -->
-        <isinclude template="product/components/image_carousel" />
+        <isinclude template="product/components/imageCarousel" />
 
         <div class="col-12 col-sm-6">
             <!-- Product Name -->
@@ -48,7 +48,7 @@
                 <isif condition="${product.options.length}">
                     <isloop items="${product.options}" var="option">
                         <isif condition="${option.selectedValueId !== ''}">
-                            <isinclude template="product/components/option_static" />
+                            <isinclude template="product/components/optionStatic" />
                         </isif>
                     </isloop>
                 </isif>
@@ -63,7 +63,7 @@
                 </div>
 
                 <div class="col-md-10 col-12">
-                    <isinclude template="product/components/quantity_static">
+                    <isinclude template="product/components/quantityStatic">
                 </div>
             </div>
         </div>

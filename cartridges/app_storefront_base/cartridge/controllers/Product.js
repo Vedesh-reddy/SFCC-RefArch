@@ -146,8 +146,8 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
     var template = product.productType === 'set'
-        ? 'product/setQuickview.isml'
-        : 'product/quickview.isml';
+        ? 'product/setQuickView.isml'
+        : 'product/quickView.isml';
 
     res.render(template, {
         product: product,
@@ -185,7 +185,7 @@ server.get('ShowBonusProducts', function (req, res, next) {
         products.push(product);
     });
 
-    var template = 'product/components/choiceofbonusproducts/bonusProducts.isml';
+    var template = 'product/components/choiceOfBonusProducts/bonusProducts.isml';
 
     res.render(template, {
         products: products

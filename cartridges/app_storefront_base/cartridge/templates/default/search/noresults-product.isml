@@ -1,3 +1,0 @@
-<isinclude template="search/noresults" />
-
-<isslot id="noresult-recommendations" description="Recommendations for no result search" context="global" />

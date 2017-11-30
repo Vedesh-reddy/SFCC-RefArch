@@ -20,7 +20,7 @@
             <div class="col-12">
                 <!---Breadcrumbs--->
                 <div class="product-breadcrumb">
-                    <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+                    <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
                 </div>
 
                 <!-- Product Name -->
@@ -34,7 +34,7 @@
 
         <div class="row product-bundle">
             <!-- Product Images Carousel -->
-            <isinclude template="product/components/image_carousel" />
+            <isinclude template="product/components/imageCarousel" />
 
             <div class="col-12 col-sm-6">
                 <div class="row">

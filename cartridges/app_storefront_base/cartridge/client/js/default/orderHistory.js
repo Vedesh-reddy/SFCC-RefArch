@@ -3,5 +3,5 @@
 var processInclude = require('./util');
 
 $(document).ready(function () {
-    processInclude(require('./orderhistory/orderhistory'));
+    processInclude(require('./orderHistory/orderHistory'));
 });

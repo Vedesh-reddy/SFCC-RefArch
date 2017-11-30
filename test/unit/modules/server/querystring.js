@@ -1,7 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
-var QueryString = require('../../../../cartridges/modules/server/querystring');
+var QueryString = require('../../../../cartridges/modules/server/queryString');
 
 describe('querystring', function () {
     describe('options parsing', function () {

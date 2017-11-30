@@ -10,21 +10,21 @@
     </div>
     <div class="container login-page">
         <!---Breadcrumbs--->
-        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+        <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
         <div class="row justify-content-center equal-height">
             <div class="col-sm-8 col-md-6">
                 <div class="card">
                     <div class="card-body">
                         <div class="login-form-nav">
-                            <isinclude template="account/components/navtabs" />
+                            <isinclude template="account/components/navTabs" />
                             <div class="tab-content">
                                 <div class="tab-pane ${pdict.navTabValue === 'login' ? 'active' : ''}" id="login" role="tabpanel">
-                                    <isinclude template="account/components/loginform" />
+                                    <isinclude template="account/components/loginForm" />
                                     <isinclude template="account/password/requestPasswordResetModal"/>
                                     <isinclude template="account/components/oauth" />
                                 </div>
                                 <div class="tab-pane ${pdict.navTabValue === "register" ? 'active' : ''}" id="register" role="tabpanel">
-                                    <isinclude template="account/components/registerform" />
+                                    <isinclude template="account/components/registerForm" />
                                 </div>
                             </div>
                         </div>
@@ -33,7 +33,7 @@
             </div>
             <div class="col-sm-8 col-md-6">
                 <div class="card">
-                    <isinclude template="account/components/trackorderform" />
+                    <isinclude template="account/components/trackOrderForm" />
                 </div>
             </div>
         </div>

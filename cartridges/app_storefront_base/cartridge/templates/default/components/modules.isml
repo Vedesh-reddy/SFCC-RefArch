@@ -1,4 +1,4 @@
-<ismodule template="/components/content/contentasset"
+<ismodule template="/components/content/contentAsset"
 	name="contentasset"
 	attribute="aid"
 />

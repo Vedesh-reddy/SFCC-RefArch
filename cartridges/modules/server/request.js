@@ -1,6 +1,6 @@
 'use strict';
 
-var QueryString = require('./querystring');
+var QueryString = require('./queryString');
 var SimpleCache = require('./simpleCache');
 
 /**

@@ -16,7 +16,7 @@ describe('forms', function () {
         'dw/web/FormField': FormField,
         'dw/web/FormAction': FormAction,
         'dw/web/FormGroup': FormGroup,
-        './formfield': proxyquire('../../../../cartridges/modules/server/forms/formfield', {
+        './formField': proxyquire('../../../../cartridges/modules/server/forms/formField', {
             'dw/web/Resource': { msg: function (value) { return value; } }
         })
     });

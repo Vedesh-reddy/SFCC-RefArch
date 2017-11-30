@@ -1,0 +1,18 @@
+<div class="card-body">
+    <p>${Resource.msg('msg.find.store','storeLocator',null)}</p>
+
+    <button type="submit" class="btn btn-primary btn-block btn-lg detect-location" data-action="${pdict.actionUrl}">
+        ${Resource.msg('button.use.my.location','storeLocator',null)}
+    </button>
+
+    <form action="${pdict.actionUrl}" class="store-locator" method="get" name="storelocator">
+        <div class="form-group">
+            <label for="postal-code">${Resource.msg('field.zip.postal.code','storeLocator',null)}</label>
+            <input type="text" class="form-control" id="postal-code" name="postalCode">
+        </div>
+
+        <button class="btn btn-block btn-storelocator-search" type="submit" name="submit" value="submit">
+            ${Resource.msg('button.find.stores','storeLocator',null)}
+        </button>
+    </form>
+</div>

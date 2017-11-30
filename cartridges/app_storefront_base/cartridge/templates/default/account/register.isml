@@ -12,11 +12,11 @@
     </div>
     <div class="container login-page registration-page ">
         <div class="row">
-            <isinclude template="account/components/navtabs" />
+            <isinclude template="account/components/navTabs" />
         </div>
         <div class="col-sm-8 offset-sm-2 col-md-6 offset-md-3">
             <div class="row">
-                <isinclude template="account/components/registerform" />
+                <isinclude template="account/components/registerForm" />
             </div>
         </div>
     </div>
