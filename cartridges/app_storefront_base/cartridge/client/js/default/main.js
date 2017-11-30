@@ -5,12 +5,12 @@ $(document).ready(function () {
     processInclude(require('./components/menu'));
     processInclude(require('./components/cookie'));
     processInclude(require('./components/footer'));
-    processInclude(require('./components/minicart'));
-    processInclude(require('./components/collapsable-item'));
+    processInclude(require('./components/miniCart'));
+    processInclude(require('./components/collapsableItem'));
     processInclude(require('./components/search'));
-    processInclude(require('./components/client-side-validation'));
-    processInclude(require('./components/countryselector'));
+    processInclude(require('./components/clientSideValidation'));
+    processInclude(require('./components/countrySelector'));
 });
 
-require('./thirdparty/bootstrap');
+require('./thirdParty/bootstrap');
 require('./components/spinner');

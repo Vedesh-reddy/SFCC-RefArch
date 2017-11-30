@@ -1,0 +1,43 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        if (pdict.googleMapsApi) {
+            assets.addJs(pdict.googleMapsApi);
+        }
+        assets.addJs('/js/storeLocator.js');
+        assets.addCss('/css/storeLocator.css');
+    </isscript>
+    <div class="jumbotron map-canvas" data-has-google-api="${pdict.googleMapsApi ? true : false}" data-locations="${pdict.locations}">
+        <div class="container">
+            <div class="row">
+                <p class="store-locator-no-apiKey alert alert-danger">${Resource.msg('error.no.api.key','storeLocator',null)}</p>
+            </div>
+        </div>
+    </div>
+    <div class="hero store-locator-hero">
+        <h1 class="page-title">${Resource.msg('title.hero.text','storeLocator',null)}</h1>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="card">
+                    <isinclude template="storeLocator/storeLocatorFields" />
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="card results-card">
+                    <div class="card-header">
+                        <isinclude template="storeLocator/storeLocatorRadius" />
+                    </div>
+                    <div class="card-body store-locator-no-results">
+                        <p class="alert alert-danger">${Resource.msg('error.no.results','storeLocator',null)}</p>
+                    </div>
+                    <div class="results" data-search-key="${JSON.stringify(pdict.searchKey)}" data-radius="${pdict.radius}" data-has-results="${pdict.stores.length}">
+                        <isinclude template="storeLocator/storeLocatorResults" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</isdecorate>

@@ -32,7 +32,7 @@ server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
         deleteActionUrl: URLUtils.url('Address-DeleteAddress').toString(),
         listActionUrl: URLUtils.url('Address-List').toString()
     };
-    res.render('account/addressbook', {
+    res.render('account/addressBook', {
         addressBook: getList(req.currentCustomer.profile.customerNo),
         actionUrls: actionUrls,
         breadcrumbs: [
@@ -56,7 +56,7 @@ server.get(
     function (req, res, next) {
         var addressForm = server.forms.getForm('address');
         addressForm.clear();
-        res.render('account/editaddaddress', {
+        res.render('account/editAddAddress', {
             addressForm: addressForm,
             breadcrumbs: [
                 {
@@ -97,7 +97,7 @@ server.get(
 
         addressForm.copyFrom(addressModel.address);
 
-        res.render('account/editaddaddress', {
+        res.render('account/editAddAddress', {
             addressForm: addressForm,
             addressId: addressId,
             breadcrumbs: [

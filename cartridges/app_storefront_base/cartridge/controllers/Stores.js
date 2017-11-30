@@ -6,7 +6,7 @@ var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
 var cache = require('*/cartridge/scripts/middleware/cache');
 
 server.get('Find', server.middleware.https, cache.applyDefaultCache, function (req, res, next) {
-    res.render('storelocator/storelocator', StoreHelpers.getModel(req));
+    res.render('storeLocator/storeLocator', StoreHelpers.getModel(req));
     next();
 });
 

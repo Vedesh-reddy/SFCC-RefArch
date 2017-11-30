@@ -21,7 +21,7 @@
 
                 <div class="row">
                     <!-- Product Images Carousel -->
-                    <isinclude template="product/components/image_carousel" />
+                    <isinclude template="product/components/imageCarousel" />
 
                     <div class="col-12 col-sm-6">
                         <!-- Product Name -->

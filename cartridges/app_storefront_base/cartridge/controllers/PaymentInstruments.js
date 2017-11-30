@@ -118,13 +118,13 @@ server.get(
         var Resource = require('dw/web/Resource');
 
         var creditCardExpirationYears = getExpirationYears();
-        var paymentForm = server.forms.getForm('creditcard');
+        var paymentForm = server.forms.getForm('creditCard');
         paymentForm.clear();
         var months = paymentForm.expirationMonth.options;
         for (var j = 0, k = months.length; j < k; j++) {
             months[j].selected = false;
         }
-        res.render('account/payment/editaddpayment', {
+        res.render('account/payment/editAddPayment', {
             paymentForm: paymentForm,
             expirationYears: creditCardExpirationYears,
             breadcrumbs: [
@@ -157,7 +157,7 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
         return next();
     }
 
-    var paymentForm = server.forms.getForm('creditcard');
+    var paymentForm = server.forms.getForm('creditCard');
     var result = getDetailsObject(paymentForm);
     var paymentInstruments = req.currentCustomer.wallet.paymentInstruments;
 

@@ -55,7 +55,7 @@ describe('Helpers - Pricing', function () {
     describe('renderHtml', function () {
         var context = 'context';
         var renderedHtml = 'rendered';
-        var defaultTemplatePath = 'product/components/pricing/ajax-main.isml';
+        var defaultTemplatePath = 'product/components/pricing/ajaxMain.isml';
 
         beforeEach(function () {
             templateStub.returns({

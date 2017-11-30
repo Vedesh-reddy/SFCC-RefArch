@@ -54,7 +54,7 @@ function createStoresObject(storesObject) {
  */
 function createGeoLocationObject(storesObject) {
     var context;
-    var template = 'storelocator/storeinfowindow';
+    var template = 'storeLocator/storeInfoWindow';
     return Object.keys(storesObject).map(function (key) {
         var store = storesObject[key];
         context = { store: store };

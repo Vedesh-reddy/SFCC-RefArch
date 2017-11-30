@@ -1,6 +1,6 @@
 'use strict';
 
-var formValidation = require('./components/form-validation');
+var formValidation = require('./components/formValidation');
 
 $(document).ready(function () {
     $('form.checkout-registration').submit(function (e) {

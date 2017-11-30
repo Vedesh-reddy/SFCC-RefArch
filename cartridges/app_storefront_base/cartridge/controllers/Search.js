@@ -53,7 +53,7 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
-    res.render('/search/productgrid', {
+    res.render('/search/productGrid', {
         productSearch: productSearch
     });
 
@@ -74,7 +74,7 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
         CatalogMgr.getSortingOptions(),
         CatalogMgr.getSiteCatalog().getRoot()
     );
-    res.render('/search/searchrefinebar', {
+    res.render('/search/searchRefineBar', {
         productSearch: productSearch,
         querystring: req.querystring
     });
@@ -93,7 +93,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
     var productSearch;
     var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')
         && req.httpHeaders['x-requested-with'] === 'XMLHttpRequest';
-    var resultsTemplate = isAjax ? 'search/searchresults_nodecorator' : 'search/searchresults';
+    var resultsTemplate = isAjax ? 'search/searchResultsNoDecorator' : 'search/searchResults';
     var apiProductSearch = new ProductSearchModel();
     var maxSlots = 4;
     var reportingURLs;
@@ -188,7 +188,7 @@ server.get('Content', cache.applyDefaultCache, function (req, res, next) {
     var count = Number(apiContentSearchModel.getCount());
     contentSearch = new ContentSearch(contentSearchResult, count, queryPhrase, startingPage, null);
 
-    res.render('/search/contentgrid', {
+    res.render('/search/contentGrid', {
         contentSearch: contentSearch
     });
     next();

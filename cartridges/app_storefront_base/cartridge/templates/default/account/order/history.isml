@@ -10,7 +10,7 @@
     </div>
     <div class="container">
         <!---Breadcrumbs--->
-        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+        <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
         <div class="row justify-content-center">
             <div class="col-12 col-sm-4 col-md-3">
                 <h4>${Resource.msg('label.orderhistory','account',null)}</h4>
@@ -33,7 +33,7 @@
         </div>
         <div class="row justify-content-center">
             <div class="container order-list-container">
-                <isinclude template="account/order/orderlist"/>
+                <isinclude template="account/order/orderList"/>
             </div>
         </div>
         <div class="row justify-content-center">

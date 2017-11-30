@@ -17,7 +17,7 @@ server.get('MiniCart', server.middleware.include, function (req, res, next) {
         quantityTotal = 0;
     }
 
-    res.render('/components/header/minicart', { quantityTotal: quantityTotal });
+    res.render('/components/header/miniCart', { quantityTotal: quantityTotal });
     next();
 });
 
@@ -559,7 +559,7 @@ server.get('ChooseBonusProducts', function (req, res, next) {
     }
 
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
-    var template = 'product/components/choiceofbonusproducts/chooseBonusProduct.isml';
+    var template = 'product/components/choiceOfBonusProducts/chooseBonusProduct.isml';
 
     res.render(template, {
         potentialProducts: potentialProducts,

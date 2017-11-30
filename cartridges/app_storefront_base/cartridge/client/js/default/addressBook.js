@@ -3,5 +3,5 @@
 var processInclude = require('./util');
 
 $(document).ready(function () {
-    processInclude(require('./addressbook/addressBook'));
+    processInclude(require('./addressBook/addressBook'));
 });

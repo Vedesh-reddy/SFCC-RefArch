@@ -10,7 +10,7 @@
     </div>
     <div class="container">
         <!---Breadcrumbs--->
-        <isinclude template="components/breadcrumbs/pagebreadcrumbs"/>
+        <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
         <isif condition="${!pdict.paymentInstruments}">
             <div class="row justify-content-center">
                 <div class="col">

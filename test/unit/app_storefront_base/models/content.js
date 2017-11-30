@@ -61,7 +61,7 @@ describe('Content', function () {
 
         var content = new Content(contentValue);
 
-        assert.equal(content.template, 'components/content/contentassetinc');
+        assert.equal(content.template, 'components/content/contentAssetInc');
     });
 
     it('should return undefined for the body if online flag is false', function () {

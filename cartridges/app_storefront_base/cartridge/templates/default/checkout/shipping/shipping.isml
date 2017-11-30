@@ -19,7 +19,7 @@
             </isif>
         </div>
 
-        <isinclude template="checkout/shipping/singleshipping" />
+        <isinclude template="checkout/shipping/singleShipping" />
     </div>
-    <isinclude template="checkout/shipping/multishipping" />
+    <isinclude template="checkout/shipping/multiShipping" />
 </div>

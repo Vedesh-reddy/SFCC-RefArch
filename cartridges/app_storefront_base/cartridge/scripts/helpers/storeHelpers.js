@@ -68,7 +68,7 @@ function createStoresResultsHtml(storesInfo) {
         context.put(key, object[key]);
     });
 
-    var template = new Template('storelocator/storelocatorresults');
+    var template = new Template('storeLocator/storeLocatorResults');
     return template.render(context).text;
 }
 
