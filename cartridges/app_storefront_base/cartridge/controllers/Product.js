@@ -72,7 +72,6 @@ function getResources() {
  */
 function showProductPage(querystring, res) {
     var URLUtils = require('dw/web/URLUtils');
-    var Site = require('dw/system/Site');
 
     var ProductFactory = require('*/cartridge/scripts/factories/product');
 
@@ -95,11 +94,7 @@ function showProductPage(querystring, res) {
         product: product,
         addToCartUrl: addToCartUrl,
         resources: getResources(),
-        breadcrumbs: breadcrumbs,
-        pickUpInStore: {
-            actionUrl: URLUtils.url('Product-GetStores').toString(),
-            enabled: Site.getCurrent().getCustomPreferenceValue('enableStorePickUp')
-        }
+        breadcrumbs: breadcrumbs
     });
 }
 
