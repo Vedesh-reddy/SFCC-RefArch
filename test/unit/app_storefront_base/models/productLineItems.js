@@ -48,7 +48,8 @@ var apiBasket = {
         quantity: {
             value: 1
         },
-        product: toProductMock(productMock)
+        product: toProductMock(productMock),
+        custom: { bonusProductLineItemUUID: 'someUUID' }
     }])
 };
 

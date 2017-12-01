@@ -24,7 +24,7 @@ var optionsMock = {
     variationModel: {},
     promotions: [],
     variables: [],
-    lineItem: { UUID: '123'}
+    lineItem: { UUID: '123' }
 };
 
 var object = {};
