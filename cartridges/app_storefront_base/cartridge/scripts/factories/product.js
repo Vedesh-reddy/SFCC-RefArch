@@ -192,7 +192,7 @@ module.exports = {
                         options.lineItemOptions = lineItemOptionsBundle;
                         options.currentOptionModel = currentOptionModelBundle;
 
-                        if (params.containerview === 'order') {
+                        if (params.containerView === 'order') {
                             product = bonusOrderLineItem(product, apiProduct, options);
                         } else {
                             product = bonusProductLineItem(product, apiProduct, options);
@@ -215,7 +215,7 @@ module.exports = {
                 switch (productType) {
                     case 'bundle':
 
-                        if (params.containerview === 'order') {
+                        if (params.containerView === 'order') {
                             product = bundleOrderLineItem(product, apiProduct, options, this);
                         } else {
                             product = bundleProductLineItem(product, apiProduct, options, this);
@@ -242,7 +242,7 @@ module.exports = {
                         options.lineItemOptions = lineItemOptionsPLI;
                         options.currentOptionModel = currentOptionModelPLI;
 
-                        if (params.containerview === 'order') {
+                        if (params.containerView === 'order') {
                             product = orderLineItem(product, apiProduct, options);
                         } else {
                             product = productLineItem(product, apiProduct, options);

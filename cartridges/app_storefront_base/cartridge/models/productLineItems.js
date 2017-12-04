@@ -41,7 +41,7 @@ function createProductLineItemsObject(allLineItems, view) {
                         quantity: bonusItem.quantity.value,
                         variables: null,
                         pview: 'bonusProductLineItem',
-                        containerview: view,
+                        containerView: view,
                         lineItem: bonusItem,
                         options: bpliOptions
                     };
@@ -56,7 +56,7 @@ function createProductLineItemsObject(allLineItems, view) {
             quantity: item.quantity.value,
             variables: null,
             pview: 'productLineItem',
-            containerview: view,
+            containerView: view,
             lineItem: item,
             options: options
         };

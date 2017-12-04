@@ -55,7 +55,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
     var basketModel = new OrderModel(
         currentBasket,
-        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerview: 'basket' }
+        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
     );
 
     res.json({
@@ -137,7 +137,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
         var basketModel = new OrderModel(
             currentBasket,
-            { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerview: 'basket' }
+            { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
         );
 
         res.json({
@@ -214,7 +214,7 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
 
     var basketModel = new OrderModel(
         currentBasket,
-        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerview: 'basket' }
+        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
     );
 
     res.json({
@@ -340,7 +340,7 @@ server.post(
                         usingMultiShipping: usingMultiShipping,
                         shippable: true,
                         countryCode: currentLocale.country,
-                        containerview: 'basket'
+                        containerView: 'basket'
                     }
                 );
 

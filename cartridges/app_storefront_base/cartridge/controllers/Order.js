@@ -40,7 +40,7 @@ server.get(
 
         var orderModel = new OrderModel(
             order,
-            { config: config, countryCode: currentLocale.country, containerview: 'order' }
+            { config: config, countryCode: currentLocale.country, containerView: 'order' }
         );
         var passwordForm;
 
@@ -108,7 +108,7 @@ server.get(
 
             var orderModel = new OrderModel(
                 order,
-                { config: config, countryCode: currentLocale.country, containerview: 'order' }
+                { config: config, countryCode: currentLocale.country, containerView: 'order' }
             );
 
             // check the email and postal code of the form
@@ -225,7 +225,7 @@ server.get(
 
             var orderModel = new OrderModel(
                 order,
-                { config: config, countryCode: currentLocale.country, containerview: 'order' }
+                { config: config, countryCode: currentLocale.country, containerView: 'order' }
             );
             var exitLinkText = Resource.msg('link.orderdetails.orderhistory', 'account', null);
             var exitLinkUrl =

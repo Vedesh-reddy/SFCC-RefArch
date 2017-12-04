@@ -148,7 +148,7 @@ server.get(
                 usingMultiShipping: usingMultiShipping,
                 shippable: allValid,
                 countryCode: currentLocale.country,
-                containerview: 'basket'
+                containerView: 'basket'
             }
         );
 
