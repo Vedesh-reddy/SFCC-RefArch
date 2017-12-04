@@ -20,8 +20,14 @@ stubProductTile.returns('product tile');
 var stubProductLineItem = sinon.stub();
 stubProductLineItem.returns('product line item');
 
+var stubOrderLineItem = sinon.stub();
+stubOrderLineItem.returns('product line item (order)');
+
 var stubBundleLineItem = sinon.stub();
 stubBundleLineItem.returns('bundle line item');
+
+var stubBundleOrderLineItem = sinon.stub();
+stubBundleOrderLineItem.returns('bundle line item (order)');
 
 var stubBonusProduct = sinon.stub();
 stubBonusProduct.returns('bonus product');
@@ -29,6 +35,8 @@ stubBonusProduct.returns('bonus product');
 var stubBonusProductLineItem = sinon.stub();
 stubBonusProductLineItem.returns('bonus product line item');
 
+var stubBonusOrderLineItem = sinon.stub();
+stubBonusOrderLineItem.returns('bonus product line item (order)');
 var productMock = {};
 
 var optionProductLineItems = new ArrayList([]);
@@ -58,9 +66,12 @@ describe('Product Factory', function () {
         '*/cartridge/models/product/productSet': stubProductSet,
         '*/cartridge/models/product/productBundle': stubProductBundle,
         '*/cartridge/models/productLineItem/productLineItem': stubProductLineItem,
+        '*/cartridge/models/productLineItem/orderLineItem': stubOrderLineItem,
         '*/cartridge/models/productLineItem/bundleLineItem': stubBundleLineItem,
+        '*/cartridge/models/productLineItem/bundleOrderLineItem': stubBundleOrderLineItem,
         '*/cartridge/models/product/bonusProduct': stubBonusProduct,
-        '*/cartridge/models/productLineItem/bonusProductLineItem': stubBonusProductLineItem
+        '*/cartridge/models/productLineItem/bonusProductLineItem': stubBonusProductLineItem,
+        '*/cartridge/models/productLineItem/bonusOrderLineItem': stubBonusOrderLineItem
     });
 
     beforeEach(function () {
