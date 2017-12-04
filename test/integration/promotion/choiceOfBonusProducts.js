@@ -102,77 +102,92 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
             assert.containSubset(bodyAsJson, expectedSubSet);
         });
     });
+});
 
-    it('should return successful result if the number bonus products are allowed by the promotion', function () {
+describe('Add Bonus Product to cart', function () {
+    this.timeout(45000);
 
-        // ----- adding product item #1:
+    var variantPid1 = '701642842668';
+    var qty1 = 1;
+    var cookieJar = request.jar();
+    var myRequest = {
+        url: '',
+        method: 'POST',
+        rejectUnauthorized: false,
+        resolveWithFullResponse: true,
+        jar: cookieJar,
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    };
+
+    var duuid;
+    var pliuuid;
+    var pageSize;
+    var bonusChoiceRuleBased;
+
+    before(function () {
+        // ----- adding qualifying product #1:
         myRequest.url = config.baseUrl + '/Cart-AddProduct';
         myRequest.form = {
-            pid: '701642842668',
-            quantity: 1
-        };
-
-        var expectedPidArray = [
-            '008885004540',
-            '008884304047',
-            '883360390116',
-            'pioneer-pdp-6010fd'];
-        var expectedLabels = {
-            'close': 'Close',
-            'maxprods': 'of 2 bonus products selected:',
-            'selectprods': 'Select Bonus Products'
+            pid: variantPid1,
+            quantity: qty1
         };
 
         return request(myRequest)
-        .then(function (myResponse) {
+            .then(function (response) {
+                var bodyAsJson = JSON.parse(response.body);
+                duuid = bodyAsJson.newBonusDiscountLineItem.uuid;
+                bonusChoiceRuleBased = bodyAsJson.newBonusDiscountLineItem.bonusChoiceRuleBased;
+                pageSize = parseInt(bodyAsJson.newBonusDiscountLineItem.pageSize, 10);
+                pliuuid = bodyAsJson.newBonusDiscountLineItem.pliUUID;
+            });
+    });
 
-            var bodyAsJson = JSON.parse(myResponse.body);
-            var UUID = bodyAsJson.newBonusDiscountLineItem.uuid;
-            var url = bodyAsJson.newBonusDiscountLineItem.showProductsUrlRuleBased;
+    it('It should reflect as a rule based bonus product', function () {
+        assert.equal(pageSize, 6);
+        assert.equal(bonusChoiceRuleBased, true);
+        assert.isNotNull(duuid);
+    });
 
-            // myRequest.url = config.baseUrl + url;
-            // myRequest.form = {
-            // };
-            // myRequest.method = 'GET';
-            // return request(myRequest)
-            // .then(function (myResponse) {
-            //     console.log('got herer');
-            // });
-            assert.equal(myResponse.statusCode, 200);
-            //assert.equal(bodyAsJson.newBonusDiscountLineItem.bonuspids.length, expectedPidArray.length);
-            //assert.containSubset(bodyAsJson.newBonusDiscountLineItem.bonuspids, expectedPidArray);
-            //assert.containSubset(bodyAsJson.newBonusDiscountLineItem.maxBonusItems, 2);
-            //assert.containSubset(bodyAsJson.newBonusDiscountLineItem.labels, expectedLabels);
+    it('bring up the edit bonus product window', function () {
+        // console.log('duuid ' + duuid);
+        myRequest.url = config.baseUrl + '/Cart-EditBonusProduct?duuid=' + duuid;
+        myRequest.form = {
+            duuid: duuid
+        };
+        myRequest.method = 'GET';
+        // console.log(myRequest.url);
+        return request(myRequest)
+        .then(function (response) {
+            var bodyAsJson = JSON.parse(response.body);
+            assert.equal(bodyAsJson.action, 'Cart-EditBonusProduct');
+            assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-AddBonusProducts');
+            assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-ShowBonusProducts');
+            assert.equal(bodyAsJson.maxBonusItems, 2);
+            assert.equal(pageSize, 6);
+            assert.equal(bodyAsJson.pliUUID, pliuuid);
+            assert.equal(bodyAsJson.uuid, duuid);
+            assert.equal(bodyAsJson.bonusChoiceRuleBased, true);
+            assert.equal(bodyAsJson.showProductsUrlRuleBased, '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-ShowBonusProducts?DUUID=' + duuid + '&pagesize=' + pageSize + '&pagestart=0&maxpids=' + bodyAsJson.maxBonusItems);
         });
-        // // ----- adding product item #1:
-        // pid:701642842668
-        // quantity:1
-        // options:[]
+    });
 
-        // var urlQuerystring = '?pids=' +
-        //     JSON.stringify({
-        //         'bonusProducts':
-        //         [{
-        //             'pid': '008885004540',
-        //             'qty': 2,
-        //             'options': [null]
-        //         }],
-        //         'totalQty': 2 });
-        // urlQuerystring += '&uuid=' + UUID;
-        // myRequest.url = config.baseUrl + '/Cart-AddProduct' + urlQuerystring;
-
-        // var expectedSubSet = {
-        //     'totalQty': 8,
-        //     'msgSuccess': 'Bonus Products added to your cart',
-        //     'error': false,
-        //     'success': true
-        // };
-
-        // return request(myRequest)
-        // .then(function (myResponse) {
-        //     var bodyAsJson = JSON.parse(myResponse.body);
-        //     // assert.equal(myResponse.statusCode, 200);
-        //     //assert.containSubset(bodyAsJson, expectedSubSet);
-        // });
+    it('Add Bonus Product to cart', function () {
+        var addBonusQueryString = '?pids={%22bonusProducts%22:[{%22pid%22:701642887584,%22qty%22:1,%22options%22:[null]}],%22totalQty%22:1}&uuid=' + duuid + '&pliuuid=' + pliuuid;
+        myRequest.url = config.baseUrl + '/Cart-AddBonusProducts' + addBonusQueryString;
+        myRequest.form = {
+            duuid: duuid
+        };
+        myRequest.method = 'POST';
+        return request(myRequest)
+        .then(function (response) {
+            var bodyAsJson = JSON.parse(response.body);
+            assert.equal(bodyAsJson.action, 'Cart-AddBonusProducts');
+            assert.equal(bodyAsJson.totalQty, 2);
+            assert.equal(bodyAsJson.msgSuccess, 'Bonus Products added to your cart');
+            assert.isTrue(bodyAsJson.success);
+            assert.isFalse(bodyAsJson.error);
+        });
     });
 });
