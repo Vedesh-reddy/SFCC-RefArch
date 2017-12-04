@@ -32,7 +32,7 @@ describe('Bonus Order Line Item', function () {
     var productDecorators = require('../../../../mocks/productDecoratorsMock');
     var productLineItemDecorators = require('../../../../mocks/productLineItemDecoratorsMock');
 
-    var bonusOrderLineItem = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/productLineItem/bonusProductLineItem', {
+    var bonusOrderLineItem = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/productLineItem/bonusOrderLineItem', {
         '*/cartridge/models/product/decorators/index': productDecorators.mocks,
         '*/cartridge/models/productLineItem/decorators/index': productLineItemDecorators.mocks
     });
@@ -190,9 +190,9 @@ describe('Bonus Order Line Item', function () {
         assert.isTrue(productLineItemDecorators.stubs.stubPreOrderUUID.calledOnce);
     });
 
-    it('should call bonusUnitPrice for bonus line item model (order)', function () {
+    it('should not call bonusUnitPrice for bonus line item model (order)', function () {
         bonusOrderLineItem(object, productMock, optionsMock);
 
-        assert.isTrue(productLineItemDecorators.stubs.stubBonusUnitPrice.calledOnce);
+        assert.isFalse(productLineItemDecorators.stubs.stubBonusUnitPrice.calledOnce);
     });
 });
