@@ -193,7 +193,7 @@ module.exports = {
                         options.currentOptionModel = currentOptionModelBundle;
 
                         if (params.containerview === 'order') {
-                            product = bonusOrderLineItem(product, apiProduct, options);                        	
+                            product = bonusOrderLineItem(product, apiProduct, options);
                         } else {
                             product = bonusProductLineItem(product, apiProduct, options);
                         }
@@ -241,7 +241,7 @@ module.exports = {
                         options.variationModel = variationsPLI;
                         options.lineItemOptions = lineItemOptionsPLI;
                         options.currentOptionModel = currentOptionModelPLI;
-                        
+
                         if (params.containerview === 'order') {
                             product = orderLineItem(product, apiProduct, options);
                         } else {

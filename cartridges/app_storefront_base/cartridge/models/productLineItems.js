@@ -7,6 +7,7 @@ var ProductFactory = require('*/cartridge/scripts/factories/product');
  * Creates an array of product line items
  * @param {dw.util.Collection <dw.order.ProductLineItem>} allLineItems - All product
  * line items of the basket
+ * @param {string} view - the view of the line item (basket or order)
  * @returns {Array} an array of product line items.
  */
 function createProductLineItemsObject(allLineItems, view) {
@@ -91,6 +92,7 @@ function getTotalQuantity(items) {
  *
  * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - the product line items
  *                                                       of the current line item container
+ * @param {string} view - the view of the line item (basket or order)
  */
 function ProductLineItems(productLineItems, view) {
     if (productLineItems) {

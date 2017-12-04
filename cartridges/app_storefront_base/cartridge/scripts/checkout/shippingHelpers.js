@@ -13,6 +13,7 @@ var ShippingModel = require('*/cartridge/models/shipping');
  * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
  * @param {dw.order.Basket} currentBasket - the target Basket object
  * @param {Object} customer - the associated Customer Model object
+ * @param {string} containerview - view of the shipping models (order or basket)
  * @returns {dw.util.ArrayList} an array of ShippingModels
  */
 function getShippingModels(currentBasket, customer, containerview) {
