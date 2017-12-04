@@ -53,7 +53,7 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     res.json({
         uuid: uuid,
         customer: new AccountModel(req.currentCustomer),
-        order: new OrderModel(basket, { countryCode: currentLocale.country })
+        order: new OrderModel(basket, { countryCode: currentLocale.country, containerview: 'basket'  })
     });
     return next();
 });
@@ -203,7 +203,8 @@ server.post(
                 {
                     usingMultiShipping: usingMultiShipping,
                     shippable: allValid,
-                    countryCode: currentLocale.country
+                    countryCode: currentLocale.country,
+                    containerview: 'basket' 
                 }
             );
 

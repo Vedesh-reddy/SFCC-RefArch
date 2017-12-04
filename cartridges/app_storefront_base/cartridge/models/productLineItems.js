@@ -9,7 +9,7 @@ var ProductFactory = require('*/cartridge/scripts/factories/product');
  * line items of the basket
  * @returns {Array} an array of product line items.
  */
-function createProductLineItemsObject(allLineItems) {
+function createProductLineItemsObject(allLineItems, view) {
     var lineItems = [];
 
     collections.forEach(allLineItems, function (item) {
@@ -40,6 +40,7 @@ function createProductLineItemsObject(allLineItems) {
                         quantity: bonusItem.quantity.value,
                         variables: null,
                         pview: 'bonusProductLineItem',
+                        containerview: view,
                         lineItem: bonusItem,
                         options: bpliOptions
                     };
@@ -54,12 +55,13 @@ function createProductLineItemsObject(allLineItems) {
             quantity: item.quantity.value,
             variables: null,
             pview: 'productLineItem',
+            containerview: view,
             lineItem: item,
             options: options
         };
         var newLineItem = ProductFactory.get(params);
         newLineItem.bonusProducts = bonusProducts;
-        if (newLineItem.bonusProductLineItemUUID === 'bonus' || newLineItem.bonusProductLineItemUUID === null) {
+        if (newLineItem.bonusProductLineItemUUID === 'bonus' || !newLineItem.bonusProductLineItemUUID) {
             lineItems.push(newLineItem);
         }
     });
@@ -90,9 +92,9 @@ function getTotalQuantity(items) {
  * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - the product line items
  *                                                       of the current line item container
  */
-function ProductLineItems(productLineItems) {
+function ProductLineItems(productLineItems, view) {
     if (productLineItems) {
-        this.items = createProductLineItemsObject(productLineItems);
+        this.items = createProductLineItemsObject(productLineItems, view);
         this.totalQuantity = getTotalQuantity(productLineItems);
     } else {
         this.items = [];

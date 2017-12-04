@@ -132,7 +132,7 @@ function OrderModel(lineItemContainer, options) {
         var usingMultiShipping = (safeOptions.usingMultiShipping
             || lineItemContainer.shipments.length > 1);
 
-        var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer, customer);
+        var shippingModels = ShippingHelpers.getShippingModels(lineItemContainer, customer, options.containerview);
 
         var paymentModel = new PaymentModel(lineItemContainer, customer, countryCode);
 
@@ -142,7 +142,7 @@ function OrderModel(lineItemContainer, options) {
 
         var billingModel = new BillingModel(billingAddressModel, paymentModel, associatedAddress);
 
-        var productLineItemsModel = new ProductLineItemsModel(lineItemContainer.productLineItems);
+        var productLineItemsModel = new ProductLineItemsModel(lineItemContainer.productLineItems, options.containerview);
         var totalsModel = new TotalsModel(lineItemContainer);
 
         this.shippable = safeOptions.shippable || false;

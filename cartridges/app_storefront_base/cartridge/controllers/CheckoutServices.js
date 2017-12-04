@@ -23,7 +23,7 @@ server.get('Get', server.middleware.https, function (req, res, next) {
 
     var basketModel = new OrderModel(
         currentBasket,
-        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country }
+        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerview: 'basket'  }
     );
 
     res.json({
@@ -330,7 +330,7 @@ server.post(
 
                 var basketModel = new OrderModel(
                     currentBasket,
-                    { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country }
+                    { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerview: 'basket'  }
                 );
 
                 var accountModel = new AccountModel(req.currentCustomer);

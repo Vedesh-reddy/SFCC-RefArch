@@ -12,6 +12,10 @@ var productBundle = require('*/cartridge/models/product/productBundle');
 var productLineItem = require('*/cartridge/models/productLineItem/productLineItem');
 var bonusProductLineItem = require('*/cartridge/models/productLineItem/bonusProductLineItem');
 var bundleProductLineItem = require('*/cartridge/models/productLineItem/bundleLineItem');
+var orderLineItem = require('*/cartridge/models/productLineItem/orderLineItem');
+var bonusOrderLineItem = require('*/cartridge/models/productLineItem/bonusOrderLineItem');
+var bundleOrderLineItem = require('*/cartridge/models/productLineItem/bundleOrderLineItem');
+
 
 /**
  * Return type of the current product
@@ -188,7 +192,11 @@ module.exports = {
                         options.lineItemOptions = lineItemOptionsBundle;
                         options.currentOptionModel = currentOptionModelBundle;
 
-                        product = bonusProductLineItem(product, apiProduct, options);
+                        if (params.containerview === 'order') {
+                            product = bonusOrderLineItem(product, apiProduct, options);                        	
+                        } else {
+                            product = bonusProductLineItem(product, apiProduct, options);
+                        }
 
                         break;
                 }
@@ -207,8 +215,11 @@ module.exports = {
                 switch (productType) {
                     case 'bundle':
 
-                        product = bundleProductLineItem(product, apiProduct, options, this);
-
+                        if (params.containerview === 'order') {
+                            product = bundleOrderLineItem(product, apiProduct, options, this);
+                        } else {
+                            product = bundleProductLineItem(product, apiProduct, options, this);
+                        }
                         break;
                     default:
                         var variationsPLI = getVariationModel(apiProduct, params.variables);
@@ -230,7 +241,12 @@ module.exports = {
                         options.variationModel = variationsPLI;
                         options.lineItemOptions = lineItemOptionsPLI;
                         options.currentOptionModel = currentOptionModelPLI;
-                        product = productLineItem(product, apiProduct, options);
+                        
+                        if (params.containerview === 'order') {
+                            product = orderLineItem(product, apiProduct, options);
+                        } else {
+                            product = productLineItem(product, apiProduct, options);
+                        }
 
                         break;
                 }

@@ -32,7 +32,7 @@
                                                 <isset name="isQuickView" value="${true}" scope="page"/>
                                             </div>
                                         <iselse>
-                                            <isinclude template="product/components/choiceofbonusproducts/variationAttributeBonusProducts" />
+                                            <isinclude template="product/components/choiceOfBonusProducts/variationAttributeBonusProducts" />
                                         </isif>
                                     </div>
                                 </isloop>
