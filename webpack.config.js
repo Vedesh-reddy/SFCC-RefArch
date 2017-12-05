@@ -8,7 +8,7 @@ var webpack = require('webpack');
 var createJSPath = function () {
     var result = {};
 
-    var jsFiles = ls('./cartridges/app_storefront_base/cartridge/client/js/default/*.js');
+    var jsFiles = ls('./cartridges/app_storefront_base/cartridge/client/default/js/*.js');
 
     jsFiles.forEach(function (filePath) {
         var name = path.basename(filePath, '.js');
