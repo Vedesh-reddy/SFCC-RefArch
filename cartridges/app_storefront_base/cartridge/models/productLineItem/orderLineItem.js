@@ -23,14 +23,11 @@ module.exports = function orderLineItem(product, apiProduct, options) {
     productDecorators.variationAttributes(product, options.variationModel, {
         attributes: 'selected'
     });
-    productDecorators.availability(product, options.quantity, apiProduct.minOrderQuantity.value, apiProduct.availabilityModel);
-
     productLineItemDecorators.quantity(product, options.quantity);
     productLineItemDecorators.gift(product, options.lineItem);
     productLineItemDecorators.appliedPromotions(product, options.lineItem);
     productLineItemDecorators.renderedPromotions(product); // must get applied promotions first
     productLineItemDecorators.uuid(product, options.lineItem);
-    productLineItemDecorators.orderable(product, apiProduct, options.quantity);
     productLineItemDecorators.shipment(product, options.lineItem);
     productLineItemDecorators.bonusProductLineItem(product, options.lineItem);
     productLineItemDecorators.priceTotal(product, options.lineItem);

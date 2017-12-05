@@ -210,12 +210,12 @@ server.get('ShowBonusProducts', function (req, res, next) {
 
         if (req.querystring.pids) {
             var params = req.querystring.pids.split(',');
-            params.forEach(function (param) {
+            products = params.map(function (param) {
                 product = ProductFactory.get({
                     pid: param,
                     pview: 'bonus',
                     duuid: duuid });
-                products.push(product);
+                return product;
             });
         } else {
             var URLUtils = require('dw/web/URLUtils');

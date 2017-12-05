@@ -97,11 +97,6 @@ describe('Order Line Item Model', function () {
         assert.isTrue(productDecorators.stubs.stubVariationAttributes.calledOnce);
     });
 
-    it('should call availability for order line item model', function () {
-        orderLineItem(object, productMock, optionsMock);
-
-        assert.isTrue(productDecorators.stubs.stubAvailability.calledOnce);
-    });
 
     it('should call quantity for order line item model', function () {
         orderLineItem(object, productMock, optionsMock);
@@ -131,12 +126,6 @@ describe('Order Line Item Model', function () {
         orderLineItem(object, productMock, optionsMock);
 
         assert.isTrue(productLineItemDecorators.stubs.stubUuid.calledOnce);
-    });
-
-    it('should call orderable for order line item model', function () {
-        orderLineItem(object, productMock, optionsMock);
-
-        assert.isTrue(productLineItemDecorators.stubs.stubOrderable.calledOnce);
     });
 
     it('should call shipment for order line item model', function () {
