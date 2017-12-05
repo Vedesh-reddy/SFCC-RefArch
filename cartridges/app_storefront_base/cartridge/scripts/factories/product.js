@@ -257,10 +257,8 @@ module.exports = {
 
                 switch (productType) {
                     case 'set':
-                        // product = productSet(product, options.apiProduct, options, this);
                         break;
                     case 'bundle':
-                        // product = productBundle(product, options.apiProduct, options, this);
                         break;
                     default:
                         product = bonusProduct(product, options.apiProduct, options, params.duuid);
