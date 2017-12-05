@@ -1,8 +1,12 @@
-<div class="card product-info uuid-${lineItem.UUID}">
+<isset name="hasEmbeddedBonusProducts" value="${lineItem.bonusProductLineItemUUID === 'bonus'}"  scope="page"/>
+<isset name="bonusproductlineitem" value="${hasEmbeddedBonusProducts ? 'bonus-product-line-item' : ''}" scope="page"/>
+<isset name="bonuslineitemrow" value="${hasEmbeddedBonusProducts ? 'bonus-line-item-row' : ''}" scope="page"/>
+
+<div class="card product-info ${bonusproductlineitem} uuid-${lineItem.UUID}">
     <!--- name and remove buttons --->
     <isinclude template="cart/productCard/cartProductCardHeader" />
 
-    <div class="row">
+    <div class="row ${bonuslineitemrow}">
         <div class="col-lg-5">
             <div class="row">
                 <div class="col-lg-12 d-flex flex-row">
@@ -27,7 +31,14 @@
                 </div>
             </div>
         </div>
-        <div class="col-12 d-lg-none"><hr class="line-item-divider"></div>
+        <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
+            <div class="col-12 d-lg-none"><hr class="line-item-divider"></div>
+        </isif>
+
         <isinclude template="cart/productCard/cartProductCardProductPrice" />
     </div>
+
+    <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
+        <isinclude template="cart/productCard/cartEmbeddedBonusProducts" />
+    </isif>
 </div>

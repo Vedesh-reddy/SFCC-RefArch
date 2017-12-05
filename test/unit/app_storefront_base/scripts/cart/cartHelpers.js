@@ -143,6 +143,15 @@ describe('cartHelpers', function () {
         '*/cartridge/scripts/helpers/productHelpers': {
             getOptions: function () {},
             getCurrentOptionModel: function () {}
+        },
+        'dw/web/URLUtils': {
+            url: function () {
+                return {
+                    toString: function () {
+                        return 'string URL';
+                    }
+                };
+            }
         }
     });
 
@@ -265,8 +274,7 @@ describe('cartHelpers', function () {
             );
             assert.equal(newBonusDiscountLineItem.maxBonusItems, 1);
             assert.equal(newBonusDiscountLineItem.addToCartUrl, 'Cart-AddBonusProducts');
-            assert.equal(newBonusDiscountLineItem.configureProductstUrl, 'Product-ShowBonusProducts');
-            assert.equal(newBonusDiscountLineItem.url, 'Cart-ChooseBonusProducts?pids=pid_1,pid_2');
+            assert.equal(newBonusDiscountLineItem.configureProductstUrl, 'string URL');
             assert.equal(newBonusDiscountLineItem.uuid, 'uuid_string');
             assert.equal(newBonusDiscountLineItem.bonuspids.length, 2);
             assert.equal(newBonusDiscountLineItem.bonuspids[0], 'pid_1');
@@ -276,8 +284,6 @@ describe('cartHelpers', function () {
             assert.equal(newBonusDiscountLineItem.newBonusDiscountLineItem.maxBonusItems, 1);
             assert.equal(newBonusDiscountLineItem.newBonusDiscountLineItem.description, 'description 1');
             assert.equal(newBonusDiscountLineItem.labels.close, 'someString');
-            assert.equal(newBonusDiscountLineItem.labels.selectattrs, 'someString');
-            assert.equal(newBonusDiscountLineItem.labels.selectbonus, 'someString');
             assert.equal(newBonusDiscountLineItem.labels.selectprods, 'someString');
         });
     });

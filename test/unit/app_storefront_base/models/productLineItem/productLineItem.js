@@ -23,7 +23,8 @@ var optionsMock = {
     quantity: 1,
     variationModel: {},
     promotions: [],
-    variables: []
+    variables: [],
+    lineItem: { UUID: '123' }
 };
 
 var object = {};

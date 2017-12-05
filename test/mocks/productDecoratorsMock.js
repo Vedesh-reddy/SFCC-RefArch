@@ -24,6 +24,7 @@ var stubSetReadyToOrder = sinon.stub();
 var stubBundleReadyToOrder = sinon.stub();
 var stubSetIndividualProducts = sinon.stub();
 var stubBundledProducts = sinon.stub();
+var stubBonusUnitPrice = sinon.stub();
 
 function proxyModel() {
     return {
@@ -48,7 +49,8 @@ function proxyModel() {
             '*/cartridge/models/product/decorators/setReadyToOrder': stubSetReadyToOrder,
             '*/cartridge/models/product/decorators/bundleReadyToOrder': stubBundleReadyToOrder,
             '*/cartridge/models/product/decorators/setIndividualProducts': stubSetIndividualProducts,
-            '*/cartridge/models/product/decorators/bundledProducts': stubBundledProducts
+            '*/cartridge/models/product/decorators/bundledProducts': stubBundledProducts,
+            '*/cartridge/models/product/decorators/bonusUnitPrice': stubBonusUnitPrice
         }),
         stubs: {
             stubBase: stubBase,
@@ -71,7 +73,8 @@ function proxyModel() {
             stubSetReadyToOrder: stubSetReadyToOrder,
             stubBundleReadyToOrder: stubBundleReadyToOrder,
             stubSetIndividualProducts: stubSetIndividualProducts,
-            stubBundledProducts: stubBundledProducts
+            stubBundledProducts: stubBundledProducts,
+            stubBonusUnitPrice: stubBonusUnitPrice
         }
     };
 }

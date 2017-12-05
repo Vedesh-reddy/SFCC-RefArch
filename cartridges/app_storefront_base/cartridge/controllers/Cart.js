@@ -97,15 +97,29 @@ server.post('AddProduct', function (req, res, next) {
         cartHelper.getNewBonusDiscountLineItem(
             currentBasket,
             previousBonusDiscountLineItems,
-            urlObject
+            urlObject,
+            result.uuid
     );
+    if (newBonusDiscountLineItem) {
+        var allLineItems = currentBasket.allProductLineItems;
+        var collections = require('*/cartridge/scripts/util/collections');
+        collections.forEach(allLineItems, function (pli) {
+            if (pli.UUID === result.uuid) {
+                Transaction.wrap(function () {
+                    pli.custom.bonusProductLineItemUUID = 'bonus'; // eslint-disable-line no-param-reassign
+                    pli.custom.preOrderUUID = pli.UUID; // eslint-disable-line no-param-reassign
+                });
+            }
+        });
+    }
 
     res.json({
         quantityTotal: quantityTotal,
         message: result.message,
         cart: cartModel,
         newBonusDiscountLineItem: newBonusDiscountLineItem || {},
-        error: result.error
+        error: result.error,
+        pliUUID: result.uuid
     });
 
     next();
@@ -144,7 +158,6 @@ server.get(
         res.setViewData({ reportingURLs: reportingURLs });
 
         var basketModel = new CartModel(currentBasket);
-
         res.render('cart/cart', basketModel);
         next();
     }
@@ -274,6 +287,7 @@ server.get('UpdateQuantity', function (req, res, next) {
     var minOrderQuantity = 0;
     var canBeUpdated = false;
     var bundleItems;
+    var bonusDiscountLineItemCount = currentBasket.bonusDiscountLineItems.length;
 
     if (matchingLineItem) {
         if (matchingLineItem.product.bundle) {
@@ -309,7 +323,23 @@ server.get('UpdateQuantity', function (req, res, next) {
     if (canBeUpdated) {
         Transaction.wrap(function () {
             matchingLineItem.setQuantityValue(updateQuantity);
+
+            var previousBounsDiscountLineItems = collections.map(currentBasket.bonusDiscountLineItems, function (bonusDiscountLineItem) {
+                return bonusDiscountLineItem.UUID;
+            });
+
             HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+            if (currentBasket.bonusDiscountLineItems.length > bonusDiscountLineItemCount) {
+                var prevItems = JSON.stringify(previousBounsDiscountLineItems);
+
+                collections.forEach(currentBasket.bonusDiscountLineItems, function (bonusDiscountLineItem) {
+                    if (prevItems.indexOf(bonusDiscountLineItem.UUID) < 0) {
+                        bonusDiscountLineItem.custom.bonusProductLineItemUUID = matchingLineItem.UUID; // eslint-disable-line no-param-reassign
+                        matchingLineItem.custom.bonusProductLineItemUUID = 'bonus';
+                        matchingLineItem.custom.preOrderUUID = matchingLineItem.UUID;
+                    }
+                });
+            }
         });
     }
 
@@ -543,32 +573,6 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
     return next();
 });
 
-server.get('ChooseBonusProducts', function (req, res, next) {
-    var URLUtils = require('dw/web/URLUtils');
-    var ProductFactory = require('*/cartridge/scripts/factories/product');
-    var pids = req.querystring.pids.split(',');
-    var potentialProducts = [];
-
-    for (var i = 0; i < pids.length; i++) {
-        var params = {
-            pid: pids[i],
-            pview: 'tile'
-        };
-        var product = ProductFactory.get(params);
-        potentialProducts.push(product);
-    }
-
-    var addToCartUrl = URLUtils.url('Cart-AddProduct');
-    var template = 'product/components/choiceOfBonusProducts/chooseBonusProduct.isml';
-
-    res.render(template, {
-        potentialProducts: potentialProducts,
-        addToCartUrl: addToCartUrl
-    });
-
-    next();
-});
-
 server.post('AddBonusProducts', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
     var ProductMgr = require('dw/catalog/ProductMgr');
@@ -578,6 +582,7 @@ server.post('AddBonusProducts', function (req, res, next) {
     var Resource = require('dw/web/Resource');
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
     var data = JSON.parse(req.querystring.pids);
+    var pliUUID = req.querystring.pliuuid;
     var newBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
     var qtyAllowed = data.totalQty;
     var totalQty = 0;
@@ -603,21 +608,34 @@ server.post('AddBonusProducts', function (req, res, next) {
 
         if (currentBasket) {
             Transaction.wrap(function () {
-                for (var l = 0; l < data.bonusProducts.length; l++) {
-                    var product = ProductMgr.getProduct(data.bonusProducts[l].pid);
-                    var selectedOptions = data.bonusProducts[l].options;
-                    var optionModel =
-                        productHelper.getCurrentOptionModel(
+                collections.forEach(bonusDiscountLineItem.getBonusProductLineItems(), function (dli) {
+                    if (dli.product) {
+                        currentBasket.removeProductLineItem(dli);
+                    }
+                });
+
+                var pli;
+                data.bonusProducts.forEach(function (bonusProduct) {
+                    var product = ProductMgr.getProduct(bonusProduct.pid);
+                    var selectedOptions = bonusProduct.options;
+                    var optionModel = productHelper.getCurrentOptionModel(
                             product.optionModel,
                             selectedOptions);
-                    var pli =
-                        currentBasket.createBonusProductLineItem(
-                        bonusDiscountLineItem,
-                        product,
-                        optionModel,
-                        null);
-                    pli.setQuantityValue(data.bonusProducts[l].qty);
-                }
+                    pli = currentBasket.createBonusProductLineItem(
+                            bonusDiscountLineItem,
+                            product,
+                            optionModel,
+                            null);
+                    pli.setQuantityValue(bonusProduct.qty);
+                    pli.custom.bonusProductLineItemUUID = pliUUID;
+                });
+
+                collections.forEach(currentBasket.getAllProductLineItems(), function (productLineItem) {
+                    if (productLineItem.UUID === pliUUID) {
+                        productLineItem.custom.bonusProductLineItemUUID = 'bonus';// eslint-disable-line no-param-reassign
+                        productLineItem.custom.preOrderUUID = productLineItem.UUID;// eslint-disable-line no-param-reassign
+                    }
+                });
             });
         }
 
@@ -628,6 +646,48 @@ server.post('AddBonusProducts', function (req, res, next) {
             error: false
         });
     }
+    next();
+});
+
+server.get('EditBonusProduct', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
+    var currentBasket = BasketMgr.getCurrentOrNewBasket();
+    var duuid = req.querystring.duuid;
+    var bonusDiscountLineItem = collections.find(currentBasket.getBonusDiscountLineItems(), function (item) {
+        return item.UUID === duuid;
+    });
+    var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+
+    var selectedBonusProducts = collections.map(bonusDiscountLineItem.bonusProductLineItems, function (bonusProductLineItem) {
+        return {
+            pid: bonusProductLineItem.productID,
+            name: bonusProductLineItem.productName,
+            submittedQty: bonusProductLineItem.quantityValue
+        };
+    });
+
+    var pids = collections.pluck(bonusDiscountLineItem.bonusProducts, 'ID').join();
+
+    res.json({
+        selectedBonusProducts: selectedBonusProducts,
+        addToCartUrl: URLUtils.url('Cart-AddBonusProducts').relative().toString(),
+        showProductsUrl: URLUtils.url('Product-ShowBonusProducts').toString(),
+        maxBonusItems: bonusDiscountLineItem.maxBonusItems,
+        pageSize: cartHelper.BONUS_PRODUCTS_PAGE_SIZE,
+        pliUUID: bonusDiscountLineItem.custom.bonusProductLineItemUUID,
+        uuid: bonusDiscountLineItem.UUID,
+        bonusChoiceRuleBased: bonusDiscountLineItem.bonusChoiceRuleBased,
+        selectprods: [],
+        labels: {
+            selectprods: Resource.msg('modal.header.selectproducts', 'product', null),
+            close: Resource.msg('link.choiceofbonus.close', 'product', null)
+        },
+        showProductsUrlRuleBased: URLUtils.url('Product-ShowBonusProducts', 'DUUID', bonusDiscountLineItem.UUID, 'pagesize', cartHelper.BONUS_PRODUCTS_PAGE_SIZE, 'pagestart', 0, 'maxpids', bonusDiscountLineItem.maxBonusItems).toString(),
+        showProductsUrlListBased: URLUtils.url('Product-ShowBonusProducts', 'DUUID', bonusDiscountLineItem.UUID, 'pids', pids, 'maxpids', bonusDiscountLineItem.maxBonusItems).toString()
+    });
     next();
 });
 

@@ -147,7 +147,8 @@ server.get(
                 customer: currentCustomer,
                 usingMultiShipping: usingMultiShipping,
                 shippable: allValid,
-                countryCode: currentLocale.country
+                countryCode: currentLocale.country,
+                containerView: 'basket'
             }
         );
 

@@ -45,12 +45,13 @@ function getApplicableShippingMethods(shipment, address) {
 /**
  * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
  * @param {dw.order.Shipment} shipment - the target Shipment
+ * @param {string} containerView - the view of the product line items (order or basket)
  * @returns {ProductLineItemsModel} an array of ShippingModels
  */
-function getProductLineItemsModel(shipment) {
+function getProductLineItemsModel(shipment, containerView) {
     if (!shipment) return null;
 
-    return new ProductLineItemsModel(shipment.productLineItems);
+    return new ProductLineItemsModel(shipment.productLineItems, containerView);
 }
 
 /**
@@ -112,13 +113,14 @@ function getAssociatedAddress(shipment, customer) {
  * @param {dw.order.Shipment} shipment - the default shipment of the current basket
  * @param {Object} address - the address to use to filter the shipping method list
  * @param {Object} customer - the current customer model
+ * @param {string} containerView - the view of the product line items (order or basket)
  */
-function ShippingModel(shipment, address, customer) {
+function ShippingModel(shipment, address, customer, containerView) {
 	// Simple properties
     this.UUID = getShipmentUUID(shipment);
 
 	// Derived properties
-    this.productLineItems = getProductLineItemsModel(shipment);
+    this.productLineItems = getProductLineItemsModel(shipment, containerView);
     this.applicableShippingMethods = getApplicableShippingMethods(shipment, address);
     this.selectedShippingMethod = getSelectedShippingMethod(shipment);
     this.matchingAddressId = getAssociatedAddress(shipment, customer);

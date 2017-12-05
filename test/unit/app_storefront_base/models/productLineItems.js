@@ -36,7 +36,7 @@ var productMock = {
     }
 };
 
-var apiBasket = {
+var apiBasketNoBonusLineItems = {
     productLineItems: new ArrayList([{
         bonusProductLineItem: false,
         gift: false,
@@ -48,7 +48,40 @@ var apiBasket = {
         quantity: {
             value: 1
         },
-        product: toProductMock(productMock)
+        product: toProductMock(productMock),
+        custom: { bonusProductLineItemUUID: '' }
+    }])
+};
+
+var apiBasketBonusLineItems = {
+    productLineItems: new ArrayList([{
+        bonusProductLineItem: true,
+        gift: false,
+        UUID: 'some UUID',
+        adjustedPrice: {
+            value: 'some value',
+            currencyCode: 'US'
+        },
+        quantity: {
+            value: 1
+        },
+        product: toProductMock(productMock),
+        custom: { bonusProductLineItemUUID: '', preOrderUUID: '' }
+    },
+    {
+        bonusProductLineItem: false,
+        gift: false,
+        UUID: 'some UUID',
+        adjustedPrice: {
+            value: 'some value',
+            currencyCode: 'US'
+        },
+        quantity: {
+            value: 1
+        },
+        product: toProductMock(productMock),
+        custom: { bonusProductLineItemUUID: 'someUUID', preOrderUUID: 'someUUID' },
+        optionProductLineItems: new ArrayList([{ optionID: 'someOptionID', optionValueID: 'someIDValue' }])
     }])
 };
 
@@ -61,8 +94,14 @@ describe('ProductLineItems model', function () {
     });
 
     it('should create product line items and get total quantity', function () {
-        var result = new ProductLineItemsModel(apiBasket.productLineItems);
+        var result = new ProductLineItemsModel(apiBasketNoBonusLineItems.productLineItems);
         assert.equal(result.items.length, 1);
         assert.equal(result.totalQuantity, 1);
+    });
+
+    it('should create product line items with bonus line items present', function () {
+        var result = new ProductLineItemsModel(apiBasketBonusLineItems.productLineItems);
+        assert.equal(result.items.length, 2);
+        assert.equal(result.totalQuantity, 2);
     });
 });

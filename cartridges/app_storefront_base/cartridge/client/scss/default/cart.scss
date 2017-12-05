@@ -255,7 +255,8 @@ $negative-spacer: -0.625rem;
     margin-bottom: 0.625em;
 }
 
-.cart-page .bundled-line-item + .bundled-line-item::before {
+.cart-page .bundled-line-item + .bundled-line-item::before,
+.cart-page .bonus-line-item-row + .bonus-line-item-msg::before {
     content: "";
     display: block;
     border-bottom: 0.063em dashed $horizontal-rule-grey;
@@ -293,4 +294,8 @@ $negative-spacer: -0.625rem;
     .item-attributes {
         margin-left: 0;
     }
+}
+
+.bonus-product-button {
+    margin-right: 1.5em;
 }

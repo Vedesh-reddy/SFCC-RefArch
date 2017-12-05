@@ -12,5 +12,10 @@ module.exports = {
     quantityOptions: require('*/cartridge/models/productLineItem/decorators/quantityOptions'),
     options: require('*/cartridge/models/productLineItem/decorators/options'),
     quantity: require('*/cartridge/models/productLineItem/decorators/quantity'),
-    bundledProductLineItems: require('*/cartridge/models/productLineItem/decorators/bundledProductLineItems')
+    bundledProductLineItems: require('*/cartridge/models/productLineItem/decorators/bundledProductLineItems'),
+    bonusProductLineItemUUID: require('*/cartridge/models/productLineItem/decorators/bonusProductLineItemUUID'),
+    preOrderUUID: require('*/cartridge/models/productLineItem/decorators/preOrderUUID'),
+    discountBonusLineItems: require('*/cartridge/models/productLineItem/decorators/discountBonusLineItems'),
+    bonusUnitPrice: require('*/cartridge/models/productLineItem/decorators/bonusUnitPrice')
+
 };

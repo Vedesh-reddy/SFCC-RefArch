@@ -20,9 +20,23 @@ stubProductTile.returns('product tile');
 var stubProductLineItem = sinon.stub();
 stubProductLineItem.returns('product line item');
 
+var stubOrderLineItem = sinon.stub();
+stubOrderLineItem.returns('product line item (order)');
+
 var stubBundleLineItem = sinon.stub();
 stubBundleLineItem.returns('bundle line item');
 
+var stubBundleOrderLineItem = sinon.stub();
+stubBundleOrderLineItem.returns('bundle line item (order)');
+
+var stubBonusProduct = sinon.stub();
+stubBonusProduct.returns('bonus product');
+
+var stubBonusProductLineItem = sinon.stub();
+stubBonusProductLineItem.returns('bonus product line item');
+
+var stubBonusOrderLineItem = sinon.stub();
+stubBonusOrderLineItem.returns('bonus product line item (order)');
 var productMock = {};
 
 var optionProductLineItems = new ArrayList([]);
@@ -52,7 +66,12 @@ describe('Product Factory', function () {
         '*/cartridge/models/product/productSet': stubProductSet,
         '*/cartridge/models/product/productBundle': stubProductBundle,
         '*/cartridge/models/productLineItem/productLineItem': stubProductLineItem,
-        '*/cartridge/models/productLineItem/bundleLineItem': stubBundleLineItem
+        '*/cartridge/models/productLineItem/orderLineItem': stubOrderLineItem,
+        '*/cartridge/models/productLineItem/bundleLineItem': stubBundleLineItem,
+        '*/cartridge/models/productLineItem/bundleOrderLineItem': stubBundleOrderLineItem,
+        '*/cartridge/models/product/bonusProduct': stubBonusProduct,
+        '*/cartridge/models/productLineItem/bonusProductLineItem': stubBonusProductLineItem,
+        '*/cartridge/models/productLineItem/bonusOrderLineItem': stubBonusOrderLineItem
     });
 
     beforeEach(function () {
@@ -431,5 +450,88 @@ describe('Product Factory', function () {
 
         assert.equal(result, 'bundle line item');
         assert.isTrue(stubBundleLineItem.calledWith({}, productMock, options, productFactory));
+    });
+
+    it('should return bonus product line item model', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'bonusProductLineItem',
+            lineItem: {
+                optionProductLineItems: new ArrayList([])
+            }
+        };
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'bonus product line item');
+    });
+
+    it('should return bonus product line item model for a bonus line item that has options', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'bonusProductLineItem',
+            lineItem: {
+                optionProductLineItems: new ArrayList([{
+                    productName: 'someName'
+                }])
+            }
+        };
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'bonus product line item');
+    });
+
+    it('should return bonus product line item model when variables are present and bonus line item has no options ', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'bonusProductLineItem',
+            lineItem: {
+                optionProductLineItems: optionProductLineItems
+            },
+            variables: {
+                color: {
+                    value: 'blue'
+                }
+            }
+        };
+
+        productMock.variationModel.selectedVariant = true;
+        productMock.optionModel = {
+            options: new ArrayList([{ displayName: 'someName' }]),
+            getSelectedOptionValue: function () {
+                return { displayValue: 'someValue' };
+            }
+        };
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'bonus product line item');
+        assert.isTrue(stubBonusProductLineItem.calledWith({}, productMock));
+    });
+
+    it('should return bonus product model for product type master', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'bonus',
+            lineItem: {
+                optionProductLineItems: new ArrayList([])
+            },
+            duuid: 'duuid'
+        };
+
+        productMock.master = true;
+        var result = productFactory.get(params);
+
+        var options = {
+            variationModel: null,
+            options: undefined,
+            optionModel: 'optionModel',
+            promotions: 'promotions',
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: productMock,
+            productType: 'master'
+        };
+
+        assert.equal(result, 'bonus product');
+        assert.isTrue(stubBonusProduct.calledWith({}, options.apiProduct, options, params.duuid));
     });
 });

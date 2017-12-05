@@ -146,6 +146,25 @@
     .bonus-quantity-select {
         min-width: 4em;
     }
+
+    .select-bonus-product {
+        margin-top: 1em;
+    }
+
+    .selected-pid {
+        border: 1px solid $grey3;
+
+        .bonus-product-name {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+    }
+
+    .bonus-product-price {
+        text-align: center;
+        margin-top: 1em;
+    }
 }
 
 .quick-view-dialog,
@@ -244,5 +263,21 @@
     .promotions {
         text-align: center;
         color: $red;
+    }
+
+    .bonus-summary {
+        @include media-breakpoint-down(sm) {
+            font-size: 0.625em;
+        }
+
+        .bonus-product-name {
+            @include media-breakpoint-down(sm) {
+                padding: 0;
+            }
+        }
+    }
+
+    .pre-cart-products {
+        margin-right: 0.125em;
     }
 }

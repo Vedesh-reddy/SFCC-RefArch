@@ -44,4 +44,9 @@ module.exports = function () {
         $('.mini-cart .popover').empty();
         $('.mini-cart .popover').removeClass('show');
     });
+    $('body').on('change', '.mini-cart .quantity', function () {
+        if ($(this).parents('.bonus-product-line-item').length && $('.cart-page').length) {
+            location.reload();
+        }
+    });
 };

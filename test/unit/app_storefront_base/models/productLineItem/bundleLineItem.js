@@ -28,7 +28,7 @@ var optionsMock = {
 
 var object = {};
 
-describe('Product Line Item Model', function () {
+describe('Bundle Product Line Item Model', function () {
     var productDecorators = require('../../../../mocks/productDecoratorsMock');
     var productLineItemDecorators = require('../../../../mocks/productLineItemDecoratorsMock');
 
