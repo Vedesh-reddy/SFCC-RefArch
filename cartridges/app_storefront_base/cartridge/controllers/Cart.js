@@ -669,15 +669,7 @@ server.get('EditBonusProduct', function (req, res, next) {
         };
     });
 
-    var pids = '';
-    var count = 0;
-    collections.forEach(bonusDiscountLineItem.bonusProducts, function (bonusProduct) {
-        if (count) {
-            pids += ',';
-        }
-        pids += bonusProduct.ID;
-        count++;
-    });
+    var pids = collections.pluck(bonusDiscountLineItem.bonusProducts, 'ID').join();
 
     res.json({
         selectedBonusProducts: selectedBonusProducts,
