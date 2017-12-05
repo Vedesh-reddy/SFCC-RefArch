@@ -512,8 +512,10 @@ function getOptions($productContainer) {
 
 module.exports = {
     attributeSelect: attributeSelect,
-    editBonusProducts: function (data) {
-        chooseBonusProducts(data);
+    methods: {
+        editBonusProducts: function (data) {
+            chooseBonusProducts(data);
+        }
     },
     colorAttribute: function () {
         $(document).on('click', '[data-attr="color"] a', function (e) {

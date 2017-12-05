@@ -420,7 +420,7 @@ module.exports = function () {
             method: 'GET',
             dataType: 'json',
             success: function (data) {
-                base.editBonusProducts(data);
+                base.methods.editBonusProducts(data);
                 $.spinner().stop();
             },
             error: function () {
