@@ -681,7 +681,7 @@ server.get('EditBonusProduct', function (req, res, next) {
 
     res.json({
         selectedBonusProducts: selectedBonusProducts,
-        addToCartUrl: URLUtils.url('Cart-AddBonusProducts').toString(),
+        addToCartUrl: URLUtils.url('Cart-AddBonusProducts').relative().toString(),
         showProductsUrl: URLUtils.url('Product-ShowBonusProducts').toString(),
         maxBonusItems: bonusDiscountLineItem.maxBonusItems,
         pageSize: cartHelper.BONUS_PRODUCTS_PAGE_SIZE,
