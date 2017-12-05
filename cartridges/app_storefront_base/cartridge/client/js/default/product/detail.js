@@ -2,14 +2,6 @@
 var base = require('./base');
 
 module.exports = {
-    selectAttributes: base.selectAttribute,
-
-    colorAttribute: base.colorAttribute,
-    removeBonusProduct: base.removeBonusProduct,
-    selectBonusProduct: base.selectBonusProduct,
-    enableBonusProductSelection: base.enableBonusProductSelection,
-    addBonusProductsToCart: base.addBonusProductsToCart,
-    showMoreBonusProducts: base.showMoreBonusProducts,
     availability: base.availability,
 
     addToCart: base.addToCart,
