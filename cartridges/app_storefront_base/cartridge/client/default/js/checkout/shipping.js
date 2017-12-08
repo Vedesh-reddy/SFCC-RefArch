@@ -227,10 +227,6 @@ function updateShippingSummaryInformation(shipping, order) {
                 $methodArrivalTime.empty();
             }
             $methodPrice.text(selectedShippingMethod.shippingCost);
-        } else {
-            $shippingAddressLabel.text(order.resources.storePickUp);
-            $shippingSummaryLabel.hide();
-            $summaryDetails.hide();
         }
     });
 }
