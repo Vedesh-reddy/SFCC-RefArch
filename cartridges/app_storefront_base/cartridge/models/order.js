@@ -27,8 +27,6 @@ var RESOURCES = {
     shippingAddresses: Resource.msg('msg.shipping.addresses', 'checkout', null),
     accountAddresses: Resource.msg('msg.account.addresses', 'checkout', null),
     shippingTo: Resource.msg('msg.shipping.to', 'checkout', null),
-    pickupInStore: Resource.msg('msg.pickup.in.store', 'checkout', null),
-    storePickUp: Resource.msg('label.store.pick.up', 'checkout', null),
     shippingAddress: Resource.msg('label.order.shipping.address', 'confirmation', null),
     addressIncomplete: Resource.msg('heading.address.incomplete', 'checkout', null)
 };
