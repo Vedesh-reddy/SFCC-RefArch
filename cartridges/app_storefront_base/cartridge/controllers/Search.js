@@ -119,7 +119,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
     );
 
     var refineurl = URLUtils.url('Search-Refinebar');
-    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax'];
+    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule'];
     Object.keys(req.querystring).forEach(function (element) {
         if (whitelistedParams.indexOf(element) > -1) {
             refineurl.append(element, req.querystring[element]);
