@@ -51,7 +51,11 @@ function getListPrices(hit, getSearchHit) {
     } catch (e) {
         searchHit = hit;
     } finally {
-        PriceBookMgr.setApplicablePriceBooks(priceModel.priceInfo.priceBook);
+        // Clears price book ID's stored to the session.
+        // When switching locales, there is nothing that clears the price book ids stored in the
+        // session, so subsequent searches will continue to use the ids from the originally set
+        // price books which have the wrong currency.
+        PriceBookMgr.setApplicablePriceBooks();
     }
 
     if (searchHit) {
