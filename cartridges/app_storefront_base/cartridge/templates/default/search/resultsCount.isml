@@ -12,7 +12,7 @@
 
     </span>
     <span class="search-keywords">
-        ${pdict.productSearch.searchKeywords}
+        ${pdict.productSearch.searchKeywords ? pdict.productSearch.searchKeywords : ''}
     </span>
 </isif>
 
