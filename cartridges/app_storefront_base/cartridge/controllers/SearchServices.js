@@ -20,7 +20,7 @@ server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) 
     // Manager.
     var maxSuggestions = 3;
 
-    if (searchTerms.length >= minChars) {
+    if (searchTerms && searchTerms.length >= minChars) {
         suggestions = new SuggestModel();
         suggestions.setSearchPhrase(searchTerms);
         suggestions.setMaxSuggestions(maxSuggestions);
