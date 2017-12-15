@@ -143,8 +143,13 @@
         width: 100%;
     }
 
+    .bonus-quantity,
+    .bonus-option {
+        margin-top: 0.938em;
+    }
+
     .bonus-quantity-select {
-        min-width: 4em;
+        min-width: 5em;
     }
 
     .select-bonus-product {

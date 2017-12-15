@@ -18,9 +18,9 @@
                                         <isif condition="${attributeStatus.last}">
                                             <div class="row">
                                                 <isset name="isQuickView" value="${false}" scope="page"/>
-                                                <div class="col-12 product-options">
+                                                <div class="col-md-10 col-12 product-options">
                                                     <div class="row">
-                                                        <div class="col-12">
+                                                        <div class="col-8">
                                                             <isinclude template="product/components/choiceOfBonusProducts/variationAttributeBonusProducts" />
                                                         </div>
                                                         <!-- Quantity Drop Down Menu -->
@@ -45,7 +45,7 @@
                                 <div class="col-md-10 col-12 product-options">
                                     <isloop items="${product.options}" var="option" status="loopStatus">
                                         <div class="row product-option" data-option-id="${option.id}">
-                                            <div class="
+                                            <div class="bonus-option
                                                 <isif condition="${loopStatus.last && !isQuickView || isProductSet}">
                                                     col-8
                                                 <iselse>
