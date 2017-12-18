@@ -31,44 +31,56 @@ function Handle(basket, paymentInformation) {
     var expirationMonth = paymentInformation.expirationMonth.value;
     var expirationYear = paymentInformation.expirationYear.value;
     var serverErrors = [];
+    var creditCardStatus;
 
     var cardType = paymentInformation.cardType.value;
     var paymentCard = PaymentMgr.getPaymentCard(cardType);
 
     if (!paymentInformation.creditCardToken) {
-        var creditCardStatus = paymentCard.verify(
-            expirationMonth,
-            expirationYear,
-            cardNumber,
-            cardSecurityCode
-        );
+        if (paymentCard) {
+            creditCardStatus = paymentCard.verify(
+                expirationMonth,
+                expirationYear,
+                cardNumber,
+                cardSecurityCode
+            );
+        } else {
+            creditCardStatus = {
+                error: true,
+                cardUnknown: true
+            };
+        }
 
         if (creditCardStatus.error) {
-            collections.forEach(creditCardStatus.items, function (item) {
-                switch (item.code) {
-                    case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
-                        cardErrors[paymentInformation.cardNumber.htmlName] =
-                            Resource.msg('error.invalid.card.number', 'creditCard', null);
-                        break;
+            if (creditCardStatus.cardUnknown) {
+                cardErrors[paymentInformation.cardNumber.htmlName] =
+                    Resource.msg('error.invalid.card.number', 'creditCard', null);
+            } else {
+                collections.forEach(creditCardStatus.items, function (item) {
+                    switch (item.code) {
+                        case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
+                            cardErrors[paymentInformation.cardNumber.htmlName] =
+                                Resource.msg('error.invalid.card.number', 'creditCard', null);
+                            break;
 
-                    case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
-                        cardErrors[paymentInformation.expirationMonth.htmlName] =
-                            Resource.msg('error.expired.credit.card', 'creditCard', null);
-                        cardErrors[paymentInformation.expirationYear.htmlName] =
-                            Resource.msg('error.expired.credit.card', 'creditCard', null);
-                        break;
+                        case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
+                            cardErrors[paymentInformation.expirationMonth.htmlName] =
+                                Resource.msg('error.expired.credit.card', 'creditCard', null);
+                            cardErrors[paymentInformation.expirationYear.htmlName] =
+                                Resource.msg('error.expired.credit.card', 'creditCard', null);
+                            break;
 
-                    case PaymentStatusCodes.CREDITCARD_INVALID_SECURITY_CODE:
-                        cardErrors[paymentInformation.securityCode.htmlName] =
-                            Resource.msg('error.invalid.security.code', 'creditCard', null);
-                        break;
-                    default:
-                        serverErrors.push(
-                            Resource.msg('error.card.information.error', 'creditCard', null)
-                        );
-                }
-            });
-
+                        case PaymentStatusCodes.CREDITCARD_INVALID_SECURITY_CODE:
+                            cardErrors[paymentInformation.securityCode.htmlName] =
+                                Resource.msg('error.invalid.security.code', 'creditCard', null);
+                            break;
+                        default:
+                            serverErrors.push(
+                                Resource.msg('error.card.information.error', 'creditCard', null)
+                            );
+                    }
+                });
+            }
             return { fieldErrors: [cardErrors], serverErrors: serverErrors, error: true };
         }
     }

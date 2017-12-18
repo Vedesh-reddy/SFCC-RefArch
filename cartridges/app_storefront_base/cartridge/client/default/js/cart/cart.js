@@ -159,7 +159,7 @@ module.exports = function () {
         var productName = $(this).data('name');
         var uuid = $(this).data('uuid');
 
-        var $deleteConfirmBtn = $('.delete-confirmation-btn');
+        var $deleteConfirmBtn = $('.cart-delete-confirmation-btn');
         var $productToRemoveSpan = $('.product-to-remove');
 
         $deleteConfirmBtn.data('pid', productID);
@@ -174,7 +174,7 @@ module.exports = function () {
         $('.promo-code-form').toggle();
     });
 
-    $('body').on('click', '.delete-confirmation-btn', function (e) {
+    $('body').on('click', '.cart-delete-confirmation-btn', function (e) {
         e.preventDefault();
 
         var productID = $(this).data('pid');
