@@ -11,7 +11,8 @@ module.exports = {
                     visa: 'Visa',
                     mastercard: 'Master Card',
                     amex: 'Amex',
-                    discover: 'Discover'
+                    discover: 'Discover',
+                    unknown: 'Unknown'
                 };
 
                 var cardType = creditCardTypes[Object.keys(creditCardTypes).indexOf(type) > -1

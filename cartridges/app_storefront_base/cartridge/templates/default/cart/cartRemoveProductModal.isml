@@ -11,7 +11,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-primary" data-dismiss="modal">${Resource.msg('button.cancel','cart',null)}</button>
-                <button type="button" class="btn btn-primary delete-confirmation-btn"
+                <button type="button" class="btn btn-primary cart-delete-confirmation-btn"
                         data-dismiss="modal">
                     ${Resource.msg('button.confirm','cart',null)}
                 </button>

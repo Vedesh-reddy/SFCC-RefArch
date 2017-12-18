@@ -1,9 +1,9 @@
 <isset name="creditFields" value="${pdict.forms.billingForm.creditCardFields}" scope="page"/>
 
-<!--- Visa is currently hard coded as the payment card type this will change when card type autofill is complete --->
+<!--- Hidden input for credit card type --->
 <input type="hidden" class="form-control" id="cardType"
        name="${creditFields.cardType.htmlName}"
-       value="Visa">
+       value="">
 
 <div class="row">
     <div class="col-12">

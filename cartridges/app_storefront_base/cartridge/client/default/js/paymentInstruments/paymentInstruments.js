@@ -74,6 +74,8 @@ module.exports = {
     },
 
     handleCreditCardNumber: function () {
-        cleave.handleCreditCardNumber('#cardNumber', '#cardType');
+        if ($('#cardNumber').length && $('#cardType').length) {
+            cleave.handleCreditCardNumber('#cardNumber', '#cardType');
+        }
     }
 };
