@@ -58,7 +58,7 @@ describe('product promotions decorator', function () {
         promotionMock.details = null;
         promotions(object, promotionsMock);
 
-        assert.equal(object.promotions[0].calloutMsg, null);
+        assert.equal(object.promotions[0].calloutMsg, '');
     });
 
     it('should handle promotions with no details', function () {
@@ -66,6 +66,6 @@ describe('product promotions decorator', function () {
         promotionMock.details = null;
         promotions(object, promotionsMock);
 
-        assert.equal(object.promotions[0].details, null);
+        assert.equal(object.promotions[0].details, '');
     });
 });
