@@ -37,6 +37,7 @@
                 value="${shippingAddress.postalCode||''}" <isprint value=${addressFields.postalCode.attributes} encoding="off"/>
                 autocomplete="shipping postal-code">
             <div class="invalid-feedback"><isprint value="${addressFields.postalCode.error}" ></div>
+             <span>${Resource.msg('example.postalcode','forms',null)}</span>
         </div>
     </div>
 </div>
@@ -147,6 +148,7 @@
                 value="${shippingAddress.phone||''}" <isprint value=${addressFields.phone.attributes} encoding="off"/>
                    autocomplete="tel">
             <div class="invalid-feedback"><isprint value="${addressFields.phone.error}" ></div>
+            <span>${Resource.msg('example.phone','forms',null)}</span>
         </div>
     </div>
 </div>
