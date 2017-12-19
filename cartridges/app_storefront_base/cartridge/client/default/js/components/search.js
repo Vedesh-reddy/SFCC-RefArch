@@ -148,7 +148,7 @@ function getSuggestions(scope) {
         $.spinner().start();
         $.ajax({
             context: scope,
-            url: endpoint + $(scope).val(),
+            url: endpoint + encodeURIComponent($(scope).val()),
             method: 'GET',
             success: processResponse,
             error: function () { $.spinner().stop(); }
