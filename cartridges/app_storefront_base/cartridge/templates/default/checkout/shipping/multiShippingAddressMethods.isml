@@ -1,0 +1,27 @@
+<div class="edit-address-block shipping-address">
+    <fieldset class="shipment-selector-block">
+        <div class="form-group">
+            <label class="form-control-label" for="shipmentSelector">
+                ${Resource.msg('heading.ship.to.address', 'checkout', null)}
+            </label>
+
+            <isinclude template="checkout/shipping/shipmentSelector" />
+            <div class="invalid-feedback"></div>
+            <div class="row">
+                <a class="col-6 text-center btn-show-details">${Resource.msg('action.update.address', 'checkout', null)}</a>
+                <a class="col-6 text-center btn-add-new">${Resource.msg('action.add.new', 'checkout', null)}</a>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="shipping-address-form">
+        <fieldset class="shipping-address-block">
+            <isinclude template="checkout/shipping/shippingAddress" />
+        </fieldset>
+        <fieldset class="shipping-method-block">
+            <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
+
+            <isinclude template="checkout/shipping/shippingMethod" />
+        </fieldset>
+    </div>
+</div>

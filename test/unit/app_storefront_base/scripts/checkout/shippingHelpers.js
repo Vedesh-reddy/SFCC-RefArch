@@ -12,7 +12,8 @@ var shippingHelpers = proxyquire('../../../../../cartridges/app_storefront_base/
 
     'dw/order/ShippingMgr': require('../../../../mocks/dw/order/ShippingMgr'),
 
-    '*/cartridge/models/shipping': require('../../../../mocks/models/shipping')
+    '*/cartridge/models/shipping': require('../../../../mocks/models/shipping'),
+    '*/cartridge/models/shipping/shippingMethod': require('../../../../mocks/models/shippingMethod')
 });
 
 function MockBasket() {}
@@ -377,6 +378,47 @@ describe('shippingHelpers', function () {
             assert.isTrue(spy.calledOnce);
             assert.isTrue(spy.withArgs(expectedDefaultShipMethod).calledOnce);
             shipmentWithNoShipMethod.setShippingMethod.restore();
+        });
+    });
+
+    describe('getApplicableShippingMethods', function () {
+        it('should return null when there is no shipment', function () {
+            var shipment = null;
+            var address = {};
+            var shippingMethods = shippingHelpers.getApplicableShippingMethods(shipment, address);
+            assert.isNull(shippingMethods);
+        });
+
+        it('should return a list of applicable shipping methods for non null address', function () {
+            var shipment = {};
+            var address = {};
+            var applicableShippingMethods = shippingHelpers.getApplicableShippingMethods(shipment, address);
+
+            assert.equal(
+                applicableShippingMethods[0].description,
+                'Order received within 7-10 business days'
+            );
+            assert.equal(applicableShippingMethods[0].displayName, 'Ground');
+            assert.equal(applicableShippingMethods[0].ID, '001');
+
+            assert.equal(applicableShippingMethods[1].displayName, '2-Day Express');
+            assert.equal(applicableShippingMethods[1].ID, '002');
+        });
+
+        it('should return a list of applicable shipping methods for null address', function () {
+            var shipment = {};
+            var address = null;
+            var applicableShippingMethods = shippingHelpers.getApplicableShippingMethods(shipment, address);
+
+            assert.equal(
+                applicableShippingMethods[0].description,
+                'Order received within 7-10 business days'
+            );
+            assert.equal(applicableShippingMethods[0].displayName, 'Ground');
+            assert.equal(applicableShippingMethods[0].ID, '001');
+
+            assert.equal(applicableShippingMethods[1].displayName, '2-Day Express');
+            assert.equal(applicableShippingMethods[1].ID, '002');
         });
     });
 });
