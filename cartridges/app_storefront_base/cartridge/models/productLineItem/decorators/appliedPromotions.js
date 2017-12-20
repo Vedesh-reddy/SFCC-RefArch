@@ -15,10 +15,10 @@ function getAppliedPromotions(lineItem) {
         priceAdjustments = collections.map(lineItem.priceAdjustments, function (priceAdjustment) {
             return {
                 callOutMsg: priceAdjustment.promotion.calloutMsg ?
-                    priceAdjustment.promotion.calloutMsg.markup : null,
+                    priceAdjustment.promotion.calloutMsg.markup : '',
                 name: priceAdjustment.promotion.name,
                 details: priceAdjustment.promotion.details ?
-                    priceAdjustment.promotion.details.markup : null
+                    priceAdjustment.promotion.details.markup : ''
             };
         });
     }

@@ -62,7 +62,7 @@ describe('product line item applied promotions decorator', function () {
         appliedPromotions(object, lineItemMock);
 
         assert.equal(object.appliedPromotions.length, 1);
-        assert.equal(object.appliedPromotions[0].callOutMsg, null);
+        assert.equal(object.appliedPromotions[0].callOutMsg, '');
         assert.equal(object.appliedPromotions[0].name, 'somePromotionName');
         assert.equal(object.appliedPromotions[0].details, 'someDetails');
     });
@@ -85,6 +85,6 @@ describe('product line item applied promotions decorator', function () {
         assert.equal(object.appliedPromotions.length, 1);
         assert.equal(object.appliedPromotions[0].callOutMsg, 'someCallOutMsg');
         assert.equal(object.appliedPromotions[0].name, 'somePromotionName');
-        assert.equal(object.appliedPromotions[0].details, null);
+        assert.equal(object.appliedPromotions[0].details, '');
     });
 });
