@@ -59,7 +59,7 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
             'pioneer-pdp-6010fd'];
         var expectedLabels = {
             'close': 'Close',
-            'maxprods': 'of 2 bonus products selected:',
+            'maxprods': 'of 2 Bonus Products Selected:',
             'selectprods': 'Select Bonus Products'
         };
 
@@ -90,7 +90,7 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
         myRequest.url = config.baseUrl + '/Cart-AddBonusProducts' + urlQuerystring;
 
         var expectedSubSet = {
-            'errorMessage': 'You are able to choose 2 products, but you have selected 3 products.',
+            'errorMessage': 'You can choose 2 products, but you have selected 3 products.',
             'error': true,
             'success': false
         };
@@ -185,7 +185,7 @@ describe('Add rule base Bonus Product to cart', function () {
             var bodyAsJson = JSON.parse(response.body);
             assert.equal(bodyAsJson.action, 'Cart-AddBonusProducts');
             assert.equal(bodyAsJson.totalQty, 2);
-            assert.equal(bodyAsJson.msgSuccess, 'Bonus Products added to your cart');
+            assert.equal(bodyAsJson.msgSuccess, 'Bonus products added to your cart');
             assert.isTrue(bodyAsJson.success);
             assert.isFalse(bodyAsJson.error);
         });
@@ -279,7 +279,7 @@ describe('Add list base Bonus Product to cart', function () {
             var bodyAsJson = JSON.parse(response.body);
             assert.equal(bodyAsJson.action, 'Cart-AddBonusProducts');
             assert.equal(bodyAsJson.totalQty, 6);
-            assert.equal(bodyAsJson.msgSuccess, 'Bonus Products added to your cart');
+            assert.equal(bodyAsJson.msgSuccess, 'Bonus products added to your cart');
             assert.isTrue(bodyAsJson.success);
             assert.isFalse(bodyAsJson.error);
         });
