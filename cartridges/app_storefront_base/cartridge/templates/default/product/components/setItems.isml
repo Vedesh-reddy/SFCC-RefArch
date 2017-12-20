@@ -2,7 +2,6 @@
     <isloop items="${productCopy.individualProducts}" var="productItem" status="loopState">
         <isset name="product" value="${productItem}" scope="page" />
 
-        <isobject object="${product.raw}" view="setproduct">
             <div class="container product-detail set-item" data-pid="${product.id}">
                 <div class="row">
                     <div class="col-12">

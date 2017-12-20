@@ -15,6 +15,7 @@
     <isset name="isBundle" value="${false}" scope="page" />
     <isset name="isProductSet" value="${true}" scope="page" />
     <isset name="isQuickView" value="${false}" scope="page" />
+    <isobject object="${product.raw}" view="detail" />
 
     <div class="container product-detail product-set-detail" data-pid="${product.id}">
         <div class="row">

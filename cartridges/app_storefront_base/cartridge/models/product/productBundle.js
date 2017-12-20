@@ -36,6 +36,7 @@ module.exports = function bundleProduct(product, apiProduct, options, factory) {
     decorators.currentUrl(product, options.variationModel, options.optionModel, 'Product-Show', apiProduct.ID, options.quantity);
     decorators.bundledProducts(product, apiProduct, options.quantity, factory);
     decorators.bundleReadyToOrder(product);
+    decorators.raw(product, apiProduct);
 
     return product;
 };

@@ -27,6 +27,7 @@ module.exports = function setProduct(product, apiProduct, options, factory) {
     decorators.currentUrl(product, options.variationModel, options.optionModel, 'Product-Show', apiProduct.ID, options.quantity);
     decorators.setIndividualProducts(product, apiProduct, factory);
     decorators.setReadyToOrder(product);
+    decorators.raw(product, apiProduct);
 
     return product;
 };
