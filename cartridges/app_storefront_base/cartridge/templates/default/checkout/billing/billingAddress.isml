@@ -147,6 +147,7 @@
                 <isprint value=${billingFields.postalCode.attributes} encoding="off"/>
                 autocomplete="billing postal-code">
             <div class="invalid-feedback"></div>
+            <span>${Resource.msg('example.postalcode','forms',null)}</span>
         </div>
     </div>
 </div>
