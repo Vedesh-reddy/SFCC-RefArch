@@ -191,9 +191,10 @@ function getApplicableShippingMethods(shipment, address) {
     }
 
     // Filter out whatever the method associated with in store pickup
+    var collections = require('*/cartridge/scripts/util/collections');
     var filteredMethods = [];
-    shippingMethods.toArray().forEach(function (shippingMethod) {
-        if (!shippingMethod.custom.storePickupEnabled) {
+    collections.forEach(shippingMethods, function (shippingMethod) {
+    	if (!shippingMethod.custom.storePickupEnabled) {
             filteredMethods.push(new ShippingMethodModel(shippingMethod, shipment));
         }
     });
