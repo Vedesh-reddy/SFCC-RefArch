@@ -119,11 +119,17 @@ $menu-item-margin: 0.625em;
     margin-top: 0.1875em; /* 3/16 */
     vertical-align: top;
 
+    a.minicart-link {
+        &:hover {
+            text-decoration: none;
+        }
+    }
+
     .minicart-quantity {
         background-color: $primary;
         border-radius: 50%;
-        width: 1.0625em; /* 17/16 */
-        height: 1.0625em; /* 17/16 */
+        width: 1.1875em; /* 19/16 */
+        height: 1.1875em; /* 19/16 */
         line-height: normal;
         display: inline-block;
         text-align: center;
