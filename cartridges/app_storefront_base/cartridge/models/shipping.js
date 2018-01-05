@@ -1,46 +1,9 @@
 'use strict';
 
-var ShippingMgr = require('dw/order/ShippingMgr');
-
 var AddressModel = require('*/cartridge/models/address');
 var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 var ShippingMethodModel = require('*/cartridge/models/shipping/shippingMethod');
 
-
-/**
- * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
- * @param {dw.order.Shipment} shipment - the target Shipment
- * @param {Object} [address] - optional address object
- * @returns {dw.util.Collection} an array of ShippingModels
- */
-function getApplicableShippingMethods(shipment, address) {
-    if (!shipment) return null;
-
-    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
-
-    var shippingMethods;
-    if (address) {
-        shippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
-    } else {
-        shippingMethods = shipmentShippingModel.getApplicableShippingMethods();
-    }
-
-    // Filter out whatever the method associated with in store pickup
-    var filteredMethods = [];
-    var iterator = shippingMethods.iterator();
-    var method;
-    while (iterator.hasNext()) {
-        method = iterator.next();
-        // TODO: remove reference to '005' replace with constant
-        if (method.ID !== '005') {
-            filteredMethods.push(method);
-        }
-    }
-
-    return filteredMethods.map(function (shippingMethod) {
-        return new ShippingMethodModel(shippingMethod, shipment);
-    });
-}
 
 /**
  * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
@@ -116,12 +79,14 @@ function getAssociatedAddress(shipment, customer) {
  * @param {string} containerView - the view of the product line items (order or basket)
  */
 function ShippingModel(shipment, address, customer, containerView) {
+    var shippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
+
 	// Simple properties
     this.UUID = getShipmentUUID(shipment);
 
 	// Derived properties
     this.productLineItems = getProductLineItemsModel(shipment, containerView);
-    this.applicableShippingMethods = getApplicableShippingMethods(shipment, address);
+    this.applicableShippingMethods = shippingHelpers.getApplicableShippingMethods(shipment, address);
     this.selectedShippingMethod = getSelectedShippingMethod(shipment);
     this.matchingAddressId = getAssociatedAddress(shipment, customer);
 

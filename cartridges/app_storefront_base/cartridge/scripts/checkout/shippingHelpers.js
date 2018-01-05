@@ -6,6 +6,8 @@ var ShippingMgr = require('dw/order/ShippingMgr');
 
 var ShippingModel = require('*/cartridge/models/shipping');
 
+var ShippingMethodModel = require('*/cartridge/models/shipping/shippingMethod');
+
 
 // Public (class) static model functions
 
@@ -170,10 +172,40 @@ function getShipmentByUUID(basket, uuid) {
     });
 }
 
+/**
+ * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
+ * @param {dw.order.Shipment} shipment - the target Shipment
+ * @param {Object} [address] - optional address object
+ * @returns {dw.util.Collection} an array of ShippingModels
+ */
+function getApplicableShippingMethods(shipment, address) {
+    if (!shipment) return null;
+
+    var shipmentShippingModel = ShippingMgr.getShipmentShippingModel(shipment);
+
+    var shippingMethods;
+    if (address) {
+        shippingMethods = shipmentShippingModel.getApplicableShippingMethods(address);
+    } else {
+        shippingMethods = shipmentShippingModel.getApplicableShippingMethods();
+    }
+
+    // Filter out whatever the method associated with in store pickup
+    var filteredMethods = [];
+    collections.forEach(shippingMethods, function (shippingMethod) {
+        if (!shippingMethod.custom.storePickupEnabled) {
+            filteredMethods.push(new ShippingMethodModel(shippingMethod, shipment));
+        }
+    });
+
+    return filteredMethods;
+}
+
 module.exports = {
     getShippingModels: getShippingModels,
     selectShippingMethod: selectShippingMethod,
     ensureShipmentHasMethod: ensureShipmentHasMethod,
     getShipmentByUUID: getShipmentByUUID,
-    getAddressFromRequest: getAddressFromRequest
+    getAddressFromRequest: getAddressFromRequest,
+    getApplicableShippingMethods: getApplicableShippingMethods
 };
