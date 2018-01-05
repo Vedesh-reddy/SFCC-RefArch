@@ -303,6 +303,10 @@ server.post(
                     }
                 }
 
+                delete registrationForm.password;
+                delete registrationForm.passwordConfirm;
+                delete registrationForm.form;
+
                 if (registrationForm.validForm) {
                     res.json({
                         success: true,
@@ -408,6 +412,7 @@ server.post(
                 var profile = customer.getProfile();
                 var customerLogin;
                 var status;
+
                 Transaction.wrap(function () {
                     status = profile.credentials.setPassword(
                             formInfo.password,
@@ -425,6 +430,10 @@ server.post(
                         );
                     }
                 });
+
+                delete formInfo.password;
+                delete formInfo.confirmEmail;
+
                 if (customerLogin) {
                     Transaction.wrap(function () {
                         profile.setFirstName(formInfo.firstName);
@@ -432,6 +441,10 @@ server.post(
                         profile.setEmail(formInfo.email);
                         profile.setPhoneHome(formInfo.phone);
                     });
+
+                    delete formInfo.profileForm;
+                    delete formInfo.email;
+
                     res.json({
                         success: true,
                         redirectUrl: URLUtils.url('Account-Show').toString()
@@ -442,6 +455,10 @@ server.post(
                         formInfo.profileForm.customer.email.error =
                             Resource.msg('error.message.username.invalid', 'forms', null);
                     }
+
+                    delete formInfo.profileForm;
+                    delete formInfo.email;
+
                     res.json({
                         success: false,
                         fields: formErrors(profileForm)
@@ -541,11 +558,22 @@ server.post(
                     formInfo.profileForm.login.currentpassword.valid = false;
                     formInfo.profileForm.login.currentpassword.error =
                         Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
+
+                    delete formInfo.currentPassword;
+                    delete formInfo.newPassword;
+                    delete formInfo.newPasswordConfirm;
+                    delete formInfo.profileForm;
+
                     res.json({
                         success: false,
                         fields: formErrors(profileForm)
                     });
                 } else {
+                    delete formInfo.currentPassword;
+                    delete formInfo.newPassword;
+                    delete formInfo.newPasswordConfirm;
+                    delete formInfo.profileForm;
+
                     res.json({
                         success: true,
                         redirectUrl: URLUtils.url('Account-Show').toString()

@@ -341,7 +341,7 @@ server.post(
                             newCustomerProfile.firstName = registrationData.firstName;
                             newCustomerProfile.lastName = registrationData.lastName;
                             newCustomerProfile.phoneHome = registrationData.phone;
-                            newCustomerProfile.email = registrationData.email;
+                            newCustomerProfile.email = login;
                             order.setCustomer(newCustomer);
                             registeredUser = {
                                 email: login,
