@@ -42,6 +42,7 @@ function proxyModel() {
         '*/cartridge/models/address': AddressModel,
         '*/cartridge/models/productLineItems': ProductLineItemsModel,
         '*/cartridge/models/shipping/shippingMethod': ShippingMethodModel,
+        '*/cartridge/scripts/checkout/shippingHelpers': shippingHelpers,
         '*/cartridge/scripts/util/collections': collections,
         '*/cartridge/scripts/util/formatting': {},
         'dw/util/StringUtils': {
@@ -50,8 +51,7 @@ function proxyModel() {
             }
         },
         'dw/value/Money': require('../dw.value.Money'),
-        'dw/order/ShippingMgr': ShippingMgr,
-        '*/cartridge/scripts/checkout/shippingHelpers': shippingHelpers
+        'dw/order/ShippingMgr': ShippingMgr
     });
 }
 

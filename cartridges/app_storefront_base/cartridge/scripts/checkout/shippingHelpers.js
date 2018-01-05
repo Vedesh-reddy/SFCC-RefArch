@@ -192,19 +192,13 @@ function getApplicableShippingMethods(shipment, address) {
 
     // Filter out whatever the method associated with in store pickup
     var filteredMethods = [];
-    var iterator = shippingMethods.iterator();
-    var method;
-    while (iterator.hasNext()) {
-        method = iterator.next();
-        // TODO: remove reference to '005' replace with constant
-        if (method.ID !== '005') {
-            filteredMethods.push(method);
+    shippingMethods.toArray().forEach(function (shippingMethod) {
+        if (!shippingMethod.custom.storePickupEnabled) {
+            filteredMethods.push(new ShippingMethodModel(shippingMethod, shipment));
         }
-    }
-
-    return filteredMethods.map(function (shippingMethod) {
-        return new ShippingMethodModel(shippingMethod, shipment);
     });
+
+    return filteredMethods;
 }
 
 module.exports = {
