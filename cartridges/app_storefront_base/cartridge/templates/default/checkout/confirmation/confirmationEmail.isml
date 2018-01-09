@@ -128,6 +128,33 @@
                     </isloop>
                 </isif>
 
+                <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
+                    <isloop items="${lineItem.bonusProducts}" var="bonusProduct" status="loopstate">
+                        <isif condition="${loopstate.first}">
+                            <br/>
+                            ${Resource.msg('text.lineitem.bonus.msg','cart',null)}
+                        </isif>
+                        ${bonusProduct.productName}
+                        <isloop items="${bonusProduct.variationAttributes}" var="attribute">
+                            ${attribute.displayName}: ${attribute.displayValue}
+                            <br/>
+                        </isloop>
+                        
+                        <!--- item price --->
+                        ${Resource.msg('label.each.item.price','cart',null)} -
+                        ${bonusProduct.priceTotal.price}
+                        <br/>
+                        
+                        <!--- quantity --->
+                        ${Resource.msg('field.selectquantity','cart',null)}
+                         - <isprint value="${bonusProduct.quantity}" formatter="##" />
+                        <br/>
+                        <isif condition="${loopstate.last}">
+                            <br/>
+                        </isif>
+                    </isloop>
+                </isif>
+
                 <!--- item price --->
                 ${Resource.msg('label.each.item.price','cart',null)} -
                 ${lineItem.price.formatted || lineItem.price.sales.formatted}
