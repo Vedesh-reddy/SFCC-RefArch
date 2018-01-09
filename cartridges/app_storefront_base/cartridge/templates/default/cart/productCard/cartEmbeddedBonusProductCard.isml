@@ -38,7 +38,7 @@
                     <p class="line-item-price-info">
                         ${Resource.msg('label.total.price','cart',null)}
                     </p>
-                    <div class="item-total-${productLineItemUUID} price">
+                    <div class="price">
                         <div class="pricing line-item-total-price-amount item-total-${productLineItem.UUID}">
                             ${productLineItem.priceTotal.price}
                         </div>
