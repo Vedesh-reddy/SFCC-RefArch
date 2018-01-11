@@ -44,19 +44,27 @@ describe('render', function () {
 
     it('should render a json output', function () {
         var response = {
-            print: sinon.spy(),
+            base: {
+                writer: {
+                    print: sinon.spy()
+                }
+            },
             setContentType: sinon.spy()
         };
 
         render.json({}, response);
 
         assert.isTrue(response.setContentType.calledWith('application/json'));
-        assert.isTrue(response.print.calledOnce);
+        assert.isTrue(response.base.writer.print.calledOnce);
     });
 
     it('should render valid xml output', function () {
         var response = {
-            print: sinon.spy(),
+            base: {
+                writer: {
+                    print: sinon.spy()
+                }
+            },
             setContentType: sinon.spy()
         };
 
@@ -67,7 +75,7 @@ describe('render', function () {
         }, response);
 
         assert.isTrue(response.setContentType.calledWith('application/xml'));
-        assert.isTrue(response.print.calledOnce);
+        assert.isTrue(response.base.writer.print.calledOnce);
     });
 
     it('should throw an exception when invalid XML is provided', function () {

@@ -32,7 +32,7 @@ module.exports = {
      */
     json: function json(data, response) {
         response.setContentType('application/json');
-        response.print(JSON.stringify(data, null, 2));
+        response.base.writer.print(JSON.stringify(data, null, 2));
     },
     /**
     * Render XML as an output
@@ -69,7 +69,7 @@ module.exports = {
         response.setContentType('application/xml');
 
         try {
-            response.print(new XML(xmlData));
+            response.base.writer.print(new XML(xmlData));
         } catch (e) {
             throw new Error(e.message + '\n\r' + e.stack, e.fileName, e.lineNumber);
         }
