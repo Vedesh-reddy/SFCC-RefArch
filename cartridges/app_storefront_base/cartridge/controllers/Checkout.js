@@ -18,7 +18,7 @@ server.get(
         var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
         var TotalsModel = require('*/cartridge/models/totals');
         var URLUtils = require('dw/web/URLUtils');
-        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
 
         var currentBasket = BasketMgr.getCurrentBasket();
         var reportingURLs;
@@ -46,7 +46,7 @@ server.get(
                 userName = req.currentCustomer.credentials.username;
             }
 
-            reportingURLs = reportingUrls.getCheckoutReportingURLs(
+            reportingURLs = reportingUrlsHelper.getCheckoutReportingURLs(
                 currentBasket.UUID,
                 1,
                 'CheckoutMethod'
@@ -78,7 +78,7 @@ server.get(
         var AccountModel = require('*/cartridge/models/account');
         var OrderModel = require('*/cartridge/models/order');
         var URLUtils = require('dw/web/URLUtils');
-        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
         var Locale = require('dw/util/Locale');
 
         var currentBasket = BasketMgr.getCurrentBasket();
@@ -163,7 +163,7 @@ server.get(
         var accountModel = new AccountModel(req.currentCustomer);
 
         var reportingURLs;
-        reportingURLs = reportingUrls.getCheckoutReportingURLs(
+        reportingURLs = reportingUrlsHelper.getCheckoutReportingURLs(
             currentBasket.UUID,
             2,
             'Shipping'

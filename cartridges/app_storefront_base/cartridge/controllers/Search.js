@@ -86,7 +86,7 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
 server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
-    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+    var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
     var URLUtils = require('dw/web/URLUtils');
 
     var categoryTemplate = '';
@@ -135,7 +135,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
     });
 
     if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
-        reportingURLs = reportingUrls.getProductSearchReportingURLs(productSearch);
+        reportingURLs = reportingUrlsHelper.getProductSearchReportingURLs(productSearch);
     }
 
     if (

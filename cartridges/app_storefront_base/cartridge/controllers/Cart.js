@@ -135,7 +135,7 @@ server.get(
         var Transaction = require('dw/system/Transaction');
         var CartModel = require('*/cartridge/models/cart');
         var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
-        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
 
         var currentBasket = BasketMgr.getCurrentBasket();
         var reportingURLs;
@@ -152,7 +152,7 @@ server.get(
         }
 
         if (currentBasket && currentBasket.allLineItems.length) {
-            reportingURLs = reportingUrls.getBasketOpenReportingURLs(currentBasket);
+            reportingURLs = reportingUrlsHelper.getBasketOpenReportingURLs(currentBasket);
         }
 
         res.setViewData({ reportingURLs: reportingURLs });
@@ -418,7 +418,7 @@ server.get('MiniCartShow', function (req, res, next) {
     var Transaction = require('dw/system/Transaction');
     var CartModel = require('*/cartridge/models/cart');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
-    var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+    var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     var reportingURLs;
@@ -434,7 +434,7 @@ server.get('MiniCartShow', function (req, res, next) {
     }
 
     if (currentBasket && currentBasket.allLineItems.length) {
-        reportingURLs = reportingUrls.getBasketOpenReportingURLs(currentBasket);
+        reportingURLs = reportingUrlsHelper.getBasketOpenReportingURLs(currentBasket);
     }
 
     res.setViewData({ reportingURLs: reportingURLs });

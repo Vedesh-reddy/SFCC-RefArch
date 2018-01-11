@@ -12,7 +12,7 @@ server.get(
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
-        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
         var OrderMgr = require('dw/order/OrderMgr');
         var OrderModel = require('*/cartridge/models/order');
         var Locale = require('dw/util/Locale');
@@ -44,7 +44,7 @@ server.get(
         );
         var passwordForm;
 
-        var reportingURLs = reportingUrls.getOrderReportingURLs(order);
+        var reportingURLs = reportingUrlsHelper.getOrderReportingURLs(order);
 
         if (!req.currentCustomer.profile) {
             passwordForm = server.forms.getForm('newPasswords');

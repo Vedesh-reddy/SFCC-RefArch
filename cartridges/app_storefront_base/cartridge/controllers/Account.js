@@ -130,12 +130,12 @@ server.get(
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
-        var reportingUrls = require('*/cartridge/scripts/reportingUrls');
+        var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
         var reportingURLs;
 
         // Get reporting event Account Open url
         if (req.querystring.registration && req.querystring.registration === 'submitted') {
-            reportingURLs = reportingUrls.getAccountOpenReportingURLs(
+            reportingURLs = reportingUrlsHelper.getAccountOpenReportingURLs(
                 CustomerMgr.registeredCustomerCount
             );
         }
