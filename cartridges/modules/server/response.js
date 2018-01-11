@@ -17,6 +17,31 @@ function Response(response) {
     this.cachePeriod = null;
     this.cachePeriodUnit = null;
     this.personalized = false;
+    this.renderings = [];
+}
+
+/**
+ * Stores a list of rendering steps.
+ * @param {Array} renderings - The array of rendering steps
+ * @param {Object} object - An object containing what type to render
+ * @returns {void}
+ */
+function appendRenderings(renderings, object) {
+    var hasRendering = false;
+
+    if (renderings.length) {
+        for (var i = renderings.length - 1; i >= 0; i--) {
+            if (renderings[i].type === 'render') {
+                renderings[i] = object; // eslint-disable-line no-param-reassign
+                hasRendering = true;
+                break;
+            }
+        }
+    }
+
+    if (!hasRendering) {
+        renderings.push(object);
+    }
 }
 
 Response.prototype = {
@@ -29,6 +54,8 @@ Response.prototype = {
     render: function render(name, data) {
         this.view = name;
         this.viewData = assign(this.viewData, data);
+
+        appendRenderings(this.renderings, { type: 'render', subType: 'isml', view: name });
     },
     /**
      * Stores data to be rendered as json
@@ -38,6 +65,8 @@ Response.prototype = {
     json: function json(data) {
         this.isJson = true;
         this.viewData = assign(this.viewData, data);
+
+        appendRenderings(this.renderings, { type: 'render', subType: 'json' });
     },
     /**
      * Stores data to be rendered as XML
@@ -47,6 +76,8 @@ Response.prototype = {
     xml: function xml(xmlString) {
         this.isXml = true;
         this.viewData = assign(this.viewData, { xml: xmlString });
+
+        appendRenderings(this.renderings, { type: 'render', subType: 'xml' });
     },
     /**
      * Redirects to a given url right away
@@ -107,12 +138,12 @@ Response.prototype = {
     },
 
     /**
-     * Print a message directly to the output
+     * creates a print step to the renderings
      * @param {string} message - Message to be printed
      * @returns {void}
      */
     print: function print(message) {
-        this.base.writer.print(message);
+        this.renderings.push({ type: 'print', message: message });
     },
 
     /**
@@ -122,6 +153,16 @@ Response.prototype = {
      */
     cacheExpiration: function cacheExpiration(period) {
         this.cachePeriod = period;
+    },
+
+    /**
+     * Adds a response header with the given name and value
+     * @param  {string} name - the name to use for the response header
+     * @param  {string} value - the value to use
+     * @return {void}
+     */
+    setHttpHeader: function setHttpHeader(name, value) {
+        this.base.setHttpHeader(name, value);
     }
 
 };
