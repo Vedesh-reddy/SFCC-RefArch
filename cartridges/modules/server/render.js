@@ -3,75 +3,112 @@
 
 var isml = require('dw/template/ISML');
 
-module.exports = {
-    /**
-     * Render an ISML template
-     * @param {string} view - Path to an ISML template
-     * @param {Object} viewData - Data to be passed as pdict
-     * @param {Object} response - Response object
-     * @returns {void}
-     */
-    template: function template(view, viewData) {
-        // create a shallow copy of the data
-        var data = {};
-        Object.keys(viewData).forEach(function (key) {
-            data[key] = viewData[key];
-        });
+/**
+ * Render an ISML template
+ * @param {string} view - Path to an ISML template
+ * @param {Object} viewData - Data to be passed as pdict
+ * @param {Object} response - Response object
+ * @returns {void}
+ */
+function template(view, viewData) {
+    // create a shallow copy of the data
+    var data = {};
+    Object.keys(viewData).forEach(function (key) {
+        data[key] = viewData[key];
+    });
 
-        try {
-            isml.renderTemplate(view, data);
-        } catch (e) {
-            throw new Error(e.javaMessage + '\n\r' + e.stack, e.fileName, e.lineNumber);
+    try {
+        isml.renderTemplate(view, data);
+    } catch (e) {
+        throw new Error(e.javaMessage + '\n\r' + e.stack, e.fileName, e.lineNumber);
+    }
+}
+
+/**
+ * Render JSON as an output
+ * @param {Object} data - Object to be turned into JSON
+ * @param {Object} response - Response object
+ * @returns {void}
+ */
+function json(data, response) {
+    response.setContentType('application/json');
+    response.base.writer.print(JSON.stringify(data, null, 2));
+}
+
+/**
+ * Render XML as an output
+ * @param {Object} viewData - Object to be turned into XML
+ * @param {Object} response - Response object
+ * @returns {void}
+ */
+function xml(viewData, response) {
+    var XML_CHAR_MAP = {
+        '<': '&lt;',
+        '>': '&gt;',
+        '&': '&amp;',
+        '"': '&quot;',
+        "'": '&apos;'
+    };
+
+    // Valid XML needs a single root.
+    var xmlData = '<response>';
+
+    Object.keys(viewData).forEach(function (key) {
+        if (key === 'xml') {
+            xmlData += viewData[key];
+        } else {
+            xmlData +=
+                '<' + key + '>' + viewData[key].replace(/[<>&"']/g, function (ch) {
+                    return XML_CHAR_MAP[ch];
+                }) + '</' + key + '>';
         }
-    },
-    /**
-     * Render JSON as an output
-     * @param {Object} data - Object to be turned into JSON
-     * @param {Object} response - Response object
-     * @returns {void}
-     */
-    json: function json(data, response) {
-        response.setContentType('application/json');
-        response.base.writer.print(JSON.stringify(data, null, 2));
-    },
-    /**
-    * Render XML as an output
-    * @param {Object} viewData - Object to be turned into XML
-    * @param {Object} response - Response object
-    * @returns {void}
-    */
-    xml: function xml(viewData, response) {
-        var XML_CHAR_MAP = {
-            '<': '&lt;',
-            '>': '&gt;',
-            '&': '&amp;',
-            '"': '&quot;',
-            "'": '&apos;'
-        };
+    });
 
-        // Valid XML needs a single root.
-        var xmlData = '<response>';
+    // Close the root
+    xmlData += '</response>';
 
-        Object.keys(viewData).forEach(function (key) {
-            if (key === 'xml') {
-                xmlData += viewData[key];
+    response.setContentType('application/xml');
+
+    try {
+        response.base.writer.print(new XML(xmlData));
+    } catch (e) {
+        throw new Error(e.message + '\n\r' + e.stack, e.fileName, e.lineNumber);
+    }
+}
+
+/**
+ * Determines what to render
+ * @param {Object} res - Response object
+ * @returns {void}
+ */
+function applyRenderings(res) {
+    if (res.renderings.length) {
+        res.renderings.forEach(function (element) {
+            if (element.type === 'render') {
+                switch (element.subType) {
+                    case 'isml':
+                        template(element.view, res.viewData, res);
+                        break;
+                    case 'json':
+                        json(res.viewData, res);
+                        break;
+                    case 'xml':
+                        xml(res.viewData, res);
+                        break;
+                    default:
+                        throw new Error('Cannot render template without name or data');
+                }
+            } else if (element.type === 'print') {
+                res.base.writer.print(element.message);
             } else {
-                xmlData +=
-                    '<' + key + '>' + viewData[key].replace(/[<>&"']/g, function (ch) {
-                        return XML_CHAR_MAP[ch];
-                    }) + '</' + key + '>';
+                throw new Error('Cannot render template without name or data');
             }
         });
-
-        // Close the root
-        xmlData += '</response>';
-
-        response.setContentType('application/xml');
-
-        try {
-            response.base.writer.print(new XML(xmlData));
-        } catch (e) {
-            throw new Error(e.message + '\n\r' + e.stack, e.fileName, e.lineNumber);
-        }
+    } else {
+        throw new Error('Cannot render template without name or data');
     }
+}
+
+module.exports = {
+    applyRenderings: applyRenderings
 };

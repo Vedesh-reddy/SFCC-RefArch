@@ -88,31 +88,7 @@ Server.prototype = {
                 return;
             }
 
-            if (res.renderings.length) {
-                res.renderings.forEach(function (element) {
-                    if (element.type === 'render') {
-                        switch (element.subType) {
-                            case 'isml':
-                                render.template(element.view, res.viewData, res);
-                                break;
-                            case 'json':
-                                render.json(res.viewData, res);
-                                break;
-                            case 'xml':
-                                render.xml(res.viewData, res);
-                                break;
-                            default:
-                                throw new Error('Cannot render template without name or data');
-                        }
-                    } else if (element.type === 'print') {
-                        res.base.writer.print(element.message);
-                    } else {
-                        throw new Error('Cannot render template without name or data');
-                    }
-                });
-            } else {
-                throw new Error('Cannot render template without name or data');
-            }
+            render.applyRenderings(res);
         });
 
         this.routes[name] = route;

@@ -11,7 +11,8 @@ var sinon = require('sinon');
 var render = {
     template: sinon.spy(),
     json: sinon.spy(),
-    xml: sinon.spy()
+    xml: sinon.spy(),
+    applyRenderings: sinon.spy()
 };
 var server = null;
 
@@ -231,11 +232,6 @@ describe('server', function () {
         assert.throws(function () { server.extend({}); });
     });
 
-    it('should throw when no route action has been taken', function () {
-        server.get('test', function (req, res, next) { next(); });
-        assert.throws(function () { server.exports().test(); });
-    });
-
     it('should throw when middleware doesn\'t match route', function () {
         server.post('test', middleware.https, function (req, res, next) {
             req.render('test', { name: 'value' }); next();
@@ -250,7 +246,7 @@ describe('server', function () {
         });
         var exports = server.exports();
         exports.test();
-        var result = render.template.calledWith('test', { name: 'value', queryString: '', action: 'test', locale: '' });
+        var result = render.applyRenderings.called;
         assert.isTrue(result);
     });
 
