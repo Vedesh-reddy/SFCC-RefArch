@@ -77,8 +77,11 @@
             <isinclude template="checkout/productCard/productCardProductPromotions" />
         </div>
     </isif>
-    ${Resource.msg('text.lineitem.bonus.msg', 'cart', null)}:
-    <isloop items="${lineItem.bonusProducts}" var="nestedLineItem">
+    
+    <isloop items="${lineItem.bonusProducts}" var="nestedLineItem" status="loopstate">
+        <isif condition="${loopstate.first}">
+            ${Resource.msg('text.lineitem.bonus.msg', 'cart', null)}:
+        </isif>
         <isinclude template="checkout/productCard/embeddedBonusProduct" />
     </isloop>
     
