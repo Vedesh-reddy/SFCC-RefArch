@@ -19,6 +19,11 @@
     }
 }
 
+label.color ~ a:hover{
+    // Removes weird dash after the swatch circle on hover.
+    text-decoration: none;
+}
+
 .description-and-detail {
     margin-top: 2em;
 
