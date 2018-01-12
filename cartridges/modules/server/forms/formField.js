@@ -21,7 +21,7 @@ function formField(field) {
             }
             if (!result.checked && !result.selected) {
                 var value = field.htmlValue == null ? '' : field.htmlValue;
-                attributes += ' value="' + value + '"';
+                attributes += ' value="' + value.toString().replace(/"/g, "'") + '"';
             }
             if (result.maxValue) {
                 attributes += ' max="' + result.maxValue + '"';
