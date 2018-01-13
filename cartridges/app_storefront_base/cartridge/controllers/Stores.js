@@ -1,11 +1,10 @@
 'use strict';
 
 var server = require('server');
-
-var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
 var cache = require('*/cartridge/scripts/middleware/cache');
 
 server.get('Find', server.middleware.https, cache.applyDefaultCache, function (req, res, next) {
+    var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
     res.render('storeLocator/storeLocator', StoreHelpers.getModel(req));
     next();
 });
@@ -20,6 +19,7 @@ server.get('Find', server.middleware.https, cache.applyDefaultCache, function (r
 // postalCode - The postal code that the user used to search.
 // radius - The radius that the user selected to refine the search
 server.get('FindStores', function (req, res, next) {
+    var StoreHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
     res.json(StoreHelpers.getModel(req));
     next();
 });

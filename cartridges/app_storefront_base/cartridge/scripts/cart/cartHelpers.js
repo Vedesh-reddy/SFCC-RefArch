@@ -12,18 +12,6 @@ var arrayHelper = require('*/cartridge/scripts/util/array');
 var BONUS_PRODUCTS_PAGE_SIZE = 6;
 
 /**
- * @typedef ProductOption
- * @type Object
- * @property {string} id - Option ID
- * @property {string} selectedValueId - Selected option value ID
- */
-
-/**
- * @typedef ProductOptions
- * @type Object.<string, ProductOption>
- */
-
-/**
  * Replaces Bundle master product items with their selected variants
  *
  * @param {dw.order.ProductLineItem} apiLineItem - Cart line item containing Bundle
@@ -264,6 +252,76 @@ function getMatchingProducts(productId, productLineItems) {
 }
 
 /**
+ * Filter all the product line items matching productId and
+ * has the same bundled items or options in the cart
+ * @param {dw.catalog.Product} product - Product object
+ * @param {string} productId - Product ID to match
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Collection of the Cart's
+ *     product line items
+ * @param {string[]} childProducts - the products' sub-products
+ * @param {SelectedOption[]} options - product options
+ * @return {dw.order.ProductLineItem[]} - Filtered all the product line item matching productId and
+ *     has the same bundled items or options
+ */
+function getExistingProductLineItemsInCart(product, productId, productLineItems, childProducts, options) {
+    var matchingProductsObj = getMatchingProducts(productId, productLineItems);
+    var matchingProducts = matchingProductsObj.matchingProducts;
+    var productLineItemsInCart = matchingProducts.filter(function (matchingProduct) {
+        return product.bundle
+            ? allBundleItemsSame(matchingProduct.bundledProductLineItems, childProducts)
+            : hasSameOptions(matchingProduct.optionProductLineItems, options || []);
+    });
+
+    return productLineItemsInCart;
+}
+
+/**
+ * Filter the product line item matching productId and
+ * has the same bundled items or options in the cart
+ * @param {dw.catalog.Product} product - Product object
+ * @param {string} productId - Product ID to match
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Collection of the Cart's
+ *     product line items
+ * @param {string[]} childProducts - the products' sub-products
+ * @param {SelectedOption[]} options - product options
+ * @return {dw.order.ProductLineItem} - get the first product line item matching productId and
+ *     has the same bundled items or options
+ */
+function getExistingProductLineItemInCart(product, productId, productLineItems, childProducts, options) {
+    return getExistingProductLineItemsInCart(product, productId, productLineItems, childProducts, options)[0];
+}
+
+/**
+ * Check if the bundled product can be added to the cart
+ * @param {string[]} childProducts - the products' sub-products
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Collection of the Cart's
+ *     product line items
+ * @param {number} quantity - the number of products to the cart
+ * @return {boolean} - return true if the bundled product can be added
+ */
+function checkBundledProductCanBeAdded(childProducts, productLineItems, quantity) {
+    var atsValueByChildPid = {};
+    var totalQtyRequested = 0;
+    var canBeAdded = false;
+
+    childProducts.forEach(function (childProduct) {
+        var apiChildProduct = ProductMgr.getProduct(childProduct.pid);
+        atsValueByChildPid[childProduct.pid] =
+            apiChildProduct.availabilityModel.inventoryRecord.ATS.value;
+    });
+
+    canBeAdded = childProducts.every(function (childProduct) {
+        var bundleQuantity = quantity;
+        var itemQuantity = bundleQuantity * childProduct.quantity;
+        var childPid = childProduct.pid;
+        totalQtyRequested = itemQuantity + getQtyAlreadyInCart(childPid, productLineItems);
+        return totalQtyRequested <= atsValueByChildPid[childPid];
+    });
+
+    return canBeAdded;
+}
+
+/**
  * Adds a product to the cart. If the product is already in the cart it increases the quantity of
  * that product.
  * @param {dw.order.Basket} currentBasket - Current users's basket
@@ -292,20 +350,7 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
     var canBeAdded = false;
 
     if (product.bundle) {
-        var atsValueByChildPid = {};
-        childProducts.forEach(function (childProduct) {
-            var apiChildProduct = ProductMgr.getProduct(childProduct.pid);
-            atsValueByChildPid[childProduct.pid] =
-                apiChildProduct.availabilityModel.inventoryRecord.ATS.value;
-        });
-
-        canBeAdded = childProducts.every(function (childProduct) {
-            var bundleQuantity = quantity;
-            var itemQuantity = bundleQuantity * childProduct.quantity;
-            var childPid = childProduct.pid;
-            totalQtyRequested = itemQuantity + getQtyAlreadyInCart(childPid, productLineItems);
-            return totalQtyRequested <= atsValueByChildPid[childPid];
-        });
+        canBeAdded = checkBundledProductCanBeAdded(childProducts, productLineItems, quantity);
     } else {
         totalQtyRequested = quantity + getQtyAlreadyInCart(productId, productLineItems);
         perpetual = product.availabilityModel.inventoryRecord.perpetual;
@@ -325,13 +370,8 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
         return result;
     }
 
-    var matchingProductsObj = getMatchingProducts(productId, productLineItems);
-    var matchingProducts = matchingProductsObj.matchingProducts;
-    productInCart = arrayHelper.find(matchingProducts, function (matchingProduct) {
-        return product.bundle
-            ? allBundleItemsSame(matchingProduct.bundledProductLineItems, childProducts)
-            : hasSameOptions(matchingProduct.optionProductLineItems, options || []);
-    });
+    productInCart = getExistingProductLineItemInCart(
+        product, productId, productLineItems, childProducts, options);
 
     if (productInCart) {
         productQuantityInCart = productInCart.quantity.value;
@@ -377,9 +417,12 @@ function ensureAllShipmentsHaveMethods(basket) {
 }
 
 module.exports = {
+    addLineItem: addLineItem,
     addProductToCart: addProductToCart,
+    checkBundledProductCanBeAdded: checkBundledProductCanBeAdded,
     ensureAllShipmentsHaveMethods: ensureAllShipmentsHaveMethods,
     getQtyAlreadyInCart: getQtyAlreadyInCart,
     getNewBonusDiscountLineItem: getNewBonusDiscountLineItem,
+    getExistingProductLineItemsInCart: getExistingProductLineItemsInCart,
     BONUS_PRODUCTS_PAGE_SIZE: BONUS_PRODUCTS_PAGE_SIZE
 };
