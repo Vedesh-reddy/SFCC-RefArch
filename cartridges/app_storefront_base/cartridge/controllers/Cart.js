@@ -3,6 +3,7 @@
 var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
@@ -128,6 +129,7 @@ server.post('AddProduct', function (req, res, next) {
 server.get(
     'Show',
     server.middleware.https,
+    consentTracking.consent,
     csrfProtection.generateToken,
     function (req, res, next) {
         var BasketMgr = require('dw/order/BasketMgr');

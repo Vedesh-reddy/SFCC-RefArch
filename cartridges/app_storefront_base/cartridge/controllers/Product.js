@@ -3,6 +3,7 @@
 var server = require('server');
 
 var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Creates the breadcrumbs object
@@ -98,7 +99,7 @@ function showProductPage(querystring, res) {
     });
 }
 
-server.get('Show', cache.applyPromotionSensitiveCache, function (req, res, next) {
+server.get('Show', cache.applyPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     showProductPage(req.querystring, res);
     next();
 });

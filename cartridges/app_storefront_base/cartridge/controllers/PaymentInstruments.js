@@ -4,6 +4,7 @@ var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Checks if a credit card is valid or not
@@ -94,7 +95,7 @@ function getExpirationYears() {
     return creditCardExpirationYears;
 }
 
-server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
+server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var Resource = require('dw/web/Resource');
     var AccountModel = require('*/cartridge/models/account');
@@ -121,6 +122,7 @@ server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
 server.get(
     'AddPayment',
     csrfProtection.generateToken,
+    consentTracking.consent,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
         var URLUtils = require('dw/web/URLUtils');

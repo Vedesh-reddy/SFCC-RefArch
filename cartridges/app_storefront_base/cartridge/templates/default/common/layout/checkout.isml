@@ -15,5 +15,6 @@
             <isinclude template="/components/footer/pageFooter" />
         </div>
         <isinclude template="/common/scripts" />
+        <isinclude template="/common/consent" />
     </body>
 </html>

@@ -2,6 +2,7 @@
 
 var server = require('server');
 var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Searches for stores and creates a plain object of the stores returned by the search
@@ -55,7 +56,7 @@ function getStores(radius, postalCode, lat, long, geolocation, showMap, url) {
     return stores;
 }
 
-server.get('Find', server.middleware.https, cache.applyDefaultCache, function (req, res, next) {
+server.get('Find', server.middleware.https, cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var radius = req.querystring.radius;
     var postalCode = req.querystring.postalCode;
     var lat = req.querystring.lat;

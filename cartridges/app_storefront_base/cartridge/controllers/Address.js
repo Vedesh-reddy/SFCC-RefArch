@@ -6,6 +6,7 @@ var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Creates a list of address model for the logged in user
@@ -27,7 +28,7 @@ function getList(customerNo) {
     return addressBook;
 }
 
-server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
+server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
     var actionUrls = {
         deleteActionUrl: URLUtils.url('Address-DeleteAddress').toString(),
         listActionUrl: URLUtils.url('Address-List').toString()
@@ -52,6 +53,7 @@ server.get('List', userLoggedIn.validateLoggedIn, function (req, res, next) {
 server.get(
     'AddAddress',
     csrfProtection.generateToken,
+    consentTracking.consent,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
         var addressForm = server.forms.getForm('address');
@@ -81,6 +83,7 @@ server.get(
     'EditAddress',
     csrfProtection.generateToken,
     userLoggedIn.validateLoggedIn,
+    consentTracking.consent,
     function (req, res, next) {
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var AddressModel = require('*/cartridge/models/address');

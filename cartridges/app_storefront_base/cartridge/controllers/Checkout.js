@@ -4,6 +4,7 @@ var server = require('server');
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Main entry point for Checkout
@@ -12,6 +13,7 @@ var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 server.get(
     'Login',
     server.middleware.https,
+    consentTracking.consent,
     csrfProtection.generateToken,
     function (req, res, next) {
         var BasketMgr = require('dw/order/BasketMgr');
@@ -71,6 +73,7 @@ server.get(
 server.get(
     'Begin',
     server.middleware.https,
+    consentTracking.consent,
     csrfProtection.generateToken,
     function (req, res, next) {
         var BasketMgr = require('dw/order/BasketMgr');
