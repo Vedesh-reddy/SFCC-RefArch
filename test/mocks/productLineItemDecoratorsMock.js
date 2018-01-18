@@ -39,7 +39,6 @@ function proxyModel() {
             '*/cartridge/models/productLineItem/decorators/discountBonusLineItems': stubDiscountBonusLineItems,
             '*/cartridge/models/productLineItem/decorators/bonusUnitPrice': stubBonusUnitPrice,
             '*/cartridge/models/productLineItem/decorators/preOrderUUID': stubPreOrderUUID
-
         }),
         stubs: {
             stubGift: stubGift,

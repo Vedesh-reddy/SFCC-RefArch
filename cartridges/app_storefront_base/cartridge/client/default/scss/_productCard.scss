@@ -86,6 +86,10 @@
     margin: 0.625em -1.225em 0.625em -1.325em;
 }
 
+.line-dotted {
+    border-top: 0.063em dashed #ccc;
+}
+
 .line-item-availability {
     font-size: 0.813rem;
 }

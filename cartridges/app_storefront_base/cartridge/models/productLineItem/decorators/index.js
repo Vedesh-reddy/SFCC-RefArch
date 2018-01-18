@@ -17,5 +17,4 @@ module.exports = {
     preOrderUUID: require('*/cartridge/models/productLineItem/decorators/preOrderUUID'),
     discountBonusLineItems: require('*/cartridge/models/productLineItem/decorators/discountBonusLineItems'),
     bonusUnitPrice: require('*/cartridge/models/productLineItem/decorators/bonusUnitPrice')
-
 };

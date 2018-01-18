@@ -3,9 +3,10 @@
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 var templateStub = sinon.stub();
-
+var StoreModel = require('../models/store');
 
 var StoresModel = proxyquire('../../../cartridges/app_storefront_base/cartridge/models/stores', {
+    '*/cartridge/models/store': StoreModel,
     'dw/util/HashMap': function () {
         return {
             result: {},
@@ -76,6 +77,7 @@ templateStub.returns({
 
 function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/scripts/helpers/storeHelpers', {
+        '*/cartridge/models/store': StoreModel,
         '*/cartridge/models/stores': StoresModel,
         'dw/catalog/StoreMgr': storeMgr,
         'dw/system/Site': site,

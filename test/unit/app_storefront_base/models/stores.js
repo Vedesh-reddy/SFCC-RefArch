@@ -4,7 +4,9 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 describe('stores', function () {
+    var StoreModel = require('../../../mocks/models/store');
     var StoresModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/stores', {
+        '*/cartridge/models/store': StoreModel,
         'dw/util/HashMap': function () {
             return {
                 result: {},

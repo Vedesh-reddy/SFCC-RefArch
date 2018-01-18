@@ -1,3 +1,4 @@
+'use strict';
 
 /**
  * Searches for stores and creates a plain object of the stores returned by the search

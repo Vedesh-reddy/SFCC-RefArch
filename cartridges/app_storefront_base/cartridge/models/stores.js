@@ -2,7 +2,7 @@
 
 var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 var storeHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
-
+var StoreModel = require('*/cartridge/models/store');
 
 /**
  * Creates an array of objects containing store information
@@ -12,38 +12,8 @@ var storeHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
 function createStoresObject(storesObject) {
     return Object.keys(storesObject).map(function (key) {
         var store = storesObject[key];
-        var storeObj = {
-            ID: store.ID,
-            name: store.name,
-            address1: store.address1,
-            address2: store.address2,
-            city: store.city,
-            postalCode: store.postalCode,
-            latitude: store.latitude,
-            longitude: store.longitude
-        };
-
-        if (store.phone) {
-            storeObj.phone = store.phone;
-        }
-
-        if (store.stateCode) {
-            storeObj.stateCode = store.stateCode;
-        }
-
-        if (store.countryCode) {
-            storeObj.countryCode = store.countryCode.value;
-        }
-
-        if (store.stateCode) {
-            storeObj.stateCode = store.stateCode;
-        }
-
-        if (store.storeHours) {
-            storeObj.storeHours = store.storeHours.markup;
-        }
-
-        return storeObj;
+        var storeModel = new StoreModel(store);
+        return storeModel;
     });
 }
 
