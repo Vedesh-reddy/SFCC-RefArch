@@ -1,6 +1,7 @@
 'use strict';
 
 var resource = require('dw/web/Resource');
+var secureEncoder = require('dw/util/SecureEncoder');
 
 /**
  * Function to conver <dw.web.FormField> object to plain JS object.
@@ -21,7 +22,7 @@ function formField(field) {
             }
             if (!result.checked && !result.selected) {
                 var value = field.htmlValue == null ? '' : field.htmlValue;
-                attributes += ' value="' + value + '"';
+                attributes += ' value="' + secureEncoder.forHtmlInDoubleQuoteAttribute(value) + '"';
             }
             if (result.maxValue) {
                 attributes += ' max="' + result.maxValue + '"';
