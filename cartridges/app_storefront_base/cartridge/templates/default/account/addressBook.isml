@@ -47,7 +47,7 @@
                                 data-target="#deleteAddressModal"
                                 data-id="${address.address.ID}"
                                 data-url="${pdict.actionUrls.deleteActionUrl}"
-                                <isprint value="${ address.address.ID == pdict.addressBook[0].address.ID ? 'data-default="true"' : '' }" encoding="off" />>
+                                <isprint value="${ address.address.ID == pdict.addressBook[0].address.ID ? 'data-default="true"' : '' }" encoding="htmlcontent" />>
                                 &times;
                             </button>
                         </div>
