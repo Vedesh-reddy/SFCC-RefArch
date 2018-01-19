@@ -2,7 +2,7 @@
     action="${URLUtils.url('Address-SaveAddress', 'addressId', pdict.addressId)}"
     class="address-form"
     method="POST"
-    <isprint value="${pdict.addressForm.attributes}" encoding="htmlcontent" />>
+    <isprint value="${pdict.addressForm.attributes}" encoding="off" />>
     <!-- Address Title -->
     <div class="form-group
         ${pdict.addressForm.addressId.mandatory === true ? 'required' : ''}">

@@ -102,7 +102,7 @@
             <input
                 type="checkbox"
                 class="form-check-input"
-                <isprint value=${pdict.profileForm.customer.addtoemaillist.attributes} encoding="htmlcontent" />>
+                <isprint value=${pdict.profileForm.customer.addtoemaillist.attributes} encoding="off" />>
             <isprint value="${pdict.profileForm.customer.addtoemaillist.label}" encoding="htmlcontent" />
         </label>
     </div>
