@@ -3,7 +3,7 @@
     <div class="form-group
         <isif condition="${pdict.profileForm.customer.firstname.mandatory === true}">required</isif>">
         <label class="form-control-label" for="firstName">
-            <isprint value="${pdict.profileForm.customer.firstname.label}" encoding="off" />
+            <isprint value="${pdict.profileForm.customer.firstname.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="firstName"
             <isprint value="${pdict.profileForm.customer.firstname.attributes}" encoding="off" />>
@@ -13,7 +13,7 @@
     <div class="form-group
         <isif condition="${pdict.profileForm.customer.lastname.mandatory === true}">required</isif>">
         <label class="form-control-label" for="lastName">
-            <isprint value="${pdict.profileForm.customer.lastname.label}" encoding="off" />
+            <isprint value="${pdict.profileForm.customer.lastname.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="lastName"
             <isprint value="${pdict.profileForm.customer.lastname.attributes}" encoding="off" />>
@@ -23,7 +23,7 @@
     <div class="form-group
         <isif condition="${pdict.profileForm.customer.phone.mandatory === true}">required</isif>">
         <label class="form-control-label" for="phone">
-            <isprint value="${pdict.profileForm.customer.phone.label}" encoding="off" />
+            <isprint value="${pdict.profileForm.customer.phone.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="phone"
             <isprint value="${pdict.profileForm.customer.phone.attributes}" encoding="off" />>
@@ -33,7 +33,7 @@
     <div class="form-group
         <isif condition="${pdict.profileForm.customer.email.mandatory === true}">required</isif>">
         <label class="form-control-label" for="email">
-            <isprint value="${pdict.profileForm.customer.email.label}" encoding="off" />
+            <isprint value="${pdict.profileForm.customer.email.label}" encoding="htmlcontent" />
         </label>
         <input type="email" class="form-control" id="email"
             <isprint value="${pdict.profileForm.customer.email.attributes}" encoding="off" />>
@@ -43,7 +43,7 @@
     <div class="form-group
         <isif condition="${pdict.profileForm.customer.emailconfirm.mandatory === true}">required</isif>">
         <label class="form-control-label" for="confirmEmail">
-            <isprint value="${pdict.profileForm.customer.emailconfirm.label}" encoding="off" />
+            <isprint value="${pdict.profileForm.customer.emailconfirm.label}" encoding="htmlcontent" />
         </label>
         <input type="email" class="form-control" id="confirmEmail" <isprint value="${pdict.profileForm.customer.emailconfirm.attributes}" encoding="off" />>
         <div class="invalid-feedback"></div>
@@ -52,7 +52,7 @@
     <div class="form-group
         <isif condition="${pdict.profileForm.login.password.mandatory === true}">required</isif>">
         <label class="form-control-label" for="password">
-            <isprint value="${pdict.profileForm.login.password.label}" encoding="off" />
+            <isprint value="${pdict.profileForm.login.password.label}" encoding="htmlcontent" />
         </label>
         <input type="password" class="form-control" id="password" <isprint value="${pdict.profileForm.login.password.attributes}" encoding="off" />>
         <div class="invalid-feedback"></div>
