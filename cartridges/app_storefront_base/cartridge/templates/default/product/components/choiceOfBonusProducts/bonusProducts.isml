@@ -102,7 +102,7 @@
                 <isloop items="${pdict.selectedBonusProducts}" var="selectedProduct" status="productLoopStatus">
                     <div class="selected-pid row" 
                         data-pid="${selectedProduct.pid}" 
-                        data-qty='<isprint value="${selectedProduct.submittedQty}" encoding="htmlcontent" formatter="#"/>'
+                        data-qty='<isprint value="${selectedProduct.submittedQty}" encoding="htmlsinglequote" formatter="#"/>'
                         data-optionid="${selectedProduct.option.optionid}" 
                         data-option-selected-value="${selectedProduct.option.selectedvalue}" >
                         <div class="col-11 bonus-product-name">${selectedProduct.name}</div>
