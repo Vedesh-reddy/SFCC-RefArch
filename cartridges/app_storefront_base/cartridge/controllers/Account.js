@@ -654,7 +654,7 @@ server.get('SetNewPassword', server.middleware.https, function (req, res, next) 
     if (!resettingCustomer) {
         res.redirect(URLUtils.url('Account-PasswordReset'));
     } else {
-        res.render('account/password/newpassword', { passwordForm: passwordForm, token: token });
+        res.render('account/password/newPassword', { passwordForm: passwordForm, token: token });
     }
     next();
 });

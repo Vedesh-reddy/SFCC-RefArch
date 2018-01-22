@@ -26,7 +26,7 @@
     <div class="form-group
         <isif condition="${pdict.paymentForm.cardOwner.mandatory === true}">required</isif>">
         <label class="form-control-label" for="cardOwner">
-            <isprint value="${pdict.paymentForm.cardOwner.label}" encoding="off" />
+            <isprint value="${pdict.paymentForm.cardOwner.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="cardOwner"
             <isprint value="${pdict.paymentForm.cardOwner.attributes}" encoding="off" />
@@ -53,14 +53,14 @@
         <div class="form-group
             <isif condition="${pdict.paymentForm.cardNumber.mandatory === true}">required</isif>">
             <label class="form-control-label" for="cardNumber">
-                <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="off" />
+                <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="htmlcontent" />
             </label>
             <div class="card-number-wrapper">
                 <input type="text" class="form-control" id="cardNumber"
                     <isprint value="${pdict.paymentForm.cardNumber.attributes}" encoding="off" />
                     autocomplete="cc-number">
                 <div class="invalid-feedback">
-                    <isprint value="${pdict.paymentForm.cardNumber.error}" encoding="off" />
+                    <isprint value="${pdict.paymentForm.cardNumber.error}" encoding="htmlcontent" />
                 </div>
             </div>
         </div>
@@ -72,7 +72,7 @@
             <div class="form-group
                 <isif condition="${pdict.paymentForm.expirationMonth.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="month">
-                    <isprint value="${pdict.paymentForm.expirationMonth.label}" encoding="off" />
+                    <isprint value="${pdict.paymentForm.expirationMonth.label}" encoding="htmlcontent" />
                 </label>
                 <select class="form-control custom-select" id="month" <isprint value="${pdict.paymentForm.expirationMonth.attributes}" encoding="off" /> autocomplete="cc-exp-month">
                     <isloop items=${pdict.paymentForm.expirationMonth.options} var="month">
@@ -80,7 +80,7 @@
                     </isloop>
                 </select>
                 <div class="invalid-feedback">
-                    <isprint value="${pdict.paymentForm.expirationMonth.error}" encoding="off" />
+                    <isprint value="${pdict.paymentForm.expirationMonth.error}" encoding="htmlcontent" />
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
             <div class="form-group
                 <isif condition="${pdict.paymentForm.expirationYear.mandatory === true}">required</isif>">
                 <label class="form-control-label" for="year">
-                    <isprint value="${pdict.paymentForm.expirationYear.label}" encoding="off" />
+                    <isprint value="${pdict.paymentForm.expirationYear.label}" encoding="htmlcontent" />
                 </label>
                 <select class="form-control custom-select" id="year" <isprint value="${pdict.paymentForm.expirationYear.attributes}" encoding="off" /> autocomplete="cc-exp-year">
                     <option value="${pdict.paymentForm.expirationYear.options[0].htmlValue}">${pdict.paymentForm.expirationYear.options[0].label}</option>

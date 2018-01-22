@@ -9,7 +9,7 @@
         >
             <a href="${URLUtils.url('Search-Show', 'cgid', category.ID)}" title="${category.displayName}">
                 <h1 class="page-title">
-                    <isprint value="${category.displayName}" encoding="off"/>
+                    <isprint value="${category.displayName}" encoding="htmlcontent"/>
                 </h1>
             </a>
         </div>
