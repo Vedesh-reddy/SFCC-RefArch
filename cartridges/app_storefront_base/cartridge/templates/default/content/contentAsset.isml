@@ -8,7 +8,7 @@
     </div>
     <div class="container content-asset-container">
         <!-- dwMarker="content" dwContentID="${pdict.content.UUID}" -->
-        <isprint value="${pdict.content.body}" encoding="htmlcontent" />
+        <isprint value="${pdict.content.body}" encoding="off" />
         <!-- END_dwmarker -->
     </div>
 </isdecorate>

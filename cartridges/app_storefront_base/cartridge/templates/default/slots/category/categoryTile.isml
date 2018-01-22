@@ -4,7 +4,7 @@
 
     <div class="category-slot">
         <h2>
-            <isprint value="${slotcontent.calloutMsg}" encoding="htmlcontent"/>
+            <isprint value="${slotcontent.calloutMsg}" encoding="off"/>
         </h2>
 
         <div class="row">
