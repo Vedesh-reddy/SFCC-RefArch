@@ -166,12 +166,6 @@ server.post(
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
 
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
-
         var email = req.form.loginEmail;
         var password = req.form.loginPassword;
         var rememberMe = req.form.loginRememberMe
@@ -205,12 +199,6 @@ server.post(
     function (req, res, next) {
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
-
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
 
         var formErrors = require('*/cartridge/scripts/formErrors');
 
@@ -373,12 +361,6 @@ server.post(
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
 
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
-
         var formErrors = require('*/cartridge/scripts/formErrors');
 
         var profileForm = server.forms.getForm('profile');
@@ -512,12 +494,6 @@ server.post(
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
-
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
 
         var formErrors = require('*/cartridge/scripts/formErrors');
 

@@ -160,12 +160,6 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
     var formErrors = require('*/cartridge/scripts/formErrors');
     var HookMgr = require('dw/system/HookMgr');
 
-    var data = res.getViewData();
-    if (data && data.csrfError) {
-        res.json();
-        return next();
-    }
-
     var paymentForm = server.forms.getForm('creditCard');
     var result = getDetailsObject(paymentForm);
 

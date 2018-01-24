@@ -30,11 +30,7 @@ function validateRequest(req, res, next) {
 function validateAjaxRequest(req, res, next) {
     if (!csrfProtection.validateRequest()) {
         CustomerMgr.logoutCustomer(false);
-        res.setStatusCode(500);
-        res.setViewData({
-            csrfError: true,
-            redirectUrl: URLUtils.url('CSRF-Fail').toString()
-        });
+        res.redirect(URLUtils.url('CSRF-AjaxFail'));
     }
 
     next();

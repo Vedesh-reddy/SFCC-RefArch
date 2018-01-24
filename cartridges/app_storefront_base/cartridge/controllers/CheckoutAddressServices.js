@@ -72,12 +72,6 @@ server.post(
         var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
         var Locale = require('dw/util/Locale');
 
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
-
         var pliUUID = req.form.productLineItemUUID;
         var shipmentUUID = req.form.shipmentSelector || req.form.shipmentUUID;
         var origUUID = req.form.originalShipmentUUID;

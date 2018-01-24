@@ -281,12 +281,6 @@ server.post(
     function (req, res, next) {
         var OrderMgr = require('dw/order/OrderMgr');
 
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
-
         var formErrors = require('*/cartridge/scripts/formErrors');
 
         var passwordForm = server.forms.getForm('newPasswords');

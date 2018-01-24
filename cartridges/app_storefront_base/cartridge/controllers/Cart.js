@@ -458,12 +458,6 @@ server.get(
         var URLUtils = require('dw/web/URLUtils');
         var CartModel = require('*/cartridge/models/cart');
 
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
-
         var currentBasket = BasketMgr.getCurrentBasket();
 
         if (!currentBasket) {

@@ -239,12 +239,6 @@ server.post(
         var URLUtils = require('dw/web/URLUtils');
         var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
-
         var currentBasket = BasketMgr.getCurrentBasket();
 
         if (!currentBasket) {

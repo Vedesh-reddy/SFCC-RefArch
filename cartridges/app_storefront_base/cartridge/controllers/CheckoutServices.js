@@ -42,11 +42,6 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
-        var data = res.getViewData();
-        if (data && data.csrfError) {
-            res.json();
-            return next();
-        }
         var paymentForm = server.forms.getForm('billing');
         var billingFormErrors = {};
         var creditCardErrors = {};

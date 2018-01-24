@@ -125,12 +125,6 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
     var Transaction = require('dw/system/Transaction');
     var formErrors = require('*/cartridge/scripts/formErrors');
 
-    var data = res.getViewData();
-    if (data && data.csrfError) {
-        res.json();
-        return next();
-    }
-
     var addressForm = server.forms.getForm('address');
     var addressFormObj = addressForm.toObject();
     addressFormObj.addressForm = addressForm;
