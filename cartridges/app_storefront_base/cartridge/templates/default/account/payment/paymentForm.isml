@@ -32,7 +32,7 @@
             <isprint value="${pdict.paymentForm.cardOwner.attributes}" encoding="off" />
             autocomplete="cc-name">
         <div class="invalid-feedback">
-            <isprint value="${pdict.paymentForm.cardOwner.error}" encoding="off" />
+            <isprint value="${pdict.paymentForm.cardOwner.error}" encoding="htmlcontent" />
         </div>
     </div>
 
