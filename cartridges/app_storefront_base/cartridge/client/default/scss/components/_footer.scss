@@ -97,21 +97,20 @@ footer {
     }
 
     .back-to-top {
-        background-color: white;
-        border-radius: 50%;
-        float: left;
-        margin: 0.313em;
-        margin-top: 0.1875em;
-        border-color: transparent;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-        cursor: pointer;
-        padding: 0.125em 0.375em 0.1875em;
+        margin: 0.1em 0.313em;
+        padding: 0;
+        background-color: transparent;
+        border: 0;
+        -webkit-appearance: none;
 
         i {
-            font-size: 1em;
-            height: 2rem;
-            width: 1.6rem;
-            padding-top: 0.4375em;
+            &.fa-arrow-up {
+                color: rgba(0, 0, 0, 0.7);
+            }
+
+            &.fa-circle {
+                text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            }
         }
     }
 }
