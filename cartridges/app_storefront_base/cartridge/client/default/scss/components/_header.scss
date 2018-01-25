@@ -14,14 +14,14 @@ $menu-item-margin: 0.625em;
     .user,
     .country-selector,
     .search,
-    .mini-cart {
+    .minicart {
         display: inline-block;
         margin: 0.9375em 0 0 0.5em;
     }
 
     .user,
     .country-selector,
-    .mini-cart,
+    .minicart,
     .navbar-toggler {
         line-height: 2.25em; /* 36/16 */
         height: auto;
@@ -115,7 +115,7 @@ $menu-item-margin: 0.625em;
     }
 }
 
-.mini-cart {
+.minicart {
     margin-top: 0.1875em; /* 3/16 */
     vertical-align: top;
 

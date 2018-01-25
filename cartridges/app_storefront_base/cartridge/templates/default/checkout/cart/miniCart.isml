@@ -14,7 +14,7 @@
                 </a>
             </div>
         </div>
-        <div class="mini-cart-error cart-error">
+        <div class="minicart-error cart-error">
             <isif condition="${pdict.valid.error && pdict.items.length !== 0}">
                 <div class="alert alert-danger alert-dismissible valid-cart-error fade show" role="alert">
                     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
@@ -46,7 +46,7 @@
             </isloop>
         </div>
     </div>
-    <div class="mini-cart-footer">
+    <div class="minicart-footer">
         <div class="row estimated-total">
             <div class="col-8">
                 <p class="sub-total-label">${Resource.msg('label.estimatedtotal','cart',null)}</p>

@@ -3,7 +3,7 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "productCard";
 
-.mini-cart {
+.minicart {
     position: relative;
 
     h4 {
@@ -70,7 +70,7 @@
         }
     }
 
-    .mini-cart-footer {
+    .minicart-footer {
         border-top: 1px solid $grey3;
     }
 

@@ -444,7 +444,7 @@ function chooseBonusProducts(data) {
  * @param {string} response - ajax response from clicking the add to cart button
  */
 function handlePostCartAdd(response) {
-    $('.mini-cart').trigger('count:update', response);
+    $('.minicart').trigger('count:update', response);
     var messageType = response.error ? 'alert-danger' : 'alert-success';
     // show add to cart toast
     if (response.newBonusDiscountLineItem

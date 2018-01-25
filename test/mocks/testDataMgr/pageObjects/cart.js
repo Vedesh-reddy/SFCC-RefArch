@@ -31,7 +31,7 @@ export function navigateTo() {
 }
 
 export function getCartURL() {
-    let selector = '.mini-cart-link';
+    let selector = '.minicart-link';
     return browser.waitForVisible(selector)
         .then(() => browser.getAttribute(selector, 'href'));
 }

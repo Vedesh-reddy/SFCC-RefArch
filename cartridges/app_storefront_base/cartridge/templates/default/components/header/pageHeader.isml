@@ -39,7 +39,7 @@
                             <div class="search hidden-xs-down">
                                 <isinclude template="components/header/search" />
                             </div>
-                            <div class="mini-cart" data-action-url="${URLUtils.url('Cart-MiniCartShow')}">
+                            <div class="minicart" data-action-url="${URLUtils.url('Cart-MiniCartShow')}">
                                 <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
                             </div>
                         </div>

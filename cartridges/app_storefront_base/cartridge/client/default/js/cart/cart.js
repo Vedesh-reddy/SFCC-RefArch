@@ -41,8 +41,8 @@ function validateBasket(data) {
             );
             $('.number-of-items').empty().append(data.resources.numberOfItems);
             $('.minicart-quantity').empty().append(data.numItems);
-            $('.mini-cart .popover').empty();
-            $('.mini-cart .popover').removeClass('show');
+            $('.minicart .popover').empty();
+            $('.minicart .popover').removeClass('show');
         }
 
         $('.checkout-btn').addClass('disabled');
@@ -204,8 +204,8 @@ module.exports = function () {
                     );
                     $('.number-of-items').empty().append(data.basket.resources.numberOfItems);
                     $('.minicart-quantity').empty().append(data.basket.numItems);
-                    $('.mini-cart .popover').empty();
-                    $('.mini-cart .popover').removeClass('show');
+                    $('.minicart .popover').empty();
+                    $('.minicart .popover').removeClass('show');
                     $('body').removeClass('modal-open');
                     $('html').removeClass('veiled');
                 } else {
