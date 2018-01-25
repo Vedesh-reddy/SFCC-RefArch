@@ -49,19 +49,19 @@
 }
 
 $swatch-colors: (
-    beige: #f5f5dc,
-    black: $black,
-    blue: $blue,
-    brown: #a52a2a,
-    green: $green,
-    grey: #8f979d,
-    navy: #000080,
-    orange: #ffa500,
-    pink: #fe249a,
-    purple: #800080,
-    red: #f00,
-    white: $white,
-    yellow: #ff0
+    'beige': #f5f5dc,
+    'black': $black,
+    'blue': $blue,
+    'brown': #a52a2a,
+    'green': $green,
+    'grey': #8f979d,
+    'navy': #000080,
+    'orange': #ffa500,
+    'pink': #fe249a,
+    'purple': #800080,
+    'red': #f00,
+    'white': $white,
+    'yellow': #ff0
 );
 
 @each $color in map-keys($swatch-colors) {
