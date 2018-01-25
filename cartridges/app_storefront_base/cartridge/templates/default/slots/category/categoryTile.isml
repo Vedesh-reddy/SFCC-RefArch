@@ -15,7 +15,7 @@
                             <div class="category-tile">
                                 <img class="img-fluid" src="${category.custom.slotBannerImage.getURL()}" alt="${category.displayName}"/>
                                 <h3>
-                                    <isprint value="${category.displayName}" encoding="off"/>
+                                    <isprint value="${category.displayName}" encoding="htmlcontent"/>
                                 </h3>
                             </div>
                         </a>

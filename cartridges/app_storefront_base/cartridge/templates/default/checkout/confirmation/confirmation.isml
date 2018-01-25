@@ -16,7 +16,7 @@
         <div class="row">
             <div class="${pdict.returningCustomer ? 'col-sm-6 offset-sm-3' : 'col-sm-6 offset-sm-3 offset-md-0'}">
                 <h2 class="order-thank-you-msg">${Resource.msg('msg.placed.order.thank.you','confirmation',null)}</h2>
-                <p class="order-thank-you-email-msg"><isprint value="${Resource.msgf('info.receive.email.confirmation', 'confirmation', null, pdict.order.orderEmail)}" encoding="off" /></p>
+                <p class="order-thank-you-email-msg"><isprint value="${Resource.msgf('info.receive.email.confirmation', 'confirmation', null, pdict.order.orderEmail)}" encoding="htmlcontent" /></p>
             </div>
         </div>
         <div class="row">

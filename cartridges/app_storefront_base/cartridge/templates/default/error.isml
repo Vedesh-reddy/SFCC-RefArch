@@ -8,7 +8,7 @@
         <h2 class='text-center error-message'>${pdict.message}</h2>
         <isif condition="${pdict.showError}">
             <pre><code>
-            <isprint value=${pdict.error.errorText} encoding="off" />
+            <isprint value=${pdict.error.errorText} encoding="htmlcontent" />
             <isif condition="${pdict.error.controllerName}">
                 in controller ${pdict.error.controllerName}
             </isif>
