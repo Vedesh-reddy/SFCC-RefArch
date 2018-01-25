@@ -10,7 +10,11 @@
   <title><isprint value="${pdict.CurrentPageMetaData.title}" encoding="htmlcontent" /></title>
 </isif>
 
-<link href="${URLUtils.staticURL('/images/favicon.ico')}" rel="shortcut icon" />
+<link rel="icon" type="image/png" href="${URLUtils.staticURL('/images/favicons/favicon-196x196.png')}" sizes="196x196" />
+<link rel="icon" type="image/png" href="${URLUtils.staticURL('/images/favicons/favicon-96x96.png')}" sizes="96x96" />
+<link rel="icon" type="image/png" href="${URLUtils.staticURL('/images/favicons/favicon-32x32.png')}" sizes="32x32" />
+<link rel="icon" type="image/png" href="${URLUtils.staticURL('/images/favicons/favicon-16x16.png')}" sizes="16x16" />
+<link rel="icon" type="image/png" href="${URLUtils.staticURL('/images/favicons/favicon-128.png')}" sizes="128x128" />
 
 <meta name="description" content=" <isif condition="${!empty(pdict.CurrentPageMetaData.description)}">${pdict.CurrentPageMetaData.description}</isif> ${Resource.msg('global.storename','locale',null)}"/>
 <meta name="keywords" content=" <isif condition="${!empty(pdict.CurrentPageMetaData.keywords)}">${pdict.CurrentPageMetaData.keywords}</isif> ${Resource.msg('global.storename','locale',null)}"/>
