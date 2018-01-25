@@ -16,8 +16,8 @@
 <link rel="icon" type="image/png" href="${URLUtils.staticURL('/images/favicons/favicon-16x16.png')}" sizes="16x16" />
 <link rel="icon" type="image/png" href="${URLUtils.staticURL('/images/favicons/favicon-128.png')}" sizes="128x128" />
 
-<meta name="description" content=" <isif condition="${!empty(pdict.CurrentPageMetaData.description)}">${pdict.CurrentPageMetaData.description}</isif> ${Resource.msg('global.storename','locale',null)}"/>
-<meta name="keywords" content=" <isif condition="${!empty(pdict.CurrentPageMetaData.keywords)}">${pdict.CurrentPageMetaData.keywords}</isif> ${Resource.msg('global.storename','locale',null)}"/>
+<meta name="description" content="<isif condition="${!empty(pdict.CurrentPageMetaData.description)}">${pdict.CurrentPageMetaData.description}</isif>${Resource.msg('global.storename','common',null)}"/>
+<meta name="keywords" content="<isif condition="${!empty(pdict.CurrentPageMetaData.keywords)}">${pdict.CurrentPageMetaData.keywords}</isif>${Resource.msg('global.storename','common',null)}"/>
 
 <link rel="stylesheet" href="${URLUtils.staticURL('/css/global.css')}" />
 <isloop items="${ require('*/cartridge/scripts/assets.js').styles }" var="style">
