@@ -80,6 +80,10 @@
 
     ul {
         overflow: auto;
+
+        li {
+            padding-left: 1px;
+        }
     }
 
     li {
