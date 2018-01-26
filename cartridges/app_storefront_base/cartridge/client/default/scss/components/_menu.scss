@@ -61,6 +61,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     }
 }
 
+.nav-item .nav-link:hover,
 .nav-item .nav-link:focus,
 .nav-item.show .nav-link {
     background-color: $white;
