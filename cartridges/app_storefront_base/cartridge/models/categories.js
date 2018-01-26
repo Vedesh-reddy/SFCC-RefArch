@@ -57,7 +57,7 @@ function categoryToObject(category) {
 
 /**
  * Represents a single category with all of it's children
- * @param {dw.util.ArrayList <dw.catalog.Category>} items - Top level categories
+ * @param {dw.util.ArrayList<dw.catalog.Category>} items - Top level categories
  * @constructor
  */
 function categories(items) {

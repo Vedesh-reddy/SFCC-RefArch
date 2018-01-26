@@ -6,7 +6,7 @@ var collections = require('*/cartridge/scripts/util/collections');
 
 /**
  * Creates an array of objects containing applicable payment methods
- * @param {dw.util.ArrayList <dw.order.dw.order.PaymentMethod>} paymentMethods - An ArrayList of
+ * @param {dw.util.ArrayList<dw.order.dw.order.PaymentMethod>} paymentMethods - An ArrayList of
  *      applicable payment methods that the user could use for the current basket.
  * @returns {Array} of object that contain information about the applicable payment methods for the
  *      current cart
@@ -22,7 +22,7 @@ function applicablePaymentMethods(paymentMethods) {
 
 /**
  * Creates an array of objects containing applicable credit cards
- * @param {dw.util.Collection <dw.order.PaymentCard>} paymentCards - An ArrayList of applicable
+ * @param {dw.util.Collection<dw.order.PaymentCard>} paymentCards - An ArrayList of applicable
  *      payment cards that the user could use for the current basket.
  * @returns {Array} Array of objects that contain information about applicable payment cards for
  *      current basket.
@@ -38,7 +38,7 @@ function applicablePaymentCards(paymentCards) {
 
 /**
  * Creates an array of objects containing selected payment information
- * @param {dw.util.ArrayList <dw.order.PaymentInstrument>} selectedPaymentInstruments - ArrayList
+ * @param {dw.util.ArrayList<dw.order.PaymentInstrument>} selectedPaymentInstruments - ArrayList
  *      of payment instruments that the user is using to pay for the current basket
  * @returns {Array} Array of objects that contain information about the selected payment instruments
  */
