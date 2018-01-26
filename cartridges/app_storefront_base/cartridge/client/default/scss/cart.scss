@@ -111,12 +111,20 @@ $negative-spacer: -0.625rem;
     font-weight: bold;
 }
 
-.product-image {
+.item-image {
     height: 5.625em;
     width: 5.625em;
     margin-right: 0.938em;
     flex-grow: 0;
     flex-shrink: 0;
+
+    img.product-image {
+        display: block;
+        margin: 0 auto;
+        max-width: 100%;
+        height: auto;
+        max-height: 5.625em;
+    }
 }
 
 .promo-code-form {

@@ -7,10 +7,12 @@
         </isif>
     </div>
     <div class="product-line-item-details d-flex flex-row">
-        <img class="product-image"
-             src="${nestedLineItem.images.small[0].url}"
-             alt="${nestedLineItem.images.small[0].alt}"
-             title="${nestedLineItem.images.small[0].title}">
+        <div class="item-image">
+            <img class="product-image"
+                src="${nestedLineItem.images.small[0].url}"
+                alt="${nestedLineItem.images.small[0].alt}"
+                title="${nestedLineItem.images.small[0].title}">
+        </div>
         <div class="item-attributes">
             <isloop items="${nestedLineItem.variationAttributes}" var="attribute">
                 <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
