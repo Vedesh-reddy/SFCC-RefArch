@@ -20,6 +20,11 @@ module.exports = {
                     : 'unknown'];
                 $(cardTypeSelector).val(cardType);
                 $('.card-number-wrapper').attr('data-type', type);
+                if (type === 'visa' || type === 'mastercard' || type === 'discover') {
+                    $('#securityCode').attr('maxlength', 3);
+                } else {
+                    $('#securityCode').attr('maxlength', 4);
+                }
             }
         });
 
