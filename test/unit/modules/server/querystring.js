@@ -56,4 +56,11 @@ describe('querystring', function () {
             assert.equal(result.trackOrderPostal, 'EC1A 1BB');
         });
     });
+    describe('handling url encoding of querystring', function () {
+        var params = '?dwvar_P12345_Maat=37%2B&pid=P12345';
+        var result = new QueryString(params);
+        it('should handle encoding properly', function () {
+            assert.equal(result.toString(), 'dwvar_P12345_Maat=37%2B&pid=P12345');
+        });
+    });
 });

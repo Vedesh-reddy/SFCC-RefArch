@@ -86,13 +86,13 @@ querystring.prototype.toString = function () {
             Object.keys(this.variables).forEach(function (variable) {
                 result.push('dwvar_' +
                     this.variables[variable].id + '_' +
-                    variable + '=' + this.variables[variable].value);
+                    variable + '=' + encodeURIComponent(this.variables[variable].value));
             }, this);
         } else if (key === 'options') {
             this.options.forEach(function (option) {
                 result.push('dwopt_' +
                     option.productId + '_' +
-                    option.optionId + '=' + option.selectedValueId);
+                    option.optionId + '=' + encodeURIComponent(option.selectedValueId));
             });
         } else if (key === 'preferences') {
             preferences = this.preferences;
@@ -102,7 +102,7 @@ querystring.prototype.toString = function () {
                 prefKeyIdx++;
             });
         } else {
-            result.push(key + '=' + this[key]);
+            result.push(key + '=' + encodeURIComponent(this[key]));
         }
     }, this);
 
