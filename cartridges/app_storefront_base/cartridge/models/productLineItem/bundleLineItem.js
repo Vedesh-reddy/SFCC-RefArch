@@ -34,7 +34,7 @@ module.exports = function productLineItem(product, apiProduct, options, factory)
     productLineItemDecorators.shipment(product, options.lineItem);
     productLineItemDecorators.bonusProductLineItem(product, options.lineItem);
     productLineItemDecorators.priceTotal(product, options.lineItem);
-    productLineItemDecorators.quantityOptions(product, apiProduct, options.quantity);
+    productLineItemDecorators.quantityOptions(product, options.lineItem, options.quantity);
 
     productLineItemDecorators.bundledProductLineItems(product, options.lineItem, factory);
 

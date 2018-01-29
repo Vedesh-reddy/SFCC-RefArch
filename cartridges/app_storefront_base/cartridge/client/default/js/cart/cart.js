@@ -221,6 +221,7 @@ module.exports = function () {
                     $('.coupons-and-promos').empty().append(data.basket.totals.discountsHtml);
                     updateCartTotals(data.basket);
                     updateApproachingDiscounts(data.basket.approachingDiscounts);
+                    $('body').trigger('setShippingMethodSelection', data.basket);
                     validateBasket(data.basket);
                 }
                 $.spinner().stop();

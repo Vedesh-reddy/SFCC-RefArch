@@ -69,7 +69,6 @@ describe('Order Line Item Model', function () {
         productLineItemDecorators.stubs.stubShipment.reset();
         productLineItemDecorators.stubs.stubBonusProductLineItem.reset();
         productLineItemDecorators.stubs.stubPriceTotal.reset();
-        productLineItemDecorators.stubs.stubQuantityOptions.reset();
         productLineItemDecorators.stubs.stubOptions.reset();
     });
 
@@ -144,12 +143,6 @@ describe('Order Line Item Model', function () {
         orderLineItem(object, productMock, optionsMock);
 
         assert.isTrue(productLineItemDecorators.stubs.stubPriceTotal.calledOnce);
-    });
-
-    it('should call quantityOptions for order line item model', function () {
-        orderLineItem(object, productMock, optionsMock);
-
-        assert.isTrue(productLineItemDecorators.stubs.stubQuantityOptions.calledOnce);
     });
 
     it('should call options for order line item model', function () {
