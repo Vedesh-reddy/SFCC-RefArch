@@ -2,6 +2,9 @@
 
 var addressHelpers = require('./address');
 var formHelpers = require('./formErrors');
+var ShippingState = require('./shippingState');
+
+var shippingState;
 
 /**
  * updates the shipping address selector within shipping forms
@@ -94,6 +97,8 @@ function updateShippingAddressFormValues(shipping) {
         }
 
         $('input[name$=_phone]', form).val(shipping.shippingAddress.phone);
+
+        shippingState.changeState({ deliveryAddress: shipping.shippingAddress }, shipping.UUID);
     });
 }
 
@@ -125,7 +130,8 @@ function updateShippingMethods(shipping) {
                         .prop('id', 'shippingMethod-' + shippingMethod.ID)
                         .prop('name', shippingMethodFormID)
                         .prop('value', shippingMethod.ID)
-                        .attr('checked', shippingMethod.ID === selected.ID);
+                        .attr('checked', shippingMethod.ID === selected.ID)
+                        .attr('data-pickup', shippingMethod.storePickupEnabled);
 
                     $('label', tmpl)
                         .prop('for', 'shippingMethod-' + shippingMethod.ID);
@@ -352,12 +358,14 @@ function updateMultiShipInformation(order) {
     var $submitShippingBtn = $('button.submit-shipping');
 
     if (order.usingMultiShipping) {
+        shippingState.changeState({ multiship: order.usingMultiShipping, collapsed: true });
         $checkoutMain.addClass('multi-ship');
         $checkbox.prop('checked', true);
     } else {
         $checkoutMain.removeClass('multi-ship');
         $checkbox.prop('checked', null);
         $submitShippingBtn.prop('disabled', null);
+        shippingState.changeState({ collapsed: true });
     }
 }
 
@@ -477,6 +485,14 @@ function selectShippingMethodAjax(url, urlParams) {
         });
 }
 
+/**
+ * Initializes state object from shipping form data attribute
+ */
+function initializeStateObject() {
+    var initialState = $('.shipping-form').data('initial-state');
+    shippingState = new ShippingState(initialState.shippingState);
+}
+
 module.exports = {
     methods: {
         updateShippingAddressSelector: updateShippingAddressSelector,
@@ -491,17 +507,21 @@ module.exports = {
         toggleMultiShip: toggleMultiShip,
         createNewShipment: createNewShipment,
         selectShippingMethodAjax: selectShippingMethodAjax,
-        updateShippingMethodList: updateShippingMethodList
+        updateShippingMethodList: updateShippingMethodList,
+        initializeStateObject: initializeStateObject
     },
 
     selectShippingMethod: function () {
         $('.shipping-method-list').change(function () {
             var $shippingForm = $(this).parents('form');
             var methodID = $(':checked', this).val();
+            var pickupEnabled = $(':checked', this).data('pickup');
             var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
             var urlParams = addressHelpers.methods.getAddressFieldsFromUI($shippingForm);
             urlParams.shipmentUUID = shipmentUUID;
             urlParams.methodID = methodID;
+
+            shippingState.changeState({ pickupEnabled: pickupEnabled }, shipmentUUID);
 
             var url = $(this).data('select-shipping-method-url');
             selectShippingMethodAjax(url, urlParams);

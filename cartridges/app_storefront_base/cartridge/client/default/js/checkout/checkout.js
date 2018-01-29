@@ -439,6 +439,9 @@ var formHelpers = require('./formErrors');
 var exports = {
     initialize: function () {
         $('#checkout-main').checkout();
+        $(window).on('load', function () {
+            shippingHelpers.methods.initializeStateObject();
+        });
     },
 
     updateCheckoutView: function () {

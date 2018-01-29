@@ -80,6 +80,7 @@ server.get(
         var URLUtils = require('dw/web/URLUtils');
         var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
         var Locale = require('dw/util/Locale');
+        var ShippingStateModel = require('*/cartridge/models/shippingState');
 
         var currentBasket = BasketMgr.getCurrentBasket();
         if (!currentBasket) {
@@ -169,6 +170,8 @@ server.get(
             'Shipping'
         );
 
+        var shippingStateModel = new ShippingStateModel(orderModel);
+
         res.render('checkout/checkout', {
             order: orderModel,
             customer: accountModel,
@@ -178,7 +181,8 @@ server.get(
             },
             expirationYears: creditCardExpirationYears,
             currentStage: currentStage,
-            reportingURLs: reportingURLs
+            reportingURLs: reportingURLs,
+            initialState: JSON.stringify(shippingStateModel)
         });
 
         return next();
