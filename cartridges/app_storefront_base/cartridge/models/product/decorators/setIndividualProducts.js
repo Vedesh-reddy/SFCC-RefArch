@@ -7,7 +7,7 @@ var collection = require('*/cartridge/scripts/util/collections');
  * @param {dw.catalog.Product} apiProduct - Product returned by the API
  * @param {Object} factory - Product Factory object
  *
- * @returns {[Object]} - Array of sub-product models
+ * @returns {Array<Object>} - Array of sub-product models
  */
 function getIndividualProducts(apiProduct, factory) {
     return collection.map(apiProduct.bundledProducts, function (product) {

@@ -8,7 +8,7 @@ var collection = require('*/cartridge/scripts/util/collections');
  * @param {number} quantity - selected quantity
  * @param {Object} factory - Product Factory object
  *
- * @returns {[Object]} - returns an array of bundle product models
+ * @returns {Array<Object>} - returns an array of bundle product models
  */
 function getBundledProducts(apiProduct, quantity, factory) {
     return collection.map(apiProduct.bundledProducts, function (bundledProduct) {

@@ -10,8 +10,8 @@ var RangePrice = require('*/cartridge/models/price/range');
 /**
  * Retrieve promotions that apply to current product
  * @param {dw.catalog.ProductSearchHit} searchHit - current product returned by Search API.
- * @param {[string]} activePromotions - array of ids of currently active promotions
- * @return {[Promotion]} - Array of promotions for current product
+ * @param {Array<string>} activePromotions - array of ids of currently active promotions
+ * @return {Array<Promotion>} - Array of promotions for current product
  */
 function getPromotions(searchHit, activePromotions) {
     var productPromotionIds = searchHit.discountedPromotionIDs;
