@@ -106,7 +106,7 @@
 
 .hide-no-link {
 
-    @include media-breakpoint-up(lg) {
+    @include media-breakpoint-up(md) {
         display: none;
     }
 
