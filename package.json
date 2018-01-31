@@ -32,6 +32,7 @@
   "homepage": "https://bitbucket.org/demandware/storefront-base#readme",
   "devDependencies": {
     "@tridnguyen/config": "^2.3.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "chai": "^3.5.0",
     "chai-subset": "^1.5.0",
     "chalk": "^1.1.3",
@@ -65,7 +66,7 @@
     "xml2js": "^0.4.17"
   },
   "dependencies": {
-    "bootstrap": "4.0.0-beta.2",
+    "bootstrap": "4.0.0",
     "cleave.js": "^1.0.2",
     "flag-icon-css": "^2.3.0",
     "font-awesome": "^4.6.3",
