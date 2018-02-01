@@ -68,7 +68,6 @@ describe('Bundle Product Line Item Model', function () {
         productLineItemDecorators.stubs.stubShipment.reset();
         productLineItemDecorators.stubs.stubBonusProductLineItem.reset();
         productLineItemDecorators.stubs.stubPriceTotal.reset();
-        productLineItemDecorators.stubs.stubQuantityOptions.reset();
         productLineItemDecorators.stubs.stubOptions.reset();
         productLineItemDecorators.stubs.stubBundledProductLineItems.reset();
     });
@@ -155,12 +154,6 @@ describe('Bundle Product Line Item Model', function () {
         bundleOrderLineItem(object, productMock, optionsMock);
 
         assert.isTrue(productLineItemDecorators.stubs.stubPriceTotal.calledOnce);
-    });
-
-    it('should call quantityOptions for bundle line item model (order)', function () {
-        bundleOrderLineItem(object, productMock, optionsMock);
-
-        assert.isTrue(productLineItemDecorators.stubs.stubQuantityOptions.calledOnce);
     });
 
     it('should not call options for bundle line item model (order)', function () {

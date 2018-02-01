@@ -1,0 +1,3 @@
+<isset name="disableShippingMethod" value="" scope="page" />
+
+<isinclude template="cart/cartShippingMethodSelection" />
