@@ -2,13 +2,13 @@
 <div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.https('CheckoutShippingServices-SelectShippingMethod')}" data-action-url="${URLUtils.https('CheckoutShippingServices-UpdateShippingMethodsList')}">
 	<input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
     <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod" status="loopSate">
-        <div class="form-check col-9 start-lines">
-            <label class="form-check-label shipping-method-option">
-                <isif condition="${shippingModel.selectedShippingMethod && shippingMethod.ID === shippingModel.selectedShippingMethod.ID}">
-                    <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" class="form-check-input" value="${shippingMethod.ID}" checked>
+        <div class="custom-control custom-radio col-9 start-lines">
+            <isif condition="${shippingModel.selectedShippingMethod && shippingMethod.ID === shippingModel.selectedShippingMethod.ID}">
+                <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" class="custom-control-input" value="${shippingMethod.ID}" checked>
                 <iselse/>
-                    <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input">
-                </isif>
+                <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="custom-control-input">
+            </isif>
+            <label class="custom-control-label shipping-method-option" for="shippingMethod-${shippingMethod.ID}">
                 <span class="display-name">${shippingMethod.displayName}</span>
                 <isif condition="${shippingMethod.estimatedArrivalTime}">
                     <span class="text-muted arrival-time">(${shippingMethod.estimatedArrivalTime})</span>
@@ -25,9 +25,9 @@
 <!-- Template used by client to redraw shipping methods                           -->
 <!---------------------------------------------------------------------------------->
 <div id="shipping-method-template" style="display:none;" >
-    <div class="form-check col-9 start-lines">
-        <label class="form-check-label shipping-method-option">
-            <input type="radio" class="form-check-input">
+    <div class="custom-control custom-radio col-9 start-lines">
+        <input type="radio" class="custom-control-input" id="shippingMethodRadioButton">
+        <label class="custom-control-label shipping-method-option" for="shippingMethodRadioButton">
             <span class="display-name"></span>
             <span class="text-muted arrival-time" style="display:none"></span>
         </label>

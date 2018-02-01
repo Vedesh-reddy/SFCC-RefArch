@@ -129,6 +129,9 @@ function updateShippingMethods(shipping) {
                         .prop('value', shippingMethod.ID)
                         .attr('checked', shippingMethod.ID === selected.ID);
 
+                    $('label', tmpl)
+                        .prop('for', 'shippingMethod-' + shippingMethod.ID);
+
                     // set shipping method name
                     $('.display-name', tmpl).text(shippingMethod.displayName);
 

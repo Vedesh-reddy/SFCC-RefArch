@@ -7,16 +7,16 @@
     <!-- Credit Card Type -->
     <input type="hidden" class="form-control" id="cardType" value="" <isprint value="${pdict.paymentForm.cardType.attributes}" encoding="off" /> autocomplete="cc-type">
 
-    <div class="form-check form-group ">
-        <label for="paymentOption-Credit" class="form-check-label">
-            <input
-                id="paymentOption-Credit"
-                name="paymentOption-Credit"
-                type="radio"
-                class="form-check-input"
-                checked
-                <isprint value="${pdict.paymentForm.paymentMethod.attributes}" encoding="off" />
-            >
+    <div class="form-group custom-control custom-radio">
+        <input
+                        id="paymentOption-Credit"
+                        name="paymentOption-Credit"
+                        type="radio"
+                        class="custom-control-input"
+                        checked
+                        <isprint value="${pdict.paymentForm.paymentMethod.attributes}" encoding="off" />
+                    >
+        <label for="paymentOption-Credit" class="custom-control-label">
             <span>${Resource.msg('label.payment.credit','payment',null)}</span>
         </label>
         <div class="invalid-feedback"></div>
@@ -103,9 +103,9 @@
     </div>
 
     <div class="make-default-payment">
-        <div class="form-group">
-            <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="makeDefaultPayment">
+        <div class="form-group custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="makeDefaultPayment" name="makeDefaultPayment">
+            <label class="custom-control-label" for="makeDefaultPayment">
                     ${Resource.msg('label.payment.checkbox.makedefault', 'payment', null)}
             </label>
         </div>
