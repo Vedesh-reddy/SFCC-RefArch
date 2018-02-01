@@ -15,11 +15,11 @@
         <div class="invalid-feedback"></div>
     </div>
 
-    <div class="form-check clearfix">
-        <div class="pull-left remember-me">
-            <label class="form-check-label">
-                <input type="checkbox" class="form-check-input" name="loginRememberMe" value="true"
-                    <isif condition="${pdict.rememberMe}">checked</isif>>
+    <div class="clearfix">
+        <div class="form-group custom-control custom-checkbox pull-left remember-me">
+            <input type="checkbox" class="custom-control-input" id="rememberMe" name="loginRememberMe" value="true"
+            <isif condition="${pdict.rememberMe}">checked</isif>>
+            <label class="custom-control-label" for="rememberMe">
                     ${Resource.msg('label.checkbox.login.rememberme', 'login', null)}
             </label>
         </div>

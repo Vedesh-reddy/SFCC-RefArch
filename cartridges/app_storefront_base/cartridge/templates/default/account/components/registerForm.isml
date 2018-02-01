@@ -97,12 +97,13 @@
         <div class="invalid-feedback"></div>
     </div>
 
-    <div class="form-check">
-        <label class="form-check-label">
-            <input
-                type="checkbox"
-                class="form-check-input"
-                <isprint value=${pdict.profileForm.customer.addtoemaillist.attributes} encoding="off" />>
+    <div class="form-group custom-control custom-checkbox">
+        <input
+            type="checkbox"
+            class="custom-control-input" id="add-to-email-list"
+            <isprint value=${pdict.profileForm.customer.addtoemaillist.attributes} encoding="off" />
+        >
+        <label class="custom-control-label" for="add-to-email-list">
             <isprint value="${pdict.profileForm.customer.addtoemaillist.label}" encoding="htmlcontent" />
         </label>
     </div>
