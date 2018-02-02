@@ -16,6 +16,7 @@ function content(contentValue, renderingTemplate) {
 
     this.body = (contentValue && contentValue.custom && contentValue.custom.body) || null;
     this.UUID = contentValue.UUID;
+    this.ID = contentValue.ID;
     this.name = contentValue.name;
     this.template = contentValue.template || usedRenderingTemplate;
 

@@ -12,6 +12,7 @@ describe('Content', function () {
             name: 'contentAssetName',
             template: 'templateName',
             UUID: 22,
+            ID: 'contentAssetID',
             online: true
         };
 
@@ -21,6 +22,7 @@ describe('Content', function () {
             body: 'Hello',
             name: 'contentAssetName',
             template: 'templateName',
+            ID: 'contentAssetID',
             UUID: 22 });
     });
 
