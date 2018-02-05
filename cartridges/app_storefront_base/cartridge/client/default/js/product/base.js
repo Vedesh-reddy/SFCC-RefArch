@@ -603,7 +603,7 @@ module.exports = {
                 form.options = getOptions($productContainer);
             }
 
-            $('body').trigger('updateAddToCartFormData', form);
+            $(this).trigger('updateAddToCartFormData', form);
             if (addToCartUrl) {
                 $.ajax({
                     url: addToCartUrl,
