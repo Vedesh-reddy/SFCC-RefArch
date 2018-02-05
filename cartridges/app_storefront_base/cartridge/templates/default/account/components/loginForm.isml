@@ -20,7 +20,7 @@
             <input type="checkbox" class="custom-control-input" id="rememberMe" name="loginRememberMe" value="true"
             <isif condition="${pdict.rememberMe}">checked</isif>>
             <label class="custom-control-label" for="rememberMe">
-                    ${Resource.msg('label.checkbox.login.rememberme', 'login', null)}
+                ${Resource.msg('label.checkbox.login.rememberme', 'login', null)}
             </label>
         </div>
 
