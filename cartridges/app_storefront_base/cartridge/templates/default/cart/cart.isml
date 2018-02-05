@@ -69,7 +69,7 @@
                         <isinclude template="cart/cartCouponDisplay" />
                     </div>
                     <div class="row">
-                        <isinclude template="cart/cartShippingMethod" />
+                        <isinclude template="cart/cartShippingMethodSelection" />
                     </div>
                     <isinclude template="cart/cartTotals" />
                     <div class="row">
