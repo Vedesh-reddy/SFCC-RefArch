@@ -9,13 +9,13 @@
 
     <div class="form-group custom-control custom-radio">
         <input
-                        id="paymentOption-Credit"
-                        name="paymentOption-Credit"
-                        type="radio"
-                        class="custom-control-input"
-                        checked
-                        <isprint value="${pdict.paymentForm.paymentMethod.attributes}" encoding="off" />
-                    >
+            id="paymentOption-Credit"
+            name="paymentOption-Credit"
+            type="radio"
+            class="custom-control-input"
+            checked
+            <isprint value="${pdict.paymentForm.paymentMethod.attributes}" encoding="off" />
+        >
         <label for="paymentOption-Credit" class="custom-control-label">
             <span>${Resource.msg('label.payment.credit','payment',null)}</span>
         </label>
@@ -106,7 +106,7 @@
         <div class="form-group custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="makeDefaultPayment" name="makeDefaultPayment">
             <label class="custom-control-label" for="makeDefaultPayment">
-                    ${Resource.msg('label.payment.checkbox.makedefault', 'payment', null)}
+                ${Resource.msg('label.payment.checkbox.makedefault', 'payment', null)}
             </label>
         </div>
     </div>
