@@ -8,9 +8,13 @@
             <isif condition="${pdict.order.items.items.length>1}">
                 <form action="${URLUtils.url('CheckoutShippingServices-ToggleMultiShip')}" novalidate>
                     <fieldset>
-                        <div class="form-check">
-                            <label class="form-check-label checkout-checkbox">
-                                <input name="usingMultiShipping" class="form-check-input" type="checkbox" <isif condition="${pdict.order.usingMultiShipping && pdict.order.shipping.length > 1}">checked</isif>>
+                        <div class="custom-control custom-checkbox">
+                            <input name="usingMultiShipping" class="custom-control-input" id="multiShipCheck" type="checkbox"
+                                <isif condition="${pdict.order.usingMultiShipping && pdict.order.shipping.length > 1}">
+                                    checked
+                                </isif>
+                            >
+                            <label class="checkout-checkbox custom-control-label" for="multiShipCheck">
                                 ${Resource.msg('check.shipping.multiship', 'checkout', null)}
                             </label>
                         </div>

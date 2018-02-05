@@ -131,9 +131,9 @@
 <div class="row">
     <div class="col">
         <isif condition="${pdict.customer.registeredUser}">
-            <div class="form-check save-credit-card">
-                <label class="form-check-label">
-                    <input type="checkbox" class="form-check-input" name="${creditFields.saveCard.htmlName}" value="true" checked>
+            <div class="save-credit-card custom-control custom-checkbox ">
+                <input type="checkbox" class="custom-control-input" id="saveCreditCard" name="${creditFields.saveCard.htmlName}" value="true" checked>
+                <label class="custom-control-label" for="saveCreditCard">
                     ${creditFields.saveCard.label}
                 </label>
             </div>
