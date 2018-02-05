@@ -227,7 +227,12 @@ server.get('RemoveProductLineItem', function (req, res, next) {
                             }
                         }
                     }
+
+                    var shipmentToRemove = item.shipment;
                     currentBasket.removeProductLineItem(item);
+                    if (shipmentToRemove.productLineItems.empty && !shipmentToRemove.default) {
+                        currentBasket.removeShipment(shipmentToRemove);
+                    }
                     isProductLineItemFound = true;
                     break;
                 }
