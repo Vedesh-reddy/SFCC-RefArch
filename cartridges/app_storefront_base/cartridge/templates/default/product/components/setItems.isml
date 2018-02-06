@@ -102,7 +102,7 @@
             </div>
 
             <div class="description-and-detail">
-                <div class="row product-attributes collapsable-xs">
+                <div class="row product-attributes collapsible-xs">
                     <isinclude template="/product/components/attributes" />
                 </div>
 
@@ -110,7 +110,7 @@
                     <hr class="d-sm-none">
                 </isif>
 
-                <div class="row description collapsable-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
+                <div class="row description collapsible-xs <isif condition="${!product.shortDescription}">hidden-xl-down</isif>">
                     <h2 class="col-sm-12 col-md-4 col-lg-3">
                     <a class="title" href="${'#'}">${Resource.msg('label.description', 'product', null)}</a>
                     </h2>
@@ -121,7 +121,7 @@
                     <hr class="d-sm-none">
                 </isif>
 
-                <div class="row details collapsable-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
+                <div class="row details collapsible-xs <isif condition="${!product.longDescription}">hidden-xl-down</isif>">
                     <h2 class="col-sm-12 col-md-4 col-lg-3">
                     <a class="title" href="${'#'}">${Resource.msg('label.details', 'product', null)}</a>
                     </h2>

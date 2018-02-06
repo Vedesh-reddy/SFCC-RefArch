@@ -1,7 +1,7 @@
 @each $size in map-keys($grid-breakpoints) {
 
     @include media-breakpoint-down($size) {
-        .collapsable-#{$size} {
+        .collapsible-#{$size} {
             .title,
             .card-header {
                 line-height: 2.5em; /* 40/16 */
@@ -35,7 +35,7 @@
         }
     }
 
-    .container div.collapsable-#{$size} a.title {
+    .container div.collapsible-#{$size} a.title {
         color: $black;
         text-decoration: none;
 

@@ -4,13 +4,13 @@
             <div class="footer-item col-sm-3 store">
                 <iscontentasset aid="footer-locate-store" />
             </div>
-            <div class="footer-item col-sm-3 collapsable-xs">
+            <div class="footer-item col-sm-3 collapsible-xs">
                 <iscontentasset aid="footer-account" />
             </div>
-            <div class="footer-item col-sm-3 collapsable-xs">
+            <div class="footer-item col-sm-3 collapsible-xs">
                 <iscontentasset aid="footer-support" />
             </div>
-            <div class="footer-item col-sm-3 collapsable-xs">
+            <div class="footer-item col-sm-3 collapsible-xs">
                 <iscontentasset aid="footer-about" />
             </div>
         </div>

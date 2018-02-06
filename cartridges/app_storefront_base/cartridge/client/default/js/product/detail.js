@@ -95,7 +95,7 @@ module.exports = {
         });
     },
     sizeChart: function () {
-        var $sizeChart = $('.size-chart-collapsable');
+        var $sizeChart = $('.size-chart-collapsible');
         $('.size-chart a').on('click', function (e) {
             e.preventDefault();
             var url = $(this).attr('href');

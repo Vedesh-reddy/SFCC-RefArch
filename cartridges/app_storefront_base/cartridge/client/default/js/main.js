@@ -6,7 +6,7 @@ $(document).ready(function () {
     processInclude(require('./components/cookie'));
     processInclude(require('./components/footer'));
     processInclude(require('./components/miniCart'));
-    processInclude(require('./components/collapsableItem'));
+    processInclude(require('./components/collapsibleItem'));
     processInclude(require('./components/search'));
     processInclude(require('./components/clientSideValidation'));
     processInclude(require('./components/countrySelector'));
