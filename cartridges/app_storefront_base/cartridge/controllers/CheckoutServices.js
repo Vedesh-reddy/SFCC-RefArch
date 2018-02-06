@@ -138,6 +138,7 @@ server.post(
                 var URLUtils = require('dw/web/URLUtils');
                 var array = require('*/cartridge/scripts/util/array');
                 var Locale = require('dw/util/Locale');
+                var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
                 var currentBasket = BasketMgr.getCurrentBasket();
                 var billingData = res.getViewData();
@@ -297,7 +298,7 @@ server.post(
 
                 // Calculate the basket
                 Transaction.wrap(function () {
-                    HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+                    basketCalculationHelpers.calculateTotals(currentBasket);
                 });
 
                 // Re-calculate the payments.
@@ -356,6 +357,7 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -412,7 +414,7 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
 
     // Calculate the basket
     Transaction.wrap(function () {
-        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+        basketCalculationHelpers.calculateTotals(currentBasket);
     });
 
     // Re-validates existing payment instruments

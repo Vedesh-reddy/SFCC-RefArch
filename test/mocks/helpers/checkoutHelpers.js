@@ -64,6 +64,7 @@ function proxyModel() {
     return proxyquire('../../../cartridges/app_storefront_base/cartridge/scripts/checkout/checkoutHelpers', {
         'server': server,
         '*/cartridge/scripts/util/collections': collections,
+        '*/cartridge/scripts/helpers/basketCalculationHelpers': { calculateTotals: function () {} },
 
         'dw/order/BasketMgr': basketMgr,
         'dw/util/HashMap': {},

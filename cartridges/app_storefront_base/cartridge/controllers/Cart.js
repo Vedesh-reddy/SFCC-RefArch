@@ -24,13 +24,13 @@ server.get('MiniCart', server.middleware.include, function (req, res, next) {
 
 server.post('AddProduct', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var URLUtils = require('dw/web/URLUtils');
     var Transaction = require('dw/system/Transaction');
     var CartModel = require('*/cartridge/models/cart');
     var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentOrNewBasket();
     var previousBonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
@@ -80,7 +80,7 @@ server.post('AddProduct', function (req, res, next) {
             }
             if (!result.error) {
                 cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-                HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+                basketCalculationHelpers.calculateTotals(currentBasket);
             }
         });
     }
@@ -133,11 +133,11 @@ server.get(
     csrfProtection.generateToken,
     function (req, res, next) {
         var BasketMgr = require('dw/order/BasketMgr');
-        var HookMgr = require('dw/system/HookMgr');
         var Transaction = require('dw/system/Transaction');
         var CartModel = require('*/cartridge/models/cart');
         var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
         var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+        var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
         var currentBasket = BasketMgr.getCurrentBasket();
         var reportingURLs;
@@ -149,7 +149,7 @@ server.get(
                 }
                 cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
-                HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+                basketCalculationHelpers.calculateTotals(currentBasket);
             });
         }
 
@@ -167,10 +167,10 @@ server.get(
 
 server.get('Get', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Transaction = require('dw/system/Transaction');
     var CartModel = require('*/cartridge/models/cart');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -178,7 +178,7 @@ server.get('Get', function (req, res, next) {
         Transaction.wrap(function () {
             cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
 
-            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
         });
     }
 
@@ -190,11 +190,11 @@ server.get('Get', function (req, res, next) {
 
 server.get('RemoveProductLineItem', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
     var CartModel = require('*/cartridge/models/cart');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -240,7 +240,7 @@ server.get('RemoveProductLineItem', function (req, res, next) {
                 }
             }
         }
-        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+        basketCalculationHelpers.calculateTotals(currentBasket);
     });
 
     if (isProductLineItemFound) {
@@ -260,13 +260,13 @@ server.get('RemoveProductLineItem', function (req, res, next) {
 
 server.get('UpdateQuantity', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
     var CartModel = require('*/cartridge/models/cart');
     var collections = require('*/cartridge/scripts/util/collections');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -335,7 +335,7 @@ server.get('UpdateQuantity', function (req, res, next) {
                 return bonusDiscountLineItem.UUID;
             });
 
-            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
             if (currentBasket.bonusDiscountLineItems.length > bonusDiscountLineItemCount) {
                 var prevItems = JSON.stringify(previousBounsDiscountLineItems);
 
@@ -366,12 +366,12 @@ server.get('UpdateQuantity', function (req, res, next) {
 
 server.post('SelectShippingMethod', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
     var CartModel = require('*/cartridge/models/cart');
     var shippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -403,7 +403,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
             return;
         }
 
-        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+        basketCalculationHelpers.calculateTotals(currentBasket);
     });
 
     if (!error) {
@@ -421,11 +421,11 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
 server.get('MiniCartShow', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Transaction = require('dw/system/Transaction');
     var CartModel = require('*/cartridge/models/cart');
     var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
     var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     var reportingURLs;
@@ -436,7 +436,7 @@ server.get('MiniCartShow', function (req, res, next) {
                 currentBasket.updateCurrency();
             }
             cartHelper.ensureAllShipmentsHaveMethods(currentBasket);
-            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
         });
     }
 
@@ -459,11 +459,11 @@ server.get(
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
         var BasketMgr = require('dw/order/BasketMgr');
-        var HookMgr = require('dw/system/HookMgr');
         var Resource = require('dw/web/Resource');
         var Transaction = require('dw/system/Transaction');
         var URLUtils = require('dw/web/URLUtils');
         var CartModel = require('*/cartridge/models/cart');
+        var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
         var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -517,7 +517,7 @@ server.get(
         }
 
         Transaction.wrap(function () {
-            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
         });
 
         var basketModel = new CartModel(currentBasket);
@@ -530,12 +530,12 @@ server.get(
 
 server.get('RemoveCouponLineItem', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var URLUtils = require('dw/web/URLUtils');
     var CartModel = require('*/cartridge/models/cart');
     var collections = require('*/cartridge/scripts/util/collections');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -559,7 +559,7 @@ server.get('RemoveCouponLineItem', function (req, res, next) {
         if (couponLineItem) {
             Transaction.wrap(function () {
                 currentBasket.removeCouponLineItem(couponLineItem);
-                HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+                basketCalculationHelpers.calculateTotals(currentBasket);
             });
 
             var basketModel = new CartModel(currentBasket);
