@@ -53,9 +53,11 @@ $checkout-font-weight: 600;
     padding-left: 0;
 
     @include media-breakpoint-down(xs) {
+        background-color: rgba(255, 255, 255, 0.95);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+
         div {
             padding: $spacer;
-            background-color: $white;
         }
     }
 
