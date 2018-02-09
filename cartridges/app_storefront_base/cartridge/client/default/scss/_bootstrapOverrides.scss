@@ -60,3 +60,19 @@ dt {
     color: $gray-700;
     font-weight: normal;
 }
+
+.custom-checkbox .custom-control-label::before {
+    border: 1px solid black;
+    background: $grey1; /* For browsers that do not support gradients */
+    background: linear-gradient($grey1, $grey3); /* Standard syntax */
+}
+
+.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
+    background-image: $svg-check;
+}
+
+.custom-radio .custom-control-label::before {
+    border: 1px solid black;
+    background: $grey3; /* For browsers that do not support gradients */
+    background: linear-gradient($grey3, $grey5); /* Standard syntax */
+}
