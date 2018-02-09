@@ -9,4 +9,10 @@ server.get('Start', cache.applyDefaultCache, function (req, res, next) {
     next();
 });
 
+/** Renders the maintenance page when a site has been set to "Maintenance mode" */
+server.get('Offline', cache.applyDefaultCache, function (req, res, next) {
+    res.render('siteoffline');
+    next();
+});
+
 module.exports = server.exports();
