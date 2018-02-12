@@ -58,7 +58,7 @@ describe('stores', function () {
                 markup: 'Mon - Sat: 10am - 9pm'
             }
         }];
-        var stores = new StoresModel(storesResults, searchKey, radius, actionUrl, apiKey);
+        var stores = new StoresModel(storesResults, searchKey, radius, actionUrl, apiKey, true);
 
         assert.deepEqual(stores, {
             stores: [
@@ -83,6 +83,7 @@ describe('stores', function () {
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
             radiusOptions: radiusOptions,
+            showMap: true,
             storesResultsHtml: 'someString'
         });
     });
@@ -101,7 +102,7 @@ describe('stores', function () {
             latitude: 42.5273334,
             longitude: -71.13758250000001
         }];
-        var stores = new StoresModel(storesResults, searchKey, radius, actionUrl, apiKey);
+        var stores = new StoresModel(storesResults, searchKey, radius, actionUrl, apiKey, true);
 
         assert.deepEqual(stores, {
             stores: [
@@ -123,12 +124,13 @@ describe('stores', function () {
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
             radiusOptions: radiusOptions,
+            showMap: true,
             storesResultsHtml: 'someString'
         });
     });
 
     it('should return Stores Model with no stores found', function () {
-        var stores = new StoresModel([], searchKey, radius, actionUrl, apiKey);
+        var stores = new StoresModel([], searchKey, radius, actionUrl, apiKey, true);
 
         assert.deepEqual(stores, {
             stores: [],
@@ -138,6 +140,7 @@ describe('stores', function () {
             actionUrl: actionUrl,
             googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY',
             radiusOptions: radiusOptions,
+            showMap: true,
             storesResultsHtml: 'someString'
         });
     });
@@ -159,7 +162,7 @@ describe('stores', function () {
             longitude: -71.13758250000001
         }];
         var noApiKey = null;
-        var stores = new StoresModel(storesResults, searchKey, radius, actionUrl, noApiKey);
+        var stores = new StoresModel(storesResults, searchKey, radius, actionUrl, noApiKey, true);
 
         assert.deepEqual(stores, {
             stores: [
@@ -183,6 +186,7 @@ describe('stores', function () {
             actionUrl: actionUrl,
             googleMapsApi: null,
             radiusOptions: radiusOptions,
+            showMap: true,
             storesResultsHtml: 'someString'
         });
     });
