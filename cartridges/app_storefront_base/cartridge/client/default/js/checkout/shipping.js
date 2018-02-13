@@ -109,7 +109,7 @@ function updateShippingMethods(shipping) {
             if (!form) return;
 
             var $shippingMethodList = $('.shipping-method-list', form);
-            if (shipping.shippingAddress.stateCode && shipping.shippingAddress.stateCode !== '') {
+            if (shipping.shippingAddress && shipping.shippingAddress.stateCode && shipping.shippingAddress.stateCode !== '') {
                 if ($shippingMethodList && $shippingMethodList.length > 0) {
                     $shippingMethodList.empty();
                     var shippingMethods = shipping.applicableShippingMethods;
