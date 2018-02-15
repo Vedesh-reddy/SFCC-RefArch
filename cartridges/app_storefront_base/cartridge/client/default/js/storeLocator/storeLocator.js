@@ -221,8 +221,8 @@ module.exports = {
     selectStore: function () {
         $('body').on('click', '.select-store', (function (e) {
             e.preventDefault();
-            var selectedStoreID = $(':checked', '.results-card .results').val();
-            $('.select-store').trigger('store:selected', selectedStoreID);
+            var selectedStore = $(':checked', '.results-card .results').data('store-info');
+            $('.select-store').trigger('store:selected', selectedStore);
         }));
     }
 };

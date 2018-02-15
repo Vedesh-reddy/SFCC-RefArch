@@ -7,7 +7,7 @@
     <iselse>
         <div class="card-body" id="${store.ID}">
             <div class="custom-control custom-radio">
-                <input type="radio" id="input-${store.ID}" class="custom-control-input select-store-input" name="store" value="${store.ID}" />
+                <input type="radio" id="input-${store.ID}" class="custom-control-input select-store-input" name="store" value="${store.ID}" data-store-info="${JSON.stringify(store)}"/>
                 <label class="custom-control-label" for="input-${store.ID}"><isinclude template="storeLocator/storeDetails" /></label>
             </div>
         </div>
