@@ -139,7 +139,7 @@ function VariationAttributesModel(variationModel, attrConfig, selectedOptionsQue
         } else if (attrConfig.attributes === 'selected') {
             result.push({
                 displayName: attr.displayName,
-                displayValue: selectedValue.displayValue,
+                displayValue: selectedValue && selectedValue.displayValue ? selectedValue.displayValue : '',
                 attributeId: attr.attributeID,
                 id: attr.ID
             });
