@@ -3,7 +3,8 @@
         <img class="tile-image"
              src="${product.images.medium[0].url}"
              alt="${product.productName}"
-             title="${product.images.medium[0].title}" />
+             title="${product.images.medium[0].title}"
+             itemprop="image"/>
     </a>
     <isif condition="${pdict.display.showQuickView !== false}">
         <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}" title="${Resource.msg('button.quickview', 'common', null)}">
