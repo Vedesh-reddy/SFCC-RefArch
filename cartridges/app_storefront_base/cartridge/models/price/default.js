@@ -11,32 +11,17 @@ function toPriceModel(price) {
     var value = price.available ? price.getDecimalValue().get() : null;
     var currency = price.available ? price.getCurrencyCode() : null;
     var formattedPrice = price.available ? formatMoney(price) : null;
-    var currencySymbol;
-    var unformattedPrice;
-    var currencyArray = [];
-    var symbolFirst;
+    var decimalPrice;
 
     if (formattedPrice) {
-        currencySymbol = formattedPrice.replace(/[0-9-.,]/g, '');
-        unformattedPrice = formattedPrice.replace(/[^0-9-.,]/g, '');
-
-        if (!parseInt(formattedPrice[0], 10)) {
-            currencyArray.push(currencySymbol);
-            currencyArray.push(unformattedPrice);
-            symbolFirst = true;
-        } else {
-            currencyArray.push(unformattedPrice);
-            currencyArray.push(currencySymbol);
-            symbolFirst = false;
-        }
+        decimalPrice = formattedPrice.replace(/[^0-9-.,]/g, '');
+        decimalPrice = decimalPrice.replace(',', '.');
     }
     return {
         value: value,
         currency: currency,
         formatted: formattedPrice,
-        currencySymbol: currencySymbol,
-        currencyArray: currencyArray,
-        symbolFirst: symbolFirst
+        decimalPrice: decimalPrice
     };
 }
 
