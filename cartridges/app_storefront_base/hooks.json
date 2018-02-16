@@ -2,27 +2,27 @@
     "hooks": [
         {
             "name": "dw.order.calculate",
-            "script": "./hooks/cart/calculate.js"
+            "script": "./cartridge/scripts/hooks/cart/calculate.js"
         },
         {
             "name": "dw.order.calculateShipping",
-            "script": "./hooks/cart/calculate.js"
+            "script": "./cartridge/scripts/hooks/cart/calculate.js"
         },
         {
             "name": "dw.order.calculateTax",
-            "script": "./hooks/cart/calculate.js"
+            "script": "./cartridge/scripts/hooks/cart/calculate.js"
         },
         {
             "name": "app.payment.processor.default",
-            "script": "./hooks/payment/processor/default"
+            "script": "./cartridge/scripts/hooks/payment/processor/default"
         },
         {
             "name": "app.payment.processor.basic_credit",
-            "script": "./hooks/payment/processor/basic_credit"
+            "script": "./cartridge/scripts/hooks/payment/processor/basic_credit"
         },
         {
             "name": "app.validate.basket",
-            "script": "./hooks/validateBasket"
+            "script": "./cartridge/scripts/hooks/validateBasket"
         }
     ]
 }
