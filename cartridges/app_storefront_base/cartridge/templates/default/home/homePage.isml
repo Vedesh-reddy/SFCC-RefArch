@@ -17,7 +17,7 @@
     </div>
 
     <div class="container home-product-tiles homepage">
-        <div class="hp-product-grid">
+        <div class="hp-product-grid" itemtype="http://schema.org/SomeProducts" itemid="#product">
             <isslot id="home-products" description="Product tiles on the home page." context="global" />
         </div>
     </div>
