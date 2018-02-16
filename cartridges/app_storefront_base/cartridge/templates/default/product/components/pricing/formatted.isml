@@ -1,1 +1,8 @@
-<span class="value">${price.formatted}</span>
+<meta itemprop="priceCurrency" content="${price.currency}" />
+<isif condition="${price.symbolFirst}">
+    <span itemprop="priceCurrency" content="${price.currency}">${price.currencyArray[0]}</span>
+    <span class="value" itemprop="price" content="${price.currencyArray[1].replace(',','.')}">${price.currencyArray[1]}</span>
+<iselse>
+    <span itemprop="priceCurrency" content="${price.currency}">${price.currencyArray[1]}</span>
+    <span class="value" itemprop="price" content="${price.currencyArray[0].replace(',','.')}">${price.currencyArray[0]}</span>
+</isif>

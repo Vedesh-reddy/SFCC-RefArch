@@ -1,4 +1,4 @@
-<div class="price"  itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer"">
+<div class="price"  itemprop="offers" itemscope itemtype="http://schema.org/Offer"">
     <isif condition="${price.type === 'tiered'}">
         <isinclude template="/product/components/pricing/tiered" />
     <iselseif condition="${price.type === 'range'}">
