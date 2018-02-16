@@ -97,9 +97,9 @@ function updateStoresResults(data) {
     }
 
     $resultsDiv.empty()
-        .attr('data-has-results', data.stores.length)
-        .attr('data-radius', data.radius)
-        .attr('data-search-key', JSON.stringify(data.searchKey));
+        .data('has-results', data.stores.length)
+        .data('radius', data.radius)
+        .data('search-key', data.searchKey);
 
     $mapDiv.attr('data-locations', data.locations);
 
