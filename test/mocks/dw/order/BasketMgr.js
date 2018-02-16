@@ -1,4 +1,6 @@
 
+var ArrayList = require('../../../mocks/dw.util.Collection');
+
 function getCurrentBasket() {
     return {
         defaultShipment: {
@@ -24,6 +26,9 @@ function getCurrentBasket() {
                 setPhone: function (phoneInput) { this.phone = phoneInput; }
             }
         },
+        shipments: new ArrayList([
+            { UUID: '000000' }
+        ]),
         totalGrossPrice: {
             value: 250.00
         }
