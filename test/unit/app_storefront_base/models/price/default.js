@@ -16,7 +16,6 @@ describe('DefaultPrice model', function () {
     var listPrice;
     var decimalValue = 'decimalValue';
     var currencyCode = 'ABC';
-    var currencySymbol = '₪moolah';
     var defaultPrice;
     function getDecimalValue() {
         return {
@@ -51,13 +50,8 @@ describe('DefaultPrice model', function () {
             sales: {
                 currency: currencyCode,
                 formatted: formattedMoney,
-                symbolFirst: true,
                 value: decimalValue,
-                currencyArray: [
-                    currencySymbol,
-                    ''
-                ],
-                currencySymbol: currencySymbol
+                decimalPrice: ''
             }
         });
     });
@@ -69,11 +63,9 @@ describe('DefaultPrice model', function () {
             list: null,
             sales: {
                 currency: null,
-                currencyArray: [],
-                currencySymbol: undefined,
                 formatted: null,
-                symbolFirst: undefined,
-                value: null
+                value: null,
+                decimalPrice: undefined
             }
         });
     });
@@ -85,23 +77,13 @@ describe('DefaultPrice model', function () {
                 currency: currencyCode,
                 formatted: formattedMoney,
                 value: decimalValue,
-                symbolFirst: true,
-                currencySymbol: currencySymbol,
-                currencyArray: [
-                    currencySymbol,
-                    ''
-                ]
+                decimalPrice: ''
             },
             sales: {
                 currency: currencyCode,
                 formatted: formattedMoney,
                 value: decimalValue,
-                symbolFirst: true,
-                currencySymbol: currencySymbol,
-                currencyArray: [
-                    currencySymbol,
-                    ''
-                ]
+                decimalPrice: ''
             }
         });
     });
