@@ -8,18 +8,18 @@
     <isif condition="${pdict.isForm === 'true'}">
         <form action="${pdict.stores.actionUrl}" class="store-locator" method="get" name="storelocator">
     </isif>
-        <div class="form-group required">
-            <label class="form-control-label" for="store-postal-code">${Resource.msg('field.zip.postal.code','storeLocator',null)}</label>
-            <input autofocus type="text" class="form-control" id="store-postal-code" name="postalCode" value="" required>
-            <div class="invalid-feedback"></div>
-        </div>
-        <button class="btn btn-block btn-storelocator-search" 
-        <isif condition="${pdict.isForm === 'true'}"> type="submit"
-        <iselse> type="button"
-        </isif>
-         name="submit" value="submit">
-            ${Resource.msg('button.find.stores','storeLocator',null)}
-        </button>
+    <div class="form-group required">
+        <label class="form-control-label" for="store-postal-code">${Resource.msg('field.zip.postal.code','storeLocator',null)}</label>
+        <input autofocus type="text" class="form-control" id="store-postal-code" name="postalCode" value="" required>
+        <div class="invalid-feedback"></div>
+    </div>
+    <button class="btn btn-block btn-storelocator-search"
+    <isif condition="${pdict.isForm === 'true'}"> type="submit"
+    <iselse> type="button"
+    </isif>
+     name="submit" value="submit">
+        ${Resource.msg('button.find.stores','storeLocator',null)}
+    </button>
     <isif condition="${pdict.isForm === 'true'}">
         </form>
     </isif>
