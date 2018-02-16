@@ -97,9 +97,9 @@ function updateStoresResults(data) {
     }
 
     $resultsDiv.empty()
-        .data('has-results', data.stores.length)
-        .data('radius', data.radius)
-        .data('search-key', data.searchKey);
+        .attr('data-has-results', data.stores.length)
+        .attr('data-radius', data.radius)
+        .attr('data-search-key', JSON.stringify(data.searchKey));
 
     $mapDiv.attr('data-locations', data.locations);
 
@@ -217,5 +217,12 @@ module.exports = {
                 }
             });
         });
+    },
+    selectStore: function () {
+        $('body').on('click', '.select-store', (function (e) {
+            e.preventDefault();
+            var selectedStore = $(':checked', '.results-card .results').data('store-info');
+            $('.select-store').trigger('store:selected', selectedStore);
+        }));
     }
 };

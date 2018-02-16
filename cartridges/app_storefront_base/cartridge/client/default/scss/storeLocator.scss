@@ -1,6 +1,7 @@
 @import "variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
+@import "components/formFields";
 
 .btn-storelocator-search {
     background-color: $light-gray;
@@ -66,32 +67,6 @@
     }
 }
 
-.store {
-    padding-left: 0.625em;
-    padding-right: 0.625em;
-
-    @include media-breakpoint-up(md) {
-        padding-left: 1.25em;
-        padding-right: 1.25em;
-    }
-}
-
-.store + .store {
-    padding-bottom: 0;
-    padding-top: 0;
-}
-
-.store + .store::before {
-    content: "";
-    display: block;
-    border-bottom: 0.063em solid $horizontal-rule-grey;
-    margin: 0 -0.65em 1em;
-
-    @include media-breakpoint-up(lg) {
-        margin: 0 -1.25em 1em;
-    }
-}
-
 .store-name {
     font-weight: 600;
 }
@@ -99,6 +74,18 @@
 .store-details {
     display: block;
     margin-left: 3.125em;
+}
+
+.striped {
+    > div:nth-of-type(odd) {
+        background-color: $table-accent-bg;
+    }
+}
+
+.custom-radio {
+    .store-details {
+        margin-left: 1.125em;
+    }
 }
 
 .store-locator-no-apiKey {
@@ -125,6 +112,5 @@
         overflow-x: hidden;
         max-height: 21.875em;
         margin-right: -0.938em;
-        padding-right: 0.938em;
     }
 }
