@@ -228,15 +228,17 @@ describe('ProductVariation - Get product variation with master product ID and pa
                     }
                 ],
                 'price': {
-                    'html': '\n\n\n<div class="price">\n    \n        <span>\n    \n\n    \n        \n        <span class="strike-through list">\n            <span class="value">$69.50</span>\n\n        </span>\n    \n\n    \n    <span class="sales">\n        <span class="value">$49.99</span>\n\n    </span>\n</span>\n\n    \n</div>\n\n',
+                    'html': '\n\n\n\n    <div class=\"price\"  itemprop=\"offers\" itemscope itemtype=\"http://schema.org/Offer\">\n        \n        <span>\n    \n\n    \n        \n        <meta itemprop=\"priceCurrency\" content=\"USD\" />\n        <span class=\"strike-through list\">\n            <span class=\"value\" itemprop=\"price\" content=\"69.50\">\n                $69.50\n\n\n            </span>\n        </span>\n    \n\n    \n    <meta itemprop=\"priceCurrency\" content=\"USD\" />\n    <span class=\"sales\">\n        \n        \n        \n            <span class=\"value\" itemprop=\"price\" content=\"49.99\">\n        \n        $49.99\n\n\n        </span>\n    </span>\n</span>\n\n    </div>\n\n\n',
                     'list': {
                         'currency': 'USD',
                         'formatted': '$69.50',
+                        'decimalPrice': '69.50',
                         'value': 69.5
                     },
                     'sales': {
                         'currency': 'USD',
                         'formatted': '$49.99',
+                        'decimalPrice': '49.99',
                         'value': 49.99
                     }
                 },
