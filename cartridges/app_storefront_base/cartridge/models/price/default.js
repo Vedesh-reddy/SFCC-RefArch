@@ -11,26 +11,30 @@ function toPriceModel(price) {
     var value = price.available ? price.getDecimalValue().get() : null;
     var currency = price.available ? price.getCurrencyCode() : null;
     var formattedPrice = price.available ? formatMoney(price) : null;
-    var currencysymbol = formattedPrice.replace(/[0-9-.,]/g, '');
-    var unformattedPrice = formattedPrice.replace(/[^0-9-.,]/g, '');
+    var currencySymbol;
+    var unformattedPrice;
     var currencyArray = [];
     var symbolFirst;
 
-    if (!parseInt(formattedPrice[0], 10)) {
-        currencyArray.push(currencysymbol);
-        currencyArray.push(unformattedPrice);
-        symbolFirst = true;
-    } else {
-        currencyArray.push(unformattedPrice);
-        currencyArray.push(currencysymbol);
-        symbolFirst = false;
-    }
+    if (formattedPrice) {
+        currencySymbol = formattedPrice.replace(/[0-9-.,]/g, '');
+        unformattedPrice = formattedPrice.replace(/[^0-9-.,]/g, '');
 
+        if (!parseInt(formattedPrice[0], 10)) {
+            currencyArray.push(currencySymbol);
+            currencyArray.push(unformattedPrice);
+            symbolFirst = true;
+        } else {
+            currencyArray.push(unformattedPrice);
+            currencyArray.push(currencySymbol);
+            symbolFirst = false;
+        }
+    }
     return {
         value: value,
         currency: currency,
         formatted: formattedPrice,
-        currencysymbol: currencysymbol,
+        currencySymbol: currencySymbol,
         currencyArray: currencyArray,
         symbolFirst: symbolFirst
     };
