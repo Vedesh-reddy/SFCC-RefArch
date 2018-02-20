@@ -16,14 +16,41 @@ var trigger = function (keys, shipment, currentState) {
 };
 
 /**
+ * Adds a new shipment to the state object and triggers event
+ * @param {Object} shipment - changed shipment object
+ * @param {Object} currentState - current state of shipping component
+ */
+var createNewShipment = function (shipment, currentState) {
+    var newObject = {
+        shipmentUUID: shipment.UUID,
+        methodID: shipment.selectedShippingMethod.ID,
+        deliveryAddress: !shipment.selectedShippingMethod.storePickupEnabled
+            ? shipment.shippingAddress
+            : null,
+        pickupAddress: shipment.selectedShippingMethod.storePickupEnabled
+            ? shipment.shippingAddress
+            : null,
+        pickupEnabled: shipment.selectedShippingMethod.storePickupEnabled,
+        editMode: false,
+        searchZipCode: '',
+        searchRadius: ''
+    };
+    currentState.shippingState.shipments.push(newObject);
+    $('.shipping-form').trigger('stateChange:newShipmentAdded', {
+        shipment: shipment,
+        currentState: currentState
+    });
+};
+
+/**
  * Shipping state model constructor
- * @param {Objct} state - initial state object
+ * @param {Object} state - initial state object
  */
 function shippingState(state) {
     this.shippingState = state;
 }
 
-shippingState.prototype.changeState = function (changeObject, shipmentUUID) {
+shippingState.prototype.changeState = function (changeObject, shipmentUUID, newShipment) {
     var currentState = this;
     var changedKeys = [];
     var shipmentChanged;
@@ -34,6 +61,11 @@ shippingState.prototype.changeState = function (changeObject, shipmentUUID) {
                 shipmentChanged = shipment;
             }
         });
+    }
+
+    if (!shipmentChanged && newShipment) {
+        shipmentChanged = newShipment;
+        createNewShipment(shipmentChanged, currentState);
     }
 
     Object.keys(changeObject).forEach(function (key) {
