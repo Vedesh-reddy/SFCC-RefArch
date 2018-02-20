@@ -13,10 +13,8 @@ function toPriceModel(price) {
     var formattedPrice = price.available ? formatMoney(price) : null;
     var decimalPrice;
 
-    if (formattedPrice) {
-        decimalPrice = formattedPrice.replace(/[^0-9-.,]/g, '');
-        decimalPrice = decimalPrice.replace(',', '.');
-    }
+    if (formattedPrice) { decimalPrice = price.getDecimalValue().toString(); }
+
     return {
         value: value,
         currency: currency,
