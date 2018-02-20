@@ -98,7 +98,7 @@ function updateShippingAddressFormValues(shipping) {
 
         $('input[name$=_phone]', form).val(shipping.shippingAddress.phone);
 
-        shippingState.changeState({ deliveryAddress: shipping.shippingAddress }, shipping.UUID);
+        shippingState.changeState({ deliveryAddress: shipping.shippingAddress }, shipping.UUID, shipping);
     });
 }
 
