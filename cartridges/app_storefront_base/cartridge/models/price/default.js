@@ -10,11 +10,16 @@ var formatMoney = require('dw/util/StringUtils').formatMoney;
 function toPriceModel(price) {
     var value = price.available ? price.getDecimalValue().get() : null;
     var currency = price.available ? price.getCurrencyCode() : null;
+    var formattedPrice = price.available ? formatMoney(price) : null;
+    var decimalPrice;
+
+    if (formattedPrice) { decimalPrice = price.getDecimalValue().toString(); }
 
     return {
         value: value,
         currency: currency,
-        formatted: price.available ? formatMoney(price) : null
+        formatted: formattedPrice,
+        decimalPrice: decimalPrice
     };
 }
 

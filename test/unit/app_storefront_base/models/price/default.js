@@ -50,7 +50,8 @@ describe('DefaultPrice model', function () {
             sales: {
                 currency: currencyCode,
                 formatted: formattedMoney,
-                value: decimalValue
+                value: decimalValue,
+                decimalPrice: '[object Object]'
             }
         });
     });
@@ -63,7 +64,8 @@ describe('DefaultPrice model', function () {
             sales: {
                 currency: null,
                 formatted: null,
-                value: null
+                value: null,
+                decimalPrice: undefined
             }
         });
     });
@@ -74,12 +76,14 @@ describe('DefaultPrice model', function () {
             list: {
                 currency: currencyCode,
                 formatted: formattedMoney,
-                value: decimalValue
+                value: decimalValue,
+                decimalPrice: '[object Object]'
             },
             sales: {
                 currency: currencyCode,
                 formatted: formattedMoney,
-                value: decimalValue
+                value: decimalValue,
+                decimalPrice: '[object Object]'
             }
         });
     });

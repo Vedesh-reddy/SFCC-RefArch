@@ -1,9 +1,14 @@
-<div class="price">
-    <isif condition="${price.type === 'tiered'}">
+<isif condition="${price.type === 'tiered'}">
+    <div class="price">
         <isinclude template="/product/components/pricing/tiered" />
-    <iselseif condition="${price.type === 'range'}">
+    </div>
+<iselseif condition="${price.type === 'range'}">
+    <div class="price"  itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer"">
         <isinclude template="/product/components/pricing/range" />
-    <iselse>
+    </div>
+<iselse>
+    <div class="price"  itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+        <isset name="isLowPrice" value="${}" scope="page" />
         <isinclude template="/product/components/pricing/default" />
-    </isif>
-</div>
+    </div>
+</isif>

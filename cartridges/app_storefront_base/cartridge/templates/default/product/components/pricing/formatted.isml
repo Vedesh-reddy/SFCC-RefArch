@@ -1,1 +1,2 @@
-<span class="value">${price.formatted}</span>
+${price.formatted}
+
