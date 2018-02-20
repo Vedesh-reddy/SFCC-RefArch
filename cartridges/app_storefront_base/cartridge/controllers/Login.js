@@ -3,9 +3,11 @@
 var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 server.get(
     'Show',
+    consentTracking.consent,
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
@@ -55,7 +57,7 @@ server.get('Logout', function (req, res, next) {
     next();
 });
 
-server.get('OAuthLogin', server.middleware.https, function (req, res, next) {
+server.get('OAuthLogin', server.middleware.https, consentTracking.consent, function (req, res, next) {
     var oauthLoginFlowMgr = require('dw/customer/oauth/OAuthLoginFlowMgr');
     var Resource = require('dw/web/Resource');
     var endpoints = require('*/cartridge/config/oAuthRenentryRedirectEndpoints');
@@ -101,7 +103,7 @@ server.get('OAuthLogin', server.middleware.https, function (req, res, next) {
     return next();
 });
 
-server.get('OAuthReentry', server.middleware.https, function (req, res, next) {
+server.get('OAuthReentry', server.middleware.https, consentTracking.consent, function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var oauthLoginFlowMgr = require('dw/customer/oauth/OAuthLoginFlowMgr');
     var CustomerMgr = require('dw/customer/CustomerMgr');

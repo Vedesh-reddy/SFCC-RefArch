@@ -3,6 +3,7 @@
 var server = require('server');
 
 var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 server.get(
     'Include',
@@ -118,7 +119,7 @@ server.get('Locale', function (req, res, next) {
     next();
 });
 
-server.get('Show', cache.applyDefaultCache, function (req, res, next) {
+server.get('Show', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var ContentMgr = require('dw/content/ContentMgr');
     var Logger = require('dw/system/Logger');
     var ContentModel = require('*/cartridge/models/content');

@@ -4,6 +4,7 @@ var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Creates an account model for the current customer
@@ -126,6 +127,7 @@ server.get(
     'Show',
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
+    consentTracking.consent,
     function (req, res, next) {
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
@@ -323,6 +325,7 @@ server.get(
     server.middleware.https,
     csrfProtection.generateToken,
     userLoggedIn.validateLoggedIn,
+    consentTracking.consent,
     function (req, res, next) {
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
@@ -462,6 +465,7 @@ server.get(
     server.middleware.https,
     csrfProtection.generateToken,
     userLoggedIn.validateLoggedIn,
+    consentTracking.consent,
     function (req, res, next) {
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
@@ -619,7 +623,7 @@ server.get('PasswordReset', server.middleware.https, function (req, res, next) {
     next();
 });
 
-server.get('SetNewPassword', server.middleware.https, function (req, res, next) {
+server.get('SetNewPassword', server.middleware.https, consentTracking.consent, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var URLUtils = require('dw/web/URLUtils');
 

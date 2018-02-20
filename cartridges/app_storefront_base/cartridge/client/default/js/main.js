@@ -4,6 +4,7 @@ var processInclude = require('./util');
 $(document).ready(function () {
     processInclude(require('./components/menu'));
     processInclude(require('./components/cookie'));
+    processInclude(require('./components/consentTracking'));
     processInclude(require('./components/footer'));
     processInclude(require('./components/miniCart'));
     processInclude(require('./components/collapsibleItem'));

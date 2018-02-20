@@ -6,9 +6,11 @@ var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 server.get(
     'Confirm',
+    consentTracking.consent,
     server.middleware.https,
     csrfProtection.generateToken,
     function (req, res, next) {
@@ -69,6 +71,7 @@ server.get(
 
 server.get(
     'Track',
+    consentTracking.consent,
     server.middleware.https,
     csrfProtection.validateRequest,
     csrfProtection.generateToken,
@@ -155,6 +158,7 @@ server.get(
 
 server.get(
     'History',
+    consentTracking.consent,
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
@@ -191,6 +195,7 @@ server.get(
 
 server.get(
     'Details',
+    consentTracking.consent,
     server.middleware.https,
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
@@ -246,6 +251,7 @@ server.get(
 server.get(
     'Filtered',
     server.middleware.https,
+    consentTracking.consent,
     userLoggedIn.validateLoggedInAjax,
     function (req, res, next) {
         var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');

@@ -4,6 +4,7 @@ var server = require('server');
 
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
  * Set search configuration values
@@ -83,7 +84,7 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
 });
 
 
-server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, next) {
+server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
@@ -172,7 +173,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, function (req, res, 
     return next();
 });
 
-server.get('Content', cache.applyDefaultCache, function (req, res, next) {
+server.get('Content', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var ContentSearchModel = require('dw/content/ContentSearchModel');
     var ContentSearch = require('*/cartridge/models/search/contentSearch');
     var apiContentSearchModel = new ContentSearchModel();
