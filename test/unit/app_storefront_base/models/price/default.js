@@ -51,7 +51,7 @@ describe('DefaultPrice model', function () {
                 currency: currencyCode,
                 formatted: formattedMoney,
                 value: decimalValue,
-                decimalPrice: ''
+                decimalPrice: '[object Object]'
             }
         });
     });
@@ -77,13 +77,13 @@ describe('DefaultPrice model', function () {
                 currency: currencyCode,
                 formatted: formattedMoney,
                 value: decimalValue,
-                decimalPrice: ''
+                decimalPrice: '[object Object]'
             },
             sales: {
                 currency: currencyCode,
                 formatted: formattedMoney,
                 value: decimalValue,
-                decimalPrice: ''
+                decimalPrice: '[object Object]'
             }
         });
     });
