@@ -15,6 +15,11 @@ var trigger = function (keys, shipment, currentState) {
     });
 };
 
+/**
+ * Adds a new shipment to the state object and triggers event
+ * @param {Object} shipment - changed shipment object
+ * @param {Object} currentState - current state of shipping component
+ */
 var createNewShipment = function (shipment, currentState) {
     var newObject = {
         shipmentUUID: shipment.UUID,
@@ -39,7 +44,7 @@ var createNewShipment = function (shipment, currentState) {
 
 /**
  * Shipping state model constructor
- * @param {Objct} state - initial state object
+ * @param {Object} state - initial state object
  */
 function shippingState(state) {
     this.shippingState = state;
