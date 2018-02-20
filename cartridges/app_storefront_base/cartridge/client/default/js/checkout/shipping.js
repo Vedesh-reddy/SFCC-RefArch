@@ -115,38 +115,40 @@ function updateShippingMethods(shipping) {
 
             var $shippingMethodList = $('.shipping-method-list', form);
 
-            if ($shippingMethodList && $shippingMethodList.length > 0) {
-                $shippingMethodList.empty();
-                var shippingMethods = shipping.applicableShippingMethods;
-                var selected = shipping.selectedShippingMethod || {};
-                var shippingMethodFormID = form.name + '_shippingAddress_shippingMethodID';
-                //
-                // Create the new rows for each shipping method
-                //
-                $.each(shippingMethods, function (methodIndex, shippingMethod) {
-                    var tmpl = $('#shipping-method-template').clone();
-                    // set input
-                    $('input', tmpl)
-                        .prop('id', 'shippingMethod-' + shippingMethod.ID)
-                        .prop('name', shippingMethodFormID)
-                        .prop('value', shippingMethod.ID)
-                        .attr('checked', shippingMethod.ID === selected.ID)
-                        .attr('data-pickup', shippingMethod.storePickupEnabled);
+            if (shipping.shippingAddress && shipping.shippingAddress.stateCode && shipping.shippingAddress.stateCode !== '') {
+                if ($shippingMethodList && $shippingMethodList.length > 0) {
+                    $shippingMethodList.empty();
+                    var shippingMethods = shipping.applicableShippingMethods;
+                    var selected = shipping.selectedShippingMethod || {};
+                    var shippingMethodFormID = form.name + '_shippingAddress_shippingMethodID';
+                    //
+                    // Create the new rows for each shipping method
+                    //
+                    $.each(shippingMethods, function (methodIndex, shippingMethod) {
+                        var tmpl = $('#shipping-method-template').clone();
+                        // set input
+                        $('input', tmpl)
+                            .prop('id', 'shippingMethod-' + shippingMethod.ID)
+                            .prop('name', shippingMethodFormID)
+                            .prop('value', shippingMethod.ID)
+                            .attr('checked', shippingMethod.ID === selected.ID)
+                            .attr('data-pickup', shippingMethod.storePickupEnabled);
 
-                    $('label', tmpl)
-                        .prop('for', 'shippingMethod-' + shippingMethod.ID);
-                    // set shipping method name
-                    $('.display-name', tmpl).text(shippingMethod.displayName);
-                    // set or hide arrival time
-                    if (shippingMethod.estimatedArrivalTime) {
-                        $('.arrival-time', tmpl)
-                            .text('(' + shippingMethod.estimatedArrivalTime + ')')
-                            .show();
-                    }
-                    // set shipping cost
-                    $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
-                    $shippingMethodList.append(tmpl.html());
-                });
+                        $('label', tmpl)
+                            .prop('for', 'shippingMethod-' + shippingMethod.ID);
+                        // set shipping method name
+                        $('.display-name', tmpl).text(shippingMethod.displayName);
+                        // set or hide arrival time
+                        if (shippingMethod.estimatedArrivalTime) {
+                            $('.arrival-time', tmpl)
+                                .text('(' + shippingMethod.estimatedArrivalTime + ')')
+                                .show();
+                        }
+                        // set shipping cost
+                        $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
+                        $shippingMethodList.append(tmpl.html());
+                    });
+                }
             }
         });
     }
