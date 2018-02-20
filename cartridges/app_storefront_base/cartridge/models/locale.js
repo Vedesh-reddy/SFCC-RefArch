@@ -35,15 +35,6 @@ function getLocaleLinks(allowedLocales, siteId, currentLocaleID) {
 }
 
 /**
- * Performs a deeper check on a plain locale object
- * @param {dw.util.Locale} currentLocale - current locale of the request
- * @return {boolean} - returns true
- */
-function isLocaleValid(currentLocale) {
-    return (currentLocale && currentLocale.ID);
-}
-
-/**
  * Represents current locale information in plain object
  * @param {dw.util.Locale} currentLocale - current locale of the request
  * @param {string} allowedLocales - list of allowed locales for the site
@@ -51,7 +42,7 @@ function isLocaleValid(currentLocale) {
  * @constructor
  */
 function Locale(currentLocale, allowedLocales, siteId) {
-    var currentCountry = !isLocaleValid(currentLocale) ? countries[0]
+    var currentCountry = !currentLocale ? countries[0]
         : countries.filter(function (country) {
             return country.id === currentLocale.ID;
         })[0];
