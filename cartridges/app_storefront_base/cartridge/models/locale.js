@@ -40,7 +40,7 @@ function getLocaleLinks(allowedLocales, siteId, currentLocaleID) {
  * @return {boolean} - returns true
  */
 function isLocaleValid(currentLocale) {
-    return (currentLocale && currentLocale.ID);
+    return currentLocale && currentLocale.ID;
 }
 
 /**
