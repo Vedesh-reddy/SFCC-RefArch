@@ -413,7 +413,6 @@ describe('locale', function () {
         });
     });
     it('should return a currentCountry if currentLocale is not set', function () {
-        
         var currentLocale = {
             ID: '',
             displayCountry: '',
@@ -433,16 +432,15 @@ describe('locale', function () {
                 'language': '',
                 'displayLanguage': '',
                 'localLinks': [{
-                    "country": "US",
-                    "currencyCode": "USD",
-                    "displayCountry": "United States",
-                    "displayLanguage": "English",
-                    "displayName": "English (US)",
-                    "language": "en",
-                    "localID": "en_US"
-                    }
+                    'country': 'US',
+                    'currencyCode': 'USD',
+                    'displayCountry': 'United States',
+                    'displayLanguage': 'English',
+                    'displayName': 'English (US)',
+                    'language': 'en',
+                    'localID': 'en_US'
+                }
                 ]
-              
             }
         });
     });
