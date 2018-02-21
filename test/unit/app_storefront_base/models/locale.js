@@ -428,7 +428,6 @@ describe('locale', function () {
             'locale': {
                 'countryCode': '',
                 'currencyCode': 'USD',
-                'localLinks': [],
                 'name': '',
                 'displayName': '',
                 'language': '',
