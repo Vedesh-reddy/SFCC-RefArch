@@ -1,9 +1,9 @@
 'use strict';
 
 var server = require('server');
-var cache = require('*/cartridge/scripts/middleware/cache');
+var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
-server.get('SetSession', cache.applyDefaultCache, function (req, res, next) {
+server.get('SetSession', function (req, res, next) {
     var consent = (req.querystring.consent === 'true');
     req.session.raw.setTrackingAllowed(consent);
     req.session.privacyCache.set('consent', consent);
@@ -11,7 +11,7 @@ server.get('SetSession', cache.applyDefaultCache, function (req, res, next) {
     next();
 });
 
-server.get('GetContent', cache.applyDefaultCache, function (req, res, next) {
+server.get('GetContent', function (req, res, next) {
     var ContentMgr = require('dw/content/ContentMgr');
     var ContentModel = require('*/cartridge/models/content');
 
@@ -23,6 +23,11 @@ server.get('GetContent', cache.applyDefaultCache, function (req, res, next) {
             res.render(content.template, { content: content });
         }
     }
+    next();
+});
+
+server.get('Check', consentTracking.consent, function (req, res, next) {
+    res.render('/common/consent');
     next();
 });
 
