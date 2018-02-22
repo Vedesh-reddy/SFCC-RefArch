@@ -57,10 +57,12 @@ function showConsentModal() {
             type: 'get',
             dataType: 'json',
             success: function () {
+                $('#consent-tracking .modal-body').remove();
                 $('#consent-tracking').remove();
                 $.spinner().stop();
             },
             error: function () {
+                $('#consent-tracking .modal-body').remove();
                 $('#consent-tracking').remove();
                 $.spinner().stop();
             }

@@ -18,6 +18,6 @@
         <div class="modal-background"></div>
         <iscontentasset aid="cookie_hint" />
         <isinclude template="/common/scripts" />
-        <isinclude template="/common/consent" />
+        <isinclude url="${URLUtils.url('ConsentTracking-Check')}"/>
     </body>
 </html>
