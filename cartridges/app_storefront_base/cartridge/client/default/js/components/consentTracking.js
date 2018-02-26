@@ -71,11 +71,13 @@ function showConsentModal() {
 }
 
 module.exports = function () {
-    if ($('.consented').length === 0) {
+    if ($('.consented').length === 0 && $('.tracking-consent').hasClass('api-true')) {
         showConsentModal();
     }
 
-    $('.tracking-consent').click(function () {
-        showConsentModal();
-    });
+    if ($('.tracking-consent').hasClass('api-true')) {
+        $('.tracking-consent').click(function () {
+            showConsentModal();
+        });
+    }
 };

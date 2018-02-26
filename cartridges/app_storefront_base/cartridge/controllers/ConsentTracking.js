@@ -27,7 +27,9 @@ server.get('GetContent', function (req, res, next) {
 });
 
 server.get('Check', consentTracking.consent, function (req, res, next) {
-    res.render('/common/consent');
+    res.render('/common/consent', {
+        consentApi: Object.prototype.hasOwnProperty.call(req.session.raw, 'setTrackingAllowed')
+    });
     next();
 });
 
