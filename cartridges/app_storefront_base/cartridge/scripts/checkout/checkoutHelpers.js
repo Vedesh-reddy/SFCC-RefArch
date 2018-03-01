@@ -55,7 +55,7 @@ function prepareBillingForm() {
  * @returns {Object} the names of the invalid form fields
  */
 function validateFields(form) {
-    return formErrors(form);
+    return formErrors.getFormErrors(form);
 }
 
 /**
