@@ -7,7 +7,6 @@ var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 server.post('ToggleMultiShip', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Transaction = require('dw/system/Transaction');
     var AccountModel = require('*/cartridge/models/account');
     var OrderModel = require('*/cartridge/models/order');
@@ -15,6 +14,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
     var collections = require('*/cartridge/scripts/util/collections');
     var Locale = require('dw/util/Locale');
     var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     if (!currentBasket) {
@@ -47,7 +47,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
             });
             COHelpers.ensureNoEmptyShipments(req);
 
-            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
         });
     }
 
@@ -68,7 +68,6 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
 server.post('SelectShippingMethod', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Resource = require('dw/web/Resource');
     var Transaction = require('dw/system/Transaction');
     var AccountModel = require('*/cartridge/models/account');
@@ -76,6 +75,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     var URLUtils = require('dw/web/URLUtils');
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
     var Locale = require('dw/util/Locale');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -119,7 +119,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
             ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
 
-            HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+            basketCalculationHelpers.calculateTotals(currentBasket);
         });
     } catch (err) {
         error = err;
@@ -151,13 +151,13 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
 server.post('UpdateShippingMethodsList', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var HookMgr = require('dw/system/HookMgr');
     var Transaction = require('dw/system/Transaction');
     var AccountModel = require('*/cartridge/models/account');
     var OrderModel = require('*/cartridge/models/order');
     var URLUtils = require('dw/web/URLUtils');
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
     var Locale = require('dw/util/Locale');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -206,7 +206,7 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
 
         ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
 
-        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+        basketCalculationHelpers.calculateTotals(currentBasket);
     });
 
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');

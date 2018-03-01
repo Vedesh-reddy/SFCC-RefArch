@@ -24,6 +24,8 @@ var formErrors = require('*/cartridge/scripts/formErrors');
 var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
 var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
 
+var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+
 // static functions needed for Checkout Controller logic
 
 /**
@@ -287,7 +289,7 @@ function ensureNoEmptyShipments(req) {
 function recalculateBasket(currentBasket) {
     // Calculate the basket
     Transaction.wrap(function () {
-        HookMgr.callHook('dw.order.calculate', 'calculate', currentBasket);
+        basketCalculationHelpers.calculateTotals(currentBasket);
     });
 }
 

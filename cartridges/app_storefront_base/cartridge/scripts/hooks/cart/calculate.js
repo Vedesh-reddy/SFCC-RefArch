@@ -17,6 +17,7 @@ var TaxMgr = require('dw/order/TaxMgr');
 var Logger = require('dw/system/Logger');
 var Status = require('dw/system/Status');
 var HookMgr = require('dw/system/HookMgr');
+var collections = require('*/cartridge/scripts/util/collections');
 
 /**
  * @function calculate
@@ -211,98 +212,82 @@ exports.calculateShipping = function(basket) {
  * Note that the function implements a fallback to the default tax class if a
  * product or a shipping method does explicitly define a tax class.
  *
- * @param {object} basket The basket containing the elements for which taxes need to be calculated
+ * @param {dw.order.Basket} basket The basket containing the elements for which taxes need to be calculated
  */
 exports.calculateTax = function(basket) {
-    var shipments = basket.getShipments().iterator();
-    while (shipments.hasNext()) {
-        var shipment = shipments.next();
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
 
-        // first we reset all tax fields of all the line items
-        // of the shipment
-        var shipmentLineItems = shipment.getAllLineItems().iterator();
-        while (shipmentLineItems.hasNext()) {
-            var _lineItem = shipmentLineItems.next();
-            // do not touch tax rate for fix rate items
-            if (_lineItem.taxClassID === TaxMgr.customRateTaxClassID) {
-                _lineItem.updateTax(_lineItem.taxRate);
+    var taxes = basketCalculationHelpers.calculateTaxes(basket);
+
+    // convert taxes into hashmap for performance.
+    var taxesMap = {};
+
+    taxes.taxes.forEach(function (item) {
+        taxesMap[item.uuid] = { value: item.value, amount: item.amount };
+    });
+
+    var lineItems = basket.getAllLineItems();
+
+    var totalShippingGrossPrice = 0;
+    var totalShippingNetPrice = 0;
+
+    var containsGlobalPriceAdjustments = false;
+
+    // update taxes for all line items
+    collections.forEach(lineItems, function (lineItem) {
+        var tax = taxesMap[lineItem.UUID];
+
+        if (tax) {
+            if (tax.amount) {
+                lineItem.updateTaxAmoun(tax.value);
+                if (lineItem instanceof dw.order.ShippingLineItem) {
+                    totalShippingGrossPrice += lineItem.getAdjustedGrossPrice();
+                    totalShippingNetPrice += lineItem.getAdjustedNetPrice();
+                }
             } else {
-                _lineItem.updateTax(null);
+                lineItem.updateTax(tax.value);
+            }
+        } else {
+            if (lineItem.taxClassID === TaxMgr.customRateTaxClassID) {
+                // do not touch tax rate for fix rate items
+                lineItem.updateTax(lineItem.taxRate);
+            } else {
+                // otherwise reset taxes to null
+                lineItem.updateTax(null);
             }
         }
-
-        // identify the appropriate tax jurisdiction
-        var taxJurisdictionID = null;
-
-        // if we have a shipping address, we can determine a tax jurisdiction for it
-        if (shipment.shippingAddress !== null) {
-            var location = new ShippingLocation(shipment.shippingAddress);
-            taxJurisdictionID = TaxMgr.getTaxJurisdictionID(location);
-        }
-
-        if (taxJurisdictionID === null) {
-            taxJurisdictionID = TaxMgr.defaultTaxJurisdictionID;
-        }
-
-        // if we have no tax jurisdiction, we cannot calculate tax
-        if (taxJurisdictionID === null) {
-            continue;
-        }
-
-        // shipping address and tax juridisction are available
-        var shipmentLineItems2 = shipment.getAllLineItems().iterator();
-        while (shipmentLineItems2.hasNext()) {
-            var lineItem = shipmentLineItems2.next();
-            var taxClassID = lineItem.taxClassID;
-
-            Logger.debug('1. Line Item {0} with Tax Class {1} and Tax Rate {2}', lineItem.lineItemText, lineItem.taxClassID, lineItem.taxRate);
-
-            // do not touch line items with fix tax rate
-            if (taxClassID === TaxMgr.customRateTaxClassID) {
-                continue;
-            }
-
-            // line item does not define a valid tax class; let's fall back to default tax class
-            if (taxClassID === null) {
-                taxClassID = TaxMgr.defaultTaxClassID;
-            }
-
-            // if we have no tax class, we cannot calculate tax
-            if (taxClassID === null) {
-                Logger.debug('Line Item {0} has invalid Tax Class {1}', lineItem.lineItemText, lineItem.taxClassID);
-                continue;
-            }
-
-            // get the tax rate
-            var taxRate = TaxMgr.getTaxRate(taxClassID, taxJurisdictionID);
-            // w/o a valid tax rate, we cannot calculate tax for the line item
-            if (taxRate === null) {
-                continue;
-            }
-
-            // calculate the tax of the line item
-            lineItem.updateTax(taxRate);
-            Logger.debug('2. Line Item {0} with Tax Class {1} and Tax Rate {2}', lineItem.lineItemText, lineItem.taxClassID, lineItem.taxRate);
-        }
-    }
+    });
 
     // besides shipment line items, we need to calculate tax for possible order-level price adjustments
     // this includes order-level shipping price adjustments
     if (!basket.getPriceAdjustments().empty || !basket.getShippingPriceAdjustments().empty) {
-    // calculate a mix tax rate from
-    var basketPriceAdjustmentsTaxRate = (basket.getMerchandizeTotalGrossPrice().value / basket.getMerchandizeTotalNetPrice().value) - 1;
+        if (collections.first(basket.getPriceAdjustments(), function (priceAdjustment) {
+            return taxesMap[priceAdjusmtnet.UUID] === null;
+        }) && collections.first(basket.getShippingPriceAdjustments(), function (shippingPriceAdjustment) {
+            return taxesMap[shippingPriceAdjustment.UUID] === null;
+        })) {
+            // tax hook didn't provide taxes for global price adjustment, we need to calculate them ourselves.
+            // calculate a mix tax rate from
+            var basketPriceAdjustmentsTaxRate = ((basket.getMerchandizeTotalGrossPrice().value + basket.getShippingTotalGrossPrice().value)
+                / (basket.getMerchandizeTotalNetPrice().value + basket.getShippingTotalNetPrice())) - 1;
 
-        var basketPriceAdjustments = basket.getPriceAdjustments().iterator();
-        while (basketPriceAdjustments.hasNext()) {
-            var basketPriceAdjustment = basketPriceAdjustments.next();
-            basketPriceAdjustment.updateTax(basketPriceAdjustmentsTaxRate);
-        }
+                var basketPriceAdjustments = basket.getPriceAdjustments();
+                collections.forEach(basketPriceAdjustments, function (basketPriceAdjustment) {
+                    basketPriceAdjustment.updateTax(basketPriceAdjustmentsTaxRate);
+                });
 
-        var basketShippingPriceAdjustments = basket.getShippingPriceAdjustments().iterator();
-        while (basketShippingPriceAdjustments.hasNext()) {
-            var basketShippingPriceAdjustment = basketShippingPriceAdjustments.next();
-            basketShippingPriceAdjustment.updateTax(basketPriceAdjustmentsTaxRate);
-        }
+                var basketShippingPriceAdjustments = basket.getShippingPriceAdjustments();
+                collections.forEach(basketShippingPriceAdjustments, function(basketShippingPriceAdjustment) {
+                    basketShippingPriceAdjustment.updateTax(totalShippingGrossPrice/totalShippingNetPrice - 1);
+                });
+            }
+    }
+
+    // if hook returned custom properties attach them to the order model
+    if (taxes.custom) {
+        Object.keys(taxes.custom).forEach(function (key) {
+            basket.custom[key] = taxes.custom[key];
+        });
     }
 
     return new Status(Status.OK);
