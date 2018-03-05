@@ -34,7 +34,7 @@ If this is your first attempt at sumbitting a pull request please follow the fol
 
 	* It is highly recommended to rebase your branch before submitting your pull request to reduce the risk of merge confilicts.
 	
-	* Please reference the issue number in the comments of yout pull request when applicable.(optional)
+	* Please reference the issue number in the comments of your pull request when applicable.(optional)
 	    
 	   
 2. Include a breif description of the problem and solution being addressed in your pull request.
@@ -55,6 +55,10 @@ If this is your first attempt at sumbitting a pull request please follow the fol
         
             npm run lint 	 
         
+    * code needs to pass unit test.
+    
+            npm run test
+    
     * code needs to pass unit/intergration test.
 	    
 	        npm run test:integration
@@ -62,28 +66,18 @@ If this is your first attempt at sumbitting a pull request please follow the fol
 
 ## What to Expect
 
-* Once your pull request has been submitted it will be look over and considered for merging.
+* Once your pull request has been submitted it will be looked over and considered for merging.
 
 * As long as it has met the guidlines illustrated above it should be merged in a timely fasion.
 
+* Our sprints generally run for two weeks, and in that period of time all pr's should be looked over and feedback given.
 
-## MFRA team menbers 
+
+## MFRA team members 
 
 To speed up the process of reviewing and merging your pull request it might make sense to proactively grant access to your fork for the following team members.
 
-    Ilya Volodin - ilyavolodin
-
-    Alex Clark - aclark_salesforce
-
-    Jing Wang - jingwang12
-
-    Zi Sardone - zsardone
-
-    Ann Diep - anndiep
-
-    Tanveer Khan - tanveer236
-
-    Ozzy Hussain - shussainsalesforce
-
-    Evan Chessman - echessman
-
+    to add the team members please allow access for the following users
+    
+        MFRA team - mobilefirst_ra
+        Jenkins automation - sg-jenkins
