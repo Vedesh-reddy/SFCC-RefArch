@@ -47,7 +47,7 @@ If this is your first attempt at sumbitting a pull request please follow the fol
 
 3. You will need to grant MFRA team members access to your fork in order for automated test to be run on your pull request prior to merging it into our integration banch.
 
-        ### Granting access to your forked repository
+  ### Granting access to your forked repository
         * From within your forked repository, find the 'Settings' link( found in the left nav of the site)
         
         * Under the settings menu click on 'User and group access'.
@@ -77,7 +77,7 @@ If this is your first attempt at sumbitting a pull request please follow the fol
 
 * As long as it has met the guidlines illustrated above it should be merged in a timely fasion.
 
-* Our sprints generally run for two weeks, and in that period of time all pr's should be looked over and feedback given.
+* Our sprints generally run for two weeks, and in that period of time all pr's should be looked over and feedback given (merged depending on our current sprint priorities).
 
 
 ## MFRA team members 
