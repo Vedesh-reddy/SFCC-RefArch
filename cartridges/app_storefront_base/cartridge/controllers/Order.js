@@ -365,7 +365,7 @@ server.post(
             });
         } else {
             res.json({
-                fields: formErrors(passwordForm)
+                fields: formErrors.getFormErrors(passwordForm)
             });
         }
 

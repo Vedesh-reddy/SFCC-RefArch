@@ -201,7 +201,7 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
     } else {
         res.json({
             success: false,
-            fields: formErrors(paymentForm)
+            fields: formErrors.getFormErrors(paymentForm)
         });
     }
     return next();

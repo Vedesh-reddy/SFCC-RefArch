@@ -295,7 +295,7 @@ server.post(
 
                 delete registrationForm.password;
                 delete registrationForm.passwordConfirm;
-                delete registrationForm.form;
+                formErrors.removeFormValues(registrationForm.form);
 
                 if (registrationForm.validForm) {
                     res.json({
@@ -306,13 +306,13 @@ server.post(
                     });
                 } else {
                     res.json({
-                        fields: formErrors(registrationForm)
+                        fields: formErrors.getFormErrors(registrationForm)
                     });
                 }
             });
         } else {
             res.json({
-                fields: formErrors(registrationForm)
+                fields: formErrors.getFormErrors(registrationForm)
             });
         }
 
@@ -446,14 +446,14 @@ server.post(
 
                     res.json({
                         success: false,
-                        fields: formErrors(profileForm)
+                        fields: formErrors.getFormErrors(profileForm)
                     });
                 }
             });
         } else {
             res.json({
                 success: false,
-                fields: formErrors(profileForm)
+                fields: formErrors.getFormErrors(profileForm)
             });
         }
         return next();
@@ -546,7 +546,7 @@ server.post(
 
                     res.json({
                         success: false,
-                        fields: formErrors(profileForm)
+                        fields: formErrors.getFormErrors(profileForm)
                     });
                 } else {
                     delete formInfo.currentPassword;
@@ -563,7 +563,7 @@ server.post(
         } else {
             res.json({
                 success: false,
-                fields: formErrors(profileForm)
+                fields: formErrors.getFormErrors(profileForm)
             });
         }
         return next();
