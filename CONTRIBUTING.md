@@ -1,11 +1,13 @@
-
 # Table of Contents
-
 -
 - [Submitting your first Pull Request ](#submitting-your-first-Pull-request)
+
 - [Submitting a Pull Request ](#submitting-a-Pull-request)
+
 - [What to expect](#what-to-expect)
+
 - [Team members](#MFRA-team-menbers)
+
 - [Back to README](./README.md)
 
 -
