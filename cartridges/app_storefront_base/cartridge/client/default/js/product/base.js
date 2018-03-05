@@ -522,7 +522,7 @@ module.exports = {
             if ($(this).attr('disabled')) {
                 return;
             }
-            var $productContainer = $(this).closest('.product-quickview');
+            var $productContainer = $(this).closest('.set-item');
             if (!$productContainer.length) {
                 $productContainer = $(this).closest('.product-detail');
             }
@@ -535,7 +535,7 @@ module.exports = {
         $(document).on('change', 'select[class*="select-"], .options-select', function (e) {
             e.preventDefault();
 
-            var $productContainer = $(this).closest('.product-quickview');
+            var $productContainer = $(this).closest('.set-item');
             if (!$productContainer.length) {
                 $productContainer = $(this).closest('.product-detail');
             }
