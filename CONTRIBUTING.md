@@ -17,7 +17,7 @@
 
 The following is a set of guidelines for contributing to MFRA base cartridge. These are mostly guidelines, not rules.  But by adhering to them we hope to address your pull request in timely manner. 
 
-## Submitting your first Pull Rquest
+## Submitting your first Pull Request
 
 If this is your first attempt at sumbitting a pull request please follow the following steps.
 
@@ -71,19 +71,19 @@ If this is your first attempt at sumbitting a pull request please follow the fol
 
 To speed up the process of reviewing and merging your pull request it might make sense to proactively grant access to your fork for the following team members.
 
-Ilya Volodin - 
+    Ilya Volodin - ilyavolodin
 
-Alex Clark - 
+    Alex Clark - aclark_salesforce
 
-Jing Wang - 
+    Jing Wang - jingwang12
 
-Zi Sardone - 
+    Zi Sardone - zsardone
 
-Ann Diep -
+    Ann Diep - anndiep
 
-Tanveer Khan - 
+    Tanveer Khan - tanveer236
 
-Ozzy Hussain - 
+    Ozzy Hussain - shussainsalesforce
 
-Evan Chessman - 
+    Evan Chessman - echessman
 
