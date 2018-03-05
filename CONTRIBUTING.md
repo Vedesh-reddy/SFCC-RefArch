@@ -45,8 +45,15 @@ If this is your first attempt at sumbitting a pull request please follow the fol
     
     * Include steps to reproduce (if applicable).
 
-3. At times we will ask you to grant MFRA team members access to your fork in order for automated test to be run on your pull request prior to merging it into our integration banch.(optional)
+3. You will need to grant MFRA team members access to your fork in order for automated test to be run on your pull request prior to merging it into our integration banch.
 
+        ### Granting access to your forked repository
+        * From within your forked repository, find the 'Settings' link( found in the left nav of the site)
+        
+        * Under the settings menu click on 'User and group access'.
+        
+        * Add the new user to the input field under the heading 'Users' with write access.
+        
 4. Note if there is any data that needs to be included with your code submission. 
 
 5. Code should pass the automation process.
