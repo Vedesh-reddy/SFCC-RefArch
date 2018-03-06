@@ -17,15 +17,15 @@ To contribute to the MFRA base cartridge, follow the guidelines below. This help
 ## Submitting your first pull request
 If this is your first pull request, follow these steps:
 
-1. Create a fork of the MFRA repository 
+  1. Create a fork of the MFRA repository 
 
-2. Download the forked repository
+  2. Download the forked repository
 
-3. Checkout the integration
+  3. Checkout the integration
 
-4. Apply your code fix
+  4. Apply your code fix
 
-5. Create a pull request against the integration branch
+  5. Create a pull request against the integration branch
 
 ## Submitting a pull request
 1. Create a branch off the integration branch.
@@ -57,11 +57,11 @@ If this is your first pull request, follow these steps:
 5. Your code should pass the automation process.
 
    * Lint your code:  
-    `npm run lint` 	 
+     `npm run lint` 	 
    * Run and pass the unit test:  
-    `npm run test`
+     `npm run test`
    * Run and pass the unit/intergration test:  
-    `npm run test:integration`
+     `npm run test:integration`
 
 ## What to expect
 
