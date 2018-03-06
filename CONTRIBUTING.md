@@ -1,4 +1,4 @@
-# Table of Contents
+# Table of contents
 
 - [Submitting your first Pull Request ](#submitting-your-first-Pull-request)
 
@@ -10,82 +10,48 @@
 
 - [Back to README](./README.md)
 
-
-
-
 # Contributing to _MFRA_
 
-The following is a set of guidelines for contributing to MFRA base cartridge. These are mostly guidelines, not rules.  But by adhering to them we hope to address your pull request in timely manner. 
+To contribute to the MFRA base cartridge, follow the guidelines below. This helps us address your pull request in a more timely manner. 
 
-## Submitting your first Pull Request
+## Submitting your first pull request
+If this is your first pull request, follow these steps:
+1. Create a fork of the MFRA repository 
+2. Download the forked repository
+3. Checkout the integration
+4. Apply your code fix
+5. Create a pull request against the integration branch
 
-If this is your first attempt at sumbitting a pull request please follow the following steps.
+## Submitting a pull request
+1. Create a branch off the integration branch.
+   * To reduce merge conflicts, rebase your branch before submitting your pull request.
+   * If applicable, reference the issue number in the comments of your pull request.
+2. In your pull request, include:
+   * A brief description of the problem and your solution
+   * (optional) Screen shots
+   * (optional) Error logs
+   * (optional) Steps to reproduce
+3. Grant MFRA team members access to your fork so we can run an automated test on your pull request prior to merging it into our integration branch.
+   * From within your forked repository, find the 'Settings' link (see the site navigation on left of the page).
+   * Under the settings menu, click 'User and group access'.
+   * Add the new user to the input field under the heading 'Users' and give the new user write access.
+4. Indicate if there is any data that needs to be included with your code submission. 
+5. Your code should pass the automation process.
+   * Lint your code:  
+    `npm run lint` 	 
+   * Run and pass the unit test:  
+    `npm run test`
+   * Run and pass the unit/intergration test:  
+    `npm run test:integration`
 
-	1. Create a fork of the MFRA repository 
-	2. Download the forked repository
-	3. Checkout the integration
-	4. Apply your code fix
-	5. Create a pull request (against the integration branch)
+## What to expect
 
-
-## Submitting a Pull Rquest
-
-1. You will need to create a branch off of the integration banch.
-
-	* It is highly recommended to rebase your branch before submitting your pull request to reduce the risk of merge confilicts.
-	
-	* Please reference the issue number in the comments of your pull request when applicable.(optional)
-	    
-	   
-2. Include a breif description of the problem and solution being addressed in your pull request.
-    
-    * Include screen shots when applicable.(optional)
-    
-    * Include error logs when applicable.(optional)
-    
-    * Include steps to reproduce (if applicable).
-
-3. You will need to grant MFRA team members access to your fork in order for automated test to be run on your pull request prior to merging it into our integration banch.
-
-      __Granting access to your forked repository__
-        
-        * From within your forked repository, find the 'Settings' link( found in the left nav of the site)
-        
-        * Under the settings menu click on 'User and group access'.
-        
-        * Add the new user to the input field under the heading 'Users' with write access.
-        
-4. Note if there is any data that needs to be included with your code submission. 
-
-5. Code should pass the automation process.
-
-    * code needs to be linted
-        
-            npm run lint 	 
-        
-    * code needs to pass unit test.
-    
-            npm run test
-    
-    * code needs to pass unit/intergration test.
-	    
-	        npm run test:integration
-	
-
-## What to Expect
-
-* Once your pull request has been submitted it will be looked over and considered for merging.
-
-* As long as it has met the guidlines illustrated above it should be merged in a timely fasion.
-
-* Our sprints generally run for two weeks, and in that period of time all pr's should be looked over and feedback given (merged depending on our current sprint priorities).
-
+After you submit your pull request, we'll look it over and consider it for merging.
+As long as your submission has met the above guidelines, we should merge it in a timely manner.
+Our sprints run for about two weeks; in that period of time, we typically review all pull requests, give feedback, and merge the request (depending on our current sprint priorities).
 
 ## MFRA team members 
 
-To speed up the process of reviewing and merging your pull request it might make sense to proactively grant access to your fork for the following team members.
-
-    to add the team members please allow access for the following users
-    
-        MFRA team - mobilefirst_ra
-        Jenkins automation - sg-jenkins
+To speed up the process of reviewing and merging your pull request, grant the following team members access to your fork:
+  * MFRA team - mobilefirst_ra
+  * Jenkins automation - sg-jenkins
