@@ -189,5 +189,6 @@ npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandwa
 
 **Note:** To see the results, please login to https://saucelabs.com/beta/dashboard/tests to find your jobs reports under dashboard.
 
+# [Contributing to MFRA](./CONTRIBUTING.md)
 
 
