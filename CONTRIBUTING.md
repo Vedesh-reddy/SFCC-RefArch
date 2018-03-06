@@ -28,40 +28,40 @@ If this is your first pull request, follow these steps:
   5. Create a pull request against the integration branch
 
 ## Submitting a pull request
-1. Create a branch off the integration branch.
+  1. Create a branch off the integration branch.
 
-   * To reduce merge conflicts, rebase your branch before submitting your pull request.
+       * To reduce merge conflicts, rebase your branch before submitting your pull request.
    
-   * If applicable, reference the issue number in the comments of your pull request.
+       * If applicable, reference the issue number in the comments of your pull request.
    
-2. In your pull request, include:
+  2. In your pull request, include:
 
-   * A brief description of the problem and your solution
+       * A brief description of the problem and your solution
    
-   * (optional) Screen shots
+       * (optional) Screen shots
    
-   * (optional) Error logs
+       * (optional) Error logs
    
-   * (optional) Steps to reproduce
+       * (optional) Steps to reproduce
    
-3. Grant MFRA team members access to your fork so we can run an automated test on your pull request prior to merging it into our integration branch.
+  3. Grant MFRA team members access to your fork so we can run an automated test on your pull request prior to merging it into our integration branch.
 
-   * From within your forked repository, find the 'Settings' link (see the site navigation on left of the page).
+       * From within your forked repository, find the 'Settings' link (see the site navigation on left of the page).
    
-   * Under the settings menu, click 'User and group access'.
+       * Under the settings menu, click 'User and group access'.
    
-   * Add the new user to the input field under the heading 'Users' and give the new user write access.
+       * Add the new user to the input field under the heading 'Users' and give the new user write access.
    
-4. Indicate if there is any data that needs to be included with your code submission. 
+  4. Indicate if there is any data that needs to be included with your code submission. 
 
-5. Your code should pass the automation process.
+  5. Your code should pass the automation process.
 
-   * Lint your code:  
-     `npm run lint` 	 
-   * Run and pass the unit test:  
-     `npm run test`
-   * Run and pass the unit/intergration test:  
-     `npm run test:integration`
+       * Lint your code:  
+         `npm run lint` 	 
+       * Run and pass the unit test:  
+         `npm run test`
+       * Run and pass the unit/intergration test:  
+         `npm run test:integration`
 
 ## What to expect
 
