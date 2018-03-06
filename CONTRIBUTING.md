@@ -21,7 +21,7 @@ If this is your first pull request, follow these steps:
 
   2. Download the forked repository
 
-  3. Checkout the integration
+  3. Checkout the integration branch
 
   4. Apply your code fix
 
@@ -66,11 +66,15 @@ If this is your first pull request, follow these steps:
 ## What to expect
 
 After you submit your pull request, we'll look it over and consider it for merging.
+
 As long as your submission has met the above guidelines, we should merge it in a timely manner.
+
 Our sprints run for about two weeks; in that period of time, we typically review all pull requests, give feedback, and merge the request (depending on our current sprint priorities).
 
 ## MFRA team members 
 
 To speed up the process of reviewing and merging your pull request, grant the following team members access to your fork:
+
   * MFRA team - mobilefirst_ra
+  
   * Jenkins automation - sg-jenkins
