@@ -1,4 +1,4 @@
-<div class="store-details">
+<div class="store-details" data-store-id="${store.ID}">
     <div class="store-name">${store.name}</div>
     <address>
         <a class="store-map" target='_blank' href="https://maps.google.com/?daddr=${store.latitude},${store.longitude}">

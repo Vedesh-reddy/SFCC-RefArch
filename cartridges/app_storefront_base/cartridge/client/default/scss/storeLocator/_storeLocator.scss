@@ -32,21 +32,12 @@
 
     .search-form {
         width: 100%;
+        margin-bottom: 4rem;
     }
 
     .select-store {
-        @include media-breakpoint-down(sm) {
-            margin-top: 1rem;
-            margin-bottom: 1rem;
-            width: 86%;
-            margin-left: 1.3rem;
-        }
-
         @include media-breakpoint-up(sm) {
-            margin-top: 15rem;
-            margin-bottom: 1rem;
-            width: 90%;
-            margin-left: 1.3rem;
+            margin-top: -3rem;
         }
     }
 
