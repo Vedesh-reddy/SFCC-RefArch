@@ -412,4 +412,36 @@ describe('locale', function () {
             }
         });
     });
+    it('should return a currentCountry if currentLocale is not set', function () {
+        var currentLocale = {
+            ID: '',
+            displayCountry: '',
+            country: '',
+            displayName: '',
+            language: '',
+            displayLanguage: ''
+        };
+        var siteId = 'MobileFirst';
+        var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
+        assert.deepEqual(localeModel, {
+            'locale': {
+                'countryCode': '',
+                'currencyCode': 'USD',
+                'name': '',
+                'displayName': '',
+                'language': '',
+                'displayLanguage': '',
+                'localLinks': [{
+                    'country': 'US',
+                    'currencyCode': 'USD',
+                    'displayCountry': 'United States',
+                    'displayLanguage': 'English',
+                    'displayName': 'English (US)',
+                    'language': 'en',
+                    'localID': 'en_US'
+                }
+                ]
+            }
+        });
+    });
 });
