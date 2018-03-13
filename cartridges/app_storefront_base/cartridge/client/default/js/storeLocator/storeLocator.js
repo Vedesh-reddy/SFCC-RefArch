@@ -89,15 +89,16 @@ function maps() {
 function updateStoresResults(data) {
     var $resultsDiv = $('.results');
     var $mapDiv = $('.map-canvas');
+    var hasResults = data.stores.length > 0;
 
-    if (data.stores.length === 0) {
+    if (!hasResults) {
         $('.store-locator-no-results').show();
     } else {
         $('.store-locator-no-results').hide();
     }
 
     $resultsDiv.empty()
-        .data('has-results', data.stores.length)
+        .data('has-results', hasResults)
         .data('radius', data.radius)
         .data('search-key', data.searchKey);
 
@@ -122,7 +123,7 @@ module.exports = {
             $('.store-locator-no-apiKey').show();
         }
 
-        if ($('.results').data('has-results') === 0) {
+        if (!$('.results').data('has-results')) {
             $('.store-locator-no-results').show();
         }
     },
@@ -154,6 +155,7 @@ module.exports = {
                     success: function (data) {
                         $.spinner().stop();
                         updateStoresResults(data);
+                        $('.select-store').prop('disabled', true);
                     }
                 });
             });
@@ -161,7 +163,7 @@ module.exports = {
     },
 
     search: function () {
-        $('.store-locator').submit(function (e) {
+        $('.store-locator-container .store-locator').submit(function (e) {
             e.preventDefault();
             $.spinner().start();
             var $form = $('.store-locator');
@@ -179,6 +181,7 @@ module.exports = {
                 success: function (data) {
                     $.spinner().stop();
                     updateStoresResults(data);
+                    $('.select-store').prop('disabled', true);
                 }
             });
             return false;
@@ -186,7 +189,7 @@ module.exports = {
     },
 
     changeRadius: function () {
-        $('.radius').change(function () {
+        $('.store-locator-container .radius').change(function () {
             var radius = $(this).val();
             var searchKeys = $('.results').data('search-key');
             var url = $('.radius').data('action');
@@ -214,15 +217,28 @@ module.exports = {
                 success: function (data) {
                     $.spinner().stop();
                     updateStoresResults(data);
+                    $('.select-store').prop('disabled', true);
                 }
             });
         });
     },
     selectStore: function () {
-        $('body').on('click', '.select-store', (function (e) {
+        $('.store-locator-container').on('click', '.select-store', (function (e) {
             e.preventDefault();
-            var selectedStore = $(':checked', '.results-card .results').data('store-info');
-            $('.select-store').trigger('store:selected', selectedStore);
+            var selectedStoreID = $('input[name=store]:checked').attr('value');
+            var selectedStore = {
+                storeID: selectedStoreID,
+                searchRadius: $('#radius').val(),
+                searchPostalCode: $('.results').data('search-key').postalCode,
+                storeDetailsHtml: $('#' + selectedStoreID + ' .store-details')[0].innerHTML
+            };
+
+            $('body').trigger('store:selected', selectedStore);
+        }));
+    },
+    updateSelectStoreButton: function () {
+        $('body').on('change', '.select-store-input', (function () {
+            $('.select-store').prop('disabled', false);
         }));
     }
 };
