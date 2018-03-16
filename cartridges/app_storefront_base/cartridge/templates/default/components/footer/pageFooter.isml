@@ -17,7 +17,7 @@
         <hr class="hidden-xs-down" />
         <div class="row">
             <div class="col-lg-4 col-sm-5 push-sm-7 push-lg-8 social">
-                <isslot id="footer-column" description="Content in column 1 of the Footer" context="global" />
+                <isslot id="footer-column-m" description="Content in column 1 of the Footer" context="global" />
                 <button class="back-to-top" title="${Resource.msg('button.back_to_top', 'common', null)}" aria-hidden="true">
                     <span class="fa-stack fa-lg">
                         <i class="fa fa-circle fa-inverse fa-stack-2x"></i>

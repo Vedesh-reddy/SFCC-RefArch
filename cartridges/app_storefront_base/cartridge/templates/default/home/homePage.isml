@@ -7,23 +7,23 @@
 
     <!-- +1.888.555.0199 --><!--This phone is a requirement to support existing Gomez monitor of SiteGenesis. Demadware customers can remove this.-->
     <div class="home-main homepage">
-        <isslot id="home-main" description="Main home page slot." context="global" />
+        <isslot id="home-main-m" description="Main home page slot." context="global" />
     </div>
 
     <div class="container home-categories homepage">
         <div class="row home-main-categories no-gutters">
-            <isslot id="home-categories" description="Categories slots on the home page." context="global" />
+            <isslot id="home-categories-m" description="Categories slots on the home page." context="global" />
         </div>
     </div>
 
     <div class="container home-product-tiles homepage">
         <div class="hp-product-grid" itemtype="http://schema.org/SomeProducts" itemid="#product">
-            <isslot id="home-products" description="Product tiles on the home page." context="global" />
+            <isslot id="home-products-m" description="Product tiles on the home page." context="global" />
         </div>
     </div>
 
     <div class="homepage shop-the-style">
-        <isslot id="home-product-set" description="Link to a Product Set." context="global" />
+        <isslot id="home-product-set-m" description="Link to a Product Set." context="global" />
         <div class="home-email-signup">
             <div class="container">
                 <form role="form">

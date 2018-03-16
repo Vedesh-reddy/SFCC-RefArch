@@ -29,13 +29,13 @@ describe('Add Product variants to cart', function () {
 
         var totalQty;
 
-        var variantPid1 = '701643421084';
+        var variantPid1 = '701643421084M';
         var qty1 = 2;
-        var variantPid2 = '701642923459';
+        var variantPid2 = '701642923459M';
         var qty2 = 1;
-        var variantPid3 = '013742000252';
+        var variantPid3 = '013742000252M';
         var qty3 = 11;
-        var variantPid4 = '029407331258';
+        var variantPid4 = '029407331258M';
         var qty4 = 3;
 
         var action = 'Cart-AddProduct';

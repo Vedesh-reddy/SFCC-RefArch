@@ -8,7 +8,7 @@
                     </button>
                 </div>
                 <div class="content">
-                    <isslot id="header-banner" description="Slot above the site header" context="global" />
+                    <isslot id="header-banner-m" description="Slot above the site header" context="global" />
                 </div>
             </div>
         </div>

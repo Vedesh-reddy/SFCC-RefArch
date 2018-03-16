@@ -9,11 +9,11 @@ chai.use(chaiSubset);
 describe('Update quantity for product variant', function () {
     this.timeout(45000);
 
-    var variantPid1 = '701643421084';
+    var variantPid1 = '701643421084M';
     var qty1 = 2;
-    var variantPid2 = '701642923459';
+    var variantPid2 = '701642923459M';
     var qty2 = 1;
-    var variantPid3 = '029407331258';
+    var variantPid3 = '029407331258M';
     var qty3 = 3;
 
     var prodIdUuidMap = {};

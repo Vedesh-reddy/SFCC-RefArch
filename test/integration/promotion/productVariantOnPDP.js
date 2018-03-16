@@ -11,7 +11,7 @@ var config = require('../it.config');
 describe('Product Variant Promotion on Product Details Page', function () {
     this.timeout(5000);
 
-    var masterPid = '25752986';
+    var masterPid = '25752986M';
     var myGetRequest = {
         url: '',
         method: 'GET',

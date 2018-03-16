@@ -4,7 +4,7 @@ var request = require('request-promise');
 var config = require('../it.config');
 
 // Test Case
-// pid=799927767720
+// pid=799927767720M
 // 1. Product PDP page contains the promotional messages
 // 2. Add 2 products to Cart, should return approaching order/shipping promotion messages
 // 3. shipping cost and order discount
@@ -13,8 +13,8 @@ var config = require('../it.config');
 describe('Approaching order level promotion', function () {
     this.timeout(5000);
 
-    var masterPid = '25594767';
-    var variantPid = '799927767720';
+    var masterPid = '25594767M';
+    var variantPid = '799927767720M';
     var qty = 2;
     var cookieString;
     var cookieJar = request.jar();

@@ -2,7 +2,7 @@
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <isslot id="header-banner" description="Slot above the site header" context="global" />
+                <isslot id="header-banner-m" description="Slot above the site header" context="global" />
             </div>
         </div>
     </div>
