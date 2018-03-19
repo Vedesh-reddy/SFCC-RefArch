@@ -24,6 +24,8 @@
 
     <div class="homepage shop-the-style">
         <isslot id="home-product-set" description="Link to a Product Set." context="global" />
+    </div>
+    <div class="homepage">
         <div class="home-email-signup">
             <div class="container">
                 <form role="form">
