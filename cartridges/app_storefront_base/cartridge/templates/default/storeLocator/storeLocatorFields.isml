@@ -14,11 +14,13 @@
         <div class="invalid-feedback"></div>
     </div>
     <button class="btn btn-block btn-storelocator-search"
-    <isif condition="${pdict.isForm === 'true'}"> type="submit"
-    <iselse> type="button"
-    </isif>
-     name="submit" value="submit">
-        ${Resource.msg('button.find.stores','storeLocator',null)}
+        <isif condition="${pdict.isForm === 'true'}">
+            type="submit"
+        <iselse>
+            type="button"
+        </isif>
+         name="submit" value="submit">
+            ${Resource.msg('button.find.stores','storeLocator',null)}
     </button>
     <isif condition="${pdict.isForm === 'true'}">
         </form>
