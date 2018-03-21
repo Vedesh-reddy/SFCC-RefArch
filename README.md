@@ -16,12 +16,14 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 3 Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
 
 4 Create `dw.json` file in the root of the project:
+```json
 {
     "hostname": "your-sandbox-hostname.demandware.net",
     "username": "yourlogin",
     "password": "yourpwd",
     "code-version": "version_to_upload_to"
-} 
+}
+```
 
 5 Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
 
@@ -185,7 +187,7 @@ npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandwa
 ```
 
 ```
-npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client appium â€”name appiumIntegrationBranch
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client appium —name appiumIntegrationBranch
 ```
 
 **Note:** To run both browsers with one command :
