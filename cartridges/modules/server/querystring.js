@@ -17,7 +17,14 @@ function parsePreferences(preferences) {
 
     for (var i = 1; i < count + 1; i++) {
         key = preferences['prefn' + i];
-        value = preferences['prefv' + i];
+        if (preferences['prefmin' + i]) {
+            value = {
+                min: preferences['prefmin' + i],
+                max: preferences['prefmax' + i]
+            };
+        } else {
+            value = preferences['prefv' + i];
+        }
         params[key] = value;
     }
 
