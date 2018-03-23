@@ -263,7 +263,7 @@ exports.calculateTax = function(basket) {
     if (!basket.getPriceAdjustments().empty || !basket.getShippingPriceAdjustments().empty) {
         if (collections.first(basket.getPriceAdjustments(), function (priceAdjustment) {
             return taxesMap[priceAdjusmtnet.UUID] === null;
-        }) && collections.first(basket.getShippingPriceAdjustments(), function (shippingPriceAdjustment) {
+        }) || collections.first(basket.getShippingPriceAdjustments(), function (shippingPriceAdjustment) {
             return taxesMap[shippingPriceAdjustment.UUID] === null;
         })) {
             // tax hook didn't provide taxes for global price adjustment, we need to calculate them ourselves.
