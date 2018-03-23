@@ -358,6 +358,7 @@ function updateMultiShipInformation(order) {
     var $checkoutMain = $('#checkout-main');
     var $checkbox = $('[name=usingMultiShipping]');
     var $submitShippingBtn = $('button.submit-shipping');
+    $('.shipping-nav .alert-danger').remove();
 
     if (order.usingMultiShipping) {
         shippingState.changeState({ multiship: order.usingMultiShipping, collapsed: true });
@@ -736,9 +737,8 @@ module.exports = {
 
                             if (response.order && response.order.shippable) {
                                 $('button.submit-shipping').attr('disabled', null);
-                            } else {
-                                $('button.submit-shipping').attr('disabled', 'disabled');
                             }
+
                             $rootEl.spinner().stop();
                         })
                         .fail(function (err) {

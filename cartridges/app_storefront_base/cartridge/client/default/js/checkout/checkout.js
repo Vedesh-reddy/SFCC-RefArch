@@ -103,9 +103,20 @@ var formHelpers = require('./formErrors');
                             url: url,
                             method: 'GET',
                             success: function (data) {
-                                $('body').trigger('checkout:updateCheckoutView',
-                                    { order: data.order, customer: data.customer });
-                                defer.resolve();
+                                if (!data.error) {
+                                    $('body').trigger('checkout:updateCheckoutView',
+                                        { order: data.order, customer: data.customer });
+                                    defer.resolve();
+                                } else if ($('.shipping-nav .alert-danger').length < 1) {
+                                    var errorMsg = data.message;
+                                    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
+                                        'fade show" role="alert">' +
+                                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                        '<span aria-hidden="true">&times;</span>' +
+                                        '</button>' + errorMsg + '</div>';
+                                    $('.shipping-nav').append(errorHtml);
+                                    defer.reject();
+                                }
                             },
                             error: function () {
                                 // Server error submitting form

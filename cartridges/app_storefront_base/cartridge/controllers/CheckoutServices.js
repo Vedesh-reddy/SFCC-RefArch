@@ -11,6 +11,7 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     var AccountModel = require('*/cartridge/models/account');
     var OrderModel = require('*/cartridge/models/order');
     var Locale = require('dw/util/Locale');
+    var Resource = require('dw/web/Resource');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
@@ -28,7 +29,9 @@ server.get('Get', server.middleware.https, function (req, res, next) {
 
     res.json({
         order: basketModel,
-        customer: new AccountModel(req.currentCustomer)
+        customer: new AccountModel(req.currentCustomer),
+        error: !basketModel.steps.shipping.iscompleted,
+        message: basketModel.steps.shipping.iscompleted ? '' : Resource.msg('error.message.shipping.addresses', 'checkout', null)
     });
 
     next();
