@@ -46,6 +46,16 @@ describe('querystring', function () {
             var paramsOutput = result.toString();
             assert.equal(paramsOutput, 'prefn1=pref1&prefn2=pref2&prefv1=pref1Value&prefv2=pref2Value');
         });
+        it('should parse search refinement preference range query parameters', function () {
+            var rangeParams = 'prefn1=prefName&prefmin1=0&prefmax1=100';
+            var rangeResult = new QueryString(rangeParams);
+            assert.deepEqual(rangeResult.preferences, {
+                prefName: {
+                    min: '0',
+                    max: '100'
+                }
+            });
+        });
     });
 
     describe('handling special characters', function () {

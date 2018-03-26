@@ -11,7 +11,7 @@
  */
 function parsePreferences(preferences) {
     var params = {};
-    var count = Object.keys(preferences).length / 2;
+    var count = Math.floor(Object.keys(preferences).length / 2);
     var key = '';
     var value = '';
 
