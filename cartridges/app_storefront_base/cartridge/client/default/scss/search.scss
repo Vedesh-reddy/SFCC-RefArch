@@ -168,7 +168,6 @@
     margin-bottom: 1em;
 
     @include media-breakpoint-down(sm) {
-
         &.card {
             border-top: 0 none;
             border-left: 0 none;
@@ -179,7 +178,7 @@
 
         .card-header {
             border-bottom: 0 none;
-            padding: .25rem 1rem;
+            padding: 0.25rem 1rem;
         }
 
         .card-body {
