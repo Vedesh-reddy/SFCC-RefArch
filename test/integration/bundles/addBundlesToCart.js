@@ -18,12 +18,12 @@ describe('Add bundles to cart', function () {
             }
         };
 
-        var bundlePid = 'womens-jewelry-bundle';
+        var bundlePid = 'womens-jewelry-bundleM';
         var qty = 1;
         var childProducts = [
-            { pid: '013742002836' },
-            { pid: '013742002805' },
-            { pid: '013742002799' }
+            { pid: '013742002836M' },
+            { pid: '013742002805M' },
+            { pid: '013742002799M' }
         ];
 
         myRequest.url = config.baseUrl + '/Cart-AddProduct';
@@ -39,11 +39,11 @@ describe('Add bundles to cart', function () {
             assert.equal(cartItems.productName, 'Turquoise Jewelry Bundle');
             assert.equal(cartItems.productType, 'bundle');
             assert.equal(cartItems.priceTotal.price, '$113.00');
-            assert.equal(cartItems.bundledProductLineItems[0].id, '013742002836');
+            assert.equal(cartItems.bundledProductLineItems[0].id, '013742002836M');
             assert.equal(cartItems.bundledProductLineItems[0].productName, 'Turquoise and Gold Bracelet');
-            assert.equal(cartItems.bundledProductLineItems[1].id, '013742002805');
+            assert.equal(cartItems.bundledProductLineItems[1].id, '013742002805M');
             assert.equal(cartItems.bundledProductLineItems[1].productName, 'Turquoise and Gold Necklace');
-            assert.equal(cartItems.bundledProductLineItems[2].id, '013742002799');
+            assert.equal(cartItems.bundledProductLineItems[2].id, '013742002799M');
             assert.equal(cartItems.bundledProductLineItems[2].productName, 'Turquoise and Gold Hoop Earring');
         });
     });

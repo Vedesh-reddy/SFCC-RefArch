@@ -23,7 +23,7 @@ describe('Select different State in Shipping Form', function () {
         var cookie;
         before(function () {
             var qty1 = 1;
-            var variantPid1 = '013742000443';
+            var variantPid1 = '013742000443M';
             var cookieString;
 
             var myRequest = {
@@ -154,7 +154,7 @@ describe('Select different State in Shipping Form', function () {
         var cookie;
         before(function () {
             var qty1 = 3;
-            var variantPid1 = '013742000443';
+            var variantPid1 = '013742000443M';
             var cookieString;
 
             var myRequest = {
@@ -288,7 +288,7 @@ describe('Select different State in Shipping Form', function () {
         var cookie;
         before(function () {
             var qty1 = 1;
-            var variantPid1 = '708141677371';
+            var variantPid1 = '708141677371M';
             var cookieString;
 
             var myRequest = {
@@ -403,7 +403,7 @@ describe('Select different State in Shipping Form', function () {
         var cookie;
         before(function () {
             var qty1 = 1;
-            var variantPid1 = '708141677371';
+            var variantPid1 = '708141677371M';
             var cookieString;
 
             var myRequest = {
@@ -536,7 +536,7 @@ describe('Select different State in Shipping Form', function () {
         var cookie;
         before(function () {
             var qty1 = 3;
-            var variantPid1 = '708141677371';
+            var variantPid1 = '708141677371M';
             var cookieString;
             var myRequest = {
                 url: '',
@@ -667,7 +667,7 @@ describe('Select different State in Shipping Form', function () {
         var cookie;
         before(function () {
             var qty1 = 1;
-            var variantPid1 = '708141677371';
+            var variantPid1 = '708141677371M';
             var cookieString;
 
             var myRequest = {

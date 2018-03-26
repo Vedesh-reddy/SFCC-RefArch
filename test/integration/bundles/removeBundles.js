@@ -7,12 +7,12 @@ describe('Remove bundle from product line item', function () {
     this.timeout(50000);
     var cookieJar = request.jar();
     var UUID;
-    var bundlePid = 'womens-jewelry-bundle';
+    var bundlePid = 'womens-jewelry-bundleM';
     var qty = 1;
     var childProducts = [
-        { pid: '013742002836' },
-        { pid: '013742002805' },
-        { pid: '013742002799' }
+        { pid: '013742002836M' },
+        { pid: '013742002805M' },
+        { pid: '013742002799M' }
     ];
 
     var myRequest = {

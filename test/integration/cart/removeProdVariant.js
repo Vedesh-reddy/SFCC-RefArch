@@ -8,11 +8,11 @@ chai.use(chaiSubset);
 describe('Remove product variant from line item', function () {
     this.timeout(50000);
 
-    var variantPid1 = '701643421084';
+    var variantPid1 = '701643421084M';
     var qty1 = 2;
-    var variantPid2 = '701642923459';
+    var variantPid2 = '701642923459M';
     var qty2 = 1;
-    var variantPid3 = '029407331258';
+    var variantPid3 = '029407331258M';
     var qty3 = 3;
 
     var prodIdUuidMap = {};
@@ -249,7 +249,7 @@ describe('Remove product variant from line item', function () {
     });
 
     it(' 4>. should return error if product does not exist in cart', function () {
-        var variantPidNotExist = '701643421084abc';
+        var variantPidNotExist = '701643421084Mabc';
         var variantUuidNotExist = '529f59ef63a0d238b8575c4f8fabc';
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + variantPidNotExist + '&uuid=' + variantUuidNotExist;
 

@@ -13,17 +13,17 @@ describe('Add Product Set to cart', function () {
 
         var pidsObj = [
             {
-                'pid': '726819487824',
+                'pid': '726819487824M',
                 'qty': '1',
                 options: ''
             },
             {
-                'pid': '69309284-2',
+                'pid': '69309284M-2',
                 'qty': '1',
                 options: ''
             },
             {
-                'pid': '799927335059',
+                'pid': '799927335059M',
                 'qty': '1',
                 options: ''
             }
@@ -137,7 +137,7 @@ describe('Add Product Set to cart', function () {
                         'approachingDiscounts': [],
                         'items': [
                             {
-                                'id': '726819487824',
+                                'id': '726819487824M',
                                 'productName': 'Platinum V Neck Suit Dress',
                                 'price': {
                                     'sales': {
@@ -197,7 +197,7 @@ describe('Add Product Set to cart', function () {
                                 'isAvailableForInStorePickup': false
                             },
                             {
-                                'id': '69309284-2',
+                                'id': '69309284M-2',
                                 'productName': 'Modern Striped Dress Shirt',
                                 'price': {
                                     'sales': {
@@ -257,7 +257,7 @@ describe('Add Product Set to cart', function () {
                                 'isAvailableForInStorePickup': false
                             },
                             {
-                                'id': '799927335059',
+                                'id': '799927335059M',
                                 'productName': 'Classic Wrap',
                                 'price': {
                                     'sales': {
@@ -377,7 +377,7 @@ describe('Add Product Set to cart', function () {
 
                 // Verify items in cart - item 1
                 var expectedItem0 = {
-                    id: '726819487824',
+                    id: '726819487824M',
                     productName: 'Platinum V Neck Suit Dress',
                     price:
                     {
@@ -401,7 +401,7 @@ describe('Add Product Set to cart', function () {
 
                 // Verify items in cart - item 2
                 var expectedItem1 = {
-                    id: '69309284-2',
+                    id: '69309284M-2',
                     productName: 'Modern Striped Dress Shirt',
                     price: {
                         sales: {
@@ -423,7 +423,7 @@ describe('Add Product Set to cart', function () {
 
                 // Verify items in cart - item 3
                 var expectedItem2 = {
-                    id: '799927335059',
+                    id: '799927335059M',
                     productName: 'Classic Wrap',
                     price: {
                         sales: {
