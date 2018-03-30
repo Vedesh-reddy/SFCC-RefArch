@@ -52,11 +52,15 @@ var orderMgr = {
     },
     placeOrder: function () {
         return status.OK;
+    },
+    failOrder: function () {
+        return { order: 'failed order' };
     }
 };
 
 var order = {
-    CONFIRMATION_STATUS_CONFIRMED: 'order confirmation status confirmed',
+    CONFIRMATION_STATUS_NOTCONFIRMED: 'ONFIRMATION_STATUS_NOTCONFIRMED',
+    CONFIRMATION_STATUS_CONFIRMED: 'CONFIRMATION_STATUS_CONFIRMED',
     EXPORT_STATUS_READY: 'order export status is ready'
 };
 
