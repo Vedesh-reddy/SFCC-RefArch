@@ -43,7 +43,6 @@ describe('storeHelpers', function () {
                 actionUrl: url,
                 googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=SOME_API_KEY',
                 radiusOptions: radiusOptions,
-                showMap: false,
                 storesResultsHtml: 'someString'
             };
 
@@ -88,7 +87,6 @@ describe('storeHelpers', function () {
                 actionUrl: url,
                 googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=SOME_API_KEY',
                 radiusOptions: radiusOptions,
-                showMap: false,
                 storesResultsHtml: 'someString'
             };
 
@@ -135,7 +133,6 @@ describe('storeHelpers', function () {
                 actionUrl: 'path-to-endpoint/Stores-FindStores',
                 googleMapsApi: 'https://maps.googleapis.com/maps/api/js?key=SOME_API_KEY',
                 radiusOptions: radiusOptions,
-                showMap: true,
                 storesResultsHtml: 'someString'
             };
 

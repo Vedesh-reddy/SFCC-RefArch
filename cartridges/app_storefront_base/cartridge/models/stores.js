@@ -61,9 +61,8 @@ function getGoogleMapsApi(apiKey) {
  * @param {number} searchRadius - the radius used in the search
  * @param {dw.web.URL} actionUrl - a relative url
  * @param {string} apiKey - the google maps api key that is set in site preferences
- * @param {boolean} showMap - boolean to show map
  */
-function stores(storesResultsObject, searchKey, searchRadius, actionUrl, apiKey, showMap) {
+function stores(storesResultsObject, searchKey, searchRadius, actionUrl, apiKey) {
     this.stores = createStoresObject(storesResultsObject);
     this.locations = JSON.stringify(createGeoLocationObject(storesResultsObject));
     this.searchKey = searchKey;
@@ -71,8 +70,7 @@ function stores(storesResultsObject, searchKey, searchRadius, actionUrl, apiKey,
     this.actionUrl = actionUrl;
     this.googleMapsApi = getGoogleMapsApi(apiKey);
     this.radiusOptions = [15, 30, 50, 100, 300];
-    this.showMap = showMap || false;
-    this.storesResultsHtml = this.stores ? storeHelpers.createStoresResultsHtml({ stores: this.stores, showMap: this.showMap }) : null;
+    this.storesResultsHtml = this.stores ? storeHelpers.createStoresResultsHtml(this.stores) : null;
 }
 
 module.exports = stores;

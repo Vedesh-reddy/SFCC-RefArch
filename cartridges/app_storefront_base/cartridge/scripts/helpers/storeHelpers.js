@@ -47,7 +47,7 @@ function getStores(radius, postalCode, lat, long, geolocation, showMap, url) {
     var actionUrl = url || URLUtils.url('Stores-FindStores', 'showMap', showMap).toString();
     var apiKey = Site.getCurrent().getCustomPreferenceValue('mapAPI');
 
-    var stores = new StoresModel(storeMgrResult.keySet(), searchKey, resolvedRadius, actionUrl, apiKey, showMap);
+    var stores = new StoresModel(storeMgrResult.keySet(), searchKey, resolvedRadius, actionUrl, apiKey);
 
     return stores;
 }
@@ -62,7 +62,7 @@ function createStoresResultsHtml(storesInfo) {
     var Template = require('dw/util/Template');
 
     var context = new HashMap();
-    var object = { stores: storesInfo };
+    var object = { stores: { stores: storesInfo } };
 
     Object.keys(object).forEach(function (key) {
         context.put(key, object[key]);

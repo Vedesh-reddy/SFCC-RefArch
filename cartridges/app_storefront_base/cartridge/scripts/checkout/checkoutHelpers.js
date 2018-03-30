@@ -262,11 +262,6 @@ function ensureNoEmptyShipments(req) {
                         currentBasket.defaultShipment.createShippingAddress();
                     }
 
-                    if (altShipment.custom && altShipment.custom.fromStoreId && altShipment.custom.shipmentType) {
-                        currentBasket.defaultShipment.custom.fromStoreId = altShipment.custom.fromStoreId;
-                        currentBasket.defaultShipment.custom.shipmentType = altShipment.custom.shipmentType;
-                    }
-
                     currentBasket.defaultShipment.setShippingMethod(altShipment.shippingMethod);
                     // then delete 2nd one
                     shipmentsToDelete.push(altShipment);
