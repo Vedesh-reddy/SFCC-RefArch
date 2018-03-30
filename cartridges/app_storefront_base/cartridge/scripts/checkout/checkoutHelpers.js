@@ -572,7 +572,7 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
     var wallet = customer.getProfile().getWallet();
 
     return Transaction.wrap(function () {
-        var storedPaymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
+        var storedPaymentInstrument = wallet.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
 
         storedPaymentInstrument.setCreditCardHolder(
             currentBasket.billingAddress.fullName
@@ -590,8 +590,9 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
             billingData.paymentInformation.expirationYear.value
         );
 
+        var processor = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
         var token = HookMgr.callHook(
-            'app.payment.processor.basic_credit',
+            'app.payment.processor.' + processor.ID.toLowerCase(),
             'createMockToken'
         );
 
