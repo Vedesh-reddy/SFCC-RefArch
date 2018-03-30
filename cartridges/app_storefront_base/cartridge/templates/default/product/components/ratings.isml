@@ -3,10 +3,10 @@
         <i class="fa
             <isif condition="${product.rating >= star}">
                 fa-star
-            <iselseif condition="${parseInt(product.rating) < star}">
-                fa-star-o
-            <iselse>
+            <iselseif condition="${(product.rating % 1 > 0) && (Math.ceil(product.rating) >= star)}">
                 fa-star-half-o
+            <iselse>
+                fa-star-o
             </isif>
             " aria-hidden="true">
         </i>

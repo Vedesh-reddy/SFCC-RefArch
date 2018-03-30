@@ -9,7 +9,8 @@ module.exports = function (object) {
                 return total + letter.charCodeAt(0);
             }, 0);
 
-            return Math.ceil((sum % 5) * 2) / 2;
+            var rateVal = (Math.ceil(((sum % 3) + 2) + (((sum % 10) / 10) + 0.1)));
+            return (rateVal < 5 ? rateVal + (((sum % 10) * 0.1) + 0.1) : rateVal);
         }())
     });
 };
