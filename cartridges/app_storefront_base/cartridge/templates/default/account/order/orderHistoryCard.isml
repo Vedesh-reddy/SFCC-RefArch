@@ -32,13 +32,13 @@
     </div>
     <div class="card-footer">
         <div class="row">
-            <div class="col-9 dashboard-order-card-footer-columns card-info-group">
+            <div class="col-7 dashboard-order-card-footer-columns card-info-group">
                 <p>${Resource.msg('label.orderhistory.totalitems','account',null)}</p>
                 <p class="dashboard-order-card-footer-value">
                     <isprint value="${order.productQuantityTotal}" formatter="#"/>
                 </p>
             </div>
-            <div class="col-3 dashboard-order-card-footer-columns card-info-group">
+            <div class="col-5 dashboard-order-card-footer-columns card-info-group">
                 <p>${Resource.msg('label.orderhistory.ordertotal','account',null)} </p>
                 <p class="dashboard-order-card-footer-value">
                     ${order.priceTotal}
