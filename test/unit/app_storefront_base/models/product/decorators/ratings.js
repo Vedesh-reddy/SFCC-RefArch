@@ -11,6 +11,6 @@ describe('product rating decorator', function () {
         };
         rating(object);
 
-        assert.equal(object.rating, 4);
+        assert.equal(object.rating, 4.5);
     });
 });
