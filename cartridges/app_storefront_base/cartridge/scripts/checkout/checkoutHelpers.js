@@ -534,9 +534,10 @@ function sendConfirmationEmail(order, locale) {
 /**
  * Attempts to place the order
  * @param {dw.order.Order} order - The order object to be placed
+ * @param {Object} fraudDetectionStatus - an Object returned by the fraud detection hook
  * @returns {Object} an error object
  */
-function placeOrder(order) {
+function placeOrder(order, fraudDetectionStatus) {
     var result = { error: false };
 
     try {
@@ -545,7 +546,13 @@ function placeOrder(order) {
         if (placeOrderStatus === Status.ERROR) {
             throw new Error();
         }
-        order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+
+        if (fraudDetectionStatus.status === 'flag') {
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_NOTCONFIRMED);
+        } else {
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+        }
+
         order.setExportStatus(Order.EXPORT_STATUS_READY);
         Transaction.commit();
     } catch (e) {

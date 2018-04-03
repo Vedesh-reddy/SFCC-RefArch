@@ -1,6 +1,7 @@
 // checkoutHelpers.js unit tests
 
 var assert = require('chai').assert;
+var sinon = require('sinon');
 
 var checkoutHelpers = require('../../../../mocks/helpers/checkoutHelpers');
 
@@ -549,16 +550,52 @@ describe('checkoutHelpers', function () {
     });
 
     describe('placeOrder', function () {
+        var setConfirmationStatusStub = sinon.stub();
+        var setExportStatusStub = sinon.stub();
+
+        beforeEach(function () {
+            setConfirmationStatusStub.reset();
+            setExportStatusStub.reset();
+        });
+
+        var order = {
+            setConfirmationStatus: setConfirmationStatusStub,
+            setExportStatus: setExportStatusStub
+        };
+
         it('should return result with error = false when no exception ', function () {
-            var order = {
-                setConfirmationStatus: function (status) { // eslint-disable-line no-unused-vars
-                },
-                setExportStatus: function (status) { // eslint-disable-line no-unused-vars
-                }
+            var mockFraudDetectionStatus = {
+                status: 'success',
+                errorCode: '',
+                errorMessage: ''
             };
 
-            var result = checkoutHelpers.placeOrder(order);
+            var result = checkoutHelpers.placeOrder(order, mockFraudDetectionStatus);
+
+            assert.isTrue(setConfirmationStatusStub.calledOnce);
+            assert.isTrue(setConfirmationStatusStub.calledWith('CONFIRMATION_STATUS_CONFIRMED'));
             assert.isFalse(result.error);
+        });
+
+        it('should return result with error = false when no exception and fraud status is flag', function () {
+            var mockFraudDetectionStatus = {
+                status: 'flag',
+                errorCode: '',
+                errorMessage: ''
+            };
+
+            var result = checkoutHelpers.placeOrder(order, mockFraudDetectionStatus);
+
+            assert.isTrue(setConfirmationStatusStub.calledOnce);
+            assert.isTrue(setConfirmationStatusStub.calledWith('ONFIRMATION_STATUS_NOTCONFIRMED'));
+            assert.isFalse(result.error);
+        });
+
+        it('should return result with error = true when exception is thrown', function () {
+            var result = checkoutHelpers.placeOrder(order);
+
+            assert.isTrue(setConfirmationStatusStub.notCalled);
+            assert.isTrue(result.error);
         });
     });
 });
