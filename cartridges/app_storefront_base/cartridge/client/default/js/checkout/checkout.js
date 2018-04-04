@@ -103,9 +103,20 @@ var formHelpers = require('./formErrors');
                             url: url,
                             method: 'GET',
                             success: function (data) {
-                                $('body').trigger('checkout:updateCheckoutView',
-                                    { order: data.order, customer: data.customer });
-                                defer.resolve();
+                                if (!data.error) {
+                                    $('body').trigger('checkout:updateCheckoutView',
+                                        { order: data.order, customer: data.customer });
+                                    defer.resolve();
+                                } else if ($('.shipping-nav .alert-danger').length < 1) {
+                                    var errorMsg = data.message;
+                                    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
+                                        'fade show" role="alert">' +
+                                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                        '<span aria-hidden="true">&times;</span>' +
+                                        '</button>' + errorMsg + '</div>';
+                                    $('.shipping-nav').append(errorHtml);
+                                    defer.reject();
+                                }
                             },
                             error: function () {
                                 // Server error submitting form
@@ -135,7 +146,7 @@ var formHelpers = require('./formErrors');
                                     window.location.href = err.responseJSON.redirectUrl;
                                 }
                                 // Server error submitting form
-                                defer.reject();
+                                defer.reject(err.responseJSON);
                             }
                         });
                     }
@@ -439,9 +450,6 @@ var formHelpers = require('./formErrors');
 var exports = {
     initialize: function () {
         $('#checkout-main').checkout();
-        $(window).on('load', function () {
-            shippingHelpers.methods.initializeStateObject();
-        });
     },
 
     updateCheckoutView: function () {
@@ -469,7 +477,11 @@ var exports = {
 
 [billingHelpers, shippingHelpers, addressHelpers].forEach(function (library) {
     Object.keys(library).forEach(function (item) {
-        exports[item] = library[item];
+        if (typeof library[item] === 'object') {
+            exports[item] = Object.assign({}, exports[item], library[item]);
+        } else {
+            exports[item] = library[item];
+        }
     });
 });
 

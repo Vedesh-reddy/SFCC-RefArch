@@ -5,7 +5,7 @@ var config = require('../it.config');
 describe('Shipping Level Coupon -  remove coupon', function () {
     this.timeout(25000);
 
-    var variantId = '740357377119';
+    var variantId = '740357377119M';
     var quantity = 5;
     var couponCode = 'shipping';
     var cookieJar = request.jar();

@@ -2,11 +2,12 @@ var assert = require('chai').assert;
 var request = require('request');
 var config = require('../it.config');
 var jsonHelpers = require('../helpers/jsonUtils');
+var urlHelpers = require('../helpers/urlUtils');
 
 describe('ProductVariation - Get product variation with only master product ID', function () {
     this.timeout(5000);
 
-    var masterPid = '25604455';
+    var masterPid = '25604455M';
     var myGetRequest = {
         url: '',
         method: 'GET',
@@ -35,7 +36,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                 'longDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
                 'options': [],
                 'selectedQuantity': 1,
-                'selectedProductUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-Show?pid=25604455',
+                'selectedProductUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-Show?pid=25604455M',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
                 'sizeChartId': null,
@@ -53,7 +54,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': 'SLABLFB',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_color=SLABLFB',
+                                'url': myGetRequest.url + '&dwvar_25604455M_color=SLABLFB',
                                 'images': {
                                     'swatch': [{
                                         'alt': 'No-Iron Textured Dress Shirt, Slate, swatch',
@@ -69,7 +70,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': 'WHITEFB',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_color=WHITEFB',
+                                'url': myGetRequest.url + '&dwvar_25604455M_color=WHITEFB',
                                 'images': {
                                     'swatch': [{
                                         'alt': 'No-Iron Textured Dress Shirt, White, swatch',
@@ -84,7 +85,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                         'attributeId': 'size',
                         'displayName': 'Size',
                         'id': 'size',
-                        'resetUrl': myGetRequest.url + '&dwvar_25604455_size=',
+                        'resetUrl': myGetRequest.url + '&dwvar_25604455M_size=',
                         'swatchable': false,
                         'values': [
                             {
@@ -94,7 +95,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '145',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=145'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=145'
                             },
                             {
                                 'id': '150',
@@ -103,7 +104,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '150',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=150'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=150'
                             },
                             {
                                 'id': '155',
@@ -112,7 +113,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '155',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=155'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=155'
                             },
                             {
                                 'id': '160',
@@ -121,7 +122,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '160',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=160'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=160'
                             },
                             {
                                 'id': '165',
@@ -130,7 +131,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '165',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=165'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=165'
                             },
                             {
                                 'id': '170',
@@ -139,7 +140,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '170',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=170'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=170'
                             },
                             {
                                 'id': '175',
@@ -148,7 +149,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '175',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=175'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=175'
                             },
                             {
                                 'id': '180',
@@ -157,7 +158,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '180',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=180'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=180'
                             },
                             {
                                 'id': '185',
@@ -166,7 +167,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '185',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=185'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=185'
                             },
                             {
                                 'id': '190',
@@ -175,7 +176,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '190',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=190'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=190'
                             },
                             {
                                 'id': '200',
@@ -184,7 +185,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '200',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=200'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=200'
                             },
                             {
                                 'id': '220',
@@ -193,7 +194,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': '220',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_size=220'
+                                'url': myGetRequest.url + '&dwvar_25604455M_size=220'
                             }
                         ]
                     },
@@ -201,7 +202,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                         'attributeId': 'width',
                         'displayName': 'Width',
                         'id': 'width',
-                        'resetUrl': myGetRequest.url + '&dwvar_25604455_width=',
+                        'resetUrl': myGetRequest.url + '&dwvar_25604455M_width=',
                         'swatchable': false,
                         'values': [
                             {
@@ -211,7 +212,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': 'A',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_width=A'
+                                'url': myGetRequest.url + '&dwvar_25604455M_width=A'
                             },
                             {
                                 'id': 'B',
@@ -220,7 +221,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                                 'value': 'B',
                                 'selected': false,
                                 'selectable': true,
-                                'url': myGetRequest.url + '&dwvar_25604455_width=B'
+                                'url': myGetRequest.url + '&dwvar_25604455M_width=B'
                             }
                         ]
                     }
@@ -307,10 +308,10 @@ describe('ProductVariation - Get product variation with only master product ID',
                         'value': '9'
                     }
                 ],
-                'rating': 0,
+                'rating': 2,
                 'productType': 'master'
             },
-            'queryString': 'pid=25604455',
+            'queryString': 'pid=25604455M',
             'locale': 'en_US',
             'resources': {
                 'info_selectforstock': 'Select Styles for Availability'
@@ -324,6 +325,8 @@ describe('ProductVariation - Get product variation with only master product ID',
         request(myGetRequest, function (error, response) {
             assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
 
+            // Remove basic auth - to use intergration tests on test instances
+
             var bodyAsJson = JSON.parse(response.body);
 
             // strip out all "url" properties from the actual response
@@ -333,59 +336,62 @@ describe('ProductVariation - Get product variation with only master product ID',
 
             // Verify URL for product.variationAttributes of color = SLABLFB
             var attrColorBlue = bodyAsJson.product.variationAttributes[0].values[0];
-            assert.equal(attrColorBlue.url, resourcePath + 'dwvar_25604455_color=SLABLFB&pid=25604455&quantity=1', 'Actual color attribute = SLABLFB: url not as expected.');
 
+            // Clean the resourcePath if basic auth is set
+            var resourcePathCleaned = urlHelpers.stripBasicAuth(resourcePath);
+
+            assert.equal(attrColorBlue.url, resourcePathCleaned + 'dwvar_25604455M_color=SLABLFB&pid=25604455M&quantity=1', 'Actual color attribute = SLABLFB: url not as expected.');
             var colorBlueImages = attrColorBlue.images;
             assert.isTrue(colorBlueImages.swatch[0].url.endsWith('SLABLFB.CP.jpg'), 'color SLABLFB image swatch[0]: url not ended with SLABLFB.CP.jpg.');
 
             // Verify URL for product.variationAttributes of color = WHITEFB
             var attrColorWhite = bodyAsJson.product.variationAttributes[0].values[1];
-            assert.equal(attrColorWhite.url, resourcePath + 'dwvar_25604455_color=WHITEFB&pid=25604455&quantity=1', 'Actual color attribute = WHITEFB: url not as expected.');
+            assert.equal(attrColorWhite.url, resourcePathCleaned + 'dwvar_25604455M_color=WHITEFB&pid=25604455M&quantity=1', 'Actual color attribute = WHITEFB: url not as expected.');
 
             var colorWhiteImages = attrColorWhite.images;
             assert.isTrue(colorWhiteImages.swatch[0].url.endsWith('WHITEFB.CP.jpg'), 'color WHITEFB image swatch[0].url not ended with WHITEFB.CP.jpg.');
 
             // Verify URL for product.variationAttributes of Size of id = 145
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[0].url, resourcePath + 'dwvar_25604455_size=145&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[0].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[0].url, resourcePathCleaned + 'dwvar_25604455M_size=145&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[0].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 150
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[1].url, resourcePath + 'dwvar_25604455_size=150&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[1].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[1].url, resourcePathCleaned + 'dwvar_25604455M_size=150&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[1].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 155
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[2].url, resourcePath + 'dwvar_25604455_size=155&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[2].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[2].url, resourcePathCleaned + 'dwvar_25604455M_size=155&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[2].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 160
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[3].url, resourcePath + 'dwvar_25604455_size=160&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[3].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[3].url, resourcePathCleaned + 'dwvar_25604455M_size=160&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[3].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 165
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[4].url, resourcePath + 'dwvar_25604455_size=165&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[4].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[4].url, resourcePathCleaned + 'dwvar_25604455M_size=165&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[4].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 170
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[5].url, resourcePath + 'dwvar_25604455_size=170&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[5].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[5].url, resourcePathCleaned + 'dwvar_25604455M_size=170&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[5].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 175
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[6].url, resourcePath + 'dwvar_25604455_size=175&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[6].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[6].url, resourcePathCleaned + 'dwvar_25604455M_size=175&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[6].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 180
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[7].url, resourcePath + 'dwvar_25604455_size=180&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[7].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[7].url, resourcePathCleaned + 'dwvar_25604455M_size=180&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[7].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 185
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[8].url, resourcePath + 'dwvar_25604455_size=185&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[8].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[8].url, resourcePathCleaned + 'dwvar_25604455M_size=185&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[8].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 190
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[9].url, resourcePath + 'dwvar_25604455_size=190&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[9].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[9].url, resourcePathCleaned + 'dwvar_25604455M_size=190&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[9].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 200
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[10].url, resourcePath + 'dwvar_25604455_size=200&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[10].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[10].url, resourcePathCleaned + 'dwvar_25604455M_size=200&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[10].url not as expected.');
 
             // Verify URL for product.variationAttributes of Size of id = 220
-            assert.equal(bodyAsJson.product.variationAttributes[1].values[11].url, resourcePath + 'dwvar_25604455_size=220&pid=25604455&quantity=1', 'Actual product.variationAttributes[1].values[11].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[1].values[11].url, resourcePathCleaned + 'dwvar_25604455M_size=220&pid=25604455M&quantity=1', 'Actual product.variationAttributes[1].values[11].url not as expected.');
 
             // Verify URL for product.variationAttributes of width = A (32/33)
-            assert.equal(bodyAsJson.product.variationAttributes[2].values[0].url, resourcePath + 'dwvar_25604455_width=A&pid=25604455&quantity=1', 'Actual product.variationAttributes[2].values[0].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[2].values[0].url, resourcePathCleaned + 'dwvar_25604455M_width=A&pid=25604455M&quantity=1', 'Actual product.variationAttributes[2].values[0].url not as expected.');
 
             // Verify URL for product.variationAttributes of width = B (34/35)
-            assert.equal(bodyAsJson.product.variationAttributes[2].values[1].url, resourcePath + 'dwvar_25604455_width=B&pid=25604455&quantity=1', 'Actual product.variationAttributes[2].values[1].url not as expected.');
+            assert.equal(bodyAsJson.product.variationAttributes[2].values[1].url, resourcePathCleaned + 'dwvar_25604455M_width=B&pid=25604455M&quantity=1', 'Actual product.variationAttributes[2].values[1].url not as expected.');
 
             // Verify URL for product.variationAttributes of images
             var prodImages = bodyAsJson.product.images;

@@ -8,9 +8,9 @@ chai.use(chaiSubset);
 describe('Cart: Selecting Shipping Methods', function () {
     this.timeout(5000);
 
-    var variantPid1 = '740357440196';
+    var variantPid1 = '740357440196M';
     var qty1 = '1';
-    var variantPid2 = '013742335538';
+    var variantPid2 = '013742335538M';
     var qty2 = '1';
 
     var cookieJar = request.jar();

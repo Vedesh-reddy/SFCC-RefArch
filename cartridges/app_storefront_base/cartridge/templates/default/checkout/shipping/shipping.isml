@@ -1,4 +1,4 @@
-<div class="shipping-form" data-initial-state="${pdict.initialState}">
+<div class="shipping-form">
     <div class="card">
         <div class="card-header">
             <h4>${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>

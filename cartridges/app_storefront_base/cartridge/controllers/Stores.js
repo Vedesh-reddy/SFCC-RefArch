@@ -4,8 +4,6 @@ var server = require('server');
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var storeHelpers = require('*/cartridge/scripts/helpers/storeHelpers');
-
-
 server.get('Find', server.middleware.https, cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var radius = req.querystring.radius;
     var postalCode = req.querystring.postalCode;

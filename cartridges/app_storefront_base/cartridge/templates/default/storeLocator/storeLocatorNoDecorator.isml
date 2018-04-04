@@ -1,12 +1,9 @@
 <div class="container store-locator-container">
     <div class="row">
         <div class="${pdict.horizontalView === 'true' ? 'col-sm-6 d-flex align-items-start flex-column' : 'col-sm-12'}">
-            <div class="card mb-auto search-form">
+            <div class="card search-form">
                 <isinclude template="storeLocator/storeLocatorFields" />
             </div>
-            <isif condition="${pdict.stores.showMap === 'false'}">
-                <button class="btn btn-primary btn-block select-store" disabled>${Resource.msg('button.select.store','storeLocator',null)}</button>
-            </isif>
         </div>
 
         <div class="${pdict.horizontalView === 'true' ? 'col-sm-6' : 'col-sm-12'}">
@@ -24,4 +21,11 @@
             </div>
         </div>
     </div>
+    <isif condition="${pdict.showMap === 'false'}">
+        <div class="row">
+            <div class="${pdict.horizontalView === 'true' ? 'col-sm-6' : 'col-sm-12'}">
+                <button class="btn btn-primary btn-block select-store" disabled>${Resource.msg('button.select.store','storeLocator',null)}</button>
+            </div>
+        </div>
+    </isif>
 </div>
