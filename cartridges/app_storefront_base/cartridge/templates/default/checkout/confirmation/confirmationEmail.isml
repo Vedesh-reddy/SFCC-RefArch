@@ -2,13 +2,11 @@
     <div>
         <p>${Resource.msg('msg.placed.order.thank.you', 'confirmation', null)}</p>
     </div>
-
     <p>
         <strong>${Resource.msg('label.order.number', 'confirmation', null)}</strong>
         <br/>
         <span>${pdict.order.orderNumber}</span>
     </p>
-
     <p>
         <strong>${Resource.msg('label.order.date', 'confirmation', null)}</strong>
         <br/>
@@ -16,11 +14,10 @@
     </p>
 
     <!--- Shipping Address --->
-    <strong>${Resource.msg('label.order.shipping.address', 'confirmation', null)}</strong><br/>
     <isloop items="${pdict.order.shipping}" var="shippingModel" status="shippingLoop">
+        <isinclude template="checkout/confirmation/shippingTitle"/>
         <isset name="address" value="${shippingModel.shippingAddress}" scope="page"/>
         <isinclude template="checkout/addressSummary" />
-
         <br/>
         <p>
             <strong>${Resource.msg('label.order.shipping.method', 'confirmation', null)}</strong>
@@ -139,12 +136,12 @@
                             ${attribute.displayName}: ${attribute.displayValue}
                             <br/>
                         </isloop>
-                        
+
                         <!--- item price --->
                         ${Resource.msg('label.each.item.price','cart',null)} -
                         ${bonusProduct.priceTotal.price}
                         <br/>
-                        
+
                         <!--- quantity --->
                         ${Resource.msg('field.selectquantity','cart',null)}
                          - <isprint value="${bonusProduct.quantity}" formatter="##" />

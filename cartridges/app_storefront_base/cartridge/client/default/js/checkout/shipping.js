@@ -215,6 +215,8 @@ function updateShippingSummaryInformation(shipping, order) {
 
         if (selectedShippingMethod) {
             $shippingAddressLabel.text(order.resources.shippingAddress);
+            $('body').trigger('checkout:updateAddressLabelText',
+                { selectedShippingMethod: selectedShippingMethod, order: order, shippingAddressLabel: $shippingAddressLabel });
             $shippingSummaryLabel.show();
             $summaryDetails.show();
             $methodTitle.text(selectedShippingMethod.displayName);

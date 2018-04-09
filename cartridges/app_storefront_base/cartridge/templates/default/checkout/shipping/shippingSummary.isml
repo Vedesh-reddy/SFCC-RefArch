@@ -2,7 +2,7 @@
 <isloop var="shippingModel" items="${pdict.order.shipping}" status="shippingLoop">
     <isif condition="${shippingLoop.first}">
         <div class="single-shipping" data-shipment-summary="${shippingModel.UUID}">
-            <p class="summary-section-label shipping-addr-label">${Resource.msg('label.order.shipping.address', 'confirmation', null)}</p>
+            <isinclude template="checkout/shipping/shippingTitle"/>
             <isif condition="${shippingModel.shippingAddress !== null}">
                 <isset name="address" value="${shippingModel.shippingAddress}" scope="page"/>
             <iselse>
@@ -14,7 +14,7 @@
                     ${shippingModel.shippingAddress ? shippingModel.shippingAddress.phone : ''}
                 </div>
             </div>
-            
+
             <!--- Shipping information --->
             <p class="summary-section-label shipping-method-label">${Resource.msg('label.order.shipping.method', 'confirmation', null)}</p>
             <div class="row summary-details leading-lines">
