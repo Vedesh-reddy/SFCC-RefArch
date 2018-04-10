@@ -87,14 +87,12 @@ describe('Order', function () {
         assert.equal(result.orderEmail, 'some Email');
     });
 
-
     it('should handle a single lineitem basket object ', function () {
         var result = new Order(createApiBasket(), { config: {
             numberOfLineItems: 'single'
         } });
-
         assert.equal(result.shippedToFirstName, 'someString');
-        assert.equal(result.shippedToLastName, 'someString');
+        assert.equal(result.shippedToLastName, '');
         assert.equal(result.orderNumber, 'some String');
         assert.equal(result.creationDate, 'some Date');
         assert.equal(result.orderEmail, 'some Email');
@@ -118,47 +116,49 @@ describe('Order', function () {
         });
     });
 
-    // it('should return the subset of the order model when using config.numberOfLineItems = "single".', function () {
-    //     var basket = createApiBasket();
-    //     config = {
-    //         numberOfLineItems: 'single'
-    //     };
+    it('should return the subset of the order model when using config.numberOfLineItems = "single".', function () {
+        var basket = createApiBasket();
+        config = {
+            numberOfLineItems: 'single'
+        };
 
-    //     basket.productLineItems = {
-    //         length: 2,
-    //         items: [
-    //             {
-    //                 images: {
-    //                     small: [
-    //                         {
-    //                             url: 'url to small image',
-    //                             alt: 'url to small image',
-    //                             title: 'url to small image'
-    //                         }
-    //                     ]
-    //                 }
-    //             }
-    //         ]
-    //     };
+        basket.productLineItems = [{
+            length: 2,
+            quantity: {
+                value: 1
+            },
+            items: [
+                {
+                    images: {
+                        small: [
+                            {
+                                url: 'url to small image',
+                                alt: 'url to small image',
+                                title: 'url to small image'
+                            }
+                        ]
+                    }
+                }
+            ]
+        }];
 
-    //     basket.shipping = [{
-    //         shippingAddress: {
-    //             firstName: 'John',
-    //             lastName: 'Snow'
-    //         }
-    //     }];
+        basket.shipping = [{
+            shippingAddress: {
+                firstName: 'John',
+                lastName: 'Snow'
+            }
+        }];
 
-    //     basket.totals = {
-    //         grandTotal: '$129.87'
-    //     };
+        basket.totals = {
+            grandTotal: '$129.87'
+        };
 
-    //     var result = new Order(basket, {config: config});
-
-    //     assert.equal(result.creationDate, 'some Date');
-    //     assert.equal(result.productQuantityTotal, 1);
-    //     assert.equal(result.priceTotal, totalsModel.grandTotal);
-    //     assert.equal(result.orderStatus, 'some status');
-    //     assert.equal(result.orderNumber, 'some String');
-    //     assert.equal(result.orderEmail, 'some Email');
-    // });
+        var result = new Order(basket, { config: config });
+        assert.equal(result.creationDate, 'some Date');
+        assert.equal(result.productQuantityTotal, 1);
+        // assert.equal(result.priceTotal, basket.totalGrossPrice.value);
+        assert.equal(result.orderStatus, 'some status');
+        assert.equal(result.orderNumber, 'some String');
+        assert.equal(result.orderEmail, 'some Email');
+    });
 });
