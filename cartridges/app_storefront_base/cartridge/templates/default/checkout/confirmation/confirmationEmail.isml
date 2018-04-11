@@ -22,7 +22,10 @@
         <p>
             <strong>${Resource.msg('label.order.shipping.method', 'confirmation', null)}</strong>
             <br/>
-            ${shippingModel.selectedShippingMethod.displayName} (${shippingModel.selectedShippingMethod.estimatedArrivalTime}):
+            ${shippingModel.selectedShippingMethod.displayName}
+            <isif condition="${shippingModel.selectedShippingMethod.estimatedArrivalTime}">
+                (${shippingModel.selectedShippingMethod.estimatedArrivalTime})
+            </isif>
         </p>
         <isif condition="${pdict.order.shipping.length > 1}">
             <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>

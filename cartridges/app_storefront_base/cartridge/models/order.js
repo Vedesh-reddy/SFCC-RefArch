@@ -172,8 +172,8 @@ function OrderModel(lineItemContainer, options) {
         } else if (modelConfig.numberOfLineItems === 'single'
                 && shippingModels[0].shippingAddress) {
             this.firstLineItem = getFirstProductLineItem(productLineItemsModel);
-            this.shippedToFirstName = shippingModels[0].shippingAddress.firstName;
-            this.shippedToLastName = shippingModels[0].shippingAddress.lastName;
+            this.shippedToFirstName = shippingModels[0].shippingAddress.firstName || '';
+            this.shippedToLastName = shippingModels[0].shippingAddress.lastName || '';
         }
     }
 }
