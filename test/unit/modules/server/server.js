@@ -274,6 +274,38 @@ describe('server', function () {
         exports.test();
     });
 
+    it('should maintain events for exported route', function () {
+        var spy = sinon.spy();
+        var spy2 = sinon.spy();
+        server.get('test', spy);
+
+        var exports = server.exports();
+        var route = exports.__routes.test;
+
+        route.on('route:Start', spy2);
+
+        var exported = server.exports();
+        assert.equal(exported.__routes.test.listeners('route:Start').length, 1);
+    });
+
+    it('should correctly remove event after export', function () {
+        var spy = sinon.spy();
+        var spy2 = sinon.spy();
+        server.get('test', spy);
+
+        var exports = server.exports();
+        var route = exports.__routes.test;
+
+        route.on('route:Start', spy2);
+
+        var exported = server.exports();
+        exported.__routes.test.off('route:Start');
+        exported.test();
+
+        assert.isTrue(spy.called);
+        assert.isTrue(spy2.notCalled);
+    });
+
     it('should verify that request is frozen', function (done) {
         server.get('test', function (req) {
             assert.isFrozen(req);
