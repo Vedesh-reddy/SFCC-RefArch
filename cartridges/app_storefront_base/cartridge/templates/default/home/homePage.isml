@@ -37,9 +37,9 @@
                             </span>
                         </div>
                     </div>
-                <div class="col-sm-7 email-description">${Resource.msg('description.form.emailsignup', 'homePage', null)}</div>
-            </div>
-        </form>
+                    <div class="col-sm-7 email-description">${Resource.msg('description.form.emailsignup', 'homePage', null)}</div>
+                </div>
+            </form>
         </div>
     </div>
 </isdecorate>
