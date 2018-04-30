@@ -115,6 +115,35 @@ function updateStoresResults(data) {
     }
 }
 
+/**
+ * Search for stores with new zip code
+ * @returns {boolean} false to prevent default event
+ */
+function search() {
+    $.spinner().start();
+    var $form = $('.store-locator');
+    var radius = $('.results').data('radius');
+    var url = $form.attr('action');
+    var urlParams = { radius: radius };
+
+    var payload = $form.is('form') ? $form.serialize() : { postalCode: $form.find('[name="postalCode"]').val() };
+
+    url = appendToUrl(url, urlParams);
+
+    $.ajax({
+        url: url,
+        type: $form.attr('method'),
+        data: payload,
+        dataType: 'json',
+        success: function (data) {
+            $.spinner().stop();
+            updateStoresResults(data);
+            $('.select-store').prop('disabled', true);
+        }
+    });
+    return false;
+}
+
 module.exports = {
     init: function () {
         if ($('.map-canvas').data('has-google-api')) {
@@ -163,28 +192,13 @@ module.exports = {
     },
 
     search: function () {
-        $('.store-locator-container .store-locator').submit(function (e) {
+        $('.store-locator-container form.store-locator').submit(function (e) {
             e.preventDefault();
-            $.spinner().start();
-            var $form = $('.store-locator');
-            var radius = $('.results').data('radius');
-            var url = $form.attr('action');
-            var urlParams = { radius: radius };
-
-            url = appendToUrl(url, urlParams);
-
-            $.ajax({
-                url: url,
-                type: $form.attr('method'),
-                data: $form.serialize(),
-                dataType: 'json',
-                success: function (data) {
-                    $.spinner().stop();
-                    updateStoresResults(data);
-                    $('.select-store').prop('disabled', true);
-                }
-            });
-            return false;
+            search();
+        });
+        $('.store-locator-container .btn-storelocator-search[type="button"]').click(function (e) {
+            e.preventDefault();
+            search();
         });
     },
 
@@ -225,15 +239,16 @@ module.exports = {
     selectStore: function () {
         $('.store-locator-container').on('click', '.select-store', (function (e) {
             e.preventDefault();
-            var selectedStoreID = $('input[name=store]:checked').attr('value');
-            var selectedStore = {
-                storeID: selectedStoreID,
+            var selectedStore = $(':checked', '.results-card .results');
+            var data = {
+                storeID: selectedStore.val(),
                 searchRadius: $('#radius').val(),
                 searchPostalCode: $('.results').data('search-key').postalCode,
-                storeDetailsHtml: $('#' + selectedStoreID + ' .store-details')[0].innerHTML
+                storeDetailsHtml: selectedStore.siblings('label').find('.store-details').html(),
+                event: e
             };
 
-            $('body').trigger('store:selected', selectedStore);
+            $('body').trigger('store:selected', data);
         }));
     },
     updateSelectStoreButton: function () {

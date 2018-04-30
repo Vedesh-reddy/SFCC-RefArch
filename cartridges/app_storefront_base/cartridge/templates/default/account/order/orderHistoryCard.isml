@@ -26,7 +26,7 @@
                 </isif>
                 <p>${Resource.msg('label.orderhistory.dateordered','account',null)} <isprint value="${order.creationDate}"/></p>
                 <p>${Resource.msg('label.orderhistory.orderstatus','account',null)} <span class="dashboard-order-card-status">${order.orderStatus}</span></p>
-                <p>${Resource.msg('label.orderhistory.shippedto','account',null)} ${order.shippedToFirstName} ${order.shippedToLastName}</p>
+                <isinclude template="account/order/shippingTitle"/>
             </div>
         </div>
     </div>

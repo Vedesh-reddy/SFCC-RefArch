@@ -161,6 +161,8 @@ server.get(
 server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, res, next) {
     var formErrors = require('*/cartridge/scripts/formErrors');
     var HookMgr = require('dw/system/HookMgr');
+    var PaymentMgr = require('dw/order/PaymentMgr');
+    var dwOrderPaymentInstrument = require('dw/order/PaymentInstrument');
 
     var paymentForm = server.forms.getForm('creditCard');
     var result = getDetailsObject(paymentForm);
@@ -179,15 +181,16 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
             var wallet = customer.getProfile().getWallet();
 
             Transaction.wrap(function () {
-                var paymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
+                var paymentInstrument = wallet.createPaymentInstrument(dwOrderPaymentInstrument.METHOD_CREDIT_CARD);
                 paymentInstrument.setCreditCardHolder(formInfo.name);
                 paymentInstrument.setCreditCardNumber(formInfo.cardNumber);
                 paymentInstrument.setCreditCardType(formInfo.cardType);
                 paymentInstrument.setCreditCardExpirationMonth(formInfo.expirationMonth);
                 paymentInstrument.setCreditCardExpirationYear(formInfo.expirationYear);
 
+                var processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
                 var token = HookMgr.callHook(
-                    'app.payment.processor.basic_credit',
+                    'app.payment.processor.' + processor.ID.toLowerCase(),
                     'createMockToken'
                 );
 

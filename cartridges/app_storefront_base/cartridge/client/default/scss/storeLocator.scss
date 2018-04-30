@@ -1,7 +1,6 @@
 @import "variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-@import "components/formFields";
 @import "storeLocator/storeLocator";
 
 .map-marker {
@@ -52,7 +51,20 @@
     }
 }
 
+.store-name {
+    font-weight: 600;
+}
+
+.store-details {
+    display: block;
+    margin-left: 3.125em;
+}
+
 .store-locator-no-apiKey {
+    display: none;
+}
+
+.store-locator-no-results {
     display: none;
 }
 
@@ -62,5 +74,15 @@
 
     @include media-breakpoint-up(sm) {
         display: none;
+    }
+}
+
+.results {
+
+    @include media-breakpoint-up(md) {
+        overflow-y: auto;
+        overflow-x: hidden;
+        max-height: 21.875em;
+        margin-right: -0.938em;
     }
 }

@@ -262,11 +262,6 @@ function ensureNoEmptyShipments(req) {
                         currentBasket.defaultShipment.createShippingAddress();
                     }
 
-                    if (altShipment.custom && altShipment.custom.fromStoreId && altShipment.custom.shipmentType) {
-                        currentBasket.defaultShipment.custom.fromStoreId = altShipment.custom.fromStoreId;
-                        currentBasket.defaultShipment.custom.shipmentType = altShipment.custom.shipmentType;
-                    }
-
                     currentBasket.defaultShipment.setShippingMethod(altShipment.shippingMethod);
                     // then delete 2nd one
                     shipmentsToDelete.push(altShipment);
@@ -539,9 +534,10 @@ function sendConfirmationEmail(order, locale) {
 /**
  * Attempts to place the order
  * @param {dw.order.Order} order - The order object to be placed
+ * @param {Object} fraudDetectionStatus - an Object returned by the fraud detection hook
  * @returns {Object} an error object
  */
-function placeOrder(order) {
+function placeOrder(order, fraudDetectionStatus) {
     var result = { error: false };
 
     try {
@@ -550,7 +546,13 @@ function placeOrder(order) {
         if (placeOrderStatus === Status.ERROR) {
             throw new Error();
         }
-        order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+
+        if (fraudDetectionStatus.status === 'flag') {
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_NOTCONFIRMED);
+        } else {
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+        }
+
         order.setExportStatus(Order.EXPORT_STATUS_READY);
         Transaction.commit();
     } catch (e) {
@@ -572,7 +574,7 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
     var wallet = customer.getProfile().getWallet();
 
     return Transaction.wrap(function () {
-        var storedPaymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
+        var storedPaymentInstrument = wallet.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
 
         storedPaymentInstrument.setCreditCardHolder(
             currentBasket.billingAddress.fullName
@@ -590,8 +592,9 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
             billingData.paymentInformation.expirationYear.value
         );
 
+        var processor = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
         var token = HookMgr.callHook(
-            'app.payment.processor.basic_credit',
+            'app.payment.processor.' + processor.ID.toLowerCase(),
             'createMockToken'
         );
 
