@@ -39,7 +39,7 @@ function proxyModel() {
             getShippingModels: function () {
                 return [{ shippingAddress: {
                     firstName: 'someString',
-                    lastName: 'someString'
+                    lastName: null
                 }
                 }];
             }

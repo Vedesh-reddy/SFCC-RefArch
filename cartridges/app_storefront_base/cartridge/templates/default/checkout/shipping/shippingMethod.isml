@@ -4,9 +4,15 @@
     <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod" status="loopSate">
         <div class="form-check col-9 start-lines">
             <isif condition="${shippingModel.selectedShippingMethod && shippingMethod.ID === shippingModel.selectedShippingMethod.ID}">
-                <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" class="form-check-input" value="${shippingMethod.ID}" data-pickup="${shippingMethod.storePickupEnabled}" checked>
+                <input
+                    id="shippingMethod-${shippingMethod.ID}"
+                    name="${shippingAddress.shippingMethodID.htmlName}"
+                    type="radio" class="form-check-input"
+                    value="${shippingMethod.ID}"
+                    data-pickup="${shippingMethod.storePickupEnabled}"
+                    checked>
                 <iselse/>
-                <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input" data-pickup="${shippingMethod.storePickupEnabled}">
+                <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input">
             </isif>
             <label class="form-check-label shipping-method-option" for="shippingMethod-${shippingMethod.ID}">
                 <span class="display-name">${shippingMethod.displayName}</span>
@@ -26,7 +32,7 @@
 <!---------------------------------------------------------------------------------->
 <div id="shipping-method-template" style="display:none;" >
     <div class="form-check col-9 start-lines">
-        <input type="radio" class="form-check-input" id="shippingMethodRadioButton" data-pickup="storePickupEnabled">
+        <input type="radio" class="form-check-input" id="shippingMethodRadioButton">
         <label class="form-check-label shipping-method-option" for="shippingMethodRadioButton">
             <span class="display-name"></span>
             <span class="text-muted arrival-time" style="display:none"></span>
