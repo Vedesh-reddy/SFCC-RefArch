@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        <div class="search-mobile d-sm-none container">
+        <div class="search-mobile d-sm-none">
             <isinclude template="components/header/search" />
         </div>
     </nav>
