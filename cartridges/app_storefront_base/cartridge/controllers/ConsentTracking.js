@@ -27,8 +27,11 @@ server.get('GetContent', function (req, res, next) {
 });
 
 server.get('Check', consentTracking.consent, function (req, res, next) {
+    var ContentMgr = require('dw/content/ContentMgr');
+    var content = ContentMgr.getContent('tracking_hint');
     res.render('/common/consent', {
-        consentApi: Object.prototype.hasOwnProperty.call(req.session.raw, 'setTrackingAllowed')
+        consentApi: Object.prototype.hasOwnProperty.call(req.session.raw, 'setTrackingAllowed'),
+        caOnline: content.online
     });
     next();
 });
