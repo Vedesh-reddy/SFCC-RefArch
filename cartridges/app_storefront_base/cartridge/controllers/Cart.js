@@ -692,4 +692,30 @@ server.get('EditBonusProduct', function (req, res, next) {
     next();
 });
 
+server.get('EditProduct', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var Resource = require('dw/web/Resource');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var ProductFactory = require('*/cartridge/scripts/factories/product');
+
+    var template = 'product/quickView.isml';
+
+    var requestPLI = collections.find(BasketMgr.getCurrentBasket().allProductLineItems, function (item) {
+        return item.UUID === req.querystring.uuid;
+    });
+
+    var pliProduct = {
+        pid: requestPLI.productID,
+        quantity: requestPLI.quantityValue
+    };
+
+    res.render(template, {
+        product: ProductFactory.get(pliProduct),
+        resources: Resource.msg('info.selectforstock', 'product', 'Select Styles for Availability')
+    });
+
+    next();
+});
+
+
 module.exports = server.exports();

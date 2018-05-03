@@ -22,15 +22,20 @@
 
                         <isloop items="${product.variationAttributes}" var="attr" status="attributeStatus">
                             <div data-attr="${attr.id}" class="swatch">
-                                <isif condition="${attributeStatus.last && product.productType === 'set'}">
+                                <isif condition="${attributeStatus.last}">
                                     <!-- Quantity Drop Down Menu -->
-                                    <div class="quantity col-sm-6">
+                                    <div class="quantity col-sm-6 d-sm-none">
                                         <isinclude template="product/components/quantity" />
                                     </div>
                                 </isif>
                                 <isinclude template="product/components/variationAttribute" />
                             </div>
                         </isloop>
+
+                        <div class="d-sm-none col availability align-self-end " data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
+                            <isinclude template="product/components/availability" />
+                        </div>
+
                     </div>
 
                     <hr>
@@ -61,17 +66,17 @@
     <isset name="product" value="${productCopy}" scope="page"/>
 </div>
 <div class="modal-footer row align-items-end">
-    <div class="col availability align-self-end global-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
+    <div class="hidden-xs-down col availability align-self-end global-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
         <isinclude template="product/components/availability" />
     </div>
     <div class="col">
         <div class="row align-items-end">
             <!-- Quantity -->
-            <div class="col-4">
+            <div class="hidden-xs-down col-4">
                 <isinclude template="product/components/quantity" />
             </div>
 
-            <div class="col-8">
+            <div class="col-8 mx-auto">
                 <!-- Prices -->
                 <div class="prices">
                     <isset name="price" value="${product.price}" scope="page" />
@@ -79,7 +84,11 @@
                 </div>
 
                 <!-- Cart and [Optionally] Apple Pay -->
-                <isinclude template="product/components/addToCartGlobal" />
+                <isif condition="${pdict.addToCartUrl}">
+                    <isinclude template="product/components/addToCartGlobal" />
+                <iselse>
+                    <isinclude template="product/components/updateCartProduct" />
+                </isif>
             </div>
         </div>
     </div>

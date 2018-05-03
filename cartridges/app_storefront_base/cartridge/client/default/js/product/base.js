@@ -288,7 +288,7 @@ function handleVariantResponse(response, $productContainer) {
         });
     } else {
         // Enable "Add to Cart" button if all required attributes have been selected
-        $('button.add-to-cart, button.add-to-cart-global').trigger('product:updateAddToCart', {
+        $('button.add-to-cart, button.add-to-cart-global, button.update-cart-product-global').trigger('product:updateAddToCart', {
             product: response.product, $productContainer: $productContainer
         }).trigger('product:statusUpdate', response.product);
     }

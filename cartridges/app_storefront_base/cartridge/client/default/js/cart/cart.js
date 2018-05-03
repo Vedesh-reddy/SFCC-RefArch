@@ -150,6 +150,73 @@ function updateAvailability(data, uuid) {
     $('.availability-' + lineItem.UUID).html(messages);
 }
 
+/**
+ * Generates the modal window on the first call.
+ *
+ */
+function getModalHtmlElement() {
+    if ($('#editProductModal').length !== 0) {
+        $('#editProductModal').remove();
+    }
+    var htmlString = '<!-- Modal -->'
+        + '<div class="modal fade" id="editProductModal" role="dialog">'
+        + '<div class="modal-dialog quick-view-dialog">'
+        + '<!-- Modal content-->'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '    <button type="button" class="close pull-right" data-dismiss="modal">'
+        + '        &times;'
+        + '    </button>'
+        + '</div>'
+        + '<div class="modal-body"></div>'
+        + '<div class="modal-footer"></div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    $('body').append(htmlString);
+}
+
+/**
+ * Parses the html for a modal window
+ * @param {string} html - representing the body and footer of the modal window
+ *
+ * @return {Object} - Object with properties body and footer.
+ */
+function parseHtml(html) {
+    var $html = $('<div>').append($.parseHTML(html));
+
+    var body = $html.find('.product-quickview');
+    var footer = $html.find('.modal-footer').children();
+
+    return { body: body, footer: footer };
+}
+
+/**
+ * replaces the content in the modal window for product variation to be edited.
+ * @param {string} editProductUrl - url to be used to retrieve a new product model
+ */
+function fillModalElement(editProductUrl) {
+    $('.modal-body').spinner().start();
+    $.ajax({
+        url: editProductUrl,
+        method: 'GET',
+        dataType: 'html',
+        success: function (html) {
+            var parsedHtml = parseHtml(html);
+
+            $('#editProductModal .modal-body').empty();
+            $('#editProductModal .modal-body').html(parsedHtml.body);
+            $('#editProductModal .modal-footer').html(parsedHtml.footer);
+            $('#editProductModal').modal('show');
+            $.spinner().stop();
+        },
+        error: function () {
+            $.spinner().stop();
+        }
+    });
+}
+
+
 module.exports = function () {
     $('body').on('click', '.remove-product', function (e) {
         e.preventDefault();
@@ -428,6 +495,62 @@ module.exports = function () {
                 $.spinner().stop();
             }
         });
+    });
+    $('body').on('click', '.cart-page .product-edit .edit, .cart-page .bundle-edit .edit', function (e) {
+        e.preventDefault();
+
+        var editProductUrl = $(this).attr('href');
+        getModalHtmlElement();
+        fillModalElement(editProductUrl);
+    });
+
+    $('body').on('product:updateAddToCart', function (e, response) {
+        // update global add to cart (single products, bundles)
+        var dialog = $(response.$productContainer)
+            .closest('.quick-view-dialog');
+
+        $('.update-cart-product-global', dialog).attr('disabled',
+            !$('.global-availability', dialog).data('ready-to-order')
+            || !$('.global-availability', dialog).data('available')
+        );
+    });
+
+    $('body').on('product:updateAvailability', function (e, response) {
+        // bundle individual products
+        $('.product-availability', response.$productContainer)
+            .data('ready-to-order', response.product.readyToOrder)
+            .data('available', response.product.available)
+            .find('.availability-msg')
+            .empty()
+            .html(response.message);
+
+
+        var dialog = $(response.$productContainer)
+            .closest('.quick-view-dialog');
+
+        if ($('.product-availability', dialog).length) {
+            // bundle all products
+            var allAvailable = $('.product-availability', dialog).toArray()
+                .every(function (item) { return $(item).data('available'); });
+
+            var allReady = $('.product-availability', dialog).toArray()
+                .every(function (item) { return $(item).data('ready-to-order'); });
+
+            $('.global-availability', dialog)
+                .data('ready-to-order', allReady)
+                .data('available', allAvailable);
+
+            $('.global-availability .availability-msg', dialog).empty()
+                .html(allReady ? response.message : response.resources.info_selectforstock);
+        } else {
+            // single product
+            $('.global-availability', dialog)
+                .data('ready-to-order', response.product.readyToOrder)
+                .data('available', response.product.available)
+                .find('.availability-msg')
+                .empty()
+                .html(response.message);
+        }
     });
 
     base.selectAttribute();
