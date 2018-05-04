@@ -21,7 +21,9 @@
 
     .store-details {
         display: block;
-        margin-left: 3.125em;
+        @include media-breakpoint-up(md) {
+            margin-left: 3.125em;
+        }
     }
 
     .striped {
