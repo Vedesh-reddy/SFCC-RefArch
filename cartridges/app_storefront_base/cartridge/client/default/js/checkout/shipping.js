@@ -340,6 +340,8 @@ function updateProductLineItemShipmentUUIDs(productLineItem, shipping) {
         var form = pli.form;
         $('[name=shipmentUUID]', form).val(shipping.UUID);
         $('[name=originalShipmentUUID]', form).val(shipping.UUID);
+
+        $(form).closest('.card').attr('data-shipment-uuid', shipping.UUID);
     });
 }
 
@@ -462,7 +464,7 @@ function clearShippingForms(order) {
  * @param {boolean} checked - is multi shipping checked
  */
 function toggleMultiShip(checked) {
-    var url = $('.shipping-nav form').attr('action');
+    var url = $('.multi-shipping-checkbox-block form').attr('action');
     $.spinner().start();
     $.ajax({
         url: url,
@@ -723,7 +725,7 @@ module.exports = {
     },
 
     multiShipActions: function () {
-        $('.product-shipping-block [data-action]').on('click', function (e) {
+        $('.multi-shipping [data-action]').on('click', function (e) {
             e.preventDefault();
 
             var action = $(this).data('action');
