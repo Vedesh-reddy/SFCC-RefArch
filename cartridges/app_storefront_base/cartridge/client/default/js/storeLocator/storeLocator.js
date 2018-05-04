@@ -117,11 +117,12 @@ function updateStoresResults(data) {
 
 /**
  * Search for stores with new zip code
+ * @param {HTMLElement} element - the target html element
  * @returns {boolean} false to prevent default event
  */
-function search() {
+function search(element) {
     $.spinner().start();
-    var $form = $('.store-locator');
+    var $form = element.closest('.store-locator');
     var radius = $('.results').data('radius');
     var url = $form.attr('action');
     var urlParams = { radius: radius };
@@ -194,11 +195,11 @@ module.exports = {
     search: function () {
         $('.store-locator-container form.store-locator').submit(function (e) {
             e.preventDefault();
-            search();
+            search($(this));
         });
         $('.store-locator-container .btn-storelocator-search[type="button"]').click(function (e) {
             e.preventDefault();
-            search();
+            search($(this));
         });
     },
 
@@ -206,7 +207,7 @@ module.exports = {
         $('.store-locator-container .radius').change(function () {
             var radius = $(this).val();
             var searchKeys = $('.results').data('search-key');
-            var url = $('.radius').data('action');
+            var url = $('.radius').data('action-url');
             var urlParams = {};
 
             if (searchKeys.postalCode) {

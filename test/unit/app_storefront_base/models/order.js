@@ -108,7 +108,7 @@ describe('Order', function () {
         var result = new Order(basket, { config: config });
         assert.deepEqual(result.steps, {
             shipping: {
-                iscompleted: false
+                iscompleted: true
             },
             billing: {
                 iscompleted: true

@@ -81,10 +81,10 @@ function getAssociatedAddress(shipment, customer) {
 function ShippingModel(shipment, address, customer, containerView) {
     var shippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
 
-	// Simple properties
+    // Simple properties
     this.UUID = getShipmentUUID(shipment);
 
-	// Derived properties
+    // Derived properties
     this.productLineItems = getProductLineItemsModel(shipment, containerView);
     this.applicableShippingMethods = shippingHelpers.getApplicableShippingMethods(shipment, address);
     this.selectedShippingMethod = getSelectedShippingMethod(shipment);

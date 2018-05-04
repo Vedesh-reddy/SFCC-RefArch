@@ -74,14 +74,15 @@ function updateOrderProductSummaryInformation(order) {
             stateBoolean = true;
         }
 
+        var shippingForm = $('.multi-shipping input[name="shipmentUUID"][value="' + shipping.UUID + '"]').parent();
+
         if (shipping.shippingAddress
             && shipping.shippingAddress.firstName
-            && shipping.shippingAddress.lastName
             && shipping.shippingAddress.address1
             && shipping.shippingAddress.city
             && stateBoolean
             && shipping.shippingAddress.countryCode
-            && shipping.shippingAddress.phone) {
+            && (shipping.shippingAddress.phone || shipping.productLineItems.items[0].fromStoreId)) {
             $('.ship-to-name', tmpl).text(nameLine);
             $('.ship-to-address1', tmpl).text(address1Line);
             $('.ship-to-address2', tmpl).text(address2Line);
@@ -100,9 +101,9 @@ function updateOrderProductSummaryInformation(order) {
                 $('.ship-to-phone', tmpl).hide();
             }
 
-            $('.ship-to-message').text('');
+            shippingForm.find('.ship-to-message').text('');
         } else {
-            $('.ship-to-message').text(order.resources.addressIncomplete);
+            shippingForm.find('.ship-to-message').text(order.resources.addressIncomplete);
         }
 
 

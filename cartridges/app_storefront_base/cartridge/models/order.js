@@ -7,6 +7,7 @@ var BillingModel = require('*/cartridge/models/billing');
 var PaymentModel = require('*/cartridge/models/payment');
 var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 var TotalsModel = require('*/cartridge/models/totals');
+var COHelper = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
 var ShippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
 
@@ -37,11 +38,7 @@ var RESOURCES = {
  * @returns {Object} Creates an object that contains information about the checkout steps
  */
 function getCheckoutStepInformation(lineItemContainer) {
-    var shippingAddress;
-    if (lineItemContainer.defaultShipment) {
-        shippingAddress = lineItemContainer.defaultShipment.shippingAddress;
-    }
-
+    var shippingAddress = COHelper.ensureValidShipments(lineItemContainer);
     return {
         shipping: { iscompleted: !!shippingAddress },
         billing: { iscompleted: !!lineItemContainer.billingAddress }

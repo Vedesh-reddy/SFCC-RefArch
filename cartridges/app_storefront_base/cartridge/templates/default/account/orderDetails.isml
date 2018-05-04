@@ -9,7 +9,7 @@
     <div class="hero slant-down account-image">
         <h1 class="page-title">${Resource.msg('heading.order.details','order',null)}</h1>
     </div>
-    <div class="container receipt">
+    <div class="container receipt <isif condition="${pdict.order.shipping.length > 1}">multi-ship</isif>">
         <!---Breadcrumbs--->
         <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
         <div class="row justify-content-center">

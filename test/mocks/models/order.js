@@ -47,6 +47,9 @@ function proxyModel() {
         '*/cartridge/scripts/checkout/checkoutHelpers': {
             isPickUpInStore: function () {
                 return false;
+            },
+            ensureValidShipments: function () {
+                return true;
             }
         },
         'dw/util/Locale': {

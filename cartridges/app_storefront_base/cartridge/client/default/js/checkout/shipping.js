@@ -37,11 +37,21 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
         shippings.forEach(function (aShipping) {
             var isSelected = shipping.UUID === aShipping.UUID;
             hasSelectedAddress = hasSelectedAddress || isSelected;
-            $shippingAddressSelector.append(
-                addressHelpers.methods.optionValueForAddress(aShipping, isSelected, order,
-                    { className: 'multi-shipping' }
-                )
+            var addressOption = addressHelpers.methods.optionValueForAddress(
+                aShipping,
+                isSelected,
+                order,
+                { className: 'multi-shipping' }
             );
+
+            var newAddress = addressOption.html() === order.resources.addNewAddress;
+            var matchingUUID = aShipping.UUID === shipping.UUID;
+            if ((newAddress && matchingUUID) || (!newAddress && matchingUUID) || (!newAddress && !matchingUUID)) {
+                $shippingAddressSelector.append(addressOption);
+            }
+            if (newAddress && !matchingUUID) {
+                $shippingAddressSelector.append(addressOption[0].outerHTML.replace('class="multi-shipping', 'class="multi-shipping d-none'));
+            }
         });
         if (customer.addresses && customer.addresses.length > 0) {
             $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
@@ -71,29 +81,43 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
  * @param {Object} shipping - the shipping (shipment model) model
  */
 function updateShippingAddressFormValues(shipping) {
-    if (!shipping.shippingAddress) return;
+    var addressObject = Object.assign({}, shipping.shippingAddress);
+
+    if (!addressObject) {
+        addressObject = {
+            firstName: null,
+            lastName: null,
+            address1: null,
+            address2: null,
+            city: null,
+            postalCode: null,
+            stateCode: null,
+            countryCode: null,
+            phone: null
+        };
+    }
 
     $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
         var form = el.form;
         if (!form) return;
-        var countryCode = shipping.shippingAddress.countryCode;
+        var countryCode = addressObject.countryCode;
 
-        $('input[name$=_firstName]', form).val(shipping.shippingAddress.firstName);
-        $('input[name$=_lastName]', form).val(shipping.shippingAddress.lastName);
-        $('input[name$=_address1]', form).val(shipping.shippingAddress.address1);
-        $('input[name$=_address2]', form).val(shipping.shippingAddress.address2);
-        $('input[name$=_city]', form).val(shipping.shippingAddress.city);
-        $('input[name$=_postalCode]', form).val(shipping.shippingAddress.postalCode);
+        $('input[name$=_firstName]', form).val(addressObject.firstName);
+        $('input[name$=_lastName]', form).val(addressObject.lastName);
+        $('input[name$=_address1]', form).val(addressObject.address1);
+        $('input[name$=_address2]', form).val(addressObject.address2);
+        $('input[name$=_city]', form).val(addressObject.city);
+        $('input[name$=_postalCode]', form).val(addressObject.postalCode);
         $('select[name$=_stateCode],input[name$=_stateCode]', form)
-            .val(shipping.shippingAddress.stateCode);
+            .val(addressObject.stateCode);
 
         if (countryCode && typeof countryCode === 'object') {
-            $('select[name$=_country]', form).val(shipping.shippingAddress.countryCode.value);
+            $('select[name$=_country]', form).val(addressObject.countryCode.value);
         } else {
-            $('select[name$=_country]', form).val(shipping.shippingAddress.countryCode);
+            $('select[name$=_country]', form).val(addressObject.countryCode);
         }
 
-        $('input[name$=_phone]', form).val(shipping.shippingAddress.phone);
+        $('input[name$=_phone]', form).val(addressObject.phone);
     });
 }
 
@@ -110,39 +134,37 @@ function updateShippingMethods(shipping) {
 
             var $shippingMethodList = $('.shipping-method-list', form);
 
-            if (shipping.shippingAddress && shipping.shippingAddress.stateCode && shipping.shippingAddress.stateCode !== '') {
-                if ($shippingMethodList && $shippingMethodList.length > 0) {
-                    $shippingMethodList.empty();
-                    var shippingMethods = shipping.applicableShippingMethods;
-                    var selected = shipping.selectedShippingMethod || {};
-                    var shippingMethodFormID = form.name + '_shippingAddress_shippingMethodID';
-                    //
-                    // Create the new rows for each shipping method
-                    //
-                    $.each(shippingMethods, function (methodIndex, shippingMethod) {
-                        var tmpl = $('#shipping-method-template').clone();
-                        // set input
-                        $('input', tmpl)
-                            .prop('id', 'shippingMethod-' + shippingMethod.ID)
-                            .prop('name', shippingMethodFormID)
-                            .prop('value', shippingMethod.ID)
-                            .attr('checked', shippingMethod.ID === selected.ID);
+            if ($shippingMethodList && $shippingMethodList.length > 0) {
+                $shippingMethodList.empty();
+                var shippingMethods = shipping.applicableShippingMethods;
+                var selected = shipping.selectedShippingMethod || {};
+                var shippingMethodFormID = form.name + '_shippingAddress_shippingMethodID';
+                //
+                // Create the new rows for each shipping method
+                //
+                $.each(shippingMethods, function (methodIndex, shippingMethod) {
+                    var tmpl = $('#shipping-method-template').clone();
+                    // set input
+                    $('input', tmpl)
+                        .prop('id', 'shippingMethod-' + shippingMethod.ID)
+                        .prop('name', shippingMethodFormID)
+                        .prop('value', shippingMethod.ID)
+                        .attr('checked', shippingMethod.ID === selected.ID);
 
-                        $('label', tmpl)
-                            .prop('for', 'shippingMethod-' + shippingMethod.ID);
-                        // set shipping method name
-                        $('.display-name', tmpl).text(shippingMethod.displayName);
-                        // set or hide arrival time
-                        if (shippingMethod.estimatedArrivalTime) {
-                            $('.arrival-time', tmpl)
-                                .text('(' + shippingMethod.estimatedArrivalTime + ')')
-                                .show();
-                        }
-                        // set shipping cost
-                        $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
-                        $shippingMethodList.append(tmpl.html());
-                    });
-                }
+                    $('label', tmpl)
+                        .prop('for', 'shippingMethod-' + shippingMethod.ID);
+                    // set shipping method name
+                    $('.display-name', tmpl).text(shippingMethod.displayName);
+                    // set or hide arrival time
+                    if (shippingMethod.estimatedArrivalTime) {
+                        $('.arrival-time', tmpl)
+                            .text('(' + shippingMethod.estimatedArrivalTime + ')')
+                            .show();
+                    }
+                    // set shipping cost
+                    $('.shipping-cost', tmpl).text(shippingMethod.shippingCost);
+                    $shippingMethodList.append(tmpl.html());
+                });
             }
         });
     }
@@ -558,8 +580,10 @@ module.exports = {
             var originalUUID = $('input[name=shipmentUUID]', form).val();
             var pliUUID = $('input[name=productLineItemUUID]', form).val();
 
+            var element;
             Object.keys(attrs).forEach(function (attr) {
-                $('[name$=' + attr + ']', form).val(attrs[attr]);
+                element = attr === 'countryCode' ? 'country' : attr;
+                $('[name$=' + element + ']', form).val(attrs[attr]);
             });
 
             if (shipmentUUID === 'new' && pliUUID) {

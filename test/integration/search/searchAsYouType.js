@@ -32,13 +32,13 @@ describe('Search As You Type - general product', function () {
             var $ = cheerio.load(response.body);
 
             var prod = $('.container a');
-            assert.equal(prod.get(0).children[0].data.trim(), 'tops');
-            assert.include(prod.get(2).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
-            assert.include(prod.get(4).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
-            assert.include(prod.get(6).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
-            assert.equal(prod.get(8).children[0].data.trim(), 'Tops');
-            assert.equal(prod.get(9).children[0].data.trim(), 'Top Sellers');
-            assert.equal(prod.get(10).children[0].data.trim(), 'FAQs');
+            assert.equal(prod.get(0).children[0].next.data.trim(), 'tops');
+            assert.include(prod.get(2).children[0].next.data.trim(), 'Top', 'returned product name should contain "Top"');
+            assert.include(prod.get(4).children[0].next.data.trim(), 'Top', 'returned product name should contain "Top"');
+            assert.include(prod.get(6).children[0].next.data.trim(), 'Top', 'returned product name should contain "Top"');
+            assert.equal(prod.get(8).children[0].next.data.trim(), 'Tops');
+            assert.equal(prod.get(9).children[0].next.data.trim(), 'Top Sellers');
+            assert.equal(prod.get(10).children[0].next.data.trim(), 'FAQs');
 
             var category = $('.justify-content-end.header div');
             assert.equal(category.get(0).children[0].data.trim(), 'Do you mean?');

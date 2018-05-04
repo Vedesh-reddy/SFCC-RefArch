@@ -331,7 +331,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             // strip out all "url" properties from the actual response
             var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedProductUrl', 'raw']);
 
-            assert.deepEqual(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
+            assert.containSubset(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
 
             // Verify URL for product.variationAttributes of color = SLABLFB
             var attrColorBlue = bodyAsJson.product.variationAttributes[0].values[0];
