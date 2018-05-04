@@ -35,10 +35,9 @@ label.color ~ a:hover {
             margin-bottom: 0;
         }
 
-        & > div:last-child {
+        > div:last-child {
             margin-bottom: 1em;
         }
-
     }
 
     .description {
@@ -48,7 +47,7 @@ label.color ~ a:hover {
         }
     }
 
-    .content{
+    .content {
 
         @include media-breakpoint-only(xs) {
             margin-top: 1em;
