@@ -27,10 +27,31 @@ label.color ~ a:hover {
 .description-and-detail {
     margin-top: 2em;
 
+    @include media-breakpoint-only(xs) {
+        margin-top: 0;
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+        }
+
+        & > div:last-child {
+            margin-bottom: 1em;
+        }
+
+    }
+
     .description {
 
         @include media-breakpoint-up(sm) {
             margin-bottom: 2em;
+        }
+    }
+
+    .content{
+
+        @include media-breakpoint-only(xs) {
+            margin-top: 1em;
         }
     }
 }

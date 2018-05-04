@@ -121,6 +121,13 @@ div.availability {
 .container.product-detail {
     margin-top: 2em;
     margin-bottom: 2em;
+
+    @include media-breakpoint-only(xs) {
+        margin-top: 0;
+        margin-bottom: 0;
+    }
+
+
 }
 
 .product-option:not(:first-child) {
