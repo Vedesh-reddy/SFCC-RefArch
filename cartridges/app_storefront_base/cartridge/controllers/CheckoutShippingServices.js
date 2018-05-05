@@ -45,6 +45,13 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     collections.forEach(shipment.productLineItems, function (lineItem) {
                         var uuid = UUIDUtils.createUUID();
                         var newShipment = currentBasket.createShipment(uuid);
+                        // only true if customer is registered
+                        if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+                            var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
+                            COHelpers.copyCustomerAddressToShipment(preferredAddress, newShipment);
+                            req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
+                        }
+
                         shippingHelpers.selectShippingMethod(newShipment);
                         lineItem.setShipment(newShipment);
                     });
@@ -74,6 +81,12 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
             defaultShipment.createShippingAddress();
 
             COHelpers.ensureNoEmptyShipments(req);
+
+            if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+                var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
+                COHelpers.copyCustomerAddressToShipment(preferredAddress);
+                req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
+            }
 
             basketCalculationHelpers.calculateTotals(currentBasket);
         });

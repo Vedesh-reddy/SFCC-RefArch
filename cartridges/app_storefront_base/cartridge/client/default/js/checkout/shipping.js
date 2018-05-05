@@ -426,6 +426,33 @@ function shippingFormResponse(defer, data) {
         defer.resolve(data);
     }
 }
+/**
+ * Clear out all the shipping form values and select the new address in the drop down
+ * @param {Object} order - the order object
+ */
+function clearShippingForms(order) {
+    order.shipping.forEach(function (shipping) {
+        $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
+            var form = el.form;
+            if (!form) return;
+
+            $('input[name$=_firstName]', form).val(null);
+            $('input[name$=_lastName]', form).val(null);
+            $('input[name$=_address1]', form).val(null);
+            $('input[name$=_address2]', form).val(null);
+            $('input[name$=_city]', form).val(null);
+            $('input[name$=_postalCode]', form).val(null);
+            $('select[name$=_stateCode],input[name$=_stateCode]', form).val(null);
+            $('select[name$=_country]', form).val(null);
+
+            $('input[name$=_phone]', form).val(null);
+
+            $(form).attr('data-address-mode', 'new');
+            var addressSelectorDropDown = $('.addressSelector option[value=new]', form);
+            $(addressSelectorDropDown).prop('selected', true);
+        });
+    });
+}
 
 /**
  * Does Ajax call to trigger multishipping
@@ -519,7 +546,8 @@ module.exports = {
         toggleMultiShip: toggleMultiShip,
         createNewShipment: createNewShipment,
         selectShippingMethodAjax: selectShippingMethodAjax,
-        updateShippingMethodList: updateShippingMethodList
+        updateShippingMethodList: updateShippingMethodList,
+        clearShippingForms: clearShippingForms
     },
 
     selectShippingMethod: function () {
