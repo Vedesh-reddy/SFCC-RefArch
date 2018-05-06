@@ -474,6 +474,21 @@ function toggleMultiShip(checked) {
             } else {
                 $('body').trigger('checkout:updateCheckoutView',
                     { order: data.order, customer: data.customer });
+
+                if ($('#checkout-main').data('customer-type') === 'guest') {
+                    clearShippingForms(data.order);
+                } else {
+                    data.order.shipping.forEach(function (shipping) {
+                        $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
+                            var form = el.form;
+                            if (!form) return;
+
+                            $(form).attr('data-address-mode', 'edit');
+                            var addressSelectorDropDown = $(form).find('.addressSelector option[value="ab_' + shipping.matchingAddressId + '"]');
+                            $(addressSelectorDropDown).prop('selected', true);
+                        });
+                    });
+                }
             }
             $.spinner().stop();
         },
