@@ -45,11 +45,21 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     collections.forEach(shipment.productLineItems, function (lineItem) {
                         var uuid = UUIDUtils.createUUID();
                         var newShipment = currentBasket.createShipment(uuid);
+                        // only true if customer is registered
+                        if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+                            var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
+                            COHelpers.copyCustomerAddressToShipment(preferredAddress, newShipment);
+                        }
+
                         shippingHelpers.selectShippingMethod(newShipment);
                         lineItem.setShipment(newShipment);
                     });
                 }
             });
+
+            shippingHelpers.selectShippingMethod(defaultShipment);
+            defaultShipment.createShippingAddress();
+
             COHelpers.ensureNoEmptyShipments(req);
 
             basketCalculationHelpers.calculateTotals(currentBasket);
@@ -65,7 +75,16 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     currentBasket.removeShipment(shipment);
                 }
             });
+
+            shippingHelpers.selectShippingMethod(defaultShipment);
+            defaultShipment.createShippingAddress();
+
             COHelpers.ensureNoEmptyShipments(req);
+
+            if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+                var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
+                COHelpers.copyCustomerAddressToShipment(preferredAddress);
+            }
 
             basketCalculationHelpers.calculateTotals(currentBasket);
         });
@@ -131,14 +150,15 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
                     shippingAddress = shipment.createShippingAddress();
                 }
 
-                Object.keys(address).forEach(function (key) {
-                    var value = address[key];
-                    if (value) {
-                        shippingAddress[key] = value;
-                    } else {
-                        shippingAddress[key] = null;
-                    }
-                });
+                shippingAddress.setFirstName(address.firstName || '');
+                shippingAddress.setLastName(address.lastName || '');
+                shippingAddress.setAddress1(address.address1 || '');
+                shippingAddress.setAddress2(address.address2 || '');
+                shippingAddress.setCity(address.city || '');
+                shippingAddress.setPostalCode(address.postalCode || '');
+                shippingAddress.setStateCode(address.stateCode || '');
+                shippingAddress.setCountryCode(address.countryCode || '');
+                shippingAddress.setPhone(address.phone || '');
 
                 ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
 

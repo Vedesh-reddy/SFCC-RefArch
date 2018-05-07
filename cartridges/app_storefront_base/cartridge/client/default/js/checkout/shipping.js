@@ -30,6 +30,19 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
             null,
             false,
             order));
+        if (customer.addresses && customer.addresses.length > 0) {
+            $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
+                order.resources.accountAddresses, false, order));
+            customer.addresses.forEach(function (address) {
+                var isSelected = shipping.matchingAddressId === address.ID;
+                $shippingAddressSelector.append(
+                    addressHelpers.methods.optionValueForAddress({
+                        UUID: 'ab_' + address.ID,
+                        shippingAddress: address
+                    }, isSelected, order)
+                );
+            });
+        }
         // Separator -
         $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
             order.resources.shippingAddresses, false, order, { className: 'multi-shipping' }
@@ -53,19 +66,6 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
                 $shippingAddressSelector.append(addressOption[0].outerHTML.replace('class="multi-shipping', 'class="multi-shipping d-none'));
             }
         });
-        if (customer.addresses && customer.addresses.length > 0) {
-            $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
-                order.resources.accountAddresses, false, order));
-            customer.addresses.forEach(function (address) {
-                var isSelected = shipping.matchingAddressId === address.ID;
-                $shippingAddressSelector.append(
-                    addressHelpers.methods.optionValueForAddress({
-                        UUID: 'ab_' + address.ID,
-                        shippingAddress: address
-                    }, isSelected, order)
-                );
-            });
-        }
     }
 
     if (!hasSelectedAddress) {
@@ -426,6 +426,33 @@ function shippingFormResponse(defer, data) {
         defer.resolve(data);
     }
 }
+/**
+ * Clear out all the shipping form values and select the new address in the drop down
+ * @param {Object} order - the order object
+ */
+function clearShippingForms(order) {
+    order.shipping.forEach(function (shipping) {
+        $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
+            var form = el.form;
+            if (!form) return;
+
+            $('input[name$=_firstName]', form).val(null);
+            $('input[name$=_lastName]', form).val(null);
+            $('input[name$=_address1]', form).val(null);
+            $('input[name$=_address2]', form).val(null);
+            $('input[name$=_city]', form).val(null);
+            $('input[name$=_postalCode]', form).val(null);
+            $('select[name$=_stateCode],input[name$=_stateCode]', form).val(null);
+            $('select[name$=_country]', form).val(null);
+
+            $('input[name$=_phone]', form).val(null);
+
+            $(form).attr('data-address-mode', 'new');
+            var addressSelectorDropDown = $('.addressSelector option[value=new]', form);
+            $(addressSelectorDropDown).prop('selected', true);
+        });
+    });
+}
 
 /**
  * Does Ajax call to trigger multishipping
@@ -447,6 +474,21 @@ function toggleMultiShip(checked) {
             } else {
                 $('body').trigger('checkout:updateCheckoutView',
                     { order: data.order, customer: data.customer });
+
+                if ($('#checkout-main').data('customer-type') === 'guest') {
+                    clearShippingForms(data.order);
+                } else {
+                    data.order.shipping.forEach(function (shipping) {
+                        $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
+                            var form = el.form;
+                            if (!form) return;
+
+                            $(form).attr('data-address-mode', 'edit');
+                            var addressSelectorDropDown = $(form).find('.addressSelector option[value="ab_' + shipping.matchingAddressId + '"]');
+                            $(addressSelectorDropDown).prop('selected', true);
+                        });
+                    });
+                }
             }
             $.spinner().stop();
         },
@@ -519,7 +561,8 @@ module.exports = {
         toggleMultiShip: toggleMultiShip,
         createNewShipment: createNewShipment,
         selectShippingMethodAjax: selectShippingMethodAjax,
-        updateShippingMethodList: updateShippingMethodList
+        updateShippingMethodList: updateShippingMethodList,
+        clearShippingForms: clearShippingForms
     },
 
     selectShippingMethod: function () {
