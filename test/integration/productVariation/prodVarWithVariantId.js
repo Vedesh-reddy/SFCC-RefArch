@@ -310,7 +310,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                         'value': '9'
                     }
                 ],
-                'rating': 2
+                'rating': 4.8
             },
             'queryString': 'pid=708141676220M',
             'locale': 'en_US',

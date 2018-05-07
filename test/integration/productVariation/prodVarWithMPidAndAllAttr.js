@@ -311,7 +311,7 @@ describe('ProductVariation - Get product variation with master product ID and al
                         'value': '9'
                     }
                 ],
-                'rating': 2
+                'rating': 4.8
             },
             'queryString': 'dwvar_25604455M_color=WHITEFB&dwvar_25604455M_size=160&dwvar_25604455M_width=A&pid=25604455M',
             'locale': 'en_US',

@@ -308,7 +308,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                         'value': '9'
                     }
                 ],
-                'rating': 2,
+                'rating': 3.3,
                 'productType': 'master'
             },
             'queryString': 'pid=25604455M',
