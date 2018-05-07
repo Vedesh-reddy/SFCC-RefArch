@@ -30,6 +30,19 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
             null,
             false,
             order));
+        if (customer.addresses && customer.addresses.length > 0) {
+            $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
+                order.resources.accountAddresses, false, order));
+            customer.addresses.forEach(function (address) {
+                var isSelected = shipping.matchingAddressId === address.ID;
+                $shippingAddressSelector.append(
+                    addressHelpers.methods.optionValueForAddress({
+                        UUID: 'ab_' + address.ID,
+                        shippingAddress: address
+                    }, isSelected, order)
+                );
+            });
+        }
         // Separator -
         $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
             order.resources.shippingAddresses, false, order, { className: 'multi-shipping' }
@@ -53,19 +66,6 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
                 $shippingAddressSelector.append(addressOption[0].outerHTML.replace('class="multi-shipping', 'class="multi-shipping d-none'));
             }
         });
-        if (customer.addresses && customer.addresses.length > 0) {
-            $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
-                order.resources.accountAddresses, false, order));
-            customer.addresses.forEach(function (address) {
-                var isSelected = shipping.matchingAddressId === address.ID;
-                $shippingAddressSelector.append(
-                    addressHelpers.methods.optionValueForAddress({
-                        UUID: 'ab_' + address.ID,
-                        shippingAddress: address
-                    }, isSelected, order)
-                );
-            });
-        }
     }
 
     if (!hasSelectedAddress) {
