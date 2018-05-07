@@ -49,7 +49,6 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                         if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
                             var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
                             COHelpers.copyCustomerAddressToShipment(preferredAddress, newShipment);
-                            req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
                         }
 
                         shippingHelpers.selectShippingMethod(newShipment);
@@ -85,7 +84,6 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
             if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
                 var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
                 COHelpers.copyCustomerAddressToShipment(preferredAddress);
-                req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
             }
 
             basketCalculationHelpers.calculateTotals(currentBasket);
