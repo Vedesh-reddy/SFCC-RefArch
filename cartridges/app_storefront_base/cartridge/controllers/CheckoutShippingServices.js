@@ -50,6 +50,10 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     });
                 }
             });
+
+            shippingHelpers.selectShippingMethod(defaultShipment);
+            defaultShipment.createShippingAddress();
+
             COHelpers.ensureNoEmptyShipments(req);
 
             basketCalculationHelpers.calculateTotals(currentBasket);
@@ -65,6 +69,10 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
                     currentBasket.removeShipment(shipment);
                 }
             });
+
+            shippingHelpers.selectShippingMethod(defaultShipment);
+            defaultShipment.createShippingAddress();
+
             COHelpers.ensureNoEmptyShipments(req);
 
             basketCalculationHelpers.calculateTotals(currentBasket);
