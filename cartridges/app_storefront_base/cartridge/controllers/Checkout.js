@@ -83,6 +83,7 @@ server.get(
         var URLUtils = require('dw/web/URLUtils');
         var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
         var Locale = require('dw/util/Locale');
+        var collections = require('*/cartridge/scripts/util/collections');
 
         var currentBasket = BasketMgr.getCurrentBasket();
         if (!currentBasket) {
@@ -93,7 +94,6 @@ server.get(
         var currentStage = req.querystring.stage ? req.querystring.stage : 'shipping';
 
         var billingAddress = currentBasket.billingAddress;
-        var shippingAddress = currentBasket.defaultShipment.shippingAddress;
 
         var currentCustomer = req.currentCustomer.raw;
         var currentLocale = Locale.getLocale(req.locale.id);
@@ -101,11 +101,15 @@ server.get(
 
         // only true if customer is registered
         if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+            var shipments = currentBasket.shipments;
             preferredAddress = req.currentCustomer.addressBook.preferredAddress;
-            if (!shippingAddress) {
-                COHelpers.copyCustomerAddressToShipment(preferredAddress);
-                req.session.privacyCache.set(currentBasket.defaultShipment.UUID, 'valid');
-            }
+
+            collections.forEach(shipments, function (shipment) {
+                if (!shipment.shippingAddress) {
+                    COHelpers.copyCustomerAddressToShipment(preferredAddress, shipment);
+                }
+            });
+
             if (!billingAddress) {
                 COHelpers.copyCustomerAddressToBilling(preferredAddress);
             }
