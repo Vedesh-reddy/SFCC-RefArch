@@ -1,10 +1,14 @@
 <div class="shipping-section">
     <div class="single-shipping">
         <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
+        <isset name="shipmentLoopState" value="${null}" scope="page" />
+        <isset name="lineItem" value="${null}" scope="page" />
         <div class="card" data-shipment-uuid="${shippingModel.UUID}">
             <div class="card-header">
                 <h4>${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
             </div>
+
+            <div class="shipping-error"></div>
 
             <isinclude template="checkout/shipping/multiShipCheckbox" />
 

@@ -3,41 +3,42 @@
           action="${shipmentLoopState
           ? URLUtils.url('CheckoutAddressServices-AddNewAddress')
           : URLUtils.url('CheckoutShippingServices-SubmitShipping')}"
-    <isprint value=${pdict.forms.shippingForm.attributes} encoding="off"/>
+          data-address-mode="${shippingModel.matchingAddressId ? 'edit' : 'new'}"
+          <isprint value=${pdict.forms.shippingForm.attributes} encoding="off"/>
     >
-    <isif condition="${lineItem}">
-        <input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
-    </isif>
+        <isif condition="${lineItem}">
+            <input name="productLineItemUUID" type="hidden" value="${lineItem.UUID}" />
+        </isif>
 
-    <input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
-    <input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
+        <input name="originalShipmentUUID" type="hidden" value="${shippingModel.UUID}" />
+        <input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
 
-    <div class="shipping-address ${pdict.order.usingMultiShipping ? 'd-none' : ''}">
-        <fieldset class="shipment-selector-block ${pdict.order.usingMultiShipping || (pdict.customer.addresses && pdict.customer.addresses.length > 0) ? '' : 'd-none'} ">
-            <isinclude template="checkout/shipping/shipmentSelector" />
-        </fieldset>
+        <div class="shipping-address ${pdict.order.usingMultiShipping ? 'd-none' : ''}">
+            <fieldset class="shipment-selector-block ${(pdict.order.usingMultiShipping || shipmentLoopState) || (pdict.customer.addresses && pdict.customer.addresses.length > 0) ? '' : 'd-none'} ">
+                <isinclude template="checkout/shipping/shipmentSelector" />
+            </fieldset>
 
-        <fieldset class="shipping-address-block">
-            <isinclude template="checkout/shipping/shippingAddress" />
-        </fieldset>
+            <fieldset class="shipping-address-block">
+                <isinclude template="checkout/shipping/shippingAddress" />
+            </fieldset>
 
-        <fieldset class="shipping-method-block">
-            <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
+            <fieldset class="shipping-method-block">
+                <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
 
-            <isinclude template="checkout/shipping/shippingMethod" />
-        </fieldset>
+                <isinclude template="checkout/shipping/shippingMethod" />
+            </fieldset>
 
-        <fieldset class="gift-message-block">
-            <isinclude template="checkout/shipping/isGift" />
-        </fieldset>
-    </div>
+            <fieldset class="gift-message-block">
+                <isinclude template="checkout/shipping/isGift" />
+            </fieldset>
+        </div>
 
-    <div class="view-address-block ${shippingModel.shippingAddress ? '' : 'd-none' }">
-        <isinclude template="checkout/shipping/shippingCard" />
-    </div>
+        <div class="view-address-block ${shippingModel.shippingAddress ? '' : 'd-none' }">
+            <isinclude template="checkout/shipping/shippingCard" />
+        </div>
 
-    <isinclude template="checkout/shipping/multiShippingButtons" />
+        <isinclude template="checkout/shipping/multiShippingButtons" />
 
-    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
     </form>
 </div>
