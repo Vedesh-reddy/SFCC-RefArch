@@ -9,8 +9,9 @@
 <isif condition="${pdict.order.shipping[0].shippingAddress}">
     <option class="multi-shipping" disabled>${Resource.msg('msg.shipping.addresses', 'checkout', null)}</option>
     <isloop items="${pdict.order.shipping}" var="aShippingModel">
+      <isif condition="${aShippingModel.UUID === shippingModel.UUID && aShippingModel.shippingAddress}">
         <option 
-            class="multi-shipping <isif condition="${aShippingModel.UUID !== shippingModel.UUID && (!aShippingModel.shippingAddress || !aShippingModel.shippingAddress.firstName)}">d-none</isif>"
+            class="multi-shipping
             value="${aShippingModel.UUID}"
             ${!shippingModel.matchingAddressId && aShippingModel.UUID === shippingModel.UUID ? 'selected="selected"' : '' }
             data-first-name="${aShippingModel.shippingAddress.firstName||''}" data-last-name="${aShippingModel.shippingAddress.lastName||''}"
@@ -39,6 +40,7 @@
             ${Resource.msg('msg.new.address', 'checkout', null)}
         </isif>
         </option>
+       </isif>
     </isloop>
 </isif>
 <isif condition="${pdict.customer.addresses && pdict.customer.addresses.length > 0}">

@@ -63,7 +63,7 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
                 $shippingAddressSelector.append(addressOption);
             }
             if (newAddress && !matchingUUID) {
-                $shippingAddressSelector.append(addressOption[0].outerHTML.replace('class="multi-shipping', 'class="multi-shipping d-none'));
+                $(addressOption[0]).remove();
             }
         });
     }
