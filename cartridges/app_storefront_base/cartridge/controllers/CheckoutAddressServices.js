@@ -195,10 +195,10 @@ server.post(
                     && req.currentCustomer.addressBook.preferredAddress) {
                     // Copy over preferredAddress (use addressUUID for matching)
                     COHelpers.copyBillingAddressToBasket(
-                        req.currentCustomer.addressBook.preferredAddress);
+                        req.currentCustomer.addressBook.preferredAddress, basket);
                 } else {
                     // Copy over first shipping address (use shipmentUUID for matching)
-                    COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress);
+                    COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress, basket);
                 }
             }
 

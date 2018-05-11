@@ -179,9 +179,9 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
 /**
  * Copies a raw address object to the baasket billing address
  * @param {Object} address - an address-similar Object (firstName, ...)
+ * @param {Object} currentBasket - the current shopping basket
  */
-function copyBillingAddressToBasket(address) {
-    var currentBasket = BasketMgr.getCurrentBasket();
+function copyBillingAddressToBasket(address, currentBasket) {
     var billingAddress = currentBasket.billingAddress;
 
     Transaction.wrap(function () {

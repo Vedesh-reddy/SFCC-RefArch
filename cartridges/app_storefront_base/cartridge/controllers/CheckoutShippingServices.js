@@ -355,11 +355,11 @@ server.post(
                         && req.currentCustomer.addressBook.preferredAddress) {
                         // Copy over preferredAddress (use addressUUID for matching)
                         COHelpers.copyBillingAddressToBasket(
-                            req.currentCustomer.addressBook.preferredAddress);
+                            req.currentCustomer.addressBook.preferredAddress, currentBasket);
                     } else {
                         // Copy over first shipping address (use shipmentUUID for matching)
                         COHelpers.copyBillingAddressToBasket(
-                            currentBasket.defaultShipment.shippingAddress);
+                            currentBasket.defaultShipment.shippingAddress, currentBasket);
                     }
                 }
                 var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
