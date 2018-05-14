@@ -539,6 +539,7 @@ function selectShippingMethodAjax(url, urlParams) {
                         urlParams: urlParams
                     }
                 );
+                $('body').trigger('checkout:postUpdateCheckoutView');
             }
             $.spinner().stop();
         })
