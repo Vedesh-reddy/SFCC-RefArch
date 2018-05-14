@@ -539,6 +539,7 @@ function selectShippingMethodAjax(url, urlParams) {
                         urlParams: urlParams
                     }
                 );
+                $('body').trigger('checkout:postUpdateCheckoutView');
             }
             $.spinner().stop();
         })
@@ -567,7 +568,6 @@ module.exports = {
 
     selectShippingMethod: function () {
         $('.shipping-method-list').change(function () {
-            var selectedRadioVal = $(this).find('input[type=radio]:checked').val();
             var $shippingForm = $(this).parents('form');
             var methodID = $(':checked', this).val();
             var shipmentUUID = $shippingForm.find('[name=shipmentUUID]').val();
@@ -577,10 +577,6 @@ module.exports = {
 
             var url = $(this).data('select-shipping-method-url');
             selectShippingMethodAjax(url, urlParams);
-
-            if (selectedRadioVal !== '005') { // exclude instore shipments
-                $(this).closest('form.address').find('[data-action=enter]').click();
-            }
         });
     },
 
