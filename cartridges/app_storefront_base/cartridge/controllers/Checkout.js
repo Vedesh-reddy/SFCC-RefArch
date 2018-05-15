@@ -80,6 +80,7 @@ server.get(
         var Transaction = require('dw/system/Transaction');
         var AccountModel = require('*/cartridge/models/account');
         var OrderModel = require('*/cartridge/models/order');
+        var AddressSelectorModel = require('*/cartridge/models/addressSelector');
         var URLUtils = require('dw/web/URLUtils');
         var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
         var Locale = require('dw/util/Locale');
@@ -165,6 +166,8 @@ server.get(
 
         var accountModel = new AccountModel(req.currentCustomer);
 
+        var addressSelectorModel = new AddressSelectorModel(currentBasket, req.currentCustomer.raw);
+
         var reportingURLs;
         reportingURLs = reportingUrlsHelper.getCheckoutReportingURLs(
             currentBasket.UUID,
@@ -175,6 +178,7 @@ server.get(
         res.render('checkout/checkout', {
             order: orderModel,
             customer: accountModel,
+            addresses: addressSelectorModel,
             forms: {
                 shippingForm: shippingForm,
                 billingForm: billingForm
