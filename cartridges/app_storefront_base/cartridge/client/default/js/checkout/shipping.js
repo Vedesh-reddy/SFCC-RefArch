@@ -518,8 +518,9 @@ function createNewShipment(url, shipmentData) {
  * Does Ajax call to select shipping method
  * @param {string} url - string representation of endpoint URL
  * @param {Object} urlParams - url params
+ * @param {Object} el - element that triggered this call
  */
-function selectShippingMethodAjax(url, urlParams) {
+function selectShippingMethodAjax(url, urlParams, el) {
     $.spinner().start();
     $.ajax({
         url: url,
@@ -539,7 +540,11 @@ function selectShippingMethodAjax(url, urlParams) {
                         urlParams: urlParams
                     }
                 );
-                $('body').trigger('checkout:postUpdateCheckoutView');
+                $('body').trigger('checkout:postUpdateCheckoutView',
+                    {
+                        el: el
+                    }
+                );
             }
             $.spinner().stop();
         })
@@ -576,7 +581,7 @@ module.exports = {
             urlParams.methodID = methodID;
 
             var url = $(this).data('select-shipping-method-url');
-            selectShippingMethodAjax(url, urlParams);
+            selectShippingMethodAjax(url, urlParams, $(this));
         });
     },
 
