@@ -2,7 +2,7 @@
 <!-- Template used by client to redraw shipping methods                           -->
 <!---------------------------------------------------------------------------------->
 <div id="pli-shipping-summary-template" style="display:none;" >
-    <h5>${Resource.msg('heading.shipping.to', 'checkout', null)}<span /></h5>
+    <h5 class="shipping-header-text">${Resource.msg('heading.shipping.to', 'checkout', null)}<span /></h5>
     <p>
         <span class="ship-to-message"></span>
         <span class="ship-to-name"></span>
