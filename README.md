@@ -10,7 +10,7 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 
 # What's New
 
-The latest version of SFRA is 3.0, which contains the following updates:
+The latest version of SFRA is 3.0.0, which contains the following updates:
 
 * Multiship: a single basket filled with multiple products can now be shipped to multiple locations.
 * Fraud Detection Hook: a hook has been added that supports customized fraud detection.
