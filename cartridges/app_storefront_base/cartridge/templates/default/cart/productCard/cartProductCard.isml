@@ -15,7 +15,7 @@
                     </div>
                     <div class="item-attributes d-flex flex-column">
                         <isloop items="${lineItem.variationAttributes}" var="attribute">
-                            <p class="line-item-attributes">${attribute.displayName}: ${attribute.displayValue}</p>
+                            <p class="line-item-attributes ${attribute.displayName}-${lineItem.UUID}">${attribute.displayName}: ${attribute.displayValue}</p>
                         </isloop>
                         <isloop items="${lineItem.options}" var="option">
                             <isif condition="${!!option}" />
@@ -26,7 +26,7 @@
                         <isinclude template="cart/productCard/cartProductCardAvailability" />
 
                         <div class="product-edit">
-                            <a href="${URLUtils.url('Cart-EditProduct', 'uuid', lineItem.UUID)}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
+                            <a href="${URLUtils.url('Cart-GetProduct', 'uuid', lineItem.UUID)}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
                         </div>
                     </div>
                 </div>

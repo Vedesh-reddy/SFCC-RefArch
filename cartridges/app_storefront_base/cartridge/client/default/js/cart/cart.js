@@ -151,6 +151,60 @@ function updateAvailability(data, uuid) {
 }
 
 /**
+ * Updates details of a product line item
+ * @param {Object} data - AJAX response from the server
+ * @param {string} uuid - The uuid of the product line item to update
+ */
+function updateProductDetails(data, uuid) {
+    var lineItem = data.cartModel.items.find(function (item) {
+        return item.UUID === uuid;
+    });
+
+    if (lineItem.variationAttributes !== null) {
+        var colorAttr = lineItem.variationAttributes.find(function (attr) {
+            return attr.attributeId === 'color';
+        });
+
+        if (colorAttr) {
+            var colorSelector = '.Color-' + uuid;
+            var newColor = 'Color: ' + colorAttr.displayValue;
+            $(colorSelector).text(newColor);
+        }
+
+        var sizeAttr = lineItem.variationAttributes.find(function (attr) {
+            return attr.attributeId === 'size';
+        });
+
+        if (sizeAttr) {
+            var sizeSelector = '.Size-' + uuid;
+            var newSize = 'Size: ' + sizeAttr.displayValue;
+            $(sizeSelector).text(newSize);
+        }
+    }
+
+    var imageSelector = '.card.product-info.uuid-' + uuid + ' .item-image > img';
+    $(imageSelector).attr('src', lineItem.images.small[0].url);
+    $(imageSelector).attr('alt', lineItem.images.small[0].alt);
+    $(imageSelector).attr('title', lineItem.images.small[0].title);
+
+    var qtySelector = '.quantity[data-uuid="' + uuid + '"]';
+    $(qtySelector).val(lineItem.quantity);
+    $(qtySelector).data('pid', data.newProductId);
+
+    $('.remove-product[data-uuid="' + uuid + '"]').data('pid', data.newProductId);
+
+    var priceSelector = '.line-item-price-' + uuid + ' .sales .value';
+    $(priceSelector).text(lineItem.price.sales.formatted);
+    $(priceSelector).attr('content', lineItem.price.sales.decimalPrice);
+
+    if (lineItem.price.list) {
+        var listPriceSelector = '.line-item-price-' + uuid + ' .list .value';
+        $(listPriceSelector).text(lineItem.price.list.formatted);
+        $(listPriceSelector).attr('content', lineItem.price.list.decimalPrice);
+    }
+}
+
+/**
  * Generates the modal window on the first call.
  *
  */
@@ -552,6 +606,72 @@ module.exports = function () {
                 .html(response.message);
         }
     });
+
+    $('body').on('product:afterAttributeSelect', function (e, response) {
+        if ($('.modal.show .product-quickview .bundle-items').length) {
+            $('.modal.show').find(response.container).data('pid', response.data.product.id);
+            $('.modal.show').find(response.container).find('.product-id').text(response.data.product.id);
+        } else {
+            $('.modal.show .product-quickview').data('pid', response.data.product.id);
+        }
+    });
+
+    $('body').on('change', '.quantity-select', function () {
+        var selectedQuantity = $(this).val();
+        $('.modal.show .update-cart-url').data('selected-quantity', selectedQuantity);
+    });
+
+    $('body').on('click', '.update-cart-product-global', function (e) {
+        e.preventDefault();
+
+        var updateProductUrl = $(this).closest('.cart-and-ipay').find('.update-cart-url').val();
+        var selectedQuantity = $(this).closest('.cart-and-ipay').find('.update-cart-url').data('selected-quantity');
+        var uuid = $(this).closest('.cart-and-ipay').find('.update-cart-url').data('uuid');
+
+        var form = {
+            uuid: uuid,
+            pid: base.getPidValue($(this)),
+            quantity: selectedQuantity
+        };
+
+        $(this).parents('.card').spinner().start();
+
+        $.ajax({
+            url: updateProductUrl,
+            type: 'post',
+            context: this,
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+                $('#editProductModal').remove();
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open');
+
+                $('.coupons-and-promos').empty().append(data.cartModel.totals.discountsHtml);
+                updateCartTotals(data.cartModel);
+                updateApproachingDiscounts(data.cartModel.approachingDiscounts);
+                updateAvailability(data.cartModel, uuid);
+                updateProductDetails(data, uuid);
+
+                if (data.uuidToBeDeleted) {
+                    $('.uuid-' + data.uuidToBeDeleted).remove();
+                }
+
+                validateBasket(data.cartModel);
+
+                $.spinner().stop();
+            },
+            error: function (err) {
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                } else {
+                    createErrorNotification(err.responseJSON.errorMessage);
+                    $.spinner().stop();
+                }
+            }
+        });
+    });
+
 
     base.selectAttribute();
     base.colorAttribute();

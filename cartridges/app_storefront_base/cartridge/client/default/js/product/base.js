@@ -769,5 +769,7 @@ module.exports = {
                 }
             });
         });
-    }
+    },
+
+    getPidValue: getPidValue
 };

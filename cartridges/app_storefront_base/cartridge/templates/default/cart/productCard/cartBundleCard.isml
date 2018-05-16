@@ -20,8 +20,8 @@
                     </div>
                 </isif>
             </div>
-            <div class="hidden-xs-down bundle-edit">
-                <a href="${URLUtils.url('Cart-EditProduct', 'uuid', lineItem.UUID)}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
+            <div class="bundle-edit">
+                <a href="${URLUtils.url('Cart-GetProduct', 'uuid', lineItem.UUID)}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
             </div>
         </div>
 
