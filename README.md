@@ -1,11 +1,21 @@
-# Mobile First Reference Architecture
+# Storefront Reference Architecture
 
-This is a repository for the Mobile First Reference Architecture reference application.
+This is a repository for the Storefront Reference Architecture (SFRA) reference application.
 
-Mobile First Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
-Mobile First Reference Architecture supplies an [plugin_applepay](https://bitbucket.org/demandware/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for the reference application.
+Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
+Storefront Reference Architecture supplies an [plugin_applepay](https://bitbucket.org/demandware/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for the reference application.
 
 Your feedback on the ease-of-use and limitations of this new architecture is invaluable during the developer preview. Particularly, feedback on any issues you encounter or workarounds you develop for efficiently customizing the base cartridge without editing it directly.
+
+
+# What's New
+
+The latest version of SFRA is 3.0.0, which contains the following updates:
+
+* Multiship: a single basket filled with multiple products can now be shipped to multiple locations.
+* Fraud Detection Hook: a hook has been added that supports customized fraud detection.
+* Localization: several properties file resources were updated for French, Italian, Japanese, and Simplified Chinese.
+* SFRA and SGJC Data: a single sandbox can now simultaneously include sites for both SiteGenesis Javascript Controllers (SGJC) and Storefront Reference Architecture (SFRA) without any resulting data conflicts.
 
 # Getting Started
 
