@@ -4,6 +4,10 @@
  * Renders a modal window that will track the users consenting to accepting site tracking policy
  */
 function showConsentModal() {
+    if (!$('.tracking-consent').data('caonline')) {
+        return;
+    }
+
     var urlContent = $('.tracking-consent').data('url');
     var urlAccept = $('.tracking-consent').data('accept');
     var urlReject = $('.tracking-consent').data('reject');
@@ -34,6 +38,7 @@ function showConsentModal() {
         + '</div>'
         + '</div>';
     $.spinner().start();
+    $('body').append(htmlString);
 
     $.ajax({
         url: urlContent,
@@ -46,8 +51,6 @@ function showConsentModal() {
             $('#consent-tracking').remove();
         }
     });
-
-    $('body').append(htmlString);
 
     $('#consent-tracking .button-wrapper button').click(function (e) {
         e.preventDefault();

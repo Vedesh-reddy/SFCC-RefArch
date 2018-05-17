@@ -1,11 +1,21 @@
-# SiteGenesis Mobile First
+# Storefront Reference Architecture
 
-This is a repository for the mobile-optimized version of SiteGenesis.
+This is a repository for the Storefront Reference Architecture (SFRA) reference application.
 
-SiteGenesis Mobile First has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
-SiteGenesis Mobile-First supplies an [plugin_applepay](https://bitbucket.org/demandware/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for SiteGenesis.
+Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
+Storefront Reference Architecture supplies an [plugin_applepay](https://bitbucket.org/demandware/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for the reference application.
 
 Your feedback on the ease-of-use and limitations of this new architecture is invaluable during the developer preview. Particularly, feedback on any issues you encounter or workarounds you develop for efficiently customizing the base cartridge without editing it directly.
+
+
+# What's New
+
+The latest version of SFRA is 3.0.0, which contains the following updates:
+
+* Multiship: a single basket filled with multiple products can now be shipped to multiple locations.
+* Fraud Detection Hook: a hook has been added that supports customized fraud detection.
+* Localization: several properties file resources were updated for French, Italian, Japanese, and Simplified Chinese.
+* SFRA and SGJC Data: a single sandbox can now simultaneously include sites for both SiteGenesis Javascript Controllers (SGJC) and Storefront Reference Architecture (SFRA) without any resulting data conflicts.
 
 # Getting Started
 
@@ -15,13 +25,23 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 
 3 Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
 
-4 Create `dw.json` file in the root of the project that would contain hostname, username and password to your sandbox. Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
+4 Create `dw.json` file in the root of the project:
+```json
+{
+    "hostname": "your-sandbox-hostname.demandware.net",
+    "username": "yourlogin",
+    "password": "yourpwd",
+    "code-version": "version_to_upload_to"
+}
+```
 
-5 Use https://bitbucket.org/demandware/mobilefirstdata to zip and import site date on your sandbox.
+5 Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
 
-6 Add the `app_storefront_base` cartridge to your cartridge path.
+6 Use https://bitbucket.org/demandware/mobilefirstdata to zip and import site date on your sandbox.
 
-7 You should now be ready to navigate to and use your site.
+7 Add the `app_storefront_base` cartridge to your cartridge path.
+
+8 You should now be ready to navigate to and use your site.
 
 
 # NPM scripts
@@ -177,7 +197,7 @@ npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandwa
 ```
 
 ```
-npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client appium â€”name appiumIntegrationBranch
+npm run test:functional:sauce -- --baseUrl http://sbox01-realm1-company.demandware.net/s/SiteGenesis --sauce --client appium —name appiumIntegrationBranch
 ```
 
 **Note:** To run both browsers with one command :

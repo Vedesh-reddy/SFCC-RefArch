@@ -38,7 +38,7 @@ function createAddressObject(addressObject) {
         if (Object.hasOwnProperty.call(addressObject, 'countryCode')) {
             result.countryCode = {
                 displayValue: addressObject.countryCode.displayValue,
-                value: addressObject.countryCode.value
+                value: addressObject.countryCode.value.toUpperCase()
             };
         }
     } else {

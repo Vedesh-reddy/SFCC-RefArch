@@ -15,6 +15,7 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
     var Locale = require('dw/util/Locale');
     var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
     var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+    var shippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     if (!currentBasket) {
@@ -34,18 +35,56 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
     req.session.privacyCache.set('usingMultiShipping', usingMultiShipping);
 
-    if (!usingMultiShipping && shipments.length > 1) {
-        // Make sure we move all product line items back to the default shipment
+
+    if (usingMultiShipping) {
+        var UUIDUtils = require('dw/util/UUIDUtils');
+        // split line items into separate shipments
+        Transaction.wrap(function () {
+            collections.forEach(shipments, function (shipment) {
+                if (shipment.productLineItems.length > 1) {
+                    collections.forEach(shipment.productLineItems, function (lineItem) {
+                        var uuid = UUIDUtils.createUUID();
+                        var newShipment = currentBasket.createShipment(uuid);
+                        // only true if customer is registered
+                        if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+                            var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
+                            COHelpers.copyCustomerAddressToShipment(preferredAddress, newShipment);
+                        }
+
+                        shippingHelpers.selectShippingMethod(newShipment);
+                        lineItem.setShipment(newShipment);
+                    });
+                }
+            });
+
+            shippingHelpers.selectShippingMethod(defaultShipment);
+            defaultShipment.createShippingAddress();
+
+            COHelpers.ensureNoEmptyShipments(req);
+
+            basketCalculationHelpers.calculateTotals(currentBasket);
+        });
+    } else {
+        // combine multiple shipments into a single one
         Transaction.wrap(function () {
             collections.forEach(shipments, function (shipment) {
                 if (!shipment.default) {
-                    collections.forEach(shipment.productLineItems, function (pli) {
-                        pli.setShipment(defaultShipment);
+                    collections.forEach(shipment.productLineItems, function (lineItem) {
+                        lineItem.setShipment(defaultShipment);
                     });
                     currentBasket.removeShipment(shipment);
                 }
             });
+
+            shippingHelpers.selectShippingMethod(defaultShipment);
+            defaultShipment.createShippingAddress();
+
             COHelpers.ensureNoEmptyShipments(req);
+
+            if (req.currentCustomer.addressBook && req.currentCustomer.addressBook.preferredAddress) {
+                var preferredAddress = req.currentCustomer.addressBook.preferredAddress;
+                COHelpers.copyCustomerAddressToShipment(preferredAddress);
+            }
 
             basketCalculationHelpers.calculateTotals(currentBasket);
         });
@@ -96,42 +135,45 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
         shipment = currentBasket.defaultShipment;
     }
 
-    var address = ShippingHelper.getAddressFromRequest(req);
+    var viewData = res.getViewData();
+    viewData.address = ShippingHelper.getAddressFromRequest(req);
+    res.setViewData(viewData);
 
-    var error;
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var address = res.getViewData().address;
 
-    try {
-        Transaction.wrap(function () {
-            var shippingAddress = shipment.shippingAddress;
+        try {
+            Transaction.wrap(function () {
+                var shippingAddress = shipment.shippingAddress;
 
-            if (!shippingAddress) {
-                shippingAddress = shipment.createShippingAddress();
-            }
-
-            Object.keys(address).forEach(function (key) {
-                var value = address[key];
-                if (value) {
-                    shippingAddress[key] = value;
-                } else {
-                    shippingAddress[key] = null;
+                if (!shippingAddress) {
+                    shippingAddress = shipment.createShippingAddress();
                 }
+
+                shippingAddress.setFirstName(address.firstName || '');
+                shippingAddress.setLastName(address.lastName || '');
+                shippingAddress.setAddress1(address.address1 || '');
+                shippingAddress.setAddress2(address.address2 || '');
+                shippingAddress.setCity(address.city || '');
+                shippingAddress.setPostalCode(address.postalCode || '');
+                shippingAddress.setStateCode(address.stateCode || '');
+                shippingAddress.setCountryCode(address.countryCode || '');
+                shippingAddress.setPhone(address.phone || '');
+
+                ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
+
+                basketCalculationHelpers.calculateTotals(currentBasket);
+            });
+        } catch (err) {
+            res.setStatusCode(500);
+            res.json({
+                error: true,
+                errorMessage: Resource.msg('error.cannot.select.shipping.method', 'cart', null)
             });
 
-            ShippingHelper.selectShippingMethod(shipment, shippingMethodID);
+            return;
+        }
 
-            basketCalculationHelpers.calculateTotals(currentBasket);
-        });
-    } catch (err) {
-        error = err;
-    }
-
-    if (error) {
-        res.setStatusCode(500);
-        res.json({
-            error: true,
-            errorMessage: Resource.msg('error.cannot.select.shipping.method', 'cart', null)
-        });
-    } else {
         var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
         var currentLocale = Locale.getLocale(req.locale.id);
 
@@ -144,7 +186,8 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
             customer: new AccountModel(req.currentCustomer),
             order: basketModel
         });
-    }
+    });
+
     return next();
 });
 
@@ -312,11 +355,11 @@ server.post(
                         && req.currentCustomer.addressBook.preferredAddress) {
                         // Copy over preferredAddress (use addressUUID for matching)
                         COHelpers.copyBillingAddressToBasket(
-                            req.currentCustomer.addressBook.preferredAddress);
+                            req.currentCustomer.addressBook.preferredAddress, currentBasket);
                     } else {
                         // Copy over first shipping address (use shipmentUUID for matching)
                         COHelpers.copyBillingAddressToBasket(
-                            currentBasket.defaultShipment.shippingAddress);
+                            currentBasket.defaultShipment.shippingAddress, currentBasket);
                     }
                 }
                 var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');

@@ -9,7 +9,7 @@ var config = require('../it.config');
 
 describe('Test Choice of bonus Products promotion Mini cart response.', function () {
     this.timeout(50000);
-    var VARIANT_PID = '013742002454';
+    var VARIANT_PID = '013742002454M';
     var QTY = 3;
     var UUID;
 
@@ -53,10 +53,10 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
         };
 
         var expectedPidArray = [
-            '008885004540',
-            '008884304047',
-            '883360390116',
-            'pioneer-pdp-6010fd'];
+            '008885004540M',
+            '008884304047M',
+            '883360390116M',
+            'pioneer-pdp-6010fdM'];
         var expectedLabels = {
             'close': 'Close',
             'maxprods': 'of 2 Bonus Products Selected:',
@@ -81,7 +81,7 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
             JSON.stringify({
                 'bonusProducts':
                 [{
-                    'pid': '008885004540',
+                    'pid': '008885004540M',
                     'qty': 3,
                     'options': [null]
                 }],
@@ -107,7 +107,7 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
 describe('Add rule base Bonus Product to cart', function () {
     this.timeout(45000);
 
-    var variantPid1 = '701642842668';
+    var variantPid1 = '701642842668M';
     var qty1 = 1;
     var cookieJar = request.jar();
     var myRequest = {
@@ -174,7 +174,7 @@ describe('Add rule base Bonus Product to cart', function () {
     });
 
     it('Add Bonus Product to cart', function () {
-        var addBonusQueryString = '?pids={%22bonusProducts%22:[{%22pid%22:701642887584,%22qty%22:1,%22options%22:[null]}],%22totalQty%22:1}&uuid=' + duuid + '&pliuuid=' + pliuuid;
+        var addBonusQueryString = '?pids={%22bonusProducts%22:[{%22pid%22:%22008884304023M%22,%22qty%22:1,%22options%22:[null]}],%22totalQty%22:1}&uuid=' + duuid + '&pliuuid=' + pliuuid;
         myRequest.url = config.baseUrl + '/Cart-AddBonusProducts' + addBonusQueryString;
         myRequest.form = {
             duuid: duuid
@@ -195,7 +195,7 @@ describe('Add rule base Bonus Product to cart', function () {
 describe('Add list base Bonus Product to cart', function () {
     this.timeout(45000);
 
-    var variantPid1 = '013742002454';
+    var variantPid1 = '013742002454M';
     var qty1 = 5;
     var cookieJar = request.jar();
     var myRequest = {
@@ -234,10 +234,10 @@ describe('Add list base Bonus Product to cart', function () {
 
     it('It should reflect as a rule based bonus product', function () {
         var bonuspidsExpected = [
-            '008885004540',
-            '008884304047',
-            '883360390116',
-            'pioneer-pdp-6010fd'
+            '008885004540M',
+            '008884304047M',
+            '883360390116M',
+            'pioneer-pdp-6010fdM'
         ];
 
         assert.equal(bonusChoiceRuleBased, false);
@@ -268,7 +268,7 @@ describe('Add list base Bonus Product to cart', function () {
     });
 
     it('Add Bonus Product to cart', function () {
-        var addBonusQueryString = '?pids={%22bonusProducts%22:[{%22pid%22:%22008885004540%22,%22qty%22:1,%22options%22:[null]}],%22totalQty%22:1}&uuid=' + duuid + '&pliuuid=' + pliuuid;
+        var addBonusQueryString = '?pids={%22bonusProducts%22:[{%22pid%22:%22008885004540M%22,%22qty%22:1,%22options%22:[null]}],%22totalQty%22:1}&uuid=' + duuid + '&pliuuid=' + pliuuid;
         myRequest.url = config.baseUrl + '/Cart-AddBonusProducts' + addBonusQueryString;
         myRequest.form = {
             duuid: duuid

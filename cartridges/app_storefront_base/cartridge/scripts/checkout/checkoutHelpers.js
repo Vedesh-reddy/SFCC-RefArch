@@ -179,9 +179,9 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
 /**
  * Copies a raw address object to the baasket billing address
  * @param {Object} address - an address-similar Object (firstName, ...)
+ * @param {Object} currentBasket - the current shopping basket
  */
-function copyBillingAddressToBasket(address) {
-    var currentBasket = BasketMgr.getCurrentBasket();
+function copyBillingAddressToBasket(address, currentBasket) {
     var billingAddress = currentBasket.billingAddress;
 
     Transaction.wrap(function () {
@@ -222,6 +222,24 @@ function getFirstNonDefaultShipmentWithProductLineItems(currentBasket) {
 
     return match;
 }
+
+/**
+ * Loop through all shipments and make sure all not null
+ * @param {dw.order.LineItemCtnr} lineItemContainer - Current users's basket
+ * @returns {boolean} - allValid
+ */
+function ensureValidShipments(lineItemContainer) {
+    var shipments = lineItemContainer.shipments;
+    var allValid = collections.every(shipments, function (shipment) {
+        if (shipment) {
+            var address = shipment.shippingAddress;
+            return address && address.address1;
+        }
+        return false;
+    });
+    return allValid;
+}
+
 
 /**
  * Ensures that no shipment exists with 0 product line items
@@ -539,9 +557,10 @@ function sendConfirmationEmail(order, locale) {
 /**
  * Attempts to place the order
  * @param {dw.order.Order} order - The order object to be placed
+ * @param {Object} fraudDetectionStatus - an Object returned by the fraud detection hook
  * @returns {Object} an error object
  */
-function placeOrder(order) {
+function placeOrder(order, fraudDetectionStatus) {
     var result = { error: false };
 
     try {
@@ -550,7 +569,13 @@ function placeOrder(order) {
         if (placeOrderStatus === Status.ERROR) {
             throw new Error();
         }
-        order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+
+        if (fraudDetectionStatus.status === 'flag') {
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_NOTCONFIRMED);
+        } else {
+            order.setConfirmationStatus(Order.CONFIRMATION_STATUS_CONFIRMED);
+        }
+
         order.setExportStatus(Order.EXPORT_STATUS_READY);
         Transaction.commit();
     } catch (e) {
@@ -572,7 +597,7 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
     var wallet = customer.getProfile().getWallet();
 
     return Transaction.wrap(function () {
-        var storedPaymentInstrument = wallet.createPaymentInstrument('CREDIT_CARD');
+        var storedPaymentInstrument = wallet.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD);
 
         storedPaymentInstrument.setCreditCardHolder(
             currentBasket.billingAddress.fullName
@@ -590,8 +615,9 @@ function savePaymentInstrumentToWallet(billingData, currentBasket, customer) {
             billingData.paymentInformation.expirationYear.value
         );
 
+        var processor = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
         var token = HookMgr.callHook(
-            'app.payment.processor.basic_credit',
+            'app.payment.processor.' + processor.ID.toLowerCase(),
             'createMockToken'
         );
 
@@ -650,5 +676,6 @@ module.exports = {
     placeOrder: placeOrder,
     savePaymentInstrumentToWallet: savePaymentInstrumentToWallet,
     getRenderedPaymentInstruments: getRenderedPaymentInstruments,
-    sendConfirmationEmail: sendConfirmationEmail
+    sendConfirmationEmail: sendConfirmationEmail,
+    ensureValidShipments: ensureValidShipments
 };

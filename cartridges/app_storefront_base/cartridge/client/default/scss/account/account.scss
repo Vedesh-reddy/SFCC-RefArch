@@ -46,6 +46,10 @@
     padding-right: 1rem;
 }
 
+.dashboard-order-card-footer-columns:last-child {
+    text-align: right;
+}
+
 .dashboard-order-card-footer-value {
     font-weight: bold;
     font-size: 1rem;

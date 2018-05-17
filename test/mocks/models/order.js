@@ -39,7 +39,7 @@ function proxyModel() {
             getShippingModels: function () {
                 return [{ shippingAddress: {
                     firstName: 'someString',
-                    lastName: 'someString'
+                    lastName: null
                 }
                 }];
             }
@@ -47,6 +47,9 @@ function proxyModel() {
         '*/cartridge/scripts/checkout/checkoutHelpers': {
             isPickUpInStore: function () {
                 return false;
+            },
+            ensureValidShipments: function () {
+                return true;
             }
         },
         'dw/util/Locale': {

@@ -27,6 +27,10 @@
         {
             "name": "app.validate.basket",
             "script": "./cartridge/scripts/hooks/validateBasket"
+        },
+        {
+            "name": "app.fraud.detection",
+            "script": "./cartridge/scripts/hooks/fraudDetection"
         }
     ]
 }

@@ -119,12 +119,24 @@ server.post(
             result.shippingMethod =
                 form.shippingAddress.shippingMethodID.value ?
                 '' + form.shippingAddress.shippingMethodID.value : null;
+            result.form = form;
+
+            res.setViewData(result);
+        }
+
+        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var viewData = res.getViewData();
+
+            if (viewData.error) {
+                res.json(viewData);
+                return;
+            }
 
             var shipment;
 
             if (!COHelpers.isShippingAddressInitialized()) {
                 // First use always applies to defaultShipment
-                COHelpers.copyShippingAddressToShipment(result, basket.defaultShipment);
+                COHelpers.copyShippingAddressToShipment(viewData, basket.defaultShipment);
                 shipment = basket.defaultShipment;
             } else {
                 try {
@@ -132,7 +144,7 @@ server.post(
                         if (origUUID === shipmentUUID) {
                             // An edit to the address or shipping method
                             shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
-                            COHelpers.copyShippingAddressToShipment(result, shipment);
+                            COHelpers.copyShippingAddressToShipment(viewData, shipment);
                         } else {
                             var productLineItem = COHelpers.getProductLineItem(basket, pliUUID);
                             if (shipmentUUID === 'new') {
@@ -151,19 +163,20 @@ server.post(
                                 // Choose an existing shipment for this PLI
                                 shipment = ShippingHelper.getShipmentByUUID(basket, shipmentUUID);
                             }
-                            COHelpers.copyShippingAddressToShipment(result, shipment);
+                            COHelpers.copyShippingAddressToShipment(viewData, shipment);
                             productLineItem.setShipment(shipment);
 
                             COHelpers.ensureNoEmptyShipments(req);
                         }
                     });
                 } catch (e) {
-                    result.error = e;
+                    viewData.error = e;
                 }
             }
 
             if (shipment && shipment.UUID) {
                 req.session.privacyCache.set(shipment.UUID, 'valid');
+                viewData.shipmentUUID = shipment.UUID;
             }
 
             // Loop through all shipments and make sure all are valid
@@ -182,10 +195,10 @@ server.post(
                     && req.currentCustomer.addressBook.preferredAddress) {
                     // Copy over preferredAddress (use addressUUID for matching)
                     COHelpers.copyBillingAddressToBasket(
-                        req.currentCustomer.addressBook.preferredAddress);
+                        req.currentCustomer.addressBook.preferredAddress, basket);
                 } else {
                     // Copy over first shipping address (use shipmentUUID for matching)
-                    COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress);
+                    COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress, basket);
                 }
             }
 
@@ -206,7 +219,7 @@ server.post(
 
             res.json({
                 form: form,
-                data: result,
+                data: viewData,
                 order: basketModel,
                 customer: accountModel,
 
@@ -214,7 +227,7 @@ server.post(
                 serverErrors: [],
                 error: false
             });
-        }
+        });
 
         return next();
     }

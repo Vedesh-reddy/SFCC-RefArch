@@ -1,14 +1,3 @@
 <isif condition="${pdict.display.ratings}">
-    <isloop items="${[1, 2, 3, 4, 5]}" var="star">
-        <i class="fa
-            <isif condition="${product.rating >= star}">
-                fa-star
-            <iselseif condition="${parseInt(product.rating) < star}">
-                fa-star-o
-            <iselse>
-                fa-star-half-o
-            </isif>
-            " aria-hidden="true">
-        </i>
-    </isloop>
+    <isinclude template="product/components/productRating" />
 </isif>

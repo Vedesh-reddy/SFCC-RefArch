@@ -103,6 +103,25 @@ describe('Shipping', function () {
         assert.equal(result.shippingAddress.postalCode, '04330');
     });
 
+    it('should return shipment without an address', function () {
+        var shipment = Object.assign({}, defaultShipmentWithAddress);
+        shipment.shippingAddress = Object.assign({}, defaultShipmentWithAddress.shippingAddress);
+
+        shipment.shippingAddress = {
+            address1: null,
+            address2: null,
+            countryCode: null,
+            firstName: null,
+            lastName: null,
+            city: null,
+            phone: null,
+            postalCode: null,
+            stateCode: null
+        };
+        var result = new ShippingModel(shipment);
+        assert.isUndefined(result.shippingAddress);
+    });
+
     // it('should set default shipping method when shippingMethodID is supplied', function () {
     //     var shippingMethodID = '002';
     //     var shippingMethod = {

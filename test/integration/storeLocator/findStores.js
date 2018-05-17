@@ -126,11 +126,11 @@ describe('Store Locator', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
                 var bodyAsJsonLocations = JSON.parse(bodyAsJson.locations);
-                assert.deepEqual(bodyAsJson.stores, ExpectedResBody.stores, 'Actual response.stores not as expected.');
+                assert.containSubset(bodyAsJson.stores, ExpectedResBody.stores, 'Actual response.stores not as expected.');
                 assert.containSubset(bodyAsJsonLocations, ExpectedResBody.locations);
-                assert.deepEqual(bodyAsJson.searchKey, ExpectedResBody.searchKey, 'Actual response.searchKey not as expected.');
-                assert.deepEqual(bodyAsJson.radius, ExpectedResBody.radius, 'Actual response.radius not as expected.');
-                assert.deepEqual(bodyAsJson.radiusOptions, ExpectedResBody.radiusOptions, 'Actual response.radiusOptions not as expected.');
+                assert.containSubset(bodyAsJson.searchKey, ExpectedResBody.searchKey, 'Actual response.searchKey not as expected.');
+                assert.containSubset(bodyAsJson.radius, ExpectedResBody.radius, 'Actual response.radius not as expected.');
+                assert.containSubset(bodyAsJson.radiusOptions, ExpectedResBody.radiusOptions, 'Actual response.radiusOptions not as expected.');
 
                 done();
             });
@@ -303,11 +303,11 @@ describe('Store Locator', function () {
 
                 var bodyAsJson = JSON.parse(response.body);
                 var bodyAsJsonLocations = JSON.parse(bodyAsJson.locations);
-                assert.deepEqual(bodyAsJson.stores, ExpectedResBody.stores, 'Actual response.stores not as expected.');
+                assert.containSubset(bodyAsJson.stores, ExpectedResBody.stores, 'Actual response.stores not as expected.');
                 assert.containSubset(bodyAsJsonLocations, ExpectedResBody.locations);
-                assert.deepEqual(bodyAsJson.searchKey, ExpectedResBody.searchKey, 'Actual response.searchKey not as expected.');
-                assert.deepEqual(bodyAsJson.radius, ExpectedResBody.radius, 'Actual response.radius not as expected.');
-                assert.deepEqual(bodyAsJson.radiusOptions, ExpectedResBody.radiusOptions, 'Actual response.radiusOptions not as expected.');
+                assert.containSubset(bodyAsJson.searchKey, ExpectedResBody.searchKey, 'Actual response.searchKey not as expected.');
+                assert.containSubset(bodyAsJson.radius, ExpectedResBody.radius, 'Actual response.radius not as expected.');
+                assert.containSubset(bodyAsJson.radiusOptions, ExpectedResBody.radiusOptions, 'Actual response.radiusOptions not as expected.');
 
                 done();
             });

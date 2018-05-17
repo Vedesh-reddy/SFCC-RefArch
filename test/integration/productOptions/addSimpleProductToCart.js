@@ -6,7 +6,7 @@ describe('Add one Simple Product with Options to Cart', function () {
     this.timeout(5000);
 
     it('should add a simple product with options to Cart', function () {
-        var pid = 'mitsubishi-wd-73736';
+        var pid = 'mitsubishi-wd-73736M';
         var quantity = '1';
         var options = [{ 'optionId': 'tvWarranty', 'selectedValueId': '001' }];
         var optionsString = JSON.stringify(options);

@@ -7,7 +7,7 @@
         assets.addJs('/js/storeLocator.js');
         assets.addCss('/css/storeLocator.css');
     </isscript>
-    <isif condition="${pdict.stores.showMap === 'true'}">
+    <isif condition="${pdict.showMap === 'true'}">
         <div class="jumbotron map-canvas" data-has-google-api="${pdict.stores.googleMapsApi ? true : false}" data-locations="${pdict.stores.locations}">
             <div class="container">
                 <div class="row">
@@ -16,37 +16,9 @@
             </div>
         </div>
     </isif>
+
     <div class="hero store-locator-hero">
         <h1 class="page-title">${Resource.msg('title.hero.text','storeLocator',null)}</h1>
     </div>
-    <div class="container">
-        <div class="row">
-            <div class="${pdict.horizontalView ==='true' ? 'col-sm-6' : 'col-sm-12'}">
-                <div class="card">
-                    <isinclude template="storeLocator/storeLocatorFields" />
-                </div>
-            </div>
-
-            <div class="${pdict.horizontalView ==='true' ? 'col-sm-6' : 'col-sm-12'}">
-                <div class="card results-card">
-                    <div class="card-header">
-                        <isinclude template="storeLocator/storeLocatorRadius" />
-                    </div>
-                    <div class="card-body store-locator-no-results">
-                        <p class="text-center">${Resource.msg('error.no.results','storeLocator',null)}</p>
-                    </div>
-                    <div class="results striped" data-search-key="${JSON.stringify(pdict.stores.searchKey)}" data-radius="${pdict.stores.radius}" data-has-results="${pdict.stores.stores.length}">
-                        <isinclude template="storeLocator/storeLocatorResults" />
-                    </div>
-                    <isif condition="${pdict.stores.showMap === 'false'}">
-                        <div class="card-footer">
-                            <button type="button" class="btn btn-block btn-outline-primary btn-margin select-store">
-                                ${Resource.msg('button.select.store','storeLocator',null)}
-                            </button>
-                        </div>
-                    </isif>
-                </div>
-            </div>
-        </div>
-    </div>
+    <isinclude template="storeLocator/storeLocatorNoDecorator" />
 </isdecorate>

@@ -89,15 +89,16 @@ function maps() {
 function updateStoresResults(data) {
     var $resultsDiv = $('.results');
     var $mapDiv = $('.map-canvas');
+    var hasResults = data.stores.length > 0;
 
-    if (data.stores.length === 0) {
+    if (!hasResults) {
         $('.store-locator-no-results').show();
     } else {
         $('.store-locator-no-results').hide();
     }
 
     $resultsDiv.empty()
-        .data('has-results', data.stores.length)
+        .data('has-results', hasResults)
         .data('radius', data.radius)
         .data('search-key', data.searchKey);
 
@@ -114,6 +115,36 @@ function updateStoresResults(data) {
     }
 }
 
+/**
+ * Search for stores with new zip code
+ * @param {HTMLElement} element - the target html element
+ * @returns {boolean} false to prevent default event
+ */
+function search(element) {
+    $.spinner().start();
+    var $form = element.closest('.store-locator');
+    var radius = $('.results').data('radius');
+    var url = $form.attr('action');
+    var urlParams = { radius: radius };
+
+    var payload = $form.is('form') ? $form.serialize() : { postalCode: $form.find('[name="postalCode"]').val() };
+
+    url = appendToUrl(url, urlParams);
+
+    $.ajax({
+        url: url,
+        type: $form.attr('method'),
+        data: payload,
+        dataType: 'json',
+        success: function (data) {
+            $.spinner().stop();
+            updateStoresResults(data);
+            $('.select-store').prop('disabled', true);
+        }
+    });
+    return false;
+}
+
 module.exports = {
     init: function () {
         if ($('.map-canvas').data('has-google-api')) {
@@ -122,7 +153,7 @@ module.exports = {
             $('.store-locator-no-apiKey').show();
         }
 
-        if ($('.results').data('has-results') === 0) {
+        if (!$('.results').data('has-results')) {
             $('.store-locator-no-results').show();
         }
     },
@@ -154,6 +185,7 @@ module.exports = {
                     success: function (data) {
                         $.spinner().stop();
                         updateStoresResults(data);
+                        $('.select-store').prop('disabled', true);
                     }
                 });
             });
@@ -161,35 +193,21 @@ module.exports = {
     },
 
     search: function () {
-        $('.store-locator').submit(function (e) {
+        $('.store-locator-container form.store-locator').submit(function (e) {
             e.preventDefault();
-            $.spinner().start();
-            var $form = $('.store-locator');
-            var radius = $('.results').data('radius');
-            var url = $form.attr('action');
-            var urlParams = { radius: radius };
-
-            url = appendToUrl(url, urlParams);
-
-            $.ajax({
-                url: url,
-                type: $form.attr('method'),
-                data: $form.serialize(),
-                dataType: 'json',
-                success: function (data) {
-                    $.spinner().stop();
-                    updateStoresResults(data);
-                }
-            });
-            return false;
+            search($(this));
+        });
+        $('.store-locator-container .btn-storelocator-search[type="button"]').click(function (e) {
+            e.preventDefault();
+            search($(this));
         });
     },
 
     changeRadius: function () {
-        $('.radius').change(function () {
+        $('.store-locator-container .radius').change(function () {
             var radius = $(this).val();
             var searchKeys = $('.results').data('search-key');
-            var url = $('.radius').data('action');
+            var url = $('.radius').data('action-url');
             var urlParams = {};
 
             if (searchKeys.postalCode) {
@@ -214,15 +232,29 @@ module.exports = {
                 success: function (data) {
                     $.spinner().stop();
                     updateStoresResults(data);
+                    $('.select-store').prop('disabled', true);
                 }
             });
         });
     },
     selectStore: function () {
-        $('body').on('click', '.select-store', (function (e) {
+        $('.store-locator-container').on('click', '.select-store', (function (e) {
             e.preventDefault();
-            var selectedStore = $(':checked', '.results-card .results').data('store-info');
-            $('.select-store').trigger('store:selected', selectedStore);
+            var selectedStore = $(':checked', '.results-card .results');
+            var data = {
+                storeID: selectedStore.val(),
+                searchRadius: $('#radius').val(),
+                searchPostalCode: $('.results').data('search-key').postalCode,
+                storeDetailsHtml: selectedStore.siblings('label').find('.store-details').html(),
+                event: e
+            };
+
+            $('body').trigger('store:selected', data);
+        }));
+    },
+    updateSelectStoreButton: function () {
+        $('body').on('change', '.select-store-input', (function () {
+            $('.select-store').prop('disabled', false);
         }));
     }
 };

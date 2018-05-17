@@ -70,6 +70,20 @@ function getAssociatedAddress(shipment, customer) {
 }
 
 /**
+ * Returns a boolean indicating if the address is empty
+ * @param {dw.order.Shipment} shipment - A shipment from the current basket
+ * @returns {boolean} a boolean that indicates if the address is empty
+ */
+function emptyAddress(shipment) {
+    if (shipment && shipment.shippingAddress) {
+        return ['firstName', 'lastName', 'address1', 'address2', 'phone', 'city', 'postalCode', 'stateCode'].some(function (key) {
+            return shipment.shippingAddress[key];
+        });
+    }
+    return false;
+}
+
+/**
  * @constructor
  * @classdesc Model that represents shipping information
  *
@@ -81,17 +95,17 @@ function getAssociatedAddress(shipment, customer) {
 function ShippingModel(shipment, address, customer, containerView) {
     var shippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
 
-	// Simple properties
+    // Simple properties
     this.UUID = getShipmentUUID(shipment);
 
-	// Derived properties
+    // Derived properties
     this.productLineItems = getProductLineItemsModel(shipment, containerView);
     this.applicableShippingMethods = shippingHelpers.getApplicableShippingMethods(shipment, address);
     this.selectedShippingMethod = getSelectedShippingMethod(shipment);
     this.matchingAddressId = getAssociatedAddress(shipment, customer);
 
     // Optional properties
-    if (shipment && shipment.shippingAddress) {
+    if (emptyAddress(shipment)) {
         this.shippingAddress = new AddressModel(shipment.shippingAddress).address;
     } else {
         this.shippingAddress = address;

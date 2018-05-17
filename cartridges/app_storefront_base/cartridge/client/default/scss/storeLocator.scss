@@ -1,23 +1,7 @@
 @import "variables";
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
-@import "components/formFields";
-
-.btn-storelocator-search {
-    background-color: $light-gray;
-    border-color: $primary;
-    border-radius: 0;
-    color: $primary;
-
-    &:hover {
-        background-color: $primary;
-        color: $light-gray;
-    }
-}
-
-.detect-location {
-    margin-bottom: 1em;
-}
+@import "storeLocator/storeLocator";
 
 .map-marker {
     float: left;
@@ -76,18 +60,6 @@
     margin-left: 3.125em;
 }
 
-.striped {
-    > div:nth-of-type(odd) {
-        background-color: $table-accent-bg;
-    }
-}
-
-.custom-radio {
-    .store-details {
-        margin-left: 1.125em;
-    }
-}
-
 .store-locator-no-apiKey {
     display: none;
 }
@@ -111,5 +83,6 @@
         overflow-y: auto;
         overflow-x: hidden;
         max-height: 21.875em;
+        margin-right: -0.938em;
     }
 }

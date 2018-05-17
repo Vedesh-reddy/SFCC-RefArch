@@ -1,5 +1,5 @@
 <label for="radius">${Resource.msg('field.radius','storeLocator',null)}</label>
-<select class="form-control custom-select radius" id="radius" name="radius" data-action="${pdict.stores.actionUrl}">
+<select class="form-control custom-select radius" id="radius" name="radius" data-action-url="${pdict.stores.actionUrl}">
     <isloop items="${pdict.stores.radiusOptions}" var="option" status="loopstate">
         <option>${StringUtils.formatInteger(option)}</option>
     </isloop>
