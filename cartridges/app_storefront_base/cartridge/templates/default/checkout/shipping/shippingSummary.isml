@@ -11,7 +11,7 @@
             <div class="summary-details shipping">
                 <isinclude template="checkout/addressSummary" />
                 <div class="shipping-phone">
-                    ${shippingModel.shippingAddress ? shippingModel.shippingAddress.phone : ''}
+                    ${shippingModel.shippingAddress && shippingModel.shippingAddress.phone ? shippingModel.shippingAddress.phone : ''}
                 </div>
             </div>
 

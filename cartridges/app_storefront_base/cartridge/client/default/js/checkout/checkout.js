@@ -89,7 +89,7 @@ var formHelpers = require('./formErrors');
                     formHelpers.clearPreviousErrors('.shipping-form');
 
                     //
-                    // Submit the Shipiing Address Form
+                    // Submit the Shipping Address Form
                     //
                     var isMultiShip = $('#checkout-main').hasClass('multi-ship');
                     var formSelector = isMultiShip ?
