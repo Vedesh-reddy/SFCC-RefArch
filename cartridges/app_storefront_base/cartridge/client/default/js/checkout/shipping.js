@@ -592,6 +592,8 @@ function editMultiShipAddress(element) {
     element.find('.btn-enter-multi-ship').addClass('d-none');
     element.find('.btn-edit-multi-ship').addClass('d-none');
     element.find('.multi-ship-address-actions').addClass('d-none');
+
+    $('body').trigger('shipping:editMultiShipAddress', { element: element, form: element.find('.shipping-form') });
 }
 
 /**
@@ -631,7 +633,9 @@ module.exports = {
         createNewShipment: createNewShipment,
         selectShippingMethodAjax: selectShippingMethodAjax,
         updateShippingMethodList: updateShippingMethodList,
-        clearShippingForms: clearShippingForms
+        clearShippingForms: clearShippingForms,
+        editMultiShipAddress: editMultiShipAddress,
+        editOrEnterMultiShipInfo: editOrEnterMultiShipInfo
     },
 
     selectShippingMethod: function () {
