@@ -692,4 +692,168 @@ server.get('EditBonusProduct', function (req, res, next) {
     next();
 });
 
+server.get('GetProduct', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var ProductFactory = require('*/cartridge/scripts/factories/product');
+
+    var requestUuid = req.querystring.uuid;
+
+
+    var requestPLI = collections.find(BasketMgr.getCurrentBasket().allProductLineItems, function (item) {
+        return item.UUID === requestUuid;
+    });
+
+    var requestQuantity = requestPLI.quantityValue.toString();
+
+    var pliProduct = {
+        pid: requestPLI.productID,
+        quantity: requestQuantity
+    };
+
+    res.render('product/quickView.isml', {
+        product: ProductFactory.get(pliProduct),
+        selectedQuantity: requestQuantity,
+        uuid: requestUuid,
+        resources: Resource.msg('info.selectforstock', 'product', 'Select Styles for Availability'),
+        updateCartUrl: URLUtils.url('Cart-EditProductLineItem')
+    });
+
+    next();
+});
+
+server.post('EditProductLineItem', function (req, res, next) {
+    var BasketMgr = require('dw/order/BasketMgr');
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
+    var Transaction = require('dw/system/Transaction');
+    var CartModel = require('*/cartridge/models/cart');
+    var collections = require('*/cartridge/scripts/util/collections');
+    var cartHelper = require('*/cartridge/scripts/cart/cartHelpers');
+    var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+
+    var uuid = req.form.uuid;
+    var productId = req.form.pid;
+    var updateQuantity = parseInt(req.form.quantity, 10);
+
+    var currentBasket = BasketMgr.getCurrentBasket();
+
+    if (!currentBasket) {
+        res.setStatusCode(500);
+        res.json({
+            error: true,
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+
+        return next();
+    }
+
+    var productLineItems = currentBasket.allProductLineItems;
+    var requestLineItem = collections.find(productLineItems, function (item) {
+        return item.UUID === uuid;
+    });
+
+    var uuidToBeDeleted = null;
+    var pliToBeDeleted;
+    var newPidAlreadyExist = collections.find(productLineItems, function (item) {
+        if (item.productID === productId && item.UUID !== uuid) {
+            uuidToBeDeleted = item.UUID;
+            pliToBeDeleted = item;
+            updateQuantity += parseInt(item.quantity, 10);
+            return true;
+        }
+        return false;
+    });
+
+    var availableToSell = 0;
+    var totalQtyRequested = 0;
+    var qtyAlreadyInCart = 0;
+    var minOrderQuantity = 0;
+    var canBeUpdated = false;
+    var bundleItems;
+
+    if (requestLineItem) {
+        if (requestLineItem.product.bundle) {
+            bundleItems = requestLineItem.bundledProductLineItems;
+            canBeUpdated = collections.every(bundleItems, function (item) {
+                var quantityToUpdate = updateQuantity *
+                    requestLineItem.product.getBundledProductQuantity(item.product).value;
+                qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
+                    item.productID,
+                    productLineItems,
+                    item.UUID
+                );
+                totalQtyRequested = quantityToUpdate + qtyAlreadyInCart;
+                availableToSell = item.product.availabilityModel.inventoryRecord.ATS.value;
+                minOrderQuantity = item.product.minOrderQuantity.value;
+                return (totalQtyRequested <= availableToSell) &&
+                    (quantityToUpdate >= minOrderQuantity);
+            });
+        } else {
+            availableToSell = requestLineItem.product.availabilityModel.inventoryRecord.ATS.value;
+            qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
+                productId,
+                productLineItems,
+                requestLineItem.UUID
+            );
+            totalQtyRequested = updateQuantity + qtyAlreadyInCart;
+            minOrderQuantity = requestLineItem.product.minOrderQuantity.value;
+            canBeUpdated = (totalQtyRequested <= availableToSell) &&
+                (updateQuantity >= minOrderQuantity);
+        }
+    }
+
+    var error = false;
+    if (canBeUpdated) {
+        var product = ProductMgr.getProduct(productId);
+
+        try {
+            Transaction.wrap(function () {
+                if (newPidAlreadyExist) {
+                    var shipmentToRemove = pliToBeDeleted.shipment;
+                    currentBasket.removeProductLineItem(pliToBeDeleted);
+                    if (shipmentToRemove.productLineItems.empty && !shipmentToRemove.default) {
+                        currentBasket.removeShipment(shipmentToRemove);
+                    }
+                }
+
+                if (!requestLineItem.product.bundle) {
+                    requestLineItem.replaceProduct(product);
+                }
+
+                requestLineItem.setQuantityValue(updateQuantity);
+
+                basketCalculationHelpers.calculateTotals(currentBasket);
+            });
+        } catch (e) {
+            error = true;
+        }
+    }
+
+    if (!error && requestLineItem && canBeUpdated) {
+        var cartModel = new CartModel(currentBasket);
+
+        var responseObject = {
+            cartModel: cartModel,
+            newProductId: productId
+        };
+
+        if (uuidToBeDeleted) {
+            responseObject.uuidToBeDeleted = uuidToBeDeleted;
+        }
+
+        res.json(responseObject);
+    } else {
+        res.setStatusCode(500);
+        res.json({
+            errorMessage: Resource.msg('error.cannot.update.product', 'cart', null)
+        });
+    }
+
+    return next();
+});
+
 module.exports = server.exports();
