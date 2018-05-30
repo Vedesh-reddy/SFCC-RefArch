@@ -59,8 +59,26 @@
     </div>
 
     <isif condition="${product.productType === 'bundle'}">
-        <hr>
+        <div class="hidden-xs-down">
+            <hr>
+        </div>
         <isinclude template="product/components/bundleItems" />
+        
+        <hr>
+        
+        <!-- Quantity Drop Down Menu -->
+        <div class="row d-sm-none">
+            <div class="quantity col-10 mx-auto">
+                <isinclude template="product/components/quantity" />
+            </div>
+        </div>
+        
+        <!-- Availability -->
+        <div class="row d-sm-none">
+            <div class="col-11 mx-auto availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
+                <isinclude template="product/components/availability" />
+            </div>
+        </div>
     </isif>
 
     <isset name="product" value="${productCopy}" scope="page"/>
