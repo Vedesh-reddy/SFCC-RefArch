@@ -160,7 +160,7 @@ function updateProductDetails(data, uuid) {
         return item.UUID === uuid;
     });
 
-    if (lineItem.variationAttributes !== null) {
+    if (lineItem.variationAttributes) {
         var colorAttr = lineItem.variationAttributes.find(function (attr) {
             return attr.attributeId === 'color';
         });
