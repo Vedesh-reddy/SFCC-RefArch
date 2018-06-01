@@ -32,7 +32,6 @@ describe.only('Search As You Type - general product', function () {
             var $ = cheerio.load(response.body);
 
             var prod = $('.container a');
-            console.log(prod);
             assert.equal(prod.get(0).children[0].data.trim(), 'tops');
             assert.include(prod.get(2).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
             assert.include(prod.get(4).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
