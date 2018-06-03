@@ -66,7 +66,7 @@
 
             <!-- Availability -->
             <div class="availability clearfix global-availability" data-ready-to-order="${bundle.readyToOrder}">
-                <isinclude template="product/components/availability" />
+                <isinclude template="product/components/availabilityBundleContainer" />
             </div>
 
             <div class="col-12 prices-add-to-cart-actions">
