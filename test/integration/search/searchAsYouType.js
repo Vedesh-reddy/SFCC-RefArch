@@ -51,6 +51,13 @@ describe('Search As You Type - general product', function () {
                 assert.equal(prod.get(9).children[0].next.data.trim(), 'Top Sellers');
                 assert.equal(prod.get(10).children[0].next.data.trim(), 'FAQs');
             }
+
+            var category = $('.justify-content-end.header div');
+            assert.equal(category.get(0).children[0].data.trim(), 'Do you mean?');
+            assert.equal(category.get(1).children[0].data.trim(), 'Products');
+            assert.equal(category.get(2).children[0].data.trim(), 'Categories');
+            assert.equal(category.get(3).children[0].data.trim(), 'Content');
+            done();
         });
     });
 });
