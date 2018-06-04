@@ -12,7 +12,7 @@ var cheerio = require('cheerio');
  * - Content : FAQs
  */
 
-describe.only('Search As You Type - general product', function () {
+describe('Search As You Type - general product', function () {
     this.timeout(5000);
 
     var product = 'Tops';
