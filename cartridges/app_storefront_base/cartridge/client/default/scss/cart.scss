@@ -2,6 +2,7 @@
 @import "bootstrap/scss/variables";
 @import "bootstrap/scss/mixins/breakpoints";
 @import "utilities/deleteCardButton";
+@import "components/quickView";
 
 $spacer: 0.625em;
 $negative-spacer: -0.625rem;
@@ -40,7 +41,7 @@ $negative-spacer: -0.625rem;
     margin-right: 0.625em;
 }
 
-.edit-add-to-wishlist {
+.product-edit {
     margin-top: auto;
 
     a {

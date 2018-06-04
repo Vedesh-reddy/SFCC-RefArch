@@ -150,6 +150,127 @@ function updateAvailability(data, uuid) {
     $('.availability-' + lineItem.UUID).html(messages);
 }
 
+/**
+ * Updates details of a product line item
+ * @param {Object} data - AJAX response from the server
+ * @param {string} uuid - The uuid of the product line item to update
+ */
+function updateProductDetails(data, uuid) {
+    var lineItem = data.cartModel.items.find(function (item) {
+        return item.UUID === uuid;
+    });
+
+    if (lineItem.variationAttributes) {
+        var colorAttr = lineItem.variationAttributes.find(function (attr) {
+            return attr.attributeId === 'color';
+        });
+
+        if (colorAttr) {
+            var colorSelector = '.Color-' + uuid;
+            var newColor = 'Color: ' + colorAttr.displayValue;
+            $(colorSelector).text(newColor);
+        }
+
+        var sizeAttr = lineItem.variationAttributes.find(function (attr) {
+            return attr.attributeId === 'size';
+        });
+
+        if (sizeAttr) {
+            var sizeSelector = '.Size-' + uuid;
+            var newSize = 'Size: ' + sizeAttr.displayValue;
+            $(sizeSelector).text(newSize);
+        }
+    }
+
+    var imageSelector = '.card.product-info.uuid-' + uuid + ' .item-image > img';
+    $(imageSelector).attr('src', lineItem.images.small[0].url);
+    $(imageSelector).attr('alt', lineItem.images.small[0].alt);
+    $(imageSelector).attr('title', lineItem.images.small[0].title);
+
+    var qtySelector = '.quantity[data-uuid="' + uuid + '"]';
+    $(qtySelector).val(lineItem.quantity);
+    $(qtySelector).data('pid', data.newProductId);
+
+    $('.remove-product[data-uuid="' + uuid + '"]').data('pid', data.newProductId);
+
+    var priceSelector = '.line-item-price-' + uuid + ' .sales .value';
+    $(priceSelector).text(lineItem.price.sales.formatted);
+    $(priceSelector).attr('content', lineItem.price.sales.decimalPrice);
+
+    if (lineItem.price.list) {
+        var listPriceSelector = '.line-item-price-' + uuid + ' .list .value';
+        $(listPriceSelector).text(lineItem.price.list.formatted);
+        $(listPriceSelector).attr('content', lineItem.price.list.decimalPrice);
+    }
+}
+
+/**
+ * Generates the modal window on the first call.
+ *
+ */
+function getModalHtmlElement() {
+    if ($('#editProductModal').length !== 0) {
+        $('#editProductModal').remove();
+    }
+    var htmlString = '<!-- Modal -->'
+        + '<div class="modal fade" id="editProductModal" role="dialog">'
+        + '<div class="modal-dialog quick-view-dialog">'
+        + '<!-- Modal content-->'
+        + '<div class="modal-content">'
+        + '<div class="modal-header">'
+        + '    <button type="button" class="close pull-right" data-dismiss="modal">'
+        + '        &times;'
+        + '    </button>'
+        + '</div>'
+        + '<div class="modal-body"></div>'
+        + '<div class="modal-footer"></div>'
+        + '</div>'
+        + '</div>'
+        + '</div>';
+    $('body').append(htmlString);
+}
+
+/**
+ * Parses the html for a modal window
+ * @param {string} html - representing the body and footer of the modal window
+ *
+ * @return {Object} - Object with properties body and footer.
+ */
+function parseHtml(html) {
+    var $html = $('<div>').append($.parseHTML(html));
+
+    var body = $html.find('.product-quickview');
+    var footer = $html.find('.modal-footer').children();
+
+    return { body: body, footer: footer };
+}
+
+/**
+ * replaces the content in the modal window for product variation to be edited.
+ * @param {string} editProductUrl - url to be used to retrieve a new product model
+ */
+function fillModalElement(editProductUrl) {
+    $('.modal-body').spinner().start();
+    $.ajax({
+        url: editProductUrl,
+        method: 'GET',
+        dataType: 'html',
+        success: function (html) {
+            var parsedHtml = parseHtml(html);
+
+            $('#editProductModal .modal-body').empty();
+            $('#editProductModal .modal-body').html(parsedHtml.body);
+            $('#editProductModal .modal-footer').html(parsedHtml.footer);
+            $('#editProductModal').modal('show');
+            $.spinner().stop();
+        },
+        error: function () {
+            $.spinner().stop();
+        }
+    });
+}
+
+
 module.exports = function () {
     $('body').on('click', '.remove-product', function (e) {
         e.preventDefault();
@@ -429,6 +550,128 @@ module.exports = function () {
             }
         });
     });
+    $('body').on('click', '.cart-page .product-edit .edit, .cart-page .bundle-edit .edit', function (e) {
+        e.preventDefault();
+
+        var editProductUrl = $(this).attr('href');
+        getModalHtmlElement();
+        fillModalElement(editProductUrl);
+    });
+
+    $('body').on('product:updateAddToCart', function (e, response) {
+        // update global add to cart (single products, bundles)
+        var dialog = $(response.$productContainer)
+            .closest('.quick-view-dialog');
+
+        $('.update-cart-product-global', dialog).attr('disabled',
+            !$('.global-availability', dialog).data('ready-to-order')
+            || !$('.global-availability', dialog).data('available')
+        );
+    });
+
+    $('body').on('product:updateAvailability', function (e, response) {
+        // bundle individual products
+        $('.product-availability', response.$productContainer)
+            .data('ready-to-order', response.product.readyToOrder)
+            .data('available', response.product.available)
+            .find('.availability-msg')
+            .empty()
+            .html(response.message);
+
+
+        var dialog = $(response.$productContainer)
+            .closest('.quick-view-dialog');
+
+        if ($('.product-availability', dialog).length) {
+            // bundle all products
+            var allAvailable = $('.product-availability', dialog).toArray()
+                .every(function (item) { return $(item).data('available'); });
+
+            var allReady = $('.product-availability', dialog).toArray()
+                .every(function (item) { return $(item).data('ready-to-order'); });
+
+            $('.global-availability', dialog)
+                .data('ready-to-order', allReady)
+                .data('available', allAvailable);
+
+            $('.global-availability .availability-msg', dialog).empty()
+                .html(allReady ? response.message : response.resources.info_selectforstock);
+        } else {
+            // single product
+            $('.global-availability', dialog)
+                .data('ready-to-order', response.product.readyToOrder)
+                .data('available', response.product.available)
+                .find('.availability-msg')
+                .empty()
+                .html(response.message);
+        }
+    });
+
+    $('body').on('product:afterAttributeSelect', function (e, response) {
+        if ($('.modal.show .product-quickview .bundle-items').length) {
+            $('.modal.show').find(response.container).data('pid', response.data.product.id);
+            $('.modal.show').find(response.container).find('.product-id').text(response.data.product.id);
+        } else {
+            $('.modal.show .product-quickview').data('pid', response.data.product.id);
+        }
+    });
+
+    $('body').on('change', '.quantity-select', function () {
+        var selectedQuantity = $(this).val();
+        $('.modal.show .update-cart-url').data('selected-quantity', selectedQuantity);
+    });
+
+    $('body').on('click', '.update-cart-product-global', function (e) {
+        e.preventDefault();
+
+        var updateProductUrl = $(this).closest('.cart-and-ipay').find('.update-cart-url').val();
+        var selectedQuantity = $(this).closest('.cart-and-ipay').find('.update-cart-url').data('selected-quantity');
+        var uuid = $(this).closest('.cart-and-ipay').find('.update-cart-url').data('uuid');
+
+        var form = {
+            uuid: uuid,
+            pid: base.getPidValue($(this)),
+            quantity: selectedQuantity
+        };
+
+        $(this).parents('.card').spinner().start();
+
+        $.ajax({
+            url: updateProductUrl,
+            type: 'post',
+            context: this,
+            data: form,
+            dataType: 'json',
+            success: function (data) {
+                $('#editProductModal').remove();
+                $('.modal-backdrop').remove();
+                $('body').removeClass('modal-open');
+
+                $('.coupons-and-promos').empty().append(data.cartModel.totals.discountsHtml);
+                updateCartTotals(data.cartModel);
+                updateApproachingDiscounts(data.cartModel.approachingDiscounts);
+                updateAvailability(data.cartModel, uuid);
+                updateProductDetails(data, uuid);
+
+                if (data.uuidToBeDeleted) {
+                    $('.uuid-' + data.uuidToBeDeleted).remove();
+                }
+
+                validateBasket(data.cartModel);
+
+                $.spinner().stop();
+            },
+            error: function (err) {
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                } else {
+                    createErrorNotification(err.responseJSON.errorMessage);
+                    $.spinner().stop();
+                }
+            }
+        });
+    });
+
 
     base.selectAttribute();
     base.colorAttribute();
