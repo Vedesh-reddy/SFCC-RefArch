@@ -180,12 +180,12 @@ function updateProductDetails(data, uuid) {
             var newSize = 'Size: ' + sizeAttr.displayValue;
             $(sizeSelector).text(newSize);
         }
-    }
 
-    var imageSelector = '.card.product-info.uuid-' + uuid + ' .item-image > img';
-    $(imageSelector).attr('src', lineItem.images.small[0].url);
-    $(imageSelector).attr('alt', lineItem.images.small[0].alt);
-    $(imageSelector).attr('title', lineItem.images.small[0].title);
+        var imageSelector = '.card.product-info.uuid-' + uuid + ' .item-image > img';
+        $(imageSelector).attr('src', lineItem.images.small[0].url);
+        $(imageSelector).attr('alt', lineItem.images.small[0].alt);
+        $(imageSelector).attr('title', lineItem.images.small[0].title);
+    }
 
     var qtySelector = '.quantity[data-uuid="' + uuid + '"]';
     $(qtySelector).val(lineItem.quantity);
