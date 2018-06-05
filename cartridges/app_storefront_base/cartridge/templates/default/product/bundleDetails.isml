@@ -80,8 +80,8 @@
                 <isinclude template="product/components/addToCartGlobal" />
             </div>
 
-            <!-- Add to Wishlist and Social Sharing Icons -->
-            <isinclude template="product/components/wishlistSocial" />
+            <!-- Social Sharing Icons -->
+            <isinclude template="product/components/socialIcons" />
         </div>
 
         <isinclude template="product/components/descriptionAndDetails" />
