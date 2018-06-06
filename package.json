@@ -1,7 +1,7 @@
 {
-  "name": "mfsg",
+  "name": "sfra",
   "version": "3.0.0",
-  "description": "Mobile First SiteGenesis",
+  "description": "Storefront Reference Architecture",
   "main": "index.js",
   "engines": {
     "node": ">=4.0"
