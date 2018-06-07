@@ -1,8 +1,8 @@
 # Server module
 
-The server module is a replacement for guard functionality that existed in the original SiteGenesis controllers and a different approach to extensibility of SiteGenesis.
+The server module is a replacement for guard functionality that existed in the original SiteGenesis JavaScript Controllers (SGJC) reference application. The server module also provides a different approach to extensibility that is new to Storefront Reference Architecture (SFRA).
 
-The server module uses a modern JavaScript approach and borrows heavily from NodeJS's [Express](http://expressjs.com/) alnog with features specific to SiteGenesis.
+The server module uses a modern JavaScript approach and borrows heavily from NodeJS's [Express](http://expressjs.com/) along with features specific to Storefront Reference Architecture.
 
 The server module allows users to register routes that create a mapping between a provided URL and code to execute when server detects that URL.
 
@@ -62,7 +62,7 @@ server.get('Show', function(req, res, next) {
 module.exports = server.exports();
 ```
 
-Let's say that you are a client who is fine with the look and feel of the Page-Show template, but want to change the wording. Instead of creating your own controller and route or modifying SiteGenesis code, you can extend this route with the following code:
+Let's say that you are a client who is fine with the look and feel of the Page-Show template, but want to change the wording. Instead of creating your own controller and route or modifying SFRA code, you can extend this route with the following code:
 
 ```js
 var page = require('app_storefront_base/cartridge/controller/Page');
@@ -97,9 +97,9 @@ server.append('Show', function(req, res, next) {
 module.exports = server.exports();
 ```
 
-Your new template still has the `pdict.value` variable with a value of `Hello World`, but you can render it using your own template without modifying any of the SiteGenesis code.
+Your new template still has the `pdict.value` variable with a value of `Hello World`, but you can render it using your own template without modifying any of the SFRA code.
 
-We recommend that you never modify anything in app_storefront_base, but instead to create your own cartridge and overlay it in the Business Manager cartridge path. This enables you to upgrade to a newer version of SiteGenesis without having to manually cherry-pick changes and perform manual merges. This doesn't mean that every new version of SiteGenesis will not modify your client's site, but upgrade and feature adoption process is much quicker and less painful.
+We recommend that you never modify anything in app\_storefront_base, but instead to create your own cartridge and overlay it in the Business Manager cartridge path. This enables you to upgrade to a newer version of SFRA without having to manually cherry-pick changes and perform manual merges. This doesn't mean that every new version of SFRA will not modify your client's site, but upgrade and feature adoption process is much quicker and less painful.
 
 ### Replacing a route
 Sometimes you might want to reuse the route's name, but do not want any of the existing functionality. In those cases, you can use `replace` command to completely remove and re-add a new route.
