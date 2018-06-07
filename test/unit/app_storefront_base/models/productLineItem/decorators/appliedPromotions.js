@@ -10,7 +10,8 @@ describe('product line item applied promotions decorator', function () {
     });
 
     var appliedPromotions = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/productLineItem/decorators/appliedPromotions', {
-        '*/cartridge/scripts/util/collections': collections
+        '*/cartridge/scripts/util/collections': collections,
+        'dw/web/Resource': { msg: function () { return 'test discount'; } }
     });
 
     it('should create a property on the passed in object called appliedPromotions', function () {
@@ -86,5 +87,15 @@ describe('product line item applied promotions decorator', function () {
         assert.equal(object.appliedPromotions[0].callOutMsg, 'someCallOutMsg');
         assert.equal(object.appliedPromotions[0].name, 'somePromotionName');
         assert.equal(object.appliedPromotions[0].details, '');
+    });
+
+    it('should use default message if no promotion is available', function () {
+        var object = {};
+
+        var lineItemMock = { priceAdjustments: new ArrayList([{}]) };
+        appliedPromotions(object, lineItemMock);
+
+        assert.equal(object.appliedPromotions.length, 1);
+        assert.equal(object.appliedPromotions[0].callOutMsg, 'test discount');
     });
 });
