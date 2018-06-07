@@ -105,7 +105,10 @@ function updateOrderProductSummaryInformation(order) {
         } else {
             shippingForm.find('.ship-to-message').text(order.resources.addressIncomplete);
         }
-
+        // checking h5 title shipping to or pickup
+        var $shippingAddressLabel = $('.shipping-header-text', tmpl);
+        $('body').trigger('shipping:updateAddressLabelText',
+            { selectedShippingMethod: selectedMethod, resources: order.resources, shippingAddressLabel: $shippingAddressLabel });
 
         if (shipping.selectedShippingMethod) {
             $('.display-name', tmpl).text(methodNameLine);

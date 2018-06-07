@@ -30,6 +30,7 @@ cartridges.zip
 dw.json
 sitegenesisdata/
 mobilefirstdata/
+storefrontdata/
 .DS_Store
 test/appium/webdriver/config.json
 .vscode

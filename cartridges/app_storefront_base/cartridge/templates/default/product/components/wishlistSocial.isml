@@ -1,6 +1,0 @@
-<div class="col-12 wishlist-social hidden-sm-down">
-    <a href="${"#"}" class="add-to-wish-list col-md-6">
-        ${Resource.msg('button.add_to_wishlist', 'common', null)}
-    </a>
-    <isinclude template="product/components/socialIcons" />
-</div>

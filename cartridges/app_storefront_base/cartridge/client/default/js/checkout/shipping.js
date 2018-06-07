@@ -236,9 +236,8 @@ function updateShippingSummaryInformation(shipping, order) {
         }
 
         if (selectedShippingMethod) {
-            $shippingAddressLabel.text(order.resources.shippingAddress);
-            $('body').trigger('checkout:updateAddressLabelText',
-                { selectedShippingMethod: selectedShippingMethod, order: order, shippingAddressLabel: $shippingAddressLabel });
+            $('body').trigger('shipping:updateAddressLabelText',
+                { selectedShippingMethod: selectedShippingMethod, resources: order.resources, shippingAddressLabel: $shippingAddressLabel });
             $shippingSummaryLabel.show();
             $summaryDetails.show();
             $methodTitle.text(selectedShippingMethod.displayName);
@@ -315,6 +314,10 @@ function updatePLIShippingSummaryInformation(productLineItem, shipping, order, o
         $('.arrival-time', tmpl).text(methodArrivalTime);
         $('.price', tmpl).text(shippingCost);
     }
+    // checking h5 title shipping to or pickup
+    var $shippingAddressLabel = $('.shipping-header-text', tmpl);
+    $('body').trigger('shipping:updateAddressLabelText',
+        { selectedShippingMethod: selectedMethod, resources: order.resources, shippingAddressLabel: $shippingAddressLabel });
 
     $viewBlock.html(tmpl.html());
 
