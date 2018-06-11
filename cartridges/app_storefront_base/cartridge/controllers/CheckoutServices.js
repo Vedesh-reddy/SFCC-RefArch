@@ -12,7 +12,6 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     var OrderModel = require('*/cartridge/models/order');
     var Locale = require('dw/util/Locale');
     var Resource = require('dw/web/Resource');
-    var AddressSelectorModel = require('*/cartridge/models/addressSelector');
     var currentBasket = BasketMgr.getCurrentBasket();
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
     if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
@@ -26,12 +25,10 @@ server.get('Get', server.middleware.https, function (req, res, next) {
         currentBasket,
         { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
     );
-    var addressSelectorModel = new AddressSelectorModel(currentBasket, req.currentCustomer.raw);
 
     res.json({
         order: basketModel,
         customer: new AccountModel(req.currentCustomer),
-        addresses: addressSelectorModel,
         error: !allValid,
         message: allValid ? '' : Resource.msg('error.message.shipping.addresses', 'checkout', null)
     });
@@ -144,8 +141,6 @@ server.post(
                 var array = require('*/cartridge/scripts/util/array');
                 var Locale = require('dw/util/Locale');
                 var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
-                var AddressSelectorModel = require('*/cartridge/models/addressSelector');
-
                 var currentBasket = BasketMgr.getCurrentBasket();
                 var billingData = res.getViewData();
 
@@ -334,7 +329,6 @@ server.post(
                     currentBasket,
                     { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
                 );
-                var addressSelectorModel = new AddressSelectorModel(currentBasket, req.currentCustomer.raw);
 
                 var accountModel = new AccountModel(req.currentCustomer);
                 var renderedStoredPaymentInstrument = COHelpers.getRenderedPaymentInstruments(
@@ -348,7 +342,6 @@ server.post(
                     renderedPaymentInstruments: renderedStoredPaymentInstrument,
                     customer: accountModel,
                     order: basketModel,
-                    addresses: addressSelectorModel,
                     form: billingForm,
                     error: false
                 });

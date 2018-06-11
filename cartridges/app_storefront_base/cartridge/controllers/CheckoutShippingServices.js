@@ -16,7 +16,6 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
     var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
     var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
     var shippingHelpers = require('*/cartridge/scripts/checkout/shippingHelpers');
-    var AddressSelectorModel = require('*/cartridge/models/addressSelector');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     if (!currentBasket) {
@@ -97,12 +96,10 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
         currentBasket,
         { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
     );
-    var addressSelectorModel = new AddressSelectorModel(currentBasket, req.currentCustomer.raw);
 
     res.json({
         customer: new AccountModel(req.currentCustomer),
-        order: basketModel,
-        addresses: addressSelectorModel
+        order: basketModel
     });
 
     next();
@@ -118,7 +115,6 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
     var Locale = require('dw/util/Locale');
     var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
-    var AddressSelectorModel = require('*/cartridge/models/addressSelector');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -185,12 +181,10 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
             currentBasket,
             { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
         );
-        var addressSelectorModel = new AddressSelectorModel(currentBasket, req.currentCustomer.raw);
 
         res.json({
             customer: new AccountModel(req.currentCustomer),
-            order: basketModel,
-            addresses: addressSelectorModel
+            order: basketModel
         });
     });
 
@@ -207,7 +201,6 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
     var Locale = require('dw/util/Locale');
     var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
-    var AddressSelectorModel = require('*/cartridge/models/addressSelector');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -266,13 +259,11 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
         currentBasket,
         { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
     );
-    var addressSelectorModel = new AddressSelectorModel(currentBasket, req.currentCustomer.raw);
 
     res.json({
         customer: new AccountModel(req.currentCustomer),
         order: basketModel,
-        shippingForm: server.forms.getForm('shipping'),
-        addresses: addressSelectorModel
+        shippingForm: server.forms.getForm('shipping')
     });
 
     return next();
@@ -290,7 +281,6 @@ server.post(
         var BasketMgr = require('dw/order/BasketMgr');
         var URLUtils = require('dw/web/URLUtils');
         var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-        var AddressSelectorModel = require('*/cartridge/models/addressSelector');
 
         var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -390,13 +380,11 @@ server.post(
                         containerView: 'basket'
                     }
                 );
-                var addressSelectorModel = new AddressSelectorModel(currentBasket, req.currentCustomer.raw);
 
                 res.json({
                     customer: new AccountModel(req.currentCustomer),
                     order: basketModel,
-                    form: server.forms.getForm('shipping'),
-                    addresses: addressSelectorModel
+                    form: server.forms.getForm('shipping')
                 });
             });
         }

@@ -15,7 +15,6 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     var UUIDUtils = require('dw/util/UUIDUtils');
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
     var Locale = require('dw/util/Locale');
-    var AddressSelectorModel = require('*/cartridge/models/addressSelector');
 
     var basket = BasketMgr.getCurrentBasket();
     if (!basket) {
@@ -50,13 +49,11 @@ server.post('CreateNewAddress', server.middleware.https, function (req, res, nex
     }
 
     var currentLocale = Locale.getLocale(req.locale.id);
-    var addressSelectorModel = new AddressSelectorModel(basket, req.currentCustomer.raw);
 
     res.json({
         uuid: uuid,
         customer: new AccountModel(req.currentCustomer),
-        order: new OrderModel(basket, { countryCode: currentLocale.country, containerView: 'basket' }),
-        addresses: addressSelectorModel
+        order: new OrderModel(basket, { countryCode: currentLocale.country, containerView: 'basket' })
     });
     return next();
 });
@@ -74,7 +71,6 @@ server.post(
         var UUIDUtils = require('dw/util/UUIDUtils');
         var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
         var Locale = require('dw/util/Locale');
-        var AddressSelectorModel = require('*/cartridge/models/addressSelector');
 
         var pliUUID = req.form.productLineItemUUID;
         var shipmentUUID = req.form.shipmentSelector || req.form.shipmentUUID;
@@ -218,7 +214,6 @@ server.post(
                     containerView: 'basket'
                 }
             );
-            var addressSelectorModel = new AddressSelectorModel(basket, req.currentCustomer.raw);
 
             var accountModel = new AccountModel(req.currentCustomer);
 
@@ -227,7 +222,6 @@ server.post(
                 data: viewData,
                 order: basketModel,
                 customer: accountModel,
-                addresses: addressSelectorModel,
                 fieldErrors: [],
                 serverErrors: [],
                 error: false
