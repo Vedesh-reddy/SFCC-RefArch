@@ -34,21 +34,22 @@ function getCategoryTemplate(apiProductSearch) {
 }
 
 /**
- * Set search configuration values
+ * Set content search configuration values
  *
- * @param {dw.catalog.ContentSearchModel} apiContentSearchModel - API search instance
  * @param {Object} params - Provided HTTP query parameters
  * @return {Object} - content search instance
  */
-function setupContentSearch(apiContentSearchModel, params) {
+function setupContentSearch(params) {
+    var ContentSearchModel = require('dw/content/ContentSearchModel');
     var ContentSearch = require('*/cartridge/models/search/contentSearch');
+    var apiContentSearchModel = new ContentSearchModel();
 
     apiContentSearchModel.setRecursiveFolderSearch(true);
     apiContentSearchModel.setSearchPhrase(params.q);
     apiContentSearchModel.search();
-    contentSearchResult = apiContentSearchModel.getContent();
+    var contentSearchResult = apiContentSearchModel.getContent();
     var count = Number(apiContentSearchModel.getCount());
-    contentSearch = new ContentSearch(contentSearchResult, count, params.q, params.startingPage, null);
+    var contentSearch = new ContentSearch(contentSearchResult, count, params.q, params.startingPage, null);
 
     return contentSearch;
 }
