@@ -1,4 +1,3 @@
-var CatalogMgr = require('dw/catalog/CatalogMgr');
 
 /**
  * Set search configuration values
@@ -8,6 +7,7 @@ var CatalogMgr = require('dw/catalog/CatalogMgr');
  * @return {dw.catalog.ProductSearchModel} - API search instance
  */
 function setupSearch(apiProductSearch, params) {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
     var search = require('*/cartridge/scripts/search/search');
 
     var sortingRule = params.srule ? CatalogMgr.getSortingRule(params.srule) : null;
