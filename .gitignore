@@ -34,3 +34,4 @@ storefrontdata/
 .DS_Store
 test/appium/webdriver/config.json
 .vscode
+.history
