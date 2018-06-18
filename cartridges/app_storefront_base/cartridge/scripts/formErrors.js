@@ -12,7 +12,7 @@ function getFormErrors(form) {
         return {};
     }
     Object.keys(form).forEach(function (key) {
-        if (form[key]) {
+        if (form[key] && Object.prototype.hasOwnProperty.call(form[key], 'formType')) {
             if (form[key].formType === 'formField' && !form[key].valid) {
                 results[form[key].htmlName] = form[key].error;
             }
