@@ -32,9 +32,7 @@
                 </div>
             </div>
         </div>
-        <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
-            <div class="col-12 d-lg-none"><hr class="line-item-divider"></div>
-        </isif>
+        <div class="col-12 d-lg-none"><hr class="line-item-divider"></div>
 
         <isinclude template="cart/productCard/cartProductCardProductPrice" />
     </div>
