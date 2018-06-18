@@ -300,7 +300,7 @@ server.post(
         }
 
         var order = OrderMgr.getOrder(req.querystring.ID);
-
+        res.setViewData({ orderID: req.querystring.ID });
         var registrationObj = {
             firstName: order.billingAddress.firstName,
             lastName: order.billingAddress.lastName,
