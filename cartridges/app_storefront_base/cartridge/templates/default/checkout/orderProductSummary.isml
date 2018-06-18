@@ -23,11 +23,7 @@
                             </div>
                         </div>
                     <iselse/>
-                        <div class="card uuid-${lineItem.UUID}">
-                            <div class="card-body">
-                                <isinclude template="checkout/productCard/productCard" />
-                            </div>
-                        </div>
+                        <isinclude template="checkout/productCard/productCard" />
                     </isif>
                 </isloop>
 

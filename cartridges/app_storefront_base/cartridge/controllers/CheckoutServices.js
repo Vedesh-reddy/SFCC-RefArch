@@ -141,7 +141,6 @@ server.post(
                 var array = require('*/cartridge/scripts/util/array');
                 var Locale = require('dw/util/Locale');
                 var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
-
                 var currentBasket = BasketMgr.getCurrentBasket();
                 var billingData = res.getViewData();
 

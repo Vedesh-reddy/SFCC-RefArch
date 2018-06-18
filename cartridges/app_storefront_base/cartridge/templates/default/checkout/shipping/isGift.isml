@@ -1,8 +1,6 @@
-<fieldset>
-    <div class="custom-control custom-checkbox">
-        <input class="custom-control-input" type="checkbox" value="" id="isGift" name="isGift">
-        <label for="isGift" class="custom-control-label checkout-checkbox">
-            ${Resource.msg('check.gift', 'checkout', null)}
-        </label>
-    </div>
-</fieldset>
+<div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" value="" id="isGift" name="isGift">
+    <label for="isGift" class="custom-control-label checkout-checkbox">
+        ${Resource.msg('check.gift', 'checkout', null)}
+    </label>
+</div>

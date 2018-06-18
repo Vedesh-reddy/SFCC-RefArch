@@ -1,29 +1,32 @@
-<div class="shipping-form">
-    <div class="card">
-        <div class="card-header">
-            <h4>${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
-        </div>
+<div class="shipping-section">
+    <div class="single-shipping">
+        <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
+        <isset name="shipmentLoopState" value="${null}" scope="page" />
+        <isset name="lineItem" value="${null}" scope="page" />
+        <div class="card" data-shipment-uuid="${shippingModel.UUID}">
+            <div class="card-header">
+                <h4>${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
+            </div>
 
-        <div class="card-body form-nav shipping-nav">
-            <isif condition="${pdict.order.items.items.length>1}">
-                <form action="${URLUtils.url('CheckoutShippingServices-ToggleMultiShip')}" novalidate>
-                    <fieldset>
-                        <div class="custom-control custom-checkbox">
-                            <input name="usingMultiShipping" class="custom-control-input" id="multiShipCheck" type="checkbox"
-                                <isif condition="${pdict.order.usingMultiShipping && pdict.order.shipping.length > 1}">
-                                    checked
-                                </isif>
-                            >
-                            <label class="checkout-checkbox custom-control-label" for="multiShipCheck">
-                                ${Resource.msg('check.shipping.multiship', 'checkout', null)}
-                            </label>
-                        </div>
-                    </fieldset>
-                </form>
-            </isif>
-        </div>
+            <div class="shipping-error"></div>
 
-        <isinclude template="checkout/shipping/singleShipping" />
+            <isinclude template="checkout/shipping/multiShipCheckbox" />
+
+            <isinclude template="checkout/shipping/shipmentCard" />
+        </div>
     </div>
-    <isinclude template="checkout/shipping/multiShipping" />
+
+    <div class="multi-shipping">
+        <isloop items="${pdict.order.shipping}" var="shippingModel" status="shipmentLoopState">
+            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
+                <div class="card" data-shipment-uuid="${shippingModel.UUID}">
+                    <div class="card-header">
+                        <isinclude template="checkout/productCard/productShippingCard" />
+                    </div>
+
+                    <isinclude template="checkout/shipping/shipmentCard" />
+                </div>
+            </isloop>
+        </isloop>
+    </div>
 </div>

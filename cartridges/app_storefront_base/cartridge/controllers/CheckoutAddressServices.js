@@ -222,7 +222,6 @@ server.post(
                 data: viewData,
                 order: basketModel,
                 customer: accountModel,
-
                 fieldErrors: [],
                 serverErrors: [],
                 error: false
