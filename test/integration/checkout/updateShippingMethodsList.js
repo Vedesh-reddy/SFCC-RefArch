@@ -53,7 +53,7 @@ describe('Select different State in Shipping Form', function () {
                 });
         });
 
-        it('should add surcharge to the Ground Shipping cost for jewelery', function (done) {
+        it('should add surcharge to the Ground Shipping cost for jewelery', function () {
             var ExpectedResBody = {
                 'order': {
                     'totals': {
@@ -145,7 +145,6 @@ describe('Select different State in Shipping Form', function () {
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                     done();
                  });
         });
     });
@@ -185,7 +184,7 @@ describe('Select different State in Shipping Form', function () {
                  });
         });
 
-        it('should add surcharge to the Ground Shipping cost for each jewelery item', function (done) {
+        it('should add surcharge to the Ground Shipping cost for each jewelery item', function () {
             var ExpectedResBody = {
                 'order': {
                     'totals': {
@@ -279,7 +278,6 @@ describe('Select different State in Shipping Form', function () {
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                     done();
                  });
         });
     });
@@ -319,7 +317,7 @@ describe('Select different State in Shipping Form', function () {
                  });
         });
 
-        it('should return 1 applicableShippingMethods for AK state', function (done) {
+        it('should return 1 applicableShippingMethods for AK state', function () {
             var ExpectedResBody = {
                 'order': {
                     'totals': {
@@ -394,7 +392,6 @@ describe('Select different State in Shipping Form', function () {
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                     done();
                  });
         });
     });
@@ -434,7 +431,7 @@ describe('Select different State in Shipping Form', function () {
                  });
         });
 
-        it('should return 3 applicableShippingMethods for MA state', function (done) {
+        it('should return 3 applicableShippingMethods for MA state', function () {
             var ExpectedResBody = {
                 'order': {
                     'totals': {
@@ -527,7 +524,6 @@ describe('Select different State in Shipping Form', function () {
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                     done();
                  });
         });
     });
@@ -566,7 +562,7 @@ describe('Select different State in Shipping Form', function () {
                  });
         });
 
-        it('shipping cost should be increased for State=MA', function (done) {
+        it('shipping cost should be increased for State=MA', function () {
             var ExpectedResBody = {
                 'order': {
                     'totals': {
@@ -658,7 +654,6 @@ describe('Select different State in Shipping Form', function () {
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                     done();
                  });
         });
     });
@@ -698,7 +693,7 @@ describe('Select different State in Shipping Form', function () {
                  });
         });
 
-        it('should include UPS as an applicable shipping methods for AP state', function (done) {
+        it('should include UPS as an applicable shipping methods for AP state', function () {
             var ExpectedResBody = {
                 'order': {
                     'totals': {
@@ -776,7 +771,6 @@ describe('Select different State in Shipping Form', function () {
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
                      assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                     done();
                  });
         });
     });

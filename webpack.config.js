@@ -3,7 +3,10 @@
 
 require('shelljs/make');
 var path = require('path');
-var webpack = require('webpack');
+var webpack = require('sgmf-scripts').webpack;
+var ExtractTextPlugin = require('sgmf-scripts')['extract-text-webpack-plugin'];
+var jsFiles = require('sgmf-scripts').createJsPath();
+var scssFiles = require('sgmf-scripts').createScssPath();
 
 var bootstrapPackages = {
     Alert: 'exports-loader?Alert!bootstrap/js/src/alert',
@@ -19,46 +22,68 @@ var bootstrapPackages = {
     Util: 'exports-loader?Util!bootstrap/js/src/util'
 };
 
-var createJSPath = function () {
-    var result = {};
-
-    var jsFiles = ls('./cartridges/app_storefront_base/cartridge/client/default/js/*.js');
-
-    jsFiles.forEach(function (filePath) {
-        var name = path.basename(filePath, '.js');
-        result[name] = filePath;
-    });
-
-    return result;
-};
-
 module.exports = [{
+    mode: 'production',
     name: 'js',
-    entry: createJSPath(),
+    entry: jsFiles,
     output: {
-        path: path.resolve('./cartridges/app_storefront_base/cartridge/static/default/js/'),
+        path: path.resolve('./cartridges/app_storefront_base/cartridge/static'),
         filename: '[name].js'
     },
     module: {
-        loaders: [
+        rules: [
             {
                 test: /bootstrap(.)*\.js$/,
-                loader: 'babel-loader',
-                options: {
-                    babelrc: true
+                use: {
+                    loader: 'babel-loader',
+                    options: {
+                        presets: ['@babel/env'],
+                        plugins: ['@babel/plugin-proposal-object-rest-spread'],
+                        cacheDirectory: true
+                    }
                 }
             }
         ]
     },
-    plugins: [new webpack.optimize.UglifyJsPlugin({
-        minimize: true,
-        sourceMap: false,
-        compress: {
-            drop_console: true
-        },
-        mangle: {
-            except: ['$', 'exports', 'require']
-        }
-    }),
-        new webpack.ProvidePlugin(bootstrapPackages)]
+    plugins: [new webpack.ProvidePlugin(bootstrapPackages)]
+}, {
+    mode: 'none',
+    name: 'scss',
+    entry: scssFiles,
+    output: {
+        path: path.resolve('./cartridges/app_storefront_base/cartridge/static'),
+        filename: '[name].css'
+    },
+    module: {
+        rules: [{
+            test: /\.scss$/,
+            use: ExtractTextPlugin.extract({
+                use: [{
+                    loader: 'css-loader',
+                    options: {
+                        url: false,
+                        minimize: true
+                    }
+                }, {
+                    loader: 'postcss-loader',
+                    options: {
+                        plugins: [
+                            require('autoprefixer')()
+                        ]
+                    }
+                }, {
+                    loader: 'sass-loader',
+                    options: {
+                        includePaths: [
+                            path.resolve('node_modules'),
+                            path.resolve('node_modules/flag-icon-css/sass')
+                        ]
+                    }
+                }]
+            })
+        }]
+    },
+    plugins: [
+        new ExtractTextPlugin({ filename: '[name].css' })
+    ]
 }];
