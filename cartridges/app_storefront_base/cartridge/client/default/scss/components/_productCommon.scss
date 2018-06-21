@@ -1,3 +1,5 @@
+@import "toastMessage";
+
 .attribute {
     margin-top: 0.938em;
     margin-right: 25%;
@@ -71,26 +73,11 @@ div.quantity {
 }
 
 .add-to-cart-messages {
-    transform: translate(-50%, -50%);
-    position: fixed;
-    top: 15%;
-    left: 50%;
+    @include toast-message();
 }
 
 .add-to-basket-alert {
-    animation: fade 5s linear forwards;
-    box-shadow: 1px 1px 5px grey;
-
-    @keyframes fade {
-        0% { opacity: 0; }
-        10% { opacity: 1; }
-        90% { opacity: 1; }
-        100% { opacity: 0; }
-    }
-
-    &.show {
-        display: block;
-    }
+    @include toast-alert();
 }
 
 .simple-quantity {

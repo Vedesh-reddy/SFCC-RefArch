@@ -25,7 +25,9 @@
                                 <isif condition="${attributeStatus.last}">
                                     <!-- Quantity Drop Down Menu -->
                                     <div class="quantity col-sm-6 d-sm-none">
-                                        <isinclude template="product/components/quantity" />
+                                        <isif condition="${pdict.addToCartUrl || pdict.updateCartUrl}">
+                                            <isinclude template="product/components/quantity" />
+                                        </isif>
                                     </div>
                                 </isif>
                                 <isinclude template="product/components/variationAttribute" />
@@ -63,16 +65,16 @@
             <hr>
         </div>
         <isinclude template="product/components/bundleItems" />
-        
+
         <hr>
-        
+
         <!-- Quantity Drop Down Menu -->
         <div class="row d-sm-none">
             <div class="quantity col-10 mx-auto">
                 <isinclude template="product/components/quantity" />
             </div>
         </div>
-        
+
         <!-- Availability -->
         <div class="row d-sm-none">
             <div class="col-11 mx-auto availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}">
@@ -91,7 +93,9 @@
         <div class="row align-items-end">
             <!-- Quantity -->
             <div class="hidden-xs-down col-4">
-                <isinclude template="product/components/quantity" />
+                <isif condition="${pdict.addToCartUrl || pdict.updateCartUrl}">
+                    <isinclude template="product/components/quantity" />
+                </isif>
             </div>
 
             <div class="col-8 mx-auto">
@@ -105,7 +109,7 @@
                 <isif condition="${pdict.addToCartUrl}">
                     <isinclude template="product/components/addToCartGlobal" />
                 <iselse>
-                    <isinclude template="product/components/updateCartProduct" />
+                    <isinclude template="product/components/updateProduct" />
                 </isif>
             </div>
         </div>
