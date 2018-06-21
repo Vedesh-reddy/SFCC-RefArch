@@ -58,7 +58,7 @@ describe('Approaching order level promotion', function () {
     var orderDiscountMsg = 'Purchase $24.00 or more and receive 20% off on your order';
     var shippingDiscountMsg = 'Purchase $24.00 or more and receive Free Shipping with USPS (7-10 Business Days)';
 
-    it('1. should return a response containing promotional messages for the order and shipping discounts on PDP', function (done) {
+    it('1. should return a response containing promotional messages for the order and shipping discounts on PDP', function () {
         myRequest.url = config.baseUrl + '/Product-Variation?pid='
             + masterPid + '&dwvar_' + masterPid + '_color=BLUJEFB&quantity=1';
         return request(myRequest, function (error, response) {
@@ -66,10 +66,9 @@ describe('Approaching order level promotion', function () {
             assert.equal(response.statusCode, 200, 'Expected GET Product-Variation statusCode to be 200.');
             assert.isTrue(bodyAsJson.product.promotions[0].calloutMsg === '20% off on your order');
             assert.isTrue(bodyAsJson.product.promotions[1].calloutMsg === 'Free Shipping with USPS (7-10 Business Days)');
-            done();
         });
     });
-    it('2. should return a response containing approaching promotional call out messages', function (done) {
+    it('2. should return a response containing approaching promotional call out messages', function () {
         // add 2 product to Cart
         myRequest.url = config.baseUrl + '/Cart-AddProduct';
         myRequest.form = {
@@ -100,10 +99,9 @@ describe('Approaching order level promotion', function () {
                 var bodyAsJson = JSON.parse(response.body);
                 assert.equal(bodyAsJson.approachingDiscounts[0].discountMsg, orderDiscountMsg);
                 assert.equal(bodyAsJson.approachingDiscounts[1].discountMsg, shippingDiscountMsg);
-                done();
             });
     });
-    it('3. should return a response with Approaching Order Discount -$30.40 in Cart', function (done) {
+    it('3. should return a response with Approaching Order Discount -$30.40 in Cart', function () {
         // update the quantity to 4 to trigger the order level discount
         myNewRequest.url = config.baseUrl + '/Cart-UpdateQuantity?pid=' + variantPid + '&quantity=4&uuid=' + UUID;
         return request(myNewRequest)
@@ -115,10 +113,9 @@ describe('Approaching order level promotion', function () {
                 assert.equal(discounts.lineItemText, 'Approaching Order Discount Test');
                 assert.equal(discounts.price, '-$30.40');
                 assert.equal(discounts.type, 'promotion');
-                done();
             });
     });
-    it('4. should return a response with Approaching Shipping Discount -$7.99 in Cart', function (done) {
+    it('4. should return a response with Approaching Shipping Discount -$7.99 in Cart', function () {
         // update the shipping methods to be USPS to meet the promotion requirement
         myShippingRequest.form = myNewShippingMethodForm; // Ground Shipping method
         myShippingRequest.url = config.baseUrl + '/Cart-SelectShippingMethod';
@@ -131,7 +128,6 @@ describe('Approaching order level promotion', function () {
                 assert.equal(discounts.lineItemText, 'Approaching Shipping Discount Test');
                 assert.equal(discounts.price, '-$7.99');
                 assert.equal(discounts.type, 'promotion');
-                done();
             });
     });
 });

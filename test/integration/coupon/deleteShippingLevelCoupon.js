@@ -69,7 +69,7 @@ describe('Shipping Level Coupon -  remove coupon', function () {
             });
     });
 
-    it('should return non-discounted total after removal of shipping coupon', function (done) {
+    it('should return non-discounted total after removal of shipping coupon', function () {
         myRequest.url = config.baseUrl + '/Cart-RemoveCouponLineItem?code=' + couponCode + '&uuid=' + UUID;
         return request(myRequest)
             .then(function (response) {
@@ -78,7 +78,6 @@ describe('Shipping Level Coupon -  remove coupon', function () {
                 assert.equal(bodyAsJson.totals.shippingLevelDiscountTotal.value, 0, 'shippingLevelDiscountTotal value is 0');
                 assert.equal(bodyAsJson.totals.grandTotal, '$594.29', 'grandTotal is $594.29');
                 assert.equal(bodyAsJson.totals.totalTax, '$28.30', 'totalTax is $528.30');
-                done();
             });
     });
 });
