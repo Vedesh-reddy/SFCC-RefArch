@@ -109,6 +109,17 @@ function optionValueForAddress(shipping, selected, order, options) {
         optionEl.attr(key, mappedValue || '');
     });
 
+    var giftObj = {
+        'data-is-gift': 'isGift',
+        'data-gift-message': 'giftMessage'
+    };
+
+    $.each(giftObj, function (key) {
+        var mappedKey = giftObj[key];
+        var mappedValue = safeShipping[mappedKey];
+        optionEl.attr(key, mappedValue || '');
+    });
+
     if (isSelected) {
         optionEl.attr('selected', true);
     }

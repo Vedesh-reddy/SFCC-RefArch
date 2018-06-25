@@ -29,17 +29,24 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
         $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
             null,
             false,
-            order));
+            order
+        ));
+
         if (customer.addresses && customer.addresses.length > 0) {
             $shippingAddressSelector.append(addressHelpers.methods.optionValueForAddress(
-                order.resources.accountAddresses, false, order));
+                order.resources.accountAddresses,
+                false,
+                order
+            ));
+
             customer.addresses.forEach(function (address) {
                 var isSelected = shipping.matchingAddressId === address.ID;
                 $shippingAddressSelector.append(
-                    addressHelpers.methods.optionValueForAddress({
-                        UUID: 'ab_' + address.ID,
-                        shippingAddress: address
-                    }, isSelected, order)
+                    addressHelpers.methods.optionValueForAddress(
+                        { UUID: 'ab_' + address.ID, shippingAddress: address },
+                        isSelected,
+                        order
+                    )
                 );
             });
         }
@@ -104,6 +111,9 @@ function updateShippingAddressFormValues(shipping) {
         };
     }
 
+    addressObject.isGift = shipping.isGift;
+    addressObject.giftMessage = shipping.giftMessage;
+
     $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
         var form = el.form;
         if (!form) return;
@@ -125,6 +135,9 @@ function updateShippingAddressFormValues(shipping) {
         }
 
         $('input[name$=_phone]', form).val(addressObject.phone);
+
+        $('input[name$=_isGift]', form).prop('checked', addressObject.isGift);
+        $('textarea[name$=_giftMessage]', form).val(addressObject.isGift && addressObject.giftMessage ? addressObject.giftMessage : '');
     });
 
     $('body').trigger('shipping:updateShippingAddressFormValues', { shipping: shipping });
@@ -234,9 +247,11 @@ function updateShippingSummaryInformation(shipping, order) {
         var $methodPrice = $container.find('.shipping-method-price');
         var $shippingSummaryLabel = $container.find('.shipping-method-label');
         var $summaryDetails = $container.find('.row.summary-details');
+        var giftMessageSummary = $container.find('.gift-summary');
 
         var address = shipping.shippingAddress;
         var selectedShippingMethod = shipping.selectedShippingMethod;
+        var isGift = shipping.isGift;
 
         addressHelpers.methods.populateAddressSummary($addressContainer, address);
 
@@ -261,6 +276,13 @@ function updateShippingSummaryInformation(shipping, order) {
             }
             $methodPrice.text(selectedShippingMethod.shippingCost);
         }
+
+        if (isGift) {
+            giftMessageSummary.find('.gift-message-summary').text(shipping.giftMessage);
+            giftMessageSummary.removeClass('d-none');
+        } else {
+            giftMessageSummary.addClass('d-none');
+        }
     });
 
     $('body').trigger('shipping:updateShippingSummaryInformation', { shipping: shipping, order: order });
@@ -275,8 +297,6 @@ function updateShippingSummaryInformation(shipping, order) {
  * @param {Object} [options.keepOpen] - if true, prevent changing PLI view mode to 'view'
  */
 function updatePLIShippingSummaryInformation(productLineItem, shipping, order, options) {
-    var keepOpen = options && options.keepOpen;
-
     var $pli = $('input[value=' + productLineItem.UUID + ']');
     var form = $pli && $pli.length > 0 ? $pli[0].form : null;
 
@@ -284,7 +304,6 @@ function updatePLIShippingSummaryInformation(productLineItem, shipping, order, o
 
     var $viewBlock = $('.view-address-block', form);
 
-    var hasAddress = !!shipping.shippingAddress;
     var address = shipping.shippingAddress || {};
     var selectedMethod = shipping.selectedShippingMethod;
 
@@ -327,20 +346,20 @@ function updatePLIShippingSummaryInformation(productLineItem, shipping, order, o
         $('.arrival-time', tmpl).text(methodArrivalTime);
         $('.price', tmpl).text(shippingCost);
     }
+
+    if (shipping.isGift) {
+        $('.gift-message-summary', tmpl).text(shipping.giftMessage);
+        var shipment = $('.gift-message-' + shipping.UUID);
+        $(shipment).val(shipping.giftMessage);
+    } else {
+        $('.gift-summary', tmpl).addClass('d-none');
+    }
     // checking h5 title shipping to or pickup
     var $shippingAddressLabel = $('.shipping-header-text', tmpl);
     $('body').trigger('shipping:updateAddressLabelText',
         { selectedShippingMethod: selectedMethod, resources: order.resources, shippingAddressLabel: $shippingAddressLabel });
 
     $viewBlock.html(tmpl.html());
-
-    if (!keepOpen) {
-        if (hasAddress) {
-            $viewBlock.parents('[data-view-mode]').attr('data-view-mode', 'view');
-        } else {
-            $viewBlock.parents('[data-view-mode]').attr('data-view-mode', 'enter');
-        }
-    }
 
     $('body').trigger('shipping:updatePLIShippingSummaryInformation', {
         productLineItem: productLineItem,
@@ -450,6 +469,19 @@ function shippingFormResponse(defer, data) {
             defer.reject(data);
         }
 
+        if (data.severErrors && data.severErrors.length) {
+            $.each(data.severErrors, function (element) {
+                var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
+                    'fade show" role="alert">' +
+                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                    '<span aria-hidden="true">&times;</span>' +
+                    '</button>' + element + '</div>';
+                $('.shipping-error').append(errorHtml);
+            });
+
+            defer.reject(data);
+        }
+
         if (data.cartError) {
             window.location.href = data.redirectUrl;
             defer.reject();
@@ -485,6 +517,10 @@ function clearShippingForms(order) {
             $('select[name$=_country]', form).val(null);
 
             $('input[name$=_phone]', form).val(null);
+
+            $('input[name$=_isGift]', form).prop('checked', false);
+            $('textarea[name$=_giftMessage]', form).val('');
+            $(form).find('.gift-message').addClass('d-none');
 
             $(form).attr('data-address-mode', 'new');
             var addressSelectorDropDown = $('.addressSelector option[value=new]', form);
@@ -646,6 +682,8 @@ module.exports = {
             var urlParams = addressHelpers.methods.getAddressFieldsFromUI($shippingForm);
             urlParams.shipmentUUID = shipmentUUID;
             urlParams.methodID = methodID;
+            urlParams.isGift = $shippingForm.find('.gift').prop('checked');
+            urlParams.giftMessage = $shippingForm.find('textarea[name$=_giftMessage]').val();
 
             var url = $(this).data('select-shipping-method-url');
             selectShippingMethodAjax(url, urlParams, $(this));
@@ -682,6 +720,9 @@ module.exports = {
                                     $(form).attr('data-address-mode', 'edit');
                                     var addressSelectorDropDown = $(form).find('.addressSelector option[value="ab_' + shipping.matchingAddressId + '"]');
                                     $(addressSelectorDropDown).prop('selected', true);
+                                    $('input[name$=_isGift]', form).prop('checked', false);
+                                    $('textarea[name$=_giftMessage]', form).val('');
+                                    $(form).find('.gift-message').addClass('d-none');
                                 });
                             });
                         }
@@ -763,8 +804,13 @@ module.exports = {
 
             var element;
             Object.keys(attrs).forEach(function (attr) {
-                element = attr === 'countryCode' ? 'country' : attr;
-                $('[name$=' + element + ']', form).val(attrs[attr]);
+                if (attr === 'isGift') {
+                    $('[name$=' + attr + ']', form).prop('checked', attrs[attr]);
+                    $('[name$=' + attr + ']', form).trigger('change');
+                } else {
+                    element = attr === 'countryCode' ? 'country' : attr;
+                    $('[name$=' + element + ']', form).val(attrs[attr]);
+                }
             });
 
             if (shipmentUUID === 'new' && pliUUID) {
@@ -902,7 +948,18 @@ module.exports = {
                 .done(function (response) {
                     formHelpers.clearPreviousErrors(form);
                     if (response.error) {
-                        formHelpers.loadFormErrors(form, response.fieldErrors);
+                        if (response.fieldErrors.length) {
+                            formHelpers.loadFormErrors(form, response.fieldErrors);
+                        } else {
+                            $.each(response.severErrors, function (element) {
+                                var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
+                                    'fade show" role="alert">' +
+                                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                                    '<span aria-hidden="true">&times;</span>' +
+                                    '</button>' + element + '</div>';
+                                $('.shipping-error').append(errorHtml);
+                            });
+                        }
                     } else {
                         // Update UI from response
                         $('body').trigger('checkout:updateCheckoutView',
@@ -958,6 +1015,20 @@ module.exports = {
             }
 
             return false;
+        });
+    },
+
+    isGift: function () {
+        $('.gift').on('change', function (e) {
+            e.preventDefault();
+            var form = $(this).closest('form');
+
+            if (this.checked) {
+                $(form).find('.gift-message').removeClass('d-none');
+            } else {
+                $(form).find('.gift-message').addClass('d-none');
+                $(form).find('.gift-message').val('');
+            }
         });
     }
 };

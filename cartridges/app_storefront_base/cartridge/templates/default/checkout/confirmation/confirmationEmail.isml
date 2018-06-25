@@ -27,6 +27,16 @@
                 (${shippingModel.selectedShippingMethod.estimatedArrivalTime})
             </isif>
         </p>
+
+        <isif condition="${shippingModel.isGift}">
+            <p>
+                <strong>
+                    ${Resource.msg('heading.gift.message', 'checkout', null)}
+                </strong>
+                ${shippingModel.giftMessage}
+            </p>
+        </isif>
+
         <isif condition="${pdict.order.shipping.length > 1}">
             <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>
             <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopSate">

@@ -48,7 +48,8 @@ var defaultShipmentWithAddress = {
         custom: {
             estimatedArrivalTime: '7-10 Business Days'
         }
-    }
+    },
+    gift: true
 };
 
 describe('Shipping', function () {
@@ -62,7 +63,9 @@ describe('Shipping', function () {
             applicableShippingMethods: null,
             matchingAddressId: false,
             shippingAddress: null,
-            selectedShippingMethod: null
+            selectedShippingMethod: null,
+            isGift: null,
+            giftMessage: null
         });
     });
 

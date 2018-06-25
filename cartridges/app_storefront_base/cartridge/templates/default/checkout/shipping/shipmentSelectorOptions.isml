@@ -10,15 +10,15 @@
     <option class="multi-shipping" disabled>${Resource.msg('msg.shipping.addresses', 'checkout', null)}</option>
     <isloop items="${pdict.order.shipping}" var="aShippingModel">
       <isif condition="${aShippingModel.UUID === shippingModel.UUID && aShippingModel.shippingAddress}">
-        <option 
-            class="multi-shipping
+        <option
+            class="multi-shipping"
             value="${aShippingModel.UUID}"
             ${!shippingModel.matchingAddressId && aShippingModel.UUID === shippingModel.UUID ? 'selected="selected"' : '' }
             data-first-name="${aShippingModel.shippingAddress.firstName||''}" data-last-name="${aShippingModel.shippingAddress.lastName||''}"
             data-address1="${aShippingModel.shippingAddress.address1||''}" data-address2="${aShippingModel.shippingAddress.address2||''}"
             data-city="${aShippingModel.shippingAddress.city||''}" data-state-code="${aShippingModel.shippingAddress.stateCode||''}"
             data-country-code="${aShippingModel.shippingAddress.countryCode.value||''}" data-postal-code="${aShippingModel.shippingAddress.postalCode}"
-            data-phone="${aShippingModel.shippingAddress.phone}"
+            data-phone="${aShippingModel.shippingAddress.phone}" data-is-gift="${aShippingModel.isGift}" data-gift-message="${aShippingModel.giftMessage}"
         >
         <isif condition="${aShippingModel.shippingAddress.firstName
                     && aShippingModel.shippingAddress.lastName
@@ -52,7 +52,7 @@
         data-address1="${address.address1||''}" data-address2="${address.address2||''}"
         data-city="${address.city||''}" data-state-code="${address.stateCode||''}"
         data-country-code="${address.countryCode.value||''}" data-postal-code="${address.postalCode||''}"
-        data-phone="${address.phone||''}">
+        data-phone="${address.phone||''}" data-is-gift="${''}" data-gift-message="${''}">
         ${address.ID || ''} - ${address.firstName || ''} ${address.lastName || ''} ${address.address1 || ''} ${address.address2 || ''} ${address.city || ''}${!address.city || ','} ${address.stateCode||''} ${address.postalCode||''}
         </option>
     </isloop>

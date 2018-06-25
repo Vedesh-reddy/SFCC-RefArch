@@ -80,27 +80,6 @@ function findValue(formGroup, name) {
     return result;
 }
 
-/**
- * Clear option values
- * @param {Object} obj - the object representing the current form or formField
- */
-function clearOptions(obj) {
-    Object.keys(obj).forEach(function (formField) {
-        if (formField === 'options') {
-            obj[formField].forEach(function (key) {
-                if (key.selected) {
-                    key.selected = false; // eslint-disable-line no-param-reassign
-                }
-            });
-        } else if (typeof obj[formField] === 'object'
-            && Object.hasOwnProperty.call(obj[formField], 'formType')
-            && (obj[formField].formType === 'formGroup'
-            || obj[formField].formType === 'formField')) {
-            clearOptions(obj[formField]);
-        }
-    });
-}
-
 module.exports = function (session) {
     return {
         getForm: function (name) {
@@ -109,7 +88,10 @@ module.exports = function (session) {
             result.base = currentForm;
             result.clear = function () {
                 currentForm.clearFormElement();
-                clearOptions(this);
+                var clearedForm = parseForm(currentForm);
+                Object.keys(clearedForm).forEach(function (key) {
+                    this[key] = clearedForm[key];
+                }, this);
             };
             result.copyFrom = function (object) {
                 copyObjectToForm(object, result);

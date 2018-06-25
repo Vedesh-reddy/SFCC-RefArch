@@ -115,6 +115,7 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
     var Locale = require('dw/util/Locale');
     var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+    var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
 
@@ -137,10 +138,13 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
     var viewData = res.getViewData();
     viewData.address = ShippingHelper.getAddressFromRequest(req);
+    viewData.isGift = req.form.isGift === 'true';
+    viewData.giftMessage = req.form.isGift ? req.form.giftMessage : null;
     res.setViewData(viewData);
 
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-        var address = res.getViewData().address;
+        var shippingData = res.getViewData();
+        var address = shippingData.address;
 
         try {
             Transaction.wrap(function () {
@@ -173,6 +177,8 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
 
             return;
         }
+
+        COHelpers.setGift(shipment, shippingData.isGift, shippingData.giftMessage);
 
         var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
         var currentLocale = Locale.getLocale(req.locale.id);
@@ -336,6 +342,10 @@ server.post(
                 ? form.shippingAddress.shippingMethodID.value.toString()
                 : null;
 
+            result.isGift = form.shippingAddress.isGift.checked;
+
+            result.giftMessage = result.isGift ? form.shippingAddress.giftMessage.value : null;
+
             res.setViewData(result);
 
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
@@ -349,6 +359,21 @@ server.post(
                     shippingData,
                     currentBasket.defaultShipment
                 );
+
+                var giftResult = COHelpers.setGift(
+                    currentBasket.defaultShipment,
+                    shippingData.isGift,
+                    shippingData.giftMessage
+                );
+
+                if (giftResult.error) {
+                    res.json({
+                        error: giftResult.error,
+                        fieldErrors: [],
+                        serverErrors: [giftResult.errorMessage]
+                    });
+                    return;
+                }
 
                 if (!currentBasket.billingAddress) {
                     if (req.currentCustomer.addressBook
