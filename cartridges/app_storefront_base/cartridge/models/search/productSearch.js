@@ -178,7 +178,7 @@ function getPermalink(productSearch, pageSize, startIdx) {
  */
 function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, rootCategory) {
     this.pageSize = parseInt(httpParams.sz, 10) || DEFAULT_PAGE_SIZE;
-
+    this.productSearch = productSearch;
     var startIdx = httpParams.start || 0;
     var paging = getPagingModel(
         productSearch.productSearchHits,
@@ -189,15 +189,11 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
 
     this.pageNumber = paging.currentPage;
     this.count = productSearch.count;
+    // this.count = 12;
     this.isCategorySearch = productSearch.categorySearch;
     this.isRefinedCategorySearch = productSearch.refinedCategorySearch;
     this.searchKeywords = productSearch.searchPhrase;
-    this.refinements = getRefinements(
-        productSearch,
-        productSearch.refinements,
-        productSearch.refinements.refinementDefinitions
-    );
-    this.selectedFilters = getSelectedFilters(this.refinements);
+
     this.resetLink = getResetLink(productSearch, httpParams);
     this.bannerImageUrl = productSearch.category ? getBannerImageUrl(productSearch.category) : null;
     this.productIds = collections.map(paging.pageElements, function (item) {
@@ -227,5 +223,17 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
         };
     }
 }
+
+Object.defineProperty(ProductSearch.prototype, 'refinements', function () {
+    this.refinements = getRefinements(
+        this.productSearch,
+        this.productSearch.refinements,
+        this.productSearch.refinements.refinementDefinitions
+    );
+});
+
+Object.defineProperty(ProductSearch.prototype, 'selectedFilters', function () {
+    this.selectedFilters = getSelectedFilters(this.refinements);
+});
 
 module.exports = ProductSearch;
