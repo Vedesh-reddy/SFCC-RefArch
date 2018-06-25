@@ -189,7 +189,6 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
 
     this.pageNumber = paging.currentPage;
     this.count = productSearch.count;
-    // this.count = 12;
     this.isCategorySearch = productSearch.categorySearch;
     this.isRefinedCategorySearch = productSearch.refinedCategorySearch;
     this.searchKeywords = productSearch.searchPhrase;
@@ -224,16 +223,24 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
     }
 }
 
-Object.defineProperty(ProductSearch.prototype, 'refinements', function () {
-    this.refinements = getRefinements(
-        this.productSearch,
-        this.productSearch.refinements,
-        this.productSearch.refinements.refinementDefinitions
-    );
+Object.defineProperty(ProductSearch.prototype, 'refinements', {
+    get: function () {
+        if (!this.cachedRefinements) {
+            this.cachedRefinements = getRefinements(
+                this.productSearch,
+                this.productSearch.refinements,
+                this.productSearch.refinements.refinementDefinitions
+            );
+        }
+
+        return this.cachedRefinements;
+    }
 });
 
-Object.defineProperty(ProductSearch.prototype, 'selectedFilters', function () {
-    this.selectedFilters = getSelectedFilters(this.refinements);
+Object.defineProperty(ProductSearch.prototype, 'selectedFilters', {
+    get: function () {
+        return getSelectedFilters(this.refinements);
+    }
 });
 
 module.exports = ProductSearch;
