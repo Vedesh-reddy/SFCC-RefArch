@@ -3,6 +3,7 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../../mocks/dw.util.Collection');
+var checkoutHelpers = require('../../../../mocks/helpers/checkoutHelpers');
 
 var productLineItems1 = new ArrayList([{
     product: {
@@ -73,8 +74,8 @@ var lineItemContainer = {
     }])
 };
 
-describe('validate basket', function () {
-    var validateBasketHook = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/hooks/validateBasket', {
+describe('validate order', function () {
+    var validateOrderHook = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/hooks/validateOrder', {
         'dw/web/Resource': {
             msg: function (param) {
                 return param;
@@ -111,32 +112,32 @@ describe('validate basket', function () {
                     };
                 }
             },
-            '*/cartridge/scripts/checkout/checkoutHelpers': function () { return; }
+            '*/cartridge/scripts/checkout/checkoutHelpers': checkoutHelpers
         })
     });
 
     it('should validate a valid basket', function () {
         lineItemContainer.shipments = new ArrayList([{ shippingAddress: { address1: 'some street' } }]);
-        var result = validateBasketHook.validateBasket(lineItemContainer, false);
+        var result = validateOrderHook.validateOrder(lineItemContainer, false);
         assert.isFalse(result.error);
         assert.equal(result.message, null);
     });
 
     it('should invalidate a null basket', function () {
-        var result = validateBasketHook.validateBasket(null, false);
+        var result = validateOrderHook.validateOrder(null, false);
         assert.isTrue(result.error);
         assert.equal(result.message, 'error.cart.expired');
     });
 
     it('should invalidate a basket without total tax', function () {
-        var result = validateBasketHook.validateBasket(lineItemContainer, true);
+        var result = validateOrderHook.validateOrder(lineItemContainer, true);
         assert.isTrue(result.error);
         assert.equal(result.message, 'error.invalid.tax');
     });
 
     it('should invalidate a basket with merchandize Total Price not available', function () {
         lineItemContainer.merchandizeTotalPrice.available = false;
-        var result = validateBasketHook.validateBasket(lineItemContainer, false);
+        var result = validateOrderHook.validateOrder(lineItemContainer, false);
         assert.isTrue(result.error);
         assert.equal(result.message, 'error.cart.or.checkout.error');
         lineItemContainer.merchandizeTotalPrice.available = true;
@@ -144,7 +145,7 @@ describe('validate basket', function () {
 
     it('should invalidate a basket when product not online', function () {
         lineItemContainer.productLineItems = productLineItems2;
-        var result = validateBasketHook.validateBasket(lineItemContainer, false);
+        var result = validateOrderHook.validateOrder(lineItemContainer, false);
         assert.isTrue(result.error);
         assert.equal(result.message, 'error.cart.or.checkout.error');
         lineItemContainer.productLineItems = productLineItems1;
@@ -152,7 +153,7 @@ describe('validate basket', function () {
 
     it('should validate a basket when product has inStore inventory', function () {
         lineItemContainer.productLineItems = productLineItems3;
-        var result = validateBasketHook.validateBasket(lineItemContainer, false);
+        var result = validateOrderHook.validateOrder(lineItemContainer, false);
         assert.isFalse(result.error);
         assert.equal(result.message, null);
         lineItemContainer.productLineItems = productLineItems1;
@@ -160,7 +161,7 @@ describe('validate basket', function () {
 
     it('should invalidate a basket with invalid coupons', function () {
         lineItemContainer.couponLineItems = new ArrayList([{ valid: false }]);
-        var result = validateBasketHook.validateBasket(lineItemContainer, false);
+        var result = validateOrderHook.validateOrder(lineItemContainer, false);
         assert.isTrue(result.error);
         assert.equal(result.message, 'error.invalid.coupon');
         lineItemContainer.couponLineItems = new ArrayList([{ valid: true }]);
@@ -168,8 +169,16 @@ describe('validate basket', function () {
 
     it('should invalidate a basket with no productLineItems', function () {
         lineItemContainer.productLineItems = new ArrayList([]);
-        var result = validateBasketHook.validateBasket(lineItemContainer, false);
+        var result = validateOrderHook.validateOrder(lineItemContainer, false);
         assert.isTrue(result.error);
         assert.equal(result.message, null);
+        lineItemContainer.productLineItems = productLineItems1;
+    });
+
+    it('should invalidate a basket with incomplete shipping address', function () {
+        lineItemContainer.shipments = new ArrayList([{ shippingAddress: {} }]);
+        var result = validateOrderHook.validateOrder(lineItemContainer, false);
+        assert.isTrue(result.error);
+        assert.equal(result.message, 'error.card.invalid.shipments');
     });
 });

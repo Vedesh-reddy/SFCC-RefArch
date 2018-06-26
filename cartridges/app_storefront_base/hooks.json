@@ -29,6 +29,10 @@
             "script": "./cartridge/scripts/hooks/validateBasket"
         },
         {
+            "name": "app.validate.order",
+            "script": "./cartridge/scripts/hooks/validateOrder"
+        },
+        {
             "name": "app.fraud.detection",
             "script": "./cartridge/scripts/hooks/fraudDetection"
         }

@@ -9,7 +9,7 @@ var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHel
  * @param {boolean} validateTax - boolean that determines whether or not to validate taxes
  * @returns {Object} an error object
  */
-function validateBasket(basket, validateTax) {
+function validateOrder(basket, validateTax) {
     var result = { error: false, message: null };
 
     if (!basket) {
@@ -18,6 +18,7 @@ function validateBasket(basket, validateTax) {
     } else {
         var productExistence = validationHelpers.validateProducts(basket);
         var validCoupons = validationHelpers.validateCoupons(basket);
+        var validShipments = validationHelpers.validateShipments(basket);
         var totalTax = true;
 
         if (validateTax) {
@@ -38,10 +39,13 @@ function validateBasket(basket, validateTax) {
         } else if (!totalTax) {
             result.error = true;
             result.message = Resource.msg('error.invalid.tax', 'cart', null);
+        } else if (!validShipments) {
+            result.error = true;
+            result.message = Resource.msg('error.card.invalid.shipments', 'cart', null);
         }
     }
 
     return result;
 }
 
-exports.validateBasket = validateBasket;
+exports.validateOrder = validateOrder;
