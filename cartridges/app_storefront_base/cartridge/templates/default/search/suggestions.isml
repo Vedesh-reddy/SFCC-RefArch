@@ -70,6 +70,65 @@
             </div>
         </isif>
 
+        <isif condition="${pdict.suggestions.recent && pdict.suggestions.recent.available}">
+            <div class="row justify-content-end header">
+                <div class="col-xs-12 col-sm-10">
+                    ${Resource.msg('label.suggest.recent', 'search', null)}
+                </div>
+            </div>
+
+            <div class="row items">
+                <isloop items="${pdict.suggestions.recent.phrases}" var="phrase">
+                    <div class="col-12 item">
+                        <div class="row">
+                            <div class="col-xs-12 offset-sm-2 col-sm-10 name">
+                                <a href="${phrase.url}">${phrase.value}</a>
+                            </div>
+                        </div>
+                    </div>
+                </isloop>
+            </div>
+        </isif>
+
+        <isif condition="${pdict.suggestions.popular && pdict.suggestions.popular.available}">
+            <div class="row justify-content-end header">
+                <div class="col-xs-12 col-sm-10">
+                    ${Resource.msg('label.suggest.popular', 'search', null)}
+                </div>
+            </div>
+
+            <div class="row items">
+                <isloop items="${pdict.suggestions.popular.phrases}" var="phrase">
+                    <div class="col-12 item">
+                        <div class="row">
+                            <div class="col-xs-12 offset-sm-2 col-sm-10 name">
+                                <a href="${phrase.url}">${phrase.value}</a>
+                            </div>
+                        </div>
+                    </div>
+                </isloop>
+            </div>
+        </isif>
+        <isif condition="${pdict.suggestions.brand && pdict.suggestions.brand.available}">
+            <div class="row justify-content-end header">
+                <div class="col-xs-12 col-sm-10">
+                    ${Resource.msg('label.suggest.brand', 'search', null)}
+                </div>
+            </div>
+
+            <div class="row items">
+                <isloop items="${pdict.suggestions.brand.phrases}" var="phrase">
+                    <div class="col-12 item">
+                        <div class="row">
+                            <div class="col-xs-12 offset-sm-2 col-sm-10 name">
+                                <a href="${phrase.url}">${phrase.value}</a>
+                            </div>
+                        </div>
+                    </div>
+                </isloop>
+            </div>
+        </isif>
+
         <isif condition="${pdict.suggestions.content && pdict.suggestions.content.available}">
             <div class="row justify-content-end header">
                 <div class="col-xs-12 col-sm-10">

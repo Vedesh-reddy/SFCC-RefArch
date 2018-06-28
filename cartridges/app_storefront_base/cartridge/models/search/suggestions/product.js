@@ -1,8 +1,8 @@
 'use strict';
 
 var URLUtils = require('dw/web/URLUtils');
-var endpoint = 'Product-Show';
-var imageSize = 'medium';
+var ACTION_ENDPOINT = 'Product-Show';
+var IMAGE_SIZE = 'medium';
 
 
 /**
@@ -16,7 +16,7 @@ function getImageUrl(product) {
     if (product.master) {
         imageProduct = product.variationModel.defaultVariant;
     }
-    return imageProduct.getImage(imageSize).URL.toString();
+    return imageProduct.getImage(IMAGE_SIZE).URL.toString();
 }
 
 /**
@@ -37,7 +37,7 @@ function getProducts(suggestedProducts, maxItems) {
             products.push({
                 name: product.name,
                 imageUrl: getImageUrl(product),
-                url: URLUtils.url(endpoint, 'pid', product.ID)
+                url: URLUtils.url(ACTION_ENDPOINT, 'pid', product.ID)
             });
         }
     }
@@ -85,17 +85,19 @@ function getPhrases(suggestedPhrases, maxItems) {
  * @param {number} maxItems - Maximum number of items to retrieve
  */
 function ProductSuggestions(suggestions, maxItems) {
-    if (!suggestions.productSuggestions) {
+    var productSuggestions = suggestions.productSuggestions;
+
+    if (!productSuggestions) {
         this.available = false;
         this.phrases = [];
         this.products = [];
         return;
     }
 
-    var productSuggestions = suggestions.productSuggestions;
+    var searchPhrasesSuggestions = productSuggestions.searchPhraseSuggestions;
 
     this.available = productSuggestions.hasSuggestions();
-    this.phrases = getPhrases(productSuggestions.suggestedPhrases, maxItems);
+    this.phrases = getPhrases(searchPhrasesSuggestions.suggestedPhrases, maxItems);
     this.products = getProducts(productSuggestions.suggestedProducts, maxItems);
 }
 

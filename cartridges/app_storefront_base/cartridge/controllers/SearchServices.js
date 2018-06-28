@@ -9,9 +9,13 @@ server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) 
     var CategorySuggestions = require('*/cartridge/models/search/suggestions/category');
     var ContentSuggestions = require('*/cartridge/models/search/suggestions/content');
     var ProductSuggestions = require('*/cartridge/models/search/suggestions/product');
+    var SearchPhraseSuggestions = require('*/cartridge/models/search/suggestions/searchPhrase');
     var categorySuggestions;
     var contentSuggestions;
     var productSuggestions;
+    var recentSuggestions;
+    var popularSuggestions;
+    var brandSuggestions;
     var searchTerms = req.querystring.q;
     var suggestions;
     // TODO: Move minChars and maxSuggestions to Site Preferences when ready for refactoring
@@ -27,14 +31,23 @@ server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) 
         categorySuggestions = new CategorySuggestions(suggestions, maxSuggestions);
         contentSuggestions = new ContentSuggestions(suggestions, maxSuggestions);
         productSuggestions = new ProductSuggestions(suggestions, maxSuggestions);
+        recentSuggestions = new SearchPhraseSuggestions(suggestions.recentSearchPhrases, maxSuggestions);
+        popularSuggestions = new SearchPhraseSuggestions(suggestions.popularSearchPhrases, maxSuggestions);
+        brandSuggestions = new SearchPhraseSuggestions(suggestions.brandSuggestions, maxSuggestions);
 
         if (productSuggestions.available || contentSuggestions.available
-            || categorySuggestions.available) {
+            || categorySuggestions.available
+            || recentSuggestions.available
+            || popularSuggestions.available
+            || brandSuggestions.available) {
             res.render('search/suggestions', {
                 suggestions: {
                     product: productSuggestions,
                     category: categorySuggestions,
-                    content: contentSuggestions
+                    content: contentSuggestions,
+                    recent: recentSuggestions,
+                    popular: popularSuggestions,
+                    brand: brandSuggestions
                 }
             });
         } else {
