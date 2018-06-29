@@ -20,10 +20,14 @@ function formField(field) {
             if (field.options && field.options.optionsCount > 0) {
                 return attributes;
             }
-            if (!result.checked && !result.selected) {
-                var value = field.htmlValue == null ? '' : field.htmlValue;
-                attributes += ' value="' + secureEncoder.forHtmlInDoubleQuoteAttribute(value) + '"';
+
+            if (field.type === field.FIELD_TYPE_BOOLEAN && result.checked) {
+                attributes += ' checked="' + result.checked + '"';
             }
+
+            var value = field.htmlValue == null ? '' : field.htmlValue;
+            attributes += ' value="' + secureEncoder.forHtmlInDoubleQuoteAttribute(value) + '"';
+
             if (result.maxValue) {
                 attributes += ' max="' + result.maxValue + '"';
             }

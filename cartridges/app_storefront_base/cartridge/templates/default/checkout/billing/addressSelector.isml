@@ -35,7 +35,7 @@
         <option disabled>${Resource.msg('msg.account.addresses', 'checkout', null)}</option>
         <isloop items="${pdict.customer.addresses}" var="address">
             <option value="${address.ID}"
-                ${address.ID === pdict.order.billing.matchingAddressId ? selected : ''}
+                ${address.ID === pdict.order.billing.matchingAddressId ? 'selected' : ''}
                 data-first-name="${address.firstName||''}" data-last-name="${address.lastName||''}"
                 data-address1="${address.address1||''}" data-address2="${address.address2||''}"
                 data-city="${address.city||''}" data-state-code="${address.stateCode||''}"

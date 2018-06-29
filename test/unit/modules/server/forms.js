@@ -117,7 +117,39 @@ describe('forms', function () {
         assert.equal(currentForm.boolField.htmlValue, true);
         assert.isFalse(currentForm.boolField.valid);
         assert.equal(currentForm.boolField.error, 'Found an issue');
-        assert.equal(currentForm.boolField.attributes, 'name="dwfrm_address_boolField"');
+        assert.equal(currentForm.boolField.attributes, 'name="dwfrm_address_boolField" checked="true" value="true"');
+        assert.equal(currentForm.boolField.formType, 'formField');
+    });
+
+    it('should load a form with correct bool form fields when checked is false', function () {
+        var session = { forms: {
+            address: {
+                valid: true,
+                error: null,
+                htmlName: 'dwfrm_address',
+                dynamicHtmlName: 'dwfrm_address_a98dfa9sd8',
+                boolField: new FormField({
+                    value: true,
+                    selected: true,
+                    checked: false,
+                    htmlValue: true,
+                    htmlName: 'dwfrm_address_boolField',
+                    dynamicHtmlName: 'dwfrm_address_boolField_a89sa7d9f8a7sd',
+                    type: 2,
+                    FIELD_TYPE_BOOLEAN: 2,
+                    valid: false,
+                    error: 'Found an issue'
+                })
+            }
+        } };
+        var forms = formsRequire(session);
+        var currentForm = forms.getForm('address');
+        assert.isNotNull(currentForm.boolField);
+        assert.equal(currentForm.boolField.value, true);
+        assert.equal(currentForm.boolField.htmlValue, true);
+        assert.isFalse(currentForm.boolField.valid);
+        assert.equal(currentForm.boolField.error, 'Found an issue');
+        assert.equal(currentForm.boolField.attributes, 'name="dwfrm_address_boolField" value="true"');
         assert.equal(currentForm.boolField.formType, 'formField');
     });
 

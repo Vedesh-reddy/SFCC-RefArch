@@ -121,6 +121,10 @@ server.post(
                 '' + form.shippingAddress.shippingMethodID.value : null;
             result.form = form;
 
+            result.isGift = form.shippingAddress.isGift.checked;
+
+            result.giftMessage = result.isGift ? form.shippingAddress.giftMessage.value : null;
+
             res.setViewData(result);
         }
 
@@ -187,6 +191,19 @@ server.post(
                 if (isValid !== 'valid') {
                     allValid = false;
                     break;
+                }
+            }
+
+            if (shipment) {
+                var giftResult = COHelpers.setGift(shipment, viewData.isGift, viewData.giftMessage);
+
+                if (giftResult.error) {
+                    res.json({
+                        error: giftResult.error,
+                        fieldErrors: [],
+                        serverErrors: [giftResult.errorMessage]
+                    });
+                    return;
                 }
             }
 
