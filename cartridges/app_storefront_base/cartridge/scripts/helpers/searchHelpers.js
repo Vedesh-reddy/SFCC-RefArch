@@ -1,3 +1,4 @@
+'use strict';
 
 /**
  * Set search configuration values
