@@ -385,16 +385,15 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
         return next();
     }
 
-    var validationBasketStatus = HookMgr.callHook(
-        'app.validate.basket',
-        'validateBasket',
-        currentBasket,
-        false
+    var validationOrderStatus = HookMgr.callHook(
+        'app.validate.order',
+        'validateOrder',
+        currentBasket
     );
-    if (validationBasketStatus.error) {
+    if (validationOrderStatus.error) {
         res.json({
             error: true,
-            errorMessage: validationBasketStatus.message
+            errorMessage: validationOrderStatus.message
         });
         return next();
     }

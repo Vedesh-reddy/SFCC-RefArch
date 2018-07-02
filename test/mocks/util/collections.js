@@ -30,8 +30,19 @@ function forEach() {
     return list ? list.forEach(callback) : null;
 }
 
+function every() {
+    var args = Array.from(arguments);
+    var list = args[0];
+    var callback = args[1];
+    if (list && Object.prototype.hasOwnProperty.call(list, 'toArray')) {
+        list = list.toArray();
+    }
+    return list ? list.every(callback) : null;
+}
+
 module.exports = {
     find: find,
     forEach: forEach,
-    map: map
+    map: map,
+    every: every
 };
