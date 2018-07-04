@@ -7,10 +7,10 @@ var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 server.get('MiniCart', server.middleware.include, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    
+
     var currentBasket = BasketMgr.getCurrentBasket();
     var quantityTotal;
-    
+
     if (currentBasket) {
         quantityTotal = currentBasket.productQuantityTotal;
     } else {
