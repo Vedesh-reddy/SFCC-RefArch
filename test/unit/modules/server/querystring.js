@@ -65,7 +65,7 @@ describe('querystring', function () {
             var rangeParams = 'prefn1=prefName&prefmin1=0&prefmax1=100';
             var rangeResult = new QueryString(rangeParams);
             var paramsOutput = rangeResult.toString();
-            assert.deepEqual(paramsOutput, 'prefn1=prefName&prefmin1=0&prefmax1=100');
+            assert.deepEqual(paramsOutput, 'prefmax1=100&prefmin1=0&prefn1=prefName');
         });
     });
 
