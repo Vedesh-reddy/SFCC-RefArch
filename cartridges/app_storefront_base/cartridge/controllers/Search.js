@@ -6,45 +6,13 @@ var CatalogMgr = require('dw/catalog/CatalogMgr');
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
-/**
- * Set search configuration values
- *
- * @param {dw.catalog.ProductSearchModel} apiProductSearch - API search instance
- * @param {Object} params - Provided HTTP query parameters
- * @return {dw.catalog.ProductSearchModel} - API search instance
- */
-function setupSearch(apiProductSearch, params) {
-    var search = require('*/cartridge/scripts/search/search');
-
-    var sortingRule = params.srule ? CatalogMgr.getSortingRule(params.srule) : null;
-    var selectedCategory = CatalogMgr.getCategory(params.cgid);
-    selectedCategory = selectedCategory && selectedCategory.online ? selectedCategory : null;
-
-    search.setProductProperties(apiProductSearch, params, selectedCategory, sortingRule);
-
-    if (params.preferences) {
-        search.addRefinementValues(apiProductSearch, params.preferences);
-    }
-
-    return apiProductSearch;
-}
-
-/**
- * Retrieve a category's template filepath if available
- *
- * @param {dw.catalog.ProductSearchModel} apiProductSearch - API search instance
- * @return {string} - Category's template filepath
- */
-function getCategoryTemplate(apiProductSearch) {
-    return apiProductSearch.category ? apiProductSearch.category.template : '';
-}
-
 server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
 
     var apiProductSearch = new ProductSearchModel();
-    apiProductSearch = setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
     var productSearch = new ProductSearch(
         apiProductSearch,
@@ -64,9 +32,10 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
 server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
+    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
 
     var apiProductSearch = new ProductSearchModel();
-    apiProductSearch = setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
     var productSearch = new ProductSearch(
         apiProductSearch,
@@ -86,9 +55,10 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
 
 server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+    var URLUtils = require('dw/web/URLUtils');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
-    var URLUtils = require('dw/web/URLUtils');
+    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
 
     var categoryTemplate = '';
     var productSearch;
@@ -107,10 +77,10 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
         return next();
     }
 
-    apiProductSearch = setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
 
-    categoryTemplate = getCategoryTemplate(apiProductSearch);
+    categoryTemplate = searchHelper.getCategoryTemplate(apiProductSearch);
     productSearch = new ProductSearch(
         apiProductSearch,
         req.querystring,
@@ -174,21 +144,9 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
 });
 
 server.get('Content', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
-    var ContentSearchModel = require('dw/content/ContentSearchModel');
-    var ContentSearch = require('*/cartridge/models/search/contentSearch');
-    var apiContentSearchModel = new ContentSearchModel();
-    var contentSearch;
-    var contentSearchResult;
-    var queryPhrase = req.querystring.q;
-    var startingPage = Number(req.querystring.startingPage);
+    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
 
-    apiContentSearchModel.setRecursiveFolderSearch(true);
-    apiContentSearchModel.setSearchPhrase(req.querystring.q);
-    apiContentSearchModel.search();
-    contentSearchResult = apiContentSearchModel.getContent();
-    var count = Number(apiContentSearchModel.getCount());
-    contentSearch = new ContentSearch(contentSearchResult, count, queryPhrase, startingPage, null);
-
+    var contentSearch = searchHelper.setupContentSearch(req.querystring);
     res.render('/search/contentGrid', {
         contentSearch: contentSearch
     });
