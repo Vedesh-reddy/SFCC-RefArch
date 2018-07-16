@@ -5,7 +5,6 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
 describe('search helpers', function () {
-
     describe('get category template', function () {
         it('should return a template', function () {
             var mockApiProductSearch = {
