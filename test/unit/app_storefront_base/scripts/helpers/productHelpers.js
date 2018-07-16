@@ -278,5 +278,5 @@ describe('Helpers - Product', function () {
             var expectedOptions = ['productName1', 'productName2'];
             assert.deepEqual(options, expectedOptions);
         });
-    });    
+    });
 });
