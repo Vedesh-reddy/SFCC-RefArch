@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!--[if gt IE 9]><!-->
+            <isinclude sf-toolkit="off" template="/common/scripts" />
+        <!--<![endif]-->
         <isinclude template="/common/htmlHead" />
         <isactivedatahead/>
     </head>
@@ -17,7 +20,9 @@
         <div class="error-messaging"></div>
         <div class="modal-background"></div>
         <iscontentasset aid="cookie_hint" />
-        <isinclude template="/common/scripts" />
+         <!--[if lt IE 10]>
+            <isinclude sf-toolkit="off" template="/common/scripts" />
+        <![endif]-->
         <isinclude url="${URLUtils.url('ConsentTracking-Check')}"/>
     </body>
 </html>

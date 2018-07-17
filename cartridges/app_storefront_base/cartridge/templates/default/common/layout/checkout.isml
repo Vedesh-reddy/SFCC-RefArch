@@ -5,6 +5,9 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <!--[if gt IE 9]><!-->
+            <isinclude sf-toolkit="off" template="/common/scripts" />
+        <!--<![endif]-->
         <isinclude template="/common/htmlHead" />
         <isactivedatahead/>
     </head>
@@ -14,7 +17,9 @@
             <isreplace/>
             <isinclude template="/components/footer/pageFooter" />
         </div>
-        <isinclude template="/common/scripts" />
+        <!--[if lt IE 10]>
+            <isinclude sf-toolkit="off" template="/common/scripts" />
+        <![endif]-->
         <isinclude url="${URLUtils.url('ConsentTracking-Check')}"/>
     </body>
 </html>
