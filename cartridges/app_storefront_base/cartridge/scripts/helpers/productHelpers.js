@@ -237,15 +237,19 @@ function getDefaultOptions(optionModel, options) {
 }
 
 /**
- * Retrieve product's options and default selected values from product line item
+ * Retrieve product's options default selected values, id and name from product line item
  *
  * @param {dw.util.Collection.<dw.order.ProductLineItem>} optionProductLineItems - Option product
  *     line items
- * @return {string[]} - Product line item option display values
+ * @return {string[]} - Product line item option display values, id and name
  */
 function getLineItemOptionNames(optionProductLineItems) {
     return collections.map(optionProductLineItems, function (item) {
-        return item.productName;
+        return {
+            displayName: item.productName,
+            optionId: item.optionID,
+            selectedValueId: item.optionValueID
+        };
     });
 }
 

@@ -406,6 +406,33 @@ describe('Product Factory', function () {
         assert.equal(result, 'product line item');
     });
 
+    it('should return product line item model for a line item that has options with multiple values', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'productLineItem',
+            containerView: 'test',
+            lineItem: {
+                optionProductLineItems: new ArrayList([{
+                    productName: 'someName',
+                    optionID: 'someID',
+                    optionValueID: 'someValue'
+
+                }])
+            }
+        };
+        productMock.optionModel = {
+            options: new ArrayList([{ productName: 'someName',
+                optionID: 'someID',
+                optionValueID: 'someValue' }]),
+            getSelectedOptionValue: function () {
+                return { displayValue: 'someValue' };
+            }
+        };
+        var result = productFactory.get(params);
+        assert.equal(result, 'product line item');
+        assert.isTrue(stubProductLineItem.calledWith({}, productMock));
+    });
+
     it('should return product line item model for a line item that has options', function () {
         var params = {
             pid: 'someID',
