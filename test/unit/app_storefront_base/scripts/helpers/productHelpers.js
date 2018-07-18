@@ -275,7 +275,18 @@ describe('Helpers - Product', function () {
     describe('getLineItemOptionNames function', function () {
         it('should return defaultOption object', function () {
             var options = productHelpers.getLineItemOptionNames(optionProductLineItemsMock);
-            var expectedOptions = ['productName1', 'productName2'];
+            var expectedOptions = [
+                {
+                    'displayName': 'productName1',
+                    'optionId': 'optionId1',
+                    'selectedValueId': 'selectedValueId1'
+                },
+                {
+                    'displayName': 'productName2',
+                    'optionId': 'optionId2',
+                    'selectedValueId': 'selectedValueId2'
+                }
+            ];
             assert.deepEqual(options, expectedOptions);
         });
     });

@@ -270,6 +270,23 @@ function fillModalElement(editProductUrl) {
     });
 }
 
+/**
+ * replace content of modal
+ * @param {string} actionUrl - url to be used to remove product
+ * @param {string} productID - pid
+ * @param {string} productName - product name
+ * @param {string} uuid - uuid
+ */
+function confirmDelete(actionUrl, productID, productName, uuid) {
+    var $deleteConfirmBtn = $('.cart-delete-confirmation-btn');
+    var $productToRemoveSpan = $('.product-to-remove');
+
+    $deleteConfirmBtn.data('pid', productID);
+    $deleteConfirmBtn.data('action', actionUrl);
+    $deleteConfirmBtn.data('uuid', uuid);
+
+    $productToRemoveSpan.empty().append(productName);
+}
 
 module.exports = function () {
     $('body').on('click', '.remove-product', function (e) {
@@ -279,15 +296,12 @@ module.exports = function () {
         var productID = $(this).data('pid');
         var productName = $(this).data('name');
         var uuid = $(this).data('uuid');
+        confirmDelete(actionUrl, productID, productName, uuid);
+    });
 
-        var $deleteConfirmBtn = $('.cart-delete-confirmation-btn');
-        var $productToRemoveSpan = $('.product-to-remove');
-
-        $deleteConfirmBtn.data('pid', productID);
-        $deleteConfirmBtn.data('action', actionUrl);
-        $deleteConfirmBtn.data('uuid', uuid);
-
-        $productToRemoveSpan.empty().append(productName);
+    $('body').on('afterRemoveFromCart', function (e, data) {
+        e.preventDefault();
+        confirmDelete(data.actionUrl, data.productID, data.productName, data.uuid);
     });
 
     $('.optional-promo').click(function (e) {
