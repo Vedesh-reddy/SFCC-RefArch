@@ -14,7 +14,11 @@ var productMock = {
             getPrimaryCategory: function () { return { custom: { sizeChartID: 'someID' } }; }
         };
     },
-    ID: 'someID'
+    ID: 'someID',
+    pageTitle: 'some title',
+    pageDescription: 'some description',
+    pageKeywords: 'some keywords',
+    pageMetaData: [{}]
 };
 
 var optionsMock = {
@@ -56,6 +60,7 @@ describe('Full Product Model', function () {
         decorators.stubs.stubSetIndividualProducts.reset();
         decorators.stubs.stubBundledProducts.reset();
         decorators.stubs.stubBonusUnitPrice.reset();
+        decorators.stubs.stubPageMetaData.reset();
     });
 
     it('should call base for full product', function () {
@@ -188,5 +193,13 @@ describe('Full Product Model', function () {
         fullProduct(object, productMock, optionsMock);
 
         assert.isTrue(decorators.stubs.stubReadyToOrder.calledOnce);
+    });
+
+    it('should call pageMetaData for full product', function () {
+        var object = {};
+        productMock.getPrimaryCategory = function () { return null; };
+        fullProduct(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubPageMetaData.calledOnce);
     });
 });

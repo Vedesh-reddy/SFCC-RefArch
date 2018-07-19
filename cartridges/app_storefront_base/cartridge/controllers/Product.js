@@ -4,6 +4,7 @@ var server = require('server');
 
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
+var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
 /**
  * Creates the breadcrumbs object
@@ -69,12 +70,13 @@ function getResources() {
 /**
  * Renders the Product Details Page
  * @param {Object} querystring - query string parameters
+ * @param {Object} reqPageMetaData - request pageMetaData object
  * @param {Object} res - response object
  */
-function showProductPage(querystring, res) {
+function showProductPage(querystring, reqPageMetaData, res) {
     var URLUtils = require('dw/web/URLUtils');
-
     var ProductFactory = require('*/cartridge/scripts/factories/product');
+    var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
 
     var params = querystring;
     var product = ProductFactory.get(params);
@@ -88,10 +90,10 @@ function showProductPage(querystring, res) {
         template = 'product/setDetails';
     }
 
+    pageMetaHelper.setPageMetaData(reqPageMetaData, product);
+    pageMetaHelper.setPageMetaTags(reqPageMetaData, product);
+
     res.render(template, {
-        CurrentPageMetaData: {
-            title: product.productName
-        },
         product: product,
         addToCartUrl: addToCartUrl,
         resources: getResources(),
@@ -100,12 +102,12 @@ function showProductPage(querystring, res) {
 }
 
 server.get('Show', cache.applyPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
-    showProductPage(req.querystring, res);
+    showProductPage(req.querystring, req.pageMetaData, res);
     next();
-});
+}, pageMetaData.computedPageMetaData);
 
 server.get('ShowInCategory', cache.applyPromotionSensitiveCache, function (req, res, next) {
-    showProductPage(req.querystring, res);
+    showProductPage(req.querystring, req.pageMetaData, res);
     next();
 });
 

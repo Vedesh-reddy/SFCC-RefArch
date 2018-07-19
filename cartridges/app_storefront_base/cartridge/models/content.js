@@ -19,6 +19,10 @@ function content(contentValue, renderingTemplate) {
     this.ID = contentValue.ID;
     this.name = contentValue.name;
     this.template = contentValue.template || usedRenderingTemplate;
+    this.pageTitle = contentValue.pageTitle;
+    this.pageDescription = contentValue.pageDescription;
+    this.pageKeywords = contentValue.pageKeywords;
+    this.pageMetaTags = contentValue.pageMetaTags;
 
     return this;
 }

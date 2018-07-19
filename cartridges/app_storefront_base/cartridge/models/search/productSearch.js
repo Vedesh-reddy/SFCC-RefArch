@@ -251,9 +251,13 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
     if (productSearch.category) {
         this.category = {
             name: productSearch.category.displayName,
-            id: productSearch.category.ID
+            id: productSearch.category.ID,
+            pageTitle: productSearch.category.pageTitle,
+            pageDescription: productSearch.category.pageDescription,
+            pageKeywords: productSearch.category.pageKeywords
         };
     }
+    this.pageMetaTags = productSearch.pageMetaTags;
 }
 
 module.exports = ProductSearch;

@@ -5,6 +5,7 @@ var server = require('server');
 var CatalogMgr = require('dw/catalog/CatalogMgr');
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
+var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
 server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
@@ -59,6 +60,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
+    var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
 
     var categoryTemplate = '';
     var productSearch;
@@ -89,6 +91,8 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
         CatalogMgr.getSiteCatalog().getRoot()
     );
 
+    pageMetaHelper.setPageMetaTags(req.pageMetaData, productSearch);
+
     var refineurl = URLUtils.url('Search-Refinebar');
     var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule'];
     Object.keys(req.querystring).forEach(function (element) {
@@ -115,6 +119,8 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
         && categoryTemplate
         && apiProductSearch.category.parent.ID === 'root'
     ) {
+        pageMetaHelper.setPageMetaData(req.pageMetaData, productSearch.category);
+
         if (isAjax) {
             res.render(resultsTemplate, {
                 productSearch: productSearch,
@@ -141,7 +147,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
     }
 
     return next();
-});
+}, pageMetaData.computedPageMetaData);
 
 server.get('Content', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
