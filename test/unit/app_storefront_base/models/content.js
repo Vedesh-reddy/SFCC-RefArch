@@ -13,7 +13,11 @@ describe('Content', function () {
             template: 'templateName',
             UUID: 22,
             ID: 'contentAssetID',
-            online: true
+            online: true,
+            pageTitle: 'some title',
+            pageDescription: 'some description',
+            pageKeywords: 'some keywords',
+            pageMetaTags: [{}]
         };
 
         var content = new Content(contentValue);
@@ -23,7 +27,12 @@ describe('Content', function () {
             name: 'contentAssetName',
             template: 'templateName',
             ID: 'contentAssetID',
-            UUID: 22 });
+            UUID: 22,
+            pageTitle: 'some title',
+            pageDescription: 'some description',
+            pageKeywords: 'some keywords',
+            pageMetaTags: [{}]
+        });
     });
 
     it('should return converted content model without a body', function () {

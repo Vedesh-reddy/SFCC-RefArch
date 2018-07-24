@@ -261,6 +261,34 @@ function getRequestBodyAsString(request) {
 }
 
 /**
+ * Get a local instance of the pageMetaData object
+ * @param {Object} pageMetaData - Global request pageMetaData object
+ * @returns {Object} object containing pageMetaData information
+ */
+function getPageMetaData(pageMetaData) {
+    var pageMetaDataObject = {
+        title: pageMetaData.title,
+        description: pageMetaData.description,
+        keywords: pageMetaData.keywords,
+        pageMetaTags: pageMetaData.pageMetaTags,
+        addPageMetaTags: function (pageMetaTags) {
+            pageMetaData.addPageMetaTags(pageMetaTags);
+        },
+        setTitle: function (title) {
+            pageMetaData.setTitle(title);
+        },
+        setDescription: function (description) {
+            pageMetaData.setDescription(description);
+        },
+        setKeywords: function (keywords) {
+            pageMetaData.setKeywords(keywords);
+        }
+    };
+
+    return pageMetaDataObject;
+}
+
+/**
  * @constructor
  * @classdesc Local instance of request object with customer object in it
  *
@@ -336,6 +364,12 @@ function Request(request, customer, session) {
     Object.defineProperty(this, 'referer', {
         get: function () {
             return request.getHttpReferer();
+        }
+    });
+
+    Object.defineProperty(this, 'pageMetaData', {
+        get: function () {
+            return getPageMetaData(request.pageMetaData);
         }
     });
 }

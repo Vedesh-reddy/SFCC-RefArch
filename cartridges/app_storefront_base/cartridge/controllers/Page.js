@@ -4,6 +4,7 @@ var server = require('server');
 
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
+var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
 server.get(
     'Include',
@@ -123,11 +124,16 @@ server.get('Show', cache.applyDefaultCache, consentTracking.consent, function (r
     var ContentMgr = require('dw/content/ContentMgr');
     var Logger = require('dw/system/Logger');
     var ContentModel = require('*/cartridge/models/content');
+    var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
 
     var apiContent = ContentMgr.getContent(req.querystring.cid);
 
     if (apiContent) {
         var content = new ContentModel(apiContent, 'content/contentAsset');
+
+        pageMetaHelper.setPageMetaData(req.pageMetaData, content);
+        pageMetaHelper.setPageMetaTags(req.pageMetaData, content);
+
         if (content.template) {
             res.render(content.template, { content: content });
         } else {
@@ -139,6 +145,6 @@ server.get('Show', cache.applyDefaultCache, consentTracking.consent, function (r
     }
 
     next();
-});
+}, pageMetaData.computedPageMetaData);
 
 module.exports = server.exports();
