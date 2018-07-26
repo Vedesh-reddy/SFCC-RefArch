@@ -482,7 +482,7 @@ var exports = {
 [billingHelpers, shippingHelpers, addressHelpers].forEach(function (library) {
     Object.keys(library).forEach(function (item) {
         if (typeof library[item] === 'object') {
-            exports[item] = Object.assign({}, exports[item], library[item]);
+            exports[item] = $.extend({}, exports[item], library[item]);
         } else {
             exports[item] = library[item];
         }

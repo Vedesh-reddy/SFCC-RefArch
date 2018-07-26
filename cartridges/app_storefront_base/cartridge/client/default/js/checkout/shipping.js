@@ -95,7 +95,7 @@ function updateShippingAddressSelector(productLineItem, shipping, order, custome
  * @param {Object} shipping - the shipping (shipment model) model
  */
 function updateShippingAddressFormValues(shipping) {
-    var addressObject = Object.assign({}, shipping.shippingAddress);
+    var addressObject = $.extend({}, shipping.shippingAddress);
 
     if (!addressObject) {
         addressObject = {
