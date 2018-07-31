@@ -23,6 +23,7 @@
     "upload": "sgmf-scripts --upload",
     "uploadCartridge": "sgmf-scripts --uploadCartridge app_storefront_base && sgmf-scripts --uploadCartridge modules",
     "watch": "sgmf-scripts --watch",
+    "watch:static": "sgmf-scripts --watch static",
     "release": "node bin/Makefile release --"
   },
   "repository": {
