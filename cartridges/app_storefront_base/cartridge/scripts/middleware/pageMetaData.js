@@ -11,7 +11,8 @@ function computedPageMetaData(req, res, next) {
     var computedMetaData = {
         title: req.pageMetaData.title,
         description: req.pageMetaData.description,
-        keywords: req.pageMetaData.keywords
+        keywords: req.pageMetaData.keywords,
+        pageMetaTags: []
     };
 
     req.pageMetaData.pageMetaTags.forEach(function (item) {
@@ -22,7 +23,6 @@ function computedPageMetaData(req, res, next) {
         } else if (item.name && item.ID === 'keywords') {
             computedMetaData.keywords = item.content;
         } else {
-            computedMetaData.pageMetaTags = [];
             computedMetaData.pageMetaTags.push(item);
         }
     });
