@@ -43,7 +43,7 @@
                             </isif>
                             <button
                                 type="button"
-                                class="remove-btn remove-address"
+                                class="remove-btn remove-address btn-light"
                                 data-toggle="modal"
                                 data-target="#deleteAddressModal"
                                 data-id="${address.address.ID}"
