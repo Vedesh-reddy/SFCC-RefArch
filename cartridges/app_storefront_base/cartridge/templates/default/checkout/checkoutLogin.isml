@@ -2,7 +2,7 @@
     <isscript>
         var assets = require('*/cartridge/scripts/assets.js');
         assets.addCss('/css/checkout/checkoutLogin.css');
-        assets.addJs('/js/checkoutLogin.js');
+        assets.addJs('/js/login.js');
     </isscript>
 
     <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
@@ -43,6 +43,7 @@
                     </div>
                     <div class="card-body">
                         <isinclude template="account/components/loginForm" />
+                        <isinclude template="account/password/requestPasswordResetModal"/>
                         <isinclude template="account/components/oauth" />
                     </div>
                 </div>
