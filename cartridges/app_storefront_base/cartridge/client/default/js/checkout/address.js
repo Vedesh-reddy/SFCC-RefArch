@@ -109,6 +109,17 @@ function optionValueForAddress(shipping, selected, order, options) {
         optionEl.attr(key, mappedValue || '');
     });
 
+    var giftObj = {
+        'data-is-gift': 'isGift',
+        'data-gift-message': 'giftMessage'
+    };
+
+    $.each(giftObj, function (key) {
+        var mappedKey = giftObj[key];
+        var mappedValue = safeShipping[mappedKey];
+        optionEl.attr(key, mappedValue || '');
+    });
+
     if (isSelected) {
         optionEl.attr('selected', true);
     }
@@ -145,13 +156,11 @@ module.exports = {
 
     showDetails: function () {
         $('.btn-show-details').on('click', function () {
-            $(this).parents('[data-address-mode]').attr('data-address-mode', 'details');
-        });
-    },
+            var form = $(this).closest('form');
 
-    hideDetails: function () {
-        $('.btn-hide-details').on('click', function () {
-            $(this).parents('[data-address-mode]').attr('data-address-mode', 'edit');
+            form.attr('data-address-mode', 'details');
+            form.find('.multi-ship-address-actions').removeClass('d-none');
+            form.find('.multi-ship-action-buttons .col-12.btn-save-multi-ship').addClass('d-none');
         });
     },
 

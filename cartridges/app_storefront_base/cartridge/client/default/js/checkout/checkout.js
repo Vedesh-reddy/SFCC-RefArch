@@ -93,7 +93,7 @@ var formHelpers = require('./formErrors');
                     //
                     var isMultiShip = $('#checkout-main').hasClass('multi-ship');
                     var formSelector = isMultiShip ?
-                            '.multi-shipping .active form' : '.single-shipping form';
+                            '.multi-shipping .active form' : '.single-shipping .shipping-form';
                     var form = $(formSelector);
 
                     if (isMultiShip && form.length === 0) {
@@ -107,14 +107,14 @@ var formHelpers = require('./formErrors');
                                     $('body').trigger('checkout:updateCheckoutView',
                                         { order: data.order, customer: data.customer });
                                     defer.resolve();
-                                } else if ($('.shipping-nav .alert-danger').length < 1) {
+                                } else if ($('.shipping-error .alert-danger').length < 1) {
                                     var errorMsg = data.message;
                                     var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
                                         'fade show" role="alert">' +
                                         '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
                                         '<span aria-hidden="true">&times;</span>' +
                                         '</button>' + errorMsg + '</div>';
-                                    $('.shipping-nav').append(errorHtml);
+                                    $('.shipping-error').append(errorHtml);
                                     defer.reject();
                                 }
                             },
@@ -136,7 +136,7 @@ var formHelpers = require('./formErrors');
 
                         $.ajax({
                             url: form.attr('action'),
-                            method: 'POST',
+                            type: 'post',
                             data: shippingFormData,
                             success: function (data) {
                                 shippingHelpers.methods.shippingFormResponse(defer, data);
@@ -321,6 +321,10 @@ var formHelpers = require('./formErrors');
                 // Handle Edit buttons on shipping and payment summary cards
                 //
                 $('.shipping-summary .edit-button', plugin).on('click', function () {
+                    if (!$('#checkout-main').hasClass('multi-ship')) {
+                        $('body').trigger('shipping:selectSingleShipping');
+                    }
+
                     members.gotoStage('shipping');
                 });
 
@@ -478,7 +482,7 @@ var exports = {
 [billingHelpers, shippingHelpers, addressHelpers].forEach(function (library) {
     Object.keys(library).forEach(function (item) {
         if (typeof library[item] === 'object') {
-            exports[item] = Object.assign({}, exports[item], library[item]);
+            exports[item] = $.extend({}, exports[item], library[item]);
         } else {
             exports[item] = library[item];
         }

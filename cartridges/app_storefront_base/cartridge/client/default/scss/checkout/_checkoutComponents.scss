@@ -17,18 +17,6 @@ $stored-payment-spacing: 1rem;
     font-weight: $checkout-font-weight;
 }
 
-.checkout-card-body {
-    padding: 0.625em;
-
-    @include media-breakpoint-up(md) {
-        padding: 1.25em;
-    }
-}
-
-.card-header {
-    background-color: $white;
-}
-
 .grand-total-price {
     float: right;
     font-weight: $checkout-font-weight;
@@ -193,6 +181,32 @@ $stored-payment-spacing: 1rem;
     padding-left: 1.5rem;
 }
 
-.multi-ship .single-shipping {
+.multi-ship .single-shipping .shipping-content {
+    display: none;
+}
+
+.multi-ship .shipping-summary .single-shipping {
+    display: none;
+}
+
+.gift-message-block {
+    padding-bottom: 1em;
+    padding-top: 1em;
+}
+
+.single-shipping .summary-section-label {
+    margin-bottom: 0;
+}
+
+.confirm-details .shipping-method,
+.confirm-details .shipping-method-price {
+    margin-bottom: 0;
+}
+
+.multi-ship .confirm-details .single-shipping {
+    display: none;
+}
+
+.multi-shipping {
     display: none;
 }

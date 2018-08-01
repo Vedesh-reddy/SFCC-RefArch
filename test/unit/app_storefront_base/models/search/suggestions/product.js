@@ -81,9 +81,11 @@ describe('Product Suggestions model', function () {
     it('should product a ProductSuggestions instance', function () {
         var suggestions = {
             productSuggestions: {
-                suggestedPhrases: {
-                    hasNext: function () { return true; },
-                    next: nextPhraseStub
+                searchPhraseSuggestions: {
+                    suggestedPhrases: {
+                        hasNext: function () { return true; },
+                        next: nextPhraseStub
+                    }
                 },
                 suggestedProducts: {
                     hasNext: function () { return true; },

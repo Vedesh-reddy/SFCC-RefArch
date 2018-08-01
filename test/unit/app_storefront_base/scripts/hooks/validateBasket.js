@@ -75,39 +75,48 @@ var lineItemContainer = {
 
 describe('validate basket', function () {
     var validateBasketHook = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/hooks/validateBasket', {
-        'dw/catalog/ProductInventoryMgr': {
-            getInventoryList: function () {
-                return {
-                    getRecord: function () {
-                        return {
-                            ATS: {
-                                value: 3
-                            }
-                        };
-                    }
-                };
-            }
-        },
         'dw/web/Resource': {
             msg: function (param) {
                 return param;
             }
         },
-        '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
-            'dw/util/ArrayList': ArrayList
-        }),
-        'dw/catalog/StoreMgr': {
-            getStore: function () {
-                return {
-                    custom: {
-                        inventoryListId: 'someID'
-                    }
-                };
-            }
-        }
+        '*/cartridge/scripts/helpers/basketValidationHelpers': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/basketValidationHelpers', {
+            'dw/catalog/ProductInventoryMgr': {
+                getInventoryList: function () {
+                    return {
+                        getRecord: function () {
+                            return {
+                                ATS: {
+                                    value: 3
+                                }
+                            };
+                        }
+                    };
+                }
+            },
+            'dw/web/Resource': {
+                msg: function (param) {
+                    return param;
+                }
+            },
+            '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+                'dw/util/ArrayList': ArrayList
+            }),
+            'dw/catalog/StoreMgr': {
+                getStore: function () {
+                    return {
+                        custom: {
+                            inventoryListId: 'someID'
+                        }
+                    };
+                }
+            },
+            '*/cartridge/scripts/checkout/checkoutHelpers': function () { return; }
+        })
     });
 
-    it('should validate a vaild basket', function () {
+    it('should validate a valid basket', function () {
+        lineItemContainer.shipments = new ArrayList([{ shippingAddress: { address1: 'some street' } }]);
         var result = validateBasketHook.validateBasket(lineItemContainer, false);
         assert.isFalse(result.error);
         assert.equal(result.message, null);

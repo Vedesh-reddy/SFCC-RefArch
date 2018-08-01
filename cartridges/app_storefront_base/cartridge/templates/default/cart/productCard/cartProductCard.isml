@@ -19,22 +19,19 @@
                         </isloop>
                         <isloop items="${lineItem.options}" var="option">
                             <isif condition="${!!option}" />
-                                <p class="line-item-attributes">${option}</p>
+                                <div class="lineItem-options-values" data-option-id="${option.optionId}" data-value-id="${option.selectedValueId}">
+                                    <p class="line-item-attributes">${option.displayName}</p>
+                                </div>
                             </isif>
                         </isloop>
 
                         <isinclude template="cart/productCard/cartProductCardAvailability" />
-
-                        <div class="product-edit">
-                            <a href="${URLUtils.url('Cart-GetProduct', 'uuid', lineItem.UUID)}" class="edit" title="${Resource.msg('link.edit.item','cart',null)}">${Resource.msg('link.edit.item','cart',null)}</a>
-                        </div>
+                        <isinclude template="cart/productCard/cartProductCardEdit" />
                     </div>
                 </div>
             </div>
         </div>
-        <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
-            <div class="col-12 d-lg-none"><hr class="line-item-divider"></div>
-        </isif>
+        <div class="col-12 d-lg-none"><hr class="line-item-divider"></div>
 
         <isinclude template="cart/productCard/cartProductCardProductPrice" />
     </div>

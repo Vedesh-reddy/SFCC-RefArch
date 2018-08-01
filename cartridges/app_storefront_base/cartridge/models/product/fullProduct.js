@@ -51,6 +51,7 @@ module.exports = function fullProduct(product, apiProduct, options) {
     decorators.currentUrl(product, options.variationModel, options.optionModel, 'Product-Show', apiProduct.ID, options.quantity);
     decorators.readyToOrder(product, options.variationModel);
     decorators.raw(product, apiProduct);
+    decorators.pageMetaData(product, apiProduct);
 
     return product;
 };

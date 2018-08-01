@@ -166,6 +166,27 @@ function getPermalink(productSearch, pageSize, startIdx) {
 }
 
 /**
+ * Compile a list of relevant suggested phrases
+ *
+ * @param {dw.util.Iterator.<dw.suggest.SuggestedPhrase>} suggestedPhrases - Iterator to retrieve suggestedPhrases
+ * @return {SuggestedPhrase[]} - Array of suggested phrases
+ */
+function getPhrases(suggestedPhrases) {
+    var phrase = null;
+    var phrases = [];
+
+    while (suggestedPhrases.hasNext()) {
+        phrase = suggestedPhrases.next();
+        phrases.push({
+            value: phrase.phrase,
+            url: URLUtils.url(ACTION_ENDPOINT, 'q', phrase.phrase)
+        });
+    }
+    return phrases;
+}
+
+
+/**
  * @constructor
  * @classdesc ProductSearch class
  *
@@ -186,6 +207,13 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
         this.pageSize,
         startIdx
     );
+
+    var searchSuggestions = productSearch.searchPhraseSuggestions;
+    this.isSearchSuggestionsAvailable = searchSuggestions ? searchSuggestions.hasSuggestedPhrases() : false;
+
+    if (this.isSearchSuggestionsAvailable) {
+        this.suggestionPhrases = getPhrases(searchSuggestions.suggestedPhrases);
+    }
 
     this.pageNumber = paging.currentPage;
     this.count = productSearch.count;
@@ -223,9 +251,13 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
     if (productSearch.category) {
         this.category = {
             name: productSearch.category.displayName,
-            id: productSearch.category.ID
+            id: productSearch.category.ID,
+            pageTitle: productSearch.category.pageTitle,
+            pageDescription: productSearch.category.pageDescription,
+            pageKeywords: productSearch.category.pageKeywords
         };
     }
+    this.pageMetaTags = productSearch.pageMetaTags;
 }
 
 module.exports = ProductSearch;

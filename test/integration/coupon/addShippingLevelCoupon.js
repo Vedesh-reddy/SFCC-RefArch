@@ -61,7 +61,7 @@ describe('Shipping Level Coupon - add coupon', function () {
             });
     });
 
-    it('should return discounted total for shipping cost', function (done) {
+    it('should return discounted total for shipping cost', function () {
         return request(myRequest)
             .then(function (response) {
                 assert.equal(response.statusCode, 200, 'Expected add coupon request statusCode to be 200.');
@@ -71,7 +71,6 @@ describe('Shipping Level Coupon - add coupon', function () {
                 assert.equal(bodyAsJson.totals.discounts[0].type, 'coupon', 'actual totals discounts type should be coupon');
                 assert.isTrue(bodyAsJson.totals.discounts[0].applied, 'actual totals discounts applied should be true');
                 assert.include(bodyAsJson.totals.discountsHtml, 'Spend 500 and receive 50% off shipping', 'actual promotion call out message is correct');
-                done();
             });
     });
 });

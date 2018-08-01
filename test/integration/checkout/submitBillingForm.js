@@ -35,7 +35,7 @@ describe('billingForm', function () {
                 });
         });
 
-        it('should submit billing form successfully', function (done) {
+        it('should submit billing form successfully', function () {
             myRequest.form = {
                 dwfrm_billing_shippingAddressUseAsBillingAddress: 'true',
                 dwfrm_billing_addressFields_firstName: 'John',
@@ -85,7 +85,6 @@ describe('billingForm', function () {
                     var strippedBody = jsonHelpers.deleteProperties(bodyAsJson, ['redirectUrl', 'action', 'queryString']);
                     assert.equal(response.statusCode, 200, 'Expected CheckoutServices-SubmitPayment statusCode to be 200.');
                     assert.deepEqual(strippedBody, ExpectedResBody, 'Expecting actual response to be equal match expected response');
-                    done();
                 });
         });
     });

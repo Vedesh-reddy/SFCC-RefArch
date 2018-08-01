@@ -653,6 +653,34 @@ function getRenderedPaymentInstruments(req, accountModel) {
     return result || null;
 }
 
+/**
+ * sets the gift message on a shipment
+ * @param {dw.order.Shipment} shipment - Any shipment for the current basket
+ * @param {boolean} isGift - is the shipment a gift
+ * @param {string} giftMessage - The gift message the user wants to attach to the shipment
+ * @returns {Object} object containing error information
+ */
+function setGift(shipment, isGift, giftMessage) {
+    var result = { error: false, errorMessage: null };
+
+    try {
+        Transaction.wrap(function () {
+            shipment.setGift(isGift);
+
+            if (isGift && giftMessage) {
+                shipment.setGiftMessage(giftMessage);
+            } else {
+                shipment.setGiftMessage(null);
+            }
+        });
+    } catch (e) {
+        result.error = true;
+        result.errorMessage = Resource.msg('error.message.could.not.be.attached', 'checkout', null);
+    }
+
+    return result;
+}
+
 module.exports = {
     getFirstNonDefaultShipmentWithProductLineItems: getFirstNonDefaultShipmentWithProductLineItems,
     ensureNoEmptyShipments: ensureNoEmptyShipments,
@@ -677,5 +705,6 @@ module.exports = {
     savePaymentInstrumentToWallet: savePaymentInstrumentToWallet,
     getRenderedPaymentInstruments: getRenderedPaymentInstruments,
     sendConfirmationEmail: sendConfirmationEmail,
-    ensureValidShipments: ensureValidShipments
+    ensureValidShipments: ensureValidShipments,
+    setGift: setGift
 };

@@ -37,7 +37,9 @@ stubBonusProductLineItem.returns('bonus product line item');
 
 var stubBonusOrderLineItem = sinon.stub();
 stubBonusOrderLineItem.returns('bonus product line item (order)');
+
 var productMock = {};
+var options = {};
 
 var optionProductLineItems = new ArrayList([]);
 
@@ -59,7 +61,41 @@ describe('Product Factory', function () {
             }
         },
         '*/cartridge/scripts/helpers/productHelpers': {
-            getCurrentOptionModel: function () { return 'optionModel'; }
+            getCurrentOptionModel: function () { return 'optionModel'; },
+            getProductType: function (product) {
+                var result;
+                if (product.master) {
+                    result = 'master';
+                } else if (product.variant) {
+                    result = 'variant';
+                } else if (product.variationGroup) {
+                    result = 'variationGroup';
+                } else if (product.productSet) {
+                    result = 'set';
+                } else if (product.bundle) {
+                    result = 'bundle';
+                } else if (product.optionProduct) {
+                    result = 'optionProduct';
+                } else {
+                    result = 'standard';
+                }
+                return result;
+            },
+            getConfig: function () {
+                return options;
+            },
+            getVariationModel: function () {
+                return productMock.variationModel;
+            },
+            getLineItemOptions: function () {
+                return [{ productId: 'someID', optionId: 'someOptionId', selectedValueId: 'someValueId' }];
+            },
+            getDefaultOptions: function () {
+                return ['name:value'];
+            },
+            getLineItemOptionNames: function () {
+                return ['lineItemOptionNames'];
+            }
         },
         '*/cartridge/models/product/productTile': stubProductTile,
         '*/cartridge/models/product/fullProduct': stubFullProduct,
@@ -110,9 +146,7 @@ describe('Product Factory', function () {
             pid: 'someID'
         };
         productMock.master = true;
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: null,
             options: undefined,
             optionModel: 'optionModel',
@@ -122,6 +156,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'master'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'full product');
         assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
@@ -133,7 +169,7 @@ describe('Product Factory', function () {
         };
         productMock.variant = true;
 
-        var options = {
+        options = {
             variationModel: null,
             options: undefined,
             optionModel: 'optionModel',
@@ -154,9 +190,7 @@ describe('Product Factory', function () {
             pid: 'someID'
         };
         productMock.variationGroup = true;
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: null,
             options: undefined,
             optionModel: 'optionModel',
@@ -166,6 +200,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'variationGroup'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'full product');
         assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
@@ -176,9 +212,7 @@ describe('Product Factory', function () {
             pid: 'someID'
         };
         productMock.optionProduct = true;
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: null,
             options: undefined,
             optionModel: 'optionModel',
@@ -188,6 +222,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'optionProduct'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'full product');
         assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
@@ -197,9 +233,7 @@ describe('Product Factory', function () {
         var params = {
             pid: 'someID'
         };
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: null,
             options: undefined,
             optionModel: 'optionModel',
@@ -209,6 +243,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'standard'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'full product');
         assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
@@ -219,9 +255,7 @@ describe('Product Factory', function () {
             pid: 'someID'
         };
         productMock.productSet = true;
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: null,
             options: undefined,
             optionModel: 'optionModel',
@@ -231,6 +265,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'set'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'product set');
         assert.isTrue(stubProductSet.calledWith({}, options.apiProduct, options, productFactory));
@@ -241,9 +277,7 @@ describe('Product Factory', function () {
             pid: 'someID'
         };
         productMock.bundle = true;
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: null,
             options: undefined,
             optionModel: 'optionModel',
@@ -253,6 +287,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'bundle'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'product bundle');
         assert.isTrue(stubProductBundle.calledWith({}, options.apiProduct, options, productFactory));
@@ -277,7 +313,7 @@ describe('Product Factory', function () {
             }]);
         };
 
-        var options = {
+        options = {
             variationModel: productMock.variationModel,
             options: undefined,
             optionModel: 'optionModel',
@@ -305,9 +341,7 @@ describe('Product Factory', function () {
         };
         productMock.master = true;
         productMock.variationModel.master = true;
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: productMock.variationModel,
             options: undefined,
             optionModel: 'optionModel',
@@ -317,6 +351,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'master'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'full product');
         assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
@@ -328,9 +364,7 @@ describe('Product Factory', function () {
         };
         productMock.master = true;
         productMock.variationModel.master = true;
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: productMock.variationModel,
             options: undefined,
             optionModel: 'optionModel',
@@ -340,6 +374,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'master'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'full product');
         assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
@@ -368,6 +404,33 @@ describe('Product Factory', function () {
         var result = productFactory.get(params);
 
         assert.equal(result, 'product line item');
+    });
+
+    it('should return product line item model for a line item that has options with multiple values', function () {
+        var params = {
+            pid: 'someID',
+            pview: 'productLineItem',
+            containerView: 'test',
+            lineItem: {
+                optionProductLineItems: new ArrayList([{
+                    productName: 'someName',
+                    optionID: 'someID',
+                    optionValueID: 'someValue'
+
+                }])
+            }
+        };
+        productMock.optionModel = {
+            options: new ArrayList([{ productName: 'someName',
+                optionID: 'someID',
+                optionValueID: 'someValue' }]),
+            getSelectedOptionValue: function () {
+                return { displayValue: 'someValue' };
+            }
+        };
+        var result = productFactory.get(params);
+        assert.equal(result, 'product line item');
+        assert.isTrue(stubProductLineItem.calledWith({}, productMock));
     });
 
     it('should return product line item model for a line item that has options', function () {
@@ -439,14 +502,14 @@ describe('Product Factory', function () {
             lineItem: {}
         };
         productMock.bundle = true;
-        var result = productFactory.get(params);
-        var options = {
+        options = {
             promotions: 'promotions',
             quantity: undefined,
             variables: undefined,
             lineItem: {},
             productType: 'bundle'
         };
+        var result = productFactory.get(params);
 
         assert.equal(result, 'bundle line item');
         assert.isTrue(stubBundleLineItem.calledWith({}, productMock, options, productFactory));
@@ -518,9 +581,7 @@ describe('Product Factory', function () {
         };
 
         productMock.master = true;
-        var result = productFactory.get(params);
-
-        var options = {
+        options = {
             variationModel: null,
             options: undefined,
             optionModel: 'optionModel',
@@ -530,6 +591,8 @@ describe('Product Factory', function () {
             apiProduct: productMock,
             productType: 'master'
         };
+        var result = productFactory.get(params);
+
 
         assert.equal(result, 'bonus product');
         assert.isTrue(stubBonusProduct.calledWith({}, options.apiProduct, options, params.duuid));

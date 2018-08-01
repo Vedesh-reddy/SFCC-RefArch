@@ -29,7 +29,8 @@ var RESOURCES = {
     accountAddresses: Resource.msg('msg.account.addresses', 'checkout', null),
     shippingTo: Resource.msg('msg.shipping.to', 'checkout', null),
     shippingAddress: Resource.msg('label.order.shipping.address', 'confirmation', null),
-    addressIncomplete: Resource.msg('heading.address.incomplete', 'checkout', null)
+    addressIncomplete: Resource.msg('heading.address.incomplete', 'checkout', null),
+    giftMessage: Resource.msg('heading.gift.message', 'checkout', null)
 };
 
 /**

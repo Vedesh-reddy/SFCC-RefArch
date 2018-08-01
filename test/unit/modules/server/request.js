@@ -111,6 +111,24 @@ function createFakeRequest(overrides) {
             }
         },
         locale: 'ab_YZ',
+        pageMetaData: {
+            title: '',
+            description: '',
+            keywords: '',
+            pageMetaTags: [{}],
+            addPageMetaTags: function (pageMetaTags) {
+                this.pageMetaTags = pageMetaTags;
+            },
+            setTitle: function (title) {
+                this.title = title;
+            },
+            setDescription: function (description) {
+                this.description = description;
+            },
+            setKeywords: function (keywords) {
+                this.keywords = keywords;
+            }
+        },
         session: {
             currency: {
                 currencyCode: 'XYZ',
@@ -418,5 +436,33 @@ describe('request', function () {
         fakeRequest.httpMethod = 'PUT';
         var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
         assert.equal(req.body, '');
+    });
+
+    it('should get pageMetaData title', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.pageMetaData.setTitle('TestTitle');
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.pageMetaData.title, 'TestTitle');
+    });
+
+    it('should get pageMetaData description', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.pageMetaData.setDescription('TestDescription');
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.pageMetaData.description, 'TestDescription');
+    });
+
+    it('should get pageMetaData keywords', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.pageMetaData.setKeywords('TestKeywords');
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.equal(req.pageMetaData.keywords, 'TestKeywords');
+    });
+
+    it('should get pageMetaData pageMetaTags', function () {
+        var fakeRequest = createFakeRequest();
+        fakeRequest.pageMetaData.addPageMetaTags([{ title: true, content: 'TestTitle' }]);
+        var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+        assert.deepEqual(req.pageMetaData.pageMetaTags, [{ title: true, content: 'TestTitle' }]);
     });
 });

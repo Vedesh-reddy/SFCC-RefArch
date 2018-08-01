@@ -270,6 +270,23 @@ function fillModalElement(editProductUrl) {
     });
 }
 
+/**
+ * replace content of modal
+ * @param {string} actionUrl - url to be used to remove product
+ * @param {string} productID - pid
+ * @param {string} productName - product name
+ * @param {string} uuid - uuid
+ */
+function confirmDelete(actionUrl, productID, productName, uuid) {
+    var $deleteConfirmBtn = $('.cart-delete-confirmation-btn');
+    var $productToRemoveSpan = $('.product-to-remove');
+
+    $deleteConfirmBtn.data('pid', productID);
+    $deleteConfirmBtn.data('action', actionUrl);
+    $deleteConfirmBtn.data('uuid', uuid);
+
+    $productToRemoveSpan.empty().append(productName);
+}
 
 module.exports = function () {
     $('body').on('click', '.remove-product', function (e) {
@@ -279,15 +296,12 @@ module.exports = function () {
         var productID = $(this).data('pid');
         var productName = $(this).data('name');
         var uuid = $(this).data('uuid');
+        confirmDelete(actionUrl, productID, productName, uuid);
+    });
 
-        var $deleteConfirmBtn = $('.cart-delete-confirmation-btn');
-        var $productToRemoveSpan = $('.product-to-remove');
-
-        $deleteConfirmBtn.data('pid', productID);
-        $deleteConfirmBtn.data('action', actionUrl);
-        $deleteConfirmBtn.data('uuid', uuid);
-
-        $productToRemoveSpan.empty().append(productName);
+    $('body').on('afterRemoveFromCart', function (e, data) {
+        e.preventDefault();
+        confirmDelete(data.actionUrl, data.productID, data.productName, data.uuid);
     });
 
     $('.optional-promo').click(function (e) {
@@ -635,41 +649,42 @@ module.exports = function () {
         };
 
         $(this).parents('.card').spinner().start();
+        if (updateProductUrl) {
+            $.ajax({
+                url: updateProductUrl,
+                type: 'post',
+                context: this,
+                data: form,
+                dataType: 'json',
+                success: function (data) {
+                    $('#editProductModal').remove();
+                    $('.modal-backdrop').remove();
+                    $('body').removeClass('modal-open');
 
-        $.ajax({
-            url: updateProductUrl,
-            type: 'post',
-            context: this,
-            data: form,
-            dataType: 'json',
-            success: function (data) {
-                $('#editProductModal').remove();
-                $('.modal-backdrop').remove();
-                $('body').removeClass('modal-open');
+                    $('.coupons-and-promos').empty().append(data.cartModel.totals.discountsHtml);
+                    updateCartTotals(data.cartModel);
+                    updateApproachingDiscounts(data.cartModel.approachingDiscounts);
+                    updateAvailability(data.cartModel, uuid);
+                    updateProductDetails(data, uuid);
 
-                $('.coupons-and-promos').empty().append(data.cartModel.totals.discountsHtml);
-                updateCartTotals(data.cartModel);
-                updateApproachingDiscounts(data.cartModel.approachingDiscounts);
-                updateAvailability(data.cartModel, uuid);
-                updateProductDetails(data, uuid);
+                    if (data.uuidToBeDeleted) {
+                        $('.uuid-' + data.uuidToBeDeleted).remove();
+                    }
 
-                if (data.uuidToBeDeleted) {
-                    $('.uuid-' + data.uuidToBeDeleted).remove();
-                }
+                    validateBasket(data.cartModel);
 
-                validateBasket(data.cartModel);
-
-                $.spinner().stop();
-            },
-            error: function (err) {
-                if (err.responseJSON.redirectUrl) {
-                    window.location.href = err.responseJSON.redirectUrl;
-                } else {
-                    createErrorNotification(err.responseJSON.errorMessage);
                     $.spinner().stop();
+                },
+                error: function (err) {
+                    if (err.responseJSON.redirectUrl) {
+                        window.location.href = err.responseJSON.redirectUrl;
+                    } else {
+                        createErrorNotification(err.responseJSON.errorMessage);
+                        $.spinner().stop();
+                    }
                 }
-            }
-        });
+            });
+        }
     });
 
 

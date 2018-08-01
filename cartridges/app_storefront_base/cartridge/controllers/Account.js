@@ -180,6 +180,7 @@ server.post(
             authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
         });
         if (authenticatedCustomer && authenticatedCustomer.authenticated) {
+            res.setViewData({ authenticatedCustomer: authenticatedCustomer });
             res.json({
                 success: true,
                 redirectUrl: checkoutLogin
@@ -298,6 +299,7 @@ server.post(
                 formErrors.removeFormValues(registrationForm.form);
 
                 if (registrationForm.validForm) {
+                    res.setViewData({ authenticatedCustomer: authenticatedCustomer }); // eslint-disable-line block-scoped-var
                     res.json({
                         success: true,
                         redirectUrl: URLUtils.url('Account-Show',

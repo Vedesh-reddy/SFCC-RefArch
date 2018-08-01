@@ -598,4 +598,29 @@ describe('checkoutHelpers', function () {
             assert.isTrue(result.error);
         });
     });
+
+    describe('setGift', function () {
+        var mockShipment = {
+            setGift: function () {
+                return;
+            },
+            setGiftMessage: function () {
+                return;
+            }
+        };
+
+        it('should return a result object with no errors', function () {
+            var result = checkoutHelpers.setGift(mockShipment, true, 'gift Message');
+
+            assert.isFalse(result.error);
+            assert.equal(result.errorMessage, null);
+        });
+
+        it('should return a result object with errors', function () {
+            var result = checkoutHelpers.setGift({}, false, 'gift Message');
+
+            assert.isTrue(result.error);
+            assert.equal(result.errorMessage, 'error.message.could.not.be.attached');
+        });
+    });
 });

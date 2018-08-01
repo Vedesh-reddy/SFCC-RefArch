@@ -105,6 +105,13 @@ function updateOrderProductSummaryInformation(order) {
         } else {
             shippingForm.find('.ship-to-message').text(order.resources.addressIncomplete);
         }
+
+        if (shipping.isGift) {
+            $('.gift-message-summary', tmpl).text(shipping.giftMessage);
+        } else {
+            $('.gift-summary', tmpl).addClass('d-none');
+        }
+
         // checking h5 title shipping to or pickup
         var $shippingAddressLabel = $('.shipping-header-text', tmpl);
         $('body').trigger('shipping:updateAddressLabelText',

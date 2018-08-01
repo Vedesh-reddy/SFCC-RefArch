@@ -110,6 +110,9 @@ function ShippingModel(shipment, address, customer, containerView) {
     } else {
         this.shippingAddress = address;
     }
+
+    this.isGift = shipment ? shipment.gift : null;
+    this.giftMessage = shipment ? shipment.giftMessage : null;
 }
 
 module.exports = ShippingModel;

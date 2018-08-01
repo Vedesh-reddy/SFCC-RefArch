@@ -19,19 +19,13 @@ $checkout-font-weight: 600;
     display: block;
 }
 
-.billing-address.same-as-shipping {
-    display: none;
-}
-
 .checkout-checkbox {
     font-size: 0.875em;
 }
 
-.checkout-summary-header {
-    display: inline;
-}
-
-.edit-button {
+.edit-button,
+.btn-show-details,
+.btn-add-new {
     color: $primary;
     float: right;
     cursor: pointer;
@@ -68,10 +62,6 @@ $checkout-font-weight: 600;
     }
 }
 
-.section-title {
-    font-weight: $checkout-font-weight;
-}
-
 .shipping-methods {
     font-size: 1.125em;
     font-weight: $checkout-font-weight;
@@ -83,17 +73,6 @@ $checkout-font-weight: 600;
 
 .shipping-method-pricing {
     font-weight: bolder;
-}
-
-.shipping-nav {
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-// multiship related
-
-.multi-shipping {
-    display: none;
 }
 
 .multi-ship .multi-shipping {
@@ -143,37 +122,8 @@ span.ship-to-city-st-zip {
             display: block;
         }
 
-        [data-view-mode] .view-address-block,
-        [data-view-mode] .edit-address-block,
-        [data-view-mode] [data-action] {
-            display: none;
-        }
-
-        [data-view-mode=view] .view-address-block,
-        [data-view-mode=view] [data-action=edit] {
-            display: block;
-        }
-
-        [data-view-mode=edit] .edit-address-block,
-        [data-view-mode=edit] .col-12[data-action=save] {
-            display: block;
-        }
-
-        [data-view-mode=enter] [data-action=enter] {
-            display: block;
-        }
-
-        .btn-show-details,
-        .btn-hide-details {
-            padding-top: 0;
-        }
-
         [data-address-mode=customer] {
             .shipping-address-block {
-                display: none;
-            }
-
-            .btn-hide-details {
                 display: none;
             }
         }
@@ -182,64 +132,25 @@ span.ship-to-city-st-zip {
             .shipping-address-form {
                 display: none;
             }
-
-            .btn-hide-details {
-                display: none;
-            }
         }
 
         [data-address-mode=edit] {
             .shipping-address-block {
                 display: none;
             }
-
-            .btn-hide-details {
-                display: none;
-            }
         }
 
         [data-address-mode=new] {
-            .btn-hide-details,
             .btn-show-details,
             .btn-add-new {
                 display: none;
-            }
-        }
-
-        [data-view-mode=edit] [data-address-mode=edit] {
-            .btn-show-details,
-            .btn-add-new,
-            .col-12[data-action=save] {
-                display: block;
-            }
-
-            .row > [data-action=save],
-            .row > [data-action=cancel] {
-                display: none;
-            }
-        }
-
-        [data-view-mode=edit] [data-address-mode=details] {
-            .btn-show-details,
-            .btn-add-new,
-            .col-12[data-action=save] {
-                display: none;
-            }
-
-            .row > [data-action=save],
-            .row > [data-action=cancel] {
-                display: inline-block;
-            }
-
-            .row > [data-action=save] {
-                margin-left: 10px;
             }
         }
     }
 
     // Payment -------------------------------
     &[data-checkout-stage=payment] {
-        .shipping-form,
+        .shipping-section,
         .card.ghost {
             display: none;
         }
@@ -253,17 +164,8 @@ span.ship-to-city-st-zip {
             display: block;
         }
 
-        .btn-show-details,
-        .btn-hide-details {
-            padding-top: 0;
-        }
-
         [data-address-mode=customer] {
             .billing-address {
-                display: none;
-            }
-
-            .btn-hide-details {
                 display: none;
             }
         }
@@ -272,18 +174,10 @@ span.ship-to-city-st-zip {
             .billing-address {
                 display: none;
             }
-
-            .btn-hide-details {
-                display: none;
-            }
         }
 
         [data-address-mode=edit] {
             .billing-address {
-                display: none;
-            }
-
-            .btn-hide-details {
                 display: none;
             }
         }
@@ -305,7 +199,7 @@ span.ship-to-city-st-zip {
 
     // Place Order -----------------------------
     &[data-checkout-stage=placeOrder] {
-        .shipping-form,
+        .shipping-section,
         .card.payment-form,
         .card.ghost {
             display: none;
@@ -353,4 +247,20 @@ span.ship-to-city-st-zip {
 
 [data-customer-type=guest] .single-shipping .shipment-selector-block {
     display: none;
+}
+
+.single-shipping .multi-ship-action-buttons {
+    display: none;
+}
+
+.single-shipping .view-address-block {
+    display: none;
+}
+
+.btn-show-details {
+    padding-top: 0;
+}
+
+.multi-ship-address-actions .btn-save-multi-ship {
+    margin-left: 10px;
 }

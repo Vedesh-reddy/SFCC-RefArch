@@ -121,6 +121,10 @@ server.post(
                 '' + form.shippingAddress.shippingMethodID.value : null;
             result.form = form;
 
+            result.isGift = form.shippingAddress.isGift.checked;
+
+            result.giftMessage = result.isGift ? form.shippingAddress.giftMessage.value : null;
+
             res.setViewData(result);
         }
 
@@ -190,6 +194,19 @@ server.post(
                 }
             }
 
+            if (shipment) {
+                var giftResult = COHelpers.setGift(shipment, viewData.isGift, viewData.giftMessage);
+
+                if (giftResult.error) {
+                    res.json({
+                        error: giftResult.error,
+                        fieldErrors: [],
+                        serverErrors: [giftResult.errorMessage]
+                    });
+                    return;
+                }
+            }
+
             if (!basket.billingAddress) {
                 if (req.currentCustomer.addressBook
                     && req.currentCustomer.addressBook.preferredAddress) {
@@ -222,7 +239,6 @@ server.post(
                 data: viewData,
                 order: basketModel,
                 customer: accountModel,
-
                 fieldErrors: [],
                 serverErrors: [],
                 error: false

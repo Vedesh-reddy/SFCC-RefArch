@@ -105,7 +105,12 @@ querystring.prototype.toString = function () {
             preferences = this.preferences;
             Object.keys(preferences).forEach(function (prefKey) {
                 result.push('prefn' + prefKeyIdx + '=' + encodeURIComponent(prefKey));
-                result.push('prefv' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey]));
+                if (preferences[prefKey].min) {
+                    result.push('prefmin' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey].min));
+                    result.push('prefmax' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey].max));
+                } else {
+                    result.push('prefv' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey]));
+                }
                 prefKeyIdx++;
             });
         } else {
