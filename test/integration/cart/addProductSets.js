@@ -56,7 +56,7 @@ describe('Add Product Set to cart', function () {
                     'queryString': '',
                     'locale': 'en_US',
                     'quantityTotal': 3,
-                    'message': 'Product added to basket',
+                    'message': 'Product added to cart',
                     'cart': {
                         'actionUrls': {
                             'removeProductLineItemUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-RemoveProductLineItem',

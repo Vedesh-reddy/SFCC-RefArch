@@ -30,7 +30,7 @@ describe('Add one Simple Product with Options to Cart', function () {
         return request(myRequest, function (error, response) {
             var bodyAsJson = JSON.parse(response.body);
             assert.equal(response.statusCode, 200, 'Cart-AddProduct call should return statusCode of 200');
-            assert.equal(bodyAsJson.message, 'Product added to basket');
+            assert.equal(bodyAsJson.message, 'Product added to cart');
             assert.equal(bodyAsJson.cart.items[0].options[0].displayName, 'Extended Warranty: 1 Year Warranty');
             assert.equal(bodyAsJson.cart.totals.subTotal, '$2,299.98');
         });
