@@ -82,7 +82,7 @@ describe('Approaching order level promotion', function () {
                 var bodyAsJson = JSON.parse(response.body);
                 UUID = bodyAsJson.cart.items[0].UUID;
                 assert.isTrue(bodyAsJson.quantityTotal === 2, 'should have 2 items added to Cart');
-                assert.isTrue(bodyAsJson.message === 'Product added to basket');
+                assert.isTrue(bodyAsJson.message === 'Product added to cart');
                 cookieString = cookieJar.getCookieString(myRequest.url);
             })
             // select a shipping method with Form is required before going to Cart
