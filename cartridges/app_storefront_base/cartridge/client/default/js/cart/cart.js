@@ -261,7 +261,7 @@ function fillModalElement(editProductUrl) {
             $('#editProductModal .modal-body').empty();
             $('#editProductModal .modal-body').html(parsedHtml.body);
             $('#editProductModal .modal-footer').html(parsedHtml.footer);
-            $('#editProductModal').modal({ show: true });
+            $('#editProductModal').modal('show');
             $.spinner().stop();
         },
         error: function () {
