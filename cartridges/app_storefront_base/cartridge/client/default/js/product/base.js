@@ -428,7 +428,7 @@ function chooseBonusProducts(data) {
             $('#chooseBonusProductModal .modal-body').empty();
             $('#chooseBonusProductModal .modal-body').html(parsedHtml.body);
             $('#chooseBonusProductModal .modal-footer').html(parsedHtml.footer);
-            $('#chooseBonusProductModal').modal({ show: true });
+            $('#chooseBonusProductModal').modal('show');
             $.spinner().stop();
         },
         error: function () {
@@ -743,10 +743,7 @@ module.exports = {
                     } else {
                         $('.configure-bonus-product-attributes').html(data);
                         $('.bonus-products-step2').removeClass('hidden-xl-down');
-
-                        $('#chooseBonusProductModal').remove();
-                        $('.modal-backdrop').remove();
-                        $('body').removeClass('modal-open');
+                        $('#chooseBonusProductModal').modal('hide');
 
                         if ($('.add-to-cart-messages').length === 0) {
                             $('body').append(

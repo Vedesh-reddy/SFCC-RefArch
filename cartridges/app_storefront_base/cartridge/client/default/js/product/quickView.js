@@ -69,7 +69,7 @@ function fillModalElement(productUrl, selectedValueUrl) {
             $('.modal-footer').html(parsedHtml.footer);
             $('#quickViewModal .full-pdp-link').attr('href', productUrl);
             $('#quickViewModal .size-chart').attr('href', productUrl);
-            $('#quickViewModal').modal({ show: true });
+            $('#quickViewModal').modal('show');
             $.spinner().stop();
         },
         error: function () {
@@ -105,9 +105,7 @@ module.exports = {
     },
     hideDialog: function () {
         $('body').on('product:afterAddToCart', function () {
-            $('#quickViewModal').remove();
-            $('.modal-backdrop').remove();
-            $('body').removeClass('modal-open');
+            $('#quickViewModal').modal('hide');
         });
     },
     beforeUpdateAttribute: function () {
