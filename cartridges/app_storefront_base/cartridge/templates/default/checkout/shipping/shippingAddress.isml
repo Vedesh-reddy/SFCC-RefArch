@@ -14,7 +14,7 @@
                 ${Resource.msg('field.shipping.address.first.name','address',null)}
             </label>
             <input autofocus type="text" class="form-control shippingFirstName" id="shippingFirstName"
-                value="${shippingAddress.firstName||''}" <isprint value=${addressFields.firstName.attributes} encoding="off"/>
+                value="${shippingAddress.firstName||''}" <isprint value="${addressFields.firstName.attributes}" encoding="off"/>
                 autocomplete="given-name" >
             <div class="invalid-feedback"><isprint value="${addressFields.firstName.error}" ></div>
         </div>
@@ -27,7 +27,7 @@
                 ${Resource.msg('field.shipping.address.last.name','address',null)}
             </label>
             <input type="text" class="form-control shippingLastName" id="shippingLastName"
-                value="${shippingAddress.lastName||''}" <isprint value=${addressFields.lastName.attributes} encoding="off"/>
+                value="${shippingAddress.lastName||''}" <isprint value="${addressFields.lastName.attributes}" encoding="off"/>
                 autocomplete="family-name">
             <div class="invalid-feedback"><isprint value="${addressFields.lastName.error}" ></div>
         </div>
@@ -43,7 +43,7 @@
                 ${Resource.msg('field.shipping.address.one','address',null)}
             </label>
             <input type="text" class="form-control shippingAddressOne" id="shippingAddressOne"
-                value="${shippingAddress.address1||''}" <isprint value=${addressFields.address1.attributes} encoding="off"/>
+                value="${shippingAddress.address1||''}" <isprint value="${addressFields.address1.attributes}" encoding="off"/>
                 autocomplete="shipping address-line1">
             <div class="invalid-feedback"><isprint value="${addressFields.address1.error}" ></div>
         </div>
@@ -60,7 +60,7 @@
                 ${Resource.msg('field.shipping.address.two','address',null)}
             </label>
             <input type="text" class="form-control shippingAddressTwo" id="shippingAddressTwo"
-                value="${shippingAddress.address2||''}" <isprint value=${addressFields.address2.attributes} encoding="off"/>
+                value="${shippingAddress.address2||''}" <isprint value="${addressFields.address2.attributes}" encoding="off"/>
                 autocomplete="shipping address-line2">
             <div class="invalid-feedback"><isprint value="${addressFields.address2.error}" ></div>
         </div>
@@ -115,7 +115,7 @@
                 ${Resource.msg('field.shipping.address.city','address',null)}
             </label>
             <input type="text" class="form-control shippingAddressCity" id="shippingAddressCity"
-                value="${shippingAddress.city||''}" <isprint value=${addressFields.city.attributes} encoding="off"/>
+                value="${shippingAddress.city||''}" <isprint value="${addressFields.city.attributes}" encoding="off"/>
                 autocomplete="shipping address-level2">
             <div class="invalid-feedback"><isprint value="${addressFields.city.error}" ></div>
         </div>
@@ -128,7 +128,7 @@
                 ${Resource.msg('field.shipping.address.zip.code','address',null)}
             </label>
             <input type="text" class="form-control shippingZipCode" id="shippingZipCode"
-                value="${shippingAddress.postalCode||''}" <isprint value=${addressFields.postalCode.attributes} encoding="off"/>
+                value="${shippingAddress.postalCode||''}" <isprint value="${addressFields.postalCode.attributes}" encoding="off"/>
                 autocomplete="shipping postal-code">
             <div class="invalid-feedback"><isprint value="${addressFields.postalCode.error}" ></div>
             <span>${Resource.msg('example.postalcode','forms',null)}</span>
@@ -145,7 +145,7 @@
                 ${Resource.msg('field.shipping.address.phone','address',null)}
             </label>
             <input type="tel" class="form-control shippingPhoneNumber" id="shippingPhoneNumber"
-                value="${shippingAddress.phone||''}" <isprint value=${addressFields.phone.attributes} encoding="off"/>
+                value="${shippingAddress.phone||''}" <isprint value="${addressFields.phone.attributes}" encoding="off"/>
                    autocomplete="tel">
             <div class="invalid-feedback"><isprint value="${addressFields.phone.error}" ></div>
             <span>${Resource.msg('example.phone','forms',null)}</span>
