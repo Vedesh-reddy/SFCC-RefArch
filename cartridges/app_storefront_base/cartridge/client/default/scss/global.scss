@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 @import "variables";
-@import "bootstrap/scss/bootstrap";
+@import "bootstrap-custom-import";
 @import "bootstrapOverrides";
 @import "utilities/responsiveUtils";
 @import "font-awesome/scss/font-awesome";
