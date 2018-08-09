@@ -176,6 +176,34 @@ function getVariationModel(product, productVariables) {
 }
 
 /**
+ * If a product is master and only have one variant for a given attribute - auto select it
+ * @param {dw.catalog.Product} apiProduct - Product from the API
+ * @param {Object} params - Parameters passed by querystring
+ *
+ * @returns {Object} - Object with selected parameters
+ */
+function normalizeSelectedAttributes(apiProduct, params) {
+    if (!apiProduct.master) {
+        return params.variables;
+    }
+
+    var variables = params.variables || {};
+    if (apiProduct.variationModel) {
+        collections.forEach(apiProduct.variationModel.productVariationAttributes, function (attribute) {
+            var allValues = apiProduct.variationModel.getAllValues(attribute);
+            if (allValues.length === 1) {
+                variables[attribute.ID] = {
+                    id: apiProduct.ID,
+                    value: allValues.get(0).ID
+                };
+            }
+        });
+    }
+
+    return Object.keys(variables) ? variables : null;
+}
+
+/**
  * Get information for model creation
  * @param {dw.catalog.Product} apiProduct - Product from the API
  * @param {Object} params - Parameters passed by querystring
@@ -183,7 +211,8 @@ function getVariationModel(product, productVariables) {
  * @returns {Object} - Config object
  */
 function getConfig(apiProduct, params) {
-    var variationModel = getVariationModel(apiProduct, params.variables);
+    var variables = normalizeSelectedAttributes(apiProduct, params);
+    var variationModel = getVariationModel(apiProduct, variables);
     if (variationModel) {
         apiProduct = variationModel.selectedVariant || apiProduct; // eslint-disable-line
     }
@@ -196,7 +225,7 @@ function getConfig(apiProduct, params) {
         optionModel: optionsModel,
         promotions: promotions,
         quantity: params.quantity,
-        variables: params.variables,
+        variables: variables,
         apiProduct: apiProduct,
         productType: getProductType(apiProduct)
     };
