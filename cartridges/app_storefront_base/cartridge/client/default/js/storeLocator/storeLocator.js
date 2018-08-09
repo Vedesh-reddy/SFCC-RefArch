@@ -121,7 +121,9 @@ function updateStoresResults(data) {
  * @returns {boolean} false to prevent default event
  */
 function search(element) {
-    $.spinner().start();
+    var dialog = element.closest('.in-store-inventory-dialog');
+    var spinner = dialog.length ? dialog.spinner() : $.spinner();
+    spinner.start();
     var $form = element.closest('.store-locator');
     var radius = $('.results').data('radius');
     var url = $form.attr('action');
@@ -137,7 +139,7 @@ function search(element) {
         data: payload,
         dataType: 'json',
         success: function (data) {
-            $.spinner().stop();
+            spinner.stop();
             updateStoresResults(data);
             $('.select-store').prop('disabled', true);
         }
@@ -224,13 +226,15 @@ module.exports = {
             }
 
             url = appendToUrl(url, urlParams);
-            $.spinner().start();
+            var dialog = $(this).closest('.in-store-inventory-dialog');
+            var spinner = dialog.length ? dialog.spinner() : $.spinner();
+            spinner.start();
             $.ajax({
                 url: url,
                 type: 'get',
                 dataType: 'json',
                 success: function (data) {
-                    $.spinner().stop();
+                    spinner.stop();
                     updateStoresResults(data);
                     $('.select-store').prop('disabled', true);
                 }
