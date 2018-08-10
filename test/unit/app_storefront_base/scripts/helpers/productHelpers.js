@@ -5,6 +5,7 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
 var mockCollections = require('../../../../mocks/util/collections');
+var Collection = require('../../../../mocks/dw.util.Collection');
 
 describe('Helpers - Product', function () {
     var productHelpers = proxyquire(
@@ -31,10 +32,10 @@ describe('Helpers - Product', function () {
                 displayName: 'Color'
             }],
             getAllValues: function () {
-                return [{
+                return new Collection([{
                     value: 'blue',
                     ID: 'blue'
-                }];
+                }]);
             },
             setSelectedAttributeValue: setSelectedAttributeValueSpy,
             getSelectedVariant: function () {}
