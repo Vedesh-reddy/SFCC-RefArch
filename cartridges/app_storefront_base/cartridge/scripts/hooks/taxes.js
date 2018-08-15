@@ -70,7 +70,7 @@ function calculateTaxes(basket) {
             // get the tax rate
             var taxRate = TaxMgr.getTaxRate(taxClassId, taxJurisdictionId);
             // w/o a valid tax rate, we cannot calculate tax for the line item
-            if (!taxRate) {
+            if (!taxRate && taxRate !== 0) {
                 return;
             }
 
