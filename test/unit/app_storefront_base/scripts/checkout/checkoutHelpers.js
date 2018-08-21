@@ -326,6 +326,71 @@ describe('checkoutHelpers', function () {
 
             assert.equal(shipment.selectedShippingMethod.ID, shippingData.shippingMethod);
         });
+
+        it('should copy information from the shipping form to shipment address for non-null shipment with shippingData having countryCode as an object', function () {
+            shippingData.address.countryCode = {
+                value: 'uk'
+            };
+            var shipment = {
+                shippingAddress: {
+                    firstName: 'David',
+                    lastName: 'Johnson',
+                    address1: '25 Quincy Rd.',
+                    address2: '',
+                    city: 'Boston',
+                    postalCode: '01234',
+                    countryCode: { value: 'us' },
+                    phone: '617-777-1010',
+                    stateCode: 'MA',
+
+                    setFirstName: function (firstNameInput) {
+                        this.firstName = firstNameInput;
+                    },
+                    setLastName: function (lastNameInput) {
+                        this.lastName = lastNameInput;
+                    },
+                    setAddress1: function (address1Input) {
+                        this.address1 = address1Input;
+                    },
+                    setAddress2: function (address2Input) {
+                        this.address2 = address2Input;
+                    },
+                    setCity: function (cityInput) {
+                        this.city = cityInput;
+                    },
+                    setPostalCode: function (postalCodeInput) {
+                        this.postalCode = postalCodeInput;
+                    },
+                    setStateCode: function (stateCodeInput) {
+                        this.stateCode = stateCodeInput;
+                    },
+                    setCountryCode: function (countryCodeInput) {
+                        this.countryCode.value = countryCodeInput;
+                    },
+                    setPhone: function (phoneInput) {
+                        this.phone = phoneInput;
+                    }
+                },
+                selectedShippingMethod: {},
+                setShippingMethod: function (shippingMethod) {
+                    this.selectedShippingMethod = shippingMethod;
+                }
+            };
+
+            checkoutHelpers.copyShippingAddressToShipment(shippingData, shipment);
+
+            assert.equal(shipment.shippingAddress.firstName, shippingData.address.firstName);
+            assert.equal(shipment.shippingAddress.lastName, shippingData.address.lastName);
+            assert.equal(shipment.shippingAddress.address1, shippingData.address.address1);
+            assert.equal(shipment.shippingAddress.address2, shippingData.address.address2);
+            assert.equal(shipment.shippingAddress.city, shippingData.address.city);
+            assert.equal(shipment.shippingAddress.postalCode, shippingData.address.postalCode);
+            assert.equal(shipment.shippingAddress.countryCode.value, shippingData.address.countryCode.value);
+            assert.equal(shipment.shippingAddress.phone, shippingData.address.phone);
+            assert.equal(shipment.shippingAddress.stateCode, shippingData.address.stateCode);
+
+            assert.equal(shipment.selectedShippingMethod.ID, shippingData.shippingMethod);
+        });
     });
 
     describe('getFirstNonDefaultShipmentWithProductLineItems', function () {
