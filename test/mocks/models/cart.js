@@ -59,6 +59,10 @@ function proxyModel() {
         '*/cartridge/models/totals': TotalsModel,
         '*/cartridge/models/productLineItems': ProductLineItemsModel,
         '*/cartridge/scripts/checkout/shippingHelpers': ShippingHelpers,
+        '*/cartridge/scripts/helpers/hooks': function () {
+            return { error: false, message: 'some message' };
+        },
+        '*/cartridge/scripts/hooks/validateBasket': function () {},
         'dw/web/URLUtils': URLUtils,
         'dw/util/StringUtils': {
             formatMoney: function () {
@@ -71,11 +75,6 @@ function proxyModel() {
             },
             msgf: function () {
                 return 'someString';
-            }
-        },
-        'dw/system/HookMgr': {
-            callHook: function () {
-                return { error: false, message: 'some message' };
             }
         }
     });

@@ -3,7 +3,6 @@
 var formatMoney = require('dw/util/StringUtils').formatMoney;
 var collections = require('*/cartridge/scripts/util/collections');
 
-var HookMgr = require('dw/system/HookMgr');
 var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 var PromotionMgr = require('dw/campaign/PromotionMgr');
@@ -90,6 +89,8 @@ function getCartActionUrls() {
  * @param {dw.campaign.DiscountPlan} discountPlan - set of applicable discounts
  */
 function CartModel(basket) {
+    var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+
     if (basket !== null) {
         var shippingModels = ShippingHelpers.getShippingModels(basket, null, 'basket');
         var productLineItemsModel = new ProductLineItemsModel(basket.productLineItems, 'basket');
@@ -116,12 +117,7 @@ function CartModel(basket) {
         }
         this.items = productLineItemsModel.items;
         this.numItems = productLineItemsModel.totalQuantity;
-        this.valid = HookMgr.callHook(
-            'app.validate.basket',
-            'validateBasket',
-            basket,
-            false
-        );
+        this.valid = hooksHelper('app.validate.basket', 'validateBasket', basket, false, require('*/cartridge/scripts/hooks/validateBasket').validateBasket);
     } else {
         this.items = [];
         this.numItems = 0;

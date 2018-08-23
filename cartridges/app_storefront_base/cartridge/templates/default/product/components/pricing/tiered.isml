@@ -17,6 +17,7 @@
                 <tr>
                     <td class="quantity"><isprint value="${tier.quantity}" style="INTEGER" /></td>
                     <td class="value">
+                        <isset name="isLowPrice" value="${}" scope="page" />
                         <isinclude template="/product/components/pricing/default" />
                     </td>
                 </tr>

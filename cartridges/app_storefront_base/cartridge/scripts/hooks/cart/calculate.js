@@ -239,7 +239,7 @@ exports.calculateTax = function(basket) {
 
         if (tax) {
             if (tax.amount) {
-                lineItem.updateTaxAmoun(tax.value);
+                lineItem.updateTaxAmount(tax.value);
                 if (lineItem instanceof dw.order.ShippingLineItem) {
                     totalShippingGrossPrice += lineItem.getAdjustedGrossPrice();
                     totalShippingNetPrice += lineItem.getAdjustedNetPrice();
@@ -262,7 +262,7 @@ exports.calculateTax = function(basket) {
     // this includes order-level shipping price adjustments
     if (!basket.getPriceAdjustments().empty || !basket.getShippingPriceAdjustments().empty) {
         if (collections.first(basket.getPriceAdjustments(), function (priceAdjustment) {
-            return taxesMap[priceAdjusmtnet.UUID] === null;
+            return taxesMap[priceAdjustment.UUID] === null;
         }) || collections.first(basket.getShippingPriceAdjustments(), function (shippingPriceAdjustment) {
             return taxesMap[shippingPriceAdjustment.UUID] === null;
         })) {
