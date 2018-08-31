@@ -166,7 +166,8 @@ server.post(
         var Transaction = require('dw/system/Transaction');
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
-        var URLUtils = require('dw/web/URLUtils');
+
+        var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
         var email = req.form.loginEmail;
         var password = req.form.loginPassword;
@@ -174,19 +175,19 @@ server.post(
             ? (!!req.form.loginRememberMe)
             : false;
         var authenticatedCustomer;
-        var checkoutLogin = req.querystring.checkoutLogin;
 
         Transaction.wrap(function () {
             authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
         });
+
         if (authenticatedCustomer && authenticatedCustomer.authenticated) {
             res.setViewData({ authenticatedCustomer: authenticatedCustomer });
             res.json({
                 success: true,
-                redirectUrl: checkoutLogin
-                    ? URLUtils.url('Checkout-Begin').toString()
-                    : URLUtils.url('Account-Show').toString()
+                redirectUrl: accountHelpers.getLoginRedirectURL(req.querystring.rurl, req.session.privacyCache, false)
             });
+
+            req.session.privacyCache.set('args', null);
         } else {
             res.json({ error: [Resource.msg('error.message.login.form', 'login', null)] });
         }
@@ -254,7 +255,7 @@ server.post(
 
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
                 var Transaction = require('dw/system/Transaction');
-                var URLUtils = require('dw/web/URLUtils');
+                var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
                 // getting variables for the BeforeComplete function
                 var registrationForm = res.getViewData(); // eslint-disable-line
@@ -302,10 +303,10 @@ server.post(
                     res.setViewData({ authenticatedCustomer: authenticatedCustomer }); // eslint-disable-line block-scoped-var
                     res.json({
                         success: true,
-                        redirectUrl: URLUtils.url('Account-Show',
-                            'registration', 'submitted'
-                        ).toString()
+                        redirectUrl: accountHelpers.getLoginRedirectURL(req.querystring.rurl, req.session.privacyCache, true)
                     });
+
+                    req.session.privacyCache.set('args', null);
                 } else {
                     res.json({
                         fields: formErrors.getFormErrors(registrationForm)

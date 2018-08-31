@@ -34,7 +34,7 @@ server.get(
         } else {
             var rememberMe = false;
             var userName = '';
-            var actionUrl = URLUtils.url('Account-Login', 'checkoutLogin', true);
+            var actionUrl = URLUtils.url('Account-Login', 'rurl', 2);
             var totalsModel = new TotalsModel(currentBasket);
             var details = {
                 subTotal: totalsModel.subTotal,
