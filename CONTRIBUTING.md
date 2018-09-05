@@ -6,18 +6,18 @@
 
 - [What to expect](#what-to-expect)
 
-- [Team members](#MFRA-team-menbers)
+- [Team members](#SFRA-team-menbers)
 
 - [Back to README](./README.md)
 
-# Contributing to _MFRA_
+# Contributing to _SFRA_
 
-To contribute to the MFRA base cartridge, follow the guidelines below. This helps us address your pull request in a more timely manner. 
+To contribute to the SFRA base cartridge, follow the guidelines below. This helps us address your pull request in a more timely manner. 
 
 ## Submitting your first pull request
 If this is your first pull request, follow these steps:
 
-  1. Create a fork of the MFRA repository 
+  1. Create a fork of the SFRA repository 
 
   2. Download the forked repository
 
@@ -44,7 +44,7 @@ If this is your first pull request, follow these steps:
    
        * (optional) Steps to reproduce
    
-  3. Grant MFRA team members access to your fork so we can run an automated test on your pull request prior to merging it into our integration branch.
+  3. Grant SFRA team members access to your fork so we can run an automated test on your pull request prior to merging it into our integration branch.
 
        * From within your forked repository, find the 'Settings' link (see the site navigation on left of the page).
    
@@ -71,10 +71,10 @@ As long as your submission has met the above guidelines, we should merge it in a
 
 Our sprints run for about two weeks; in that period of time, we typically review all pull requests, give feedback, and merge the request (depending on our current sprint priorities).
 
-## MFRA team members 
+## SFRA team members 
 
 To speed up the process of reviewing and merging your pull request, grant the following team members access to your fork:
 
-  * MFRA team - mobilefirst_ra
+  * SFRA team 
   
   * Jenkins automation - sg-jenkins
