@@ -37,3 +37,11 @@
 <isif condition="${'GoogleVerificationTag' in dw.system.Site.current.preferences.custom && dw.system.Site.current.preferences.custom.GoogleVerificationTag!=''}">
     <meta name="google-site-verification" content="<isprint value="${dw.system.Site.current.preferences.custom.GoogleVerificationTag}"/>" />
 </isif>
+
+<iscomment>
+    hook for Marketing Cloud connector & other integration which need to inject
+    logic or markup into the page header
+    IMPORTANT: Note that this hook will be called to cached as well as uncached pages
+               which means you need to put privacy information into another remote include
+</iscomment>
+${dw.system.HookMgr.callHook('app.template.htmlHead', 'htmlHead') || ''}
