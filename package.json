@@ -28,11 +28,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/demandware/storefront-reference-architecture.git"
+    "url": "git+ssh://git@github.com:SalesforceCommerceCloud/storefront-reference-architecture.git"
   },
   "author": "Ilya Volodin <ivolodin@demandware.com>",
   "license": "ISC",
-  "homepage": "https://bitbucket.org/demandware/storefront-reference-architecture#readme",
+  "homepage": "https://github.com/SalesforceCommerceCloud/storefront-reference-architecture",
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.51",
