@@ -76,7 +76,6 @@ describe('billingForm', function () {
                 fieldErrors: [],
                 serverErrors: [],
                 saveCard: false
-                /* ,redirectUrl: '/s/MobileFirst/cart?lang=en_US' */
             };
 
             return request(myRequest)

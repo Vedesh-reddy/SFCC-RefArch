@@ -34,7 +34,7 @@ describe('Search As You Type - general product', function () {
             var prod = $('.container a');
             // Determining if pretty-URLs is enabled to differentiate test case usage
             var prettyURL = prod.get(0).attribs.href;
-            if (prettyURL.includes('/s/MobileFirst/')) {
+            if (prettyURL.includes('/s/RefArch/')) {
                 assert.equal(prod.get(0).children[0].data.trim(), 'tops');
                 assert.include(prod.get(2).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
                 assert.include(prod.get(4).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');

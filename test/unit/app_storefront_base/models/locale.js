@@ -111,7 +111,7 @@ describe('locale', function () {
             language: 'en',
             displayLanguage: 'English'
         };
-        var siteId = 'MobileFirst';
+        var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
 
         assert.deepEqual(localeModel, {
@@ -169,7 +169,7 @@ describe('locale', function () {
             language: 'fr',
             displayLanguage: 'Français'
         };
-        var siteId = 'MobileFirst';
+        var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -226,7 +226,7 @@ describe('locale', function () {
             language: 'it',
             displayLanguage: 'Italiano'
         };
-        var siteId = 'MobileFirst';
+        var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -283,7 +283,7 @@ describe('locale', function () {
             language: 'ja',
             displayLanguage: '日本語'
         };
-        var siteId = 'MobileFirst';
+        var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -340,7 +340,7 @@ describe('locale', function () {
             language: 'zh',
             displayLanguage: '中国語'
         };
-        var siteId = 'MobileFirst';
+        var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -398,7 +398,7 @@ describe('locale', function () {
             language: 'en',
             displayLanguage: 'English'
         };
-        var siteId = 'MobileFirst';
+        var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {
@@ -421,7 +421,7 @@ describe('locale', function () {
             language: '',
             displayLanguage: ''
         };
-        var siteId = 'MobileFirst';
+        var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
         assert.deepEqual(localeModel, {
             'locale': {

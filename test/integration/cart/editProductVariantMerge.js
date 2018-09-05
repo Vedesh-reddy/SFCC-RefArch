@@ -114,7 +114,7 @@ describe('Edit product variant for merging products', function () {
                                 {
                                     'alt': '3/4 Sleeve V-Neck Top, Butter, small',
                                     'title': '3/4 Sleeve V-Neck Top, Butter',
-                                    'url': '/on/demandware.static/-/Sites-apparel-m-catalog/default/dwef3c390f/images/small/PG.10221714.JJ370XX.PZ.jpg'
+                                    'url': '/on/demandware.static/-/Sites-apparel-m-catalog/default/dwdd28bd60/images/small/PG.10221714.JJ370XX.PZ.jpg'
                                 }
                             ]
                         },

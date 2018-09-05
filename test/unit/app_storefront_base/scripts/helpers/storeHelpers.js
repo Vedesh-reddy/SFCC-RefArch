@@ -8,7 +8,7 @@ describe('storeHelpers', function () {
         var radiusOptions = [15, 30, 50, 100, 300];
 
         it('should return store model when search include postal code as search parameter. NO latitude, longitude, or geolocation latitude or longitude', function () {
-            var url = '/on/demandware.store/Sites-MobileFirst-Site/en_US/Stores-FindStores';
+            var url = '/on/demandware.store/Sites-RefArch-Site/en_US/Stores-FindStores';
             var radius = 15;
             var postalCode = '01803';
             var geolocation = {
@@ -51,7 +51,7 @@ describe('storeHelpers', function () {
         });
 
         it('should return store model when search include longitute and latitute as search parameters. NO postal code or geolocation latitude or longitude.', function () {
-            var url = '/on/demandware.store/Sites-MobileFirst-Site/en_US/Stores-FindStores';
+            var url = '/on/demandware.store/Sites-RefArch-Site/en_US/Stores-FindStores';
             var radius = 15;
             var postalCode = '';
             var geolocation = {

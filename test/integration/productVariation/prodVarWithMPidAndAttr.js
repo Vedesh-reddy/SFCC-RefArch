@@ -38,7 +38,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                 'shortDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
                 'longDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
                 'options': [],
-                'selectedProductUrl': '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-Show?pid=25604455M&dwvar_25604455M_color=SLABLFB&dwvar_25604455M_size=155',
+                'selectedProductUrl': '/on/demandware.store/Sites-RefArch-Site/en_US/Product-Show?pid=25604455M&dwvar_25604455M_color=SLABLFB&dwvar_25604455M_size=155',
                 'minOrderQuantity': 1,
                 'maxOrderQuantity': 9,
                 'selectedQuantity': 1,
