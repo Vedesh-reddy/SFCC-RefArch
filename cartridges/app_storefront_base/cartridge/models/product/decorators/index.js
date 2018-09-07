@@ -17,6 +17,7 @@ module.exports = {
     attributes: require('*/cartridge/models/product/decorators/attributes'),
     options: require('*/cartridge/models/product/decorators/options'),
     currentUrl: require('*/cartridge/models/product/decorators/currentUrl'),
+    online: require('*/cartridge/models/product/decorators/online'),
     readyToOrder: require('*/cartridge/models/product/decorators/readyToOrder'),
     setReadyToOrder: require('*/cartridge/models/product/decorators/setReadyToOrder'),
     bundleReadyToOrder: require('*/cartridge/models/product/decorators/bundleReadyToOrder'),

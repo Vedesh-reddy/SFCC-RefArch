@@ -20,6 +20,7 @@ var stubAttributes = sinon.stub();
 var stubOptions = sinon.stub();
 var stubCurrentUrl = sinon.stub();
 var stubReadyToOrder = sinon.stub();
+var stubOnline = sinon.stub();
 var stubSetReadyToOrder = sinon.stub();
 var stubBundleReadyToOrder = sinon.stub();
 var stubSetIndividualProducts = sinon.stub();
@@ -48,6 +49,7 @@ function proxyModel() {
             '*/cartridge/models/product/decorators/options': stubOptions,
             '*/cartridge/models/product/decorators/currentUrl': stubCurrentUrl,
             '*/cartridge/models/product/decorators/readyToOrder': stubReadyToOrder,
+            '*/cartridge/models/product/decorators/online': stubOnline,
             '*/cartridge/models/product/decorators/setReadyToOrder': stubSetReadyToOrder,
             '*/cartridge/models/product/decorators/bundleReadyToOrder': stubBundleReadyToOrder,
             '*/cartridge/models/product/decorators/setIndividualProducts': stubSetIndividualProducts,
@@ -74,6 +76,7 @@ function proxyModel() {
             stubOptions: stubOptions,
             stubCurrentUrl: stubCurrentUrl,
             stubReadyToOrder: stubReadyToOrder,
+            stubOnline: stubOnline,
             stubSetReadyToOrder: stubSetReadyToOrder,
             stubBundleReadyToOrder: stubBundleReadyToOrder,
             stubSetIndividualProducts: stubSetIndividualProducts,

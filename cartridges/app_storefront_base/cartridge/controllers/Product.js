@@ -19,28 +19,34 @@ var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 server.get('Show', cache.applyPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
     var showProductPageHelperResult = productHelper.showProductPage(req.querystring, req.pageMetaData);
-
-    res.render(showProductPageHelperResult.template, {
-        product: showProductPageHelperResult.product,
-        addToCartUrl: showProductPageHelperResult.addToCartUrl,
-        resources: showProductPageHelperResult.resources,
-        breadcrumbs: showProductPageHelperResult.breadcrumbs
-    });
-
+    if (!showProductPageHelperResult.product.online) {
+        res.setStatusCode(404);
+        res.render('error/notFound');
+    } else {
+        res.render(showProductPageHelperResult.template, {
+            product: showProductPageHelperResult.product,
+            addToCartUrl: showProductPageHelperResult.addToCartUrl,
+            resources: showProductPageHelperResult.resources,
+            breadcrumbs: showProductPageHelperResult.breadcrumbs
+        });
+    }
     next();
 }, pageMetaData.computedPageMetaData);
 
 server.get('ShowInCategory', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
     var showProductPageHelperResult = productHelper.showProductPage(req.querystring, req.pageMetaData);
-
-    res.render(showProductPageHelperResult.template, {
-        product: showProductPageHelperResult.product,
-        addToCartUrl: showProductPageHelperResult.addToCartUrl,
-        resources: showProductPageHelperResult.resources,
-        breadcrumbs: showProductPageHelperResult.breadcrumbs
-    });
-
+    if (!showProductPageHelperResult.product.online) {
+        res.setStatusCode(404);
+        res.render('error/notFound');
+    } else {
+        res.render(showProductPageHelperResult.template, {
+            product: showProductPageHelperResult.product,
+            addToCartUrl: showProductPageHelperResult.addToCartUrl,
+            resources: showProductPageHelperResult.resources,
+            breadcrumbs: showProductPageHelperResult.breadcrumbs
+        });
+    }
     next();
 });
 

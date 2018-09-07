@@ -337,7 +337,6 @@ function getResources() {
  * Renders the Product Details Page
  * @param {Object} querystring - query string parameters
  * @param {Object} reqPageMetaData - request pageMetaData object
- * @param {Object} res - response object
  * @returns {Object} contain information needed to render the product page
  */
 function showProductPage(querystring, reqPageMetaData) {

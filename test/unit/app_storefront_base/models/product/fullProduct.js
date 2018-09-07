@@ -55,6 +55,7 @@ describe('Full Product Model', function () {
         decorators.stubs.stubOptions.reset();
         decorators.stubs.stubCurrentUrl.reset();
         decorators.stubs.stubReadyToOrder.reset();
+        decorators.stubs.stubOnline.reset();
         decorators.stubs.stubSetReadyToOrder.reset();
         decorators.stubs.stubBundleReadyToOrder.reset();
         decorators.stubs.stubSetIndividualProducts.reset();
@@ -193,6 +194,14 @@ describe('Full Product Model', function () {
         fullProduct(object, productMock, optionsMock);
 
         assert.isTrue(decorators.stubs.stubReadyToOrder.calledOnce);
+    });
+
+    it('should call online for full product', function () {
+        var object = {};
+        productMock.getPrimaryCategory = function () { return null; };
+        fullProduct(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubOnline.calledOnce);
     });
 
     it('should call pageMetaData for full product', function () {
