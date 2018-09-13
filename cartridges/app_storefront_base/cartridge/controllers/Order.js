@@ -33,6 +33,13 @@ server.get(
 
             return next();
         }
+		
+        var lastOrderID = Object.prototype.hasOwnProperty.call(req.session.raw.custom, 'orderID') ? req.session.raw.custom.orderID : null;
+		
+        if (lastOrderID === req.querystring.ID) {
+            res.redirect(URLUtils.url('Home-Show'));
+            return next();
+        }
 
         var config = {
             numberOfLineItems: '*'
@@ -64,6 +71,8 @@ server.get(
                 reportingURLs: reportingURLs
             });
         }
+		
+        req.session.raw.custom.orderID = req.querystring.ID;
 
         return next();
     }
