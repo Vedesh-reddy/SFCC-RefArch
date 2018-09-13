@@ -184,7 +184,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
                         Resource.msg('error.message.idalreadyexists', 'forms', null);
                     res.json({
                         success: false,
-                        fields: formErrors(addressForm)
+                        fields: formErrors.getFormErrors(addressForm)
                     });
                 }
             });
@@ -192,7 +192,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
     } else {
         res.json({
             success: false,
-            fields: formErrors(addressForm)
+            fields: formErrors.getFormErrors(addressForm)
         });
     }
     return next();
