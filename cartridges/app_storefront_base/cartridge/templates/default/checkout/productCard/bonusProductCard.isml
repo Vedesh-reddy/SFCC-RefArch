@@ -80,8 +80,8 @@
         </div>
     </isif>
 
-    <isloop items="${lineItem.bonusProducts}" var="nestedLineItem" status="loopstate">
-        <isif condition="${loopstate.first}">
+    <isloop items="${lineItem.bonusProducts}" var="nestedLineItem" status="loopState">
+        <isif condition="${loopState.first}">
             ${Resource.msg('text.lineitem.bonus.msg', 'cart', null)}:
         </isif>
         <isinclude template="checkout/productCard/embeddedBonusProduct" />

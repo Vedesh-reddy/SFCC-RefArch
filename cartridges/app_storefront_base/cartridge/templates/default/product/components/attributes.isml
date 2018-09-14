@@ -3,16 +3,16 @@
       <a class="title" href="${'#'}">${Resource.msg('label.attributes', 'product', null)}</a>
     </h2>
     <div class="col-sm-12 col-md-8 col-lg-9 value content">
-        <isloop items="${product.attributes}" var="attrGroup" status="loopstate">
+        <isloop items="${product.attributes}" var="attrGroup">
             <isif condition="${attrGroup.ID !== 'mainAttributes'}">
                 <h3 class="attribute-name">
                     ${attrGroup.name}
                 </h3>
                 <ul>
-                    <isloop items="${attrGroup.attributes}" var="attr" status="loopstate">
+                    <isloop items="${attrGroup.attributes}" var="attr">
                         <li class="attribute-values">
                             ${attr.label}:
-                            <isloop items="${attr.value}" var="value" status="loopstate">
+                            <isloop items="${attr.value}" var="value">
                                 ${value}
                             </isloop>
                         </li>

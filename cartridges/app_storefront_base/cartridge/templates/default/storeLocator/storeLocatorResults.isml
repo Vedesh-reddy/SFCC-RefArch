@@ -1,7 +1,7 @@
-<isloop items="${pdict.stores.stores}" var="store" status="loopstate">
+<isloop items="${pdict.stores.stores}" var="store" status="loopState">
     <isif condition="${pdict.showMap === 'true'}">
         <div class="card-body" id="${store.ID}">
-            <div class="map-marker"><span>${loopstate.count}</span></div>
+            <div class="map-marker"><span>${loopState.count}</span></div>
             <isinclude template="storeLocator/storeDetails" />
         </div>
     <iselse>

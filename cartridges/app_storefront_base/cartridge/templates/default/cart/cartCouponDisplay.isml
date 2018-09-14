@@ -1,4 +1,4 @@
-<isloop items="${pdict.totals.discounts}" var="discount" status="loopstate">
+<isloop items="${pdict.totals.discounts}" var="discount">
     <isif condition="${discount.type === 'coupon'}">
         <div class="coupon-price-adjustment coupon-uuid-${discount.UUID}"
              data-uuid="${discount.UUID}">
@@ -18,7 +18,7 @@
                 </button>
             </div>
             <ul class="coupon-promotion-relationship">
-                <isloop items="${discount.relationship}" var="relatedPromotion" status="loopstate">
+                <isloop items="${discount.relationship}" var="relatedPromotion">
                     <li>${relatedPromotion.callOutMsg}</li>
                 </isloop>
             </ul>
