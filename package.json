@@ -28,7 +28,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:SalesforceCommerceCloud/storefront-reference-architecture.git"
+    "url": "git+https://github.com/SalesforceCommerceCloud/storefront-reference-architecture.git"
   },
   "author": "Ilya Volodin <ivolodin@demandware.com>",
   "license": "ISC",

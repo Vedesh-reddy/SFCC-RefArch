@@ -117,6 +117,6 @@ npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites
 
 
 
-# [Contributing to MFRA](./CONTRIBUTING.md)
+# [Contributing to SFRA](./CONTRIBUTING.md)
 
 
