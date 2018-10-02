@@ -43,11 +43,11 @@ var querystring = function (raw) {
             left = decodeURIComponent(pair[0]);
             if (left.indexOf('dwvar_') === 0) {
                 var variableParts = left.split('_');
-                if (variableParts.length === 3) {
+                if (variableParts.length >= 3) {
                     if (!this.variables) {
                         this.variables = {};
                     }
-                    this.variables[variableParts[2]] = {
+                    this.variables[variableParts.slice(2).join('_')] = {
                         id: variableParts[1],
                         value: decodeURIComponent(pair[1])
                     };
@@ -56,9 +56,9 @@ var querystring = function (raw) {
             } else if (left.indexOf('dwopt_') === 0) {
                 var optionParts = left.split('_');
                 var productId = optionParts[1];
-                var optionId = optionParts[2];
+                var optionId = optionParts.slice(2).join('_');
                 var selectedOptionValueId = decodeURIComponent(pair[1]);
-                if (optionParts.length === 3) {
+                if (optionParts.length >= 3) {
                     if (!this.options) {
                         this.options = [];
                     }
