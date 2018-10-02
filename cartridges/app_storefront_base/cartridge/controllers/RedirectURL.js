@@ -9,7 +9,7 @@ server.get('Start', function (req, res, next) {
     var location = redirect ? redirect.location : null;
 
     if (!location) {
-        res.setStatus(404);
+        res.setStatusCode(404);
         res.render('error/notFound');
     } else {
         res.redirect(location);
