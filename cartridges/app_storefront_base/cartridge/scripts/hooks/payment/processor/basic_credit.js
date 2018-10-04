@@ -12,7 +12,7 @@ var Transaction = require('dw/system/Transaction');
  * Creates a token. This should be replaced by utilizing a tokenization provider
  * @returns {string} a token
  */
-function createMockToken() {
+function createToken() {
     return Math.random().toString(36).substr(2);
 }
 
@@ -102,7 +102,7 @@ function Handle(basket, paymentInformation) {
         paymentInstrument.setCreditCardToken(
             paymentInformation.creditCardToken
             ? paymentInformation.creditCardToken
-            : createMockToken()
+            : createToken()
         );
     });
 
@@ -140,4 +140,4 @@ function Authorize(orderNumber, paymentInstrument, paymentProcessor) {
 
 exports.Handle = Handle;
 exports.Authorize = Authorize;
-exports.createMockToken = createMockToken;
+exports.createToken = createToken;

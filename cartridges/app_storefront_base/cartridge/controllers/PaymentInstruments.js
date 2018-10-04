@@ -191,7 +191,7 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
                 var processor = PaymentMgr.getPaymentMethod(dwOrderPaymentInstrument.METHOD_CREDIT_CARD).getPaymentProcessor();
                 var token = HookMgr.callHook(
                     'app.payment.processor.' + processor.ID.toLowerCase(),
-                    'createMockToken'
+                    'createToken'
                 );
 
                 paymentInstrument.setCreditCardToken(token);
