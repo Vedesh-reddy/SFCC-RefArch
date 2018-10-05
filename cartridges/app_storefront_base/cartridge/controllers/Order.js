@@ -33,9 +33,7 @@ server.get(
 
             return next();
         }
-		
         var lastOrderID = Object.prototype.hasOwnProperty.call(req.session.raw.custom, 'orderID') ? req.session.raw.custom.orderID : null;
-		
         if (lastOrderID === req.querystring.ID) {
             res.redirect(URLUtils.url('Home-Show'));
             return next();
@@ -71,9 +69,7 @@ server.get(
                 reportingURLs: reportingURLs
             });
         }
-		
-        req.session.raw.custom.orderID = req.querystring.ID;
-
+        req.session.raw.custom.orderID = req.querystring.ID; // eslint-disable-line no-param-reassign
         return next();
     }
 );

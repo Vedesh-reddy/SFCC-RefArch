@@ -26,21 +26,23 @@ function countBonusProducts(item) {
  * @returns {number} the total number of bonus products from within one bonus discount line item
  */
 function getDiscountLineItems(UUID) {
-    var bonusDiscountLineItems = BasketMgr.getCurrentOrNewBasket().bonusDiscountLineItems;
+    var basket = BasketMgr.getCurrentBasket();
     var result = [];
-    collections.forEach(bonusDiscountLineItems, function (bonusDiscountLineItem) {
-        var bdliObj = {};
-        if (UUID === bonusDiscountLineItem.custom.bonusProductLineItemUUID) {
-            bdliObj.pliuuid = bonusDiscountLineItem.custom.bonusProductLineItemUUID;
-            bdliObj.uuid = bonusDiscountLineItem.UUID;
-            bdliObj.full = countBonusProducts(bonusDiscountLineItem) < bonusDiscountLineItem.maxBonusItems;
-            bdliObj.maxpids = bonusDiscountLineItem.maxBonusItems;
-            bdliObj.url = URLUtils.url('Cart-EditBonusProduct', 'duuid', bonusDiscountLineItem.UUID).toString();
-            bdliObj.msg = bdliObj.full ? Resource.msg('button.bonus.select', 'cart', null) : Resource.msg('button.bonus.change', 'cart', null);
-            result.push(bdliObj);
-        }
-    });
-
+    if (basket) {
+        var bonusDiscountLineItems = basket.bonusDiscountLineItems;
+        collections.forEach(bonusDiscountLineItems, function (bonusDiscountLineItem) {
+            var bdliObj = {};
+            if (UUID === bonusDiscountLineItem.custom.bonusProductLineItemUUID) {
+                bdliObj.pliuuid = bonusDiscountLineItem.custom.bonusProductLineItemUUID;
+                bdliObj.uuid = bonusDiscountLineItem.UUID;
+                bdliObj.full = countBonusProducts(bonusDiscountLineItem) < bonusDiscountLineItem.maxBonusItems;
+                bdliObj.maxpids = bonusDiscountLineItem.maxBonusItems;
+                bdliObj.url = URLUtils.url('Cart-EditBonusProduct', 'duuid', bonusDiscountLineItem.UUID).toString();
+                bdliObj.msg = bdliObj.full ? Resource.msg('button.bonus.select', 'cart', null) : Resource.msg('button.bonus.change', 'cart', null);
+                result.push(bdliObj);
+            }
+        });
+    }
     return result;
 }
 
