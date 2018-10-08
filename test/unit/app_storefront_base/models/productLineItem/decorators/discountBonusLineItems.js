@@ -78,7 +78,7 @@ describe('discount bonus line item decorator', function () {
 
         assert.equal(object.discountLineItems.length, 1);
     });
-    it('should create a property on the passed in object called discountLineItems when UUID and bonusProductLineItemUUID are null ', function () {
+    it('should create a property on the passed in object when getCurrentBasket returns null', function () {
         var object = {};
         var UUIDMock = 'someUUID';
         getCurrentBasketStub.returns(null);
