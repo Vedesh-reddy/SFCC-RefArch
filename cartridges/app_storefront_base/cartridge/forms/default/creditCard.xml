@@ -50,7 +50,11 @@
            max-length="4" missing-error="error.card.info.missing.securityCode" />
 
     <field formid="email" label="profile.email" type="string" mandatory="true" binding="email"
-           max-length="254" missing-error="error.card.info.missing.email" />
+           max-length="50" regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$" missing-error="error.card.info.missing.email"
+           parse-error="error.message.parse.email.profile.form" range-error="error.message.lessthan50"
+           value-error="ValueErrorText" required="">
+        <div class="invalid-feedback">Please match the requested format.</div>
+    </field>
 
     <field formid="phone" label="profile.phone" description="address.phone.example" type="string" mandatory="true"
            binding="phone" max-length="20" missing-error="error.card.info.missing.phone" />
