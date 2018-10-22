@@ -25,5 +25,6 @@ module.exports = {
     bundledProducts: require('*/cartridge/models/product/decorators/bundledProducts'),
     bonusUnitPrice: require('*/cartridge/models/product/decorators/bonusUnitPrice'),
     raw: require('*/cartridge/models/product/decorators/raw'),
-    pageMetaData: require('*/cartridge/models/product/decorators/pageMetaData')
+    pageMetaData: require('*/cartridge/models/product/decorators/pageMetaData'),
+    template: require('*/cartridge/models/product/decorators/template')
 };

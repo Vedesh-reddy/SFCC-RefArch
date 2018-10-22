@@ -348,7 +348,7 @@ function showProductPage(querystring, reqPageMetaData) {
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
     var breadcrumbs = getAllBreadcrumbs(null, product.id, []).reverse();
-    var template = 'product/productDetails';
+    var template = (product.template) ? product.template : 'product/productDetails';
 
     if (product.productType === 'bundle') {
         template = 'product/bundleDetails';

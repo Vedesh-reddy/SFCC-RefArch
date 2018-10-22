@@ -28,6 +28,7 @@ var stubBundledProducts = sinon.stub();
 var stubBonusUnitPrice = sinon.stub();
 var stubRaw = sinon.stub();
 var stubPageMetaData = sinon.stub();
+var stubTemplate = sinon.stub();
 
 function proxyModel() {
     return {
@@ -56,7 +57,8 @@ function proxyModel() {
             '*/cartridge/models/product/decorators/bundledProducts': stubBundledProducts,
             '*/cartridge/models/product/decorators/bonusUnitPrice': stubBonusUnitPrice,
             '*/cartridge/models/product/decorators/raw': stubRaw,
-            '*/cartridge/models/product/decorators/pageMetaData': stubPageMetaData
+            '*/cartridge/models/product/decorators/pageMetaData': stubPageMetaData,
+            '*/cartridge/models/product/decorators/template': stubTemplate
         }),
         stubs: {
             stubBase: stubBase,
@@ -83,7 +85,8 @@ function proxyModel() {
             stubBundledProducts: stubBundledProducts,
             stubBonusUnitPrice: stubBonusUnitPrice,
             stubRaw: stubRaw,
-            stubPageMetaData: stubPageMetaData
+            stubPageMetaData: stubPageMetaData,
+            stubTemplate: stubTemplate
         }
     };
 }

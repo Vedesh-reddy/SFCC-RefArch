@@ -18,7 +18,8 @@ var productMock = {
     pageTitle: 'some title',
     pageDescription: 'some description',
     pageKeywords: 'some keywords',
-    pageMetaData: [{}]
+    pageMetaData: [{}],
+    template: 'some template'
 };
 
 var optionsMock = {
@@ -62,6 +63,7 @@ describe('Full Product Model', function () {
         decorators.stubs.stubBundledProducts.reset();
         decorators.stubs.stubBonusUnitPrice.reset();
         decorators.stubs.stubPageMetaData.reset();
+        decorators.stubs.stubTemplate.reset();
     });
 
     it('should call base for full product', function () {
@@ -210,5 +212,12 @@ describe('Full Product Model', function () {
         fullProduct(object, productMock, optionsMock);
 
         assert.isTrue(decorators.stubs.stubPageMetaData.calledOnce);
+    });
+
+    it('should call template for full product', function () {
+        var object = {};
+        fullProduct(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubTemplate.calledOnce);
     });
 });
