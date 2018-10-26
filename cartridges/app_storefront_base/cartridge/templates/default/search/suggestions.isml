@@ -62,7 +62,11 @@
                                 </isif>
                             </div>
                             <div class="col-xs-12 col-sm-10 name">
-                                <a href="${category.url}">${category.name}</a>
+                                <a href="${category.url}">${category.name}
+                                    <isif condition="${category.parentID !== 'root'}">
+                                        <span class="category-parent"> ${Resource.msg('label.suggest.in', 'search', null)} ${category.parentName}</span>
+                                    </isif>
+                                </a>
                             </div>
                         </div>
                     </div>
