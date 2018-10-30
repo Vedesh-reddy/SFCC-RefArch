@@ -2,6 +2,7 @@
 
 var Response = require('../../../../cartridges/modules/server/response');
 var Route = require('../../../../cartridges/modules/server/route');
+var sinon = require('sinon');
 var assert = require('chai').assert;
 var mockReq = {
     path: '',
@@ -57,6 +58,33 @@ describe('route', function () {
             done();
         });
         route.getRoute()();
+    });
+    it('should verify that redirect with implicit (not set) redirect status works', function (done) {
+        var baseResponseRedirectMock = sinon.spy();
+        function tempFunc(req, res, next) {
+            res.redirect('test');
+            next();
+        }
+        var response = new Response({ redirect: baseResponseRedirectMock });
+        var route = new Route('test', [tempFunc], mockReq, response);
+        route.getRoute()();
+        assert.isTrue(baseResponseRedirectMock.calledOnce);
+        assert.isTrue(baseResponseRedirectMock.firstCall.calledWithExactly('test'));
+        done();
+    });
+    it('should verify that redirect with explicit redirect status works', function (done) {
+        var baseResponseRedirectMock = sinon.spy();
+        function tempFunc(req, res, next) {
+            res.setRedirectStatus(301);
+            res.redirect('test');
+            next();
+        }
+        var response = new Response({ redirect: baseResponseRedirectMock });
+        var route = new Route('test', [tempFunc], mockReq, response);
+        route.getRoute()();
+        assert.isTrue(baseResponseRedirectMock.calledOnce);
+        assert.isTrue(baseResponseRedirectMock.firstCall.calledWithExactly('test', 301));
+        done();
     });
     it('should throw an error', function () {
         function tempFunc(req, res, next) {

@@ -12,6 +12,7 @@ function Response(response) {
     this.view = null;
     this.viewData = {};
     this.redirectUrl = null;
+    this.redirectStatus = null;
     this.messageLog = [];
     this.base = response;
     this.cachePeriod = null;
@@ -86,6 +87,14 @@ Response.prototype = {
      */
     redirect: function redirect(url) {
         this.redirectUrl = url;
+    },
+    /**
+     * Sets an optional redirect status, standard cases being 301 or 302.
+     * @param {string} redirectStatus - HTTP redirect status code
+     * @returns {void}
+     */
+    setRedirectStatus: function setRedirectStatus(redirectStatus) {
+        this.redirectStatus = redirectStatus;
     },
     /**
      * Get data that was setup for a template

@@ -84,7 +84,11 @@ Server.prototype = {
             if (res.redirectUrl) {
                 // if there's a pending redirect, break the chain
                 route.emit('route:Redirect', req, res);
-                res.base.redirect(res.redirectUrl);
+                if (res.redirectStatus) {
+                    res.base.redirect(res.redirectUrl, res.redirectStatus);
+                } else {
+                    res.base.redirect(res.redirectUrl);
+                }
                 return;
             }
 

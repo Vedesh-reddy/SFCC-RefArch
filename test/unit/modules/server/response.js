@@ -54,6 +54,12 @@ describe('response', function () {
         assert.equal(response.redirectUrl, 'hello');
     });
 
+    it('should correctly set redirect status', function () {
+        var response = new Response({});
+        response.setRedirectStatus('301');
+        assert.equal(response.redirectStatus, '301');
+    });
+
     it('should set and retrieve data', function () {
         var response = new Response({});
         response.setViewData({ name: 'value' });
