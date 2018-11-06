@@ -447,6 +447,20 @@ function updateMultiShipInformation(order) {
 }
 
 /**
+  * Create an alert to display the error message
+  * @param {Object} message - Error message to display
+  */
+function createErrorNotification(message) {
+    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
+    'fade show" role="alert">' +
+    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+    '<span aria-hidden="true">&times;</span>' +
+    '</button>' + message + '</div>';
+
+    $('.shipping-error').append(errorHtml);
+}
+
+/**
  * Handle response from the server for valid or invalid form fields.
  * @param {Object} defer - the deferred object which will resolve on success or reject.
  * @param {Object} data - the response data with the invalid form fields or
@@ -469,14 +483,9 @@ function shippingFormResponse(defer, data) {
             defer.reject(data);
         }
 
-        if (data.severErrors && data.severErrors.length) {
-            $.each(data.severErrors, function (element) {
-                var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
-                    'fade show" role="alert">' +
-                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                    '<span aria-hidden="true">&times;</span>' +
-                    '</button>' + element + '</div>';
-                $('.shipping-error').append(errorHtml);
+        if (data.serverErrors && data.serverErrors.length) {
+            $.each(data.serverErrors, function (index, element) {
+                createErrorNotification(element);
             });
 
             defer.reject(data);
@@ -950,15 +959,12 @@ module.exports = {
                     if (response.error) {
                         if (response.fieldErrors.length) {
                             formHelpers.loadFormErrors(form, response.fieldErrors);
-                        } else {
-                            $.each(response.severErrors, function (element) {
-                                var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
-                                    'fade show" role="alert">' +
-                                    '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                                    '<span aria-hidden="true">&times;</span>' +
-                                    '</button>' + element + '</div>';
-                                $('.shipping-error').append(errorHtml);
+                        } else if (response.serverErrors && response.serverErrors.length) {
+                            $.each(response.serverErrors, function (index, element) {
+                                createErrorNotification(element);
                             });
+                        } else {
+                            createErrorNotification(response.errorMessage);
                         }
                     } else {
                         // Update UI from response
