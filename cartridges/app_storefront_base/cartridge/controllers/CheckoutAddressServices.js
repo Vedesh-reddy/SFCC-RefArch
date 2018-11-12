@@ -91,7 +91,7 @@ server.post(
             }
             res.json({
                 form: form,
-                fieldErrors: shippingFormErrors,
+                fieldErrors: [shippingFormErrors],
                 serverErrors: [],
                 error: true
             });
@@ -194,7 +194,7 @@ server.post(
                 }
             }
 
-            if (shipment) {
+            if (shipment && viewData && !!viewData.isGift) {
                 var giftResult = COHelpers.setGift(shipment, viewData.isGift, viewData.giftMessage);
 
                 if (giftResult.error) {

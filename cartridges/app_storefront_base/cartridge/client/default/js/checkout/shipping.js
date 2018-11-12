@@ -680,7 +680,9 @@ module.exports = {
         updateShippingMethodList: updateShippingMethodList,
         clearShippingForms: clearShippingForms,
         editMultiShipAddress: editMultiShipAddress,
-        editOrEnterMultiShipInfo: editOrEnterMultiShipInfo
+        editOrEnterMultiShipInfo: editOrEnterMultiShipInfo,
+        createErrorNotification: createErrorNotification,
+        viewMultishipAddress: viewMultishipAddress
     },
 
     selectShippingMethod: function () {
@@ -957,14 +959,16 @@ module.exports = {
                 .done(function (response) {
                     formHelpers.clearPreviousErrors(form);
                     if (response.error) {
-                        if (response.fieldErrors.length) {
-                            formHelpers.loadFormErrors(form, response.fieldErrors);
+                        if (response.fieldErrors && response.fieldErrors.length) {
+                            response.fieldErrors.forEach(function (error) {
+                                if (Object.keys(error).length) {
+                                    formHelpers.loadFormErrors(form, error);
+                                }
+                            });
                         } else if (response.serverErrors && response.serverErrors.length) {
                             $.each(response.serverErrors, function (index, element) {
                                 createErrorNotification(element);
                             });
-                        } else {
-                            createErrorNotification(response.errorMessage);
                         }
                     } else {
                         // Update UI from response
