@@ -10,4 +10,6 @@
 
     <include formid="creditCardFields" name="creditCard"/>
 
+    <field formid="subscribe" type="boolean" checked="false" default-value="false" mandatory="false" />
+
 </form>

@@ -141,6 +141,8 @@ server.post(
                 var array = require('*/cartridge/scripts/util/array');
                 var Locale = require('dw/util/Locale');
                 var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
+                var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+
                 var currentBasket = BasketMgr.getCurrentBasket();
                 var billingData = res.getViewData();
 
@@ -322,6 +324,8 @@ server.post(
                     req.session.privacyCache.set('usingMultiShipping', false);
                     usingMultiShipping = false;
                 }
+
+                hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, paymentForm.creditCardFields.email.htmlValue], function () {});
 
                 var currentLocale = Locale.getLocale(req.locale.id);
 
