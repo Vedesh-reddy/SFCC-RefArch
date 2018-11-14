@@ -67,62 +67,6 @@ function validateEmail(email) {
     return regex.test(email);
 }
 
-/**
- * Gets the password reset token of a customer
- * @param {Object} customer - the customer requesting password reset token
- * @returns {string} password reset token string
- */
-function getPasswordResetToken(customer) {
-    var Transaction = require('dw/system/Transaction');
-
-    var passwordResetToken;
-    Transaction.wrap(function () {
-        passwordResetToken = customer.profile.credentials.createResetPasswordToken();
-    });
-    return passwordResetToken;
-}
-
-/**
- * Sends the email with password reset instructions
- * @param {string} email - email for password reset
- * @param {Object} resettingCustomer - the customer requesting password reset
- */
-function sendPasswordResetEmail(email, resettingCustomer) {
-    var Resource = require('dw/web/Resource');
-    var URLUtils = require('dw/web/URLUtils');
-    var Mail = require('dw/net/Mail');
-    var Template = require('dw/util/Template');
-    var Site = require('dw/system/Site');
-    var HashMap = require('dw/util/HashMap');
-
-    var template;
-    var content;
-    var passwordResetToken = getPasswordResetToken(resettingCustomer);
-    var url = URLUtils.https('Account-SetNewPassword', 'token', passwordResetToken);
-    var objectForEmail = {
-        passwordResetToken: passwordResetToken,
-        firstName: resettingCustomer.profile.firstName,
-        lastName: resettingCustomer.profile.lastName,
-        url: url
-    };
-    var resetPasswordEmail = new Mail();
-    var context = new HashMap();
-    Object.keys(objectForEmail).forEach(function (key) {
-        context.put(key, objectForEmail[key]);
-    });
-
-    resetPasswordEmail.addTo(email);
-    resetPasswordEmail.setSubject(
-        Resource.msg('subject.profile.resetpassword.email', 'login', null));
-    resetPasswordEmail.setFrom(Site.current.getCustomPreferenceValue('customerServiceEmail')
-        || 'no-reply@salesforce.com');
-
-    template = new Template('account/password/passwordResetEmail');
-    content = template.render(context).text;
-    resetPasswordEmail.setContent(content, 'text/html', 'UTF-8');
-    resetPasswordEmail.send();
-}
-
 server.get(
     'Show',
     server.middleware.https,
@@ -256,6 +200,7 @@ server.post(
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
                 var Transaction = require('dw/system/Transaction');
                 var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+                var authenticatedCustomer;
 
                 // getting variables for the BeforeComplete function
                 var registrationForm = res.getViewData(); // eslint-disable-line
@@ -263,7 +208,6 @@ server.post(
                 if (registrationForm.validForm) {
                     var login = registrationForm.email;
                     var password = registrationForm.password;
-                    var authenticatedCustomer;
 
                     // attempt to create a new user and log that user in.
                     try {
@@ -300,7 +244,10 @@ server.post(
                 formErrors.removeFormValues(registrationForm.form);
 
                 if (registrationForm.validForm) {
-                    res.setViewData({ authenticatedCustomer: authenticatedCustomer }); // eslint-disable-line block-scoped-var
+                    // send a registration email
+                    accountHelpers.sendCreateAccountEmail(authenticatedCustomer);
+
+                    res.setViewData({ authenticatedCustomer: authenticatedCustomer });
                     res.json({
                         success: true,
                         redirectUrl: accountHelpers.getLoginRedirectURL(req.querystring.rurl, req.session.privacyCache, true)
@@ -577,6 +524,7 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Resource = require('dw/web/Resource');
     var URLUtils = require('dw/web/URLUtils');
+    var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
     var email = req.form.loginEmail;
     var errorMsg;
@@ -592,7 +540,7 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
         if (isValid) {
             resettingCustomer = CustomerMgr.getCustomerByLogin(email);
             if (resettingCustomer) {
-                sendPasswordResetEmail(email, resettingCustomer);
+                accountHelpers.sendPasswordResetEmail(email, resettingCustomer);
             }
             res.json({
                 success: true,
@@ -668,10 +616,8 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var CustomerMgr = require('dw/customer/CustomerMgr');
             var URLUtils = require('dw/web/URLUtils');
-            var Mail = require('dw/net/Mail');
-            var Template = require('dw/util/Template');
             var Site = require('dw/system/Site');
-            var HashMap = require('dw/util/HashMap');
+            var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
 
             var formInfo = res.getViewData();
             var status;
@@ -700,23 +646,15 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
                     lastName: resettingCustomer.profile.lastName,
                     url: url
                 };
-                var passwordChangedEmail = new Mail();
-                var context = new HashMap();
-                Object.keys(objectForEmail).forEach(function (key) {
-                    context.put(key, objectForEmail[key]);
-                });
 
-                passwordChangedEmail.addTo(email);
-                passwordChangedEmail.setSubject(
-                    Resource.msg('subject.profile.resetpassword.email', 'login', null));
-                passwordChangedEmail.setFrom(
-                    Site.current.getCustomPreferenceValue('customerServiceEmail')
-                    || 'no-reply@salesforce.com');
+                var emailObj = {
+                    to: email,
+                    subject: Resource.msg('subject.profile.resetpassword.email', 'login', null),
+                    from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+                    type: emailHelpers.emailTypes.passwordReset
+                };
 
-                var template = new Template('account/password/passwordChangedEmail');
-                var content = template.render(context).text;
-                passwordChangedEmail.setContent(content, 'text/html', 'UTF-8');
-                passwordChangedEmail.send();
+                emailHelpers.sendEmail(emailObj, 'account/password/passwordChangedEmail', objectForEmail);
                 res.redirect(URLUtils.url('Login-Show'));
             }
         });

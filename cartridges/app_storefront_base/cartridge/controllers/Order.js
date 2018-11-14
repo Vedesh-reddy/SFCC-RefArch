@@ -320,7 +320,7 @@ server.post(
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
                 var CustomerMgr = require('dw/customer/CustomerMgr');
                 var Transaction = require('dw/system/Transaction');
-                var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+                var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
                 var registrationData = res.getViewData();
 
@@ -353,7 +353,7 @@ server.post(
                                 firstName: registrationData.firstName,
                                 lastName: registrationData.lastName
                             };
-                            OrderHelpers.sendConfirmationEmail(registeredUser);
+                            accountHelpers.sendCreateAccountEmail(registeredUser);
                             res.json({
                                 success: true,
                                 redirectUrl: URLUtils.url('Account-Show',
