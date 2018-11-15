@@ -388,6 +388,7 @@ server.post(
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
+        var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
         var formErrors = require('*/cartridge/scripts/formErrors');
 
@@ -451,6 +452,9 @@ server.post(
                         profile.setEmail(formInfo.email);
                         profile.setPhoneHome(formInfo.phone);
                     });
+
+                    // Send account edited email
+                    accountHelpers.sendAccountEditedEmail(customer.profile);
 
                     delete formInfo.profileForm;
                     delete formInfo.email;

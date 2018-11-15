@@ -163,6 +163,7 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
     var HookMgr = require('dw/system/HookMgr');
     var PaymentMgr = require('dw/order/PaymentMgr');
     var dwOrderPaymentInstrument = require('dw/order/PaymentInstrument');
+    var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
     var paymentForm = server.forms.getForm('creditCard');
     var result = getDetailsObject(paymentForm);
@@ -196,6 +197,10 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
 
                 paymentInstrument.setCreditCardToken(token);
             });
+
+            // Send account edited email
+            accountHelpers.sendAccountEditedEmail(customer.profile);
+
             res.json({
                 success: true,
                 redirectUrl: URLUtils.url('PaymentInstruments-List').toString()
@@ -212,6 +217,7 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
 
 server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
     var array = require('*/cartridge/scripts/util/array');
+    var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
     var data = res.getViewData();
     if (data && !data.loggedin) {
@@ -238,6 +244,10 @@ server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, re
         Transaction.wrap(function () {
             wallet.removePaymentInstrument(payment.raw);
         });
+
+        // Send account edited email
+        accountHelpers.sendAccountEditedEmail(customer.profile);
+
         if (wallet.getPaymentInstruments().length === 0) {
             res.json({
                 UUID: UUID,

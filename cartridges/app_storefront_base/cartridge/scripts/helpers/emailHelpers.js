@@ -33,6 +33,7 @@ module.exports = {
         passwordReset: 2,
         passwordChanged: 3,
         orderConfirmation: 4,
-        accountLocked: 5
+        accountLocked: 5,
+        accountEdited: 6
     }
 };

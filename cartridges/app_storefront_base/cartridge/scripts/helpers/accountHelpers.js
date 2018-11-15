@@ -103,8 +103,34 @@ function sendPasswordResetEmail(email, resettingCustomer) {
     emailHelpers.sendEmail(emailObj, 'account/password/passwordResetEmail', objectForEmail);
 }
 
+/**
+ * Send an email that would notify the user that account was edited
+ * @param {obj} profile - object that contains user's profile information.
+ */
+function sendAccountEditedEmail(profile) {
+    var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
+    var Site = require('dw/system/Site');
+    var Resource = require('dw/web/Resource');
+
+    var userObject = {
+        firstName: profile.firstName,
+        lastName: profile.lastName,
+        url: URLUtils.https('Login-Show')
+    };
+
+    var emailObj = {
+        to: profile.email,
+        subject: Resource.msg('email.subject.account.edited', 'account', null),
+        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+        type: emailHelpers.emailTypes.accountEdited
+    };
+
+    emailHelpers.sendEmail(emailObj, 'account/components/accountEditedEmail', userObject);
+}
+
 module.exports = {
     getLoginRedirectURL: getLoginRedirectURL,
     sendCreateAccountEmail: sendCreateAccountEmail,
-    sendPasswordResetEmail: sendPasswordResetEmail
+    sendPasswordResetEmail: sendPasswordResetEmail,
+    sendAccountEditedEmail: sendAccountEditedEmail
 };
