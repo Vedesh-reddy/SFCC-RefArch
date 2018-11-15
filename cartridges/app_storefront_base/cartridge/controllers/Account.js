@@ -107,25 +107,79 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
-        var Transaction = require('dw/system/Transaction');
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
+        var Site = require('dw/system/Site');
+        var Transaction = require('dw/system/Transaction');
 
         var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+        var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
+        var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
 
         var email = req.form.loginEmail;
         var password = req.form.loginPassword;
         var rememberMe = req.form.loginRememberMe
             ? (!!req.form.loginRememberMe)
             : false;
-        var authenticatedCustomer;
 
-        Transaction.wrap(function () {
-            authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
+        var customerLoginResult = Transaction.wrap(function () {
+            var authenticateCustomerResult = CustomerMgr.authenticateCustomer(email, password);
+
+            if (authenticateCustomerResult.status !== 'AUTH_OK') {
+                var errorCodes = {
+                    ERROR_CUSTOMER_DISABLED: 'error.message.account.disabled',
+                    ERROR_CUSTOMER_LOCKED: 'error.message.account.locked',
+                    ERROR_CUSTOMER_NOT_FOUND: 'error.message.login.form',
+                    ERROR_PASSWORD_EXPIRED: 'error.message.password.expired',
+                    ERROR_PASSWORD_MISMATCH: 'error.message.password.mismatch',
+                    ERROR_UNKNOWN: 'error.message.error.unknown',
+                    default: 'error.message.login.form'
+                };
+
+                var errorMessageKey = errorCodes[authenticateCustomerResult.status] || errorCodes.default;
+                var errorMessage = Resource.msg(errorMessageKey, 'login', null);
+
+                return {
+                    error: true,
+                    errorMessage: errorMessage,
+                    status: authenticateCustomerResult.status,
+                    authenticatedCustomer: null
+                };
+            }
+
+            return {
+                error: false,
+                errorMessage: null,
+                status: authenticateCustomerResult.status,
+                authenticatedCustomer: CustomerMgr.loginCustomer(authenticateCustomerResult, rememberMe)
+            };
         });
 
-        if (authenticatedCustomer && authenticatedCustomer.authenticated) {
-            res.setViewData({ authenticatedCustomer: authenticatedCustomer });
+        if (customerLoginResult.error) {
+            if (customerLoginResult.status === 'ERROR_CUSTOMER_LOCKED') {
+                var context = {
+                    customer: CustomerMgr.getCustomerByLogin(email) || null
+                };
+
+                var emailObj = {
+                    to: email,
+                    subject: Resource.msg('subject.account.locked.email', 'login', null),
+                    from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+                    type: emailHelpers.emailTypes.accountLocked
+                };
+
+                hooksHelper('app.customer.email', 'sendEmail', [emailObj, 'account/accountLockedEmail', context], function () {});
+            }
+
+            res.json({
+                error: [customerLoginResult.errorMessage || Resource.msg('error.message.login.form', 'login', null)]
+            });
+
+            return next();
+        }
+
+        if (customerLoginResult.authenticatedCustomer) {
+            res.setViewData({ authenticatedCustomer: customerLoginResult.authenticatedCustomer });
             res.json({
                 success: true,
                 redirectUrl: accountHelpers.getLoginRedirectURL(req.querystring.rurl, req.session.privacyCache, false)
@@ -201,6 +255,7 @@ server.post(
                 var Transaction = require('dw/system/Transaction');
                 var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
                 var authenticatedCustomer;
+                var serverError;
 
                 // getting variables for the BeforeComplete function
                 var registrationForm = res.getViewData(); // eslint-disable-line
@@ -212,30 +267,40 @@ server.post(
                     // attempt to create a new user and log that user in.
                     try {
                         Transaction.wrap(function () {
+                            var error = {};
                             var newCustomer = CustomerMgr.createCustomer(login, password);
 
-                            if (newCustomer) {
+                            var authenticateCustomerResult = CustomerMgr.authenticateCustomer(login, password);
+                            if (authenticateCustomerResult.status !== 'AUTH_OK') {
+                                error = { authError: true, status: authenticateCustomerResult.status };
+                                throw error;
+                            }
+
+                            authenticatedCustomer = CustomerMgr.loginCustomer(authenticateCustomerResult, false);
+
+                            if (!authenticatedCustomer) {
+                                error = { authError: true, status: authenticateCustomerResult.status };
+                                throw error;
+                            } else {
                                 // assign values to the profile
                                 var newCustomerProfile = newCustomer.getProfile();
-                                authenticatedCustomer =
-                                    CustomerMgr.loginCustomer(login, password, false);
+
                                 newCustomerProfile.firstName = registrationForm.firstName;
                                 newCustomerProfile.lastName = registrationForm.lastName;
                                 newCustomerProfile.phoneHome = registrationForm.phone;
                                 newCustomerProfile.email = registrationForm.email;
                             }
-
-                            if (authenticatedCustomer === undefined) {
-                                registrationForm.validForm = false;
-                                registrationForm.form.customer.email.valid = false;
-                                registrationForm.form.customer.emailconfirm.valid = false;
-                            }
                         });
                     } catch (e) {
-                        registrationForm.validForm = false;
-                        registrationForm.form.customer.email.valid = false;
-                        registrationForm.form.customer.email.error =
-                            Resource.msg('error.message.username.invalid', 'forms', null);
+                        if (e.authError) {
+                            serverError = true;
+                        } else {
+                            registrationForm.validForm = false;
+                            registrationForm.form.customer.email.valid = false;
+                            registrationForm.form.customer.emailconfirm.valid = false;
+                            registrationForm.form.customer.email.error =
+                                Resource.msg('error.message.username.invalid', 'forms', null);
+                        }
                     }
                 }
 
@@ -243,9 +308,19 @@ server.post(
                 delete registrationForm.passwordConfirm;
                 formErrors.removeFormValues(registrationForm.form);
 
+                if (serverError) {
+                    res.setStatusCode(500);
+                    res.json({
+                        success: false,
+                        errorMessage: Resource.msg('error.message.unable.to.create.account', 'login', null)
+                    });
+
+                    return;
+                }
+
                 if (registrationForm.validForm) {
                     // send a registration email
-                    accountHelpers.sendCreateAccountEmail(authenticatedCustomer);
+                    accountHelpers.sendCreateAccountEmail(authenticatedCustomer.profile);
 
                     res.setViewData({ authenticatedCustomer: authenticatedCustomer });
                     res.json({

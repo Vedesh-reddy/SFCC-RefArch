@@ -1,6 +1,7 @@
 'use strict';
 
 var formValidation = require('../components/formValidation');
+var createErrorNotification = require('../components/errorNotification');
 
 module.exports = {
     login: function () {
@@ -61,6 +62,8 @@ module.exports = {
                 error: function (err) {
                     if (err.responseJSON.redirectUrl) {
                         window.location.href = err.responseJSON.redirectUrl;
+                    } else {
+                        createErrorNotification($('.error-messaging'), err.responseJSON.errorMessage);
                     }
 
                     form.spinner().stop();
