@@ -100,6 +100,11 @@ describe('Reporting URLs', function () {
         adjustedShippingTotalGrossPrice: { value: 'adjustedShippingTotalGrossPrice' },
         totalNetPrice: { value: 'totalNetPrice' },
         totalTax: { value: 'totalTax' },
+        customer: {
+            orderHistory: {
+                orderCount: '10'
+            }
+        },
         totalGrossPrice: { value: 'totalGrossPrice' },
         priceAdjustments: new ArrayList([{
             campaignID: 'Some ID',
@@ -120,7 +125,13 @@ describe('Reporting URLs', function () {
 
     it('should get order reporting URLs', function () {
         var result = reportingUrls.getOrderReportingURLs(order);
-        assert.equal(result.length, 5);
+        assert.equal(result.length, 6);
+    });
+
+    it('should get order count reporting URLs', function () {
+        var myReportingUrls = [];
+        var result = reportingUrls.getOrderPlacedReportingURLs(order, myReportingUrls);
+        assert.equal(result.length, 1);
     });
 
     it('should get basket open reporting URLs', function () {
