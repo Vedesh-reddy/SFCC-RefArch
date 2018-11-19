@@ -25,6 +25,26 @@ describe('querystring', function () {
             }], querystring.options);
         });
 
+        it('should parse product option for product with underscore', function () {
+            var params = 'dwopt_microsoft__xbox360__console_consoleWarranty=002&' +
+            'dwopt_microsoft__xbox360__console_gpsWarranty=003&' +
+            'dwopt_microsoft__xbox360__console_gps_warranty=003';
+            var querystring = new QueryString(params);
+            assert.deepEqual([{
+                optionId: 'gps_warranty',
+                productId: 'microsoft_xbox360_console',
+                selectedValueId: '003'
+            }, {
+                optionId: 'gpsWarranty',
+                productId: 'microsoft_xbox360_console',
+                selectedValueId: '003'
+            }, {
+                optionId: 'consoleWarranty',
+                productId: 'microsoft_xbox360_console',
+                selectedValueId: '002'
+            }], querystring.options);
+        });
+
         it('should output options query params', function () {
             var params = 'dwopt_microsoft-xbox360-console_consoleWarranty=002&' +
             'dwopt_microsoft-xbox360-console_gpsWarranty=003';
@@ -32,6 +52,15 @@ describe('querystring', function () {
             var paramsOutput = querystring.toString();
             assert.equal(paramsOutput, 'dwopt_microsoft-xbox360-console_consoleWarranty=002&' +
                 'dwopt_microsoft-xbox360-console_gpsWarranty=003');
+        });
+
+        it('should output options query params for product with underscore', function () {
+            var params = 'dwopt_microsoft__xbox360__console_console_Warranty=002&' +
+            'dwopt_microsoft__xbox360__console_gpsWarranty=003';
+            var querystring = new QueryString(params);
+            var paramsOutput = querystring.toString();
+            assert.equal(paramsOutput, 'dwopt_microsoft__xbox360__console_console_Warranty=002&' +
+                'dwopt_microsoft__xbox360__console_gpsWarranty=003');
         });
     });
 
@@ -47,6 +76,21 @@ describe('querystring', function () {
                 },
                 pv_size: {
                     id: 'P12345',
+                    value: 'L'
+                }
+            }, querystring.variables);
+        });
+
+        it('should parse product variation param for product with underscores', function () {
+            var params = 'dwvar_my__test__product_color=blue&dwvar_my__test__product_pv_size=L&pid=P12345';
+            var querystring = new QueryString(params);
+            assert.deepEqual({
+                color: {
+                    id: 'my_test_product',
+                    value: 'blue'
+                },
+                pv_size: {
+                    id: 'my_test_product',
                     value: 'L'
                 }
             }, querystring.variables);
