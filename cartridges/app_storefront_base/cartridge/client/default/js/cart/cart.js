@@ -151,17 +151,32 @@ function updateAvailability(data, uuid) {
 }
 
 /**
+ * Finds an element in the array that matches search parameter
+ * @param {array} array - array of items to search
+ * @param {function} match - function that takes an element and returns a boolean indicating if the match is made
+ * @returns {Object|null} - returns an element of the array that matched the query.
+ */
+function findItem(array, match) {
+    for (var i = 0, l = array.length; i < l; i++) {
+        if (match.call(this, array[i])) {
+            return array[i];
+        }
+    }
+    return null;
+}
+
+/**
  * Updates details of a product line item
  * @param {Object} data - AJAX response from the server
  * @param {string} uuid - The uuid of the product line item to update
  */
 function updateProductDetails(data, uuid) {
-    var lineItem = data.cartModel.items.find(function (item) {
+    var lineItem = findItem(data.cartModel.items, function (item) {
         return item.UUID === uuid;
     });
 
     if (lineItem.variationAttributes) {
-        var colorAttr = lineItem.variationAttributes.find(function (attr) {
+        var colorAttr = findItem(lineItem.variationAttributes, function (attr) {
             return attr.attributeId === 'color';
         });
 
@@ -171,7 +186,7 @@ function updateProductDetails(data, uuid) {
             $(colorSelector).text(newColor);
         }
 
-        var sizeAttr = lineItem.variationAttributes.find(function (attr) {
+        var sizeAttr = findItem(lineItem.variationAttributes, function (attr) {
             return attr.attributeId === 'size';
         });
 
