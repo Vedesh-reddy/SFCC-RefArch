@@ -138,6 +138,22 @@ function getBasketOpenReportingURLs(currentBasket) {
 }
 
 /**
+ * Build the urls that report on order placed by a customer
+ * @param {number} orderCount - The number of orders this customer placed in the system
+ * @param {Array} reportingURLs - current array of reporting urls
+ * @returns {Array} - an array of urls that are used to report
+ */
+function getOrderPlacedReportingURLs(orderCount, reportingURLs) {
+    var result = reportingURLs;
+
+    result.push(URLUtils.url('ReportingEvent-Start',
+        'UserOrders', formatHelpers.formatNumber(orderCount)
+    ));
+
+    return result;
+}
+
+/**
  * Build the urls that report on the order
  * @param {dw.order.Order} order - the order object
  * @returns {Array} - an array of urls that are used to report on the current order
@@ -180,6 +196,7 @@ function getOrderReportingURLs(order) {
 
     // Report all price adjustments for the entire order
     reportingURLs = getOrderPromoReportingURLs(order.priceAdjustments, reportingURLs);
+    reportingURLs = getOrderPlacedReportingURLs(order.customer.orderHistory.orderCount, reportingURLs);
 
     // Check all shipments for shipping promotions, lineitems and their promotions
     collections.forEach(order.shipments, function (shipment) {
@@ -277,5 +294,6 @@ module.exports = {
     getOrderReportingURLs: getOrderReportingURLs,
     getProductSearchReportingURLs: getProductSearchReportingURLs,
     getCheckoutReportingURLs: getCheckoutReportingURLs,
-    getAccountOpenReportingURLs: getAccountOpenReportingURLs
+    getAccountOpenReportingURLs: getAccountOpenReportingURLs,
+    getOrderPlacedReportingURLs: getOrderPlacedReportingURLs
 };

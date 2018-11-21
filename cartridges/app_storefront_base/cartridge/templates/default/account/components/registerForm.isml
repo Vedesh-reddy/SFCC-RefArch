@@ -1,5 +1,5 @@
 <form
-    action="${URLUtils.url('Account-SubmitRegistration')}"
+    action="${pdict.createAccountUrl}"
     class="registration"
     method="POST"
     name="${pdict.profileForm.htmlName}">

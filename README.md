@@ -3,14 +3,14 @@
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
-Storefront Reference Architecture supplies an [plugin_applepay](https://bitbucket.org/demandware/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for the reference application.
+Storefront Reference Architecture supplies an [plugin_applepay](https://github.com/SalesforceCommerceCloud/plugin-applepay) plugin cartridge to demonstrate how to layer customizations for the reference application.
 
 Your feedback on the ease-of-use and limitations of this new architecture is invaluable during the developer preview. Particularly, feedback on any issues you encounter or workarounds you develop for efficiently customizing the base cartridge without editing it directly.
 
 
 # What's New
 
-The latest version of SFRA is 3.0.0, which contains the following updates:
+The latest version of SFRA is 3.2.0, which contains the following updates:
 
 * Multiship: a single basket filled with multiple products can now be shipped to multiple locations.
 * Fraud Detection Hook: a hook has been added that supports customized fraud detection.
@@ -37,9 +37,9 @@ The latest version of SFRA is 3.0.0, which contains the following updates:
 
 5 Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
 
-6 Use https://bitbucket.org/demandware/storefrontdata to zip and import site date on your sandbox.
+6 Use https://github.com/SalesforceCommerceCloud/storefrontdata to zip and import site date on your sandbox.
 
-7 Add the `app_storefront_base` cartridge to your cartridge path.
+7 Add the `app_storefront_base` cartridge to your cartridge path in _Administration >  Sites >  Manage Sites > RefArch - Settings_ (Note: This should already be populated by the sample data in Step 6).
 
 8 You should now be ready to navigate to and use your site.
 
@@ -117,6 +117,6 @@ npm run test:integration -- --baseUrl https://hostname/on/demandware.store/Sites
 
 
 
-# [Contributing to MFRA](./CONTRIBUTING.md)
+# [Contributing to SFRA](./CONTRIBUTING.md)
 
 

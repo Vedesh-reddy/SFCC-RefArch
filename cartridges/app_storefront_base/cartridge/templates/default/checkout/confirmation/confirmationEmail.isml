@@ -39,7 +39,7 @@
 
         <isif condition="${pdict.order.shipping.length > 1}">
             <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>
-            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopSate">
+            <isloop items="${shippingModel.productLineItems.items}" var="lineItem">
                 <p>
                     ${Resource.msg('label.order.product.name', 'confirmation', null)}: ${lineItem.productName}
                     <br/>
@@ -117,7 +117,7 @@
     <br/>
     <isif condition="${pdict.order.shipping.length === 1}">
         <strong>${Resource.msg('label.order.products', 'confirmation', null)}:</strong> <br/>
-        <isloop items="${pdict.order.items.items}" var="lineItem" status="loopSate">
+        <isloop items="${pdict.order.items.items}" var="lineItem">
             <p>
                 ${Resource.msg('label.order.product.name', 'confirmation', null)}: ${lineItem.productName}
                 <br/>
@@ -139,8 +139,8 @@
                 </isif>
 
                 <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
-                    <isloop items="${lineItem.bonusProducts}" var="bonusProduct" status="loopstate">
-                        <isif condition="${loopstate.first}">
+                    <isloop items="${lineItem.bonusProducts}" var="bonusProduct" status="loopState">
+                        <isif condition="${loopState.first}">
                             <br/>
                             ${Resource.msg('text.lineitem.bonus.msg','cart',null)}
                         </isif>
@@ -159,7 +159,7 @@
                         ${Resource.msg('field.selectquantity','cart',null)}
                          - <isprint value="${bonusProduct.quantity}" formatter="##" />
                         <br/>
-                        <isif condition="${loopstate.last}">
+                        <isif condition="${loopState.last}">
                             <br/>
                         </isif>
                     </isloop>

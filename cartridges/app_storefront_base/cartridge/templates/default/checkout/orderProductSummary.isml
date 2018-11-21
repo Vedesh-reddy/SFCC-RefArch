@@ -10,12 +10,12 @@
             </div>
         </div>
         <div class="product-summary-block">
-            <isloop items="${pdict.order.shipping}" var="shippingModel" status="shipmentLoopState">
+            <isloop items="${pdict.order.shipping}" var="shippingModel">
                 <isif condition="${pdict.order.shipping.length > 1}">
                     <div class="shipment-block">
                 </isif>
 
-                <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
+                <isloop items="${shippingModel.productLineItems.items}" var="lineItem">
                     <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
                         <div class="card ${miniCart ? 'bonus-product-line-item' : ''} uuid-${lineItem.UUID}">
                             <div class="card-body">

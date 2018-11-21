@@ -127,6 +127,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
     var formErrors = require('*/cartridge/scripts/formErrors');
+    var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
     var addressForm = server.forms.getForm('address');
     var addressFormObj = addressForm.toObject();
@@ -173,6 +174,9 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
                     address.setSuite(formInfo.suite || '');
                     address.setJobTitle(formInfo.title || '');
 
+                    // Send account edited email
+                    accountHelpers.sendAccountEditedEmail(customer.profile);
+
                     res.json({
                         success: true,
                         redirectUrl: URLUtils.url('Address-List').toString()
@@ -184,7 +188,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
                         Resource.msg('error.message.idalreadyexists', 'forms', null);
                     res.json({
                         success: false,
-                        fields: formErrors(addressForm)
+                        fields: formErrors.getFormErrors(addressForm)
                     });
                 }
             });
@@ -192,7 +196,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
     } else {
         res.json({
             success: false,
-            fields: formErrors(addressForm)
+            fields: formErrors.getFormErrors(addressForm)
         });
     }
     return next();
@@ -201,6 +205,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
 server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
+    var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
     var data = res.getViewData();
     if (data && !data.loggedin) {
@@ -226,6 +231,10 @@ server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, re
                 addressBook.setPreferredAddress(newDefaultAddress);
             }
         });
+
+        // Send account edited email
+        accountHelpers.sendAccountEditedEmail(customer.profile);
+
         if (length === 0) {
             res.json({
                 UUID: UUID,
@@ -244,6 +253,7 @@ server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, re
 server.get('SetDefault', userLoggedIn.validateLoggedIn, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
+    var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
     var addressId = req.querystring.addressId;
     var customer = CustomerMgr.getCustomerByCustomerNumber(
@@ -255,6 +265,10 @@ server.get('SetDefault', userLoggedIn.validateLoggedIn, function (req, res, next
         Transaction.wrap(function () {
             addressBook.setPreferredAddress(address);
         });
+
+        // Send account edited email
+        accountHelpers.sendAccountEditedEmail(customer.profile);
+
         res.redirect(URLUtils.url('Address-List'));
     });
     next();

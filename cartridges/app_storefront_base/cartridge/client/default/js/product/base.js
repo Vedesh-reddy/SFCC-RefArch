@@ -771,5 +771,6 @@ module.exports = {
         });
     },
 
-    getPidValue: getPidValue
+    getPidValue: getPidValue,
+    getQuantitySelected: getQuantitySelected
 };

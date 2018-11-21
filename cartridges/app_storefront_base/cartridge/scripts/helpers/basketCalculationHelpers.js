@@ -8,7 +8,8 @@ var HookMgr = require('dw/system/HookMgr');
  * @returns {Object} - object describing taxes that needs to be applied
  */
 function calculateTaxes(basket) {
-    return HookMgr.callHook('app.basket.taxes', 'calculateTaxes', basket);
+    var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+    return hooksHelper('app.basket.taxes', 'calculateTaxes', basket, require('*/cartridge/scripts/hooks/taxes').calculateTaxes);
 }
 
 /**

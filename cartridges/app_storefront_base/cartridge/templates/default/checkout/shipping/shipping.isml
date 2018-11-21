@@ -18,7 +18,7 @@
 
     <div class="multi-shipping">
         <isloop items="${pdict.order.shipping}" var="shippingModel" status="shipmentLoopState">
-            <isloop items="${shippingModel.productLineItems.items}" var="lineItem" status="loopState">
+            <isloop items="${shippingModel.productLineItems.items}" var="lineItem">
                 <div class="card" data-shipment-uuid="${shippingModel.UUID}">
                     <div class="card-header">
                         <isinclude template="checkout/productCard/productShippingCard" />

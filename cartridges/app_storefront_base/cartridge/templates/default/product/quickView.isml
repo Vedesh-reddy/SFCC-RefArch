@@ -43,8 +43,8 @@
                     <hr>
 
                     <!-- Applicable Promotions -->
-                    <div class="row promotions">
-                        <div class="col-12 align-self-center">
+                    <div class="col-12 promotions">
+                        <div class="align-self-center">
                             <isinclude template="product/components/promotions" />
                         </div>
                     </div>

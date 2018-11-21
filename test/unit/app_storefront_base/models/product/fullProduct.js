@@ -18,7 +18,8 @@ var productMock = {
     pageTitle: 'some title',
     pageDescription: 'some description',
     pageKeywords: 'some keywords',
-    pageMetaData: [{}]
+    pageMetaData: [{}],
+    template: 'some template'
 };
 
 var optionsMock = {
@@ -55,12 +56,14 @@ describe('Full Product Model', function () {
         decorators.stubs.stubOptions.reset();
         decorators.stubs.stubCurrentUrl.reset();
         decorators.stubs.stubReadyToOrder.reset();
+        decorators.stubs.stubOnline.reset();
         decorators.stubs.stubSetReadyToOrder.reset();
         decorators.stubs.stubBundleReadyToOrder.reset();
         decorators.stubs.stubSetIndividualProducts.reset();
         decorators.stubs.stubBundledProducts.reset();
         decorators.stubs.stubBonusUnitPrice.reset();
         decorators.stubs.stubPageMetaData.reset();
+        decorators.stubs.stubTemplate.reset();
     });
 
     it('should call base for full product', function () {
@@ -195,11 +198,26 @@ describe('Full Product Model', function () {
         assert.isTrue(decorators.stubs.stubReadyToOrder.calledOnce);
     });
 
+    it('should call online for full product', function () {
+        var object = {};
+        productMock.getPrimaryCategory = function () { return null; };
+        fullProduct(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubOnline.calledOnce);
+    });
+
     it('should call pageMetaData for full product', function () {
         var object = {};
         productMock.getPrimaryCategory = function () { return null; };
         fullProduct(object, productMock, optionsMock);
 
         assert.isTrue(decorators.stubs.stubPageMetaData.calledOnce);
+    });
+
+    it('should call template for full product', function () {
+        var object = {};
+        fullProduct(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubTemplate.calledOnce);
     });
 });

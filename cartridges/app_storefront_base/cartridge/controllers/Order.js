@@ -33,6 +33,11 @@ server.get(
 
             return next();
         }
+        var lastOrderID = Object.prototype.hasOwnProperty.call(req.session.raw.custom, 'orderID') ? req.session.raw.custom.orderID : null;
+        if (lastOrderID === req.querystring.ID) {
+            res.redirect(URLUtils.url('Home-Show'));
+            return next();
+        }
 
         var config = {
             numberOfLineItems: '*'
@@ -64,7 +69,7 @@ server.get(
                 reportingURLs: reportingURLs
             });
         }
-
+        req.session.raw.custom.orderID = req.querystring.ID; // eslint-disable-line no-param-reassign
         return next();
     }
 );
@@ -315,7 +320,7 @@ server.post(
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
                 var CustomerMgr = require('dw/customer/CustomerMgr');
                 var Transaction = require('dw/system/Transaction');
-                var OrderHelpers = require('*/cartridge/scripts/order/orderHelpers');
+                var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
                 var registrationData = res.getViewData();
 
@@ -324,7 +329,7 @@ server.post(
                 var newCustomer;
                 var authenticatedCustomer;
                 var newCustomerProfile;
-                var registeredUser;
+                var errorObj = {};
 
                 delete registrationData.email;
                 delete registrationData.password;
@@ -332,36 +337,51 @@ server.post(
                 // attempt to create a new user and log that user in.
                 try {
                     Transaction.wrap(function () {
+                        var error = {};
                         newCustomer = CustomerMgr.createCustomer(login, password);
-                        authenticatedCustomer =
-                            CustomerMgr.loginCustomer(login, password, false);
-                        if (newCustomer && authenticatedCustomer.authenticated) {
+
+                        var authenticateCustomerResult = CustomerMgr.authenticateCustomer(login, password);
+                        if (authenticateCustomerResult.status !== 'AUTH_OK') {
+                            error = { authError: true, status: authenticateCustomerResult.status };
+                            throw error;
+                        }
+
+                        authenticatedCustomer = CustomerMgr.loginCustomer(authenticateCustomerResult, false);
+
+                        if (!authenticatedCustomer) {
+                            error = { authError: true, status: authenticateCustomerResult.status };
+                            throw error;
+                        } else {
                             // assign values to the profile
                             newCustomerProfile = newCustomer.getProfile();
+
                             newCustomerProfile.firstName = registrationData.firstName;
                             newCustomerProfile.lastName = registrationData.lastName;
                             newCustomerProfile.phoneHome = registrationData.phone;
                             newCustomerProfile.email = login;
+
                             order.setCustomer(newCustomer);
-                            registeredUser = {
-                                email: login,
-                                firstName: registrationData.firstName,
-                                lastName: registrationData.lastName
-                            };
-                            OrderHelpers.sendConfirmationEmail(registeredUser);
-                            res.json({
-                                success: true,
-                                redirectUrl: URLUtils.url('Account-Show',
-                                    'registration', 'submitted'
-                                ).toString()
-                            });
                         }
                     });
                 } catch (e) {
-                    res.json({
-                        error: [Resource.msg('error.account.exists', 'checkout', null)]
-                    }); // Show error if the login email already exists
+                    errorObj.error = true;
+                    errorObj.errorMessage = e.authError
+                        ? Resource.msg('error.message.unable.to.create.account', 'login', null)
+                        : Resource.msg('error.message.username.invalid', 'forms', null);
                 }
+
+                if (errorObj.error) {
+                    res.json({ error: [errorObj.errorMessage] });
+
+                    return;
+                }
+
+                accountHelpers.sendCreateAccountEmail(authenticatedCustomer.profile);
+
+                res.json({
+                    success: true,
+                    redirectUrl: URLUtils.url('Account-Show', 'registration', 'submitted').toString()
+                });
             });
         } else {
             res.json({

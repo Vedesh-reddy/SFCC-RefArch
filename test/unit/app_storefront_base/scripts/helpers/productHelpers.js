@@ -5,6 +5,18 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
 var mockCollections = require('../../../../mocks/util/collections');
+var Collection = require('../../../../mocks/dw.util.Collection');
+
+var stubGetProduct = sinon.stub();
+var stubCategoryMock = sinon.stub();
+var stubProductFactoryGet = sinon.stub();
+var categoryMock = {
+    displayName: 'some name',
+    ID: 'some ID',
+    parent: {
+        ID: 'root'
+    }
+};
 
 describe('Helpers - Product', function () {
     var productHelpers = proxyquire(
@@ -17,6 +29,27 @@ describe('Helpers - Product', function () {
                 activeCustomerPromotions: {
                     getProductPromotions: function () { return 'promotions'; }
                 }
+            },
+            'dw/web/URLUtils': {
+                url: function () { return 'some url'; }
+            },
+            '*/cartridge/scripts/factories/product': {
+                get: stubProductFactoryGet
+            },
+            '*/cartridge/scripts/helpers/pageMetaHelper': {
+                setPageMetaData: function () {},
+                setPageMetaTags: function () {}
+            },
+            'dw/web/Resource': {
+                msg: function () {
+                    return 'some string';
+                }
+            },
+            'dw/catalog/CatalogMgr': {
+                getCategory: stubCategoryMock
+            },
+            'dw/catalog/ProductMgr': {
+                getProduct: stubGetProduct
             }
         });
 
@@ -31,10 +64,10 @@ describe('Helpers - Product', function () {
                 displayName: 'Color'
             }],
             getAllValues: function () {
-                return [{
+                return new Collection([{
                     value: 'blue',
                     ID: 'blue'
-                }];
+                }]);
             },
             setSelectedAttributeValue: setSelectedAttributeValueSpy,
             getSelectedVariant: function () {}
@@ -104,6 +137,99 @@ describe('Helpers - Product', function () {
             productName: 'productName2'
         }
     ];
+
+    describe('showProductPage() function', function () {
+        var renderSpy = sinon.spy();
+        var res = { render: renderSpy };
+        var apiProductMock = {
+            variant: true,
+            masterProduct: {
+                primaryCategory: categoryMock
+            },
+            primaryCategoryMock: categoryMock
+        };
+
+        beforeEach(function () {
+            stubProductFactoryGet.reset();
+            stubGetProduct.reset();
+            renderSpy.reset();
+        });
+
+        it('should return a with product/productDetails template', function () {
+            var prodMock = { productType: 'variant', id: '12345' };
+
+            stubProductFactoryGet.returns(prodMock);
+            stubGetProduct.returns(apiProductMock);
+
+            var result = productHelpers.showProductPage({}, {});
+            assert.equal(result.template, 'product/productDetails');
+            assert.equal(result.resources.info_selectforstock, 'some string');
+        });
+
+        it('should with product/bundleDetails template', function () {
+            var prodMock = { productType: 'bundle', id: 'bundle' };
+
+            stubProductFactoryGet.returns(prodMock);
+            stubGetProduct.returns(apiProductMock);
+
+            productHelpers.showProductPage({}, {});
+
+            var result = productHelpers.showProductPage({}, {});
+            assert.equal(result.template, 'product/bundleDetails');
+        });
+
+        it('should return with product/setDetails template', function () {
+            var prodMock = { productType: 'set', id: 'set' };
+
+            stubProductFactoryGet.returns(prodMock);
+            stubGetProduct.returns(apiProductMock);
+
+            productHelpers.showProductPage({}, {}, res);
+
+            var result = productHelpers.showProductPage({}, {});
+            assert.equal(result.template, 'product/setDetails');
+        });
+    });
+
+    describe('getAllBreadcrumbs() function', function () {
+        beforeEach(function () {
+            stubGetProduct.reset();
+            stubCategoryMock.reset();
+        });
+
+        it('should return breadcrumbs empty', function () {
+            var apiProductMock = {
+                variant: true,
+                masterProduct: {
+                    primaryCategory: categoryMock
+                },
+                primaryCategoryMock: categoryMock
+            };
+
+            stubGetProduct.returns(apiProductMock);
+
+            var result = productHelpers.getAllBreadcrumbs(null, null, []);
+            assert.equal(result.length, 0);
+        });
+
+        it('should return breadcrumbs with length 1', function () {
+            var apiProductMock = {
+                variant: false,
+                masterProduct: {
+                    primaryCategory: categoryMock
+                },
+                primaryCategoryMock: categoryMock
+            };
+
+            stubGetProduct.returns(apiProductMock);
+            stubCategoryMock.returns(categoryMock);
+
+            var result = productHelpers.getAllBreadcrumbs('cgid', null, []);
+            assert.equal(result.length, 1);
+            assert.equal(result[0].htmlValue, 'some name');
+            assert.equal(result[0].url, 'some url');
+        });
+    });
 
     describe('getCurrentOptionModel() function', function () {
         it('should set the selected option value on the product option model', function () {

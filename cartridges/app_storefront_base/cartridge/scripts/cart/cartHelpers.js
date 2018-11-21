@@ -423,6 +423,10 @@ module.exports = {
     ensureAllShipmentsHaveMethods: ensureAllShipmentsHaveMethods,
     getQtyAlreadyInCart: getQtyAlreadyInCart,
     getNewBonusDiscountLineItem: getNewBonusDiscountLineItem,
+    getExistingProductLineItemInCart: getExistingProductLineItemInCart,
     getExistingProductLineItemsInCart: getExistingProductLineItemsInCart,
+    getMatchingProducts: getMatchingProducts,
+    allBundleItemsSame: allBundleItemsSame,
+    hasSameOptions: hasSameOptions,
     BONUS_PRODUCTS_PAGE_SIZE: BONUS_PRODUCTS_PAGE_SIZE
 };

@@ -20,6 +20,7 @@ var stubAttributes = sinon.stub();
 var stubOptions = sinon.stub();
 var stubCurrentUrl = sinon.stub();
 var stubReadyToOrder = sinon.stub();
+var stubOnline = sinon.stub();
 var stubSetReadyToOrder = sinon.stub();
 var stubBundleReadyToOrder = sinon.stub();
 var stubSetIndividualProducts = sinon.stub();
@@ -27,6 +28,7 @@ var stubBundledProducts = sinon.stub();
 var stubBonusUnitPrice = sinon.stub();
 var stubRaw = sinon.stub();
 var stubPageMetaData = sinon.stub();
+var stubTemplate = sinon.stub();
 
 function proxyModel() {
     return {
@@ -48,13 +50,15 @@ function proxyModel() {
             '*/cartridge/models/product/decorators/options': stubOptions,
             '*/cartridge/models/product/decorators/currentUrl': stubCurrentUrl,
             '*/cartridge/models/product/decorators/readyToOrder': stubReadyToOrder,
+            '*/cartridge/models/product/decorators/online': stubOnline,
             '*/cartridge/models/product/decorators/setReadyToOrder': stubSetReadyToOrder,
             '*/cartridge/models/product/decorators/bundleReadyToOrder': stubBundleReadyToOrder,
             '*/cartridge/models/product/decorators/setIndividualProducts': stubSetIndividualProducts,
             '*/cartridge/models/product/decorators/bundledProducts': stubBundledProducts,
             '*/cartridge/models/product/decorators/bonusUnitPrice': stubBonusUnitPrice,
             '*/cartridge/models/product/decorators/raw': stubRaw,
-            '*/cartridge/models/product/decorators/pageMetaData': stubPageMetaData
+            '*/cartridge/models/product/decorators/pageMetaData': stubPageMetaData,
+            '*/cartridge/models/product/decorators/template': stubTemplate
         }),
         stubs: {
             stubBase: stubBase,
@@ -74,13 +78,15 @@ function proxyModel() {
             stubOptions: stubOptions,
             stubCurrentUrl: stubCurrentUrl,
             stubReadyToOrder: stubReadyToOrder,
+            stubOnline: stubOnline,
             stubSetReadyToOrder: stubSetReadyToOrder,
             stubBundleReadyToOrder: stubBundleReadyToOrder,
             stubSetIndividualProducts: stubSetIndividualProducts,
             stubBundledProducts: stubBundledProducts,
             stubBonusUnitPrice: stubBonusUnitPrice,
             stubRaw: stubRaw,
-            stubPageMetaData: stubPageMetaData
+            stubPageMetaData: stubPageMetaData,
+            stubTemplate: stubTemplate
         }
     };
 }

@@ -5,9 +5,7 @@ var server = require('server');
 var collections = require('*/cartridge/scripts/util/collections');
 
 var BasketMgr = require('dw/order/BasketMgr');
-var HashMap = require('dw/util/HashMap');
 var HookMgr = require('dw/system/HookMgr');
-var Mail = require('dw/net/Mail');
 var OrderMgr = require('dw/order/OrderMgr');
 var PaymentInstrument = require('dw/order/PaymentInstrument');
 var PaymentMgr = require('dw/order/PaymentMgr');
@@ -15,7 +13,6 @@ var Order = require('dw/order/Order');
 var Status = require('dw/system/Status');
 var Resource = require('dw/web/Resource');
 var Site = require('dw/system/Site');
-var Template = require('dw/util/Template');
 var Transaction = require('dw/system/Transaction');
 
 var AddressModel = require('*/cartridge/models/address');
@@ -169,7 +166,8 @@ function copyShippingAddressToShipment(shippingData, shipmentOrNull) {
         shippingAddress.setCity(shippingData.address.city);
         shippingAddress.setPostalCode(shippingData.address.postalCode);
         shippingAddress.setStateCode(shippingData.address.stateCode);
-        shippingAddress.setCountryCode(shippingData.address.countryCode);
+        var countryCode = shippingData.address.countryCode.value ? shippingData.address.countryCode.value : shippingData.address.countryCode;
+        shippingAddress.setCountryCode(countryCode);
         shippingAddress.setPhone(shippingData.address.phone);
 
         ShippingHelper.selectShippingMethod(shipment, shippingData.shippingMethod);
@@ -529,29 +527,23 @@ function handlePayments(order, orderNumber) {
  */
 function sendConfirmationEmail(order, locale) {
     var OrderModel = require('*/cartridge/models/order');
+    var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
     var Locale = require('dw/util/Locale');
 
-    var confirmationEmail = new Mail();
-    var context = new HashMap();
     var currentLocale = Locale.getLocale(locale);
 
     var orderModel = new OrderModel(order, { countryCode: currentLocale.country });
 
     var orderObject = { order: orderModel };
 
-    confirmationEmail.addTo(order.customerEmail);
-    confirmationEmail.setSubject(Resource.msg('subject.order.confirmation.email', 'order', null));
-    confirmationEmail.setFrom(Site.current.getCustomPreferenceValue('customerServiceEmail')
-        || 'no-reply@salesforce.com');
+    var emailObj = {
+        to: order.customerEmail,
+        subject: Resource.msg('subject.order.confirmation.email', 'order', null),
+        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+        type: emailHelpers.emailTypes.orderConfirmation
+    };
 
-    Object.keys(orderObject).forEach(function (key) {
-        context.put(key, orderObject[key]);
-    });
-
-    var template = new Template('checkout/confirmation/confirmationEmail');
-    var content = template.render(context).text;
-    confirmationEmail.setContent(content, 'text/html', 'UTF-8');
-    confirmationEmail.send();
+    emailHelpers.sendEmail(emailObj, 'checkout/confirmation/confirmationEmail', orderObject);
 }
 
 /**

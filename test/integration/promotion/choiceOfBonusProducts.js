@@ -162,14 +162,14 @@ describe('Add rule base Bonus Product to cart', function () {
         .then(function (response) {
             var bodyAsJson = JSON.parse(response.body);
             assert.equal(bodyAsJson.action, 'Cart-EditBonusProduct');
-            assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-AddBonusProducts');
-            assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-ShowBonusProducts');
+            assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Cart-AddBonusProducts');
+            assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts');
             assert.equal(bodyAsJson.maxBonusItems, 2);
             assert.equal(pageSize, 6);
             assert.equal(bodyAsJson.pliUUID, pliuuid);
             assert.equal(bodyAsJson.uuid, duuid);
             assert.equal(bodyAsJson.bonusChoiceRuleBased, true);
-            assert.equal(bodyAsJson.showProductsUrlRuleBased, '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-ShowBonusProducts?DUUID=' + duuid + '&pagesize=' + pageSize + '&pagestart=0&maxpids=' + bodyAsJson.maxBonusItems);
+            assert.equal(bodyAsJson.showProductsUrlRuleBased, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts?DUUID=' + duuid + '&pagesize=' + pageSize + '&pagestart=0&maxpids=' + bodyAsJson.maxBonusItems);
         });
     });
 
@@ -258,8 +258,8 @@ describe('Add list base Bonus Product to cart', function () {
         .then(function (response) {
             var bodyAsJson = JSON.parse(response.body);
             assert.equal(bodyAsJson.action, 'Cart-EditBonusProduct');
-            assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-MobileFirst-Site/en_US/Cart-AddBonusProducts');
-            assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-MobileFirst-Site/en_US/Product-ShowBonusProducts');
+            assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Cart-AddBonusProducts');
+            assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts');
             assert.equal(bodyAsJson.maxBonusItems, 2);
             assert.equal(bodyAsJson.pliUUID, pliuuid);
             assert.equal(bodyAsJson.uuid, duuid);

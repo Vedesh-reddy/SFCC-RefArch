@@ -1,19 +1,9 @@
 <isset name="shippingAddress" value="${pdict.forms.shippingForm.shippingAddress}" scope="page"/>
 <div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.https('CheckoutShippingServices-SelectShippingMethod')}" data-action-url="${URLUtils.https('CheckoutShippingServices-UpdateShippingMethodsList')}">
 	<input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
-    <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod" status="loopSate">
+    <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod">
         <div class="form-check col-9 start-lines">
-            <isif condition="${shippingModel.selectedShippingMethod && shippingMethod.ID === shippingModel.selectedShippingMethod.ID}">
-                <input
-                    id="shippingMethod-${shippingMethod.ID}"
-                    name="${shippingAddress.shippingMethodID.htmlName}"
-                    type="radio" class="form-check-input"
-                    value="${shippingMethod.ID}"
-                    data-pickup="${shippingMethod.storePickupEnabled}"
-                    checked>
-                <iselse/>
-                <input id="shippingMethod-${shippingMethod.ID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input">
-            </isif>
+            <isinclude template="checkout/shipping/selectedShippingMethod"/>
             <label class="form-check-label shipping-method-option" for="shippingMethod-${shippingMethod.ID}">
                 <span class="display-name">${shippingMethod.displayName}</span>
                 <isif condition="${shippingMethod.estimatedArrivalTime}">

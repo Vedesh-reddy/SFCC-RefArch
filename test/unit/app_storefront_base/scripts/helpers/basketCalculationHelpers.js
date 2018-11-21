@@ -6,19 +6,23 @@ var sinon = require('sinon');
 
 describe('Helpers - Totals', function () {
     var hookMgrSpy = sinon.spy();
+    var hookHelperSpy = sinon.spy();
 
     var basketCalculationHelpers = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/basketCalculationHelpers', {
-        'dw/system/HookMgr': { callHook: hookMgrSpy }
+        'dw/system/HookMgr': { callHook: hookMgrSpy },
+        '*/cartridge/scripts/helpers/hooks': hookHelperSpy,
+        '*/cartridge/scripts/hooks/taxes': { calculateTaxes: function () {} }
     });
 
     beforeEach(function () {
         hookMgrSpy.reset();
+        hookHelperSpy.reset();
     });
 
     it('Should call taxes hook', function () {
         basketCalculationHelpers.calculateTaxes();
 
-        assert.isTrue(hookMgrSpy.calledWith('app.basket.taxes', 'calculateTaxes'));
+        assert.isTrue(hookHelperSpy.calledWith('app.basket.taxes', 'calculateTaxes'));
     });
 
     it('Should call totals hook', function () {

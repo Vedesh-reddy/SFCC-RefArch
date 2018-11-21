@@ -71,16 +71,16 @@ target.compileFonts = function () {
 
 target.functional = function (args) {
     var defaults = {
-        baseUrl: 'http://' + getSandboxUrl() + '/s/MobileFirst',
+        baseUrl: 'http://' + getSandboxUrl() + '/s/RefArch',
         client: 'chrome'
     };
 
     var configFile = 'test/functional/webdriver/wdio.conf.js';
     if(args.indexOf('appium') > -1) {
         args.splice(args.indexOf('appium'), 1);
-        configFile = 'test/functional/webdriver/wdio.appium.js'
+        configFile = 'test/functional/webdriver/wdio.appium.js';
         defaults = {
-            baseUrl: 'http://' + getSandboxUrl() + '/s/MobileFirst'
+            baseUrl: 'http://' + getSandboxUrl() + '/s/RefArch'
         }
     }
 
@@ -106,7 +106,7 @@ target.functional = function (args) {
 
 target.integration = function (args) {
     var defaults = {
-        baseUrl: 'https://' + getSandboxUrl() + '/on/demandware.store/Sites-MobileFirst-Site/en_US'
+        baseUrl: 'https://' + getSandboxUrl() + '/on/demandware.store/Sites-RefArch-Site/en_US'
     };
 
     var options = getOptions(defaults, args);

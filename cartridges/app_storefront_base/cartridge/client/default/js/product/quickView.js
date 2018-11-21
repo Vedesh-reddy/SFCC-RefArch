@@ -51,24 +51,22 @@ function parseHtml(html) {
 
 /**
  * replaces the content in the modal window on for the selected product variation.
- * @param {string} productUrl - url to be used for going to the product details page
  * @param {string} selectedValueUrl - url to be used to retrieve a new product model
  */
-function fillModalElement(productUrl, selectedValueUrl) {
+function fillModalElement(selectedValueUrl) {
     $('.modal-body').spinner().start();
     $.ajax({
         url: selectedValueUrl,
         method: 'GET',
-        dataType: 'html',
-        success: function (html) {
-            var parsedHtml = parseHtml(html);
+        dataType: 'json',
+        success: function (data) {
+            var parsedHtml = parseHtml(data.renderedTemplate);
 
             $('.modal-body').empty();
-            // $('.modal-body').html(html);
             $('.modal-body').html(parsedHtml.body);
             $('.modal-footer').html(parsedHtml.footer);
-            $('#quickViewModal .full-pdp-link').attr('href', productUrl);
-            $('#quickViewModal .size-chart').attr('href', productUrl);
+            $('#quickViewModal .full-pdp-link').attr('href', data.productUrl);
+            $('#quickViewModal .size-chart').attr('href', data.productUrl);
             $('#quickViewModal').modal('show');
             $.spinner().stop();
         },
@@ -83,10 +81,9 @@ module.exports = {
         $('body').on('click', '.quickview', function (e) {
             e.preventDefault();
             var selectedValueUrl = $(this).closest('a.quickview').attr('href');
-            var productUrl = selectedValueUrl.replace('Product-ShowQuickView', 'Product-Show');
             $(e.target).trigger('quickview:show');
             getModalHtmlElement();
-            fillModalElement(productUrl, selectedValueUrl);
+            fillModalElement(selectedValueUrl);
         });
     },
     colorAttribute: base.colorAttribute,

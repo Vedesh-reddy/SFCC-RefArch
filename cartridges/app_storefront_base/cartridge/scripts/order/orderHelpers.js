@@ -1,11 +1,7 @@
 'use strict';
 
-var HashMap = require('dw/util/HashMap');
-var Mail = require('dw/net/Mail');
 var OrderMgr = require('dw/order/OrderMgr');
 var Order = require('dw/order/Order');
-var Site = require('dw/system/Site');
-var Template = require('dw/util/Template');
 var Resource = require('dw/web/Resource');
 var URLUtils = require('dw/web/URLUtils');
 var Locale = require('dw/util/Locale');
@@ -102,42 +98,6 @@ function getOrders(currentCustomer, querystring, locale) {
     };
 }
 
-/**
- * Sends a confirmation email to the newly registered user
- * @param {Object} registeredUser - The newly registered user
- * @returns {void}
- */
-function sendConfirmationEmail(registeredUser) {
-    var confirmationEmail = new Mail();
-    var context = new HashMap();
-    var template;
-    var content;
-
-    var userObject = {
-        email: registeredUser.email,
-        firstName: registeredUser.firstName,
-        lastName: registeredUser.lastName,
-        url: URLUtils.https('Login-Show')
-    };
-
-    confirmationEmail.addTo(userObject.email);
-    confirmationEmail.setSubject(
-        Resource.msg('email.subject.new.registration', 'registration', null)
-    );
-    confirmationEmail.setFrom(Site.current.getCustomPreferenceValue('customerServiceEmail')
-        || 'no-reply@salesforce.com');
-
-    Object.keys(userObject).forEach(function (key) {
-        context.put(key, userObject[key]);
-    });
-
-    template = new Template('checkout/confirmation/accountRegisteredEmail');
-    content = template.render(context).text;
-    confirmationEmail.setContent(content, 'text/html', 'UTF-8');
-    confirmationEmail.send();
-}
-
 module.exports = {
-    getOrders: getOrders,
-    sendConfirmationEmail: sendConfirmationEmail
+    getOrders: getOrders
 };

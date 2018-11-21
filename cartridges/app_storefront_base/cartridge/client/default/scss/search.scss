@@ -95,12 +95,8 @@
             padding-left: 0;
         }
 
-        span {
-            color: $dark-gray;
-
-            &.disabled {
-                color: $slightly-darker-gray;
-            }
+        &.disabled {
+            opacity: 0.5;
         }
     }
 

@@ -49,4 +49,8 @@ module.exports = function (array) {
         }
         return list ? list.map(callback) : [];
     };
+
+    this.get = function (index) {
+        return items[index];
+    };
 };

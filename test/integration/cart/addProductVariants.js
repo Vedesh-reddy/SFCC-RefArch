@@ -39,7 +39,7 @@ describe('Add Product variants to cart', function () {
         var qty4 = 3;
 
         var action = 'Cart-AddProduct';
-        var message = 'Product added to basket';
+        var message = 'Product added to cart';
         var addProd = '/Cart-AddProduct';
 
         // ----- adding product #1:

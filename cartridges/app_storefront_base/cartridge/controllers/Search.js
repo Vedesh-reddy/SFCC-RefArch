@@ -95,12 +95,19 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
 
     var refineurl = URLUtils.url('Search-Refinebar');
     var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule'];
+    var isRefinedSearch = false;
     Object.keys(req.querystring).forEach(function (element) {
         if (whitelistedParams.indexOf(element) > -1) {
             refineurl.append(element, req.querystring[element]);
         }
+
+        if (['pmin', 'pmax'].indexOf(element) > -1) {
+            isRefinedSearch = true;
+        }
+
         if (element === 'preferences') {
             var i = 1;
+            isRefinedSearch = true;
             Object.keys(req.querystring[element]).forEach(function (preference) {
                 refineurl.append('prefn' + i, preference);
                 refineurl.append('prefv' + i, req.querystring[element][preference]);
@@ -109,7 +116,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
         }
     });
 
-    if (productSearch.searchKeywords !== null && !productSearch.selectedFilters.length) {
+    if (productSearch.searchKeywords !== null && !isRefinedSearch) {
         reportingURLs = reportingUrlsHelper.getProductSearchReportingURLs(productSearch);
     }
 

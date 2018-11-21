@@ -67,62 +67,6 @@ function validateEmail(email) {
     return regex.test(email);
 }
 
-/**
- * Gets the password reset token of a customer
- * @param {Object} customer - the customer requesting password reset token
- * @returns {string} password reset token string
- */
-function getPasswordResetToken(customer) {
-    var Transaction = require('dw/system/Transaction');
-
-    var passwordResetToken;
-    Transaction.wrap(function () {
-        passwordResetToken = customer.profile.credentials.createResetPasswordToken();
-    });
-    return passwordResetToken;
-}
-
-/**
- * Sends the email with password reset instructions
- * @param {string} email - email for password reset
- * @param {Object} resettingCustomer - the customer requesting password reset
- */
-function sendPasswordResetEmail(email, resettingCustomer) {
-    var Resource = require('dw/web/Resource');
-    var URLUtils = require('dw/web/URLUtils');
-    var Mail = require('dw/net/Mail');
-    var Template = require('dw/util/Template');
-    var Site = require('dw/system/Site');
-    var HashMap = require('dw/util/HashMap');
-
-    var template;
-    var content;
-    var passwordResetToken = getPasswordResetToken(resettingCustomer);
-    var url = URLUtils.https('Account-SetNewPassword', 'token', passwordResetToken);
-    var objectForEmail = {
-        passwordResetToken: passwordResetToken,
-        firstName: resettingCustomer.profile.firstName,
-        lastName: resettingCustomer.profile.lastName,
-        url: url
-    };
-    var resetPasswordEmail = new Mail();
-    var context = new HashMap();
-    Object.keys(objectForEmail).forEach(function (key) {
-        context.put(key, objectForEmail[key]);
-    });
-
-    resetPasswordEmail.addTo(email);
-    resetPasswordEmail.setSubject(
-        Resource.msg('subject.profile.resetpassword.email', 'login', null));
-    resetPasswordEmail.setFrom(Site.current.getCustomPreferenceValue('customerServiceEmail')
-        || 'no-reply@salesforce.com');
-
-    template = new Template('account/password/passwordResetEmail');
-    content = template.render(context).text;
-    resetPasswordEmail.setContent(content, 'text/html', 'UTF-8');
-    resetPasswordEmail.send();
-}
-
 server.get(
     'Show',
     server.middleware.https,
@@ -163,30 +107,85 @@ server.post(
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
-        var Transaction = require('dw/system/Transaction');
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
-        var URLUtils = require('dw/web/URLUtils');
+        var Site = require('dw/system/Site');
+        var Transaction = require('dw/system/Transaction');
+
+        var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+        var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
+        var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
 
         var email = req.form.loginEmail;
         var password = req.form.loginPassword;
         var rememberMe = req.form.loginRememberMe
             ? (!!req.form.loginRememberMe)
             : false;
-        var authenticatedCustomer;
-        var checkoutLogin = req.querystring.checkoutLogin;
 
-        Transaction.wrap(function () {
-            authenticatedCustomer = CustomerMgr.loginCustomer(email, password, rememberMe);
+        var customerLoginResult = Transaction.wrap(function () {
+            var authenticateCustomerResult = CustomerMgr.authenticateCustomer(email, password);
+
+            if (authenticateCustomerResult.status !== 'AUTH_OK') {
+                var errorCodes = {
+                    ERROR_CUSTOMER_DISABLED: 'error.message.account.disabled',
+                    ERROR_CUSTOMER_LOCKED: 'error.message.account.locked',
+                    ERROR_CUSTOMER_NOT_FOUND: 'error.message.login.form',
+                    ERROR_PASSWORD_EXPIRED: 'error.message.password.expired',
+                    ERROR_PASSWORD_MISMATCH: 'error.message.password.mismatch',
+                    ERROR_UNKNOWN: 'error.message.error.unknown',
+                    default: 'error.message.login.form'
+                };
+
+                var errorMessageKey = errorCodes[authenticateCustomerResult.status] || errorCodes.default;
+                var errorMessage = Resource.msg(errorMessageKey, 'login', null);
+
+                return {
+                    error: true,
+                    errorMessage: errorMessage,
+                    status: authenticateCustomerResult.status,
+                    authenticatedCustomer: null
+                };
+            }
+
+            return {
+                error: false,
+                errorMessage: null,
+                status: authenticateCustomerResult.status,
+                authenticatedCustomer: CustomerMgr.loginCustomer(authenticateCustomerResult, rememberMe)
+            };
         });
-        if (authenticatedCustomer && authenticatedCustomer.authenticated) {
-            res.setViewData({ authenticatedCustomer: authenticatedCustomer });
+
+        if (customerLoginResult.error) {
+            if (customerLoginResult.status === 'ERROR_CUSTOMER_LOCKED') {
+                var context = {
+                    customer: CustomerMgr.getCustomerByLogin(email) || null
+                };
+
+                var emailObj = {
+                    to: email,
+                    subject: Resource.msg('subject.account.locked.email', 'login', null),
+                    from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+                    type: emailHelpers.emailTypes.accountLocked
+                };
+
+                hooksHelper('app.customer.email', 'sendEmail', [emailObj, 'account/accountLockedEmail', context], function () {});
+            }
+
+            res.json({
+                error: [customerLoginResult.errorMessage || Resource.msg('error.message.login.form', 'login', null)]
+            });
+
+            return next();
+        }
+
+        if (customerLoginResult.authenticatedCustomer) {
+            res.setViewData({ authenticatedCustomer: customerLoginResult.authenticatedCustomer });
             res.json({
                 success: true,
-                redirectUrl: checkoutLogin
-                    ? URLUtils.url('Checkout-Begin').toString()
-                    : URLUtils.url('Account-Show').toString()
+                redirectUrl: accountHelpers.getLoginRedirectURL(req.querystring.rurl, req.session.privacyCache, false)
             });
+
+            req.session.privacyCache.set('args', null);
         } else {
             res.json({ error: [Resource.msg('error.message.login.form', 'login', null)] });
         }
@@ -254,7 +253,9 @@ server.post(
 
             this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
                 var Transaction = require('dw/system/Transaction');
-                var URLUtils = require('dw/web/URLUtils');
+                var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+                var authenticatedCustomer;
+                var serverError;
 
                 // getting variables for the BeforeComplete function
                 var registrationForm = res.getViewData(); // eslint-disable-line
@@ -262,35 +263,44 @@ server.post(
                 if (registrationForm.validForm) {
                     var login = registrationForm.email;
                     var password = registrationForm.password;
-                    var authenticatedCustomer;
 
                     // attempt to create a new user and log that user in.
                     try {
                         Transaction.wrap(function () {
+                            var error = {};
                             var newCustomer = CustomerMgr.createCustomer(login, password);
 
-                            if (newCustomer) {
+                            var authenticateCustomerResult = CustomerMgr.authenticateCustomer(login, password);
+                            if (authenticateCustomerResult.status !== 'AUTH_OK') {
+                                error = { authError: true, status: authenticateCustomerResult.status };
+                                throw error;
+                            }
+
+                            authenticatedCustomer = CustomerMgr.loginCustomer(authenticateCustomerResult, false);
+
+                            if (!authenticatedCustomer) {
+                                error = { authError: true, status: authenticateCustomerResult.status };
+                                throw error;
+                            } else {
                                 // assign values to the profile
                                 var newCustomerProfile = newCustomer.getProfile();
-                                authenticatedCustomer =
-                                    CustomerMgr.loginCustomer(login, password, false);
+
                                 newCustomerProfile.firstName = registrationForm.firstName;
                                 newCustomerProfile.lastName = registrationForm.lastName;
                                 newCustomerProfile.phoneHome = registrationForm.phone;
                                 newCustomerProfile.email = registrationForm.email;
                             }
-
-                            if (authenticatedCustomer === undefined) {
-                                registrationForm.validForm = false;
-                                registrationForm.form.customer.email.valid = false;
-                                registrationForm.form.customer.emailconfirm.valid = false;
-                            }
                         });
                     } catch (e) {
-                        registrationForm.validForm = false;
-                        registrationForm.form.customer.email.valid = false;
-                        registrationForm.form.customer.email.error =
-                            Resource.msg('error.message.username.invalid', 'forms', null);
+                        if (e.authError) {
+                            serverError = true;
+                        } else {
+                            registrationForm.validForm = false;
+                            registrationForm.form.customer.email.valid = false;
+                            registrationForm.form.customer.emailconfirm.valid = false;
+                            registrationForm.form.customer.email.error =
+                                Resource.msg('error.message.username.invalid', 'forms', null);
+                        }
                     }
                 }
 
@@ -298,14 +308,27 @@ server.post(
                 delete registrationForm.passwordConfirm;
                 formErrors.removeFormValues(registrationForm.form);
 
+                if (serverError) {
+                    res.setStatusCode(500);
+                    res.json({
+                        success: false,
+                        errorMessage: Resource.msg('error.message.unable.to.create.account', 'login', null)
+                    });
+
+                    return;
+                }
+
                 if (registrationForm.validForm) {
-                    res.setViewData({ authenticatedCustomer: authenticatedCustomer }); // eslint-disable-line block-scoped-var
+                    // send a registration email
+                    accountHelpers.sendCreateAccountEmail(authenticatedCustomer.profile);
+
+                    res.setViewData({ authenticatedCustomer: authenticatedCustomer });
                     res.json({
                         success: true,
-                        redirectUrl: URLUtils.url('Account-Show',
-                            'registration', 'submitted'
-                        ).toString()
+                        redirectUrl: accountHelpers.getLoginRedirectURL(req.querystring.rurl, req.session.privacyCache, true)
                     });
+
+                    req.session.privacyCache.set('args', null);
                 } else {
                     res.json({
                         fields: formErrors.getFormErrors(registrationForm)
@@ -365,6 +388,7 @@ server.post(
         var CustomerMgr = require('dw/customer/CustomerMgr');
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
+        var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
         var formErrors = require('*/cartridge/scripts/formErrors');
 
@@ -428,6 +452,9 @@ server.post(
                         profile.setEmail(formInfo.email);
                         profile.setPhoneHome(formInfo.phone);
                     });
+
+                    // Send account edited email
+                    accountHelpers.sendAccountEditedEmail(customer.profile);
 
                     delete formInfo.profileForm;
                     delete formInfo.email;
@@ -576,6 +603,7 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Resource = require('dw/web/Resource');
     var URLUtils = require('dw/web/URLUtils');
+    var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
     var email = req.form.loginEmail;
     var errorMsg;
@@ -591,7 +619,7 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
         if (isValid) {
             resettingCustomer = CustomerMgr.getCustomerByLogin(email);
             if (resettingCustomer) {
-                sendPasswordResetEmail(email, resettingCustomer);
+                accountHelpers.sendPasswordResetEmail(email, resettingCustomer);
             }
             res.json({
                 success: true,
@@ -667,10 +695,8 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
             var CustomerMgr = require('dw/customer/CustomerMgr');
             var URLUtils = require('dw/web/URLUtils');
-            var Mail = require('dw/net/Mail');
-            var Template = require('dw/util/Template');
             var Site = require('dw/system/Site');
-            var HashMap = require('dw/util/HashMap');
+            var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
 
             var formInfo = res.getViewData();
             var status;
@@ -699,23 +725,15 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
                     lastName: resettingCustomer.profile.lastName,
                     url: url
                 };
-                var passwordChangedEmail = new Mail();
-                var context = new HashMap();
-                Object.keys(objectForEmail).forEach(function (key) {
-                    context.put(key, objectForEmail[key]);
-                });
 
-                passwordChangedEmail.addTo(email);
-                passwordChangedEmail.setSubject(
-                    Resource.msg('subject.profile.resetpassword.email', 'login', null));
-                passwordChangedEmail.setFrom(
-                    Site.current.getCustomPreferenceValue('customerServiceEmail')
-                    || 'no-reply@salesforce.com');
+                var emailObj = {
+                    to: email,
+                    subject: Resource.msg('subject.profile.resetpassword.email', 'login', null),
+                    from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+                    type: emailHelpers.emailTypes.passwordReset
+                };
 
-                var template = new Template('account/password/passwordChangedEmail');
-                var content = template.render(context).text;
-                passwordChangedEmail.setContent(content, 'text/html', 'UTF-8');
-                passwordChangedEmail.send();
+                emailHelpers.sendEmail(emailObj, 'account/password/passwordChangedEmail', objectForEmail);
                 res.redirect(URLUtils.url('Login-Show'));
             }
         });
