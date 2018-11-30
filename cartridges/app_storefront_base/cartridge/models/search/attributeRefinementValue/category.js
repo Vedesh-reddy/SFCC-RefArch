@@ -2,7 +2,7 @@
 
 var BaseAttributeValue = require('*/cartridge/models/search/attributeRefinementValue/base');
 
-var ACTION_ENDPOINT = 'Search-Show';
+var ACTION_ENDPOINT = 'Search-ShowAjax';
 
 /**
  * @constructor

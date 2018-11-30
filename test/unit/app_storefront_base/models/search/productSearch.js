@@ -6,7 +6,7 @@ var sinon = require('sinon');
 var mockCollections = require('../../../../mocks/util/collections');
 
 describe('ProductSearch model', function () {
-    var endpointSearchShow = 'Search-Show';
+    var endpointSearchShow = 'Search-ShowAjax';
     var endpointSearchUpdateGrid = 'Search-UpdateGrid';
     var pluckValue = 'plucked';
     var spySetPageSize = sinon.spy();

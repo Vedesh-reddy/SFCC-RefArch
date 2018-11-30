@@ -7,6 +7,7 @@ var ProductSortOptions = require('*/cartridge/models/search/productSortOptions')
 var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
 
 var ACTION_ENDPOINT = 'Search-Show';
+var ACTION_ENDPOINT_AJAX = 'Search-ShowAjax';
 var DEFAULT_PAGE_SIZE = 12;
 
 
@@ -21,8 +22,8 @@ var DEFAULT_PAGE_SIZE = 12;
  */
 function getResetLink(search, httpParams) {
     return search.categorySearch
-        ? URLUtils.url(ACTION_ENDPOINT, 'cgid', httpParams.cgid)
-        : URLUtils.url(ACTION_ENDPOINT, 'q', httpParams.q);
+        ? URLUtils.url(ACTION_ENDPOINT_AJAX, 'cgid', httpParams.cgid)
+        : URLUtils.url(ACTION_ENDPOINT_AJAX, 'q', httpParams.q);
 }
 
 /**

@@ -98,4 +98,135 @@ describe('search helpers', function () {
             assert.isTrue(contentSearchSpy.calledWith(['jeans', 'shorts'], 2, 'denim', 0, null));
         });
     });
+
+    describe('search', function () {
+        var productSearchStub = sinon.stub();
+        var searchSpy = sinon.spy();
+        var categoryMock = {
+            parent: {
+                ID: 'root'
+            },
+            template: 'some template'
+        };
+        var productSearchModelMock = {
+            search: searchSpy,
+            getSearchRedirect: function () {
+                return {
+                    getLocation: function () {
+                        return 'some value';
+                    }
+                };
+            },
+            category: categoryMock
+        };
+        var searchHelpersMock3 = proxyquire(searchHelperPath, {
+            'dw/catalog/CatalogMgr': {
+                getSortingOptions: function () {
+                    return;
+                },
+                getSiteCatalog: function () {
+                    return { getRoot: function () { return; } };
+                },
+                getSortingRule: function (rule) {
+                    return rule;
+                },
+                getCategory: function () {
+                    return { ID: 'mens', online: true };
+                }
+            },
+            'dw/catalog/ProductSearchModel': function () {
+                return productSearchModelMock;
+            },
+            'dw/web/URLUtils': {
+                url: function () {
+                    return {
+                        append: function () {
+                            return 'some appened URL';
+                        }
+                    };
+                }
+            },
+            '*/cartridge/scripts/helpers/pageMetaHelper': {
+                setPageMetaTags: function () {
+                    return;
+                },
+                setPageMetaData: function () {
+                    return;
+                }
+            },
+            '*/cartridge/models/search/productSearch': productSearchStub,
+            '*/cartridge/scripts/reportingUrls': {
+                getProductSearchReportingURLs: function () {
+                    return ['something', 'something else'];
+                }
+            },
+            '*/cartridge/scripts/search/search': {
+                setProductProperties: function () {
+                    return;
+                },
+                addRefinementValues: function () {
+                    return;
+                }
+            }
+        });
+
+        var mockRequest1 = { querystring: {} };
+        var mockRequest2 = { querystring: { q: 'someValue' } };
+        var mockRequest3 = { querystring: { cgid: 'someCategory', preferences: 'preferences', pmin: 'pmin', pmax: 'pmax' } };
+
+        afterEach(function () {
+            productSearchStub.reset();
+            searchSpy.reset();
+        });
+
+        it('should category search', function () {
+            productSearchStub.returns({
+                isCategorySearch: true,
+                isRefinedCategorySearch: false
+            });
+            var result = searchHelpersMock3.search(mockRequest1);
+
+            assert.isTrue(searchSpy.calledOnce);
+            assert.equal(result.maxSlots, 4);
+            assert.deepEqual(result.category, {
+                parent: {
+                    ID: 'root'
+                },
+                template: 'some template'
+            });
+            assert.equal(result.categoryTemplate, 'some template');
+            assert.equal(result.reportingURLs.length, 2);
+        });
+
+        it('should search', function () {
+            productSearchStub.returns({
+                isCategorySearch: false,
+                isRefinedCategorySearch: false
+            });
+
+            categoryMock = null;
+
+            var result = searchHelpersMock3.search(mockRequest1);
+
+            assert.isTrue(searchSpy.calledOnce);
+            assert.equal(result.maxSlots, 4);
+            assert.equal(result.category, null);
+            assert.equal(result.categoryTemplate, null);
+            assert.equal(result.reportingURLs.length, 2);
+        });
+
+        it('should get a search redirect url', function () {
+            var result = searchHelpersMock3.search(mockRequest2);
+
+            assert.equal(result.searchRedirect, 'some value');
+            assert.isTrue(searchSpy.notCalled);
+            assert.equal(result.maxSlots, null);
+        });
+
+        it('should search with query string params', function () {
+            searchHelpersMock3.search(mockRequest3);
+
+            assert.isTrue(searchSpy.calledOnce);
+        });
+    });
 });

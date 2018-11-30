@@ -2,12 +2,12 @@
 
 var server = require('server');
 
-var CatalogMgr = require('dw/catalog/CatalogMgr');
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
 server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
@@ -31,6 +31,7 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
 });
 
 server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
@@ -51,107 +52,50 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
     });
 
     next();
-});
+}, pageMetaData.computedPageMetaData);
 
-
-server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
-    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
-    var URLUtils = require('dw/web/URLUtils');
-    var ProductSearch = require('*/cartridge/models/search/productSearch');
-    var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+server.get('ShowAjax', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
-    var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
 
-    var categoryTemplate = '';
-    var productSearch;
-    var isAjax = Object.hasOwnProperty.call(req.httpHeaders, 'x-requested-with')
-        && req.httpHeaders['x-requested-with'] === 'XMLHttpRequest';
-    var resultsTemplate = isAjax ? 'search/searchResultsNoDecorator' : 'search/searchResults';
-    var apiProductSearch = new ProductSearchModel();
-    var maxSlots = 4;
-    var reportingURLs;
-    var searchRedirect = req.querystring.q
-        ? apiProductSearch.getSearchRedirect(req.querystring.q)
-        : null;
+    var result = searchHelper.search(req);
 
-    if (searchRedirect) {
-        res.redirect(searchRedirect.getLocation());
+    if (result.searchRedirect) {
+        res.redirect(result.searchRedirect);
         return next();
     }
 
-    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
-    apiProductSearch.search();
-
-    categoryTemplate = searchHelper.getCategoryTemplate(apiProductSearch);
-    productSearch = new ProductSearch(
-        apiProductSearch,
-        req.querystring,
-        req.querystring.srule,
-        CatalogMgr.getSortingOptions(),
-        CatalogMgr.getSiteCatalog().getRoot()
-    );
-
-    pageMetaHelper.setPageMetaTags(req.pageMetaData, productSearch);
-
-    var refineurl = URLUtils.url('Search-Refinebar');
-    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule'];
-    var isRefinedSearch = false;
-    Object.keys(req.querystring).forEach(function (element) {
-        if (whitelistedParams.indexOf(element) > -1) {
-            refineurl.append(element, req.querystring[element]);
-        }
-
-        if (['pmin', 'pmax'].indexOf(element) > -1) {
-            isRefinedSearch = true;
-        }
-
-        if (element === 'preferences') {
-            var i = 1;
-            isRefinedSearch = true;
-            Object.keys(req.querystring[element]).forEach(function (preference) {
-                refineurl.append('prefn' + i, preference);
-                refineurl.append('prefv' + i, req.querystring[element][preference]);
-                i++;
-            });
-        }
+    res.render('search/searchResultsNoDecorator', {
+        productSearch: result.productSearch,
+        maxSlots: result.maxSlots,
+        reportingURLs: result.reportingURLs,
+        refineurl: result.refineurl
     });
 
-    if (productSearch.searchKeywords !== null && !isRefinedSearch) {
-        reportingURLs = reportingUrlsHelper.getProductSearchReportingURLs(productSearch);
+    return next();
+}, pageMetaData.computedPageMetaData);
+
+server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
+    var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
+    var template = 'search/searchResults';
+
+    var result = searchHelper.search(req);
+
+    if (result.searchRedirect) {
+        res.redirect(result.searchRedirect);
+        return next();
     }
 
-    if (
-        productSearch.isCategorySearch
-        && !productSearch.isRefinedCategorySearch
-        && categoryTemplate
-        && apiProductSearch.category.parent.ID === 'root'
-    ) {
-        pageMetaHelper.setPageMetaData(req.pageMetaData, productSearch.category);
-
-        if (isAjax) {
-            res.render(resultsTemplate, {
-                productSearch: productSearch,
-                maxSlots: maxSlots,
-                reportingURLs: reportingURLs,
-                refineurl: refineurl
-            });
-        } else {
-            res.render(categoryTemplate, {
-                productSearch: productSearch,
-                maxSlots: maxSlots,
-                category: apiProductSearch.category,
-                reportingURLs: reportingURLs,
-                refineurl: refineurl
-            });
-        }
-    } else {
-        res.render(resultsTemplate, {
-            productSearch: productSearch,
-            maxSlots: maxSlots,
-            reportingURLs: reportingURLs,
-            refineurl: refineurl
-        });
+    if (result.category && result.categoryTemplate) {
+        template = result.categoryTemplate;
     }
+
+    res.render(template, {
+        productSearch: result.productSearch,
+        maxSlots: result.maxSlots,
+        reportingURLs: result.reportingURLs,
+        refineurl: result.refineurl,
+        category: result.category ? result.category : null
+    });
 
     return next();
 }, pageMetaData.computedPageMetaData);

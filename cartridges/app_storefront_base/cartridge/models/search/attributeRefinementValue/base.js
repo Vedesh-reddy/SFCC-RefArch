@@ -2,7 +2,7 @@
 
 var Resource = require('dw/web/Resource');
 
-var ACTION_ENDPOINT = 'Search-Show';
+var ACTION_ENDPOINT = 'Search-ShowAjax';
 
 
 /**

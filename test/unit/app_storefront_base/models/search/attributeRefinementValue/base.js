@@ -38,7 +38,7 @@ describe('BaseAttributeValue model', function () {
         baseAttributeValue = new BaseAttributeValue(productSearch, refinementDefinition, refinementValue);
 
         assert.deepEqual(baseAttributeValue, {
-            actionEndpoint: 'Search-Show',
+            actionEndpoint: 'Search-ShowAjax',
             hitCount: 10,
             id: 'product 1',
             presentationId: 'prez',
