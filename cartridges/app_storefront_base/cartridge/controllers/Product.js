@@ -93,14 +93,20 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
     var context = {
         product: product,
         addToCartUrl: addToCartUrl,
-        resources: productHelper.getResources()
+        resources: productHelper.getResources(),
+        template: template
     };
 
-    var renderedTemplate = renderTemplateHelper.getRenderedHtml(context, template);
+    res.setViewData(context);
 
-    res.json({
-        renderedTemplate: renderedTemplate,
-        productUrl: URLUtils.url('Product-Show', 'pid', product.id).relative().toString()
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var viewData = res.getViewData();
+        var renderedTemplate = renderTemplateHelper.getRenderedHtml(viewData, viewData.template);
+
+        res.json({
+            renderedTemplate: renderedTemplate,
+            productUrl: URLUtils.url('Product-Show', 'pid', viewData.product.id).relative().toString()
+        });
     });
 
     next();
