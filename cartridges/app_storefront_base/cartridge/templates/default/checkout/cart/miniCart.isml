@@ -46,6 +46,9 @@
             </isloop>
         </div>
     </div>
+    
+    <isinclude template="cart/cartRemoveProductModal"/>
+    
     <div class="minicart-footer">
         <div class="row estimated-total">
             <div class="col-8">

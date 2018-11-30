@@ -12,5 +12,4 @@
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
-    <isinclude template="cart/cartRemoveProductModal"/>
 </isif>

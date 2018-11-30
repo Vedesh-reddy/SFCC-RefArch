@@ -374,6 +374,9 @@ module.exports = function () {
                     $('body').trigger('setShippingMethodSelection', data.basket);
                     validateBasket(data.basket);
                 }
+
+                $('body').trigger('cart:update');
+
                 $.spinner().stop();
             },
             error: function (err) {
@@ -416,6 +419,9 @@ module.exports = function () {
                 updateAvailability(data, uuid);
                 validateBasket(data);
                 $(this).data('pre-select-qty', quantity);
+
+                $('body').trigger('cart:update');
+
                 $.spinner().stop();
                 if ($(this).parents('.product-info').hasClass('bonus-product-line-item') && $('.cart-page').length) {
                     location.reload();
@@ -687,6 +693,8 @@ module.exports = function () {
                     }
 
                     validateBasket(data.cartModel);
+
+                    $('body').trigger('cart:update');
 
                     $.spinner().stop();
                 },
