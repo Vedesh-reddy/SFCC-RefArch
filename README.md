@@ -8,14 +8,9 @@ Storefront Reference Architecture supplies an [plugin_applepay](https://github.c
 Your feedback on the ease-of-use and limitations of this new architecture is invaluable during the developer preview. Particularly, feedback on any issues you encounter or workarounds you develop for efficiently customizing the base cartridge without editing it directly.
 
 
-# What's New
+# The latest version
 
-The latest version of SFRA is 3.2.0, which contains the following updates:
-
-* Multiship: a single basket filled with multiple products can now be shipped to multiple locations.
-* Fraud Detection Hook: a hook has been added that supports customized fraud detection.
-* Localization: several properties file resources were updated for French, Italian, Japanese, and Simplified Chinese.
-* SFRA and SGJC Data: a single sandbox can now simultaneously include sites for both SiteGenesis Javascript Controllers (SGJC) and Storefront Reference Architecture (SFRA) without any resulting data conflicts.
+The latest version of SFRA is 3.3.0
 
 # Getting Started
 
