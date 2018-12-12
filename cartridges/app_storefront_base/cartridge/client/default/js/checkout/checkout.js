@@ -176,8 +176,6 @@ var formHelpers = require('./formErrors');
                         data: paymentForm,
                         callback: function (data) { paymentForm = data; }
                     });
-                    // disable the next:Place Order button here
-                    $('body').trigger('checkout:disableButton', '.next-step-button button');
 
                     if ($('.data-checkout-stage').data('customer-type') === 'registered') {
                         // if payment method is credit card
@@ -205,6 +203,8 @@ var formHelpers = require('./formErrors');
                             }
                         }
                     }
+                     // disable the next:Place Order button here
+                    $('body').trigger('checkout:disableButton', '.next-step-button button');
 
                     $.ajax({
                         url: $('#dwfrm_billing').attr('action'),
