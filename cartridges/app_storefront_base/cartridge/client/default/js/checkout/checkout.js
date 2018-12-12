@@ -97,12 +97,16 @@ var formHelpers = require('./formErrors');
                     var form = $(formSelector);
 
                     if (isMultiShip && form.length === 0) {
+                        // disable the next:Payment button here
+                        $('body').trigger('checkout:disableButton', '.next-step-button button');
                         // in case the multi ship form is already submitted
                         var url = $('#checkout-main').attr('data-checkout-get-url');
                         $.ajax({
                             url: url,
                             method: 'GET',
                             success: function (data) {
+                                // enable the next:Payment button here
+                                $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 if (!data.error) {
                                     $('body').trigger('checkout:updateCheckoutView',
                                         { order: data.order, customer: data.customer });
@@ -119,6 +123,8 @@ var formHelpers = require('./formErrors');
                                 }
                             },
                             error: function () {
+                                // enable the next:Payment button here
+                                $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 // Server error submitting form
                                 defer.reject();
                             }
@@ -133,15 +139,20 @@ var formHelpers = require('./formErrors');
                                 shippingFormData = data;
                             }
                         });
-
+                        // disable the next:Payment button here
+                        $('body').trigger('checkout:disableButton', '.next-step-button button');
                         $.ajax({
                             url: form.attr('action'),
                             type: 'post',
                             data: shippingFormData,
                             success: function (data) {
+                                 // enable the next:Payment button here
+                                $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 shippingHelpers.methods.shippingFormResponse(defer, data);
                             },
                             error: function (err) {
+                                // enable the next:Payment button here
+                                $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 if (err.responseJSON.redirectUrl) {
                                     window.location.href = err.responseJSON.redirectUrl;
                                 }
@@ -165,6 +176,8 @@ var formHelpers = require('./formErrors');
                         data: paymentForm,
                         callback: function (data) { paymentForm = data; }
                     });
+                    // disable the next:Place Order button here
+                    $('body').trigger('checkout:disableButton', '.next-step-button button');
 
                     if ($('.data-checkout-stage').data('customer-type') === 'registered') {
                         // if payment method is credit card
@@ -198,6 +211,8 @@ var formHelpers = require('./formErrors');
                         method: 'POST',
                         data: paymentForm,
                         success: function (data) {
+                             // enable the next:Place Order button here
+                            $('body').trigger('checkout:enableButton', '.next-step-button button');
                             // look for field validation errors
                             if (data.error) {
                                 if (data.fieldErrors.length) {
@@ -243,6 +258,8 @@ var formHelpers = require('./formErrors');
                             }
                         },
                         error: function (err) {
+                            // enable the next:Place Order button here
+                            $('body').trigger('checkout:enableButton', '.next-step-button button');
                             if (err.responseJSON.redirectUrl) {
                                 window.location.href = err.responseJSON.redirectUrl;
                             }
@@ -251,10 +268,14 @@ var formHelpers = require('./formErrors');
 
                     return defer;
                 } else if (stage === 'placeOrder') {
+                    // disable the placeOrder button here
+                    $('body').trigger('checkout:disableButton', '.next-step-button button');
                     $.ajax({
                         url: $('.place-order').data('action'),
                         method: 'POST',
                         success: function (data) {
+                            // enable the placeOrder button here
+                            $('body').trigger('checkout:enableButton', '.next-step-button button');
                             if (data.error) {
                                 if (data.cartError) {
                                     window.location.href = data.redirectUrl;
@@ -280,6 +301,8 @@ var formHelpers = require('./formErrors');
                             }
                         },
                         error: function () {
+                            // enable the placeOrder button here
+                            $('body').trigger('checkout:enableButton', $('.next-step-button button'));
                         }
                     });
 
@@ -476,7 +499,21 @@ var exports = {
             billingHelpers.methods.updatePaymentInformation(data.order, data.options);
             summaryHelpers.updateOrderProductSummaryInformation(data.order, data.options);
         });
+    },
+
+    disableButton: function () {
+        $('body').on('checkout:disableButton', function (e, button) {
+            $(button).prop('disabled', true);
+        });
+    },
+
+    enableButton: function () {
+        $('body').on('checkout:enableButton', function (e, button) {
+            $(button).prop('disabled', false);
+        });
     }
+
+
 };
 
 [billingHelpers, shippingHelpers, addressHelpers].forEach(function (library) {
