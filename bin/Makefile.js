@@ -104,28 +104,6 @@ target.functional = function (args) {
     });
 };
 
-target.integration = function (args) {
-    var defaults = {
-        baseUrl: 'https://' + getSandboxUrl() + '/on/demandware.store/Sites-RefArch-Site/en_US'
-    };
-
-    var options = getOptions(defaults, args);
-    var optionsString = getOptionsString(options);
-
-    if (Object.keys(options).length < 2) {
-        optionsString += ' test/integration/*';
-    }
-
-    console.log(chalk.green('Running integration tests'));
-
-    var tests = spawn('./node_modules/.bin/_mocha --reporter spec ' + optionsString, { stdio: 'inherit', shell: true });
-
-    tests.on('exit', function (code) {
-        process.exit(code);
-    });
-
-};
-
 target.release = function (args) {
     if (!args) {
         console.log('No version type provided. Please specify release type patch/minor/major');

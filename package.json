@@ -10,7 +10,7 @@
     "test": "sgmf-scripts --test test/unit/**/*.js",
     "test:appium": "node bin/Makefile functional -- appium -- ",
     "cover": "sgmf-scripts --cover",
-    "test:integration": "node bin/Makefile integration -- ",
+    "test:integration": "sgmf-scripts --integration 'test/integration/**/*.js'",
     "test:functional": "node bin/Makefile functional -- ",
     "test:functional:docker": "bin/test-functional-docker.sh",
     "test:functional:sauce": "./node_modules/.bin/wdio test/functional/webdriver/wdio.conf.js ",
