@@ -5,6 +5,7 @@ var shippingHelpers = require('./shipping');
 var billingHelpers = require('./billing');
 var summaryHelpers = require('./summary');
 var formHelpers = require('./formErrors');
+var scrollAnimate = require('../components/scrollAnimate');
 
 
 /**
@@ -119,6 +120,7 @@ var formHelpers = require('./formErrors');
                                         '<span aria-hidden="true">&times;</span>' +
                                         '</button>' + errorMsg + '</div>';
                                     $('.shipping-error').append(errorHtml);
+                                    scrollAnimate($('.shipping-error'));
                                     defer.reject();
                                 }
                             },
@@ -227,6 +229,7 @@ var formHelpers = require('./formErrors');
                                     data.serverErrors.forEach(function (error) {
                                         $('.error-message').show();
                                         $('.error-message-text').text(error);
+                                        scrollAnimate($('.error-message'));
                                     });
                                 }
 

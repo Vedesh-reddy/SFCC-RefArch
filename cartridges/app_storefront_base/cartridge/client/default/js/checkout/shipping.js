@@ -2,6 +2,7 @@
 
 var addressHelpers = require('./address');
 var formHelpers = require('./formErrors');
+var scrollAnimate = require('../components/scrollAnimate');
 
 /**
  * updates the shipping address selector within shipping forms
@@ -458,6 +459,7 @@ function createErrorNotification(message) {
     '</button>' + message + '</div>';
 
     $('.shipping-error').append(errorHtml);
+    scrollAnimate($('.shipping-error'));
 }
 
 /**
@@ -502,7 +504,7 @@ function shippingFormResponse(defer, data) {
             order: data.order,
             customer: data.customer
         });
-
+        scrollAnimate($('.payment-form'));
         defer.resolve(data);
     }
 }

@@ -1,9 +1,9 @@
 'use strict';
 
+var scrollAnimate = require('./scrollAnimate');
+
 module.exports = function () {
     $('.back-to-top').click(function () {
-        $('html, body').animate({
-            scrollTop: 0
-        }, 500);
+        scrollAnimate();
     });
 };
