@@ -187,9 +187,11 @@ var scrollAnimate = require('../components/scrollAnimate');
                                     'selected-payment .saved-payment-security-code').val();
 
                                 if (cvvCode === '') {
-                                    $('.saved-payment-instrument.' +
+                                    var cvvElement = $('.saved-payment-instrument.' +
                                         'selected-payment ' +
-                                        '.form-control').addClass('is-invalid');
+                                        '.form-control');
+                                    cvvElement.addClass('is-invalid');
+                                    scrollAnimate(cvvElement);
                                     defer.reject();
                                     return defer;
                                 }
