@@ -257,6 +257,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                                     $('.cancel-new-payment').removeClass('checkout-hidden');
                                 }
 
+                                scrollAnimate();
                                 defer.resolve(data);
                             }
                         },
