@@ -94,7 +94,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                     //
                     var isMultiShip = $('#checkout-main').hasClass('multi-ship');
                     var formSelector = isMultiShip ?
-                            '.multi-shipping .active form' : '.single-shipping .shipping-form';
+                        '.multi-shipping .active form' : '.single-shipping .shipping-form';
                     var form = $(formSelector);
 
                     if (isMultiShip && form.length === 0) {
@@ -171,13 +171,33 @@ var scrollAnimate = require('../components/scrollAnimate');
 
                     formHelpers.clearPreviousErrors('.payment-form');
 
-                    var paymentForm = $('#dwfrm_billing').serialize();
+                    var billingAddressForm = $('#dwfrm_billing .billing-address-block').serialize();
 
                     $('body').trigger('checkout:serializeBilling', {
-                        form: $('#dwfrm_billing'),
-                        data: paymentForm,
-                        callback: function (data) { paymentForm = data; }
+                        form: $('#dwfrm_billing .billing-address-block'),
+                        data: billingAddressForm,
+                        callback: function (data) {
+                            if (data) {
+                                billingAddressForm = data;
+                            }
+                        }
                     });
+
+                    var activeTabId = $('.tab-pane.active').attr('id');
+                    var paymentInfoSelector = '#dwfrm_billing .' + activeTabId + ' .payment-form-fields';
+                    var paymentInfoForm = $(paymentInfoSelector).serialize();
+
+                    $('body').trigger('checkout:serializeBilling', {
+                        form: $(paymentInfoSelector),
+                        data: paymentInfoForm,
+                        callback: function (data) {
+                            if (data) {
+                                paymentInfoForm = data;
+                            }
+                        }
+                    });
+
+                    var paymentForm = billingAddressForm + '&' + paymentInfoForm;
 
                     if ($('.data-checkout-stage').data('customer-type') === 'registered') {
                         // if payment method is credit card
@@ -375,7 +395,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                     // checkoutStages array.
                     //
                     if (e.state === null ||
-                         checkoutStages.indexOf(e.state) < members.currentStage) {
+                        checkoutStages.indexOf(e.state) < members.currentStage) {
                         members.handlePrevStage(false);
                     } else if (checkoutStages.indexOf(e.state) > members.currentStage) {
                         // Forward button  pressed

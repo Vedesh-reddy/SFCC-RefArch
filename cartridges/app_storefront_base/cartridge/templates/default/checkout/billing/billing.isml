@@ -13,29 +13,33 @@
             data-address-mode="${!pdict.order.billing.billingAddress.address ? 'new' : 'edit'}"
             <isprint value=${pdict.forms.billingForm.attributes} encoding="off" /> novalidate>
 
-            <!-------------------------------------------------------------------------->
-            <!-- Billing Address Selector                                             -->
-            <!-------------------------------------------------------------------------->
-            <fieldset class="address-selector-block">
-                <div class="form-group">
-                    <label class="form-control-label" for="shipmentSelector">
-                        ${Resource.msg('heading.billing.address', 'checkout', null)}
-                    </label>
+            <fieldset class="billing-address-block">
+                <!-------------------------------------------------------------------------->
+                <!-- Billing Address Selector                                             -->
+                <!-------------------------------------------------------------------------->
+                <fieldset class="address-selector-block">
+                    <div class="form-group">
+                        <label class="form-control-label" for="shipmentSelector">
+                            ${Resource.msg('heading.billing.address', 'checkout', null)}
+                        </label>
 
-                    <isinclude template="checkout/billing/addressSelector" />
-                    <div class="invalid-feedback"></div>
-                    <div class="row">
-                        <a class="col-6 text-center btn-show-details">${Resource.msg('action.update.address', 'checkout', null)}</a>
-                        <a class="col-6 text-center btn-add-new">${Resource.msg('action.add.new', 'checkout', null)}</a>
+                        <isinclude template="checkout/billing/addressSelector" />
+                        <div class="invalid-feedback"></div>
+                        <div class="row">
+                            <a class="col-6 text-center btn-show-details">${Resource.msg('action.update.address', 'checkout', null)}</a>
+                            <a class="col-6 text-center btn-add-new">${Resource.msg('action.add.new', 'checkout', null)}</a>
+                        </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
 
-            <!-------------------------------------------------------------------------->
-            <!-- Billing Address                                                      -->
-            <!-------------------------------------------------------------------------->
-            <fieldset class="billing-address">
-                <isinclude template="checkout/billing/billingAddress" />
+                <!-------------------------------------------------------------------------->
+                <!-- Billing Address                                                      -->
+                <!-------------------------------------------------------------------------->
+                <fieldset class="billing-address">
+                    <isinclude template="checkout/billing/billingAddress" />
+                </fieldset>
+
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
             </fieldset>
 
             <!-------------------------------------------------------------------------->
@@ -45,7 +49,6 @@
                 <isinclude template="checkout/billing/paymentOptions" />
             </fieldset>
 
-            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
         </form>
     </div>
 </div>
