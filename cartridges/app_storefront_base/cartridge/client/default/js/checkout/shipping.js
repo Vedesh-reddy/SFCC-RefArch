@@ -518,16 +518,16 @@ function clearShippingForms(order) {
             var form = el.form;
             if (!form) return;
 
-            $('input[name$=_firstName]', form).val(null);
-            $('input[name$=_lastName]', form).val(null);
-            $('input[name$=_address1]', form).val(null);
-            $('input[name$=_address2]', form).val(null);
-            $('input[name$=_city]', form).val(null);
-            $('input[name$=_postalCode]', form).val(null);
-            $('select[name$=_stateCode],input[name$=_stateCode]', form).val(null);
-            $('select[name$=_country]', form).val(null);
+            $('input[name$=_firstName]', form).val('');
+            $('input[name$=_lastName]', form).val('');
+            $('input[name$=_address1]', form).val('');
+            $('input[name$=_address2]', form).val('');
+            $('input[name$=_city]', form).val('');
+            $('input[name$=_postalCode]', form).val('');
+            $('select[name$=_stateCode],input[name$=_stateCode]', form).val('');
+            $('select[name$=_country]', form).val('');
 
-            $('input[name$=_phone]', form).val(null);
+            $('input[name$=_phone]', form).val('');
 
             $('input[name$=_isGift]', form).prop('checked', false);
             $('textarea[name$=_giftMessage]', form).val('');
