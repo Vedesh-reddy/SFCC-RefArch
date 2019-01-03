@@ -106,7 +106,14 @@ function createFakeRequest(overrides) {
                     lastName: 'Snow',
                     ID: 'Home',
                     postalCode: '02125',
-                    stateCode: 'MA'
+                    stateCode: 'MA',
+                    postBox: '2134',
+                    salutation: null,
+                    secondName: null,
+                    suffix: null,
+                    suite: '302',
+                    title: 'Dr'
+
                 }
             }
         },
@@ -276,12 +283,36 @@ describe('request', function () {
             'Home'
         );
         assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.stateCode,
+            'MA'
+        );
+        assert.equal(
             req.currentCustomer.addressBook.preferredAddress.postalCode,
             '02125'
         );
         assert.equal(
-            req.currentCustomer.addressBook.preferredAddress.stateCode,
-            'MA'
+            req.currentCustomer.addressBook.preferredAddress.postBox,
+            '2134'
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.salutation,
+            null
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.secondName,
+            null
+        );
+        assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.suffix,
+            null
+        );
+         assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.suite,
+            '302'
+        );
+         assert.equal(
+            req.currentCustomer.addressBook.preferredAddress.title,
+            'Dr'
         );
     });
 

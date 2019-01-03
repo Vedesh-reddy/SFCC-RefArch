@@ -119,7 +119,13 @@ function getAddressObject(address) {
             ID: address.ID,
             phone: address.phone,
             postalCode: address.postalCode,
-            stateCode: address.stateCode
+            stateCode: address.stateCode,
+            postBox: address.postBox,
+            salutation: address.salutation,
+            secondName: address.secondName,
+            suffix: address.suffix,
+            suite: address.suite,
+            title: address.title
         };
     }
     return null;
