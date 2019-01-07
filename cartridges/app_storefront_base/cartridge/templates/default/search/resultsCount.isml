@@ -15,7 +15,7 @@
             ${pdict.productSearch.searchKeywords ? pdict.productSearch.searchKeywords : ''}
         </span>
     </p>
-    <isif condition="${pdict.productSearch.isSearchSuggestionsAvailable}">
+    <isif condition="${pdict.productSearch.isSearchSuggestionsAvailable && pdict.productSearch.productIds.length === 0}">
         <isloop items="${pdict.productSearch.suggestionPhrases}" alias="phrase" status="loopState" >
             <isif condition="${loopState.first}">
                 <p>

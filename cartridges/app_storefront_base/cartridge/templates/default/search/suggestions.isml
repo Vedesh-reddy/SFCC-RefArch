@@ -2,11 +2,12 @@
     <div class="container">
 
         <isif condition="${pdict.suggestions.product && pdict.suggestions.product.phrases.length > 0}">
-            <div class="row justify-content-end header">
-                <div class="col-xs-12 col-sm-10 do-you-mean">${Resource.msg('label.suggest.doyoumean', 'search', null)}</div>
-            </div>
-            <div class="row items">
-                <isloop items="${pdict.suggestions.product.phrases}" var="phrase">
+          <isloop items="${pdict.suggestions.product.phrases}" var="phrase">
+            <isif condition="${!phrase.exactMatch}">
+	            <div class="row justify-content-end header">
+	                <div class="col-xs-12 col-sm-10 do-you-mean">${Resource.msg('label.suggest.doyoumean', 'search', null)}</div>
+	            </div>           
+	            <div class="row items">                
                     <div class="col-12 item term">
                         <div class="row justify-content-end">
                             <div class="col-xs-12 col-sm-10">
@@ -15,9 +16,10 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                </isloop>
-            </div>
+                    </div>                
+	            </div>
+              </isif>
+           </isloop>
         </isif>
 
         <isif condition="${pdict.suggestions.product && pdict.suggestions.product.available}">
