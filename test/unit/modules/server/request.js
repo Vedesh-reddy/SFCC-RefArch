@@ -306,11 +306,11 @@ describe('request', function () {
             req.currentCustomer.addressBook.preferredAddress.suffix,
             null
         );
-         assert.equal(
+        assert.equal(
             req.currentCustomer.addressBook.preferredAddress.suite,
             '302'
         );
-         assert.equal(
+        assert.equal(
             req.currentCustomer.addressBook.preferredAddress.title,
             'Dr'
         );
