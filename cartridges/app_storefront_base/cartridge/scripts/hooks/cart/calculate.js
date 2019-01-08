@@ -1,14 +1,13 @@
 /* eslint-disable */
 'use strict';
 
+/** @module calculate */
 /**
- * @module calculate.js
- *
  * This javascript file implements methods (via Common.js exports) that are needed by
  * the new (smaller) CalculateCart.ds script file.  This allows OCAPI calls to reference
  * these tools via the OCAPI 'hook' mechanism
- *
  */
+
 var HashMap = require('dw/util/HashMap');
 var PromotionMgr = require('dw/campaign/PromotionMgr');
 var ShippingMgr = require('dw/order/ShippingMgr');

@@ -16,7 +16,7 @@ var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
  *
  * @param {dw.catalog.ProductOptionModel} optionModel - A product's option model
  * @param {dw.catalog.ProductOption} option - A product's option
- * @param {dw.util.Collection <dw.catalog.ProductOptionValue>} optionValues - Product option values
+ * @param {dw.util.Collection<dw.catalog.ProductOptionValue>} optionValues - Product option values
  * @param {Object} attributeVariables - Variation attribute query params
  * @return {ProductOptionValues} - View model for a product option's values
  */
@@ -236,10 +236,10 @@ function getConfig(apiProduct, params) {
 /**
  * Retrieve product's options and default selected values from product line item
  *
- * @param {dw.util.Collection.<dw.order.ProductLineItem>} optionProductLineItems - Option product
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} optionProductLineItems - Option product
  *     line items
  * @param {string} productId - Line item product ID
- * @return {string []} - Product line item options
+ * @return {string[]} - Product line item options
  */
 function getLineItemOptions(optionProductLineItems, productId) {
     return collections.map(optionProductLineItems, function (item) {
@@ -255,8 +255,8 @@ function getLineItemOptions(optionProductLineItems, productId) {
  * Retrieve product's options and default values
  *
  * @param {dw.catalog.ProductOptionModel} optionModel - A product's option model
- * @param {dw.util.Collection.<dw.catalog.ProductOption>} options - A product's configured options
- * @return {string []} - Product line item options
+ * @param {dw.util.Collection<dw.catalog.ProductOption>} options - A product's configured options
+ * @return {string[]} - Product line item options
  */
 function getDefaultOptions(optionModel, options) {
     return collections.map(options, function (option) {
@@ -268,7 +268,7 @@ function getDefaultOptions(optionModel, options) {
 /**
  * Retrieve product's options default selected values, id and name from product line item
  *
- * @param {dw.util.Collection.<dw.order.ProductLineItem>} optionProductLineItems - Option product
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} optionProductLineItems - Option product
  *     line items
  * @return {string[]} - Product line item option display values, id and name
  */
