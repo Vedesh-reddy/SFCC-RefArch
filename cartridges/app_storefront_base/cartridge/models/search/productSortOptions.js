@@ -34,11 +34,11 @@ function getSortingOptions(productSearch, sortingOptions, pagingModel) {
  *
  * @param {dw.catalog.ProductSearchModel} productSearch - Product search instance
  * @param {dw.catalog.Category} rootCategory - Catalog's root category
- * @return {string} - Sort rule ID
+ * @return {string} - Sort rule ID or null if no default sorting rule specified
  */
 function getSortRuleDefault(productSearch, rootCategory) {
     var category = productSearch.category ? productSearch.category : rootCategory;
-    return category.defaultSortingRule.ID;
+    return category.defaultSortingRule ? category.defaultSortingRule.ID : null;
 }
 
 /**

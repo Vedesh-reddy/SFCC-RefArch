@@ -84,4 +84,15 @@ describe('ProductSortOptions model', function () {
         var productSortOptions = new ProductSortOptions(productSearch, null, sortingOptions, null, pagingModel);
         assert.isTrue(productSortOptions.ruleId === productSearch.category.defaultSortingRule.ID);
     });
+
+    it('should set rule ID to \'null\' when no rule provided and there is no default rule for category', function () {
+        var productSearchWithNoCategoryDefaultSortingRule = {
+            category: {
+                defaultSortingRule: null
+            },
+            urlSortingRule: productSearch.urlSortingRule
+        };
+        var productSortOptions = new ProductSortOptions(productSearchWithNoCategoryDefaultSortingRule, null, sortingOptions, rootCategory, pagingModel);
+        assert.isTrue(productSortOptions.ruleId === null);
+    });
 });
