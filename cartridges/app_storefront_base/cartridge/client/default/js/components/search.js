@@ -62,14 +62,14 @@ function tearDownSuggestions() {
  * @param {string} action - Action to toggle to
  */
 function toggleSuggestionsIcon(action) {
-    var mobileSearchIcon = '.search-mobile span.';
+    var mobileSearchIcon = '.search-mobile button.';
     var iconSearch = 'fa-search';
     var iconSearchClose = 'fa-close';
 
     if (action === 'close') {
-        $(mobileSearchIcon + iconSearch).removeClass(iconSearch).addClass(iconSearchClose);
+        $(mobileSearchIcon + iconSearch).removeClass(iconSearch).addClass(iconSearchClose).attr('type', 'button');
     } else {
-        $(mobileSearchIcon + iconSearchClose).removeClass(iconSearchClose).addClass(iconSearch);
+        $(mobileSearchIcon + iconSearchClose).removeClass(iconSearchClose).addClass(iconSearch).attr('type', 'submit');
     }
 }
 
@@ -127,6 +127,7 @@ function processResponse(response) {
 
     if (!(typeof (response) === 'object')) {
         $suggestionsWrapper.append(response).show();
+        $(this).siblings('.reset-button').addClass('d-sm-block');
         positionSuggestions(this);
 
         if (isMobileSearch(this)) {
@@ -155,6 +156,7 @@ function getSuggestions(scope) {
         });
     } else {
         toggleSuggestionsIcon('search');
+        $(scope).siblings('.reset-button').removeClass('d-sm-block');
         clearModals();
         getSuggestionsWrapper(scope).empty();
     }
@@ -180,9 +182,14 @@ module.exports = function () {
         }
     });
 
-    $('body').on('click touchend', '.search-mobile span.fa-close', function () {
+    $('body').on('click touchend', '.search-mobile button.fa-close', function (e) {
+        e.preventDefault();
         $('.suggestions').hide();
         toggleSuggestionsIcon('search');
         tearDownSuggestions();
     });
+
+    $('.site-search .reset-button').on('click', function () {
+        $(this).removeClass('d-sm-block');
+    })
 };

@@ -1,6 +1,7 @@
 <div class="site-search">
     <form role="search" action="${URLUtils.url('Search-Show')}" method="get" name="simpleSearch">
-        <span class="fa fa-search"></span>
+        <button type="submit" name="search-button" class="fa fa-search"></button>
+        <button type="reset" name="reset-button" class="fa fa-times reset-button d-none"></button>
         <input class="form-control search-field"
                type="search"
                name="q"
@@ -11,7 +12,4 @@
         <div class="suggestions-wrapper" data-url="${URLUtils.url('SearchServices-GetSuggestions', 'q')}"></div>
         <input type="hidden" value="${pdict.locale}" name="lang">
     </form>
-</div>
-<div class="search-button">
-    <i class="fa fa-search"></i>
 </div>
