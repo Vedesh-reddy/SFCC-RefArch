@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <isif condition="${pdict.showMap === 'false'}">
+    <isif condition="${pdict.showMap === false || pdict.showMap === 'false'}">
         <div class="row">
             <div class="${pdict.horizontalView === 'true' ? 'col-sm-6' : 'col-sm-12'}">
                 <button class="btn btn-primary btn-block select-store" disabled>${Resource.msg('button.select.store','storeLocator',null)}</button>
