@@ -61,9 +61,14 @@ function formField(field) {
         bool: ['checked', 'selected'],
         int: ['maxValue', 'minValue'],
         common: ['htmlValue', 'mandatory',
-            'dynamicHtmlName', 'htmlName', 'valid'],
+            'dynamicHtmlName', 'htmlName', 'valid'
+        ],
         resources: ['error', 'description', 'label']
     };
+
+    if (field.type === field.FIELD_TYPE_BOOLEAN && field.mandatory && !field.checked) {
+        field.invalidateFormElement();
+    }
 
     attributesToCopy.common.forEach(function (item) {
         if (item !== 'valid') {
