@@ -191,5 +191,5 @@ module.exports = function () {
 
     $('.site-search .reset-button').on('click', function () {
         $(this).removeClass('d-sm-block');
-    })
+    });
 };
