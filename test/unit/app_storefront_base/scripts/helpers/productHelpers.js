@@ -166,6 +166,16 @@ describe('Helpers - Product', function () {
             assert.equal(result.resources.info_selectforstock, 'some string');
         });
 
+        it('should return with canonicalUrl', function () {
+            var prodMock = { productType: 'variant', id: '12345' };
+
+            stubProductFactoryGet.returns(prodMock);
+            stubGetProduct.returns(apiProductMock);
+
+            var result = productHelpers.showProductPage({}, {});
+            assert.equal(result.canonicalUrl, 'some url');
+        });
+
         it('should with product/bundleDetails template', function () {
             var prodMock = { productType: 'bundle', id: 'bundle' };
 

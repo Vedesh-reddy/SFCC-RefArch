@@ -9,6 +9,9 @@
             <isinclude sf-toolkit="off" template="/common/scripts" />
         <!--<![endif]-->
         <isinclude template="/common/htmlHead" />
+        <isif condition="${pdict.canonicalUrl}" >
+            <link rel="canonical" href="${pdict.canonicalUrl}"/>
+        </isif>
         <isactivedatahead/>
     </head>
     <body>

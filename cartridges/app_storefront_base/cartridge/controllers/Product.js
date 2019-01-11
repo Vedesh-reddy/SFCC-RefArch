@@ -28,7 +28,8 @@ server.get('Show', cache.applyPromotionSensitiveCache, consentTracking.consent, 
             product: showProductPageHelperResult.product,
             addToCartUrl: showProductPageHelperResult.addToCartUrl,
             resources: showProductPageHelperResult.resources,
-            breadcrumbs: showProductPageHelperResult.breadcrumbs
+            breadcrumbs: showProductPageHelperResult.breadcrumbs,
+            canonicalUrl: showProductPageHelperResult.canonicalUrl
         });
     }
     next();

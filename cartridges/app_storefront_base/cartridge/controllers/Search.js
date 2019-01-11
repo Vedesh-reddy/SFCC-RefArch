@@ -94,7 +94,8 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
         maxSlots: result.maxSlots,
         reportingURLs: result.reportingURLs,
         refineurl: result.refineurl,
-        category: result.category ? result.category : null
+        category: result.category ? result.category : null,
+        canonicalUrl: result.canonicalUrl
     });
 
     return next();

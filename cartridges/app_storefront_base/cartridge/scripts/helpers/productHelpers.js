@@ -347,6 +347,7 @@ function showProductPage(querystring, reqPageMetaData) {
     var params = querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
+    var canonicalUrl = URLUtils.url('Product-Show', 'pid', product.id);
     var breadcrumbs = getAllBreadcrumbs(null, product.id, []).reverse();
     var template = (product.template) ? product.template : 'product/productDetails';
 
@@ -364,7 +365,8 @@ function showProductPage(querystring, reqPageMetaData) {
         product: product,
         addToCartUrl: addToCartUrl,
         resources: getResources(),
-        breadcrumbs: breadcrumbs
+        breadcrumbs: breadcrumbs,
+        canonicalUrl: canonicalUrl
     };
 }
 

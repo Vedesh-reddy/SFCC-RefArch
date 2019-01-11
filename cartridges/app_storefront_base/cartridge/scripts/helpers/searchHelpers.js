@@ -96,6 +96,7 @@ function search(req) {
 
     pageMetaHelper.setPageMetaTags(req.pageMetaData, productSearch);
 
+    var canonicalUrl = URLUtils.url('Search-Show', 'cgid', req.querystring.cgid);
     var refineurl = URLUtils.url('Search-Refinebar');
     var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule'];
     var isRefinedSearch = false;
@@ -128,7 +129,8 @@ function search(req) {
         productSearch: productSearch,
         maxSlots: maxSlots,
         reportingURLs: reportingURLs,
-        refineurl: refineurl
+        refineurl: refineurl,
+        canonicalUrl: canonicalUrl
     };
 
     if (productSearch.isCategorySearch && !productSearch.isRefinedCategorySearch && categoryTemplate && apiProductSearch.category.parent.ID === 'root') {

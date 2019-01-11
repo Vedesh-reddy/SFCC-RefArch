@@ -196,6 +196,7 @@ describe('search helpers', function () {
             });
             assert.equal(result.categoryTemplate, 'some template');
             assert.equal(result.reportingURLs.length, 2);
+            assert.isDefined(result.canonicalUrl);
         });
 
         it('should search', function () {
