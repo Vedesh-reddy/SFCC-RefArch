@@ -40,7 +40,7 @@ describe('ProductVariation - Get product variation with master product ID and pa
                 'options': [],
                 'selectedProductUrl': '/on/demandware.store/Sites-RefArch-Site/en_US/Product-Show?pid=25604455M&dwvar_25604455M_color=SLABLFB&dwvar_25604455M_size=155',
                 'minOrderQuantity': 1,
-                'maxOrderQuantity': 9,
+                'maxOrderQuantity': 10,
                 'selectedQuantity': 1,
                 'sizeChartId': null,
                 'variationAttributes': [

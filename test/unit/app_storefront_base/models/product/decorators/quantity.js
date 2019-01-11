@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 var productMock = {
     minOrderQuantity: {
@@ -9,7 +10,11 @@ var productMock = {
 };
 
 describe('product quantity decorator', function () {
-    var quantity = require('../../../../../../cartridges/app_storefront_base/cartridge/models/product/decorators/quantity');
+    var quantity = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/product/decorators/quantity', {
+        '*/cartridge/config/preferences': {
+            maxOrderQty: 10
+        }
+    });
 
     it('should create a property on the passed in object called selectedQuantity', function () {
         var object = {};
@@ -50,6 +55,6 @@ describe('product quantity decorator', function () {
         var object = {};
         quantity(object, productMock, 1);
 
-        assert.equal(object.maxOrderQuantity, 9);
+        assert.equal(object.maxOrderQuantity, 10);
     });
 });

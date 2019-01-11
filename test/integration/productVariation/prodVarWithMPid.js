@@ -38,7 +38,7 @@ describe('ProductVariation - Get product variation with only master product ID',
                 'selectedQuantity': 1,
                 'selectedProductUrl': '/on/demandware.store/Sites-RefArch-Site/en_US/Product-Show?pid=25604455M',
                 'minOrderQuantity': 1,
-                'maxOrderQuantity': 9,
+                'maxOrderQuantity': 10,
                 'sizeChartId': null,
                 'variationAttributes': [
                     {

@@ -4,7 +4,10 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 var quantityOptions = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/productLineItem/decorators/quantityOptions', {
-    'dw/catalog/ProductInventoryMgr': require('../../../../../mocks/dw/catalog/ProductInventoryMgr')
+    'dw/catalog/ProductInventoryMgr': require('../../../../../mocks/dw/catalog/ProductInventoryMgr'),
+    '*/cartridge/config/preferences': {
+        maxOrderQty: 10
+    }
 });
 
 describe('product line item quantity options decorator', function () {

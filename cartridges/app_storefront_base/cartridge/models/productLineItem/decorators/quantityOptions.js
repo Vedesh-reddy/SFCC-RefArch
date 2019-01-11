@@ -1,6 +1,8 @@
 'use strict';
 
 var ProductInventoryMgr = require('dw/catalog/ProductInventoryMgr');
+var preferences = require('*/cartridge/config/preferences');
+var DEFAULT_MAX_ORDER_QUANTITY = preferences.maxOrderQty || 10;
 
 /**
  * get the min and max numbers to display in the quantity drop down.
@@ -16,7 +18,7 @@ function getMinMaxQuantityOptions(productLineItem, quantity) {
         availableToSell = inventoryRecord.ATS.value;
     }
 
-    var max = Math.max(Math.min(availableToSell, 10), quantity);
+    var max = Math.max(Math.min(availableToSell, DEFAULT_MAX_ORDER_QUANTITY), quantity);
 
     return {
         minOrderQuantity: productLineItem.product.minOrderQuantity.value || 1,
