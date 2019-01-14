@@ -532,7 +532,7 @@ function sendConfirmationEmail(order, locale) {
 
     var currentLocale = Locale.getLocale(locale);
 
-    var orderModel = new OrderModel(order, { countryCode: currentLocale.country });
+    var orderModel = new OrderModel(order, { countryCode: currentLocale.country, containerView: 'order' });
 
     var orderObject = { order: orderModel };
 
