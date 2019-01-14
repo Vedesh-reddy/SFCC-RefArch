@@ -25,15 +25,17 @@
     .fa-search {
         position: absolute;
         border: none;
-        top: 0.375em; /* 6/16 */
-        right: 0.0625em; /* 1/16 */
+        top: 0.5625em; /* 9/16 */
+        right: 0.5625em; /* 9/16 */
+        padding: 0;
     }
 
     .reset-button {
         position: absolute;
         border: none;
-        top: 0.375em; /* 6/16 */
+        top: 0.5625em; /* 9/16 */
         right: 2em; /* 32/16 */
+        padding: 0;
     }
 
     input {
