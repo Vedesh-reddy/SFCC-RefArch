@@ -294,6 +294,26 @@ describe('Product Factory', function () {
         assert.isTrue(stubProductBundle.calledWith({}, options.apiProduct, options, productFactory));
     });
 
+    it('should return empty product model for invalid productid', function () {
+        var params = {
+            pid: 'someID'
+        };
+        options = {
+            variationModel: undefined,
+            options: undefined,
+            optionModel: undefined,
+            promotions: undefined,
+            quantity: undefined,
+            variables: undefined,
+            apiProduct: undefined,
+            productType: undefined
+        };
+        var result = productFactory.get(params);
+
+        assert.equal(result, 'full product');
+        assert.isTrue(stubFullProduct.calledWith({}, options.apiProduct, options));
+    });
+
     it('should return full product model for product type master with variables and variation model type master', function () {
         var params = {
             pid: 'someID',

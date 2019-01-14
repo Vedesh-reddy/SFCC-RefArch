@@ -18,9 +18,12 @@ var bundleOrderLineItem = require('*/cartridge/models/productLineItem/bundleOrde
 module.exports = {
     get: function (params) {
         var productId = params.pid;
-        var apiProduct = ProductMgr.getProduct(productId);
-        var productType = productHelper.getProductType(apiProduct);
         var product = Object.create(null);
+        var apiProduct = ProductMgr.getProduct(productId);
+        if (apiProduct === null) {
+            return product;
+        }
+        var productType = productHelper.getProductType(apiProduct);
         var options = null;
         var promotions;
 
