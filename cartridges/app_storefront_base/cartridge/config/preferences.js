@@ -2,4 +2,4 @@
 
 module.exports = {
     maxOrderQty: 10
-}
+};
