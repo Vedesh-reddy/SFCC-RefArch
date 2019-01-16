@@ -156,7 +156,7 @@ function OrderModel(lineItemContainer, options) {
             ? lineItemContainer.status
             : null;
         this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
-                lineItemContainer.productQuantityTotal : null;
+            lineItemContainer.productQuantityTotal : null;
 
         if (modelConfig.numberOfLineItems === '*') {
             this.totals = totalsModel;

@@ -29,7 +29,7 @@ function categoryToObject(category) {
         id: category.ID
     };
     var subCategories = category.hasOnlineSubCategories() ?
-            category.getOnlineSubCategories() : null;
+        category.getOnlineSubCategories() : null;
 
     if (subCategories) {
         collections.forEach(subCategories, function (subcategory) {

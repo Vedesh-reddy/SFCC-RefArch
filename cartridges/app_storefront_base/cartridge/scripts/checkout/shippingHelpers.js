@@ -139,7 +139,7 @@ function ensureShipmentHasMethod(shipment) {
         var defaultMethod = ShippingMgr.getDefaultShippingMethod();
 
         if (!defaultMethod) {
-			// If no defaultMethod set, just use the first one
+            // If no defaultMethod set, just use the first one
             shippingMethod = getFirstApplicableShippingMethod(methods, true);
         } else {
             // Look for defaultMethod in applicableMethods

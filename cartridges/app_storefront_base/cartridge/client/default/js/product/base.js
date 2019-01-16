@@ -451,7 +451,7 @@ function handlePostCartAdd(response) {
     } else {
         if ($('.add-to-cart-messages').length === 0) {
             $('body').append(
-            '<div class="add-to-cart-messages"></div>'
+                '<div class="add-to-cart-messages"></div>'
             );
         }
 
@@ -739,7 +739,7 @@ module.exports = {
                     $.spinner().stop();
                     if (data.error) {
                         $('.error-choice-of-bonus-products')
-                        .html(data.errorMessage);
+                            .html(data.errorMessage);
                     } else {
                         $('.configure-bonus-product-attributes').html(data);
                         $('.bonus-products-step2').removeClass('hidden-xl-down');
@@ -747,8 +747,8 @@ module.exports = {
 
                         if ($('.add-to-cart-messages').length === 0) {
                             $('body').append(
-                            '<div class="add-to-cart-messages"></div>'
-                         );
+                                '<div class="add-to-cart-messages"></div>'
+                            );
                         }
                         $('.minicart-quantity').html(data.totalQty);
                         $('.add-to-cart-messages').append(

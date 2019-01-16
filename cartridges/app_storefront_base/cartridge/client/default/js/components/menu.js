@@ -88,10 +88,10 @@ module.exports = function () {
                 parentMenu.children().first().focus();
             }
         },
-            function () {
-                return $(this).parent();
-            }
-        );
+        function () {
+            return $(this).parent();
+        }
+    );
 
     $('.dropdown:not(.disabled) [data-toggle="dropdown"]')
         .on('click', function (e) {

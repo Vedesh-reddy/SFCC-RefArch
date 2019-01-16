@@ -108,7 +108,7 @@ server.post(
             };
 
             if (Object.prototype.hasOwnProperty
-                    .call(form.shippingAddress.addressFields, 'states')) {
+                .call(form.shippingAddress.addressFields, 'states')) {
                 result.address.stateCode =
                     form.shippingAddress.addressFields.states.stateCode.value;
             }
@@ -118,7 +118,7 @@ server.post(
 
             result.shippingMethod =
                 form.shippingAddress.shippingMethodID.value ?
-                '' + form.shippingAddress.shippingMethodID.value : null;
+                    '' + form.shippingAddress.shippingMethodID.value : null;
             result.form = form;
 
             result.isGift = form.shippingAddress.isGift.checked;

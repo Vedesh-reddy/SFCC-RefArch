@@ -39,7 +39,7 @@ module.exports = function (object, hit) {
                             hit.productID,
                             'dwvar_' + hit.productID + '_color',
                             color.value
-                            ).toString()
+                        ).toString()
                     };
                 })
             }];

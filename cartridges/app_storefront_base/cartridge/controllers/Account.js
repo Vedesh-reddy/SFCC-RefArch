@@ -426,18 +426,19 @@ server.post(
 
                 Transaction.wrap(function () {
                     status = profile.credentials.setPassword(
-                            formInfo.password,
-                            formInfo.password,
-                            true
+                        formInfo.password,
+                        formInfo.password,
+                        true
                     );
+
                     if (status.error) {
                         formInfo.profileForm.login.password.valid = false;
                         formInfo.profileForm.login.password.error =
                             Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
                     } else {
                         customerLogin = profile.credentials.setLogin(
-                                formInfo.email,
-                                formInfo.password
+                            formInfo.email,
+                            formInfo.password
                         );
                     }
                 });

@@ -101,8 +101,8 @@ function Handle(basket, paymentInformation) {
         paymentInstrument.setCreditCardExpirationYear(expirationYear);
         paymentInstrument.setCreditCardToken(
             paymentInformation.creditCardToken
-            ? paymentInformation.creditCardToken
-            : createToken()
+                ? paymentInformation.creditCardToken
+                : createToken()
         );
     });
 

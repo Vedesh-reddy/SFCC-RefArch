@@ -99,7 +99,7 @@ server.post('AddProduct', function (req, res, next) {
             previousBonusDiscountLineItems,
             urlObject,
             result.uuid
-    );
+        );
     if (newBonusDiscountLineItem) {
         var allLineItems = currentBasket.allProductLineItems;
         var collections = require('*/cartridge/scripts/util/collections');
@@ -619,13 +619,15 @@ server.post('AddBonusProducts', function (req, res, next) {
                     var product = ProductMgr.getProduct(bonusProduct.pid);
                     var selectedOptions = bonusProduct.options;
                     var optionModel = productHelper.getCurrentOptionModel(
-                            product.optionModel,
-                            selectedOptions);
+                        product.optionModel,
+                        selectedOptions
+                    );
                     pli = currentBasket.createBonusProductLineItem(
-                            bonusDiscountLineItem,
-                            product,
-                            optionModel,
-                            null);
+                        bonusDiscountLineItem,
+                        product,
+                        optionModel,
+                        null
+                    );
                     pli.setQuantityValue(bonusProduct.qty);
                     pli.custom.bonusProductLineItemUUID = pliUUID;
                 });

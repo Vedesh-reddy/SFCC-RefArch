@@ -27,7 +27,7 @@ server.get(
             }
         } else {
             Logger.warn('Content asset with ID {0} was included but not found',
-                    req.querystring.cid);
+                req.querystring.cid);
 
             res.render('/components/content/offlineContent');
         }
@@ -45,7 +45,7 @@ server.get(
         var siteRootCategory = catalogMgr.getSiteCatalog().getRoot();
 
         var topLevelCategories = siteRootCategory.hasOnlineSubCategories() ?
-                siteRootCategory.getOnlineSubCategories() : null;
+            siteRootCategory.getOnlineSubCategories() : null;
 
         res.render('/components/header/menu', new Categories(topLevelCategories));
         next();
