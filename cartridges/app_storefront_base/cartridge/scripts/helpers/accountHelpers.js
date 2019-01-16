@@ -85,7 +85,7 @@ function sendPasswordResetEmail(email, resettingCustomer) {
     var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
 
     var passwordResetToken = getPasswordResetToken(resettingCustomer);
-    var url = URLUtils.https('Account-SetNewPassword', 'token', passwordResetToken);
+    var url = URLUtils.https('Account-SetNewPassword', 'Token', passwordResetToken);
     var objectForEmail = {
         passwordResetToken: passwordResetToken,
         firstName: resettingCustomer.profile.firstName,
