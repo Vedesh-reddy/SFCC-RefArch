@@ -15,9 +15,15 @@ module.exports = function () {
         return $(element).parents('.menu-toggleable-left').css('position') !== 'fixed';
     };
 
+    var headerBannerStatus = window.sessionStorage.getItem('hide_header_banner');
     $('.header-banner .close').on('click', function () {
-        $('.header-banner').addClass('hide');
+        $('.header-banner').addClass('d-none');
+        window.sessionStorage.setItem('hide_header_banner', '1');
     });
+
+    if (!headerBannerStatus || headerBannerStatus < 0) {
+        $('.header-banner').removeClass('d-none');
+    }
 
     keyboardAccessibility('.main-menu .nav-link, .main-menu .dropdown-link',
         {
