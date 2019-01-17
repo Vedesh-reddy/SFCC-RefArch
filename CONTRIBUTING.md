@@ -6,7 +6,7 @@
 
 - [What to expect](#what-to-expect)
 
-- [Team members](#SFRA-team-menbers)
+- [Team members](#SFRA-team-members)
 
 - [Back to README](./README.md)
 
