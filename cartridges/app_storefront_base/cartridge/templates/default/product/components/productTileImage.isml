@@ -7,7 +7,7 @@
              itemprop="image"/>
     </a>
     <isif condition="${pdict.display.showQuickView !== false}">
-        <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}" title="${Resource.msg('button.quickview', 'common', null)}">
+        <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}" title="${Resource.msgf('button.quickview', 'common', null, product.productName)}" aria-label="${Resource.msgf('button.quickview', 'common', null, product.productName)}">
             <span class="fa-stack fa-lg">
                 <i class="fa fa-circle fa-inverse fa-stack-2x"></i>
                 <i class="fa fa-expand fa-stack-1x"></i>
