@@ -349,12 +349,14 @@ function showProductPage(querystring, reqPageMetaData) {
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
     var canonicalUrl = URLUtils.url('Product-Show', 'pid', product.id);
     var breadcrumbs = getAllBreadcrumbs(null, product.id, []).reverse();
-    var template = (product.template) ? product.template : 'product/productDetails';
+    var template = 'product/productDetails';
 
-    if (product.productType === 'bundle') {
+    if (product.productType === 'bundle' && !product.template) {
         template = 'product/bundleDetails';
-    } else if (product.productType === 'set') {
+    } else if (product.productType === 'set' && !product.template) {
         template = 'product/setDetails';
+    } else if (product.template) {
+        template = product.template;
     }
 
     pageMetaHelper.setPageMetaData(reqPageMetaData, product);

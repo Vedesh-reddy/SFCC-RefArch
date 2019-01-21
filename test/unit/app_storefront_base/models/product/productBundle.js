@@ -41,6 +41,7 @@ describe('Product Bundle Model', function () {
         decorators.stubs.stubImages.reset();
         decorators.stubs.stubAvailability.reset();
         decorators.stubs.stubDescription.reset();
+        decorators.stubs.stubTemplate.reset();
         decorators.stubs.stubSearchPrice.reset();
         decorators.stubs.stubPromotions.reset();
         decorators.stubs.stubQuantity.reset();
@@ -93,6 +94,12 @@ describe('Product Bundle Model', function () {
         productBundle(object, productMock, optionsMock);
 
         assert.isTrue(decorators.stubs.stubDescription.calledOnce);
+    });
+
+    it('should call template for bundle product', function () {
+        productBundle(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubTemplate.calledOnce);
     });
 
     it('should call ratings for bundle product', function () {
