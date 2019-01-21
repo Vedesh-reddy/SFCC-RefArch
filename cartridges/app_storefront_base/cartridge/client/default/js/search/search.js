@@ -204,7 +204,7 @@ module.exports = {
 
         // Display the next page of content results from the search
         $('.container').on('click', '.show-more-content button', function () {
-            getContent($(this), $('#content-search-results .result-count'));
+            getContent($(this), $('#content-search-results'));
             $('.show-more-content').remove();
         });
     }
