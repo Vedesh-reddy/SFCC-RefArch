@@ -37,7 +37,7 @@ module.exports = function (formElement, payload) {
             ? $(formElement)
             : $(formElement).parents('form');
 
-        form.prepend('<div class="alert alert-danger">'
+        form.prepend('<div class="alert alert-danger" role="alert">'
             + payload.error.join('<br/>') + '</div>');
     }
 };

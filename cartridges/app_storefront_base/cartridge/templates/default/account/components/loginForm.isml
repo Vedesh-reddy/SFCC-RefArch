@@ -1,17 +1,17 @@
 <form action="${pdict.actionUrl}" class="login" method="POST" name="login-form">
-    <div class="form-group required">
+    <div class="form-group required" title="required">
         <label class="form-control-label" for="login-form-email">
             ${Resource.msg('label.input.login.email', 'login', null)}
         </label>
-        <input type="email" id="login-form-email" class="form-control" name="loginEmail" value="${pdict.userName}">
+        <input type="email" id="login-form-email" class="form-control required" name="loginEmail" value="${pdict.userName}">
         <div class="invalid-feedback"></div>
     </div>
 
-    <div class="form-group required">
+    <div class="form-group required" title="required">
         <label class="form-control-label" for="login-form-password">
                 ${Resource.msg('label.input.login.password', 'login', null)}
         </label>
-        <input type="password" id="login-form-password" class="form-control" name="loginPassword">
+        <input type="password" id="login-form-password" class="form-control required" name="loginPassword">
         <div class="invalid-feedback"></div>
     </div>
 
