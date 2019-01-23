@@ -481,6 +481,7 @@ module.exports = function () {
         $('.coupon-error-message').empty();
         if (!$('.coupon-code-field').val()) {
             $('.promo-code-form .form-control').addClass('is-invalid');
+            $('.promo-code-form .form-control').attr('aria-describedby', 'missingCouponCode');
             $('.coupon-missing-error').show();
             $.spinner().stop();
             return false;
@@ -497,6 +498,7 @@ module.exports = function () {
             success: function (data) {
                 if (data.error) {
                     $('.promo-code-form .form-control').addClass('is-invalid');
+                    $('.promo-code-form .form-control').attr('aria-describedby', 'invalidCouponCode');
                     $('.coupon-error-message').empty().append(data.errorMessage);
                 } else {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);

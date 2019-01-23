@@ -12,9 +12,9 @@
                     <div class="col-7">
                         <input type="text" class="form-control coupon-code-field" id="couponCode" name="couponCode" placeholder="${Resource.msg('placholder.text.promo.code.input','cart',null)}">
                         <div class="coupon-error">
-                            <span class="coupon-missing-error">${Resource.msg('error.missing.coupon.code', 'cart', null)}</span>
-                            <span class="coupon-error-message"></span>
-                        </div>  
+                            <span class="coupon-missing-error" id="missingCouponCode" role="alert">${Resource.msg('error.missing.coupon.code', 'cart', null)}</span>
+                            <span class="coupon-error-message" id="invalidCouponCode" role="alert"></span>
+                        </div>
                     </div>
 
                     <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
