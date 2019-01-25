@@ -110,6 +110,7 @@ function getAddressObject(address) {
             address1: address.address1,
             address2: address.address2,
             city: address.city,
+            companyName: address.companyName,
             countryCode: {
                 displayValue: address.countryCode.displayValue,
                 value: address.countryCode.value
