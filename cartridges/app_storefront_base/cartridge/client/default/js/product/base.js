@@ -56,7 +56,7 @@ function processSwatchValues(attr, $productContainer) {
     attr.values.forEach(function (attrValue) {
         var $attrValue = $productContainer.find('[data-attr="' + attr.id + '"] [data-attr-value="' +
             attrValue.value + '"]');
-        var $swatchAnchor = $attrValue.parent();
+        var $swatchButton = $attrValue.parent();
 
         if (attrValue.selected) {
             $attrValue.addClass('selected');
@@ -65,9 +65,9 @@ function processSwatchValues(attr, $productContainer) {
         }
 
         if (attrValue.url) {
-            $swatchAnchor.attr('href', attrValue.url);
+            $swatchButton.attr('data-url', attrValue.url);
         } else {
-            $swatchAnchor.removeAttr('href');
+            $swatchButton.removeAttr('data-url');
         }
 
         // Disable if not selectable
@@ -516,7 +516,7 @@ module.exports = {
         }
     },
     colorAttribute: function () {
-        $(document).on('click', '[data-attr="color"] a', function (e) {
+        $(document).on('click', '[data-attr="color"] button', function (e) {
             e.preventDefault();
 
             if ($(this).attr('disabled')) {
@@ -527,7 +527,7 @@ module.exports = {
                 $productContainer = $(this).closest('.product-detail');
             }
 
-            attributeSelect(e.currentTarget.href, $productContainer);
+            attributeSelect($(this).attr('data-url'), $productContainer);
         });
     },
 

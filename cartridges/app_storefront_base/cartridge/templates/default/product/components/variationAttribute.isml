@@ -19,7 +19,7 @@ Template Notes:
         <!-- Circular Swatch Image Attribute Values -->
         <isloop items="${attr.values}" var="attrValue">
             <isif condition="${!(isBundle && product.productType === 'variant' && !attrValue.selected) }">
-                <a href="${attrValue.url}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }>
+                <button class="color-attribute" data-url="${attrValue.url}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }>
                     <span data-attr-value="${attrValue.value}"
                           class="
                               ${attr.id}-value
@@ -31,7 +31,7 @@ Template Notes:
                           style="background-image: url(${attrValue.images['swatch'][0].url})"
                     >
                     </span>
-                </a>
+                </button>
             </isif>
         </isloop>
 
