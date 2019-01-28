@@ -5,7 +5,8 @@
     </div>
 
     <!-- Product Rating -->
-    <div class="ratings pull-right">
+    <div class="ratings pull-right" tabindex="0">
+        <span class="sr-only">${Resource.msgf('label.product.ratings', 'common', null, product.rating)}</span>
         <isinclude template="product/components/productRating" />
     </div>
 </div>
