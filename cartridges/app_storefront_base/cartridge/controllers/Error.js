@@ -35,4 +35,13 @@ server.use('ErrorCode', consentTracking.consent, function (req, res, next) {
     next();
 });
 
+server.get('Forbidden', consentTracking.consent, function (req, res, next) {
+    var URLUtils = require('dw/web/URLUtils');
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+
+    CustomerMgr.logoutCustomer(true);
+    res.redirect(URLUtils.url('Home-Show'));
+    next();
+});
+
 module.exports = server.exports();
