@@ -29,7 +29,7 @@ Template Notes:
                     </span>
             </isif>
             <isif condition="${product.productType === 'master' && !attrValue.selected}">
-                <a href="${attrValue.url}" ${ product.productType === "master"}>
+                <button class="color-attribute" data-url="${attrValue.url}" ${ product.productType === "master"}>
                     <span data-attr-value="${attrValue.value}"
                           class="
                               ${attr.id}-value
@@ -41,7 +41,7 @@ Template Notes:
                           style="background-image: url(${attrValue.images['swatch'][0].url})"
                     >
                     </span>
-                </a>
+                </button>
             </isif>
         </isloop>
 
