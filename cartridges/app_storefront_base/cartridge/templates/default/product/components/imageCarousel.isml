@@ -1,6 +1,6 @@
 <div class="primary-images col-12 col-sm-6">
     <div id="pdpCarousel-${product.id}" class="carousel slide" data-interval="0">
-        <ol class="carousel-indicators">
+        <ol class="carousel-indicators" aria-hidden="true">
             <isloop items="${product.images['large']}" var="image" status="loopStatus">
                 <li data-target="${"#"}pdpCarousel-${product.id}" data-slide-to="${loopStatus.index}"
                     class='<isif condition="${loopStatus.index == 0}">active</isif>'>
