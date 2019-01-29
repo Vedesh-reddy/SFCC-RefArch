@@ -250,6 +250,7 @@ describe('request', function () {
 
     it('should contain correct current customer address book and properties', function () {
         var req = new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
+        var expectedResult = createFakeRequest();
         assert.equal(
             req.currentCustomer.addressBook.preferredAddress.address1,
             '15 South Point Drive'
@@ -314,6 +315,10 @@ describe('request', function () {
             req.currentCustomer.addressBook.preferredAddress.title,
             'Dr'
         );
+        assert.deepEqual(
+            req.currentCustomer.addressBook.preferredAddress.raw,
+            expectedResult.customer.addressBook.preferredAddress
+         );
     });
 
     it('should contain correct current customer wallet and properties', function () {

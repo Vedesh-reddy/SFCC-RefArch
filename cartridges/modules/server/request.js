@@ -105,8 +105,9 @@ function getCurrentLocale(locale, currency) {
  * @returns {Object} local instance of address object
  */
 function getAddressObject(address) {
+    var addressObject = null;
     if (address) {
-        return {
+        addressObject = {
             address1: address.address1,
             address2: address.address2,
             city: address.city,
@@ -126,10 +127,11 @@ function getAddressObject(address) {
             secondName: address.secondName,
             suffix: address.suffix,
             suite: address.suite,
-            title: address.title
+            title: address.title,
+            raw: address
         };
     }
-    return null;
+    return addressObject;
 }
 
 /**
