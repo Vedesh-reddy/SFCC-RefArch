@@ -15,12 +15,12 @@
            max-length="16" missing-error="error.message.required" />
 
     <field formid="cardNumber" label="label.input.creditcard.number" type="string" mandatory="true" binding="cardNumber"
-           max-length="20" missing-error="error.message.required" parse-error="error.message.required" />
+           max-length="20" missing-error="payment.card.number.missing" parse-error="error.message.required" />
 
     <field formid="cardOwner" label="label.input.creditcard.owner" type="string" mandatory="true" binding="cardOwner"
            max-length="16" missing-error="error.message.required" />
 
-    <field formid="expirationMonth" label="label.input.payment.expirationmonth" type="integer" mandatory="true" binding="expirationMonth" missing-error="error.message.required"
+    <field formid="expirationMonth" label="label.input.payment.expirationmonth" type="integer" mandatory="true" binding="expirationMonth" missing-error="payment.card.month.missing"
            value-error="address.field.invalid">
         <options>
             <option optionid="" label="select.default.month" value=""/>
@@ -40,7 +40,7 @@
     </field>
 
     <field formid="expirationYear" label="label.input.payment.expirationyear" type="integer" mandatory="true"
-           missing-error="error.message.required">
+           missing-error="payment.card.year.missing">
         <options>
             <option optionid="" label="select.default.year" value=""/>
         </options>
