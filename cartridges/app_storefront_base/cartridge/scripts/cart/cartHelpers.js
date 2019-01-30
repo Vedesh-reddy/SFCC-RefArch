@@ -365,6 +365,7 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
             'error.alert.selected.quantity.cannot.be.added.for',
             'product',
             null,
+            product.availabilityModel.inventoryRecord.ATS.value,
             product.name
         );
         return result;
