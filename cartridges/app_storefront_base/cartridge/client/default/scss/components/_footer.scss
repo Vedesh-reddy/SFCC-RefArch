@@ -1,4 +1,5 @@
 @import "collapsibleItem";
+@import "toastMessage";
 
 footer {
     background-color: $gray-200;
@@ -132,4 +133,12 @@ footer {
             margin: 0.5em;
         }
     }
+}
+
+.email-signup-message {
+    @include toast-message();
+}
+
+.email-signup-alert {
+    @include toast-alert();
 }
