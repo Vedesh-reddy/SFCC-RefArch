@@ -25,49 +25,49 @@ export const creditCard2 = {
     cvn: 987
 };
 
-let demoDataDir = 'mobilefirstdata/demo_data_mfra';
+let demoDataDir = '../storefrontdata/demo_data_sfra';
 let subjectMeta = {
     customers: {
-        files: [demoDataDir + '/sites/MobileFirst/customers.xml'],
+        files: [demoDataDir + '/sites/RefArch/customers.xml'],
         processor: customers.parseCustomers
     },
     catalog: {
         files: [
-            demoDataDir + '/catalogs/electronics-catalog/catalog.xml',
-            demoDataDir + '/catalogs/apparel-catalog/catalog.xml',
-            demoDataDir + '/catalogs/storefront-catalog-en/catalog.xml',
-            demoDataDir + '/catalogs/storefront-catalog-non-en/catalog.xml'
+            demoDataDir + '/catalogs/electronics-m-catalog/catalog.xml',
+            demoDataDir + '/catalogs/apparel-m-catalog/catalog.xml',
+            demoDataDir + '/catalogs/storefront-catalog-m-en/catalog.xml',
+            demoDataDir + '/catalogs/storefront-catalog-m-non-en/catalog.xml'
         ],
         processor: products.parseCatalog
     },
     pricebooks: {
         files: [
-            demoDataDir + '/pricebooks/cny-list-prices.xml',
-            demoDataDir + '/pricebooks/cny-sale-prices.xml',
-            demoDataDir + '/pricebooks/eur-list-prices.xml',
-            demoDataDir + '/pricebooks/eur-sale-prices.xml',
-            demoDataDir + '/pricebooks/gbp-list-prices.xml',
-            demoDataDir + '/pricebooks/gbp-sale-prices.xml',
-            demoDataDir + '/pricebooks/jpy-list-prices.xml',
-            demoDataDir + '/pricebooks/jpy-sale-prices.xml',
-            demoDataDir + '/pricebooks/usd-list-prices.xml',
-            demoDataDir + '/pricebooks/usd-sale-prices.xml'
+            demoDataDir + '/pricebooks/cny-m-list-prices.xml',
+            demoDataDir + '/pricebooks/cny-m-sale-prices.xml',
+            demoDataDir + '/pricebooks/eur-m-list-prices.xml',
+            demoDataDir + '/pricebooks/eur-m-sale-prices.xml',
+            demoDataDir + '/pricebooks/gbp-m-list-prices.xml',
+            demoDataDir + '/pricebooks/gbp-m-sale-prices.xml',
+            demoDataDir + '/pricebooks/jpy-m-list-prices.xml',
+            demoDataDir + '/pricebooks/jpy-m-sale-prices.xml',
+            demoDataDir + '/pricebooks/usd-m-list-prices.xml',
+            demoDataDir + '/pricebooks/usd-m-sale-prices.xml'
         ],
         processor: prices.parsePriceBooks
     },
     promotions: {
         files: [
-            demoDataDir + '/sites/MobileFirst/promotions.xml',
-            demoDataDir + '/sites/MobileFirstGlobal/promotions.xml'
+            demoDataDir + '/sites/RefArch/promotions.xml',
+            demoDataDir + '/sites/RefArchGlobal/promotions.xml'
         ],
         processor: promotions.parsePromotions
     }
 };
 
-const standardProductId = '750518548296';
-const variationMasterProductId = '25604455';
-const setProductId = 'spring-look';
-const bundleProductId = 'microsoft-xbox360-bundle';
+const standardProductId = '750518548296M';
+const variationMasterProductId = '25604455M';
+const setProductId = 'spring-lookM';
+const bundleProductId = 'microsoft-xbox360-bundleM';
 
 export let parsedData = {};
 

@@ -18,9 +18,9 @@ import * as pricingHelpers from '../../mocks/testDataMgr/helpers/pricing';
 describe('Cart - Selecting Shipping Methods', () => {
     const locale = config.locale;
 
-    const productVariantId1 = '701643566075';
+    const productVariantId1 = '701643566075M';
     let productVariant1;
-    const productVariantId2 = '013742003208';
+    const productVariantId2 = '013742003208M';
     let productVariant2;
 
     const prodIdUnitPricesMap = {};

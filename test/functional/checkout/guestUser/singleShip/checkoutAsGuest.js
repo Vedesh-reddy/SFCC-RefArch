@@ -24,7 +24,7 @@ describe('Checkout - As Guest, same Billing and Shipping address ', () => {
     let shippingData = {};
     let paymentData = {};
 
-    const productVariantId1 = '708141677203';
+    const productVariantId1 = '708141677203M';
     let productVariant1;
 
     const prodIdUnitPricesMap = {};

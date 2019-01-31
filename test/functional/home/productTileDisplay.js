@@ -30,9 +30,9 @@ import * as productTile from '../../mocks/testDataMgr/pageObjects/productTile';
 describe('Home - Product Tiles Display', () => {
     const locale = config.locale;
     const localeStr = locale === 'x_default' ? 'en_US' : locale;
-    const productMasterId2 = '25697682';
-    const productVariantId2 = '701644391737';
-    const productMasterId4 = '25519318';
+    const productMasterId2 = '25697682M';
+    const productVariantId2 = '701644391737M';
+    const productMasterId4 = '25519318M';
 
     // This flag is to indicate whether Quickview is expected to be present.
     // Currently it is only available on desktop and tablet-landscape.

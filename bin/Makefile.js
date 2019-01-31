@@ -71,7 +71,7 @@ target.compileFonts = function () {
 
 target.functional = function (args) {
     var defaults = {
-        baseUrl: 'http://' + getSandboxUrl() + '/s/RefArch',
+        baseUrl: 'https://' + getSandboxUrl() + '/s/RefArch',
         client: 'chrome'
     };
 
@@ -80,7 +80,7 @@ target.functional = function (args) {
         args.splice(args.indexOf('appium'), 1);
         configFile = 'test/functional/webdriver/wdio.appium.js';
         defaults = {
-            baseUrl: 'http://' + getSandboxUrl() + '/s/RefArch'
+            baseUrl: 'https://' + getSandboxUrl() + '/s/RefArch'
         }
     }
 
