@@ -155,7 +155,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                             error: function (err) {
                                 // enable the next:Payment button here
                                 $('body').trigger('checkout:enableButton', '.next-step-button button');
-                                if (err.responseJSON.redirectUrl) {
+                                if (err.responseJSON && err.responseJSON.redirectUrl) {
                                     window.location.href = err.responseJSON.redirectUrl;
                                 }
                                 // Server error submitting form
@@ -286,7 +286,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                         error: function (err) {
                             // enable the next:Place Order button here
                             $('body').trigger('checkout:enableButton', '.next-step-button button');
-                            if (err.responseJSON.redirectUrl) {
+                            if (err.responseJSON && err.responseJSON.redirectUrl) {
                                 window.location.href = err.responseJSON.redirectUrl;
                             }
                         }
