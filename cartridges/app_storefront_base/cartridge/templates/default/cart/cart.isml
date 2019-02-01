@@ -28,7 +28,7 @@
                 </a>
             </div>
             <div class="col-sm-3 text-center">
-                <h5 class="number-of-items">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.numItems)}</h5>
+                <h2 class="number-of-items">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.numItems)}</h2>
             </div>
             <div class="col-sm-5 text-right hidden-xs-down">
                 <div>
