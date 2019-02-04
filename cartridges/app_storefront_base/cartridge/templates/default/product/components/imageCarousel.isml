@@ -11,7 +11,7 @@
         <div class="carousel-inner" role="listbox">
             <isloop items="${product.images['large']}" var="image" status="loopStatus">
                 <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
-                    <img src="${image.url}" class="d-block img-fluid" alt="${image.alt}" itemprop="image">
+                    <img src="${image.url}" class="d-block img-fluid" alt="${image.alt}">
                 </div>
             </isloop>
         </div>

@@ -1,4 +1,4 @@
-<div class="product-tile" itemscope itemtype="http://schema.org/Product">
+<div class="product-tile">
     <!-- dwMarker="product" dwContentID="${product.uuid}" -->
     <isinclude template="product/components/productTileImage" />
     <div class="tile-body">

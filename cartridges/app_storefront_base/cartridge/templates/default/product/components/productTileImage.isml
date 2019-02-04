@@ -4,7 +4,7 @@
              src="${product.images.medium[0].url}"
              alt="${product.productName}"
              title="${product.images.medium[0].title}"
-             itemprop="image"/>
+             />
     </a>
     <isif condition="${pdict.display.showQuickView !== false}">
         <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}" title="${Resource.msgf('button.quickview', 'common', null, product.productName)}" aria-label="${Resource.msgf('button.quickview', 'common', null, product.productName)}">

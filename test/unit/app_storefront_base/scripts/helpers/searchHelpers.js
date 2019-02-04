@@ -106,7 +106,7 @@ describe('search helpers', function () {
             parent: {
                 ID: 'root'
             },
-            template: 'some template'
+            template: 'rendering/category/categoryproducthits'
         };
         var productSearchModelMock = {
             search: searchSpy,
@@ -154,6 +154,11 @@ describe('search helpers', function () {
                     return;
                 }
             },
+            '*/cartridge/scripts/helpers/structuredDataHelper': {
+                getListingPageSchema: function () {
+                    return 'some schema';
+                }
+            },
             '*/cartridge/models/search/productSearch': productSearchStub,
             '*/cartridge/scripts/reportingUrls': {
                 getProductSearchReportingURLs: function () {
@@ -192,11 +197,12 @@ describe('search helpers', function () {
                 parent: {
                     ID: 'root'
                 },
-                template: 'some template'
+                template: 'rendering/category/categoryproducthits'
             });
-            assert.equal(result.categoryTemplate, 'some template');
+            assert.equal(result.categoryTemplate, 'rendering/category/categoryproducthits');
             assert.equal(result.reportingURLs.length, 2);
             assert.isDefined(result.canonicalUrl);
+            assert.isDefined(result.schemaData);
         });
 
         it('should search', function () {

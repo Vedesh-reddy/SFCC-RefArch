@@ -95,7 +95,8 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
         reportingURLs: result.reportingURLs,
         refineurl: result.refineurl,
         category: result.category ? result.category : null,
-        canonicalUrl: result.canonicalUrl
+        canonicalUrl: result.canonicalUrl,
+        schemaData: result.schemaData
     });
 
     return next();

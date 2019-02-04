@@ -40,6 +40,9 @@ describe('Helpers - Product', function () {
                 setPageMetaData: function () {},
                 setPageMetaTags: function () {}
             },
+            '*/cartridge/scripts/helpers/structuredDataHelper': {
+                getProductSchema: function () { return 'schema'; }
+            },
             'dw/web/Resource': {
                 msg: function () {
                     return 'some string';
@@ -174,6 +177,16 @@ describe('Helpers - Product', function () {
 
             var result = productHelpers.showProductPage({}, {});
             assert.equal(result.canonicalUrl, 'some url');
+        });
+
+        it('should return with product schema json', function () {
+            var prodMock = { productType: 'variant', id: '12345' };
+
+            stubProductFactoryGet.returns(prodMock);
+            stubGetProduct.returns(apiProductMock);
+
+            var result = productHelpers.showProductPage({}, {});
+            assert.equal(result.schemaData, 'schema');
         });
 
         it('should with product/bundleDetails template', function () {

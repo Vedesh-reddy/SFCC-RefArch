@@ -69,6 +69,7 @@ function search(req) {
     var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
+    var schemaHelper = require('*/cartridge/scripts/helpers/structuredDataHelper');
 
     var apiProductSearch = new ProductSearchModel();
     var categoryTemplate = '';
@@ -137,6 +138,10 @@ function search(req) {
         pageMetaHelper.setPageMetaData(req.pageMetaData, productSearch.category);
         result.category = apiProductSearch.category;
         result.categoryTemplate = categoryTemplate;
+    }
+
+    if (!categoryTemplate || categoryTemplate === 'rendering/category/categoryproducthits') {
+        result.schemaData = schemaHelper.getListingPageSchema(productSearch.productIds);
     }
 
     return result;

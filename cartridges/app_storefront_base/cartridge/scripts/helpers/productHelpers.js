@@ -361,6 +361,7 @@ function showProductPage(querystring, reqPageMetaData) {
 
     pageMetaHelper.setPageMetaData(reqPageMetaData, product);
     pageMetaHelper.setPageMetaTags(reqPageMetaData, product);
+    var schemaData = require('*/cartridge/scripts/helpers/structuredDataHelper').getProductSchema(product);
 
     return {
         template: template,
@@ -368,7 +369,8 @@ function showProductPage(querystring, reqPageMetaData) {
         addToCartUrl: addToCartUrl,
         resources: getResources(),
         breadcrumbs: breadcrumbs,
-        canonicalUrl: canonicalUrl
+        canonicalUrl: canonicalUrl,
+        schemaData: schemaData
     };
 }
 

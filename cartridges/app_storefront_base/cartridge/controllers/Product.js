@@ -29,7 +29,8 @@ server.get('Show', cache.applyPromotionSensitiveCache, consentTracking.consent, 
             addToCartUrl: showProductPageHelperResult.addToCartUrl,
             resources: showProductPageHelperResult.resources,
             breadcrumbs: showProductPageHelperResult.breadcrumbs,
-            canonicalUrl: showProductPageHelperResult.canonicalUrl
+            canonicalUrl: showProductPageHelperResult.canonicalUrl,
+            schemaData: showProductPageHelperResult.schemaData
         });
     }
     next();

@@ -228,7 +228,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
                     }
                 ],
                 'price': {
-                    'html': '\n\n\n\n    <div class="price"  itemprop="offers" itemscope itemtype="http://schema.org/Offer">\n        \n        <span>\n    \n\n    \n        \n        <meta itemprop="priceCurrency" content="USD" />\n        <span class="strike-through list">\n            <span class="value" itemprop="price" content="69.50">\n                $69.50\n\n\n            </span>\n        </span>\n    \n\n    \n    <meta itemprop="priceCurrency" content="USD" />\n    <span class="sales">\n        \n        \n        \n            <span class="value" itemprop="price" content="49.99">\n        \n        $49.99\n\n\n        </span>\n    </span>\n</span>\n\n    </div>\n\n\n',
+                    'html': '\n\n\n\n    <div class="price">\n        \n        <span>\n    \n\n    \n        \n        <span class="strike-through list">\n            <span class="value" content="69.50">\n                $69.50\n\n\n            </span>\n        </span>\n    \n\n    \n    <span class="sales">\n        \n        \n        \n            <span class="value" content="49.99">\n        \n        $49.99\n\n\n        </span>\n    </span>\n</span>\n\n    </div>\n\n\n',
                     'list': {
                         'decimalPrice': '69.50',
                         'currency': 'USD',
@@ -321,7 +321,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
         };
 
         // strip out all "url" properties from the expected response
-        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url', 'resetUrl', 'selectedProductUrl']);
+        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url', 'resetUrl', 'selectedProductUrl', 'absURL']);
 
         request(myGetRequest, function (error, response) {
             assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
@@ -329,7 +329,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             var bodyAsJson = JSON.parse(response.body);
 
             // strip out all "url" properties from the actual response
-            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedProductUrl', 'raw']);
+            var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedProductUrl', 'raw', 'absURL']);
 
             assert.containSubset(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
 

@@ -13,6 +13,7 @@
             <link rel="canonical" href="${pdict.canonicalUrl}"/>
         </isif>
         <isactivedatahead/>
+        <isinclude template="/components/schema" />
     </head>
     <body>
         <div class="page" data-action="${pdict.action}" data-querystring="${pdict.queryString}" >

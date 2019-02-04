@@ -3,11 +3,11 @@
         <isinclude template="/product/components/pricing/tiered" />
     </div>
 <iselseif condition="${price.type === 'range'}">
-    <div class="price"  itemprop="offers" itemscope itemtype="http://schema.org/AggregateOffer"">
+    <div class="price">
         <isinclude template="/product/components/pricing/range" />
     </div>
 <iselse>
-    <div class="price"  itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+    <div class="price">
         <isset name="isLowPrice" value="${}" scope="page" />
         <isinclude template="/product/components/pricing/default" />
     </div>

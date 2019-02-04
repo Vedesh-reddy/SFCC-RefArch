@@ -16,7 +16,7 @@
     <isset name="product" value="${pdict.product}" scope="page" />
     <isobject object="${product.raw}" view="detail" />
 
-    <div class="container product-detail" data-pid="${product.id}" itemscope itemtype="http://schema.org/Product">
+    <div class="container product-detail" data-pid="${product.id}">
         <div class="row">
             <div class="col-12">
                 <!---Breadcrumbs--->
@@ -27,7 +27,7 @@
                 <!-- Product Name -->
                 <div class="row">
                     <div class="col-sm-12">
-                        <h1 class="product-name" itemprop="name">${product.productName}</h1>
+                        <h1 class="product-name">${product.productName}</h1>
                     </div>
                 </div>
             </div>

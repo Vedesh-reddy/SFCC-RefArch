@@ -21,6 +21,11 @@ describe('productImages', function () {
                     toString: function () {
                         return '/first_image_url';
                     }
+                },
+                absURL: {
+                    toString: function () {
+                        return 'path/first_image_url';
+                    }
                 }
             }, {
                 alt: 'Second Image',
@@ -28,6 +33,11 @@ describe('productImages', function () {
                 URL: {
                     toString: function () {
                         return '/second_image_url';
+                    }
+                },
+                absURL: {
+                    toString: function () {
+                        return 'path/second_image_url';
                     }
                 }
             }]),
@@ -41,7 +51,9 @@ describe('productImages', function () {
         assert.equal(images.small[0].alt, 'First Image');
         assert.equal(images.small[0].title, 'First Image');
         assert.equal(images.small[0].url, '/first_image_url');
+        assert.equal(images.small[0].absURL, 'path/first_image_url');
         assert.equal(images.small[1].url, '/second_image_url');
+        assert.equal(images.small[1].absURL, 'path/second_image_url');
     });
 
     it('should get only first small image', function () {
@@ -50,5 +62,6 @@ describe('productImages', function () {
         assert.equal(images.small[0].alt, 'First Image');
         assert.equal(images.small[0].title, 'First Image');
         assert.equal(images.small[0].url, '/first_image_url');
+        assert.equal(images.small[0].absURL, 'path/first_image_url');
     });
 });

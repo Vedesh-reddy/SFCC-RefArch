@@ -19,7 +19,8 @@ function Images(product, imageConfig) {
                 result = [{
                     alt: firstImage.alt,
                     url: firstImage.URL.toString(),
-                    title: firstImage.title
+                    title: firstImage.title,
+                    absURL: firstImage.absURL.toString()
                 }];
             }
         } else {
@@ -27,7 +28,8 @@ function Images(product, imageConfig) {
                 return {
                     alt: image.alt,
                     url: image.URL.toString(),
-                    title: image.title
+                    title: image.title,
+                    absURL: image.absURL.toString()
                 };
             });
         }
