@@ -148,4 +148,14 @@ describe('querystring', function () {
             assert.equal(result.toString(), 'dwvar_P12345_Maat=37%2B&pid=P12345');
         });
     });
+
+    describe('handling duplicate parameters in querystring', function () {
+        it('should return an array', function () {
+            var params = '?one=uno&cheese=1&cheese=2&cheese=3&brand=sony&brand=samsung&cheese=4';
+            var result = new QueryString(params);
+            assert.deepEqual(result.one, 'uno');
+            assert.deepEqual(result.cheese, ['4', '3', '2', '1']);
+            assert.deepEqual(result.brand, ['samsung', 'sony']);
+        });
+    });
 });

@@ -31,6 +31,27 @@ function parsePreferences(preferences) {
     return params;
 }
 
+/**
+* Detect duplicate parameters and be sure to set object[key] as an array of those parameter values
+*
+* @param {Object} object The object to check for existing values.
+* @param {string} key The key to set on object for the new value.
+* @param {string} value The new value to be added to object[key].
+* @return {Object} Value or array of values if object[key] has already exists.
+*/
+function parameterToArray(object, key, value) {
+    var result = value;
+    if (object[key]) {
+        result = object[key];
+        if (!(result instanceof Array)) {
+            result = [object[key]];
+        }
+        result.push(value);
+    }
+
+    return result;
+}
+
 var querystring = function (raw) {
     var pair;
     var left;
@@ -76,7 +97,7 @@ var querystring = function (raw) {
                 continue; // eslint-disable-line no-continue
             }
 
-            this[left] = decodeURIComponent(pair[1]);
+            this[left] = parameterToArray(this, left, decodeURIComponent(pair[1]));
         }
     }
 
