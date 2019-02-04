@@ -40,6 +40,7 @@
                 </fieldset>
 
                 <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+                <input type="hidden" name="localizedNewAddressTitle" value="${Resource.msg('msg.new.address', 'checkout', null)}"/>
             </fieldset>
 
             <!-------------------------------------------------------------------------->

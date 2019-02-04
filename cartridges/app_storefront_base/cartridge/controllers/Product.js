@@ -84,10 +84,12 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
     var ProductFactory = require('*/cartridge/scripts/factories/product');
     var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
+    var Resource = require('dw/web/Resource');
 
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
+    var quickViewFullDetailMsg = Resource.msg('link.quickview.viewdetails', 'product', null);
     var template = product.productType === 'set'
         ? 'product/setQuickView.isml'
         : 'product/quickView.isml';
@@ -96,6 +98,7 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
         product: product,
         addToCartUrl: addToCartUrl,
         resources: productHelper.getResources(),
+        quickViewFullDetailMsg: quickViewFullDetailMsg,
         template: template
     };
 

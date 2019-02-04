@@ -15,7 +15,7 @@ function getModalHtmlElement() {
         + '<!-- Modal content-->'
         + '<div class="modal-content">'
         + '<div class="modal-header">'
-        + '    <a class="full-pdp-link" href="">View Full Details</a>'
+        + '    <a class="full-pdp-link" href=""></a>'
         + '    <button type="button" class="close pull-right" data-dismiss="modal">'
         + '        &times;'
         + '    </button>'
@@ -65,6 +65,7 @@ function fillModalElement(selectedValueUrl) {
             $('.modal-body').empty();
             $('.modal-body').html(parsedHtml.body);
             $('.modal-footer').html(parsedHtml.footer);
+            $('.full-pdp-link').text(data.quickViewFullDetailMsg);
             $('#quickViewModal .full-pdp-link').attr('href', data.productUrl);
             $('#quickViewModal .size-chart').attr('href', data.productUrl);
             $('#quickViewModal').modal('show');
