@@ -10,7 +10,7 @@
                 </isif>
                 <button type="button" class="float-right remove-coupon"
                         data-code="${discount.couponCode}"
-                        aria-label="Close"
+                        aria-label="${Resource.msgf('text.remove.coupon','cart', null, discount.couponCode)}"
                         data-toggle="modal"
                         data-target="#removeCouponModal"
                         data-uuid="${discount.UUID}">

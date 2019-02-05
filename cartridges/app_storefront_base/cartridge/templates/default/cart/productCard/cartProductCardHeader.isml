@@ -12,7 +12,7 @@
                     data-name="${lineItem.productName}"
                     data-action="${pdict.actionUrls.removeProductLineItemUrl}"
                     data-uuid="${lineItem.UUID}"
-                    aria-label="remove">
+                    aria-label="${Resource.msgf('text.remove.line.item','cart', null, lineItem.productName)}">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
@@ -22,7 +22,7 @@
                     data-name="${lineItem.productName}"
                     data-action="${pdict.actionUrls.removeProductLineItemUrl}"
                     data-uuid="${lineItem.UUID}"
-                    aria-label="remove">
+                    aria-label="${Resource.msgf('text.remove.line.item','cart', null, lineItem.productName)}">
                 <span aria-hidden="true">&times;</span>
             </button>
         </div>
