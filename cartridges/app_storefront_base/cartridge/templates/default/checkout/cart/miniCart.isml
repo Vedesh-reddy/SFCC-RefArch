@@ -6,7 +6,7 @@
     <div>
         <div class="row">
             <div class="col-6">
-                <h4>${Resource.msg('title.your.shopping.cart','cart',null)}</h4>
+                <h1>${Resource.msg('title.your.shopping.cart','cart',null)}</h1>
             </div>
             <div class="col-6 text-right">
                 <a class="normal" href="${URLUtils.https('Cart-Show')}" title="${Resource.msg('link.view.cart','cart',null)}">
