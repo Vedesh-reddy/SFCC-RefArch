@@ -88,7 +88,7 @@
             </div>
             <!--- Content Grid --->
             <div class="tab-pane container" id="content-search-results-pane" role="tabpanel" aria-expanded="false">
-                <div id="content-search-results" class="row content-grid-header justify-content-center"></div>
+                <div id="content-search-results" class="content-grid-header"></div>
             </div>
 
         </div>

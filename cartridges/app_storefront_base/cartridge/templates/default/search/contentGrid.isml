@@ -16,12 +16,16 @@
 </isif>
 
     <isloop items="${pdict.contentSearch.contents}" var="contentAsset">
-        <div class="card">
-            <div class="card-header clearfix">
-                <h4><a href="${contentAsset.url}">${contentAsset.name}</a></h4>
-            </div>
-            <div class="card-body card-info-group">
-                ${contentAsset.description}
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header clearfix">
+                        <h4><a href="${contentAsset.url}">${contentAsset.name}</a></h4>
+                    </div>
+                    <div class="card-body card-info-group">
+                        ${contentAsset.description}
+                    </div>
+                </div>
             </div>
         </div>
     </isloop>
