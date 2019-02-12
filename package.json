@@ -1,6 +1,6 @@
 {
   "name": "sfra",
-  "version": "3.4.0",
+  "version": "3.5.0",
   "description": "Storefront Reference Architecture",
   "main": "index.js",
   "engines": {
