@@ -186,6 +186,7 @@ module.exports = function () {
         $('.main-menu').toggleClass('in');
         $('.modal-background').show();
 
+        $('.main-menu').removeClass('d-none');
         $('.main-menu').attr('aria-hidden', 'false');
         $('.main-menu').siblings().attr('aria-hidden', 'true');
         $('header').siblings().attr('aria-hidden', 'true');
