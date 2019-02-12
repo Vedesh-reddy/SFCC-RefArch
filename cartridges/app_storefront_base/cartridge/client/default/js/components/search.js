@@ -31,6 +31,7 @@ function isMobileSearch(scope) {
  */
 function clearModals() {
     $('body').removeClass('modal-open');
+    $('header').siblings().attr('aria-hidden', 'false');
     $('.suggestions').removeClass('modal');
 }
 
@@ -42,6 +43,7 @@ function clearModals() {
 function applyModals(scope) {
     if (isMobileSearch(scope)) {
         $('body').addClass('modal-open');
+        $('header').siblings().attr('aria-hidden', 'true');
         getSuggestionsWrapper(scope).find('.suggestions').addClass('modal');
     }
 }
