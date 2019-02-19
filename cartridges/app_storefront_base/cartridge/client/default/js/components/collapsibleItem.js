@@ -7,6 +7,12 @@ module.exports = function () {
         $('body').on('click', selector, function (e) {
             e.preventDefault();
             $(this).parents('.collapsible-' + size).toggleClass('active');
+
+            if ($(this).parents('.collapsible-' + size).hasClass('active')) {
+                $(this).attr('aria-expanded', true);
+            } else {
+                $(this).attr('aria-expanded', false);
+            }
         });
     });
 };
