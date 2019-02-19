@@ -51,8 +51,9 @@ function getQuantitySelected($el) {
  *     selected.  If there is no variant that corresponds to a specific combination of attribute
  *     values, an attribute may be disabled in the Product Detail Page
  * @param {jQuery} $productContainer - DOM container for a given product
+ * @param {Object} msgs - object containing resource messages
  */
-function processSwatchValues(attr, $productContainer) {
+function processSwatchValues(attr, $productContainer, msgs) {
     attr.values.forEach(function (attrValue) {
         var $attrValue = $productContainer.find('[data-attr="' + attr.id + '"] [data-attr-value="' +
             attrValue.value + '"]');
@@ -60,8 +61,10 @@ function processSwatchValues(attr, $productContainer) {
 
         if (attrValue.selected) {
             $attrValue.addClass('selected');
+            $attrValue.siblings('.selected-assistive-text').text(msgs.assistiveSelectedText);
         } else {
             $attrValue.removeClass('selected');
+            $attrValue.siblings('.selected-assistive-text').empty();
         }
 
         if (attrValue.url) {
@@ -114,14 +117,15 @@ function processNonSwatchValues(attr, $productContainer) {
  * @param {Object} attrs - Attribute
  * @param {string} attr.id - Attribute ID
  * @param {jQuery} $productContainer - DOM element for a given product
+ * @param {Object} msgs - object containing resource messages
  */
-function updateAttrs(attrs, $productContainer) {
+function updateAttrs(attrs, $productContainer, msgs) {
     // Currently, the only attribute type that has image swatches is Color.
     var attrsWithSwatches = ['color'];
 
     attrs.forEach(function (attr) {
         if (attrsWithSwatches.indexOf(attr.id) > -1) {
-            processSwatchValues(attr, $productContainer);
+            processSwatchValues(attr, $productContainer, msgs);
         } else {
             processNonSwatchValues(attr, $productContainer);
         }
@@ -250,7 +254,7 @@ function handleVariantResponse(response, $productContainer) {
         $productContainer.parents('.choose-bonus-product-dialog').length > 0;
     var isVaraint;
     if (response.product.variationAttributes) {
-        updateAttrs(response.product.variationAttributes, $productContainer);
+        updateAttrs(response.product.variationAttributes, $productContainer, response.resources);
         isVaraint = response.product.productType === 'variant';
         if (isChoiceOfBonusProducts && isVaraint) {
             $productContainer.parent('.bonus-product-item')

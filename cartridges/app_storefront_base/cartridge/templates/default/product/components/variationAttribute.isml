@@ -19,7 +19,11 @@ Template Notes:
         <!-- Circular Swatch Image Attribute Values -->
         <isloop items="${attr.values}" var="attrValue">
             <isif condition="${!(isBundle && product.productType === 'variant' && !attrValue.selected) }">
-                <button class="color-attribute" data-url="${attrValue.url}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }>
+                <button class="color-attribute"
+                        aria-label="${Resource.msg('label.select', 'common', null)} ${attr.displayName} ${attrValue.displayValue}"
+                        aria-describedby="${attrValue.id}"
+                        data-url="${attrValue.url}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }
+                >
                     <span data-attr-value="${attrValue.value}"
                           class="
                               ${attr.id}-value
@@ -30,6 +34,9 @@ Template Notes:
                           "
                           style="background-image: url(${attrValue.images['swatch'][0].url})"
                     >
+                    </span>
+                    <span id="${attrValue.id}" class="sr-only selected-assistive-text">
+                        ${attrValue.selected ? ${Resource.msg('msg.assistive.selected.text', 'common', null)} : ''}
                     </span>
                 </button>
             </isif>

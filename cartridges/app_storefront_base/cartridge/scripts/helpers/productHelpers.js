@@ -329,7 +329,8 @@ function getResources() {
 
     return {
         info_selectforstock: Resource.msg('info.selectforstock', 'product',
-            'Select Styles for Availability')
+            'Select Styles for Availability'),
+        assistiveSelectedText: Resource.msg('msg.assistive.selected.text', 'common', null)
     };
 }
 
