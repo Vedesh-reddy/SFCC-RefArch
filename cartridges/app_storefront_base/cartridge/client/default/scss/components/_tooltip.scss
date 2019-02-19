@@ -4,6 +4,9 @@ $arrow-height: 1.25em; /* 20/16 */
     position: relative;
     cursor: pointer;
     display: inline-block;
+    border: none;
+    padding: 0;
+    background: inherit;
 
     .icon {
         border-radius: 1.25rem;
@@ -15,12 +18,7 @@ $arrow-height: 1.25em; /* 20/16 */
         font-weight: 600;
     }
 
-    &:hover .tooltip {
-        display: block;
-    }
-
     .tooltip {
-        display: none;
         position: absolute;
         bottom: 100%;
         padding: 0.312rem;

@@ -135,7 +135,7 @@ server.get(
         for (var j = 0, k = months.length; j < k; j++) {
             months[j].selected = false;
         }
-        res.render('account/payment/editAddPayment', {
+        res.render('account/payment/addPayment', {
             paymentForm: paymentForm,
             expirationYears: creditCardExpirationYears,
             breadcrumbs: [

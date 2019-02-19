@@ -36,35 +36,22 @@
         </div>
     </div>
 
-    <isif condition="${pdict.UUID}">
-        <!-- Edit Card Number -->
-        <div class="form-group">
-            ${pdict.paymentForm.editNumber.label}
-            <span class="info-icon">
-                <span class="icon">i</span>
-                <div class="tooltip">
-                    ${Resource.msg('msg.edit.card.tooltip','payment',null)}
-                </div>
-            </span>
-            <p class="masked-card-number">${pdict.paymentForm.editNumber.htmlValue}</p>
-        </div>
-        <iselse>
-        <!-- Card Number -->
-        <div class="form-group
-            <isif condition="${pdict.paymentForm.cardNumber.mandatory === true}">required</isif>">
-            <label class="form-control-label" for="cardNumber">
-                <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="htmlcontent" />
-            </label>
-            <div class="card-number-wrapper">
-                <input type="text" class="form-control" id="cardNumber"
-                    <isprint value="${pdict.paymentForm.cardNumber.attributes}" encoding="off" />
-                    autocomplete="cc-number">
-                <div class="invalid-feedback">
-                    <isprint value="${pdict.paymentForm.cardNumber.error}" encoding="htmlcontent" />
-                </div>
+
+    <!-- Card Number -->
+    <div class="form-group
+        <isif condition="${pdict.paymentForm.cardNumber.mandatory === true}">required</isif>">
+        <label class="form-control-label" for="cardNumber">
+            <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="htmlcontent" />
+        </label>
+        <div class="card-number-wrapper">
+            <input type="text" class="form-control" id="cardNumber"
+                <isprint value="${pdict.paymentForm.cardNumber.attributes}" encoding="off" />
+                autocomplete="cc-number">
+            <div class="invalid-feedback">
+                <isprint value="${pdict.paymentForm.cardNumber.error}" encoding="htmlcontent" />
             </div>
         </div>
-    </isif>
+    </div>
 
     <!-- Month -->
     <div class="row">

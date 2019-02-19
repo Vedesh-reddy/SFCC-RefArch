@@ -82,12 +82,14 @@
             <isif condition=${creditFields.securityCode.mandatory === true}>required</isif>
             ${creditFields.securityCode.htmlName}">
             <label class="form-control-label" for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
-            <span class="info-icon">
-                <span class="icon">i</span>
-                <div class="tooltip">
+
+            <button type="button" class="info-icon">
+                <span class="icon" aria-hidden="true">i</span>
+                <span class="sr-only">${Resource.msg('button.help.assistive.text','common',null)}</span>
+                <span class="tooltip d-none">
                     ${Resource.msg('tooltip.security.code','creditCard',null)}
-                </div>
-            </span>
+                </span>
+            </button>
 
             <input type="text" class="form-control securityCode" id="securityCode"
                 <isprint value=${creditFields.securityCode.attributes} encoding="off"/>
@@ -103,12 +105,15 @@
             <isif condition=${creditFields.email.mandatory === true}>required</isif>
             ${creditFields.email.htmlName}">
             <label class="form-control-label" for="email">${Resource.msg('field.customer.email','checkout',null)}</label>
-            <span class="info-icon">
-                <span class="icon">i</span>
-                <div class="tooltip">
+
+            <button type="button" class="info-icon">
+                <span class="icon" aria-hidden="true">i</span>
+                <span class="sr-only">${Resource.msg('button.help.assistive.text','common',null)}</span>
+                <span class="tooltip d-none">
                     ${Resource.msg('tooltip.email','creditCard',null)}
-                </div>
-            </span>
+                </span>
+            </button>
+
             <input type="text" class="form-control email" id="email"
                 value="${pdict.order.orderEmail||''}" <isprint value=${creditFields.email.attributes} encoding="off"/>
                 aria-describedby="emailInvalidMessage" >
@@ -120,12 +125,15 @@
             <isif condition=${creditFields.phone.mandatory === true}>required</isif>
             ${creditFields.phone.htmlName}">
             <label class="form-control-label" for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
-            <span class="info-icon">
-                <span class="icon">i</span>
-                <div class="tooltip">
+
+            <button type="button" class="info-icon">
+                <span class="icon" aria-hidden="true">i</span>
+                <span class="sr-only">${Resource.msg('button.help.assistive.text','common',null)}</span>
+                <span class="tooltip d-none">
                     ${Resource.msg('tooltip.phone.number','creditCard',null)}
-                </div>
-            </span>
+                </span>
+            </button>
+
             <input type="tel" class="form-control phone" id="phoneNumber"
                 value="${pdict.order.billing.billingAddress.address
                 ? pdict.order.billing.billingAddress.address.phone||''

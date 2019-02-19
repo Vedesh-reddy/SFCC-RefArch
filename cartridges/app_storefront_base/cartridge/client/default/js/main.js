@@ -11,6 +11,7 @@ $(document).ready(function () {
     processInclude(require('./components/search'));
     processInclude(require('./components/clientSideValidation'));
     processInclude(require('./components/countrySelector'));
+    processInclude(require('./components/toolTip'));
 });
 
 require('./thirdParty/bootstrap');
