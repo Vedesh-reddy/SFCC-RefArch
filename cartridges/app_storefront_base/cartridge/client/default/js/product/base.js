@@ -143,10 +143,10 @@ function updateAvailability(response, $productContainer) {
     var availabilityValue = '';
     var availabilityMessages = response.product.availability.messages;
     if (!response.product.readyToOrder) {
-        availabilityValue = '<div>' + response.resources.info_selectforstock + '</div>';
+        availabilityValue = '<li><div>' + response.resources.info_selectforstock + '</div></li>';
     } else {
         availabilityMessages.forEach(function (message) {
-            availabilityValue += '<div>' + message + '</div>';
+            availabilityValue += '<li><div>' + message + '</div></li>';
         });
     }
 
