@@ -10,12 +10,13 @@ Template Notes:
 </iscomment>
 
 <div class="attribute">
-    <!-- Select <Attribute> Label -->
-    <label class="${attr.id}">
-        ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
-    </label>
-
     <isif condition="${attr.swatchable}">
+
+        <!-- Select <Attribute> Label -->
+        <span class="${attr.id} non-input-label">
+            ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
+        </span>
+
         <!-- Circular Swatch Image Attribute Values -->
         <isloop items="${attr.values}" var="attrValue">
             <isif condition="${!(isBundle && product.productType === 'variant' && !attrValue.selected) }">
@@ -36,15 +37,20 @@ Template Notes:
                     >
                     </span>
                     <span id="${attrValue.id}" class="sr-only selected-assistive-text">
-                        ${attrValue.selected ? ${Resource.msg('msg.assistive.selected.text', 'common', null)} : ''}
+                        ${attrValue.selected ? Resource.msg('msg.assistive.selected.text', 'common', null) : ''}
                     </span>
                 </button>
             </isif>
         </isloop>
 
     <iselse>
+        <!-- Select <Attribute> Label -->
+        <label class="${attr.id}" for="${attr.id}-${loopState && loopState.count ? loopState.count : '1' }">
+            ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
+        </label>
+
         <!-- Attribute Values Drop Down Menu -->
-        <select class="custom-select form-control select-${attr.id}" ${ product.productType === "variant" && isBundle ? "disabled" : "" }>
+        <select class="custom-select form-control select-${attr.id}" id="${attr.id}-${loopState && loopState.count ? loopState.count : '1' }" ${ product.productType === "variant" && isBundle ? "disabled" : "" }>
             <option value="${attr.resetUrl}">
                 ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
             </option>

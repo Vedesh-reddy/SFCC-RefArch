@@ -5,7 +5,7 @@
 </div>
 
 <div class="bundle-items">
-    <isloop items="${product.bundledProducts}" var="productItem">
+    <isloop items="${product.bundledProducts}" var="productItem" status="loopState">
         <isset name="product" value="${productItem}" scope="page" />
         <isset name="isBundle" value="${true}" scope="page" />
 

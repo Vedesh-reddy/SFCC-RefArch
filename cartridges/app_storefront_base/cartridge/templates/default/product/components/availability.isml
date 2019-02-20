@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-12 col-sm-4">
-        <label class="availability">
+        <span class="availability non-input-label">
             ${Resource.msg('label.availability', 'common', null)}:
-        </label>
+        </span>
     </div>
     <div class="col-12 col-sm-8">
         <ul class="list-unstyled availability-msg">
             <li>
                 <isif condition="${!product.readyToOrder}">
-                    ${Resource.msg('info.selectforstock', 'product', 'Select Styles for Availability')}
+                    <div>${Resource.msg('info.selectforstock', 'product', 'Select Styles for Availability')}</div>
                 <iselse>
                     <isloop items="${product.availability.messages}" var="message">
                         <div>${message}</div>
