@@ -19,7 +19,7 @@
                 <!-------------------------------------------------------------------------->
                 <fieldset class="address-selector-block">
                     <div class="form-group">
-                        <label class="form-control-label" for="shipmentSelector">
+                        <label class="form-control-label" for="billingAddressSelector">
                             ${Resource.msg('heading.billing.address', 'checkout', null)}
                         </label>
 
