@@ -238,6 +238,29 @@ function updateOptions(options, $productContainer) {
 }
 
 /**
+ * Dynamically creates Bootstrap carousel from response containing images
+ * @param {Object[]} imgs - Array of large product images,along with related information
+ * @param {jQuery} $productContainer - DOM element for a given product
+ */
+function createCarousel(imgs, $productContainer) {
+    var carousel = $productContainer.find('.carousel');
+    $(carousel).carousel('dispose');
+    var carouselId = $(carousel).attr('id');
+    $(carousel).empty().append('<ol class="carousel-indicators"></ol><div class="carousel-inner" role="listbox"></div><a class="carousel-control-prev" href="#' + carouselId + '" role="button" data-slide="prev"><span class="fa icon-prev" aria-hidden="true"></span><span class="sr-only">' + $(carousel).data('prev') + '</span></a><a class="carousel-control-next" href="#' + carouselId + '" role="button" data-slide="next"><span class="fa icon-next" aria-hidden="true"></span><span class="sr-only">' + $(carousel).data('next') + '</span></a>');
+    for (var i = 0; i < imgs.length; i++) {
+        $('<div class="carousel-item"><img src="' + imgs[i].url + '" class="d-block img-fluid" alt="' + imgs[i].alt + '" title="' + imgs[i].title + '" itemprop="image" /></div>').appendTo($(carousel).find('.carousel-inner'));
+        $('<li data-target="#' + carouselId + '" data-slide-to="' + i + '" class=""></li>').appendTo($(carousel).find('.carousel-indicators'));
+    }
+    $($(carousel).find('.carousel-item')).first().addClass('active');
+    $($(carousel).find('.carousel-indicators > li')).first().addClass('active');
+    if (imgs.length === 1) {
+        $($(carousel).find('.carousel-indicators, a[class^="carousel-control-"]')).detach();
+    }
+    $(carousel).carousel();
+    $($(carousel).find('.carousel-indicators')).attr('aria-hidden', true);
+}
+
+/**
  * Parses JSON from Ajax call made whenever an attribute value is [de]selected
  * @param {Object} response - response from Ajax call
  * @param {Object} response.product - Product object
@@ -266,11 +289,8 @@ function handleVariantResponse(response, $productContainer) {
     }
 
     // Update primary images
-    var primaryImageUrls = response.product.images;
-    primaryImageUrls.large.forEach(function (imageUrl, idx) {
-        $productContainer.find('.primary-images').find('img').eq(idx)
-            .attr('src', imageUrl.url);
-    });
+    var primaryImageUrls = response.product.images.large;
+    createCarousel(primaryImageUrls, $productContainer);
 
     // Update pricing
     if (!isChoiceOfBonusProducts) {
