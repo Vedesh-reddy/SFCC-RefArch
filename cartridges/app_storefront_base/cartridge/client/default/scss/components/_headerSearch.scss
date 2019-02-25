@@ -25,7 +25,6 @@
     .fa-search {
         position: absolute;
         border: none;
-        background: none;
         top: 0.5625em; /* 9/16 */
         right: 0.5625em; /* 9/16 */
         padding: 0;
@@ -33,7 +32,6 @@
 
     .reset-button {
         position: absolute;
-        background: none;
         border: none;
         top: 0.5625em; /* 9/16 */
         right: 2em; /* 32/16 */
@@ -110,6 +108,14 @@
     .category-parent {
         color: $grey4;
         font-size: 0.875em;
+    }
+
+    .selected {
+        background-color: $grey2;
+    }
+
+    .container {
+        list-style-type: none;
     }
 }
 

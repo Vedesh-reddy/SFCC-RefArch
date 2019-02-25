@@ -3,7 +3,10 @@
 var debounce = require('lodash/debounce');
 var endpoint = $('.suggestions-wrapper').data('url');
 var minChars = 3;
-
+var UP_KEY = 38;
+var DOWN_KEY = 40;
+var DIRECTION_DOWN = 1;
+var DIRECTION_UP = -1;
 
 /**
  * Retrieves Suggestions element relative to scope
@@ -136,6 +139,14 @@ function processResponse(response) {
             toggleSuggestionsIcon('close');
             applyModals(this);
         }
+
+        // Trigger screen reader by setting aria-describedby with the new suggestion message.
+        var suggestionsList = $('.suggestions .item');
+        if ($(suggestionsList).length) {
+            $('input.search-field').attr('aria-describedby', 'search-result-count');
+        } else {
+            $('input.search-field').removeAttr('aria-describedby');
+        }
     } else {
         $suggestionsWrapper.hide();
     }
@@ -154,7 +165,9 @@ function getSuggestions(scope) {
             url: endpoint + encodeURIComponent($(scope).val()),
             method: 'GET',
             success: processResponse,
-            error: function () { $.spinner().stop(); }
+            error: function () {
+                $.spinner().stop();
+            }
         });
     } else {
         toggleSuggestionsIcon('search');
@@ -164,7 +177,55 @@ function getSuggestions(scope) {
     }
 }
 
+/**
+ * Handle Search Suggestion Keyboard Arrow Keys
+ *
+ * @param {Integer} direction takes positive or negative number constant, DIRECTION_UP (-1) or DIRECTION_DOWN (+1)
+ */
+function handleArrow(direction) {
+    // get all li elements in the suggestions list
+    var suggestionsList = $('.suggestions .item');
+    if (suggestionsList.filter('.selected').length === 0) {
+        suggestionsList.first().addClass('selected');
+        $('input.search-field').each(function () {
+            $(this).attr('aria-activedescendant', suggestionsList.first()[0].id);
+        });
+    } else {
+        suggestionsList.each(function (index) {
+            var idx = index + direction;
+            if ($(this).hasClass('selected')) {
+                $(this).removeClass('selected');
+                $(this).removeAttr('aria-selected');
+                if (suggestionsList.eq(idx).length !== 0) {
+                    suggestionsList.eq(idx).addClass('selected');
+                    suggestionsList.eq(idx).attr('aria-selected', true);
+                    $(this).removeProp('aria-selected');
+                    $('input.search-field').each(function () {
+                        $(this).attr('aria-activedescendant', suggestionsList.eq(idx)[0].id);
+                    });
+                } else {
+                    suggestionsList.first().addClass('selected');
+                    suggestionsList.first().attr('aria-selected', true);
+                    $('input.search-field').each(function () {
+                        $(this).attr('aria-activedescendant', suggestionsList.first()[0].id);
+                    });
+                }
+                return false;
+            }
+            return true;
+        });
+    }
+}
+
 module.exports = function () {
+    $('form[name="simpleSearch"]').submit(function (e) {
+        var suggestionsList = $('.suggestions .item');
+        if (suggestionsList.filter('.selected').length !== 0) {
+            e.preventDefault();
+            suggestionsList.filter('.selected').find('a')[0].click();
+        }
+    });
+
     $('input.search-field').each(function () {
         /**
          * Use debounce to avoid making an Ajax call on every single key press by waiting a few
@@ -172,9 +233,20 @@ module.exports = function () {
          * browser blink with every key press.
          */
         var debounceSuggestions = debounce(getSuggestions, 300);
-
-        $(this).on('keyup click', function (e) {
-            debounceSuggestions(this, e);
+        $(this).on('keyup focus', function (e) {
+            // Capture Down/Up Arrow Key Events
+            switch (e.which) {
+                case DOWN_KEY:
+                    handleArrow(DIRECTION_DOWN);
+                    e.preventDefault(); // prevent moving the cursor
+                    break;
+                case UP_KEY:
+                    handleArrow(DIRECTION_UP);
+                    e.preventDefault(); // prevent moving the cursor
+                    break;
+                default:
+                    debounceSuggestions(this, e);
+            }
         });
     });
 
