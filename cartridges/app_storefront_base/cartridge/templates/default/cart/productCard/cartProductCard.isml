@@ -34,6 +34,19 @@
         <div class="col-12 d-lg-none"><hr class="line-item-divider"></div>
 
         <isinclude template="cart/productCard/cartProductCardProductPrice" />
+
+        <isif condition="${!lineItem.isBonusProductLineItem}"/>
+            <div class="hidden-md-down">
+                <button type="button" class="remove-btn-lg remove-product btn btn-light" data-toggle="modal"
+                        data-target=".cart.cart-page #removeProductModal" data-pid="${lineItem.id}"
+                        data-name="${lineItem.productName}"
+                        data-action="${pdict.actionUrls.removeProductLineItemUrl}"
+                        data-uuid="${lineItem.UUID}"
+                        aria-label="${Resource.msgf('text.remove.line.item','cart', null, lineItem.productName)}">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </isif>
     </div>
 
     <isif condition="${lineItem.bonusProductLineItemUUID === 'bonus'}">
