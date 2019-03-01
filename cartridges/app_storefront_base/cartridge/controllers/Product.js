@@ -89,7 +89,6 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
     var params = req.querystring;
     var product = ProductFactory.get(params);
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
-    var quickViewFullDetailMsg = Resource.msg('link.quickview.viewdetails', 'product', null);
     var template = product.productType === 'set'
         ? 'product/setQuickView.isml'
         : 'product/quickView.isml';
@@ -98,7 +97,8 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
         product: product,
         addToCartUrl: addToCartUrl,
         resources: productHelper.getResources(),
-        quickViewFullDetailMsg: quickViewFullDetailMsg,
+        quickViewFullDetailMsg: Resource.msg('link.quickview.viewdetails', 'product', null),
+        closeButtonText: Resource.msg('link.quickview.close', 'product', null),
         template: template
     };
 

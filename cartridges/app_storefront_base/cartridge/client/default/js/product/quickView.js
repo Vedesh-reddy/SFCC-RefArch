@@ -17,7 +17,8 @@ function getModalHtmlElement() {
         + '<div class="modal-header">'
         + '    <a class="full-pdp-link" href=""></a>'
         + '    <button type="button" class="close pull-right" data-dismiss="modal">'
-        + '        &times;'
+        + '        <span aria-hidden="true">&times;</span>'
+        + '        <span class="sr-only"> </span>'
         + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
@@ -68,6 +69,7 @@ function fillModalElement(selectedValueUrl) {
             $('.full-pdp-link').text(data.quickViewFullDetailMsg);
             $('#quickViewModal .full-pdp-link').attr('href', data.productUrl);
             $('#quickViewModal .size-chart').attr('href', data.productUrl);
+            $('#quickViewModal .modal-header .close .sr-only').text(data.closeButtonText);
             $('#quickViewModal').modal('show');
             $.spinner().stop();
         },

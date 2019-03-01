@@ -234,7 +234,8 @@ function getModalHtmlElement() {
         + '<div class="modal-content">'
         + '<div class="modal-header">'
         + '    <button type="button" class="close pull-right" data-dismiss="modal">'
-        + '        &times;'
+        + '        <span aria-hidden="true">&times;</span>'
+        + '        <span class="sr-only"> </span>'
         + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
@@ -269,13 +270,14 @@ function fillModalElement(editProductUrl) {
     $.ajax({
         url: editProductUrl,
         method: 'GET',
-        dataType: 'html',
-        success: function (html) {
-            var parsedHtml = parseHtml(html);
+        dataType: 'json',
+        success: function (data) {
+            var parsedHtml = parseHtml(data.renderedTemplate);
 
             $('#editProductModal .modal-body').empty();
             $('#editProductModal .modal-body').html(parsedHtml.body);
             $('#editProductModal .modal-footer').html(parsedHtml.footer);
+            $('#editProductModal .modal-header .close .sr-only').text(data.closeButtonText);
             $('#editProductModal').modal('show');
             $.spinner().stop();
         },
