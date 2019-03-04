@@ -100,6 +100,11 @@ module.exports = {
         // Display refinements bar when Menu icon clicked
         $('.container').on('click', 'button.filter-results', function () {
             $('.refinement-bar, .modal-background').show();
+            $('.refinement-bar').siblings().attr('aria-hidden', true);
+            $('.refinement-bar').closest('.row').siblings().attr('aria-hidden', true);
+            $('.refinement-bar').closest('.tab-pane.active').siblings().attr('aria-hidden', true);
+            $('.refinement-bar').closest('.container.search-results').siblings().attr('aria-hidden', true);
+            $('.refinement-bar .close').focus();
         });
     },
 
@@ -107,6 +112,11 @@ module.exports = {
         // Refinements close button
         $('.container').on('click', '.refinement-bar button.close, .modal-background', function () {
             $('.refinement-bar, .modal-background').hide();
+            $('.refinement-bar').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.row').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.tab-pane.active').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.container.search-results').siblings().attr('aria-hidden', false);
+            $('.btn.filter-results').focus();
         });
     },
 
@@ -114,6 +124,10 @@ module.exports = {
         // Close refinement bar and hide modal background if user resizes browser
         $(window).resize(function () {
             $('.refinement-bar, .modal-background').hide();
+            $('.refinement-bar').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.row').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.tab-pane.active').siblings().attr('aria-hidden', false);
+            $('.refinement-bar').closest('.container.search-results').siblings().attr('aria-hidden', false);
         });
     },
 

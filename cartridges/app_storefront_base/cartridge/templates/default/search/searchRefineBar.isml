@@ -26,10 +26,16 @@
     <div class="refinements">
         <isloop items="${pdict.productSearch.refinements}" var="refinement">
             <div class="card collapsible-sm refinement refinement-${refinement.displayName.toLowerCase().replace(/ /g, '-')}">
-                <div class="card-header">
-                    ${refinement.displayName}
+                <div class="card-header col-sm-12">
+                    <button class="title btn text-left btn-block d-md-none"
+                       aria-controls="refinement-${refinement.displayName.toLowerCase().replace(/ /g, '-')}"
+                       aria-expanded="false"
+                    >
+                        <span>${refinement.displayName}</span>
+                    </button>
+                    <div aria-label="${refinement.displayName}" class="d-none d-md-block">${refinement.displayName}</div>
                 </div>
-                <div class="card-body">
+                <div class="card-body content value" id="refinement-${refinement.displayName.toLowerCase().replace(/ /g, '-')}">
                     <!--- CATEGORY REFINEMENTS --->
                     <isif condition="${refinement.isCategoryRefinement}">
                         <isset name="categories" value="${refinement.values}" scope="page" />
