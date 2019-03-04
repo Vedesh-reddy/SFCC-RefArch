@@ -20,14 +20,16 @@ function Images(product, imageConfig) {
                     alt: firstImage.alt,
                     url: firstImage.URL.toString(),
                     title: firstImage.title,
+                    index: '0',
                     absURL: firstImage.absURL.toString()
                 }];
             }
         } else {
-            result = collections.map(images, function (image) {
+            result = collections.map(images, function (image, index) {
                 return {
                     alt: image.alt,
                     url: image.URL.toString(),
+                    index: index.toString(),
                     title: image.title,
                     absURL: image.absURL.toString()
                 };

@@ -17,6 +17,7 @@ describe('productImages', function () {
             return: new ArrayList([{
                 alt: 'First Image',
                 title: 'First Image',
+                index: '0',
                 URL: {
                     toString: function () {
                         return '/first_image_url';
@@ -30,6 +31,7 @@ describe('productImages', function () {
             }, {
                 alt: 'Second Image',
                 title: 'Second Image',
+                index: '1',
                 URL: {
                     toString: function () {
                         return '/second_image_url';
@@ -49,11 +51,13 @@ describe('productImages', function () {
         var images = new ProductImages(toProductMock(productMock), { types: ['small'], quantity: '*' });
         assert.equal(images.small.length, 2);
         assert.equal(images.small[0].alt, 'First Image');
+        assert.equal(images.small[0].index, '0');
         assert.equal(images.small[0].title, 'First Image');
         assert.equal(images.small[0].url, '/first_image_url');
         assert.equal(images.small[0].absURL, 'path/first_image_url');
         assert.equal(images.small[1].url, '/second_image_url');
         assert.equal(images.small[1].absURL, 'path/second_image_url');
+        assert.equal(images.small[1].index, '1');
     });
 
     it('should get only first small image', function () {
@@ -61,6 +65,7 @@ describe('productImages', function () {
         assert.equal(images.small.length, 1);
         assert.equal(images.small[0].alt, 'First Image');
         assert.equal(images.small[0].title, 'First Image');
+        assert.equal(images.small[0].index, '0');
         assert.equal(images.small[0].url, '/first_image_url');
         assert.equal(images.small[0].absURL, 'path/first_image_url');
     });
