@@ -30,6 +30,11 @@ footer {
         margin-top: 1.25em;
     }
 
+    .footer-container .footer-item.collapsible-xs button {
+        font-family: 'Dosis', sans-serif;
+        padding: 0;
+    }
+
     .social-links {
 
         @include clearfix;
