@@ -21,10 +21,9 @@ function updateDom($results, selector) {
 function handleRefinements($results) {
     $('.refinement.active').each(function () {
         $(this).removeClass('active');
-
-        $results
-            .find('.' + $(this)[0].className.replace(/ /g, '.'))
-            .addClass('active');
+        var activeDiv = $results.find('.' + $(this)[0].className.replace(/ /g, '.'));
+        activeDiv.addClass('active');
+        activeDiv.find('button.title').attr('aria-expanded', 'true');
     });
 
     updateDom($results, '.refinements');
@@ -183,7 +182,7 @@ module.exports = {
         // Handle refinement value selection and reset click
         $('.container').on(
             'click',
-            '.refinements li a, .refinement-bar a.reset, .filter-value a, .swatch-filter a',
+            '.refinements li button, .refinement-bar button.reset, .filter-value button, .swatch-filter button',
             function (e) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -191,10 +190,10 @@ module.exports = {
                 $.spinner().start();
                 $(this).trigger('search:filter', e);
                 $.ajax({
-                    url: e.currentTarget.href,
+                    url: $(this).data('href'),
                     data: {
                         page: $('.grid-footer').data('page-number'),
-                        selectedUrl: e.currentTarget.href
+                        selectedUrl: $(this).data('href')
                     },
                     method: 'GET',
                     success: function (response) {
