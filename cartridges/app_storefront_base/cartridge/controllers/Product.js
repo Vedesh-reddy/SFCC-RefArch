@@ -99,6 +99,7 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
         resources: productHelper.getResources(),
         quickViewFullDetailMsg: Resource.msg('link.quickview.viewdetails', 'product', null),
         closeButtonText: Resource.msg('link.quickview.close', 'product', null),
+        enterDialogMessage: Resource.msg('msg.enter.quickview', 'product', null),
         template: template
     };
 
@@ -134,7 +135,9 @@ server.get('SizeChart', function (req, res, next) {
 });
 
 server.get('ShowBonusProducts', function (req, res, next) {
+    var Resource = require('dw/web/Resource');
     var ProductFactory = require('*/cartridge/scripts/factories/product');
+    var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
     var moreUrl = null;
     var pagingModel;
     var products = [];
@@ -215,14 +218,25 @@ server.get('ShowBonusProducts', function (req, res, next) {
         }
     }
 
-    var template = 'product/components/choiceOfBonusProducts/bonusProducts.isml';
-
-    res.render(template, {
+    var context = {
         products: products,
         selectedBonusProducts: selectedBonusProducts,
         maxPids: req.querystring.maxpids,
         moreUrl: moreUrl,
-        showMoreButton: showMoreButton
+        showMoreButton: showMoreButton,
+        closeButtonText: Resource.msg('link.choice.of.bonus.dialog.close', 'product', null),
+        enterDialogMessage: Resource.msg('msg.enter.choice.of.bonus.select.products', 'product', null),
+        template: 'product/components/choiceOfBonusProducts/bonusProducts.isml'
+    };
+
+    res.setViewData(context);
+
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var viewData = res.getViewData();
+
+        res.json({
+            renderedTemplate: renderTemplateHelper.getRenderedHtml(viewData, viewData.template)
+        });
     });
 
     next();

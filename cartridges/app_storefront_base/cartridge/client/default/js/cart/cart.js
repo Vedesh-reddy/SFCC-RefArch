@@ -229,6 +229,7 @@ function getModalHtmlElement() {
     }
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="editProductModal" role="dialog">'
+        + '<span class="enter-message sr‐only" ></span>'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
         + '<div class="modal-content">'
@@ -278,6 +279,7 @@ function fillModalElement(editProductUrl) {
             $('#editProductModal .modal-body').html(parsedHtml.body);
             $('#editProductModal .modal-footer').html(parsedHtml.footer);
             $('#editProductModal .modal-header .close .sr-only').text(data.closeButtonText);
+            $('#editProductModal .enter-message').text(data.enterDialogMessage);
             $('#editProductModal').modal('show');
             $.spinner().stop();
         },

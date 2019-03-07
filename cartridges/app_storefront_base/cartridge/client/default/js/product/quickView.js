@@ -11,6 +11,7 @@ function getModalHtmlElement() {
     }
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="quickViewModal" role="dialog">'
+        + '<span class="enter-message sr‐only" ></span>'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
         + '<div class="modal-content">'
@@ -70,6 +71,7 @@ function fillModalElement(selectedValueUrl) {
             $('#quickViewModal .full-pdp-link').attr('href', data.productUrl);
             $('#quickViewModal .size-chart').attr('href', data.productUrl);
             $('#quickViewModal .modal-header .close .sr-only').text(data.closeButtonText);
+            $('#quickViewModal .enter-message').text(data.enterDialogMessage);
             $('#quickViewModal').modal('show');
             $.spinner().stop();
         },

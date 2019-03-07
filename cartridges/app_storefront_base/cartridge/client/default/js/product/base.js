@@ -420,6 +420,7 @@ function chooseBonusProducts(data) {
 
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="chooseBonusProductModal" role="dialog">'
+        + '<span class="enter-message sr‐only" ></span>'
         + '<div class="modal-dialog choose-bonus-product-dialog" '
         + 'data-total-qty="' + data.maxBonusItems + '"'
         + 'data-UUID="' + data.uuid + '"'
@@ -433,7 +434,10 @@ function chooseBonusProducts(data) {
         + '<div class="modal-content">'
         + '<div class="modal-header">'
         + '    <span class="">' + data.labels.selectprods + '</span>'
-        + '    <button type="button" class="close pull-right" data-dismiss="modal">&times;</button>'
+        + '    <button type="button" class="close pull-right" data-dismiss="modal">'
+        + '        <span aria-hidden="true">&times;</span>'
+        + '        <span class="sr-only"> </span>'
+        + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
         + '<div class="modal-footer"></div>'
@@ -446,10 +450,12 @@ function chooseBonusProducts(data) {
     $.ajax({
         url: bonusUrl,
         method: 'GET',
-        dataType: 'html',
-        success: function (html) {
-            var parsedHtml = parseHtml(html);
+        dataType: 'json',
+        success: function (response) {
+            var parsedHtml = parseHtml(response.renderedTemplate);
             $('#chooseBonusProductModal .modal-body').empty();
+            $('#chooseBonusProductModal .enter-message').text(response.enterDialogMessage);
+            $('#chooseBonusProductModal .modal-header .close .sr-only').text(response.closeButtonText);
             $('#chooseBonusProductModal .modal-body').html(parsedHtml.body);
             $('#chooseBonusProductModal .modal-footer').html(parsedHtml.footer);
             $('#chooseBonusProductModal').modal('show');

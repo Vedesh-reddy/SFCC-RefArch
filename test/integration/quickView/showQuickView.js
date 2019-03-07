@@ -31,6 +31,8 @@ describe('Product-ShowQuickView', function () {
             assert.isString(bodyAsJson.renderedTemplate);
             assert.isNotNull(bodyAsJson.productUrl);
             assert.isString(bodyAsJson.productUrl);
+            assert.isString(bodyAsJson.closeButtonText);
+            assert.isString(bodyAsJson.enterDialogMessage);
 
             done();
         });

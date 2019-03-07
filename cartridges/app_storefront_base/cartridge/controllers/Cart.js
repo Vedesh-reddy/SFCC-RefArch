@@ -720,6 +720,7 @@ server.get('GetProduct', function (req, res, next) {
         uuid: requestUuid,
         updateCartUrl: URLUtils.url('Cart-EditProductLineItem'),
         closeButtonText: Resource.msg('link.editProduct.close', 'cart', null),
+        enterDialogMessage: Resource.msg('msg.enter.edit.product', 'cart', null),
         template: 'product/quickView.isml'
     };
 
