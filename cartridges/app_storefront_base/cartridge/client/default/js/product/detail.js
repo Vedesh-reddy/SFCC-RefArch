@@ -117,5 +117,7 @@ module.exports = {
                 $sizeChart.removeClass('active');
             }
         });
-    }
+    },
+
+    focusChooseBonusProductModal: base.focusChooseBonusProductModal()
 };

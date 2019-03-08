@@ -73,6 +73,7 @@ function fillModalElement(selectedValueUrl) {
             $('#quickViewModal .modal-header .close .sr-only').text(data.closeButtonText);
             $('#quickViewModal .enter-message').text(data.enterDialogMessage);
             $('#quickViewModal').modal('show');
+
             $.spinner().stop();
         },
         error: function () {
@@ -89,6 +90,11 @@ module.exports = {
             $(e.target).trigger('quickview:show');
             getModalHtmlElement();
             fillModalElement(selectedValueUrl);
+        });
+    },
+    focusQuickview: function () {
+        $('body').on('shown.bs.modal', '#quickViewModal', function () {
+            $('#quickViewModal .close').focus();
         });
     },
     colorAttribute: base.colorAttribute,

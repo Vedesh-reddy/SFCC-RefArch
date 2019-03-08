@@ -545,6 +545,13 @@ module.exports = {
             chooseBonusProducts(data);
         }
     },
+
+    focusChooseBonusProductModal: function () {
+        $('body').on('shown.bs.modal', '#chooseBonusProductModal', function () {
+            $('#chooseBonusProductModal .close').focus();
+        });
+    },
+
     colorAttribute: function () {
         $(document).on('click', '[data-attr="color"] button', function (e) {
             e.preventDefault();

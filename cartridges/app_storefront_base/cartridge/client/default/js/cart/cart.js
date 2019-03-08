@@ -599,6 +599,10 @@ module.exports = function () {
         fillModalElement(editProductUrl);
     });
 
+    $('body').on('shown.bs.modal', '#editProductModal', function () {
+        $('#editProductModal .close').focus();
+    });
+
     $('body').on('product:updateAddToCart', function (e, response) {
         // update global add to cart (single products, bundles)
         var dialog = $(response.$productContainer)
@@ -724,4 +728,5 @@ module.exports = function () {
     base.enableBonusProductSelection();
     base.showMoreBonusProducts();
     base.addBonusProductsToCart();
+    base.focusChooseBonusProductModal();
 };
