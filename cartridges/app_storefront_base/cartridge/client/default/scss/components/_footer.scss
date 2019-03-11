@@ -126,10 +126,6 @@ footer {
     @include media-breakpoint-down(xs) {
         border-bottom: 1px solid $dark-gray;
     }
-
-    h2 {
-        cursor: pointer;
-    }
 }
 
 #consent-tracking {
