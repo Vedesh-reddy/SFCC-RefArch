@@ -1,4 +1,4 @@
-<div class="col-md-10 col-12 product-options">
+<div class="product-options">
     <isloop items="${product.options}" var="option" status="loopStatus">
         <div class="row product-option" data-option-id="${option.id}">
             <div class="

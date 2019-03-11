@@ -145,15 +145,6 @@ label.availability {
 
 .product-options {
     margin-top: 1.25em;
-
-    .quantity {
-        bottom: 0;
-        min-width: 6.25em;
-        padding-left: 0.938em;
-        padding-right: 0.938em;
-        position: absolute;
-        right: 0;
-    }
 }
 
 .size-chart {
@@ -179,4 +170,13 @@ label.availability {
 .non-input-label {
     display: block;
     margin-bottom: 0.5rem;
+}
+
+.attributes {
+
+    @include media-breakpoint-up(md) {
+        padding-left: 2.5rem;
+        padding-right: 2.5rem;
+    }
+
 }

@@ -59,30 +59,32 @@
 
         <hr>
 
-        <div class="col-12 col-sm-6 offset-sm-6 bundle-footer">
-            <!-- Quantity -->
-            <isset name="loopState" value="{count: 1}" scope="page" />
-            <isset name="product" value="${bundle}" scope="page" />
-            <isinclude template="product/components/quantity" />
+        <div class="row">
+            <div class="col-12 col-sm-6 offset-sm-6 bundle-footer">
+                <!-- Quantity -->
+                <isset name="loopState" value="{count: 1}" scope="page" />
+                <isset name="product" value="${bundle}" scope="page" />
+                <isinclude template="product/components/quantity" />
 
-            <!-- Availability -->
-            <div class="availability clearfix global-availability" data-ready-to-order="${bundle.readyToOrder}">
-                <isinclude template="product/components/availabilityBundleContainer" />
-            </div>
-
-            <div class="col-12 prices-add-to-cart-actions">
-                <!-- Prices -->
-                <div class="prices">
-                    <isset name="price" value="${product.price}" scope="page" />
-                    <isinclude template="product/components/pricing/main" />
+                <!-- Availability -->
+                <div class="availability clearfix global-availability" data-ready-to-order="${bundle.readyToOrder}">
+                    <isinclude template="product/components/availabilityBundleContainer" />
                 </div>
 
-                <!-- Cart and [Optionally] Apple Pay -->
-                <isinclude template="product/components/addToCartGlobal" />
-            </div>
+                <div class="col-12 prices-add-to-cart-actions">
+                    <!-- Prices -->
+                    <div class="prices">
+                        <isset name="price" value="${product.price}" scope="page" />
+                        <isinclude template="product/components/pricing/main" />
+                    </div>
 
-            <!-- Social Sharing Icons -->
-            <isinclude template="product/components/socialIcons" />
+                    <!-- Cart and [Optionally] Apple Pay -->
+                    <isinclude template="product/components/addToCartGlobal" />
+                </div>
+
+                <!-- Social Sharing Icons -->
+                <isinclude template="product/components/socialIcons" />
+            </div>
         </div>
 
         <isinclude template="product/components/descriptionAndDetails" />
