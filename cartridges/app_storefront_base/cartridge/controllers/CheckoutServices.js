@@ -55,6 +55,7 @@ server.post(
 
         // verify billing form data
         var billingFormErrors = COHelpers.validateBillingForm(paymentForm.addressFields);
+        var contactInfoFormErrors = COHelpers.validateFields(paymentForm.contactInfoFields);
 
         var formFieldErrors = [];
         if (Object.keys(billingFormErrors).length) {
@@ -73,6 +74,16 @@ server.post(
             if (Object.prototype.hasOwnProperty.call(paymentForm.addressFields, 'states')) {
                 viewData.address.stateCode = { value: paymentForm.addressFields.states.stateCode.value };
             }
+        }
+
+        if (Object.keys(contactInfoFormErrors).length) {
+            formFieldErrors.push(contactInfoFormErrors);
+        } else {
+            viewData.email = {
+                value: paymentForm.contactInfoFields.email.value
+            };
+
+            viewData.phone = { value: paymentForm.contactInfoFields.phone.value };
         }
 
         var paymentMethodIdValue = paymentForm.paymentMethod.value;
@@ -265,7 +276,7 @@ server.post(
                 usingMultiShipping = false;
             }
 
-            hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, paymentForm.creditCardFields.email.htmlValue], function () {});
+            hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, paymentForm.contactInfoFields.email.htmlValue], function () {});
 
             var currentLocale = Locale.getLocale(req.locale.id);
 

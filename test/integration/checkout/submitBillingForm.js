@@ -52,8 +52,8 @@ describe('billingForm', function () {
                 dwfrm_billing_creditCardFields_expirationMonth: '2',
                 dwfrm_billing_creditCardFields_expirationYear: '2020.0',
                 dwfrm_billing_creditCardFields_securityCode: '342',
-                dwfrm_billing_creditCardFields_email: 'blahblah@gmail.com',
-                dwfrm_billing_creditCardFields_phone: '9786543213'
+                dwfrm_billing_contactInfoFields_email: 'blahblah@gmail.com',
+                dwfrm_billing_contactInfoFields_phone: '9786543213'
             };
 
             var ExpectedResBody = {

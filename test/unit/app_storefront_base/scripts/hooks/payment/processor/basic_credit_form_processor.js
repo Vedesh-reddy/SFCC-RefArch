@@ -127,9 +127,6 @@ describe('basic credit form processor', function () {
             assert.equal(result.viewData.paymentInformation.cardType.value, 'some card type value');
             assert.equal(result.viewData.paymentInformation.securityCode.value, 'some card cvv value');
 
-            assert.equal(result.viewData.email.value, 'some email value');
-            assert.equal(result.viewData.phone.value, 'some phone value');
-
             assert.equal(result.viewData.storedPaymentUUID, null);
         });
 

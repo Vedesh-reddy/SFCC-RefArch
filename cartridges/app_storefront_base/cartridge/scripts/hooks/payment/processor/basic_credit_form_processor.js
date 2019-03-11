@@ -62,12 +62,6 @@ function processForm(req, paymentForm, viewFormData) {
         viewData.storedPaymentUUID = req.form.storedPaymentUUID;
     }
 
-    viewData.email = {
-        value: paymentForm.creditCardFields.email.value
-    };
-
-    viewData.phone = { value: paymentForm.creditCardFields.phone.value };
-
     viewData.saveCard = paymentForm.creditCardFields.saveCard.checked;
 
     // process payment information
