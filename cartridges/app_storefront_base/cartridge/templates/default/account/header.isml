@@ -1,17 +1,19 @@
 <isif condition="${pdict.name === null}">
     <div class="user hidden-md-down">
-        <a href="${URLUtils.https('Login-Show')}">
+        <a href="${URLUtils.https('Login-Show')}" role="button">
             <i class="fa fa-sign-in" aria-hidden="true"></i>
             <span class="user-message">${Resource.msg('link.header.login', 'account', null)}</span>
         </a>
     </div>
 <iselse/>
-    <div class="user hidden-md-down" tabindex="0">
+    <div class="user hidden-md-down nav-item" tabindex="0" role="navigation" aria-label="Account Menu" data-toggle="dropdown" aria-expanded="false">
         <i class="fa fa-sign-in" aria-hidden="true"></i>
-        <span class="user-message">${pdict.name}</span>
+        <span class="user-message btn dropdown-toggle">${pdict.name}</span>
         <div class="popover popover-bottom">
-            <a href="${URLUtils.https('Account-Show')}">${Resource.msg('link.header.myaccount', 'account', null)}</a>
-            <a href="${URLUtils.url('Login-Logout')}">${Resource.msg('link.header.logout', 'account', null)}</a>
+        	<ul class="nav" role="menu" aria-hidden="true">
+            	<li class="nav-item" role="menuitem"><a href="${URLUtils.https('Account-Show')}" role="button">${Resource.msg('link.header.myaccount', 'account', null)}</a></li>
+            	<li class="nav-item" role="menuitem"><a href="${URLUtils.url('Login-Logout')}" role="button">${Resource.msg('link.header.logout', 'account', null)}</a></li>
+        	</ul>
         </div>
     </div>
 </isif>

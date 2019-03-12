@@ -198,7 +198,7 @@ module.exports = function () {
         {
             40: function ($popover) { // down
                 if ($popover.children('a').first().is(':focus')) {
-                    $popover.children('a').first().next().focus();
+                    $popover.next().children().first().focus();
                 } else {
                     $popover.children('a').first().focus();
                 }
@@ -220,7 +220,7 @@ module.exports = function () {
             }
         },
         function () {
-            var $popover = $('.user .popover');
+            var $popover = $('.user .popover li.nav-item');
             if (!($popover.hasClass('show'))) {
                 $popover.addClass('show');
             }
@@ -231,10 +231,12 @@ module.exports = function () {
     $('.navbar-header .user').on('mouseenter focusin', function () {
         if ($('.navbar-header .user .popover').length > 0) {
             $('.navbar-header .user .popover').addClass('show');
+            $('.user').attr('aria-expanded', 'true');
         }
     });
 
     $('.navbar-header .user').on('mouseleave', function () {
         $('.navbar-header .user .popover').removeClass('show');
+        $('.user').attr('aria-expanded', 'false');
     });
 };
