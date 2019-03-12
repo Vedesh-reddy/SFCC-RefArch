@@ -11,7 +11,7 @@ function getModalHtmlElement() {
     }
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="quickViewModal" role="dialog">'
-        + '<span class="enter-message sr‐only" ></span>'
+        + '<span class="enter-message sr-only" ></span>'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
         + '<div class="modal-content">'

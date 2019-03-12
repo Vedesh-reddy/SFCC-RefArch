@@ -420,7 +420,7 @@ function chooseBonusProducts(data) {
 
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="chooseBonusProductModal" role="dialog">'
-        + '<span class="enter-message sr‐only" ></span>'
+        + '<span class="enter-message sr-only" ></span>'
         + '<div class="modal-dialog choose-bonus-product-dialog" '
         + 'data-total-qty="' + data.maxBonusItems + '"'
         + 'data-UUID="' + data.uuid + '"'
