@@ -16,6 +16,7 @@ function formField(field) {
             attributes += 'name="' + result.htmlName + '"';
             if (result.mandatory) {
                 attributes += ' required';
+                attributes += ' aria-required="true"';
             }
             if (field.options && field.options.optionsCount > 0) {
                 return attributes;
