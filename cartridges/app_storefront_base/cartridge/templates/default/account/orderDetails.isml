@@ -16,7 +16,7 @@
             <div class="col-sm-8 col-md-6">
                 <isinclude template="checkout/confirmation/confirmationDetails" />
                 <div class="my-account">
-                    <a href="${pdict.exitLinkUrl}" title="${Resource.msg('link.orderdetails.myaccount','account',null)}">
+                    <a href="${pdict.exitLinkUrl}" title="${Resource.msg('link.orderdetails.myaccount','account',null)}" aria‐label="${Resource.msg('link.orderdetails.myaccount','account',null)}">
                         ${pdict.exitLinkText}
                     </a>
                 </div>
