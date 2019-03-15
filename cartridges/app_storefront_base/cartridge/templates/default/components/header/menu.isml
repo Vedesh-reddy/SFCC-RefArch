@@ -24,7 +24,7 @@
                             <isinclude template="components/header/menuItem" />
                         </li>
                     <iselse/>
-                        <li class="nav-item" role="menuitem">
+                        <li class="nav-item">
                             <a href="<isprint value="${category.url}" encoding="htmldoublequote"/>" id="${category.id}" role="button" class="nav-link">${category.name}</a>
                         </li>
                     </isif>

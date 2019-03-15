@@ -7,7 +7,7 @@
                 <isinclude template="components/header/menuItem" />
             </li>
         <iselse/>
-            <li class="dropdown-item" role="menuitem">
+            <li class="dropdown-item">
                 <a href="${category.url}" id="${category.id}" role="button" class="dropdown-link">${category.name}</a>
             </li>
         </isif>
