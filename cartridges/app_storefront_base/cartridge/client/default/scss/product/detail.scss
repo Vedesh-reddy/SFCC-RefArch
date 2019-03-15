@@ -56,17 +56,27 @@ label.color ~ a:hover {
     }
 }
 
-.social-icons {
-    font-size: 1.875em;
-
-    @include media-breakpoint-down(md) {
-        font-size: 1.5625em;
-    }
-}
-
 .social-container {
     padding-top: 0.9375em;
     text-align: center;
+
+    .social-icons {
+        text-decoration: none;
+        font-size: 1.875em;
+        list-style-type: none;
+        padding: 0;
+        color: $grey6;
+
+        @include media-breakpoint-down(md) {
+            font-size: 1.5625em;
+        }
+
+        i,
+        a {
+            color: $grey6;
+            padding-right: 0.2em;
+        }
+    }
 }
 
 label.availability {
