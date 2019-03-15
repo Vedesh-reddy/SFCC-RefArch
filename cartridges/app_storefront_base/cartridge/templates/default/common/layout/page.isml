@@ -16,9 +16,12 @@
         <isinclude template="/components/schema" />
     </head>
     <body>
+    	<isinclude template="/components/header/skipNav" />
         <div class="page" data-action="${pdict.action}" data-querystring="${pdict.queryString}" >
             <isinclude template="/components/header/pageHeader" />
-            <isreplace/>
+            <div id="maincontent">
+            	<isreplace/>
+            </div>
             <isinclude template="/components/footer/pageFooter" />
         </div>
         <div class="error-messaging"></div>

@@ -53,3 +53,25 @@ header ~ .container a:not(.btn-primary, .btn-outline-primary) {
 .error.continue-shopping {
     margin-bottom: 6.25em;
 }
+
+.skip {
+    position: absolute;
+    left: 0;
+    top: -4.2em;
+    overflow: hidden;
+    padding: 1em 1.5em;
+    background: $white;
+    transition: all 0.2s ease-in-out;
+}
+
+a.skip:active,
+a.skip:focus,
+a.skip:hover {
+    left: 0;
+    top: 0;
+    width: auto;
+    height: auto;
+    z-index: 10000000;
+    background: $white;
+    transition: all 0.2s ease-in-out;
+}
