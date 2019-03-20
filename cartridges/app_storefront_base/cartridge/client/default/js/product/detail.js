@@ -118,8 +118,9 @@ module.exports = {
             }
         });
     },
-    copyProductLink: function () {
-        $('body').on('click', '.fa-link', function () {
+    copyProductLink: function (e) {
+        $('body').on('click', '#fa-link', function () {
+        	event.preventDefault();
             var $temp = $('<input>');
             $('body').append($temp);
             $temp.val($('#shareUrl').val()).select();
