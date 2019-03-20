@@ -1,31 +1,31 @@
 <nav class="navbar navbar-expand-md bg-inverse col-12">
     <div class="close-menu clearfix d-lg-none">
         <div class="back pull-left">
-            <a href="${'#'}" role="button">
+            <a href="${'#'}" role="button" aria-label="${Resource.msg('label.header.menu.close', 'common', null)}">
                 <span class="caret-left"></span>
                 ${Resource.msg('link.header.menu.back', 'common', null)}
             </a>
         </div>
         <div class="close-button pull-right">
-            <a href="${'#'}" role="button">
+            <a href="${'#'}" role="button" aria-label="${Resource.msg('label.header.menu.close', 'common', null)}">
                 ${Resource.msg('link.header.menu.close', 'common', null)}
                 <span aria-hidden="true">&times;</span>
             </a>
         </div>
     </div>
-    <div class="menu-group" aria-label="Main menu" role="navigation">
+    <div class="menu-group" role="navigation">
         <ul class="nav navbar-nav" role="menu">
             <isif condition="${pdict.categories}">
                 <isloop items="${pdict.categories}" var="category">
                     <isif condition="${category.subCategories}">
-                        <li class="nav-item dropdown" role="menuitem">
-                            <a href="<isprint value="${category.url}" encoding="htmldoublequote"/>" id="${category.id}" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${category.name}</a>
+                        <li class="nav-item dropdown" role="presentation">
+                            <a href="<isprint value="${category.url}" encoding="htmldoublequote"/>" id="${category.id}" class="nav-link dropdown-toggle" role="menuitem" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" tabindex="0">${category.name}</a>
                             <isset name="menuItem" value="${category}" scope="page" />
                             <isinclude template="components/header/menuItem" />
                         </li>
                     <iselse/>
-                        <li class="nav-item">
-                            <a href="<isprint value="${category.url}" encoding="htmldoublequote"/>" id="${category.id}" role="button" class="nav-link">${category.name}</a>
+                        <li class="nav-item" role="presentation">
+                            <a href="<isprint value="${category.url}" encoding="htmldoublequote"/>" id="${category.id}" role="menuitem" class="nav-link" tabindex="0">${category.name}</a>
                         </li>
                     </isif>
                 </isloop>
