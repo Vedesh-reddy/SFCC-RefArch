@@ -2,7 +2,7 @@
     <div class="card-header clearfix">
         <h4 class="pull-left">${Resource.msg('label.profile','account',null)}</h4>
         <isif condition="${!pdict.account.isExternallyAuthenticated}">
-            <a href="${URLUtils.url('Account-EditProfile')}" class="pull-right" aria‐label="${Resource.msg('label.profile.edit','account',null)}">${Resource.msg('link.edit','account',null)}</a>
+            <a href="${URLUtils.url('Account-EditProfile')}" class="pull-right" aria-label="${Resource.msg('label.profile.edit','account',null)}">${Resource.msg('link.edit','account',null)}</a>
         </isif>
     </div>
     <div class="card-body">

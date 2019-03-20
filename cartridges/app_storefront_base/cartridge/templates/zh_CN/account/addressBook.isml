@@ -25,7 +25,7 @@
                     <div class="card">
                         <div class="card-header">
                             <h4 class="address-heading pull-left">${address.address.ID == pdict.addressBook[0].address.ID ? pdict.addressBook[0].address.ID+' ('+Resource.msg('label.addressbook.defaultaddress','account',null)+')' : address.address.ID}</h4>
-                            <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="pull-right">${Resource.msg('link.edit','account',null)}</a>
+                            <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="pull-right" aria-label="${Resource.msg('label.addressbook.editaddress','account',null)} : ${address.address.ID == pdict.addressBook[0].address.ID ? pdict.addressBook[0].address.ID+' ('+Resource.msg('label.addressbook.defaultaddress','account',null)+')' : address.address.ID}">${Resource.msg('link.edit','account',null)}</a>
                         </div>
                         <div class="card-body card-body-positioning">
                             <div>${address.address.postalCode} </div>
@@ -38,7 +38,7 @@
                             <div>${address.address.phone}</div>
                             <isif condition="${address.address.ID !== pdict.addressBook[0].address.ID}">
                                 <div class="card-make-default-link">
-                                    <a href="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID)}" class="normal">${Resource.msg('link.addressbook.makedefault','account',null)}</a>
+                                    <a href="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID)}" class="normal" aria-label="${Resource.msg('label.addressbook.makedefaultaddress','account',null)}">${Resource.msg('link.addressbook.makedefault','account',null)}</a>
                                 </div>
                             </isif>
                             <button
@@ -47,7 +47,8 @@
                                 data-toggle="modal"
                                 data-target="#deleteAddressModal"
                                 data-id="${address.address.ID}"
-                                data-url="${pdict.actionUrls.deleteActionUrl}"
+                                data-url="${pdict.actionUrls.deleteActionUrl}" 
+                                aria-label="${Resource.msg('label.addressbook.deleteaddress','account',null)}"
                                 ${ address.address.ID == pdict.addressBook[0].address.ID ? data-default="true" : '' }>
                                 &times;
                             </button>
@@ -60,12 +61,12 @@
             <div class="col-6">
                 <div class="row">
                     <div class="col text-center">
-                        <a href="${URLUtils.url('Account-Show')}" class="normal">
+                        <a href="${URLUtils.url('Account-Show')}" class="normal" aria-label="${Resource.msg('label.addressbook.myaccount','account',null)}">
                             ${Resource.msg('link.profile.backtomyaccount','account',null)}
                         </a>
                     </div>
                     <div class="col">
-                        <a href="${URLUtils.url('Address-AddAddress')}" class="btn btn-save btn-block btn-primary">${Resource.msg('button.addnew','account',null)}</a>
+                        <a href="${URLUtils.url('Address-AddAddress')}" class="btn btn-save btn-block btn-primary" aria-label="${Resource.msg('label.addressbook.addnewaddress','account',null)}">${Resource.msg('button.addnew','account',null)}</a>
                     </div>
                 </div>
             </div>

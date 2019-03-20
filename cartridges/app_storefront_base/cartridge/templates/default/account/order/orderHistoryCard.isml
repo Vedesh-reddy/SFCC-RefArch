@@ -2,12 +2,12 @@
     <isif condition="${pdict.accountlanding}">
         <div class="card-header clearfix">
             <h4 class="pull-left">${Resource.msg('label.orderhistory','account',null)}</h4>
-            <a href="${URLUtils.url('Order-History')}" class="pull-right"  aria‐label="${Resource.msg('label.orderhistory.vieworderhistory','account',null)}">${Resource.msg('link.view','account',null)}</a>
+            <a href="${URLUtils.url('Order-History')}" class="pull-right"  aria-label="${Resource.msg('label.orderhistory.vieworderhistory','account',null)}">${Resource.msg('link.view','account',null)}</a>
         </div>
     <iselse/>
         <div class="card-header clearfix">
             <h4 class="pull-left">${Resource.msg('label.orderhistory.orderno','account',null)} ${order.orderNumber}</h4>
-            <a href="${URLUtils.url('Order-Details', 'orderID', order.orderNumber, 'orderFilter', pdict.orderFilter)}" class="pull-right" aria‐label="${Resource.msg('label.orderhistory.vieworderdetails','account',null)}">${Resource.msg('link.view','account',null)}</a>
+            <a href="${URLUtils.url('Order-Details', 'orderID', order.orderNumber, 'orderFilter', pdict.orderFilter)}" class="pull-right" aria-label="${Resource.msg('label.orderhistory.vieworderdetails','account',null)}">${Resource.msg('link.view','account',null)}</a>
         </div>
     </isif>
     <div class="card-body card-info-group">
