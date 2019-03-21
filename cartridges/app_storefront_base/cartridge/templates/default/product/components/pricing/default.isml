@@ -3,11 +3,19 @@
 
     <isif condition="${finalOrigPrice.list !== null}">
         <isset name="price" value="${finalOrigPrice.list}" scope="page" />
-        <span class="strike-through list">
-            <span class="value" content="${price.decimalPrice}">
-                <isinclude template="/product/components/pricing/formatted" />
+        <del>
+            <span class="strike-through list">
+                <span class="value" content="${price.decimalPrice}">
+                    <span class="sr-only">
+                        ${Resource.msg('label.price.reduced.from', 'pricing', null)}
+                    </span>
+                    <isinclude template="/product/components/pricing/formatted" />
+                    <span class="sr-only">
+                        ${Resource.msg('label.price.to', 'pricing', null)}
+                    </span>
+                </span>
             </span>
-        </span>
+        </del>
     </isif>
 
     <isset name="price" value="${finalOrigPrice.sales}" scope="page" />
