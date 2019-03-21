@@ -17,7 +17,7 @@
             </div>
             <div class="col-12 col-sm-4 col-md-3">
                 <div class="form-group">
-                    <select class="form-control custom-select order-history-select">
+                    <select class="form-control custom-select order-history-select" aria-label="${Resource.msg('label.filter.order.history','account',null)}">
                         <isloop items="${pdict.filterValues}" var="filterValue">
                             <option
                                 value="${filterValue.optionValue}"
