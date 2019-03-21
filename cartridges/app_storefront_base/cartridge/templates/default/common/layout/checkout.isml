@@ -12,11 +12,10 @@
         <isactivedatahead/>
     </head>
     <body>
-    	<isinclude template="/components/header/skipNav" />
         <div class="page">
             <isinclude template="/components/header/pageHeaderNomenu" />
-            <div id="maincontent">
-            	<isreplace/>
+            <div role="main" id="maincontent">
+                <isreplace/>
             </div>
             <isinclude template="/components/footer/pageFooter" />
         </div>
