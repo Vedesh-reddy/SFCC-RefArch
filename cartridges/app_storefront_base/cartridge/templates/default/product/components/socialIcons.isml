@@ -4,17 +4,17 @@
 <div class="col-12 social-container hidden-sm-down">
 	<ul class="social-icons social-icons d-flex justify-content-center">
 		<li>
-		    <a href="https://pinterest.com/pin/create/button/?url=${productUrlencode}&description=${escapedProductName}&media=${productImageLarge}" role="button" title="${Resource.msgf('label.social.pinterest', 'product', null, product.productName)}" aria-label="${Resource.msgf('label.social.pinterest', 'product', null, product.productName)}" class="share-icons" target="_blank">
+		    <a href="https://pinterest.com/pin/create/button/?url=${productUrlencode}&description=${escapedProductName}&media=${productImageLarge}" title="${Resource.msgf('label.social.pinterest', 'product', null, product.productName)}" aria-label="${Resource.msgf('label.social.pinterest', 'product', null, product.productName)}" class="share-icons" target="_blank">
 		    	<i class="fa fa-pinterest"></i>
 		    </a>
 	    </li>
 	    <li>
-		    <a href="https://www.facebook.com/share.php?u=${productUrlencode}" role="button" title="${Resource.msgf('label.social.facebook', 'product', null, product.productName)}" data-share="facebook" aria-label="${Resource.msgf('label.social.facebook', 'product', null, product.productName)}" class="share-icons" target="_blank">
+		    <a href="https://www.facebook.com/share.php?u=${productUrlencode}" title="${Resource.msgf('label.social.facebook', 'product', null, product.productName)}" data-share="facebook" aria-label="${Resource.msgf('label.social.facebook', 'product', null, product.productName)}" class="share-icons" target="_blank">
 		    	<i class="fa fa-facebook-official"></i>
 		    </a>
 	    </li>
 	    <li>
-		    <a href="https://twitter.com/share?url=${productUrlencode}&text=${product.productName}" role="button" data-share="twitter" title="${Resource.msgf('label.social.twitter', 'product', null, product.productName)}" aria-label="${Resource.msgf('label.social.twitter', 'product', null, product.productName)}" class="share-icons" target="_blank">
+		    <a href="https://twitter.com/share?url=${productUrlencode}&text=${product.productName}" data-share="twitter" title="${Resource.msgf('label.social.twitter', 'product', null, product.productName)}" aria-label="${Resource.msgf('label.social.twitter', 'product', null, product.productName)}" class="share-icons" target="_blank">
 		    	<i class="fa fa-twitter"></i>
 		    </a>
 	    </li>
