@@ -28,13 +28,11 @@
                 <isloop items="${pdict.suggestions.product.products}" var="product" status="listindex">
                     <span class="col-12 item" id="product-${listindex.index}" role="option">
                         <div class="row">
-                            <div class="col-sm-2 hidden-xs-down">
-                                <a href="${product.url}">
-                                    <img class="swatch-circle" alt="${product.name}" src="${product.imageUrl}" />
+                            <div class="col-xs-12 col-sm-10">
+                                <a href="${product.url}" aria‐label="${product.name}">
+                                    <img class="swatch-circle hidden-xs-down" alt="${product.name}" src="${product.imageUrl}" />
+                                    <span class="name">${product.name}</span>
                                 </a>
-                            </div>
-                            <div class="col-xs-12 col-sm-10 name">
-                                <a href="${product.url}">${product.name}</a>
                             </div>
                         </div>
                     </span>
@@ -51,19 +49,18 @@
                 <isloop items="${pdict.suggestions.category.categories}" var="category" status="listindex">
                     <div class="col-12 item" id="category-${listindex.index}" role="option">
                         <div class="row">
-                            <div class="hidden-xs-down col-sm-2">
+                            <div class="col-xs-12 col-sm-10">
                                 <isif condition="${category.imageUrl != ''}">
                                     <a href="${category.url}">
-                                        <img class="swatch-circle" alt="${category.name}" src="${category.imageUrl}" />
+                                        <img class="swatch-circle hidden-xs-down" alt="${category.name}" src="${category.imageUrl}" />
+                                        <span class="name">
+		                                	${category.name}
+		                                    <isif condition="${category.parentID !== 'root'}">
+		                                        <span class="category-parent"> ${Resource.msg('label.suggest.in', 'search', null)} ${category.parentName}</span>
+		                                    </isif>
+		                            	</span>
                                     </a>
                                 </isif>
-                            </div>
-                            <div class="col-xs-12 col-sm-10 name">
-                                <a href="${category.url}">${category.name}
-                                    <isif condition="${category.parentID !== 'root'}">
-                                        <span class="category-parent"> ${Resource.msg('label.suggest.in', 'search', null)} ${category.parentName}</span>
-                                    </isif>
-                                </a>
                             </div>
                         </div>
                     </div>
