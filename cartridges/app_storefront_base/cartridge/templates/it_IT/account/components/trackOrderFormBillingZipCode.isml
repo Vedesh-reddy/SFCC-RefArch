@@ -7,9 +7,10 @@
         required
         class="form-control"
         id="trackorder-form-zip"
+        aria-describedby="form-zipcode-error"
         name="trackOrderPostal"
         pattern="(^([0-9]){5}$)">
-    <div class="invalid-feedback"></div>
+    <div class="invalid-feedback" id="form-zipcode-error"></div>
 </div>
 
       

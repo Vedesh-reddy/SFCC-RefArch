@@ -7,9 +7,10 @@
         required
         class="form-control"
         id="trackorder-form-zip"
+        aria-describedby="form-zipcode-error"
         name="trackOrderPostal"
         pattern="(^\d{5}(-\d{4})?$)|(^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]{1}\d{1}[A-Za-z]{1} *\d{1}[A-Za-z]{1}\d{1}$)">
-    <div class="invalid-feedback"></div>
+    <div class="invalid-feedback" id="form-zipcode-error"></div>
 </div>
 
       
