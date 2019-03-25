@@ -1,6 +1,7 @@
 'use strict';
 
 var base = require('../product/base');
+var focusHelper = require('../components/focus');
 
 /**
  * appends params to a url
@@ -228,7 +229,7 @@ function getModalHtmlElement() {
         $('#editProductModal').remove();
     }
     var htmlString = '<!-- Modal -->'
-        + '<div class="modal fade" id="editProductModal" role="dialog">'
+        + '<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog">'
         + '<span class="enter-message sr-only" ></span>'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
@@ -600,7 +601,23 @@ module.exports = function () {
     });
 
     $('body').on('shown.bs.modal', '#editProductModal', function () {
+        $('#editProductModal').siblings().attr('aria-hidden', 'true');
         $('#editProductModal .close').focus();
+    });
+
+    $('body').on('hidden.bs.modal', '#editProductModal', function () {
+        $('#editProductModal').siblings().attr('aria-hidden', 'false');
+    });
+
+    $('body').on('keydown', '#editProductModal', function (e) {
+        var focusParams = {
+            event: e,
+            containerSelector: '#editProductModal',
+            firstElementSelector: '.close',
+            lastElementSelector: '.update-cart-product-global',
+            nextToLastElementSelector: '.modal-footer .quantity-select'
+        };
+        focusHelper.setTabNextFocus(focusParams);
     });
 
     $('body').on('product:updateAddToCart', function (e, response) {
@@ -720,7 +737,6 @@ module.exports = function () {
         }
     });
 
-
     base.selectAttribute();
     base.colorAttribute();
     base.removeBonusProduct();
@@ -729,4 +745,6 @@ module.exports = function () {
     base.showMoreBonusProducts();
     base.addBonusProductsToCart();
     base.focusChooseBonusProductModal();
+    base.trapChooseBonusProductModalFocus();
+    base.onClosingChooseBonusProductModal();
 };

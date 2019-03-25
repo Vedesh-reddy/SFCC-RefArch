@@ -1,4 +1,5 @@
 'use strict';
+var focusHelper = require('../components/focus');
 
 /**
  * Retrieves the relevant pid value
@@ -419,7 +420,7 @@ function chooseBonusProducts(data) {
     }
 
     var htmlString = '<!-- Modal -->'
-        + '<div class="modal fade" id="chooseBonusProductModal" role="dialog">'
+        + '<div class="modal fade" id="chooseBonusProductModal" tabindex="-1" role="dialog">'
         + '<span class="enter-message sr-only" ></span>'
         + '<div class="modal-dialog choose-bonus-product-dialog" '
         + 'data-total-qty="' + data.maxBonusItems + '"'
@@ -548,7 +549,26 @@ module.exports = {
 
     focusChooseBonusProductModal: function () {
         $('body').on('shown.bs.modal', '#chooseBonusProductModal', function () {
+            $('#chooseBonusProductModal').siblings().attr('aria-hidden', 'true');
             $('#chooseBonusProductModal .close').focus();
+        });
+    },
+
+    onClosingChooseBonusProductModal: function () {
+        $('body').on('hidden.bs.modal', '#chooseBonusProductModal', function () {
+            $('#chooseBonusProductModal').siblings().attr('aria-hidden', 'false');
+        });
+    },
+
+    trapChooseBonusProductModalFocus: function () {
+        $('body').on('keydown', '#chooseBonusProductModal', function (e) {
+            var focusParams = {
+                event: e,
+                containerSelector: '#chooseBonusProductModal',
+                firstElementSelector: '.close',
+                lastElementSelector: '.add-bonus-products'
+            };
+            focusHelper.setTabNextFocus(focusParams);
         });
     },
 

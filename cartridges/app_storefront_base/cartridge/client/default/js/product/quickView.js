@@ -1,5 +1,6 @@
 'use strict';
 var base = require('./base');
+var focusHelper = require('../components/focus');
 
 /**
  * Generates the modal window on the first call.
@@ -95,6 +96,18 @@ module.exports = {
     focusQuickview: function () {
         $('body').on('shown.bs.modal', '#quickViewModal', function () {
             $('#quickViewModal .close').focus();
+        });
+    },
+    trapQuickviewFocus: function () {
+        $('body').on('keydown', '#quickViewModal', function (e) {
+            var focusParams = {
+                event: e,
+                containerSelector: '#quickViewModal',
+                firstElementSelector: '.full-pdp-link',
+                lastElementSelector: '.add-to-cart-global',
+                nextToLastElementSelector: '.modal-footer .quantity-select'
+            };
+            focusHelper.setTabNextFocus(focusParams);
         });
     },
     colorAttribute: base.colorAttribute,
