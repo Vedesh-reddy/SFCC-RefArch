@@ -579,6 +579,7 @@ module.exports = function () {
     });
     $('body').on('click', '.cart-page .bonus-product-button', function () {
         $.spinner().start();
+        $(this).addClass('launched-modal');
         $.ajax({
             url: $(this).data('url'),
             method: 'GET',
@@ -592,6 +593,20 @@ module.exports = function () {
             }
         });
     });
+
+    $('body').on('hidden.bs.modal', '#chooseBonusProductModal', function () {
+        $('#chooseBonusProductModal').remove();
+        $('.modal-backdrop').remove();
+        $('body').removeClass('modal-open');
+
+        if ($('.cart-page').length) {
+            $('.launched-modal .btn-outline-primary').trigger('focus');
+            $('.launched-modal').removeClass('launched-modal');
+        } else {
+            $('.product-detail .add-to-cart').focus();
+        }
+    });
+
     $('body').on('click', '.cart-page .product-edit .edit, .cart-page .bundle-edit .edit', function (e) {
         e.preventDefault();
 
@@ -705,9 +720,7 @@ module.exports = function () {
                 data: form,
                 dataType: 'json',
                 success: function (data) {
-                    $('#editProductModal').remove();
-                    $('.modal-backdrop').remove();
-                    $('body').removeClass('modal-open');
+                    $('#editProductModal').modal('hide');
 
                     $('.coupons-and-promos').empty().append(data.cartModel.totals.discountsHtml);
                     updateCartTotals(data.cartModel);

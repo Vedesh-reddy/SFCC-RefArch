@@ -95,10 +95,10 @@
                     <span class="pre-cart-products">${pdict.selectedBonusProducts.length}</span> ${Resource.msgf('label.choiceofbonus.selectproducts', 'product', null, pdict.maxPids)}
                 </div>
                 <isloop items="${pdict.selectedBonusProducts}" var="selectedProduct" status="productLoopStatus">
-                    <div class="selected-pid row" 
-                        data-pid="${selectedProduct.pid}" 
+                    <div class="selected-pid row"
+                        data-pid="${selectedProduct.pid}"
                         data-qty='<isprint value="${selectedProduct.submittedQty}" encoding="htmlsinglequote" formatter="#"/>'
-                        data-optionid="${selectedProduct.option.optionid}" 
+                        data-optionid="${selectedProduct.option.optionid}"
                         data-option-selected-value="${selectedProduct.option.selectedvalue}" >
                         <div class="col-11 bonus-product-name">${selectedProduct.name}</div>
                         <div class="col-1"><i class="fa fa-times" aria-hidden="true"></i></div>
