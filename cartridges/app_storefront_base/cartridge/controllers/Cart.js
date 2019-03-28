@@ -119,7 +119,8 @@ server.post('AddProduct', function (req, res, next) {
         cart: cartModel,
         newBonusDiscountLineItem: newBonusDiscountLineItem || {},
         error: result.error,
-        pliUUID: result.uuid
+        pliUUID: result.uuid,
+        minicartCountOfItems: Resource.msgf('minicart.count', 'common', null, quantityTotal)
     });
 
     next();

@@ -125,6 +125,7 @@ function CartModel(basket) {
 
     this.resources = {
         numberOfItems: Resource.msgf('label.number.items.in.cart', 'cart', null, this.numItems),
+        minicartCountOfItems: Resource.msgf('minicart.count', 'common', null, this.numItems),
         emptyCartMsg: Resource.msg('info.cart.empty.msg', 'cart', null)
     };
 }

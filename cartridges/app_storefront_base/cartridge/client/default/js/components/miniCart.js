@@ -10,6 +10,10 @@ module.exports = function () {
     $('.minicart').on('count:update', function (event, count) {
         if (count && $.isNumeric(count.quantityTotal)) {
             $('.minicart .minicart-quantity').text(count.quantityTotal);
+            $('.minicart .minicart-link').attr({
+                'aria-label': count.minicartCountOfItems,
+                title: count.minicartCountOfItems
+            });
         }
     });
 
