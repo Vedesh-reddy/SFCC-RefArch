@@ -211,19 +211,17 @@ module.exports = function () {
                     $popover.children('a').first().focus();
                 }
             },
-            27: function ($popover) { // escape
-                $(this).focus();
-                $popover.removeClass('show');
+            27: function () { // escape
+                $('.navbar-header .user .popover').removeClass('show');
+                $('.user').attr('aria-expanded', 'false');
             },
-            9: function ($popover) { // tab
-                $popover.removeClass('show');
+            9: function () { // tab
+                $('.navbar-header .user .popover').removeClass('show');
+                $('.user').attr('aria-expanded', 'false');
             }
         },
         function () {
             var $popover = $('.user .popover li.nav-item');
-            if (!($popover.hasClass('show'))) {
-                $popover.addClass('show');
-            }
             return $popover;
         }
     );
@@ -238,5 +236,8 @@ module.exports = function () {
     $('.navbar-header .user').on('mouseleave', function () {
         $('.navbar-header .user .popover').removeClass('show');
         $('.user').attr('aria-expanded', 'false');
+    });
+    $('body').on('click', '#myaccount', function () {
+        event.preventDefault();
     });
 };
