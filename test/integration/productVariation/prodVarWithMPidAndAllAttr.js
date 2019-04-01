@@ -28,302 +28,6 @@ describe('ProductVariation - Get product variation with master product ID and al
         var urlWithMpid = urlEndPoint + '?pid=' + masterPid;
         myGetRequest.url = urlWithMpid + '&' + paramColorWhite + '&' + paramSize160 + '&' + paramWidth3233;
 
-        var expectedResBody = {
-            'action': 'Product-Variation',
-            'product': {
-                'attributes': null,
-                'attributesHtml': '\n\n\n',
-                'availability': {
-                    'inStockDate': 'Sun Jul 15 2012',
-                    'messages': ['Back Order']
-                },
-                'id': expectedVariant,
-                'productName': 'No-Iron Textured Dress Shirt',
-                'shortDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
-                'longDescription': 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.',
-                'options': [],
-                'selectedProductUrl': '/on/demandware.store/Sites-RefArch-Site/en_US/Product-Show?pid=25604455M&dwvar_25604455M_color=WHITEFB&dwvar_25604455M_width=A&dwvar_25604455M_size=160',
-                'minOrderQuantity': 1,
-                'maxOrderQuantity': 10,
-                'selectedQuantity': 1,
-                'sizeChartId': null,
-                'variationAttributes': [
-                    {
-                        'attributeId': 'color',
-                        'displayName': 'Color',
-                        'id': 'color',
-                        'swatchable': true,
-                        'values': [
-                            {
-                                'id': 'SLABLFB',
-                                'description': null,
-                                'displayValue': 'Slate',
-                                'value': 'SLABLFB',
-                                'selected': false,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_color=SLABLFB&dwvar_25604455M_size=160&dwvar_25604455M_width=A',
-                                'images': {
-                                    'swatch': [{
-                                        'alt': 'No-Iron Textured Dress Shirt, Slate, swatch',
-                                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw7a85aeb2/images/swatch/PG.15J0037EJ.SLABLFB.CP.jpg',
-                                        'title': 'No-Iron Textured Dress Shirt, Slate'
-                                    }]
-                                }
-                            },
-                            {
-                                'id': 'WHITEFB',
-                                'description': null,
-                                'displayValue': 'White',
-                                'value': 'WHITEFB',
-                                'selected': true,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_color=&dwvar_25604455M_size=160&dwvar_25604455M_width=A',
-                                'images': {
-                                    'swatch': [{
-                                        'alt': 'No-Iron Textured Dress Shirt, White, swatch',
-                                        'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw80b5ac36/images/swatch/PG.15J0037EJ.WHITEFB.CP.jpg',
-                                        'title': 'No-Iron Textured Dress Shirt, White'
-                                    }]
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        'attributeId': 'size',
-                        'displayName': 'Size',
-                        'id': 'size',
-                        'resetUrl': urlWithMpid + '&dwvar_25604455M_size=&dwvar_25604455M_width=A&dwvar_25604455M_color=WHITEFB',
-                        'swatchable': false,
-                        'values': [
-                            {
-                                'id': '145',
-                                'description': null,
-                                'displayValue': '14 1/2',
-                                'value': '145',
-                                'selected': false,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_size=145&dwvar_25604455M_color=WHITEFB&dwvar_25604455M_width=A'
-                            },
-                            {
-                                'id': '150',
-                                'description': null,
-                                'displayValue': '15',
-                                'value': '150',
-                                'selected': false,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_size=150&dwvar_25604455M_color=WHITEFB&dwvar_25604455M_width=A'
-                            },
-                            {
-                                'id': '155',
-                                'description': null,
-                                'displayValue': '15 1/2',
-                                'value': '155',
-                                'selected': false,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_size=155&dwvar_25604455M_color=WHITEFB&dwvar_25604455M_width=A'
-                            },
-                            {
-                                'id': '160',
-                                'description': null,
-                                'displayValue': '16',
-                                'value': '160',
-                                'selected': true,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_size=&dwvar_25604455M_color=WHITEFB&dwvar_25604455M_width=A'
-                            },
-                            {
-                                'id': '165',
-                                'description': null,
-                                'displayValue': '16 1/2',
-                                'value': '165',
-                                'selected': false,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_size=165&dwvar_25604455M_color=WHITEFB&dwvar_25604455M_width=A'
-                            },
-                            {
-                                'id': '170',
-                                'description': null,
-                                'displayValue': '17',
-                                'value': '170',
-                                'selected': false,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_size=170&dwvar_25604455M_color=WHITEFB&dwvar_25604455M_width=A'
-                            },
-                            {
-                                'id': '175',
-                                'description': null,
-                                'displayValue': '17 1/2',
-                                'value': '175',
-                                'selected': false,
-                                'selectable': false
-                            },
-                            {
-                                'id': '180',
-                                'description': null,
-                                'displayValue': '18',
-                                'value': '180',
-                                'selected': false,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_size=180&dwvar_25604455M_color=WHITEFB&dwvar_25604455M_width=A'
-                            },
-                            {
-                                'id': '185',
-                                'description': null,
-                                'displayValue': '18 1/2',
-                                'value': '185',
-                                'selected': false,
-                                'selectable': false
-                            },
-                            {
-                                'id': '190',
-                                'description': null,
-                                'displayValue': '19',
-                                'value': '190',
-                                'selected': false,
-                                'selectable': false
-                            },
-                            {
-                                'id': '200',
-                                'description': null,
-                                'displayValue': '20',
-                                'value': '200',
-                                'selected': false,
-                                'selectable': false
-                            },
-                            {
-                                'id': '220',
-                                'description': null,
-                                'displayValue': '22',
-                                'value': '220',
-                                'selected': false,
-                                'selectable': false
-                            }
-                        ]
-                    },
-                    {
-                        'attributeId': 'width',
-                        'displayName': 'Width',
-                        'id': 'width',
-                        'resetUrl': urlWithMpid + '&dwvar_25604455M_width=&dwvar_25604455M_size=160&dwvar_25604455M_color=WHITEFB',
-                        'swatchable': false,
-                        'values': [
-                            {
-                                'id': 'A',
-                                'description': null,
-                                'displayValue': '32/33',
-                                'value': 'A',
-                                'selected': true,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_width=&dwvar_25604455M_size=160&dwvar_25604455M_color=WHITEFB'
-                            },
-                            {
-                                'id': 'B',
-                                'description': null,
-                                'displayValue': '34/35',
-                                'value': 'B',
-                                'selected': false,
-                                'selectable': true,
-                                'url': urlWithMpid + '&dwvar_25604455M_width=B&dwvar_25604455M_size=160&dwvar_25604455M_color=WHITEFB'
-                            }
-                        ]
-                    }
-                ],
-                'price': {
-                    'html': '\n\n\n\n    <div class="price">\n        \n        <span>\n    \n\n    \n        \n        <span class="strike-through list">\n            <span class="value" content="69.50">\n                $69.50\n\n\n            </span>\n        </span>\n    \n\n    \n    <span class="sales">\n        \n        \n        \n            <span class="value" content="49.99">\n        \n        $49.99\n\n\n        </span>\n    </span>\n</span>\n\n    </div>\n\n\n',
-                    'list': {
-                        'currency': 'USD',
-                        'decimalPrice': '69.50',
-                        'formatted': '$69.50',
-                        'value': 69.5
-                    },
-                    'sales': {
-                        'currency': 'USD',
-                        'decimalPrice': '49.99',
-                        'formatted': '$49.99',
-                        'value': 49.99
-                    }
-                },
-                'images': {
-                    'large': [
-                        {
-                            'alt': 'No-Iron Textured Dress Shirt, White, large',
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dw8f141f96/images/large/PG.15J0037EJ.WHITEFB.PZ.jpg',
-                            'title': 'No-Iron Textured Dress Shirt, White'
-                        },
-                        {
-                            'alt': 'No-Iron Textured Dress Shirt, White, large',
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwadb01158/images/large/PG.15J0037EJ.WHITEFB.BZ.jpg',
-                            'title': 'No-Iron Textured Dress Shirt, White'
-                        }
-                    ],
-                    'small': [
-                        {
-                            'alt': 'No-Iron Textured Dress Shirt, White, small',
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwe65fe261/images/small/PG.15J0037EJ.WHITEFB.PZ.jpg',
-                            'title': 'No-Iron Textured Dress Shirt, White'
-                        },
-                        {
-                            'alt': 'No-Iron Textured Dress Shirt, White, small',
-                            'url': '/on/demandware.static/-/Sites-apparel-catalog/default/dwe28073fd/images/small/PG.15J0037EJ.WHITEFB.BZ.jpg',
-                            'title': 'No-Iron Textured Dress Shirt, White'
-                        }
-                    ]
-                },
-                'available': true,
-                'readyToOrder': true,
-                'productType': 'variant',
-                'promotions': null,
-                'quantities': [
-                    {
-                        'selected': true,
-                        'value': '1'
-                    },
-                    {
-                        'selected': false,
-                        'value': '2'
-                    },
-                    {
-                        'selected': false,
-                        'value': '3'
-                    },
-                    {
-                        'selected': false,
-                        'value': '4'
-                    },
-                    {
-                        'selected': false,
-                        'value': '5'
-                    },
-                    {
-                        'selected': false,
-                        'value': '6'
-                    },
-                    {
-                        'selected': false,
-                        'value': '7'
-                    },
-                    {
-                        'selected': false,
-                        'value': '8'
-                    },
-                    {
-                        'selected': false,
-                        'value': '9'
-                    }
-                ],
-                'rating': 4.8
-            },
-            'queryString': 'dwvar_25604455M_color=WHITEFB&dwvar_25604455M_size=160&dwvar_25604455M_width=A&pid=25604455M',
-            'locale': 'en_US',
-            'resources': {
-                'info_selectforstock': 'Select Styles for Availability'
-            }
-
-        };
-
-        // strip out all "url" properties from the expected response
-        var expectedResBodyStripped = jsonHelpers.deleteProperties(expectedResBody, ['url', 'resetUrl', 'selectedProductUrl', 'absURL']);
-
         request(myGetRequest, function (error, response) {
             assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
 
@@ -331,8 +35,32 @@ describe('ProductVariation - Get product variation with master product ID and al
 
             // strip out all "url" properties from the actual response
             var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['url', 'resetUrl', 'selectedProductUrl', 'raw', 'absURL']);
+            var attrColor = actualRespBodyStripped.product.variationAttributes[0].values[0];
 
-            assert.containSubset(actualRespBodyStripped, expectedResBodyStripped, 'Actual response not as expected.');
+            // Verify color swatch
+            assert.equal(attrColor.value, 'SLABLFB');
+            assert.isTrue(actualRespBodyStripped.product.variationAttributes[0].swatchable);
+
+            // Verify rating
+            assert.equal(actualRespBodyStripped.product.rating, '4.8');
+
+            // Verify description
+            assert.equal(actualRespBodyStripped.product.longDescription, 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.');
+            assert.equal(actualRespBodyStripped.product.shortDescription, 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.');
+
+            // Verify product
+            assert.equal(actualRespBodyStripped.product.productName, 'No-Iron Textured Dress Shirt');
+            assert.equal(actualRespBodyStripped.product.productType, 'variant');
+            assert.equal(actualRespBodyStripped.product.id, expectedVariant);
+            assert.equal(actualRespBodyStripped.product.longDescription, 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.');
+
+            // Verify product price
+            assert.equal(actualRespBodyStripped.product.price.sales.value, '49.99');
+            assert.equal(actualRespBodyStripped.product.price.sales.currency, 'USD');
+            assert.equal(actualRespBodyStripped.product.price.sales.formatted, '$49.99');
+            assert.equal(actualRespBodyStripped.product.price.list.value, '69.5');
+            assert.equal(actualRespBodyStripped.product.price.list.currency, 'USD');
+            assert.equal(actualRespBodyStripped.product.price.list.formatted, '$69.50');
 
             // Verify URL for product.variationAttributes of color = SLABLFB
             var attrColorBlue = bodyAsJson.product.variationAttributes[0].values[0];

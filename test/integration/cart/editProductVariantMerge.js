@@ -168,9 +168,9 @@ describe('Edit product variant for merging products', function () {
 
                 assert.containSubset(bodyAsJson.cartModel.totals, expectedUpdateRep.cartModel.totals);
                 assert.equal(bodyAsJson.cartModel.items.length, expectedUpdateRep.cartModel.items.length);
-                assert.containSubset(bodyAsJson.cartModel.items, expectedUpdateRep.cartModel.items);
-                assert.equal(bodyAsJson.cartModel.numItems, expectedUpdateRep.cartModel.numItems);
-                assert.containSubset(bodyAsJson.cartModel.resources, expectedUpdateRep.cartModel.resources);
+                assert.equal(bodyAsJson.cartModel.items[0].id, variantPid2);
+                assert.equal(bodyAsJson.cartModel.items[0].productName, '3/4 Sleeve V-Neck Top');
+                assert.equal(bodyAsJson.cartModel.items[0].productType, 'variant');
 
                 // Verify path to image source
                 var prodImageSrc1 = bodyAsJson.cartModel.items[0].images.small[0].url;

@@ -35,28 +35,14 @@ describe('Search As You Type - general product', function () {
             // Determining if pretty-URLs is enabled to differentiate test case usage
             var prettyURL = prod.get(0).attribs.href;
             if (prettyURL.includes('/s/RefArch/')) {
-                assert.equal(prod.get(0).children[0].data.trim(), 'tops');
-                assert.include(prod.get(2).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
-                assert.include(prod.get(4).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
-                assert.include(prod.get(6).children[0].data.trim(), 'Top', 'returned product name should contain "Top"');
-                assert.equal(prod.get(8).children[0].data.trim(), 'Tops');
-                assert.equal(prod.get(9).children[0].data.trim(), 'Top Sellers');
-                assert.equal(prod.get(10).children[0].data.trim(), 'FAQs');
+                assert.isTrue(prod.get(0).children[0].next.attribs.alt.endsWith('Top'));
+                assert.isTrue(prod.get(1).children[0].next.attribs.alt.endsWith('Top'));
+                assert.isTrue(prod.get(2).children[0].next.attribs.alt.endsWith('Top'));
             } else {
-                assert.equal(prod.get(0).children[0].next.data.trim(), 'tops');
-                assert.include(prod.get(2).children[0].next.data.trim(), 'Top', 'returned product name should contain "Top"');
-                assert.include(prod.get(4).children[0].next.data.trim(), 'Top', 'returned product name should contain "Top"');
-                assert.include(prod.get(6).children[0].next.data.trim(), 'Top', 'returned product name should contain "Top"');
-                assert.equal(prod.get(8).children[0].next.data.trim(), 'Tops');
-                assert.equal(prod.get(9).children[0].next.data.trim(), 'Top Sellers');
-                assert.equal(prod.get(10).children[0].next.data.trim(), 'FAQs');
+                assert.isTrue(prod.get(0).children[0].next.next.attribs.alt.endsWith('Top'));
+                assert.isTrue(prod.get(1).children[0].next.next.attribs.alt.endsWith('Top'));
+                assert.isTrue(prod.get(2).children[0].next.next.attribs.alt.endsWith('Top'));
             }
-
-            var category = $('.justify-content-end.header div');
-            assert.equal(category.get(0).children[0].data.trim(), 'Do you mean?');
-            assert.equal(category.get(1).children[0].data.trim(), 'Products');
-            assert.equal(category.get(2).children[0].data.trim(), 'Categories');
-            assert.equal(category.get(3).children[0].data.trim(), 'Content');
             done();
         });
     });
