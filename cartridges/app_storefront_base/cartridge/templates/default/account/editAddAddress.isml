@@ -17,7 +17,7 @@
                     <isif condition="${pdict.addressId}">
                         <h3>${Resource.msg('label.addressbook.editaddress','account',null)}</h3>
                         <iselse>
-                            <h3>${Resource.msg('label.addressbook.addnewaddress','account',null)}</h3>
+                            <h2>${Resource.msg('label.addressbook.addnewaddress','account',null)}</h2>
                     </isif>
                     </div>
                     <div class="card-body">

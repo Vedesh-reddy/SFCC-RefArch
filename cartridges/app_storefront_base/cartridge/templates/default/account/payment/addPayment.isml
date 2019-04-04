@@ -15,9 +15,9 @@
                 <div class="card">
                     <div class="card-header">
                         <isif condition="${pdict.UUID}">
-                            <h4>${Resource.msg('label.payment.editpayment','payment',null)}</h4>
-                            <iselse>
-                                <h4>${Resource.msg('label.payment.addnewpayment','payment',null)}</h4>
+                            <h2>${Resource.msg('label.payment.editpayment','payment',null)}</h2>
+                        <iselse>
+                            <h2>${Resource.msg('label.payment.addnewpayment','payment',null)}</h2>
                         </isif>
                     </div>
                     <div class="card-body">

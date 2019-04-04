@@ -24,7 +24,7 @@
                 <div class="col-sm-8 col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <h4 class="pull-left">${paymentInstrument.creditCardHolder}</h4>
+                            <h2 class="pull-left">${paymentInstrument.creditCardHolder}</h2>
                         </div>
                         <div class="card-body card-body-positioning">
                             <div class="card-info-group">

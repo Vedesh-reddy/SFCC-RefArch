@@ -1,6 +1,6 @@
 <div class="card">
     <div class="card-header clearfix">
-        <h4 class="pull-left">${Resource.msg('label.profile','account',null)}</h4>
+        <h2 class="pull-left profile-header">${Resource.msg('label.profile','account',null)}</h2>
         <isif condition="${!pdict.account.isExternallyAuthenticated}">
             <a href="${URLUtils.url('Account-EditProfile')}" class="pull-right" aria-label="${Resource.msg('label.profile.edit','account',null)}">${Resource.msg('link.edit','account',null)}</a>
         </isif>

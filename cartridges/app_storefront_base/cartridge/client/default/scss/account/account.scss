@@ -35,7 +35,7 @@
 
 .order-history-control,
 .order-history {
-    h4 {
+    h2 {
         font-weight: bold;
         margin-top: 0.5rem;
     }
@@ -53,4 +53,10 @@
 .dashboard-order-card-footer-value {
     font-weight: bold;
     font-size: 1rem;
+}
+
+.card-header h2,
+.card-header h3 {
+    font-size: 1.5rem;
+    margin-bottom: 0;
 }
