@@ -33,14 +33,18 @@ module.exports = function () {
                         .children('.dropdown-menu')
                         .removeClass('show');
                     menuItem.addClass('show').children('.dropdown-menu').addClass('show');
-                    $(this).attr('aria-expanded', 'true');
                     menuItem.find('ul > li > a')
                         .first()
                         .focus();
                 } else {
                     menuItem.removeClass('show').children('.dropdown-menu').removeClass('show');
-                    $(this).attr('aria-expanded', 'false');
-                    menuItem.next().children().first().focus();
+                    if (!(menuItem.next().length > 0)) { // if this is the last menuItem
+                        menuItem.parent().parent().find('li > a') // set focus to the first menuitem
+                        .first()
+                        .focus();
+                    } else {
+                        menuItem.next().children().first().focus();
+                    }
                 }
             },
             39: function (menuItem) { // right
@@ -59,12 +63,12 @@ module.exports = function () {
             38: function (menuItem) { // up
                 if (menuItem.hasClass('nav-item')) { // top level
                     menuItem.removeClass('show').children('.dropdown-menu').removeClass('show');
-                    $(this).attr('aria-expanded', 'false');
-                } else if (menuItem.prev().length === 0) {
+                } else if (menuItem.prev().length === 0) { // first menuItem
                     menuItem.parent().parent().removeClass('show')
                         .children('.nav-link')
                         .attr('aria-expanded', 'false');
-                    menuItem.parent().parent().children().first()
+                    menuItem.parent().children().last().children() // set the focus to the last menuItem
+                        .first()
                         .focus();
                 } else {
                     menuItem.prev().children().first().focus();
