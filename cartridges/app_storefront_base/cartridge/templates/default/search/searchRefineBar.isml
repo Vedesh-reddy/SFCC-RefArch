@@ -33,7 +33,7 @@
                     >
                         <span>${refinement.displayName}</span>
                     </button>
-                    <div aria-label="${refinement.displayName}" class="d-none d-md-block">${refinement.displayName}</div>
+                    <h2 aria-label="${refinement.displayName}" class="d-none d-md-block">${refinement.displayName}</h2>
                 </div>
                 <div class="card-body content value" id="refinement-${refinement.displayName.toLowerCase().replace(/ /g, '-')}">
                     <!--- CATEGORY REFINEMENTS --->

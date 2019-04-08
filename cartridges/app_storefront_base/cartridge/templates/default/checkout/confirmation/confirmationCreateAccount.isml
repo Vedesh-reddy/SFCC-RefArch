@@ -1,7 +1,7 @@
 <div>
     <div class="card order-confirm-create-account">
         <div class="card-header">
-            <h4>${Resource.msg('title.save.customer.information', 'confirmation', null)}</h4>
+            <h3 class="card-header-custom">${Resource.msg('title.save.customer.information', 'confirmation', null)}</h3>
         </div>
         <div class="card-body">
             <form

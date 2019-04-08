@@ -5,7 +5,7 @@
         <isset name="lineItem" value="${null}" scope="page" />
         <div class="card" data-shipment-uuid="${shippingModel.UUID}">
             <div class="card-header">
-                <h4>${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h4>
+                <h2 class="card-header-custom">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h2>
             </div>
 
             <div class="shipping-error"></div>

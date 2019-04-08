@@ -23,7 +23,7 @@
             <div class="col-md-6 col-sm-8">
                 <div class="card">
                     <div class="card-header">
-                        <h4>${Resource.msg('heading.guest.checkout', 'checkout', null)}</h4>
+                        <h2 class="card-header-custom">${Resource.msg('heading.guest.checkout', 'checkout', null)}</h2>
                     </div>
                     <div class="card-body">
                         <p>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h4>${Resource.msg('heading.returning.customers', 'checkout', null)}</h4>
+                        <h2 class="card-header-custom">${Resource.msg('heading.returning.customers', 'checkout', null)}</h2>
                     </div>
                     <div class="card-body">
                         <isinclude template="account/components/loginForm" />
@@ -49,7 +49,7 @@
                 </div>
                 <div class="card">
                     <div class="card-header">
-                        <h4>${Resource.msg('heading.create.account', 'checkout', null)}</h4>
+                        <h2 class="card-header-custom">${Resource.msg('heading.create.account', 'checkout', null)}</h2>
                     </div>
                     <div class="card-body">
                         <a href="${URLUtils.https('Login-Show', 'action', 'register')}" class="btn btn-block btn-outline-primary">

@@ -112,6 +112,13 @@
     @include media-breakpoint-down(xs) {
         padding: 0;
     }
+
+    .card-header h2 {
+        font-family: inherit;
+        font-size: inherit;
+        font-weight: inherit;
+        margin-bottom: 0;
+    }
 }
 
 .secondary-bar {

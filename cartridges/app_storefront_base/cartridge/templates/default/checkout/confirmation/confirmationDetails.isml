@@ -1,6 +1,6 @@
 <div class="card confirm-details">
     <div class="card-header">
-        <h4>${Resource.msg('title.receipt', 'confirmation', null)}</h4>
+        <h2 class="card-header-custom">${Resource.msg('title.receipt', 'confirmation', null)}</h2>
     </div>
 
     <div class="card-body">

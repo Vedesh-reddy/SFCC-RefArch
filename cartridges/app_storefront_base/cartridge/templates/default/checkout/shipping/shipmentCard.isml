@@ -23,7 +23,7 @@
             </fieldset>
 
             <fieldset class="shipping-method-block">
-                <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}</h5>
+                <h3>${Resource.msg('heading.shipping.method', 'checkout', null)}</h3>
 
                 <isinclude template="checkout/shipping/shippingMethod" />
             </fieldset>
