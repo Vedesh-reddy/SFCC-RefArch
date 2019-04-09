@@ -82,6 +82,10 @@ $stored-payment-spacing: 1rem;
 
 .product-summary-block {
     margin: 1em 0;
+
+    h3 {
+        font-size: 1.25rem;
+    }
 }
 
 .leading-lines {
@@ -216,6 +220,7 @@ $stored-payment-spacing: 1rem;
     border-bottom: 0.063em dashed $horizontal-rule-grey;
 }
 
+.view-address-block h3,
 .shipping-method-block h3 {
     font-size: 1.25rem;
 }

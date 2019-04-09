@@ -2,7 +2,7 @@
 <!-- Template used by client to redraw shipping methods                           -->
 <!---------------------------------------------------------------------------------->
 <div id="pli-shipping-summary-template" class="d-none" >
-    <h5 class="shipping-header-text">${Resource.msg('heading.shipping.to', 'checkout', null)}</h5>
+    <h3 class="shipping-header-text">${Resource.msg('heading.shipping.to', 'checkout', null)}</h3>
     <p>
         <span class="ship-to-message"></span>
         <span class="ship-to-name"></span>
@@ -11,7 +11,7 @@
         <span class="ship-to-city-st-zip"><span class="ship-to-city"></span> <span class="ship-to-st"></span> <span class="ship-to-zip"></span> </span>
         <span class="ship-to-phone"></span>
     </p>
-    <h5>${Resource.msg('heading.shipping.method', 'checkout', null)}<span></span></h5>
+    <h3>${Resource.msg('heading.shipping.method', 'checkout', null)}<span></span></h3>
     <div class="row leading-lines">
         <p class="col-8 start-lines">
             <span class="display-name"></span>
@@ -23,7 +23,7 @@
     </div>
 
     <div class="summary-details gift-summary">
-        <h5>${Resource.msg('heading.gift.message', 'checkout', null)}</h5>
+        <h3>${Resource.msg('heading.gift.message', 'checkout', null)}</h3>
         <div class="gift-message-summary"></div>
     </div>
 </div>

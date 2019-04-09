@@ -1,16 +1,16 @@
 <isif condition="${shippingModel.shippingAddress}">
-    <h5>${Resource.msg('heading.shipping.to', 'checkout', null)}</h5>
+    <h3>${Resource.msg('heading.shipping.to', 'checkout', null)}</h3>
     <isinclude template="checkout/shipping/shippingCardShippingAddress" />
 </isif>
 
 <isif condition="${shippingModel.selectedShippingMethod}">
-    <h5>${pdict.order.resources.shippingMethod}
+    <h3>${pdict.order.resources.shippingMethod}
         <span>
             <isif condition="${shippingModel.productLineItems.items && shippingModel.productLineItems.items.length > 1}">
                 - ${shippingModel.productLineItems.items.length.toFixed(0)} ${pdict.order.resources.items}
             </isif>
         </span>
-    </h5>
+    </h3>
     <div class="row leading-lines">
         <p class="col-8 start-lines">
             <span class="display-name">${shippingModel.selectedShippingMethod.displayName}</span>
