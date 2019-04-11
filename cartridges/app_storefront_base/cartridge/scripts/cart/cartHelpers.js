@@ -429,5 +429,6 @@ module.exports = {
     getMatchingProducts: getMatchingProducts,
     allBundleItemsSame: allBundleItemsSame,
     hasSameOptions: hasSameOptions,
-    BONUS_PRODUCTS_PAGE_SIZE: BONUS_PRODUCTS_PAGE_SIZE
+    BONUS_PRODUCTS_PAGE_SIZE: BONUS_PRODUCTS_PAGE_SIZE,
+    updateBundleProducts: updateBundleProducts
 };
