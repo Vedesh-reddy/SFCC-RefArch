@@ -794,10 +794,10 @@
   "visibility" : [ ]
 }</config>
         <data xml:lang="x-default">{
-          "product" : "25502881M"
+          "product" : "25502881"
         }</data>
         <data xml:lang="en-US">{
-          "product" : "25502881M"
+          "product" : "25502881"
         }</data>
         <online-flag>true</online-flag>
         <page-attributes/>
@@ -810,10 +810,10 @@
   "visibility" : [ ]
 }</config>
         <data xml:lang="x-default">{
-          "product" : "25695242M"
+          "product" : "25695242"
         }</data>
         <data xml:lang="en-US">{
-          "product" : "25695242M"
+          "product" : "25695242"
         }</data>
         <online-flag>true</online-flag>
         <page-attributes/>
@@ -826,10 +826,10 @@
   "visibility" : [ ]
 }</config>
         <data xml:lang="x-default">{
-          "product" : "25696677M"
+          "product" : "25696677"
         }</data>
         <data xml:lang="en-US">{
-          "product" : "25696677M"
+          "product" : "25696677"
         }</data>
         <online-flag>true</online-flag>
         <page-attributes/>
