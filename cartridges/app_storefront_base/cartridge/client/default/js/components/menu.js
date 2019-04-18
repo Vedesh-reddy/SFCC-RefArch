@@ -6,7 +6,9 @@ var clearSelection = function (element) {
     $(element).closest('.dropdown').children('.dropdown-menu').children('.top-category')
         .detach();
     $(element).closest('.dropdown.show').children('.nav-link').attr('aria-expanded', 'false');
+    $(element).closest('.dropdown.show').children('.dropdown-menu').attr('aria-hidden', 'true');
     $(element).closest('.dropdown.show').removeClass('show');
+    $('div.menu-group > ul.nav.navbar-nav > li.nav-item > a').attr('aria-hidden', 'false');
     $(element).closest('li').detach();
 };
 
@@ -118,10 +120,13 @@ module.exports = function () {
                 closeMenu.append($('.close-menu').first().clone());
                 $(this).parent().children('.dropdown-menu')
                     .prepend(li)
-                    .prepend(closeMenu);
+                    .prepend(closeMenu)
+                    .attr('aria-hidden', 'false');
                 // copy navigation menu into view
                 $(this).parent().addClass('show');
                 $(this).attr('aria-expanded', 'true');
+                $(link).focus();
+                $('div.menu-group > ul.nav.navbar-nav > li.nav-item > a').attr('aria-hidden', 'true');
                 e.preventDefault();
             }
         })
