@@ -27,6 +27,22 @@ describe('response', function () {
         assert.equal(response.viewData.foo, 'bar');
     });
 
+    it('should correctly page view and data', function () {
+        var response = new Response({});
+        response.page('test', { name: 'value' });
+        assert.equal(response.page, 'test');
+        assert.equal(response.viewData.name, 'value');
+    });
+
+    it('should extend viewData for page', function () {
+        var response = new Response({});
+        response.setViewData({ name: 'value' });
+        response.setViewData({ foo: 'bar' });
+        response.page('page', { name: 'test' });
+        assert.equal(response.viewData.name, 'test');
+        assert.equal(response.viewData.foo, 'bar');
+    });
+
     it('should not extend viewData with non-objects', function () {
         var response = new Response({});
         response.setViewData({ name: 'value' });

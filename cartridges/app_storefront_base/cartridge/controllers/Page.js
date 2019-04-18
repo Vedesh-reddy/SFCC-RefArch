@@ -123,25 +123,37 @@ server.get('Locale', function (req, res, next) {
 server.get('Show', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var ContentMgr = require('dw/content/ContentMgr');
     var Logger = require('dw/system/Logger');
+    var PageMgr = require('dw/experience/PageMgr');
     var ContentModel = require('*/cartridge/models/content');
     var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
 
-    var apiContent = ContentMgr.getContent(req.querystring.cid);
+    var page = PageMgr.getPage(req.querystring.cid);
 
-    if (apiContent) {
-        var content = new ContentModel(apiContent, 'content/contentAsset');
-
-        pageMetaHelper.setPageMetaData(req.pageMetaData, content);
-        pageMetaHelper.setPageMetaTags(req.pageMetaData, content);
-
-        if (content.template) {
-            res.render(content.template, { content: content });
-        } else {
-            Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
-            res.render('/components/content/offlineContent');
+    if (page != null && page.isVisible()) {
+        if (!page.hasVisibilityRules()) {
+            res.cachePeriod = 168; // eslint-disable-line no-param-reassign
+            res.cachePeriodUnit = 'hours'; // eslint-disable-line no-param-reassign
         }
+
+        res.page(page.ID, {});
     } else {
-        Logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);
+        var apiContent = ContentMgr.getContent(req.querystring.cid);
+
+        if (apiContent) {
+            var content = new ContentModel(apiContent, 'content/contentAsset');
+
+            pageMetaHelper.setPageMetaData(req.pageMetaData, content);
+            pageMetaHelper.setPageMetaTags(req.pageMetaData, content);
+
+            if (content.template) {
+                res.render(content.template, { content: content });
+            } else {
+                Logger.warn('Content asset with ID {0} is offline', req.querystring.cid);
+                res.render('/components/content/offlineContent');
+            }
+        } else {
+            Logger.warn('Content asset with ID {0} was included but not found', req.querystring.cid);
+        }
     }
 
     next();

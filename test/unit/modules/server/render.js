@@ -7,6 +7,7 @@ var sinon = require('sinon');
 describe('render', function () {
     var render = null;
     var ismlRender = sinon.spy();
+    var pageDesignerRender = sinon.spy();
 
     var response = {
         base: {
@@ -34,12 +35,16 @@ describe('render', function () {
         render = proxyquire('../../../../cartridges/modules/server/render', {
             'dw/template/ISML': {
                 renderTemplate: ismlRender
+            },
+            'dw/experience/PageMgr': {
+                renderPage: pageDesignerRender
             }
         });
     });
 
     afterEach(function () {
         ismlRender.reset();
+        pageDesignerRender.reset();
         response.base.writer.print.reset();
         response.setContentType.reset();
         response.viewData = {};
@@ -59,6 +64,22 @@ describe('render', function () {
         render.applyRenderings(response);
 
         assert.isTrue(ismlRender.calledWith('template', sinon.match({ name: 'value' })));
+    });
+
+    it('should correctly render a page', function () {
+        response.renderings.push({ type: 'render', subType: 'page', page: 'page' });
+        render.applyRenderings(response);
+
+        assert.isTrue(pageDesignerRender.calledOnce);
+    });
+
+    it('should pass data correctly to the view of the page being rendered', function () {
+        response.renderings.push({ type: 'render', subType: 'page', page: 'page2' });
+        response.viewData = { decorator: 'decorator' };
+        render.applyRenderings(response);
+
+        assert.isTrue(response.base.writer.print.calledOnce);
+        assert.isTrue(pageDesignerRender.calledWith('page2', '{"decorator":"decorator"}'));
     });
 
     it('should render a json output', function () {
@@ -109,6 +130,11 @@ describe('render', function () {
             'dw/template/ISML': {
                 renderTemplate: function () {
                     throw new Error('hello');
+                }
+            },
+            'dw/experience/PageMgr': {
+                renderPage: function () {
+                    throw new Error('Hello Darkness');
                 }
             }
         });

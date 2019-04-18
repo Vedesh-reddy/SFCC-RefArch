@@ -49,7 +49,7 @@ Response.prototype = {
     /**
      * Stores template name and data for rendering at the later time
      * @param {string} name - Path to a template
-     * @param {Object} data - Data to be passed ot the template
+     * @param {Object} data - Data to be passed to the template
      * @returns {void}
      */
     render: function render(name, data) {
@@ -79,6 +79,17 @@ Response.prototype = {
         this.viewData = assign(this.viewData, { xml: xmlString });
 
         appendRenderings(this.renderings, { type: 'render', subType: 'xml' });
+    },
+    /**
+     * Stores data to be rendered as a page designer page
+     * @param {string} page - ID of the page to be rendered
+     * @param {Object} data - Data to be passed to the template
+     * @returns {void}
+     */
+    page: function (page, data) {
+        this.page = page;
+        this.viewData = assign(this.viewData, data);
+        appendRenderings(this.renderings, { type: 'render', subType: 'page', page: page });
     },
     /**
      * Redirects to a given url right away
