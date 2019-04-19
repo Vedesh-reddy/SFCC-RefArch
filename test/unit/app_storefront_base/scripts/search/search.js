@@ -36,7 +36,7 @@ describe('search script', function () {
             setRecursiveCategorySearch: function () {}
         };
         var mockParams = {
-            q: 'toasters+galore',
+            q: 'toasters galore',
             cgid: { ID: 'abc' },
             pid: 'Product123',
             pmin: '15',

@@ -12,7 +12,7 @@ function setProductProperties(productSearch, httpParams, selectedCategory, sorti
     var searchPhrase;
 
     if (httpParams.q) {
-        searchPhrase = decodeURIComponent(httpParams.q.replace(/\+/g, '%20'));
+        searchPhrase = httpParams.q;
         productSearch.setSearchPhrase(searchPhrase);
     }
     if (selectedCategory) {
