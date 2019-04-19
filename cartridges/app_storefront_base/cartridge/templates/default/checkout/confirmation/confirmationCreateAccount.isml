@@ -18,6 +18,8 @@
                        type="password"
                        class="form-control"
                        id="newPassword"
+                       data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+                       data-range-error="${Resource.msg('error.message.8_255characters','forms',null)}"
                        <isprint value="${pdict.passwordForm.newpassword.attributes}" encoding="off" />>
                     <div class="invalid-feedback"></div>
                 </div>
@@ -30,6 +32,8 @@
                        type="password"
                        class="form-control"
                        id="newPasswordConfirm"
+                       data-missing-error="${Resource.msg('error.message.required','forms',null)}"
+                       data-range-error="${Resource.msg('error.message.8_255characters','forms',null)}"
                        <isprint value="${pdict.passwordForm.newpasswordconfirm.attributes}" encoding="off" />>
                     <div class="invalid-feedback"></div>
                 </div>
