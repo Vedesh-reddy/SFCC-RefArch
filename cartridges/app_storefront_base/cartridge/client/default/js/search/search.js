@@ -107,7 +107,7 @@ module.exports = {
         });
     },
 
-    closeRefinments: function () {
+    closeRefinements: function () {
         // Refinements close button
         $('.container').on('click', '.refinement-bar button.close, .modal-background', function () {
             $('.refinement-bar, .modal-background').hide();
