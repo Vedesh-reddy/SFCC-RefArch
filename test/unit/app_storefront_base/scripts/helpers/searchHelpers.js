@@ -99,6 +99,21 @@ describe('search helpers', function () {
         });
     });
 
+    describe('applyCache', function () {
+        var res = {
+            cachePeriod: '',
+            cachePeriodUnit: '',
+            personalized: false
+        };
+
+        it('should apply cache', function () {
+            searchHelpers.applyCache(res);
+            assert.equal(res.cachePeriod, 1);
+            assert.equal(res.cachePeriodUnit, 'hours');
+            assert.isTrue(res.personalized);
+        });
+    });
+
     describe('search', function () {
         var productSearchStub = sinon.stub();
         var searchSpy = sinon.spy();
@@ -175,7 +190,14 @@ describe('search helpers', function () {
             }
         });
 
-        var mockRequest1 = { querystring: {} };
+        var res = {
+            cachePeriod: '',
+            cachePeriodUnit: '',
+            personalized: false
+        };
+        var mockRequest1 = {
+            querystring: {}
+        };
         var mockRequest2 = { querystring: { q: 'someValue' } };
         var mockRequest3 = { querystring: { cgid: 'someCategory', preferences: 'preferences', pmin: 'pmin', pmax: 'pmax' } };
 
@@ -189,7 +211,7 @@ describe('search helpers', function () {
                 isCategorySearch: true,
                 isRefinedCategorySearch: false
             });
-            var result = searchHelpersMock3.search(mockRequest1);
+            var result = searchHelpersMock3.search(mockRequest1, res);
 
             assert.isTrue(searchSpy.calledOnce);
             assert.equal(result.maxSlots, 4);
@@ -213,7 +235,7 @@ describe('search helpers', function () {
 
             categoryMock = null;
 
-            var result = searchHelpersMock3.search(mockRequest1);
+            var result = searchHelpersMock3.search(mockRequest1, res);
 
             assert.isTrue(searchSpy.calledOnce);
             assert.equal(result.maxSlots, 4);
@@ -231,7 +253,7 @@ describe('search helpers', function () {
         });
 
         it('should search with query string params', function () {
-            searchHelpersMock3.search(mockRequest3);
+            searchHelpersMock3.search(mockRequest3, res);
 
             assert.isTrue(searchSpy.calledOnce);
         });

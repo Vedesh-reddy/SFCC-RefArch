@@ -56,12 +56,24 @@ function setupContentSearch(params) {
 }
 
 /**
+ * Set the cache values
+ *
+ * @param {Object} res - The response object
+ */
+function applyCache(res) {
+    res.cachePeriod = 1; // eslint-disable-line no-param-reassign
+    res.cachePeriodUnit = 'hours'; // eslint-disable-line no-param-reassign
+    res.personalized = true; // eslint-disable-line no-param-reassign
+}
+
+/**
  * performs a search
  *
  * @param {Object} req - Provided HTTP query parameters
+ * @param {Object} res - Provided HTTP query parameters
  * @return {Object} - an object with relevant search information
  */
-function search(req) {
+function search(req, res) {
     var CatalogMgr = require('dw/catalog/CatalogMgr');
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var URLUtils = require('dw/web/URLUtils');
@@ -86,6 +98,9 @@ function search(req) {
     apiProductSearch = setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
 
+    if (!apiProductSearch.personalizedSort) {
+        applyCache(res);
+    }
     categoryTemplate = getCategoryTemplate(apiProductSearch);
     productSearch = new ProductSearch(
         apiProductSearch,
@@ -151,3 +166,4 @@ exports.setupSearch = setupSearch;
 exports.getCategoryTemplate = getCategoryTemplate;
 exports.setupContentSearch = setupContentSearch;
 exports.search = search;
+exports.applyCache = applyCache;

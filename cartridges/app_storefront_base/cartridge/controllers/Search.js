@@ -6,7 +6,7 @@ var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
-server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res, next) {
+server.get('UpdateGrid', function (req, res, next) {
     var CatalogMgr = require('dw/catalog/CatalogMgr');
     var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
@@ -15,6 +15,10 @@ server.get('UpdateGrid', cache.applyPromotionSensitiveCache, function (req, res,
     var apiProductSearch = new ProductSearchModel();
     apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
     apiProductSearch.search();
+
+    if (!apiProductSearch.personalizedSort) {
+        searchHelper.applyCache(res);
+    }
     var productSearch = new ProductSearch(
         apiProductSearch,
         req.querystring,
@@ -57,7 +61,7 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
 server.get('ShowAjax', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
 
-    var result = searchHelper.search(req);
+    var result = searchHelper.search(req, res);
 
     if (result.searchRedirect) {
         res.redirect(result.searchRedirect);
@@ -78,7 +82,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
     var template = 'search/searchResults';
 
-    var result = searchHelper.search(req);
+    var result = searchHelper.search(req, res);
 
     if (result.searchRedirect) {
         res.redirect(result.searchRedirect);
