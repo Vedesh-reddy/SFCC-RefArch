@@ -87,6 +87,13 @@ $menu-item-margin: 0.625em;
 
 .main-menu {
     background-color: $dark-gray;
+
+    .navbar .close-menu button,
+    .navbar .close-button button {
+        background-color: transparent;
+        border: 0;
+        -webkit-appearance: none;
+    }
 }
 
 .header-banner {
