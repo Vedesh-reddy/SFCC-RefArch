@@ -16,7 +16,7 @@
             </label>
             <input autofocus type="text" class="form-control shippingFirstName" id="shippingFirstName${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}FirstName"
                 value="${shippingAddress.firstName||''}" <isprint value=${addressFields.firstName.attributes} encoding="off"/>
-                autocomplete="given-name" >
+                autocomplete="shipping given-name" >
             <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}FirstName"><isprint value="${addressFields.firstName.error}" ></div>
         </div>
     </div>
@@ -29,7 +29,7 @@
             </label>
             <input type="text" class="form-control shippingLastName" id="shippingLastName${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}LastName"
                 value="${shippingAddress.lastName||''}" <isprint value=${addressFields.lastName.attributes} encoding="off"/>
-                autocomplete="family-name">
+                autocomplete="shipping family-name">
             <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}LastName"><isprint value="${addressFields.lastName.error}" ></div>
         </div>
     </div>
@@ -150,7 +150,7 @@
             </label>
             <input type="tel" class="form-control shippingPhoneNumber" id="shippingPhoneNumber${lineItem ? lineItem.UUID : 'default'}" aria-describedby="${lineItem ? lineItem.UUID : 'default'}TelephoneNumber"
                 value="${shippingAddress.phone||''}" <isprint value=${addressFields.phone.attributes} encoding="off"/>
-                   autocomplete="tel">
+                   autocomplete="shipping tel">
             <div class="invalid-feedback" id="${lineItem ? lineItem.UUID : 'default'}TelephoneNumber"><isprint value="${addressFields.phone.error}" ></div>
             <span>${Resource.msg('example.phone','forms',null)}</span>
         </div>
