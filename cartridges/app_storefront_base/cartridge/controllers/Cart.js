@@ -292,6 +292,7 @@ server.get('UpdateQuantity', function (req, res, next) {
     var totalQtyRequested = 0;
     var qtyAlreadyInCart = 0;
     var minOrderQuantity = 0;
+    var perpetual = false;
     var canBeUpdated = false;
     var bundleItems;
     var bonusDiscountLineItemCount = currentBasket.bonusDiscountLineItems.length;
@@ -309,12 +310,14 @@ server.get('UpdateQuantity', function (req, res, next) {
                 );
                 totalQtyRequested = quantityToUpdate + qtyAlreadyInCart;
                 availableToSell = item.product.availabilityModel.inventoryRecord.ATS.value;
+                perpetual = item.product.availabilityModel.inventoryRecord.perpetual;
                 minOrderQuantity = item.product.minOrderQuantity.value;
-                return (totalQtyRequested <= availableToSell) &&
+                return (totalQtyRequested <= availableToSell || perpetual) &&
                     (quantityToUpdate >= minOrderQuantity);
             });
         } else {
             availableToSell = matchingLineItem.product.availabilityModel.inventoryRecord.ATS.value;
+            perpetual = matchingLineItem.product.availabilityModel.inventoryRecord.perpetual;
             qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
                 productId,
                 productLineItems,
@@ -322,7 +325,7 @@ server.get('UpdateQuantity', function (req, res, next) {
             );
             totalQtyRequested = updateQuantity + qtyAlreadyInCart;
             minOrderQuantity = matchingLineItem.product.minOrderQuantity.value;
-            canBeUpdated = (totalQtyRequested <= availableToSell) &&
+            canBeUpdated = (totalQtyRequested <= availableToSell || perpetual) &&
                 (updateQuantity >= minOrderQuantity);
         }
     }
@@ -787,6 +790,7 @@ server.post('EditProductLineItem', function (req, res, next) {
     var qtyAlreadyInCart = 0;
     var minOrderQuantity = 0;
     var canBeUpdated = false;
+    var perpetual = false;
     var bundleItems;
 
     if (requestLineItem) {
@@ -802,12 +806,14 @@ server.post('EditProductLineItem', function (req, res, next) {
                 );
                 totalQtyRequested = quantityToUpdate + qtyAlreadyInCart;
                 availableToSell = item.product.availabilityModel.inventoryRecord.ATS.value;
+                perpetual = item.product.availabilityModel.inventoryRecord.perpetual;
                 minOrderQuantity = item.product.minOrderQuantity.value;
-                return (totalQtyRequested <= availableToSell) &&
+                return (totalQtyRequested <= availableToSell || perpetual) &&
                     (quantityToUpdate >= minOrderQuantity);
             });
         } else {
             availableToSell = requestLineItem.product.availabilityModel.inventoryRecord.ATS.value;
+            perpetual = requestLineItem.product.availabilityModel.inventoryRecord.perpetual;
             qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
                 productId,
                 productLineItems,
@@ -815,7 +821,7 @@ server.post('EditProductLineItem', function (req, res, next) {
             );
             totalQtyRequested = updateQuantity + qtyAlreadyInCart;
             minOrderQuantity = requestLineItem.product.minOrderQuantity.value;
-            canBeUpdated = (totalQtyRequested <= availableToSell) &&
+            canBeUpdated = (totalQtyRequested <= availableToSell || perpetual) &&
                 (updateQuantity >= minOrderQuantity);
         }
     }

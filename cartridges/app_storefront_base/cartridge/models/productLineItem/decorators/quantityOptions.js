@@ -12,13 +12,20 @@ var DEFAULT_MAX_ORDER_QUANTITY = preferences.maxOrderQty || 10;
  */
 function getMinMaxQuantityOptions(productLineItem, quantity) {
     var availableToSell = productLineItem.product.availabilityModel.inventoryRecord.ATS.value;
+    var perpetual = productLineItem.product.availabilityModel.inventoryRecord.perpetual;
+    var max;
     if (productLineItem.productInventoryListID) {
         var inventoryList = ProductInventoryMgr.getInventoryList(productLineItem.productInventoryListID);
         var inventoryRecord = inventoryList.getRecord(productLineItem.product.ID);
         availableToSell = inventoryRecord.ATS.value;
+        perpetual = inventoryRecord.perpetual;
     }
 
-    var max = Math.max(Math.min(availableToSell, DEFAULT_MAX_ORDER_QUANTITY), quantity);
+    if (perpetual) {
+        max = Math.max(DEFAULT_MAX_ORDER_QUANTITY, quantity);
+    } else {
+        max = Math.max(Math.min(availableToSell, DEFAULT_MAX_ORDER_QUANTITY), quantity);
+    }
 
     return {
         minOrderQuantity: productLineItem.product.minOrderQuantity.value || 1,

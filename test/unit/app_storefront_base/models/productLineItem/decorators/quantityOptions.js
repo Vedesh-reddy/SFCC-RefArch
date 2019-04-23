@@ -43,6 +43,15 @@ describe('product line item quantity options decorator', function () {
             assert.equal(object.quantityOptions.minOrderQuantity, 1);
             assert.equal(object.quantityOptions.maxOrderQuantity, 5);
         });
+
+        it('should handle perpetual inventory on the product', function () {
+            var object = {};
+            productLineItemMock.product.availabilityModel.inventoryRecord.perpetual = true;
+            quantityOptions(object, productLineItemMock, 1);
+
+            assert.equal(object.quantityOptions.minOrderQuantity, 1);
+            assert.equal(object.quantityOptions.maxOrderQuantity, 10);
+        });
     });
 
     describe('When inventory list provided', function () {
