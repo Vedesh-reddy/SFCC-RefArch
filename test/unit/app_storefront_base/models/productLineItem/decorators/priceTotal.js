@@ -11,7 +11,7 @@ var lineItemMock = {
         add: function () {}
     },
     optionProductLineItems: new ArrayList([{
-        adjustedNetPrice: {}
+        adjustedPrice: {}
     }])
 };
 

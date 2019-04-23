@@ -25,7 +25,7 @@ function getTotalPrice(lineItem) {
     // The platform does not include prices for selected option values in a line item product's
     // price by default.  So, we must add the option price to get the correct line item total price.
     collections.forEach(lineItem.optionProductLineItems, function (item) {
-        price = price.add(item.adjustedNetPrice);
+        price = price.add(item.adjustedPrice);
     });
 
     result.price = formatMoney(price);
