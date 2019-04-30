@@ -688,6 +688,8 @@ module.exports = {
     },
 
     selectShippingMethod: function () {
+        var baseObj = this;
+
         $('.shipping-method-list').change(function () {
             var $shippingForm = $(this).parents('form');
             var methodID = $(':checked', this).val();
@@ -699,11 +701,18 @@ module.exports = {
             urlParams.giftMessage = $shippingForm.find('textarea[name$=_giftMessage]').val();
 
             var url = $(this).data('select-shipping-method-url');
-            selectShippingMethodAjax(url, urlParams, $(this));
+
+            if (baseObj.methods && baseObj.methods.selectShippingMethodAjax) {
+                baseObj.methods.selectShippingMethodAjax(url, urlParams, $(this));
+            } else {
+                selectShippingMethodAjax(url, urlParams, $(this));
+            }
         });
     },
 
     toggleMultiship: function () {
+        var baseObj = this;
+
         $('input[name="usingMultiShipping"]').on('change', function () {
             var url = $('.multi-shipping-checkbox-block form').attr('action');
             var usingMultiShip = this.checked;
@@ -723,7 +732,11 @@ module.exports = {
                         });
 
                         if ($('#checkout-main').data('customer-type') === 'guest') {
-                            clearShippingForms(response.order);
+                            if (baseObj.methods && baseObj.methods.clearShippingForms) {
+                                baseObj.methods.clearShippingForms(response.order);
+                            } else {
+                                clearShippingForms(response.order);
+                            }
                         } else {
                             response.order.shipping.forEach(function (shipping) {
                                 $('input[value=' + shipping.UUID + ']').each(function (formIndex, el) {
@@ -763,6 +776,8 @@ module.exports = {
     },
 
     selectMultiShipping: function () {
+        var baseObj = this;
+
         $('body').on('shipping:selectMultiShipping', function (e, data) {
             $('.multi-shipping .shipping-address').addClass('d-none');
 
@@ -770,9 +785,19 @@ module.exports = {
                 var element = $('.multi-shipping .card[data-shipment-uuid="' + shipping.UUID + '"]');
 
                 if (shipping.shippingAddress) {
-                    viewMultishipAddress($(element));
+                    if (baseObj.methods && baseObj.methods.viewMultishipAddress) {
+                        baseObj.methods.viewMultishipAddress($(element));
+                    } else {
+                        viewMultishipAddress($(element));
+                    }
                 } else {
-                    enterMultishipView($(element));
+                    /* eslint-disable no-lonely-if */
+                    if (baseObj.methods && baseObj.methods.enterMultishipView) {
+                        baseObj.methods.enterMultishipView($(element));
+                    } else {
+                        enterMultishipView($(element));
+                    }
+                    /* eslint-enable no-lonely-if */
                 }
             });
         });
@@ -807,6 +832,8 @@ module.exports = {
     },
 
     selectMultiShipAddress: function () {
+        var baseObj = this;
+
         $('.multi-shipping .addressSelector').on('change', function () {
             var form = $(this).closest('form');
             var selectedOption = $('option:selected', this);
@@ -814,6 +841,7 @@ module.exports = {
             var shipmentUUID = selectedOption[0].value;
             var originalUUID = $('input[name=shipmentUUID]', form).val();
             var pliUUID = $('input[name=productLineItemUUID]', form).val();
+            var createNewShipmentScoped = baseObj.methods && baseObj.methods.createNewShipment ? baseObj.methods.createNewShipment : createNewShipment;
 
             var element;
             Object.keys(attrs).forEach(function (attr) {
@@ -828,7 +856,7 @@ module.exports = {
 
             if (shipmentUUID === 'new' && pliUUID) {
                 var createShipmentUrl = $(this).attr('data-create-shipment-url');
-                createNewShipment(createShipmentUrl, { productLineItemUUID: pliUUID })
+                createNewShipmentScoped(createShipmentUrl, { productLineItemUUID: pliUUID })
                     .done(function (response) {
                         $.spinner().stop();
                         if (response.error) {
@@ -857,7 +885,7 @@ module.exports = {
             } else if (shipmentUUID.indexOf('ab_') === 0) {
                 var url = $(form).attr('action');
                 var serializedData = $(form).serialize();
-                createNewShipment(url, serializedData)
+                createNewShipmentScoped(url, serializedData)
                     .done(function (response) {
                         $.spinner().stop();
                         if (response.error) {
@@ -885,7 +913,7 @@ module.exports = {
             } else {
                 var updatePLIShipmentUrl = $(form).attr('action');
                 var serializedAddress = $(form).serialize();
-                createNewShipment(updatePLIShipmentUrl, serializedAddress)
+                createNewShipmentScoped(updatePLIShipmentUrl, serializedAddress)
                     .done(function (response) {
                         $.spinner().stop();
                         if (response.error) {
@@ -913,9 +941,15 @@ module.exports = {
     },
 
     updateShippingList: function () {
+        var baseObj = this;
+
         $('select[name$="shippingAddress_addressFields_states_stateCode"]')
             .on('change', function (e) {
-                updateShippingMethodList($(e.currentTarget.form));
+                if (baseObj.methods && baseObj.methods.updateShippingMethodList) {
+                    baseObj.methods.updateShippingMethodList($(e.currentTarget.form));
+                } else {
+                    updateShippingMethodList($(e.currentTarget.form));
+                }
             });
     },
 
@@ -926,22 +960,36 @@ module.exports = {
     },
 
     enterMultiShipInfo: function () {
+        var baseObj = this;
+
         $('.btn-enter-multi-ship').on('click', function (e) {
             e.preventDefault();
 
-            editOrEnterMultiShipInfo($(this), 'new');
+            if (baseObj.methods && baseObj.methods.editOrEnterMultiShipInfo) {
+                baseObj.methods.editOrEnterMultiShipInfo($(this), 'new');
+            } else {
+                editOrEnterMultiShipInfo($(this), 'new');
+            }
         });
     },
 
     editMultiShipInfo: function () {
+        var baseObj = this;
+
         $('.btn-edit-multi-ship').on('click', function (e) {
             e.preventDefault();
 
-            editOrEnterMultiShipInfo($(this), 'edit');
+            if (baseObj.methods && baseObj.methods.editOrEnterMultiShipInfo) {
+                baseObj.methods.editOrEnterMultiShipInfo($(this), 'edit');
+            } else {
+                editOrEnterMultiShipInfo($(this), 'edit');
+            }
         });
     },
 
     saveMultiShipInfo: function () {
+        var baseObj = this;
+
         $('.btn-save-multi-ship').on('click', function (e) {
             e.preventDefault();
 
@@ -981,7 +1029,11 @@ module.exports = {
                             }
                         );
 
-                        viewMultishipAddress($rootEl);
+                        if (baseObj.methods && baseObj.methods.viewMultishipAddress) {
+                            baseObj.methods.viewMultishipAddress($rootEl);
+                        } else {
+                            viewMultishipAddress($rootEl);
+                        }
                     }
 
                     if (response.order && response.order.shippable) {
@@ -1003,6 +1055,8 @@ module.exports = {
     },
 
     cancelMultiShipAddress: function () {
+        var baseObj = this;
+
         $('.btn-cancel-multi-ship-address').on('click', function (e) {
             e.preventDefault();
 
@@ -1016,13 +1070,21 @@ module.exports = {
                 var originalStateCode = restoreStateObj.shippingAddress.stateCode;
                 var stateCode = $('[name$=_stateCode]', form).val();
 
-                updateShippingAddressFormValues(restoreStateObj);
+                if (baseObj.methods && baseObj.methods.updateShippingAddressFormValues) {
+                    baseObj.methods.updateShippingAddressFormValues(restoreStateObj);
+                } else {
+                    updateShippingAddressFormValues(restoreStateObj);
+                }
 
                 if (stateCode !== originalStateCode) {
                     $('[data-action=save]', form).trigger('click');
                 } else {
                     $(form).attr('data-address-mode', 'edit');
-                    editMultiShipAddress($rootEl);
+                    if (baseObj.methods && baseObj.methods.editMultiShipAddress) {
+                        baseObj.methods.editMultiShipAddress($rootEl);
+                    } else {
+                        editMultiShipAddress($rootEl);
+                    }
                 }
             }
 
