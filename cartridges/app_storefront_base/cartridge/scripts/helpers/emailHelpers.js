@@ -22,6 +22,16 @@ function send(emailObj, template, context) {
     email.send();
 }
 
+/**
+ * Checks if the email value entered is correct format
+ * @param {string} email - email string to check if valid
+ * @returns {boolean} Whether email is valid
+ */
+function validateEmail(email) {
+    var regex = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
+    return regex.test(email);
+}
+
 module.exports = {
     send: send,
     sendEmail: function (emailObj, template, context) {
@@ -35,5 +45,6 @@ module.exports = {
         orderConfirmation: 4,
         accountLocked: 5,
         accountEdited: 6
-    }
+    },
+    validateEmail: validateEmail
 };
