@@ -146,9 +146,7 @@ function getBasketOpenReportingURLs(currentBasket) {
 function getOrderPlacedReportingURLs(orderCount, reportingURLs) {
     var result = reportingURLs;
 
-    result.push(URLUtils.url('ReportingEvent-Start',
-        'UserOrders', formatHelpers.formatNumber(orderCount)
-    ));
+    result.push(URLUtils.url('ReportingEvent-Start', 'ID', 'UserOrders', 'Count', formatHelpers.formatNumber(orderCount)));
 
     return result;
 }
