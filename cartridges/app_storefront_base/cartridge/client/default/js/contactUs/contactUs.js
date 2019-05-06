@@ -20,7 +20,7 @@ function displayMessage(data, button) {
         );
     }
     $('.contact-us-signup-message')
-        .append('<div class="contact-us-signup-alert text-center ' + status + '">' + data.msg + '</div>');
+        .append('<div class="contact-us-signup-alert text-center ' + status + '" role="alert">' + data.msg + '</div>');
 
     setTimeout(function () {
         $('.contact-us-signup-message').remove();
