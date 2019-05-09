@@ -88,8 +88,12 @@ function updateCartTotals(data) {
     }
 
     data.items.forEach(function (item) {
-        $('.item-' + item.UUID).empty().append(item.renderedPromotions);
-        $('.item-total-' + item.UUID).empty().append(item.priceTotal.renderedPrice);
+        if (item.renderedPromotions) {
+            $('.item-' + item.UUID).empty().append(item.renderedPromotions);
+        }
+        if (item.priceTotal && item.priceTotal.renderedPrice) {
+            $('.item-total-' + item.UUID).empty().append(item.priceTotal.renderedPrice);
+        }
     });
 }
 

@@ -53,6 +53,20 @@ var apiBasketNoBonusLineItems = {
     }])
 };
 
+var apiBasketUncategorizedLineItem = {
+    productLineItems: new ArrayList([{
+        product: toProductMock(null),
+        quantity: {
+            item: {
+                quantity: {
+                    value: 1
+                }
+            }
+        },
+        noProduct: true
+    }])
+};
+
 var apiBasketBonusLineItems = {
     productLineItems: new ArrayList([{
         bonusProductLineItem: true,
@@ -103,5 +117,13 @@ describe('ProductLineItems model', function () {
         var result = new ProductLineItemsModel(apiBasketBonusLineItems.productLineItems);
         assert.equal(result.items.length, 2);
         assert.equal(result.totalQuantity, 2);
+    });
+
+    it('should return product line item with no product image and noProduct equals true', function () {
+        var result = new ProductLineItemsModel(apiBasketUncategorizedLineItem.productLineItems);
+        assert.equal(result.items.length, 1);
+        assert.equal(result.items[0].product, null);
+        assert.equal(result.items[0].noProduct, true);
+        assert.equal(result.items[0].image.url, '/images/noimagelarge.png');
     });
 });

@@ -2,6 +2,8 @@
 
 var collections = require('*/cartridge/scripts/util/collections');
 var ProductFactory = require('*/cartridge/scripts/factories/product');
+var URLUtils = require('dw/web/URLUtils');
+var Resource = require('dw/web/Resource');
 
 /**
  * Creates an array of product line items
@@ -14,7 +16,22 @@ function createProductLineItemsObject(allLineItems, view) {
     var lineItems = [];
 
     collections.forEach(allLineItems, function (item) {
-        if (!item.product) { return; }
+        // when item's category is unassigned, return a lineItem with limited attributes
+        if (!item.product) {
+            lineItems.push({
+                id: item.productID,
+                quantity: item.quantity.value,
+                productName: item.productName,
+                UUID: item.UUID,
+                noProduct: true,
+                image: {
+                    url: URLUtils.staticURL('/images/noimagelarge.png'),
+                    alt: Resource.msgf('msg.no.image', 'common', null),
+                    title: Resource.msgf('msg.no.image', 'common', null)
+                }
+            });
+            return;
+        }
         var options = collections.map(item.optionProductLineItems, function (optionItem) {
             return {
                 optionId: optionItem.optionID,

@@ -37,7 +37,11 @@
                         <iselse/>
                             <div class="card uuid-${lineItem.UUID}">
                                 <div class="card-body">
-                                    <isinclude template="checkout/productCard/productCard" />
+                                    <isif condition="${lineItem.noProduct === true}">
+                                        <isinclude template="checkout/productCard/uncategorizedProductCard" />
+                                    <iselse/>
+                                        <isinclude template="checkout/productCard/productCard" />
+                                    </isif>
                                 </div>
                             </div>
                         </isif>

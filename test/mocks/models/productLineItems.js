@@ -10,6 +10,16 @@ function proxyModel() {
             get: function () {
                 return { bonusProducts: null, bonusProductLineItemUUID: null };
             }
+        },
+        'dw/web/URLUtils': {
+            staticURL: function () {
+                return '/images/noimagelarge.png';
+            }
+        },
+        'dw/web/Resource': {
+            msgf: function (param1) {
+                return param1;
+            }
         }
     });
 }

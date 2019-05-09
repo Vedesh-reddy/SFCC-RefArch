@@ -7,14 +7,7 @@
     </div>
     <isif condition="${!lineItem.isBonusProductLineItem}"/>
         <div class="remove-line-item d-lg-none">
-            <button type="button" class="remove-btn remove-product btn btn-light" data-toggle="modal"
-                    data-target=".cart.cart-page #removeProductModal" data-pid="${lineItem.id}"
-                    data-name="${lineItem.productName}"
-                    data-action="${pdict.actionUrls.removeProductLineItemUrl}"
-                    data-uuid="${lineItem.UUID}"
-                    aria-label="${Resource.msgf('text.remove.line.item','cart', null, lineItem.productName)}">
-                <span aria-hidden="true">&times;</span>
-            </button>
+            <isinclude template="components/deleteButton" />
         </div>
     </isif>
 </div>

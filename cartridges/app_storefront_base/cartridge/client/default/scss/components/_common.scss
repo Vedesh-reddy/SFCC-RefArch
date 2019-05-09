@@ -54,6 +54,10 @@ header ~ #maincontent .container a:not(.btn-primary, .btn-outline-primary) {
     margin-bottom: 6.25em;
 }
 
+.error-unassigned-category {
+    color: $red;
+}
+
 .skip {
     position: absolute;
     left: 0;
