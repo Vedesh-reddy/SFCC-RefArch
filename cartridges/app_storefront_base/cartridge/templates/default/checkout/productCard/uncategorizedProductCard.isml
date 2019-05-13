@@ -15,7 +15,7 @@
     <iselse/>
         <div class="product-line-item-details d-flex flex-row">
             <div class="item-image">
-                <img class="product-image" src="${lineItem.image.url}" alt="${lineItem.image.alt}" title="${lineItem.image.title}">
+                <img class="product-image" src="${lineItem.images.small[0].url}" alt="${lineItem.images.small[0].alt}" title="${lineItem.images.small[0].title}">
             </div>
             <div class="item-attributes error-unassigned-category d-flex flex-column">
                 ${Resource.msg('error.removed.online.catalog', 'cart', null)}

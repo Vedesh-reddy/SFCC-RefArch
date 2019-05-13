@@ -24,11 +24,18 @@ function createProductLineItemsObject(allLineItems, view) {
                 productName: item.productName,
                 UUID: item.UUID,
                 noProduct: true,
-                image: {
-                    url: URLUtils.staticURL('/images/noimagelarge.png'),
-                    alt: Resource.msgf('msg.no.image', 'common', null),
-                    title: Resource.msgf('msg.no.image', 'common', null)
+                images:
+                {
+                    small: [
+                        {
+                            url: URLUtils.staticURL('/images/noimagelarge.png'),
+                            alt: Resource.msgf('msg.no.image', 'common', null),
+                            title: Resource.msgf('msg.no.image', 'common', null)
+                        }
+                    ]
+
                 }
+
             });
             return;
         }

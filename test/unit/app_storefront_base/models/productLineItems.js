@@ -124,6 +124,6 @@ describe('ProductLineItems model', function () {
         assert.equal(result.items.length, 1);
         assert.equal(result.items[0].product, null);
         assert.equal(result.items[0].noProduct, true);
-        assert.equal(result.items[0].image.url, '/images/noimagelarge.png');
+        assert.equal(result.items[0].images.small[0].url, '/images/noimagelarge.png');
     });
 });

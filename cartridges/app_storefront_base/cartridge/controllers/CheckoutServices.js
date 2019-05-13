@@ -137,11 +137,14 @@ server.post(
             var Locale = require('dw/util/Locale');
             var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
             var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+            var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
 
             var currentBasket = BasketMgr.getCurrentBasket();
+            var validatedProducts = validationHelpers.validateProducts(currentBasket);
+
             var billingData = res.getViewData();
 
-            if (!currentBasket) {
+            if (!currentBasket || validatedProducts.error) {
                 delete billingData.paymentInformation;
 
                 res.json({
@@ -316,10 +319,12 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalculationHelpers');
     var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
     var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+    var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
+    var validatedProducts = validationHelpers.validateProducts(currentBasket);
 
-    if (!currentBasket) {
+    if (!currentBasket || validatedProducts.error) {
         res.json({
             error: true,
             cartError: true,

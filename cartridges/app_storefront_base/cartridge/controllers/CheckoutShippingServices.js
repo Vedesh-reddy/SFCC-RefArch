@@ -287,10 +287,11 @@ server.post(
         var BasketMgr = require('dw/order/BasketMgr');
         var URLUtils = require('dw/web/URLUtils');
         var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+        var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
 
         var currentBasket = BasketMgr.getCurrentBasket();
-
-        if (!currentBasket) {
+        var validatedProducts = validationHelpers.validateProducts(currentBasket);
+        if (!currentBasket || validatedProducts.error) {
             res.json({
                 error: true,
                 cartError: true,
