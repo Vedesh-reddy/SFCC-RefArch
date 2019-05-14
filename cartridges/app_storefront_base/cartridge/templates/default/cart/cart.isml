@@ -81,7 +81,6 @@
                             <isinclude template="cart/checkoutButtons" />
                         </div>
                     </div>
-                    <br/>
                 </div>
             </div>
             
