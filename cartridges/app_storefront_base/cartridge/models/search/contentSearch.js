@@ -3,9 +3,10 @@
 var PagingModel = require('dw/web/PagingModel');
 var collections = require('*/cartridge/scripts/util/collections');
 var URLUtils = require('dw/web/URLUtils');
+var preferences = require('*/cartridge/config/preferences');
 var ACTION_ENDPOINT_GRID = 'Search-Content';
 var ACTION_ENDPOINT_CONTENT = 'Page-Show';
-var DEFAULT_PAGE_SIZE = 12;
+var DEFAULT_PAGE_SIZE = preferences.defaultPageSize ? preferences.defaultPageSize : 12;
 
 /**
  * Configures and returns a PagingModel instance

@@ -146,7 +146,11 @@ var ContentSearch = proxyquire('../../../../../cartridges/app_storefront_base/ca
     '*/cartridge/scripts/util/collections': {
         map: mockCollections.map
     },
-    'dw/web/PagingModel': stubPagingModel
+    'dw/web/PagingModel': stubPagingModel,
+    '*/cartridge/config/preferences': {
+        maxOrderQty: 10,
+        defaultPageSize: 12
+    }
 });
 
 var createApiContentSearchResult = function (queryPhrase, Page) {

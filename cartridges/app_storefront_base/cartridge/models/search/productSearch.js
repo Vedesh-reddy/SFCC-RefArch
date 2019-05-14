@@ -3,12 +3,13 @@
 var collections = require('*/cartridge/scripts/util/collections');
 var searchRefinementsFactory = require('*/cartridge/scripts/factories/searchRefinements');
 var URLUtils = require('dw/web/URLUtils');
+var preferences = require('*/cartridge/config/preferences');
 var ProductSortOptions = require('*/cartridge/models/search/productSortOptions');
 var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
 
 var ACTION_ENDPOINT = 'Search-Show';
 var ACTION_ENDPOINT_AJAX = 'Search-ShowAjax';
-var DEFAULT_PAGE_SIZE = 12;
+var DEFAULT_PAGE_SIZE = preferences.defaultPageSize ? preferences.defaultPageSize : 12;
 
 
 /**

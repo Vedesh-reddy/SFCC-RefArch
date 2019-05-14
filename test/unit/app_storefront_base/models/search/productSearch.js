@@ -57,7 +57,11 @@ describe('ProductSearch model', function () {
         'dw/web/URLUtils': {
             url: function (endpoint, param, value) { return [endpoint, param, value].join(' '); }
         },
-        'dw/web/PagingModel': stubPagingModel
+        'dw/web/PagingModel': stubPagingModel,
+        '*/cartridge/config/preferences': {
+            maxOrderQty: 10,
+            defaultPageSize: 12
+        }
     });
 
     var apiProductSearch;
