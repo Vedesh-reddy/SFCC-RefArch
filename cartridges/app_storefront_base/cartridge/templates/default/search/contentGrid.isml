@@ -13,6 +13,8 @@
                 ${pdict.contentSearch.queryPhrase}
             </span>
     </isif>
+<iselse>
+<div>
 </isif>
 
     <isloop items="${pdict.contentSearch.contents}" var="contentAsset">
