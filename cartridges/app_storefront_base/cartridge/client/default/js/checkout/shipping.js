@@ -169,13 +169,13 @@ function updateShippingMethods(shipping) {
                     var tmpl = $('#shipping-method-template').clone();
                     // set input
                     $('input', tmpl)
-                        .prop('id', 'shippingMethod-' + shippingMethod.ID)
+                        .prop('id', 'shippingMethod-' + shippingMethod.ID + '-' + shipping.UUID)
                         .prop('name', shippingMethodFormID)
                         .prop('value', shippingMethod.ID)
                         .attr('checked', shippingMethod.ID === selected.ID);
 
                     $('label', tmpl)
-                        .prop('for', 'shippingMethod-' + shippingMethod.ID);
+                        .prop('for', 'shippingMethod-' + shippingMethod.ID  + '-' + shipping.UUID);
                     // set shipping method name
                     $('.display-name', tmpl).text(shippingMethod.displayName);
                     // set or hide arrival time
