@@ -31,6 +31,8 @@ dw.json
 sitegenesisdata/
 mobilefirstdata/
 storefrontdata/
+demo_data_sfra/
+demo_data_sfra.zip
 .DS_Store
 test/appium/webdriver/config.json
 .vscode
