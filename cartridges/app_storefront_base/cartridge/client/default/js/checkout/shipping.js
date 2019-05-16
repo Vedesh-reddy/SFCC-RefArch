@@ -175,7 +175,7 @@ function updateShippingMethods(shipping) {
                         .attr('checked', shippingMethod.ID === selected.ID);
 
                     $('label', tmpl)
-                        .prop('for', 'shippingMethod-' + shippingMethod.ID  + '-' + shipping.UUID);
+                        .prop('for', 'shippingMethod-' + shippingMethod.ID + '-' + shipping.UUID);
                     // set shipping method name
                     $('.display-name', tmpl).text(shippingMethod.displayName);
                     // set or hide arrival time
