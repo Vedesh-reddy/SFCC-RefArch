@@ -10,7 +10,7 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 
 # The latest version
 
-The latest version of SFRA is 4.0.0
+The latest version of SFRA is 4.1.1
 
 # Getting Started
 
