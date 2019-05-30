@@ -1,3 +1,4 @@
+<isset name="renderedQuantity" value="${false}" scope="page" />
 <isloop items="${pdict.products}" var="product" status="productLoopStatus">
     <div class="col-12 bonus-product-item ready-to-order choice-of-bonus-product" data-pid="${product.id}" data-ready-to-order="${product.readyToOrder}" data-optionID="">
         <div class="product-quickview product-${product.productType} col product-wrapper product-detail" data-pid="${product.id}">
@@ -22,6 +23,7 @@
                                         <!-- Quantity Drop Down Menu -->
                                        <div class="col-4 quantity">
                                            <isinclude template="product/components/choiceOfBonusProducts/bonusProductsQuantity" />
+                                           <isset name="renderedQuantity" value="${true}" scope="page" />
                                        </div>
 
                                         <isset name="isQuickView" value="${true}" scope="page"/>
@@ -48,12 +50,19 @@
                                             <isif condition="${loopStatus.last && (!isQuickView || isProductSet)}">
                                                 <div class="col-4 quantity">
                                                     <isinclude template="product/components/choiceOfBonusProducts/bonusProductsQuantity" />
+                                                    <isset name="renderedQuantity" value="${true}" scope="page" />
                                                 </div>
                                             </isif>
                                         </div>
                                     </isloop>
                                 <isset name="isQuickView" value="${true}" scope="page"/>
                             </isif>
+                        </isif>
+
+                        <isif condition="${!renderedQuantity}">
+                            <div class="col-12 quantity">
+                                <isinclude template="product/components/choiceOfBonusProducts/bonusProductsQuantity" />
+                            </div>
                         </isif>
 
                         <div class="row">
