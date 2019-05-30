@@ -9,7 +9,6 @@ Template Notes:
 
 </iscomment>
 
-<isset name="loopState" value="{count: 1}" scope="page" />
 <div class="attribute">
     <isif condition="${attr.swatchable}">
 
