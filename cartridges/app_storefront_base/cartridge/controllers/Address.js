@@ -141,9 +141,13 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
         this.on('route:BeforeComplete', function () { // eslint-disable-line no-shadow
             var formInfo = res.getViewData();
             Transaction.wrap(function () {
-                var address = req.querystring.addressId
-                    ? addressBook.getAddress(req.querystring.addressId)
-                    : addressBook.createAddress(formInfo.addressId);
+                var address = null;
+                if (formInfo.addressId.equals(req.querystring.addressId) || !addressBook.getAddress(formInfo.addressId)) {
+                    address = req.querystring.addressId
+                        ? addressBook.getAddress(req.querystring.addressId)
+                        : addressBook.createAddress(formInfo.addressId);
+                }
+
                 if (address) {
                     if (req.querystring.addressId) {
                         address.setID(formInfo.addressId);
