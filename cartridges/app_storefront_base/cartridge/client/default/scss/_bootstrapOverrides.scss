@@ -80,3 +80,7 @@ dt {
     background: $grey3; /* For browsers that do not support gradients */
     background: linear-gradient($grey3, $grey5); /* Standard syntax */
 }
+
+.form-control.is-invalid {
+    background-image: none;
+}
