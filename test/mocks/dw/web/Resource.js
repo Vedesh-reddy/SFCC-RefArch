@@ -2,8 +2,7 @@
 
 var path = require('path');
 var properties = require('properties-parser');
-var wdioConfig = require('../../../functional/webdriver/wdio.appium');
-const locale = wdioConfig.locale;
+const locale = 'x_default';
 
 function msg(key, bundleName, defaultValue) {
     let bundlePath;
@@ -57,5 +56,5 @@ function msgf() {
 module.exports = {
     msg: msg,
     msgf: msgf,
-    locale: wdioConfig.locale
+    locale: locale
 };
