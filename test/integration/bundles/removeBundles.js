@@ -1,7 +1,6 @@
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
-var Resource = require('../../mocks/dw/web/Resource');
 
 describe('Remove bundle from product line item', function () {
     this.timeout(50000);
@@ -41,14 +40,13 @@ describe('Remove bundle from product line item', function () {
     });
 
     it('1. should be able to remove a bundle from product line item', function () {
-        var cartEmptyMsg = Resource.msgf('info.cart.empty.msg', 'cart', null);
         myRequest.method = 'GET';
         myRequest.url = config.baseUrl + '/Cart-RemoveProductLineItem?pid=' + bundlePid + '&uuid=' + UUID;
         return request(myRequest)
             .then(function (removedItemResponse) {
                 assert.equal(removedItemResponse.statusCode, 200, 'Expected removeProductLineItem call statusCode to be 200.');
                 var bodyAsJson = JSON.parse(removedItemResponse.body);
-                assert.equal(bodyAsJson.basket.resources.emptyCartMsg, cartEmptyMsg, 'actual response from removing bundles not are expected');
+                assert.equal(bodyAsJson.basket.resources.emptyCartMsg, 'Your Shopping Cart is Empty', 'actual response from removing bundles not are expected');
                 assert.equal(bodyAsJson.basket.resources.numberOfItems, '0 Items', 'should return 0 items in basket');
             });
     });
