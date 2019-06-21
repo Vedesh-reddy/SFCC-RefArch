@@ -20,7 +20,7 @@
 
             <div class="item-options">
                 <isloop items="${nestedLineItem.options}" var="option">
-                    <div class="line-item-option">${option}</div>
+                    <div class="line-item-option">${option.displayName}</div>
                 </isloop>
             </div>
         </div>

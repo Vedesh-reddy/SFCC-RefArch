@@ -683,14 +683,14 @@ module.exports = {
             var $choiceOfBonusProduct = $(this).parents('.choice-of-bonus-product');
             var pid = $(this).data('pid');
             var maxPids = $('.choose-bonus-product-dialog').data('total-qty');
-            var submittedQty = parseInt($(this).parents('.choice-of-bonus-product').find('.bonus-quantity-select').val(), 10);
+            var submittedQty = parseInt($choiceOfBonusProduct.find('.bonus-quantity-select').val(), 10);
             var totalQty = 0;
             $.each($('#chooseBonusProductModal .selected-bonus-products .selected-pid'), function () {
                 totalQty += $(this).data('qty');
             });
             totalQty += submittedQty;
-            var optionID = $(this).parents('.choice-of-bonus-product').find('.product-option').data('option-id');
-            var valueId = $(this).parents('.choice-of-bonus-product').find('.options-select option:selected').data('valueId');
+            var optionID = $choiceOfBonusProduct.find('.product-option').data('option-id');
+            var valueId = $choiceOfBonusProduct.find('.options-select option:selected').data('valueId');
             if (totalQty <= maxPids) {
                 var selectedBonusProductHtml = ''
                 + '<div class="selected-pid row" '
@@ -733,7 +733,7 @@ module.exports = {
             $('button.select-bonus-product', response.$productContainer).attr('disabled',
                 (!response.product.readyToOrder || !response.product.available));
             var pid = response.product.id;
-            $('button.select-bonus-product').data('pid', pid);
+            $('button.select-bonus-product', response.$productContainer).data('pid', pid);
         });
     },
     showMoreBonusProducts: function () {
