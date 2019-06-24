@@ -73,7 +73,7 @@
 
                         <div class="row">
                             <div class="col-sm-12">
-                                <button class="btn btn-secondary btn-block btn-outline-primary select-bonus-product"
+                                <button class="btn btn-block btn-outline-primary select-bonus-product"
                                         data-pid="${product.id}"
                                         ${!product.readyToOrder || !product.available ? "disabled" : ""}>
                                 ${Resource.msg('button.choiceofbonus.select', 'product', null)}

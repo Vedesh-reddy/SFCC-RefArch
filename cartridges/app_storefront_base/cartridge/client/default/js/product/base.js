@@ -795,8 +795,20 @@ module.exports = {
                 success: function (data) {
                     $.spinner().stop();
                     if (data.error) {
-                        $('.error-choice-of-bonus-products')
-                            .html(data.errorMessage);
+                        $('#chooseBonusProductModal').modal('hide');
+                        if ($('.add-to-cart-messages').length === 0) {
+                            $('body').append(
+                                '<div class="add-to-cart-messages"></div>'
+                                );
+                        }
+                        $('.add-to-cart-messages').append(
+                                '<div class="alert alert-danger add-to-basket-alert text-center"'
+                                + ' role="alert">'
+                                + data.errorMessage + '</div>'
+                            );
+                        setTimeout(function () {
+                            $('.add-to-basket-alert').remove();
+                        }, 3000);
                     } else {
                         $('.configure-bonus-product-attributes').html(data);
                         $('.bonus-products-step2').removeClass('hidden-xl-down');

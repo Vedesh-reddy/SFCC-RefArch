@@ -594,7 +594,17 @@ server.post('AddBonusProducts', function (req, res, next) {
     for (var i = 0; i < data.bonusProducts.length; i++) {
         totalQty += data.bonusProducts[i].qty;
     }
-    if (totalQty > qtyAllowed) {
+
+    if (totalQty === 0) {
+        res.json({
+            errorMessage: Resource.msg(
+                'error.alert.choiceofbonus.no.product.selected',
+                'product',
+                null),
+            error: true,
+            success: false
+        });
+    } else if (totalQty > qtyAllowed) {
         res.json({
             errorMessage: Resource.msgf(
                 'error.alert.choiceofbonus.max.quantity',
