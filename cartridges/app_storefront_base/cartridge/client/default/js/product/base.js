@@ -797,15 +797,13 @@ module.exports = {
                     if (data.error) {
                         $('#chooseBonusProductModal').modal('hide');
                         if ($('.add-to-cart-messages').length === 0) {
-                            $('body').append(
-                                '<div class="add-to-cart-messages"></div>'
-                                );
+                            $('body').append('<div class="add-to-cart-messages"></div>');
                         }
                         $('.add-to-cart-messages').append(
-                                '<div class="alert alert-danger add-to-basket-alert text-center"'
-                                + ' role="alert">'
-                                + data.errorMessage + '</div>'
-                            );
+                            '<div class="alert alert-danger add-to-basket-alert text-center"'
+                            + ' role="alert">'
+                            + data.errorMessage + '</div>'
+                        );
                         setTimeout(function () {
                             $('.add-to-basket-alert').remove();
                         }, 3000);
@@ -815,9 +813,7 @@ module.exports = {
                         $('#chooseBonusProductModal').modal('hide');
 
                         if ($('.add-to-cart-messages').length === 0) {
-                            $('body').append(
-                                '<div class="add-to-cart-messages"></div>'
-                            );
+                            $('body').append('<div class="add-to-cart-messages"></div>');
                         }
                         $('.minicart-quantity').html(data.totalQty);
                         $('.add-to-cart-messages').append(

@@ -110,13 +110,6 @@ module.exports = {
             focusHelper.setTabNextFocus(focusParams);
         });
     },
-    colorAttribute: base.colorAttribute,
-    selectAttribute: base.selectAttribute,
-    removeBonusProduct: base.removeBonusProduct,
-    selectBonusProduct: base.selectBonusProduct,
-    enableBonusProductSelection: base.enableBonusProductSelection,
-    showMoreBonusProducts: base.showMoreBonusProducts,
-    addBonusProductsToCart: base.addBonusProductsToCart,
     availability: base.availability,
     addToCart: base.addToCart,
     showSpinner: function () {
