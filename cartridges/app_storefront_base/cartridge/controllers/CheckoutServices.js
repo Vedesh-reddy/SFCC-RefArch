@@ -208,6 +208,20 @@ server.post(
                 return;
             }
 
+            // Validate existing payment instruments
+            var validPayment = COHelpers.validatePayment(req, currentBasket);
+            if (validPayment.error) {
+                var invalidPaymentMethod = Resource.msg('error.payment.not.valid', 'checkout', null);
+                delete billingData.paymentInformation;
+                res.json({
+                    form: billingForm,
+                    fieldErrors: [],
+                    serverErrors: [invalidPaymentMethod],
+                    error: true
+                });
+                return;
+            }
+
             // check to make sure there is a payment processor
             if (!PaymentMgr.getPaymentMethod(paymentMethodID).paymentProcessor) {
                 throw new Error(Resource.msg(
