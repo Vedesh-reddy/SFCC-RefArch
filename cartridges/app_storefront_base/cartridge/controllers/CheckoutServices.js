@@ -130,6 +130,7 @@ server.post(
             var BasketMgr = require('dw/order/BasketMgr');
             var HookMgr = require('dw/system/HookMgr');
             var PaymentMgr = require('dw/order/PaymentMgr');
+            var PaymentInstrument = require('dw/order/PaymentInstrument');
             var Transaction = require('dw/system/Transaction');
             var AccountModel = require('*/cartridge/models/account');
             var OrderModel = require('*/cartridge/models/order');
@@ -208,9 +209,18 @@ server.post(
                 return;
             }
 
-            // Validate existing payment instruments
-            var validPayment = COHelpers.validatePayment(req, currentBasket);
-            if (validPayment.error) {
+            // Validate payment instrument
+            var creditCardPaymentMethod = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD);
+            var paymentCard = PaymentMgr.getPaymentCard(billingData.paymentInformation.cardType.value);
+
+            var applicablePaymentCards = creditCardPaymentMethod.getApplicablePaymentCards(
+                req.currentCustomer.raw,
+                req.geolocation.countryCode,
+                null
+            );
+
+            if (!applicablePaymentCards.contains(paymentCard)) {
+                // Invalid Payment Instrument
                 var invalidPaymentMethod = Resource.msg('error.payment.not.valid', 'checkout', null);
                 delete billingData.paymentInformation;
                 res.json({
