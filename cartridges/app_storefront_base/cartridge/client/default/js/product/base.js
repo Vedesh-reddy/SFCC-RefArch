@@ -826,7 +826,7 @@ module.exports = {
                             if ($('.cart-page').length) {
                                 location.reload();
                             }
-                        }, 3000);
+                        }, 1500);
                     }
                 },
                 error: function () {
