@@ -1,7 +1,5 @@
-/* globals cat, cd, cp, echo, exec, exit, find, ls, mkdir, rm, target, test */
 'use strict';
 
-require('shelljs/make');
 var path = require('path');
 var webpack = require('sgmf-scripts').webpack;
 var ExtractTextPlugin = require('sgmf-scripts')['extract-text-webpack-plugin'];
