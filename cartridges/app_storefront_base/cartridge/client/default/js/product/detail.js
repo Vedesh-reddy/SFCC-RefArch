@@ -95,23 +95,24 @@ module.exports = {
         });
     },
     sizeChart: function () {
-        var $sizeChart = $('.size-chart-collapsible');
         $('.size-chart a').on('click', function (e) {
             e.preventDefault();
             var url = $(this).attr('href');
-            if ($sizeChart.is(':empty')) {
+            var $prodSizeChart = $(this).closest('.size-chart').find('.size-chart-collapsible');
+            if ($prodSizeChart.is(':empty')) {
                 $.ajax({
                     url: url,
                     type: 'get',
                     dataType: 'json',
                     success: function (data) {
-                        $sizeChart.append(data.content);
+                        $prodSizeChart.append(data.content);
                     }
                 });
             }
-            $sizeChart.toggleClass('active');
+            $prodSizeChart.toggleClass('active');
         });
 
+        var $sizeChart = $('.size-chart-collapsible');
         $('body').on('click touchstart', function (e) {
             if ($('.size-chart').has(e.target).length <= 0) {
                 $sizeChart.removeClass('active');
