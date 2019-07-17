@@ -1,4 +1,5 @@
 $breakpoint-name: 'sm';
+$breakpoint-name: 'sm' !default;
 $breakpoint-index: index(map-keys($grid-breakpoints), $breakpoint-name);
 $prev-breakpoint: nth(map-keys($grid-breakpoints), $breakpoint-index - 1);
 $next-breakpoint: nth(map-keys($grid-breakpoints), $breakpoint-index + 1);

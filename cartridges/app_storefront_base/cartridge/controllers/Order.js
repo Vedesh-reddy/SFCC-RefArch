@@ -84,13 +84,10 @@ server.get(
         var OrderMgr = require('dw/order/OrderMgr');
         var OrderModel = require('*/cartridge/models/order');
         var Locale = require('dw/util/Locale');
-        var URLUtils = require('dw/web/URLUtils');
-
         var order;
         var validForm = true;
         var target = req.querystring.rurl || 1;
         var actionUrl = URLUtils.url('Account-Login', 'rurl', target);
-        
         var profileForm = server.forms.getForm('profile');
         profileForm.clear();
 
