@@ -1,3 +1,4 @@
+<isset name="product" value="${pdict.product}" scope="page" />
 <isif condition="${product.promotions}">
     <isloop items="${product.promotions}" var="promotion" status="promdet">
         <div class="row collapsible-xl">

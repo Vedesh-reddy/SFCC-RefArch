@@ -160,27 +160,6 @@ function updateAvailability(response, $productContainer) {
 }
 
 /**
- * Generates html for promotions section
- *
- * @param {array} promotions - list of promotions
- * @return {string} - Compiled HTML
- */
-function getPromotionsHtml(promotions) {
-    if (!promotions) {
-        return '';
-    }
-
-    var html = '';
-
-    promotions.forEach(function (promotion) {
-        html += '<div class="callout" title="' + promotion.details + '">' + promotion.calloutMsg +
-            '</div>';
-    });
-
-    return html;
-}
-
-/**
  * Generates html for product attributes section
  *
  * @param {array} attributes - list of attributes
@@ -302,7 +281,7 @@ function handleVariantResponse(response, $productContainer) {
     }
 
     // Update promotions
-    $('.promotions').empty().html(getPromotionsHtml(response.product.promotions));
+    $('.promotions').empty().html(response.product.promotionsHtml);
 
     updateAvailability(response, $productContainer);
 

@@ -71,6 +71,14 @@ server.get('Variation', function (req, res, next) {
         attributeTemplate
     );
 
+    var promotionsContext = { product: { promotions: product.promotions } };
+    var promotionsTemplate = 'product/components/promotions';
+
+    product.promotionsHtml = renderTemplateHelper.getRenderedHtml(
+        promotionsContext,
+        promotionsTemplate
+    );
+
     res.json({
         product: product,
         resources: productHelper.getResources()
