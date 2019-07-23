@@ -1,9 +1,9 @@
-const { I, homePage, productPage, uriUtils } = inject();
+const { I, homePage, productPage } = inject();
 var should = require('should'); // eslint-disable-line
 
-When('shopper goes to the Product Detail Page', () => {
+Given('shopper goes to the Product Detail Page', () => {
     // From "test/acceptance/features/productDetailPage/pdpSimpleLayout.feature" {"line":6,"column":9}
-    I.amOnPage(uriUtils.uri.simpleProductDetailPage);
+    I.amOnPage('/on/demandware.store/Sites-RefArch-Site/en_US/Product-Show?pid=P0150M');
     homePage.accept();
 });
 

@@ -39,3 +39,4 @@ test/appium/webdriver/config.json
 .history
 *.iml
 .idea
+test/acceptance/report

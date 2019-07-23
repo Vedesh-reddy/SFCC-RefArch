@@ -5,7 +5,11 @@ module.exports = {
         consentTrackModal: '.modal-content',
         consentTrackAffirm: '.affirm',
         searchField: 'input.form-control.search-field',
-        searchedImage: 'a>img.swatch-circle'
+        searchedImage: 'a>img.swatch-circle',
+        loginButton: '.user-message',
+        subscribeEmail: 'input.form-control',
+        subscribeButton: '.subscribe-email',
+        emailSignup: '.email-signup-alert'
     },
     accept() {
         I.waitForElement(this.locators.consentTrackModal);
@@ -17,5 +21,12 @@ module.exports = {
         I.fillField(this.locators.searchField, product);
         I.waitForElement(this.locators.searchedImage);
         I.click(this.locators.searchedImage);
+    },
+    clickLogin() {
+        I.waitForElement(this.locators.loginButton);
+        I.click(this.locators.loginButton);
+    },
+    subscribeList(email) {
+        I.fillField('hpEmailSignUp', email);
     }
 };

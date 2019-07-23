@@ -1,0 +1,56 @@
+{
+    "include": {
+        "data": "./test/acceptance/metadata.json",
+        "homePage": "./test/acceptance/pages/home.page.js",
+        "productPage": "./test/acceptance/pages/product.page.js",
+        "cartPage": "./test/acceptance/pages/cart.page.js"
+    },
+    "gherkin_steps": [
+        "./test/acceptance/steps/homePage/addProductToCart.steps.js",
+        "./test/acceptance/steps/homePage/emailSignup.steps.js",
+        "./test/acceptance/steps/homePage/landHomePage.steps.js",
+        "./test/acceptance/steps/productDetailPage/pdpSimpleLayout.steps.js"
+    ],
+    "home": {
+        "email": "test@user.com"
+    },
+    "login": {
+        "loginPage": "/on/demandware.store/Sites-RefArch-Site/en_US/Login-Show",
+        "homePage": "/on/demandware.store/Sites-RefArch-Site/en_US/Home-Show",
+        "email": "jsmith@email.com",
+        "password": "Password123!",
+        "currentUrl": "/on/demandware.store/Sites-RefArch-Site/en_US/Account-Show?registration=false",
+        "fName": "John",
+        "lName": "Smith",
+        "phone": "5555555555",
+        "regEmail": "jsmith@email.com",
+        "orderNum": "12345",
+        "orderEmail": "order@email.com",
+        "orderZip": "10101",
+        "loginHomeScreen": "span.user-message",
+        "emailLogin": "#login-form-email",
+        "passwordLogin": "#login-form-password",
+        "primaryButton": ".btn.btn-block.btn-primary"
+    },
+    "checkout": {
+        "fName": "John",
+        "lName": "Smith",
+        "address1": "123 Main Street",
+        "address2": "Apt 01",
+        "country": "United States",
+        "state": "Massachusetts",
+        "city": "Burlington",
+        "zip": "11111",
+        "phone": "5555551234",
+        "email": "test@user.com",
+        "ccNum": "4111111111111111",
+        "ccSecCode": "555",
+        "expMonth": "08",
+        "expYear": "2023"
+    },
+    "account": {
+        "name": "John Smith",
+        "addressTitle": "Apartment",
+        "newPassword": "Password123!"
+    }
+}

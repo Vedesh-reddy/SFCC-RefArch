@@ -1,6 +1,6 @@
-const { I, homePage, uriUtils } = inject();
+const { I, data, homePage } = inject();
 
 When('shopper selects yes or no for tracking consent', () => {
-    I.amOnPage(uriUtils.uri.homePage);
+    I.amOnPage(data.login.homePage);
     homePage.accept();
 });

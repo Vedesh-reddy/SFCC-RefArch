@@ -2,3 +2,4 @@ cartridges/app_storefront_base/cartridge/static/
 coverage/
 doc/
 bin/
+codecept.conf.js
