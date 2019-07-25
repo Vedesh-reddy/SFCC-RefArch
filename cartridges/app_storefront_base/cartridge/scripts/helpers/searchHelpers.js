@@ -149,7 +149,7 @@ function search(req, res) {
         canonicalUrl: canonicalUrl
     };
 
-    if (productSearch.isCategorySearch && !productSearch.isRefinedCategorySearch && categoryTemplate) {
+    if (productSearch.isCategorySearch && !productSearch.isRefinedCategorySearch && categoryTemplate && apiProductSearch.category.parent.ID === 'root') {
         pageMetaHelper.setPageMetaData(req.pageMetaData, productSearch.category);
         result.category = apiProductSearch.category;
         result.categoryTemplate = categoryTemplate;
