@@ -369,7 +369,7 @@ server.post(
                     errorObj.error = true;
                     errorObj.errorMessage = e.authError
                         ? Resource.msg('error.message.unable.to.create.account', 'login', null)
-                        : Resource.msg('error.message.username.invalid', 'forms', null);
+                        : Resource.msg('error.message.account.create.error', 'forms', null);
                 }
 
                 if (errorObj.error) {
