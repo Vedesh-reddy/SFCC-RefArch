@@ -75,19 +75,23 @@ function applyCache(res) {
  */
 function search(req, res) {
     var CatalogMgr = require('dw/catalog/CatalogMgr');
-    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var URLUtils = require('dw/web/URLUtils');
+    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
 
     var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
     var ProductSearch = require('*/cartridge/models/search/productSearch');
     var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
     var schemaHelper = require('*/cartridge/scripts/helpers/structuredDataHelper');
 
-    var apiProductSearch = new ProductSearchModel();
     var categoryTemplate = '';
     var maxSlots = 4;
     var productSearch;
     var reportingURLs;
+
+    var apiProductSearch = res.getViewData().apiProductSearch;
+    if (!apiProductSearch) {
+        apiProductSearch = new ProductSearchModel();
+    }
 
     var searchRedirect = req.querystring.q ? apiProductSearch.getSearchRedirect(req.querystring.q) : null;
 

@@ -79,30 +79,38 @@ server.get('ShowAjax', cache.applyShortPromotionSensitiveCache, consentTracking.
 }, pageMetaData.computedPageMetaData);
 
 server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
+    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
     var template = 'search/searchResults';
 
-    var result = searchHelper.search(req, res);
+    var apiProductSearch = new ProductSearchModel();
+    var viewData = {
+        apiProductSearch: apiProductSearch
+    };
+    res.setViewData(viewData);
 
-    if (result.searchRedirect) {
-        res.redirect(result.searchRedirect);
-        return next();
-    }
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        var result = searchHelper.search(req, res);
 
-    if (result.category && result.categoryTemplate) {
-        template = result.categoryTemplate;
-    }
+        if (result.searchRedirect) {
+            res.redirect(result.searchRedirect);
+            return;
+        }
 
-    res.render(template, {
-        productSearch: result.productSearch,
-        maxSlots: result.maxSlots,
-        reportingURLs: result.reportingURLs,
-        refineurl: result.refineurl,
-        category: result.category ? result.category : null,
-        canonicalUrl: result.canonicalUrl,
-        schemaData: result.schemaData
+        if (result.category && result.categoryTemplate) {
+            template = result.categoryTemplate;
+        }
+
+        res.render(template, {
+            productSearch: result.productSearch,
+            maxSlots: result.maxSlots,
+            reportingURLs: result.reportingURLs,
+            refineurl: result.refineurl,
+            category: result.category ? result.category : null,
+            canonicalUrl: result.canonicalUrl,
+            schemaData: result.schemaData
+        });
     });
-
     return next();
 }, pageMetaData.computedPageMetaData);
 
