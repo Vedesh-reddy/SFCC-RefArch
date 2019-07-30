@@ -14,21 +14,28 @@ server.get('UpdateGrid', function (req, res, next) {
 
     var apiProductSearch = new ProductSearchModel();
     apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
-    apiProductSearch.search();
+    var viewData = {
+        apiProductSearch: apiProductSearch
+    };
+    res.setViewData(viewData);
 
-    if (!apiProductSearch.personalizedSort) {
-        searchHelper.applyCache(res);
-    }
-    var productSearch = new ProductSearch(
-        apiProductSearch,
-        req.querystring,
-        req.querystring.srule,
-        CatalogMgr.getSortingOptions(),
-        CatalogMgr.getSiteCatalog().getRoot()
-    );
+    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+        apiProductSearch.search();
 
-    res.render('/search/productGrid', {
-        productSearch: productSearch
+        if (!apiProductSearch.personalizedSort) {
+            searchHelper.applyCache(res);
+        }
+        var productSearch = new ProductSearch(
+            apiProductSearch,
+            req.querystring,
+            req.querystring.srule,
+            CatalogMgr.getSortingOptions(),
+            CatalogMgr.getSiteCatalog().getRoot()
+        );
+
+        res.render('/search/productGrid', {
+            productSearch: productSearch
+        });
     });
 
     next();
