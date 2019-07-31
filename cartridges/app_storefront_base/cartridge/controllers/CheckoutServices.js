@@ -344,6 +344,7 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
     var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
     var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
+    var addressHelpers = require('*/cartridge/scripts/helpers/addressHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
     var validatedProducts = validationHelpers.validateProducts(currentBasket);
@@ -479,6 +480,16 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
             errorMessage: Resource.msg('error.technical', 'checkout', null)
         });
         return next();
+    }
+
+    if (req.currentCustomer.addressBook) {
+        // save all used shipping addresses to address book of the logged in customer
+        var allAddresses = addressHelpers.gatherShippingAddresses(order);
+        allAddresses.forEach(function (address) {
+            if (!addressHelpers.checkIfAddressStored(address, req.currentCustomer.addressBook.addresses)) {
+                addressHelpers.saveAddress(address, req.currentCustomer, addressHelpers.generateAddressName(address));
+            }
+        });
     }
 
     COHelpers.sendConfirmationEmail(order, req.locale.id);

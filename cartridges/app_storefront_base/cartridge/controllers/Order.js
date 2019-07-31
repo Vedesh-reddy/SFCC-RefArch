@@ -323,6 +323,7 @@ server.post(
                 var CustomerMgr = require('dw/customer/CustomerMgr');
                 var Transaction = require('dw/system/Transaction');
                 var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+                var addressHelpers = require('*/cartridge/scripts/helpers/addressHelpers');
 
                 var registrationData = res.getViewData();
 
@@ -363,6 +364,12 @@ server.post(
                             newCustomerProfile.email = login;
 
                             order.setCustomer(newCustomer);
+
+                            // save all used shipping addresses to address book of the logged in customer
+                            var allAddresses = addressHelpers.gatherShippingAddresses(order);
+                            allAddresses.forEach(function (address) {
+                                addressHelpers.saveAddress(address, { raw: newCustomer }, addressHelpers.generateAddressName(address));
+                            });
                         }
                     });
                 } catch (e) {

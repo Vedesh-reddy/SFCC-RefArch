@@ -128,6 +128,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
     var Transaction = require('dw/system/Transaction');
     var formErrors = require('*/cartridge/scripts/formErrors');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+    var addressHelpers = require('*/cartridge/scripts/helpers/addressHelpers');
 
     var addressForm = server.forms.getForm('address');
     var addressFormObj = addressForm.toObject();
@@ -153,30 +154,8 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
                         address.setID(formInfo.addressId);
                     }
 
-                    address.setAddress1(formInfo.address1 || '');
-                    address.setAddress2(formInfo.address2 || '');
-                    address.setCity(formInfo.city || '');
-                    address.setFirstName(formInfo.firstName || '');
-                    address.setLastName(formInfo.lastName || '');
-                    address.setPhone(formInfo.phone || '');
-                    address.setPostalCode(formInfo.postalCode || '');
-
-                    if (formInfo.states && formInfo.states.stateCode) {
-                        address.setStateCode(formInfo.states.stateCode);
-                    }
-
-                    if (formInfo.country) {
-                        address.setCountryCode(formInfo.country);
-                    }
-
-                    address.setJobTitle(formInfo.jobTitle || '');
-                    address.setPostBox(formInfo.postBox || '');
-                    address.setSalutation(formInfo.salutation || '');
-                    address.setSecondName(formInfo.secondName || '');
-                    address.setCompanyName(formInfo.companyName || '');
-                    address.setSuffix(formInfo.suffix || '');
-                    address.setSuite(formInfo.suite || '');
-                    address.setJobTitle(formInfo.title || '');
+                    // Save form's address
+                    addressHelpers.updateAddressFields(address, formInfo);
 
                     // Send account edited email
                     accountHelpers.sendAccountEditedEmail(customer.profile);
