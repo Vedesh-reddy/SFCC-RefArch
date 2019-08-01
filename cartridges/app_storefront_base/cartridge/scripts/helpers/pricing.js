@@ -68,10 +68,7 @@ function renderHtml(context, templatePath) {
     var html;
     var path = templatePath || 'product/components/pricing/ajaxMain.isml';
     var tmpl = new Template(path);
-    var result = new HashMap();
-
-    result.put('price', context);
-    html = tmpl.render(result);
+    html = tmpl.render(context);
 
     return html.text;
 }
