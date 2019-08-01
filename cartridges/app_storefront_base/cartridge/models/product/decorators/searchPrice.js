@@ -44,7 +44,7 @@ function getListPrices(hit, getSearchHit) {
         return { minPrice: hit.minPrice, maxPrice: hit.maxPrice };
     }
     var searchHit;
-
+    var currentApplicablePriceBooks = PriceBookMgr.getApplicablePriceBooks();
     try {
         PriceBookMgr.setApplicablePriceBooks(rootPriceBook);
         searchHit = getSearchHit(hit.product);
@@ -55,7 +55,11 @@ function getListPrices(hit, getSearchHit) {
         // When switching locales, there is nothing that clears the price book ids stored in the
         // session, so subsequent searches will continue to use the ids from the originally set
         // price books which have the wrong currency.
-        PriceBookMgr.setApplicablePriceBooks();
+        if (currentApplicablePriceBooks && currentApplicablePriceBooks.length) {
+            PriceBookMgr.setApplicablePriceBooks(currentApplicablePriceBooks.toArray());
+        } else {
+            PriceBookMgr.setApplicablePriceBooks();
+        }
     }
 
     if (searchHit) {

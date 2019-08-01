@@ -48,7 +48,8 @@ describe('search price decorator', function () {
             getPromotionPrice: function () { return { value: 50, available: true }; }
         },
         'dw/catalog/PriceBookMgr': {
-            setApplicablePriceBooks: function () {}
+            setApplicablePriceBooks: function () {},
+            getApplicablePriceBooks: function () {}
         },
         '*/cartridge/models/price/default': stubDefaultPrice,
         '*/cartridge/models/price/range': stubRangePrice
