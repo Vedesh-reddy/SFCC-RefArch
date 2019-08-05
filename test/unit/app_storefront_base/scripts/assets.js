@@ -30,6 +30,14 @@ describe('assets', function () {
         assert.equal(assets.scripts[0], 'http://www.google.com/test.js');
     });
 
+    it('should not add a duplicate external JavaScript file', function () {
+        assert.deepEqual(assets.scripts, []);
+        assets.addJs('http://www.google.com/test.js');
+        assets.addJs('http://www.google.com/test.js');
+        assert.equal(assets.scripts[0], 'http://www.google.com/test.js');
+        assert.equal(assets.scripts.length, 1);
+    });
+
     it('should add a new CSS file', function () {
         assets.addCss('../test.css');
         assert.equal(assets.styles[0], 'test../test.css');
@@ -38,5 +46,12 @@ describe('assets', function () {
     it('should add a new external CSS file', function () {
         assets.addCss('https://www.google.com/test.css');
         assert.equal(assets.styles[0], 'https://www.google.com/test.css');
+    });
+
+    it('should not add a duplicate external CSS file', function () {
+        assets.addCss('https://www.google.com/test.css');
+        assets.addCss('https://www.google.com/test.css');
+        assert.equal(assets.styles[0], 'https://www.google.com/test.css');
+        assert.equal(assets.styles.length, 1);
     });
 });
