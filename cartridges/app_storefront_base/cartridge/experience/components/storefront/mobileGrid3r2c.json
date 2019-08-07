@@ -1,0 +1,63 @@
+{
+    "name": "Desktop/Tablet 2 row x 3 column, Mobile 3 row x 2 column",
+    "description": "This is a layout component of 2 row by 3 column for desktop/tablet and 3 row by 2 column for mobile.",
+    "group": "storefront",
+    "attribute_definition_groups": [],
+    "region_definitions": [
+        {
+            "id":"column1",
+            "name":"Column 1",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid3r2c" },
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.carousel" }
+            ]
+        },
+        {
+            "id":"column2",
+            "name":"Column 2",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.carousel" }
+            ]
+        },
+        {
+            "id":"column3",
+            "name":"Column 3",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.carousel" }
+            ]
+        },
+        {
+            "id":"column4",
+            "name":"Column 4",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.carousel" }
+            ]
+        },
+        {
+            "id":"column5",
+            "name":"Column 5",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.carousel" }
+            ]
+        },
+        {
+            "id":"column6",
+            "name":"Column 6",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.carousel" }
+            ]
+        }
+    ]
+}

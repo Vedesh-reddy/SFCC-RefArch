@@ -1,0 +1,32 @@
+.page-designer-reference {
+    .experience-storefront-einsteinCarousel,
+    .experience-storefront-einsteinCarouselProduct,
+    .experience-storefront-einsteinCarouselCategory {
+        .experience-storefront-carousel.hide-indicators {
+            .carousel-control-prev,
+            .carousel-control-next {
+                display: none;
+            }
+
+            .pd-carousel-indicators {
+                display: none;
+            }
+
+            .hidden-indicators-template {
+                display: none;
+            }
+        }
+    }
+}
+
+.page-designer-reference {
+    .experience-storefront-einsteinCarousel,
+    .experience-storefront-einsteinCarouselProduct,
+    .experience-storefront-einsteinCarouselCategory {
+        .experience-storefront-carousel {
+            .hidden-indicators-template {
+                display: none;
+            }
+        }
+    }
+}

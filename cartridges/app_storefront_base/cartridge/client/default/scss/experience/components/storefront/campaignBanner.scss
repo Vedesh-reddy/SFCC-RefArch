@@ -1,0 +1,41 @@
+@import "../../variables";
+
+.campaign-banner {
+    background-color: $thin-banner-background-color;
+    color: $thin-banner-text-color;
+
+    .campaign-banner-message {
+        margin-left: 2em;
+        margin-right: 1em;
+        padding-top: 1em;
+        padding-bottom: 1em;
+        font-family: $thin-banner-font;
+        line-height: 1.75em;
+
+        a:visited {
+            color: $thin-banner-visited-link-color;
+        }
+
+        a {
+            color: $thin-banner-link-color;
+            margin-left: 1em;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+    }
+
+    .close-button {
+        margin-right: 1em;
+
+        .close {
+            opacity: 1;
+            height: 100%;
+
+            img {
+                width: 0.7em;
+            }
+        }
+    }
+}

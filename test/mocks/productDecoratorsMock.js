@@ -24,6 +24,7 @@ var stubOnline = sinon.stub();
 var stubSetReadyToOrder = sinon.stub();
 var stubBundleReadyToOrder = sinon.stub();
 var stubSetIndividualProducts = sinon.stub();
+var stubSetProductsCollection = sinon.stub();
 var stubBundledProducts = sinon.stub();
 var stubBonusUnitPrice = sinon.stub();
 var stubRaw = sinon.stub();
@@ -54,6 +55,7 @@ function proxyModel() {
             '*/cartridge/models/product/decorators/setReadyToOrder': stubSetReadyToOrder,
             '*/cartridge/models/product/decorators/bundleReadyToOrder': stubBundleReadyToOrder,
             '*/cartridge/models/product/decorators/setIndividualProducts': stubSetIndividualProducts,
+            '*/cartridge/models/product/decorators/setProductsCollection': stubSetProductsCollection,
             '*/cartridge/models/product/decorators/bundledProducts': stubBundledProducts,
             '*/cartridge/models/product/decorators/bonusUnitPrice': stubBonusUnitPrice,
             '*/cartridge/models/product/decorators/raw': stubRaw,
@@ -82,6 +84,7 @@ function proxyModel() {
             stubSetReadyToOrder: stubSetReadyToOrder,
             stubBundleReadyToOrder: stubBundleReadyToOrder,
             stubSetIndividualProducts: stubSetIndividualProducts,
+            stubSetProductsCollection: stubSetProductsCollection,
             stubBundledProducts: stubBundledProducts,
             stubBonusUnitPrice: stubBonusUnitPrice,
             stubRaw: stubRaw,

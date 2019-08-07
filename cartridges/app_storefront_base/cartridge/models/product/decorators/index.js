@@ -22,6 +22,7 @@ module.exports = {
     setReadyToOrder: require('*/cartridge/models/product/decorators/setReadyToOrder'),
     bundleReadyToOrder: require('*/cartridge/models/product/decorators/bundleReadyToOrder'),
     setIndividualProducts: require('*/cartridge/models/product/decorators/setIndividualProducts'),
+    setProductsCollection: require('*/cartridge/models/product/decorators/setProductsCollection'),
     bundledProducts: require('*/cartridge/models/product/decorators/bundledProducts'),
     bonusUnitPrice: require('*/cartridge/models/product/decorators/bonusUnitPrice'),
     raw: require('*/cartridge/models/product/decorators/raw'),

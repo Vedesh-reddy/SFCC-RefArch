@@ -1,0 +1,18 @@
+{
+    "name":"homepage",
+    "description":"Use layout components to create a custom Storefront Homepage",
+    "region_definitions":[
+      {
+        "id":"main",
+        "name":"Main Region",
+        "component_type_exclusions": [
+          { "type_id": "assets.categorytile" },
+          { "type_id": "assets.headlinebanner" },
+          { "type_id": "assets.producttile" },
+          { "type_id": "assets.ruledrivenproducttile" },
+          { "type_id": "assets.texttile" },
+          { "type_id": "layouts.carousel" }
+        ]
+      }
+    ]
+}

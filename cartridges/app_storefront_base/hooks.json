@@ -27,6 +27,10 @@
         {
             "name": "app.payment.form.processor.default_form_processor",
             "script": "./cartridge/scripts/hooks/payment/processor/default_form_processor"
+        },
+        {
+            "name": "app.experience.editmode",
+            "script": "./cartridge/experience/hooks.js"
         }
     ]
 }

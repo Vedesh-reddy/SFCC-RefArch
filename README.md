@@ -96,3 +96,6 @@ npm run test:integration -- --baseUrl devxx-sitegenesis-dw.demandware.net
 
 # [Contributing to SFRA](./CONTRIBUTING.md)
 
+
+#Page Designer Components for Storefront
+See: [Page Desinger Components](other_file.md)
