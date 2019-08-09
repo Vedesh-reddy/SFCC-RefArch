@@ -1,0 +1,104 @@
+{
+    "name": "Shop The Look Layout",
+    "description": "This is the Shop The Look layout component.",
+    "group": "storefront",
+    "attribute_definition_groups": [],
+    "region_definitions": [
+        {
+            "id":"column1",
+            "name":"Column 1",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid1r1c" },
+                { "type_id": "storefront.mobileGrid2r1c" },
+                { "type_id": "storefront.mobileGrid3r1c" },
+                { "type_id": "storefront.mobileGrid2r2c" },
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.mobileGrid3r2c" },
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.popularCategories" },
+                { "type_id": "storefront.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column2",
+            "name":"Column 2",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid1r1c" },
+                { "type_id": "storefront.mobileGrid2r1c" },
+                { "type_id": "storefront.mobileGrid3r1c" },
+                { "type_id": "storefront.mobileGrid2r2c" },
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.mobileGrid3r2c" },
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.popularCategories" },
+                { "type_id": "storefront.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column3",
+            "name":"Column 3",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid1r1c" },
+                { "type_id": "storefront.mobileGrid2r1c" },
+                { "type_id": "storefront.mobileGrid3r1c" },
+                { "type_id": "storefront.mobileGrid2r2c" },
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.mobileGrid3r2c" },
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.popularCategories" },
+                { "type_id": "storefront.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column4",
+            "name":"Column 4",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid1r1c" },
+                { "type_id": "storefront.mobileGrid2r1c" },
+                { "type_id": "storefront.mobileGrid3r1c" },
+                { "type_id": "storefront.mobileGrid2r2c" },
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.mobileGrid3r2c" },
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.popularCategories" },
+                { "type_id": "storefront.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column5",
+            "name":"Column 5",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid1r1c" },
+                { "type_id": "storefront.mobileGrid2r1c" },
+                { "type_id": "storefront.mobileGrid3r1c" },
+                { "type_id": "storefront.mobileGrid2r2c" },
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.mobileGrid3r2c" },
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.popularCategories" },
+                { "type_id": "storefront.mobileGridLookBook" }
+            ]
+        },
+        {
+            "id":"column6",
+            "name":"Column 6",
+            "max_components":1,
+            "component_type_exclusions": [
+                { "type_id": "storefront.mobileGrid1r1c" },
+                { "type_id": "storefront.mobileGrid2r1c" },
+                { "type_id": "storefront.mobileGrid3r1c" },
+                { "type_id": "storefront.mobileGrid2r2c" },
+                { "type_id": "storefront.mobileGrid2r3c" },
+                { "type_id": "storefront.mobileGrid3r2c" },
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.popularCategories" },
+                { "type_id": "storefront.mobileGridLookBook" }
+            ]
+        }
+    ]
+}

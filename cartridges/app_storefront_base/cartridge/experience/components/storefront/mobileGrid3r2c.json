@@ -11,7 +11,8 @@
             "component_type_exclusions": [
                 { "type_id": "storefront.mobileGrid3r2c" },
                 { "type_id": "storefront.mobileGrid2r3c" },
-                { "type_id": "storefront.carousel" }
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.mobileGridLookBook" }
             ]
         },
         {
@@ -20,7 +21,8 @@
             "max_components":1,
             "component_type_exclusions": [
                 { "type_id": "storefront.mobileGrid2r3c" },
-                { "type_id": "storefront.carousel" }
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.mobileGridLookBook" }
             ]
         },
         {
@@ -29,7 +31,8 @@
             "max_components":1,
             "component_type_exclusions": [
                 { "type_id": "storefront.mobileGrid2r3c" },
-                { "type_id": "storefront.carousel" }
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.mobileGridLookBook" }
             ]
         },
         {
@@ -38,7 +41,8 @@
             "max_components":1,
             "component_type_exclusions": [
                 { "type_id": "storefront.mobileGrid2r3c" },
-                { "type_id": "storefront.carousel" }
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.mobileGridLookBook" }
             ]
         },
         {
@@ -47,7 +51,8 @@
             "max_components":1,
             "component_type_exclusions": [
                 { "type_id": "storefront.mobileGrid2r3c" },
-                { "type_id": "storefront.carousel" }
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.mobileGridLookBook" }
             ]
         },
         {
@@ -56,7 +61,8 @@
             "max_components":1,
             "component_type_exclusions": [
                 { "type_id": "storefront.mobileGrid2r3c" },
-                { "type_id": "storefront.carousel" }
+                { "type_id": "storefront.carousel" },
+                { "type_id": "storefront.mobileGridLookBook" }
             ]
         }
     ]
