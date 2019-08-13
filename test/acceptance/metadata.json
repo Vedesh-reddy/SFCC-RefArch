@@ -3,30 +3,100 @@
         "data": "./test/acceptance/metadata.json",
         "homePage": "./test/acceptance/pages/home.page.js",
         "productPage": "./test/acceptance/pages/product.page.js",
-        "cartPage": "./test/acceptance/pages/cart.page.js"
+        "cartPage": "./test/acceptance/pages/cart.page.js",
+        "checkoutPage": "./test/acceptance/pages/checkout.page.js",
+        "loginPage": "./test/acceptance/pages/login.page.js",
+        "accountPage": "./test/acceptance/pages/account.page.js"
     },
     "gherkin_steps": [
         "./test/acceptance/steps/homePage/addProductToCart.steps.js",
         "./test/acceptance/steps/homePage/emailSignup.steps.js",
         "./test/acceptance/steps/homePage/landHomePage.steps.js",
-        "./test/acceptance/steps/productDetailPage/pdpSimpleLayout.steps.js"
+        "./test/acceptance/steps/productDetailPage/pdpSimpleLayout.steps.js",
+        "./test/acceptance/steps/productDetailPage/pdpQuickViewSearch.steps.js",
+        "./test/acceptance/steps/productDetailPage/pdpProductFilter.steps.js",
+        "./test/acceptance/steps/checkoutPage/editCart.steps.js",
+        "./test/acceptance/steps/loginPage/checkOrder.steps.js",
+        "./test/acceptance/steps/loginPage/createAccount.steps.js",
+        "./test/acceptance/steps/loginPage/loginUser.steps.js",
+        "./test/acceptance/steps/accountPage/editProfile.steps.js",
+        "./test/acceptance/steps/accountPage/changePassword.steps.js",
+        "./test/acceptance/steps/accountPage/addPayment.steps.js",
+        "./test/acceptance/steps/accountPage/addAddress.steps.js",
+        "./test/acceptance/steps/testSuites/happyPath.steps.js"
     ],
+    "user1": {
+        "fName": "John",
+        "lName": "Smith",
+        "address1": "123 Main Street",
+        "address2": "Apt 01",
+        "country": "United States",
+        "state": "Massachusetts",
+        "stateAbr": "MA",
+        "city": "Burlington",
+        "zip": "11111",
+        "phone": "5555555555",
+        "email": "jsmith@email.com",
+        "password": "Password123!"
+    },
+    "CC": {
+        "ccNum": "4111111111111111",
+        "ccSecCode": "555",
+        "expMonth": "08",
+        "expYear": "2023",
+        "ccExpDate": "8/2023"
+    },
+    "product": {
+        "name": "Elbow Sleeve Ribbed Sweater",
+        "quantity": "2",
+        "editCartQuantity": "1",
+        "itemPrice": "$65.99",
+        "totalItemPrice": "$131.98",
+        "shipping": "$7.99",
+        "tax": "$7.00",
+        "estimatedTotal": "$146.97"
+    },
+    "product2": {
+        "name": "Modern Striped Dress Shirt",
+        "quantity": "1",
+        "color": "blue",
+        "size": "16R"
+    },
+    "product3": {
+        "name": "Ribbed Cardigan.",
+        "quantity": "1",
+        "color": "Ivory",
+        "size": "M",
+        "productLinkQV": "/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowQuickView?pid=25697194M"
+    },
+    "searchPages": {
+        "womensTops": "/on/demandware.store/Sites-RefArch-Site/en_US/Search-Show?cgid=womens-clothing-tops"
+    },
+    "orderHistory": {
+        "number": "00004201",
+        "email": "jsmith@email.com",
+        "zip": "11111"
+    },
+    "filterProduct": {
+        "color": "white",
+        "colorTotalItems": "78 Results",
+        "size": "12",
+        "sizeTotalItems": "10 Results",
+        "price": "$20 - $49.99",
+        "priceTotalItems": "2 Results"
+    },
     "home": {
         "email": "test@user.com"
     },
     "login": {
-        "loginPage": "/on/demandware.store/Sites-RefArch-Site/en_US/Login-Show",
+        "loginPage": "/on/demandware.store/Sites-RefArch-Site/en_US/Account-Show?registration=false",
         "homePage": "/on/demandware.store/Sites-RefArch-Site/en_US/Home-Show",
         "email": "jsmith@email.com",
         "password": "Password123!",
-        "currentUrl": "/on/demandware.store/Sites-RefArch-Site/en_US/Account-Show?registration=false",
         "fName": "John",
         "lName": "Smith",
         "phone": "5555555555",
         "regEmail": "jsmith@email.com",
-        "orderNum": "12345",
-        "orderEmail": "order@email.com",
-        "orderZip": "10101",
         "loginHomeScreen": "span.user-message",
         "emailLogin": "#login-form-email",
         "passwordLogin": "#login-form-password",
@@ -39,14 +109,16 @@
         "address2": "Apt 01",
         "country": "United States",
         "state": "Massachusetts",
+        "stateAbr": "MA",
         "city": "Burlington",
         "zip": "11111",
-        "phone": "5555551234",
-        "email": "test@user.com",
+        "phone": "5555555555",
+        "email": "jsmith@email.com",
         "ccNum": "4111111111111111",
         "ccSecCode": "555",
         "expMonth": "08",
-        "expYear": "2023"
+        "expYear": "2023",
+        "ccExpDate": "8/2023"
     },
     "account": {
         "name": "John Smith",
