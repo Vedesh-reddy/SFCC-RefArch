@@ -1,10 +1,28 @@
-###Page Designer Components for Storefront Reference Architecture
+# Page Designer Components for Storefront Reference Architecture
 
+SFRA uses the following Page Designer components:
 
-#### Campaign Banner
-*Thin banner used for campaigns / announcements.*
+* [Campaign Banner](#Campaign-Banner)
+* [Carousel](#Carousel)
+* [Einstein Carousel](#Einstein-Carousel)
+* [Shop Category](#Shop-Category)
+* [Editorial Rich Text](#Editorial-Rich-Text)
+* [Image and Text](#Image-and-Text)
+* [Main Banner](#Main-Banner)
+* [Mobile Grid 2 Rows 3 Columns](#Mobile-Grid-2-Rows-3-Columns)
+* [Photo Tile](#Photo-Tile)
+* [Popular Categories](#Popular-Categories)
+* [Popular Category](#Popular-Category)
+* [Product Tile](#Product-Tile)
+* [Shop the Look](#Shop-the-Look)
 
-##### Files:
+-------------------
+
+## Campaign Banner
+
+This component is a thin banner used for campaigns and announcements.
+
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/js/campaignBanner.js
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/campaignBanner.scss
@@ -16,20 +34,21 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/campaignBanner.properties
 ```
 
-##### Notes:
+### Notes
 
-*Has one text attribute for the campaign announcement.*
+This component has a text attribute for a campaign announcement.
 
-*It is mosl likely meant to be driven by the “Customer Groups” and/or the “Schedule” settings at the top of the component attributes panel during creation.*
+This component depends on either the “Customer Groups” settings or the “Schedule” settings at the top of the component attributes panel.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
+## Carousel
 
-#### Carousel
+Enables a shopper to visually cycle through multiple other components, such as [Product Tile](#Product-Tile) components.
 
-*The carousel can be used to show components such as product tiles or other components.*
-
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/js/carousel.js
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/carousel.scss
@@ -41,59 +60,59 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/carousel.properties
 ```
 
-##### Notes:
+### Notes
 
-*The carousel has configurable display attributes for phone and desktop.*
+The carousel has configurable display attributes for phone and desktop.
 
-*This component reuses and overrides the Bootstrap Carousel.*
+This component reuses and overrides the Bootstrap Carousel.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Einstein Carousel
+## Einstein Carousel
 
-*The carousel can be used to show product tiles components based on PID's coming from the Einstein engine.  It will use the productTile component and carousel component*
+Enables a shopper to visually cycle through [Product Tile](#Product-Tile) components that are based on product IDs coming from the Einstein engine.  This component depends on the [Product Tile](#Product-Tile) component and the [Carousel](#Carousel) component.
 
-##### Files:
+### Files
 ```
-./cartridges/app_storefront_base/cartridge/client/default/js/carousel.js 
-./cartridges/app_storefront_base/cartridge/client/default/js/einstienCarousel.js 
+./cartridges/app_storefront_base/cartridge/client/default/js/carousel.js
+./cartridges/app_storefront_base/cartridge/client/default/js/einstienCarousel.js
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/einsteinCarousel.scss
 ./cartridges/app_storefront_base/cartridge/controllers/EinsteinCarousel.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarousel.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarousel.json
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselCategory.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselCategory.json 
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselProduct.js 
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselCategory.json
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselProduct.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselProduct.json
 ./cartridges/app_storefront_base/cartridge/scripts/experience/storefront/carouselBuilder.js
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/einsteinCarousel.isml
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/product/productTileWrapper.isml
-./cartridges/app_storefront_base/cartridge/templates/resources/error.properties 
+./cartridges/app_storefront_base/cartridge/templates/resources/error.properties
 ./cartridges/app_storefront_base/cartridge/templates/resources/pageDesigner.properties
 ./cartridges/app_storefront_base/cartridge/experience/editors/einstein/categoryrecommenderselector.js
 ./cartridges/app_storefront_base/cartridge/experience/editors/einstein/categoryrecommenderselector.json
-./cartridges/bm_app_storefront_base/cartridge/experience/editors/einstein/globalrecommenderselector.js 
+./cartridges/bm_app_storefront_base/cartridge/experience/editors/einstein/globalrecommenderselector.js
 ./cartridges/app_storefront_base/cartridge/experience/editors/einstein/globalrecommenderselector.json
 ./cartridges/app_storefront_base/cartridge/experience/editors/einstein/productrecommenderselector.js
-./cartridges/app_storefront_base/cartridge/static/default/experience/editors/einstein/recommenderselector.js 
+./cartridges/app_storefront_base/cartridge/static/default/experience/editors/einstein/recommenderselector.js
 ./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/einsteinCarousel.properties
 ./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/einsteinCarouselCategory.properties
 ./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/einsteinCarouselProduct.properties
 ```
 
-##### Notes:
+### Notes
 
-*The carousel has configurable display attributes for phone and desktop.*
+This component has configurable display attributes for phone and desktop. It reuses and overrides the Bootstrap Carousel.
 
-*This component reuses and overrides the Bootstrap Carousel.*
+This component uses the product tile component isml file.
 
-*This component uses the product tile component isml file*
-
-*There are 3 einstein components to choose from.* 
+There are three Einstein components to choose from.
 
     1. Einstein recommendations Component recommenders
         a. recently viewed
-        b. viewed-recently-einstein 
+        b. viewed-recently-einstein
         c. products-in-all-categories
         d. home-page-recommender-mens
         e. home-page-recommender-womens
@@ -103,60 +122,15 @@
     3. Einstein recommendations (category) Component recommenders
         a. products-in-a-category-einstein
 
--------------------
-
-#### Popular Categories
-
-*Has a text headline attribute.*
-
-
-##### Files:
-```
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/popularCategories.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategories.js 
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategories.json 
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/popularCategories.isml
-./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/popularCategories.properties
-```
-
-##### Notes:
-
-*Has a text headline attribute. This component will hold n number popular category components*
-
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Popular Category
+## Shop Category
 
-*Has a text headline attribute.*
+Shows a navigation bar with links to categories.
 
-
-##### Files:
-```
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/popularCategory.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategory.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategory.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/popularCategory.isml
-./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/popularCategory.properties 
-
-```
-
-##### Notes:
-
-*This component requires a selection of a category. User can change the display name*
-
-*By default it will use one of the images assigned to the category (used in slots). If the fall back images are used there are two feilds to add inline css rules for adjusting the image display size and css positioning within the circle used to diaply in the isml template*
-
-*The image can be overwritten by using the image picker and choosing a focal point.*
-
--------------------
-
-#### Shop Category
-
-*Navigation bar with links to categories.*
-
-
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/category.scss
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/category.js
@@ -167,19 +141,21 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/category.properties
 ```
 
-##### Notes:
+### Notes
 
-*Has a text headline attribute.*
+Has a text headline attribute.
 
-*Has 4 required category attributes and 8 more as optional.*
+Has four required and eight optional category attributes.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Editorial Rich Text
+## Editorial Rich Text
 
-*Add text or pictures to a section*
+Shows text or pictures within a section.
 
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/editorialRichText.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/editorialRichText.json
@@ -187,17 +163,19 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/editorialRichText.properties
 ```
 
-##### Notes:
+### Notes
 
-*Has a single rich text attribute.*
+Has one rich text attribute.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Image and Text
+## Image and Text
 
-*A component combined image and text.*
+A component showing combined image and text.
 
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/imageAndText.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/imageAndText.json
@@ -205,18 +183,19 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/imageAndText.properties
 ```
 
-##### Notes:
+### Notes
 
-*Has an image picker attribute, a text overlay attribute and a link.*
+Has an image picker attribute, a text overlay attribute, and a link.
 
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Main Banner
+## Main Banner
 
-*Hero Image with text overlay + ‘Shop Now’ link.*
+Shows a hero image with a text overlay and a ‘Shop Now’ link.
 
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/MainBanner.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/MainBanner.json
@@ -225,17 +204,19 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mainBanner.properties
 ```
 
-##### Notes:
+### Notes
 
-*Has an image attribute, a text overlay attribute and a category picker to create a link.*
+Has an image attribute, a text overlay attribute and a category picker to create a link.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Mobile Grid 2 rows 3 columns
+## Mobile Grid 2 Rows 3 Columns
 
-*A component with 6 droppable regions.*
+Shows a grid with six regions into which a merchant can drop other components.
 
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r3c.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r3c.json
@@ -243,20 +224,21 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid2r3c.properties
 ```
 
-##### Notes:
+### Notes
 
-*Desktop and Tablet mode will display 1 row x 6 column*
+Desktop and Tablet mode show 1 row by 6 columns.
 
-*Mobile Phone will display 2 Rows with 3 Columns*
+Mobile Phone mode shows 2 rows by 3 Columns.
 
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Photo Tile
+## Photo Tile
 
-*Adds an image to a page or section.*
+Adds an image to a page or section.
 
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/photoTile.scss
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/photoTile.js
@@ -265,56 +247,67 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/photoTile.properties
 ```
 
-##### Notes:
+### Notes
 
-*Has a sinlge image picker attribute.*
+Has a single image picker attribute.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Popular Categories
 
-*The Popular Category is a component container.*
+## Popular Categories
 
-##### Files:
+Shows one or more [Popular Category](#Popular-Category) components.
+
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/popularCategories.scss
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategories.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategories.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/popularCategories.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/popularCategories.properties
+./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/popularCategories.properties
 ```
 
-##### Notes:
+### Notes
 
-*Just a text heading and a region for dropping the "Popular Category" component(s)*
+Has a text headline attribute. This component can hold an arbitrary number of [Popular Category](#Popular-Category) components.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Popular Category
+## Popular Category
 
-*The Popular Category component (used with Popular Categories)*
+Shows a popular category.
 
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/popularCategory.scss
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategory.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategory.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/popularCategory.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/popularCategory.properties
+./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/popularCategory.properties
+
 ```
 
-##### Notes:
+### Notes
 
+This component requires a selection of a category. The merchant can change the category's display name.
 
-*Has one category, one display name text, one image, and one offset attribute.*
+By default, this component uses one of the images assigned to the category (used in slots). If the fall-back images are used, there are two fields to add inline css rules for adjusting the image display size and css positioning within the circle used to display in the isml template.
+
+The merchant can override the image using the image selector and choosing a focal point.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Product Tile
+## Product Tile
 
-*Displays a product in tile + ‘Shop Now’ overlay.*
+Shows a product in a tile and a ‘Shop Now’ overlay.
 
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/productTile.scss
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/productTile.js
@@ -324,17 +317,19 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/productTile.properties
 ```
 
-##### Notes:
+### Notes
 
-*Has a product picker attribute and a boolean attribute to toggle display ratings.*
+Has a product picker attribute and a boolean attribute to toggle display ratings.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-#### Shop the Look
+## Shop the Look
 
-*Product Tiles that links to Quick View of a set.*
+Shows [Product Tile](#Product-Tile) components that link to the Quick View of a set.
 
-##### Files:
+### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/shopTheLook.scss
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/shopTheLook.js
@@ -344,6 +339,10 @@
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/shopTheLook.properties
 ```
 
-##### Notes:
+### Notes
 
-*Has a product picker attribute and a boolean attribute to toggle display product pricing.*
+Has a product picker attribute and a boolean attribute to toggle display product pricing.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
+
+
