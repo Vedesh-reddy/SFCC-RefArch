@@ -2,10 +2,10 @@
 <isdecorate template="common/layout/page">
     <isscript>
         var assets = require('*/cartridge/scripts/assets.js');
-        assets.addCss('/css/experience/homepage.css');
+        assets.addCss('/css/experience/storepage.css');
     </isscript>
 
-    <div class="homepage">
+    <div class="storepage">
         <!--- the page markup --->
         <!-- TODO: Determine appropriate CSS Styles from UX for Homepage and PD compatible default styles. -->
         <div class="container page-designer-reference">

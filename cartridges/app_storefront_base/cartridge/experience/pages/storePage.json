@@ -1,6 +1,6 @@
 {
-    "name":"homepage",
-    "description":"Use layout components to create a custom Storefront Homepage",
+    "name":"Storefront Page",
+    "description":"A Storefront Page Type",
     "region_definitions":[
       {
         "id":"main",

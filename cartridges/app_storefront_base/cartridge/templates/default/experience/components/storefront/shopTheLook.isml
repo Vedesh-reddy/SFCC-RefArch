@@ -16,7 +16,7 @@
                             <isinclude template="/experience/components/storefront/shopTheLook/titleAndPrice"/>
                             <div class="d-flex justify-content-center">
                                 <div class="shopthelook-text btn">
-                                    ${Resource.msg('pd.homepage.shop.the.look.text','homePage',null)}
+                                    ${Resource.msg('pd.shop.the.look.text','pageDesigner',null)}
                                 </div>
                              </div>
                         </div>

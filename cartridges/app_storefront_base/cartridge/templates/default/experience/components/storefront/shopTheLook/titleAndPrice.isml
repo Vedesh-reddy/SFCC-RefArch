@@ -13,7 +13,7 @@
         <div class="row shopthelook-set-count">
             <div class="col-12 set-count-text-center">
                 <p>
-                    ${Resource.msgf('pd.homepage.shop.the.look.set.items', 'homePage', null, pdict.itemsCount)}
+                    ${Resource.msgf('pd.shop.the.look.set.items', 'pageDesigner', null, pdict.itemsCount)}
                 </p>
             </div>
         </div>

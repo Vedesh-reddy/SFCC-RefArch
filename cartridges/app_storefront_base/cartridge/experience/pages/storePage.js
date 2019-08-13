@@ -5,7 +5,7 @@ var PageRenderHelper = require('*/cartridge/experience/utilities/PageRenderHelpe
 var RegionModelRegistry = require('*/cartridge/experience/utilities/RegionModelRegistry.js');
 
 /**
- * Render logic for the homepage.
+ * Render logic for the storepage.
  *
  * @param {dw.experience.PageScriptContext} context The page script context object.
  *
@@ -17,7 +17,7 @@ module.exports.render = function (context) {
     model.page = page;
 
     // automatically register configured regions
-    var metaDefinition = require('*/cartridge/experience/pages/homepage.json');
+    var metaDefinition = require('*/cartridge/experience/pages/storePage.json');
     model.regions = new RegionModelRegistry(page, metaDefinition);
 
     // Determine seo meta data.
@@ -34,5 +34,5 @@ module.exports.render = function (context) {
     }
 
     // render the page
-    return new Template('experience/pages/homepage').render(model).text;
+    return new Template('experience/pages/storePage').render(model).text;
 };
