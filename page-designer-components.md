@@ -10,6 +10,8 @@ SFRA uses the following Page Designer components:
 * [Image and Text](#Image-and-Text)
 * [Main Banner](#Main-Banner)
 * [Mobile Grid 2 Rows 3 Columns](#Mobile-Grid-2-Rows-3-Columns)
+* [Mobile Grid 3 Rows 2 Columns](#Mobile-Grid-3-Rows-2-Columns)
+* [Mobile Grid Shop The Look](#Mobile-Grid-Shop-The-Look)
 * [Photo Tile](#Photo-Tile)
 * [Popular Categories](#Popular-Categories)
 * [Popular Category](#Popular-Category)
@@ -30,7 +32,7 @@ This component is a thin banner used for campaigns and announcements.
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/campaignBanner.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/campaignBanner.isml
 ./cartridges/app_storefront_base/cartridge/templates/resources/campaignBanner.properties
-./cartridges/bm_app_storefront_base/cartridge/static/default/css/experience/components/storefront/campaignBanner.css
+./cartridges/app_storefront_base/cartridge/static/default/css/experience/components/storefront/campaignBanner.css
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/campaignBanner.properties
 ```
 
@@ -145,6 +147,12 @@ Shows a navigation bar with links to categories.
 
 Has a text headline attribute.
 
+Has a image picker attribute for selecting background image and focal point.
+
+Has applying shade to image attribute
+
+Has change text to white color attribute
+
 Has four required and eight optional category attributes.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
@@ -234,6 +242,54 @@ Mobile Phone mode shows 2 rows by 3 Columns.
 
 -------------------
 
+## Mobile Grid 3 Rows 2 Columns
+
+Shows a grid with six regions into which a merchant can drop other components.
+
+### Files
+```
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid3r2c.js
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid3r2c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid3r2c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid3r2c.properties
+```
+
+### Notes
+
+Desktop and Tablet mode show 2 rows by 3 columns.
+
+Mobile Phone mode shows 3 rows by 2 Columns.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
+
+-------------------
+
+## Mobile Grid Shop The Look
+
+Shows a grid with six regions into which a merchant can drop other components.
+
+### Files
+```
+./cartridges/app_storefront_base/cartridge/client/default/js/mobileGridLookBook.js
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/mobileGridLookBook.scss
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGridLookBook.js
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGridLookBook.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGridLookBook.isml
+./cartridges/app_storefront_base/cartridge/static/default/css/experience/components/storefront/mobileGridLookBook.css
+./cartridges/app_storefront_base/cartridge/templates/resources/mobileGridLookBook.properties
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGridLookBook.properties
+```
+
+### Notes
+
+Desktop mode shows 1 double width / double height container next to a 2 rows of 1 column on top of 1 row of three columns
+
+Mobile Phone and Tablet mode show 1 double width / double height row on top of one row of 2 columns. A show more button to expand to another group of double width / double height on top of one row of 2 columns.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
+
+-------------------
+
 ## Photo Tile
 
 Adds an image to a page or section.
@@ -313,7 +369,8 @@ Shows a product in a tile and a ‘Shop Now’ overlay.
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/productTile.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/productTile.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/product/productTile.isml
-./cartridges/bm_app_storefront_base/cartridge/static/default/css/experience/components/storefront/productTile.css
+./cartridges/app_storefront_base/cartridge/static/default/css/experience/components/storefront/productTile.css
+./cartridges/app_storefront_base/cartridge/templates/resources/productTile.properties
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/productTile.properties
 ```
 
