@@ -10,12 +10,13 @@
                 <picture>
                     <source srcset="${pdict.image.src.tablet}" media="(min-width: 768px)"/>
                     <source srcset="${pdict.image.src.desktop}" media="(min-width: 1024px)"/>
-                    <a href="${pdict.link}" aria-label="${Resource.msg('pd.ITC.image.link','pageDesigner',null)}">
+                    <isset name="imageName" value="${Resource.msg('pd.ITC.image.alt','pageDesigner',null)}" scope="page"/>
+                    <a href="${pdict.link}" aria-label="${Resource.msgf('pd.ITC.image.link','pageDesigner', null, pdict.alt ? pdict.alt : imageName)}">
                         <img
                             class="ITC-image image-fluid common-image-component ${pdict.heading ? 'common-image-filter' : ''}"
                             src="${pdict.image.src.mobile}"
                             style="--focal-point-x:${pdict.image.focalPointX}; --focal-point-y:${pdict.image.focalPointY}"
-                            alt="${pdict.image.alt ? pdict.image.alt : ''}" title="${pdict.image.alt ? pdict.image.alt : ''}"
+                            alt="${pdict.alt ? pdict.alt : imageName}" title="${pdict.alt ? pdict.alt : imageName}"
                         />
                     </a>
                 </picture>

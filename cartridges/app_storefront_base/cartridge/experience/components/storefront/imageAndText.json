@@ -13,6 +13,13 @@
           "required": true
         },
         {
+          "id": "alt",
+          "name": "Alt Text",
+          "description": "The image alt text shown by the component.",
+          "type": "string",
+          "required": false
+        },
+        {
           "id": "heading",
           "name": "Text Overlay",
           "type": "markup",

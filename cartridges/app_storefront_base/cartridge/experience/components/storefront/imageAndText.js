@@ -18,6 +18,7 @@ module.exports.render = function (context) {
     model.ITCText = content.ITCText ? content.ITCText : null;
     model.image = ImageTransformation.getScaledImage(content.image);
     model.link = content.ITCLink ? content.ITCLink : '#';
+    model.alt = content.alt ? content.alt : null;
 
     return new Template('experience/components/storefront/imageAndText').render(model).text;
 };
