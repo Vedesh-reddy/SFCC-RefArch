@@ -20,7 +20,8 @@ var Request = proxyquire('../../../../cartridges/modules/server/request', {
     '*/cartridge/config/countries': [
         {
             'id': 'en_US',
-            'currencyCode': 'USD'
+            'currencyCode': 'USD',
+            'alternativeCurrencyCodes': ['CAD']
         }, {
             'id': 'en_GB',
             'currencyCode': 'GBP'
@@ -435,6 +436,16 @@ describe('request', function () {
         new Request(createFakeRequest(), createFakeRequest().customer, createFakeRequest().session);
         assert.isTrue(setCurrencyStub.calledOnce);
     });
+
+    it('should not call setCurrency when currency is a alternative currency code', function () {
+        var fakeRequest = createFakeRequest({
+            locale: 'en_US'
+        });
+        fakeRequest.session.currency.currencyCode = 'CAD';
+        new Request(fakeRequest, fakeRequest.customer, fakeRequest.session);
+        assert.isFalse(setCurrencyStub.calledOnce);
+    });
+
 
     it('should contain correct geolocation object and properties wehn co geolocation exists', function () {
         var fakeRequest = createFakeRequest();

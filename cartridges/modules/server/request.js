@@ -230,6 +230,9 @@ function setCurrency(request, session) {
     if (session.currency
         && currentCountry
         && session.currency.currencyCode !== currentCountry.currencyCode
+        && (!currentCountry.alternativeCurrencyCodes
+            || currentCountry.alternativeCurrencyCodes.indexOf(session.currency.currencyCode) < 0
+        )
     ) {
         session.setCurrency(currency.getCurrency(currentCountry.currencyCode));
     }
