@@ -137,7 +137,7 @@ querystring.prototype.toString = function () {
                 prefKeyIdx++;
             });
         } else {
-            result.push(key + '=' + encodeURIComponent(this[key]));
+            result.push(encodeURIComponent(key) + '=' + encodeURIComponent(this[key]));
         }
     }, this);
 
