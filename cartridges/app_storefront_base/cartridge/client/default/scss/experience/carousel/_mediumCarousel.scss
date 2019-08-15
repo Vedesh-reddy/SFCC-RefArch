@@ -4,12 +4,21 @@
 @import "carouselMixins";
 
 @include media-breakpoint-up(md) {
-    .experience-storefront-carousel .carousel.insufficient-md-slides .carousel-control-next,
-    .experience-storefront-carousel .carousel.insufficient-md-slides .carousel-control-prev {
+    .experience-einstein-einsteinCarousel .carousel.insufficient-md-slides .carousel-control-next,
+    .experience-einstein-einsteinCarousel .carousel.insufficient-md-slides .carousel-control-prev,
+    .experience-einstein-einsteinCarouselCategory .carousel.insufficient-md-slides .carousel-control-next,
+    .experience-einstein-einsteinCarouselCategory .carousel.insufficient-md-slides .carousel-control-prev,
+    .experience-einstein-einsteinCarouselProduct .carousel.insufficient-md-slides .carousel-control-next,
+    .experience-einstein-einsteinCarouselProduct .carousel.insufficient-md-slides .carousel-control-prev,
+    .experience-commerce_layouts-carousel .carousel.insufficient-md-slides .carousel-control-next,
+    .experience-commerce_layouts-carousel .carousel.insufficient-md-slides .carousel-control-prev {
         display: none !important;
     }
 
-    .experience-storefront-carousel .carousel.insufficient-md-slides {
+    .experience-einstein-einsteinCarousel .carousel.insufficient-md-slides,
+    .experience-einstein-einsteinCarouselCategory .carousel.insufficient-md-slides,
+    .experience-einstein-einsteinCarouselProduct .carousel.insufficient-md-slides,
+    .experience-commerce_layouts-carousel .carousel.insufficient-md-slides {
         padding-bottom: 0 !important;
 
         .pd-carousel-indicators {
@@ -21,17 +30,29 @@
         @include carousel-indicators();
     }
 
-    .experience-storefront-carousel .carousel.controls-md .carousel-control-next {
+    .experience-einstein-einsteinCarousel .carousel.controls-md .carousel-control-next,
+    .experience-einstein-einsteinCarouselCategory .carousel.controls-md .carousel-control-next,
+    .experience-einstein-einsteinCarouselProduct .carousel.controls-md .carousel-control-next,
+    .experience-commerce_layouts-carousel .carousel.controls-md .carousel-control-next {
         display: flex;
     }
 
-    .experience-storefront-carousel .carousel.controls-md .carousel-control-prev {
+    .experience-einstein-einsteinCarousel .carousel.controls-md .carousel-control-prev,
+    .experience-einstein-einsteinCarouselCategory .carousel.controls-md .carousel-control-prev,
+    .experience-einstein-einsteinCarouselProduct .carousel.controls-md .carousel-control-prev,
+    .experience-commerce_layouts-carousel .carousel.controls-md .carousel-control-prev {
         display: flex;
     }
 
     // =============================================================================================
-    .experience-storefront-carousel .carousel-md-2 .carousel-control-prev,
-    .experience-storefront-carousel .carousel-md-2 .carousel-control-next {
+    .experience-einstein-einsteinCarousel .carousel-md-2 .carousel-control-prev,
+    .experience-einstein-einsteinCarousel .carousel-md-2 .carousel-control-next,
+    .experience-einstein-einsteinCarouselCategory .carousel-md-2 .carousel-control-prev,
+    .experience-einstein-einsteinCarouselCategory .carousel-md-2 .carousel-control-next,
+    .experience-einstein-einsteinCarouselProduct .carousel-md-2 .carousel-control-prev,
+    .experience-einstein-einsteinCarouselProduct .carousel-md-2 .carousel-control-next,
+    .experience-commerce_layouts-carousel .carousel-md-2 .carousel-control-prev,
+    .experience-commerce_layouts-carousel .carousel-md-2 .carousel-control-next {
         top: 43%;
     }
 
@@ -86,13 +107,22 @@
         display: block;
     }
 
-    .experience-storefront-carousel .carousel.carousel-md-2.insufficient-md-slides .carousel-item {
+    .experience-einstein-einsteinCarousel .carousel.carousel-md-2.insufficient-md-slides .carousel-item,
+    .experience-einstein-einsteinCarouselCategory .carousel.carousel-md-2.insufficient-md-slides .carousel-item,
+    .experience-einstein-einsteinCarouselProduct .carousel.carousel-md-2.insufficient-md-slides .carousel-item,
+    .experience-commerce_layouts-carousel .carousel.carousel-md-2.insufficient-md-slides .carousel-item {
         display: block !important;
     }
 
     // =============================================================================================
-    .experience-storefront-carousel .carousel-md-3 .carousel-control-prev,
-    .experience-storefront-carousel .carousel-md-3 .carousel-control-next {
+    .experience-einstein-einsteinCarousel .carousel-md-3 .carousel-control-prev,
+    .experience-einstein-einsteinCarousel .carousel-md-3 .carousel-control-next,
+    .experience-einstein-einsteinCarouselCategory .carousel-md-3 .carousel-control-prev,
+    .experience-einstein-einsteinCarouselCategory .carousel-md-3 .carousel-control-next,
+    .experience-einstein-einsteinCarouselProduct .carousel-md-3 .carousel-control-prev,
+    .experience-einstein-einsteinCarouselProduct .carousel-md-3 .carousel-control-next,
+    .experience-commerce_layouts-carousel .carousel-md-3 .carousel-control-prev,
+    .experience-commerce_layouts-carousel .carousel-md-3 .carousel-control-next {
         top: 40%;
     }
 
@@ -151,13 +181,22 @@
         display: block;
     }
 
-    .experience-storefront-carousel .carousel.carousel-md-3.insufficient-md-slides .carousel-item {
+    .experience-einstein-einsteinCarousel .carousel.carousel-md-3.insufficient-md-slides .carousel-item,
+    .experience-einstein-einsteinCarouselCategory .carousel.carousel-md-3.insufficient-md-slides .carousel-item,
+    .experience-einstein-einsteinCarouselProduct .carousel.carousel-md-3.insufficient-md-slides .carousel-item,
+    .experience-commerce_layouts-carousel .carousel.carousel-md-3.insufficient-md-slides .carousel-item {
         display: block !important;
     }
 
     // =============================================================================================
-    .experience-storefront-carousel .carousel-md-4 .carousel-control-prev,
-    .experience-storefront-carousel .carousel-md-4 .carousel-control-next {
+    .experience-einstein-einsteinCarousel .carousel-md-4 .carousel-control-prev,
+    .experience-einstein-einsteinCarousel .carousel-md-4 .carousel-control-next,
+    .experience-einstein-einsteinCarouselCategory .carousel-md-4 .carousel-control-prev,
+    .experience-einstein-einsteinCarouselCategory .carousel-md-4 .carousel-control-next,
+    .experience-einstein-einsteinCarouselProduct .carousel-md-4 .carousel-control-prev,
+    .experience-einstein-einsteinCarouselProduct .carousel-md-4 .carousel-control-next,
+    .experience-commerce_layouts-carousel .carousel-md-4 .carousel-control-prev,
+    .experience-commerce_layouts-carousel .carousel-md-4 .carousel-control-next {
         top: 37%;
     }
 
@@ -220,13 +259,22 @@
         display: block;
     }
 
-    .experience-storefront-carousel .carousel.carousel-md-4.insufficient-md-slides .carousel-item {
+    .experience-einstein-einsteinCarousel .carousel.carousel-md-4.insufficient-md-slides .carousel-item,
+    .experience-einstein-einsteinCarouselCategory .carousel.carousel-md-4.insufficient-md-slides .carousel-item,
+    .experience-einstein-einsteinCarouselProduct .carousel.carousel-md-4.insufficient-md-slides .carousel-item,
+    .experience-commerce_layouts-carousel .carousel.carousel-md-4.insufficient-md-slides .carousel-item {
         display: block !important;
     }
 
     // =============================================================================================
-    .experience-storefront-carousel .carousel-md-6 .carousel-control-prev,
-    .experience-storefront-carousel .carousel-md-6 .carousel-control-next {
+    .experience-einstein-einsteinCarousel .carousel-md-6 .carousel-control-prev,
+    .experience-einstein-einsteinCarousel .carousel-md-6 .carousel-control-next,
+    .experience-einstein-einsteinCarouselCategory .carousel-md-6 .carousel-control-prev,
+    .experience-einstein-einsteinCarouselCategory .carousel-md-6 .carousel-control-next,
+    .experience-einstein-einsteinCarouselProduct .carousel-md-6 .carousel-control-prev,
+    .experience-einstein-einsteinCarouselProduct .carousel-md-6 .carousel-control-next,
+    .experience-commerce_layouts-carousel .carousel-md-6 .carousel-control-prev,
+    .experience-commerce_layouts-carousel .carousel-md-6 .carousel-control-next {
         top: 29.5%;
     }
 
@@ -297,7 +345,10 @@
         display: block;
     }
 
-    .experience-storefront-carousel .carousel.carousel-md-6.insufficient-md-slides .carousel-item {
+    .experience-einstein-einsteinCarousel .carousel.carousel-md-6.insufficient-md-slides .carousel-item,
+    .experience-einstein-einsteinCarouselCategory .carousel.carousel-md-6.insufficient-md-slides .carousel-item,
+    .experience-einstein-einsteinCarouselProduct .carousel.carousel-md-6.insufficient-md-slides .carousel-item,
+    .experience-commerce_layouts-carousel .carousel.carousel-md-6.insufficient-md-slides .carousel-item {
         display: block !important;
     }
 }

@@ -2,7 +2,7 @@
 <isdecorate template="common/layout/page">
     <isscript>
         var assets = require('*/cartridge/scripts/assets.js');
-        assets.addCss('/css/experience/storepage.css');
+        assets.addCss('/css/experience/storePage.css');
     </isscript>
 
     <div class="storepage">
