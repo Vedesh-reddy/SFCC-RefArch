@@ -4,7 +4,7 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 describe('carouselBuilder', function () {
-    var carouselBuilder = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/scripts/experience/storefront/carouselBuilder.js', {
+    var carouselBuilder = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/scripts/experience/utilities/carouselBuilder.js', {
         '*/cartridge/experience/utilities/PageRenderHelper.js': {
             getRegionModelRegistry: function () {
                 var returnValue = {
