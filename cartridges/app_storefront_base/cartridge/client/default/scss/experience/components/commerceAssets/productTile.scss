@@ -23,7 +23,7 @@
     }
 
     .product-tile-image:hover .quick-shop {
-        margin: -2.875em 1em 0.5em 1em;
+        margin: -2.875em 1em 0.5em;
 
         @include media-breakpoint-up(lg) {
             display: block;

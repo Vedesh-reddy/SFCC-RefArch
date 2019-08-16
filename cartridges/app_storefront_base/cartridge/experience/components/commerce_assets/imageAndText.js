@@ -6,9 +6,9 @@ var ImageTransformation = require('*/cartridge/experience/utilities/ImageTransfo
 
 
 /**
- * Render logic for Image And Text component.
- * @param {dw.experience.PageScriptContext} context The page script context object.
- * @returns {string} template to be displayed
+ * Render logic for storefront.imageAndText component.
+ * @param {dw.experience.ComponentScriptContext} context The Component script context object.
+ * @returns {string} The template to be displayed
  */
 module.exports.render = function (context) {
     var model = new HashMap();

@@ -5,12 +5,9 @@ var HashMap = require('dw/util/HashMap');
 var URLUtils = require('dw/web/URLUtils');
 
 /**
- * Render logic for the assets.category.
- *
- * @param {dw.experience.PageScriptContext}
- *            context The page script context object.
- *
- * @returns {string} The template text
+ * Render logic for the storefront.shopTheLook component
+ * @param {dw.experience.ComponentScriptContext} context The Component script context object.
+ * @returns {string} The template to be displayed
  */
 module.exports.render = function (context) {
     var ProductFactory = require('*/cartridge/scripts/factories/product');

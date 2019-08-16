@@ -5,9 +5,9 @@ var HashMap = require('dw/util/HashMap');
 var ImageTransformation = require('*/cartridge/experience/utilities/ImageTransformation.js');
 
 /**
- * Render logic for the storefront.Image Tile.
- * @param {dw.experience.PageScriptContext} context The page script context object.
- * @returns {string} template to be displayed
+ * Render logic for the storefront.photoTile component.
+ * @param {dw.experience.ComponentScriptContext} context The Component script context object.
+ * @returns {string} The template to be displayed
  */
 module.exports.render = function (context) {
     var model = new HashMap();

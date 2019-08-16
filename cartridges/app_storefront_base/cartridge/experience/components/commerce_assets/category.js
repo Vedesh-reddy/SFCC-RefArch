@@ -6,12 +6,9 @@ var Categories = require('*/cartridge/models/categories');
 var ArrayList = require('dw/util/ArrayList');
 
 /**
- * Render logic for the assets.category.
- *
- * @param {dw.experience.PageScriptContext}
- *            context The page script context object.
- *
- * @returns {string} The template text
+ * Render logic for the storefront.category component.
+ * @param {dw.experience.ComponentScriptContext} context The Component script context object.
+ * @returns {string} The template to be displayed
  */
 module.exports.render = function (context) {
     var model = new HashMap();

@@ -9,7 +9,11 @@ SFRA uses the following Page Designer components:
 * [Editorial Rich Text](#Editorial-Rich-Text)
 * [Image and Text](#Image-and-Text)
 * [Main Banner](#Main-Banner)
+* [Mobile Grid 1 Row 1 Column](#Mobile-Grid-1-Row-1-Column)
+* [Mobile Grid 2 Rows 1 Column](#Mobile-Grid-2-Rows-1-Column)
+* [Mobile Grid 2 Rows 2 Columns](#Mobile-Grid-2-Rows-2-Columns)
 * [Mobile Grid 2 Rows 3 Columns](#Mobile-Grid-2-Rows-3-Columns)
+* [Mobile Grid 3 Rows 1 Column](#Mobile-Grid-3-Rows-1-Column)
 * [Mobile Grid 3 Rows 2 Columns](#Mobile-Grid-3-Rows-2-Columns)
 * [Mobile Grid Shop The Look](#Mobile-Grid-Shop-The-Look)
 * [Photo Tile](#Photo-Tile)
@@ -32,7 +36,6 @@ This component is a thin banner used for campaigns and announcements.
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/campaignBanner.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/campaignBanner.isml
 ./cartridges/app_storefront_base/cartridge/templates/resources/campaignBanner.properties
-./cartridges/app_storefront_base/cartridge/static/default/css/experience/components/storefront/campaignBanner.css
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/campaignBanner.properties
 ```
 
@@ -57,8 +60,6 @@ Enables a shopper to visually cycle through multiple other components, such as [
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/carousel.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/carousel.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/carousel.isml
-./cartridges/bm_app_storefront_base/cartridge/static/default/css/experience/components/storefront/carousel.css
-./cartridges/bm_app_storefront_base/cartridge/static/default/css/experience/sfra_carousel.css
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/carousel.properties
 ```
 
@@ -138,8 +139,6 @@ Shows a navigation bar with links to categories.
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/category.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/category.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/category.isml
-./cartridges/bm_app_storefront_base/cartridge/static/default/css/experience/category.css
-./cartridges/bm_app_storefront_base/cartridge/static/default/css/experience/components/storefront/category.css
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/category.properties
 ```
 
@@ -189,11 +188,16 @@ A component showing combined image and text.
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/imageAndText.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/imageAndText.isml
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/imageAndText.properties
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/imageAndTextCommon.scss
 ```
 
 ### Notes
 
-Has an image picker attribute, a text overlay attribute, and a link.
+Has an image picker attribute and focal point
+Has an optional alt text attribute 
+Has an optional text overlay attribute
+Has an optional image link attribute
+Has an optional text under image attribute 
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -205,10 +209,10 @@ Shows a hero image with a text overlay and a ‘Shop Now’ link.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/MainBanner.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/MainBanner.json
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mainBanner.js
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mainBanner.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/assets/mainBanner.isml
-./cartridges/bm_app_storefront_base/cartridge/static/default/css/experience/mainBanner.css
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/imageAndTextCommon.scss
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mainBanner.properties
 ```
 
@@ -219,6 +223,90 @@ Has an image attribute, a text overlay attribute and a category picker to create
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
+
+## Mobile Grid 1 Row 1 Column
+
+Shows a grid with 1 region into which a merchant can drop other component.
+
+### Files
+```
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid1r1c.js
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid1r1c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid1r1c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid1r1c.properties
+```
+
+### Notes
+
+Mobile phone, tablet and desktop mode all show 1 row by 1 column.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
+
+-------------------
+
+## Mobile Grid 2 Row 1 Columns
+
+Shows a grid with 2 region into which a merchant can drop other components.
+
+### Files
+```
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r1c.js
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r1c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid2r1c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid2r1c.properties
+```
+
+### Notes
+
+Mobile phone, tablet mode will show 2 rows x 1 column
+Desktop mode will show 1 row by 2 columns.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
+
+-------------------
+
+## Mobile Grid 3 Rows 1 Column
+
+Shows a grid with 3 regions into which a merchant can drop other components.
+
+### Files
+```
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid3r1c.js
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid3r1c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid3r1c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid3r1c.properties
+```
+
+### Notes
+
+Mobile phone, tablet mode will show 3 rows x 1 column
+Desktop mode will show 1 row by 3 columns.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
+
+-------------------
+
+## Mobile Grid 2 Rows 2 Columns
+
+Shows a grid with 4 regions into which a merchant can drop other components.
+
+### Files
+```
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r2c.js
+./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r2c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid2r2c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid2r2c.properties
+```
+
+### Notes
+
+Mobile phone, tablet mode will show 2 rows x 2 columns
+Desktop mode will show 1 row by 4 columns.
+
+[Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
+
+-------------------
+
 
 ## Mobile Grid 2 Rows 3 Columns
 
@@ -275,7 +363,6 @@ Shows a grid with six regions into which a merchant can drop other components.
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGridLookBook.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGridLookBook.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGridLookBook.isml
-./cartridges/app_storefront_base/cartridge/static/default/css/experience/components/storefront/mobileGridLookBook.css
 ./cartridges/app_storefront_base/cartridge/templates/resources/mobileGridLookBook.properties
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGridLookBook.properties
 ```
@@ -369,7 +456,6 @@ Shows a product in a tile and a ‘Shop Now’ overlay.
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/productTile.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/productTile.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/product/productTile.isml
-./cartridges/app_storefront_base/cartridge/static/default/css/experience/components/storefront/productTile.css
 ./cartridges/app_storefront_base/cartridge/templates/resources/productTile.properties
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/productTile.properties
 ```
@@ -384,7 +470,7 @@ Has a product picker attribute and a boolean attribute to toggle display ratings
 
 ## Shop the Look
 
-Shows [Product Tile](#Product-Tile) components that link to the Quick View of a set.
+Shows [Shop The Look](#Shop-The-Look) components that link to the Quick View of a product.
 
 ### Files
 ```
@@ -392,7 +478,6 @@ Shows [Product Tile](#Product-Tile) components that link to the Quick View of a 
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/shopTheLook.js
 ./cartridges/app_storefront_base/cartridge/experience/components/storefront/shopTheLook.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/shopTheLook.isml
-./cartridges/bm_app_storefront_base/cartridge/static/default/css/experience/components/storefront/shopTheLook.css
 ./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/shopTheLook.properties
 ```
 

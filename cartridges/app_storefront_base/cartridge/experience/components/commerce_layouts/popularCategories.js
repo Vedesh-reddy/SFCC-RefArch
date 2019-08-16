@@ -6,11 +6,8 @@ var PageRenderHelper = require('*/cartridge/experience/utilities/PageRenderHelpe
 
 /**
  * Render logic for the storefront.popularCategories.
- *
- * @param {dw.experience.PageScriptContext}
- *            context The page script context object.
- *
- * @returns {string} The template text
+ * @param {dw.experience.ComponentScriptContext} context The Component script context object.
+ * @returns {string} The template to be displayed
  */
 module.exports.render = function (context) {
     var model = new HashMap();

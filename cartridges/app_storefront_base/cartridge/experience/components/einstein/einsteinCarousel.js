@@ -8,12 +8,9 @@ var URLUtils = require('dw/web/URLUtils');
 var Resource = require('dw/web/Resource');
 
 /**
- * Render logic for the einstein carousel.
- *
- * @param {dw.experience.PageScriptContext}
- *            context The page script context object.
- *
- * @returns {string} The template text
+ * Render logic for the storefront.einsteinCarousel.
+ * @param {dw.experience.ComponentScriptContext} context The Component script context object.
+ * @returns {string} The template to be displayed
  */
 module.exports.render = function (context) {
     var model = new HashMap();
