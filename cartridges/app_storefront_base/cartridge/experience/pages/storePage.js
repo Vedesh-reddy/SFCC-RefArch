@@ -31,6 +31,7 @@ module.exports.render = function (context) {
     if (PageRenderHelper.isInEditMode()) {
         var HookManager = require('dw/system/HookMgr');
         HookManager.callHook('app.experience.editmode', 'editmode');
+        model.resetEditPDMode = true;
     }
 
     // render the page
