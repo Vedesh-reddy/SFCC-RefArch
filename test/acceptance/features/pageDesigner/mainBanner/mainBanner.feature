@@ -1,7 +1,7 @@
 Feature: Main Banner on Page Designer Home Page
   As a shopper, I should see the main banner
 
-  @mainBanner
+  @mainBanner @pageDesigner
   Scenario: Shopper should able to see the main banner
     When shopper load Page Designer home page
     Then shopper accept the Consent Tracking Modal

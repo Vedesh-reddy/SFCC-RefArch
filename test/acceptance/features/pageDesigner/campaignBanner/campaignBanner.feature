@@ -1,7 +1,7 @@
 Feature: Campaign Banner on Page Designer Home Page
     As a shopper, I shoiuld see the campaign banner
 
-@campaignBanner
+@campaignBanner @pageDesigner
     Scenario: Shopper should able to see the campaign banner
         When shopper load Page Designer home page
         Then shopper accept the Consent Tracking Modal

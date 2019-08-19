@@ -7,7 +7,7 @@
         "checkoutPage": "./test/acceptance/pages/checkout.page.js",
         "loginPage": "./test/acceptance/pages/login.page.js",
         "accountPage": "./test/acceptance/pages/account.page.js",
-        "mainBanner": "./test/acceptance/pages/mainBanner.page.js",
+        "pageDesigner": "./test/acceptance/pages/pageDesigner.page.js",
         "utilities": "./test/acceptance/utilities.js"
     },
     "gherkin_steps": [
@@ -28,7 +28,8 @@
         "./test/acceptance/steps/testSuites/happyPath.steps.js",
         "./test/acceptance/steps/utilities.steps.js",
         "./test/acceptance/steps/pageDesigner/campaignBanner/campaignBanner.steps.js",
-        "./test/acceptance/steps/pageDesigner/mainBanner/mainBanner.steps.js"
+        "./test/acceptance/steps/pageDesigner/mainBanner/mainBanner.steps.js",
+        "./test/acceptance/steps/pageDesigner/popularCategory/popularCategory.steps.js"
     ],
     "user1": {
         "fName": "John",
