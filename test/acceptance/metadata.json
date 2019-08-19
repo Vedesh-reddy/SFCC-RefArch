@@ -7,6 +7,7 @@
         "checkoutPage": "./test/acceptance/pages/checkout.page.js",
         "loginPage": "./test/acceptance/pages/login.page.js",
         "accountPage": "./test/acceptance/pages/account.page.js",
+        "mainBanner": "./test/acceptance/pages/mainBanner.page.js",
         "utilities": "./test/acceptance/utilities.js"
     },
     "gherkin_steps": [
@@ -26,7 +27,8 @@
         "./test/acceptance/steps/accountPage/addAddress.steps.js",
         "./test/acceptance/steps/testSuites/happyPath.steps.js",
         "./test/acceptance/steps/utilities.steps.js",
-        "./test/acceptance/steps/pageDesigner/campaignBanner/campaignBanner.steps.js"
+        "./test/acceptance/steps/pageDesigner/campaignBanner/campaignBanner.steps.js",
+        "./test/acceptance/steps/pageDesigner/mainBanner/mainBanner.steps.js"
     ],
     "user1": {
         "fName": "John",
@@ -82,9 +84,9 @@
     },
     "filterProduct": {
         "color": "white",
-        "colorTotalItems": "78 Results",
+        "colorTotalItems": "79 Results",
         "size": "12",
-        "sizeTotalItems": "10 Results",
+        "sizeTotalItems": "11 Results",
         "price": "$20 - $49.99",
         "priceTotalItems": "2 Results"
     },

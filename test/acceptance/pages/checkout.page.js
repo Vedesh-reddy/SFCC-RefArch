@@ -59,6 +59,7 @@ module.exports = {
     },
     fillPaymentInfoGuest(fName, lName, address1, address2, city, stateAbr, zipcode, email, phone, ccNum, expMonth, expYear, ccSecCode) {
         I.waitForElement(this.locators.checkout_prefilledShippingInfo);
+        I.wait(1);
         I.see(fName, this.locators.checkout_prefilledShippingInfo);
         I.see(lName, this.locators.checkout_prefilledShippingInfo);
         I.see(address1, this.locators.checkout_prefilledShippingInfo);
