@@ -2,10 +2,10 @@
 
 SFRA uses the following Page Designer components:
 
-* [Campaign Banner](#Campaign-Banner)
+* [Header Promo Banner](#Header-Promo-Banner)
 * [Carousel](#Carousel)
 * [Einstein Carousel](#Einstein-Carousel)
-* [Link Banner](#Link Banner)
+* [Link Banner](#Link-Banner)
 * [Editorial Rich Text](#Editorial-Rich-Text)
 * [Image and Text](#Image-and-Text)
 * [Main Banner](#Main-Banner)
@@ -18,25 +18,25 @@ SFRA uses the following Page Designer components:
 * [Mobile Grid Shop The Look](#Mobile-Grid-Shop-The-Look)
 * [Photo Tile](#Photo-Tile)
 * [Popular Categories](#Popular-Categories)
-* [Round Category Tile with Caption](#Round Category Tile with Caption)
+* [Round Category Tile with Caption](#Round-Category-Tile-with-Caption)
 * [Product Tile](#Product-Tile)
 * [Shop the Look](#Shop-the-Look)
 
 -------------------
 
-## Campaign Banner
+## Header Promo Banner
 
 This component is a thin banner used for campaigns and announcements.
 
 ### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/js/campaignBanner.js
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/campaignBanner.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/campaignBanner.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/campaignBanner.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/campaignBanner.isml
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceAssets/campaignBanner.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/campaignBanner.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/campaignBanner.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/campaignBanner.isml
 ./cartridges/app_storefront_base/cartridge/templates/resources/campaignBanner.properties
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/campaignBanner.properties
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/campaignBanner.properties
 ```
 
 ### Notes
@@ -56,11 +56,11 @@ Enables a shopper to visually cycle through multiple other components, such as [
 ### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/js/carousel.js
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/carousel.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/carousel.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/carousel.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/carousel.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/carousel.properties
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceLayouts/carousel.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/carousel.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/carousel.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_layouts/carousel.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_layouts/carousel.properties
 ```
 
 ### Notes
