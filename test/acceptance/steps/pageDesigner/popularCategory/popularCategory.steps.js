@@ -20,6 +20,6 @@ Then('shopper should see the popularCategory components', () => {
 
 
 Then('shopper can click on a popular category', () => {
-    pageDesigner.clickPopulareCategory(1, '/s/RefArch/new arrivals/womens/?lang=default');
+    pageDesigner.clickPopulareCategory(1, '.popular-category', '/s/RefArch/new arrivals/womens/?lang=default');
 });
 

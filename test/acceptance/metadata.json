@@ -29,7 +29,8 @@
         "./test/acceptance/steps/utilities.steps.js",
         "./test/acceptance/steps/pageDesigner/campaignBanner/campaignBanner.steps.js",
         "./test/acceptance/steps/pageDesigner/mainBanner/mainBanner.steps.js",
-        "./test/acceptance/steps/pageDesigner/popularCategory/popularCategory.steps.js"
+        "./test/acceptance/steps/pageDesigner/popularCategory/popularCategory.steps.js",
+        "./test/acceptance/steps/pageDesigner/category/category.steps.js"
     ],
     "user1": {
         "fName": "John",

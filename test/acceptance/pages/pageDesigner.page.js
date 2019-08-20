@@ -9,8 +9,8 @@ module.exports = {
         pageTitle: '.page-title'
 
     },
-    clickPopulareCategory(index, url) {
-        let locator = locate('.popular-category')
+    clickPopulareCategory(index, selector, url) {
+        let locator = locate(selector)
             .at(index);
 
         I.seeElement(locator);
