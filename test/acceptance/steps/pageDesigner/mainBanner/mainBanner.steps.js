@@ -1,4 +1,4 @@
-const { I, pageDesigner } = inject();
+const { I, pageDesigner, utilities } = inject();
 
 Then('shopper should see the main banner', () => {
     I.waitForElement(pageDesigner.locators.mainBanner);
@@ -15,7 +15,5 @@ Then('shopper should see the main banner message', () => {
 });
 
 Then('shopper should go to womens clothing dresses clicking on the main banner', () => {
-    I.click(pageDesigner.locators.mainBannerLink);
-    I.wait(1);
-    I.seeCurrentUrlEquals('/s/RefArch/womens/clothing/dresses/?lang=default');
+    utilities.clickToLoadPage(pageDesigner.locators.mainBannerLink, '/s/RefArch/womens/clothing/dresses/?lang=default');
 });

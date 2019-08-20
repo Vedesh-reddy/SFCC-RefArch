@@ -10,6 +10,11 @@ module.exports = {
         within(this.locators.consentTrackModal, () => {
             I.click(this.locators.consentTrackAffirm);
         });
+    },
+    clickToLoadPage(elementSelector, expectedPageUrl) {
+        I.click(elementSelector);
+        I.wait(1);
+        I.seeCurrentUrlEquals(expectedPageUrl);
     }
 };
 

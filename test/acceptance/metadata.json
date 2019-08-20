@@ -30,7 +30,9 @@
         "./test/acceptance/steps/pageDesigner/campaignBanner/campaignBanner.steps.js",
         "./test/acceptance/steps/pageDesigner/mainBanner/mainBanner.steps.js",
         "./test/acceptance/steps/pageDesigner/popularCategory/popularCategory.steps.js",
-        "./test/acceptance/steps/pageDesigner/category/category.steps.js"
+        "./test/acceptance/steps/pageDesigner/category/category.steps.js",
+        "./test/acceptance/steps/pageDesigner/productTile/productTile.steps.js",
+        "./test/acceptance/steps/pageDesigner/shopCategory/shopCategory.steps"
     ],
     "user1": {
         "fName": "John",
