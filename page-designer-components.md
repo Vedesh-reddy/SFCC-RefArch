@@ -9,15 +9,15 @@ SFRA uses the following Page Designer components:
 * [Textbox](#Textbox)
 * [Image with Text](#Image-with-Text)
 * [Main Banner](#Main-Banner)
-* [Mobile Grid 1 Row 1 Column](#Mobile-Grid-1-Row-1-Column)
-* [Mobile Grid 2 Rows 1 Column](#Mobile-Grid-2-Rows-1-Column)
-* [Mobile Grid 2 Rows 2 Columns](#Mobile-Grid-2-Rows-2-Columns)
-* [Mobile Grid 2 Rows 3 Columns](#Mobile-Grid-2-Rows-3-Columns)
-* [Mobile Grid 3 Rows 1 Column](#Mobile-Grid-3-Rows-1-Column)
-* [Mobile Grid 3 Rows 2 Columns](#Mobile-Grid-3-Rows-2-Columns)
-* [Mobile Grid Shop The Look](#Mobile-Grid-Shop-The-Look)
+* [1 Row x 1 Col (Mobile, Desktop)](#1-Row-x-1-Col-(Mobile,-Desktop))
+* [2 Row x 1 Col (Mobile), 1 Row x 2 Col (Desktop)](#2-Row-x-1-Col-(Mobile),-1-Row-x-2-Col-(Desktop))
+* [2 Row x 2 Col (Mobile), 1 Row x 4 Col (Desktop)](#2-Row-x-2-Col-(Mobile),-1-Row-x-4-Col-(Desktop))
+* [2 Row x 3 Col (Mobile), 1 Row x 6 Col (Desktop)](#2-Row-x-3-Col-(Mobile),-1-Row-x-6-Col-(Desktop))
+* [3 Row x 1 Col (Mobile), 1 Row x 3 Col (Desktop)](#3-Row-x-1-Col-(Mobile),-1-Row-x-3-Col-(Desktop))
+* [3 Row x 2 Col (Mobile), 2 Row x 3 Col (Desktop)](#3-Row-x-2-Col-(Mobile),-2-Row-x-3-Col-(Desktop))
+* [Shop the Look Layout](#Mobile-Grid-Shop-The-Look)
 * [Image Tile](#Image-Tile)
-* [Popular Categories](#Popular-Categories)
+* [Popular Categories Layout](#Popular-Categories-Layout)
 * [Round Category Tile with Caption](#Round-Category-Tile-with-Caption)
 * [Product Tile](#Product-Tile)
 * [Shop The Look Product Tile](#Shop-The-Look-Product-Tile)
@@ -226,16 +226,16 @@ Has an image attribute, a text overlay attribute and a category picker to create
 
 -------------------
 
-## Mobile Grid 1 Row 1 Column
+## 1 Row x 1 Col (Mobile, Desktop)
 
 Shows a grid with 1 region into which a merchant can drop other component.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid1r1c.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid1r1c.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid1r1c.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid1r1c.properties
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid1r1c.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid1r1c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_layouts/mobileGrid1r1c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_layouts/mobileGrid1r1c.properties
 ```
 
 ### Notes
@@ -246,16 +246,16 @@ Mobile phone, tablet and desktop mode all show 1 row by 1 column.
 
 -------------------
 
-## Mobile Grid 2 Row 1 Columns
+## 2 Row x 1 Col (Mobile), 1 Row x 2 Col (Desktop)
 
 Shows a grid with 2 region into which a merchant can drop other components.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r1c.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r1c.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid2r1c.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid2r1c.properties
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid2r1c.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid2r1c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_layouts/mobileGrid2r1c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_layouts/mobileGrid2r1c.properties
 ```
 
 ### Notes
@@ -267,16 +267,16 @@ Desktop mode will show 1 row by 2 columns.
 
 -------------------
 
-## Mobile Grid 3 Rows 1 Column
+## 3 Row x 1 Col (Mobile), 1 Row x 3 Col (Desktop)
 
 Shows a grid with 3 regions into which a merchant can drop other components.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid3r1c.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid3r1c.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid3r1c.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid3r1c.properties
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid3r1c.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid3r1c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_layouts/mobileGrid3r1c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_layouts/mobileGrid3r1c.properties
 ```
 
 ### Notes
@@ -288,16 +288,16 @@ Desktop mode will show 1 row by 3 columns.
 
 -------------------
 
-## Mobile Grid 2 Rows 2 Columns
+## 2 Row x 2 Col (Mobile), 1 Row x 4 Col (Desktop)
 
 Shows a grid with 4 regions into which a merchant can drop other components.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r2c.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r2c.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid2r2c.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid2r2c.properties
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid2r2c.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid2r2c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_layouts/mobileGrid2r2c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_layouts/mobileGrid2r2c.properties
 ```
 
 ### Notes
@@ -310,16 +310,16 @@ Desktop mode will show 1 row by 4 columns.
 -------------------
 
 
-## Mobile Grid 2 Rows 3 Columns
+## 2 Row x 3 Col (Mobile), 1 Row x 6 Col (Desktop)
 
 Shows a grid with six regions into which a merchant can drop other components.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r3c.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid2r3c.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid2r3c.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid2r3c.properties
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid2r3c.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid2r3c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_layouts/mobileGrid2r3c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_layouts/mobileGrid2r3c.properties
 ```
 
 ### Notes
@@ -332,16 +332,16 @@ Mobile Phone mode shows 2 rows by 3 Columns.
 
 -------------------
 
-## Mobile Grid 3 Rows 2 Columns
+## 3 Row x 2 Col (Mobile), 2 Row x 3 Col (Desktop)
 
 Shows a grid with six regions into which a merchant can drop other components.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid3r2c.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGrid3r2c.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGrid3r2c.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGrid3r2c.properties
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid3r2c.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/mobileGrid3r2c.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_layouts/mobileGrid3r2c.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_layouts/mobileGrid3r2c.properties
 ```
 
 ### Notes
@@ -361,12 +361,12 @@ Shows a grid with six regions into which a merchant can drop other components.
 ### Files
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/js/mobileGridLookBook.js
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/mobileGridLookBook.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGridLookBook.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mobileGridLookBook.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/mobileGridLookBook.isml
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceAssets/mobileGridLookBook.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/mobileGridLookBook.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/mobileGridLookBook.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/mobileGridLookBook.isml
 ./cartridges/app_storefront_base/cartridge/templates/resources/mobileGridLookBook.properties
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mobileGridLookBook.properties
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/mobileGridLookBook.properties
 ```
 
 ### Notes
@@ -401,17 +401,17 @@ Has a single image picker attribute.
 -------------------
 
 
-## Popular Categories
+## Popular Categories Layout
 
 Shows one or more [Round Category Tile with Caption](#Round Category Tile with Caption) components.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/popularCategories.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategories.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategories.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/popularCategories.isml
-./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/popularCategories.properties
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceLayouts/popularCategories.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/popularCategories.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_layouts/popularCategories.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_layouts/popularCategories.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_layouts/popularCategories.properties
 ```
 
 ### Notes
@@ -432,7 +432,7 @@ Shows a Round Category Tile with Caption.
 ./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/popularCategory.js
 ./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/popularCategory.json
 ./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/popularCategory.isml
-./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/popularCategory.properties
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/popularCategory.properties
 
 ```
 
