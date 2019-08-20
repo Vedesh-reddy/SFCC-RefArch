@@ -5,7 +5,7 @@ SFRA uses the following Page Designer components:
 * [Campaign Banner](#Campaign-Banner)
 * [Carousel](#Carousel)
 * [Einstein Carousel](#Einstein-Carousel)
-* [Shop Category](#Shop-Category)
+* [Link Banner](#Link Banner)
 * [Editorial Rich Text](#Editorial-Rich-Text)
 * [Image and Text](#Image-and-Text)
 * [Main Banner](#Main-Banner)
@@ -18,7 +18,7 @@ SFRA uses the following Page Designer components:
 * [Mobile Grid Shop The Look](#Mobile-Grid-Shop-The-Look)
 * [Photo Tile](#Photo-Tile)
 * [Popular Categories](#Popular-Categories)
-* [Popular Category](#Popular-Category)
+* [Round Category Tile with Caption](#Round Category Tile with Caption)
 * [Product Tile](#Product-Tile)
 * [Shop the Look](#Shop-the-Look)
 
@@ -83,15 +83,15 @@ Enables a shopper to visually cycle through [Product Tile](#Product-Tile) compon
 ./cartridges/app_storefront_base/cartridge/client/default/js/einstienCarousel.js
 ./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/einsteinCarousel.scss
 ./cartridges/app_storefront_base/cartridge/controllers/EinsteinCarousel.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarousel.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarousel.json
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselCategory.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselCategory.json
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselProduct.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/einsteinCarouselProduct.json
-./cartridges/app_storefront_base/cartridge/scripts/experience/storefront/carouselBuilder.js
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/einsteinCarousel.isml
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/product/productTileWrapper.isml
+./cartridges/app_storefront_base/cartridge/experience/components/einstein/einsteinCarousel.js
+./cartridges/app_storefront_base/cartridge/experience/components/einstein/einsteinCarousel.json
+./cartridges/app_storefront_base/cartridge/experience/components/einstein/einsteinCarouselCategory.js
+./cartridges/app_storefront_base/cartridge/experience/components/einstein/einsteinCarouselCategory.json
+./cartridges/app_storefront_base/cartridge/experience/components/einstein/einsteinCarouselProduct.js
+./cartridges/app_storefront_base/cartridge/experience/components/einstein/einsteinCarouselProduct.json
+./cartridges/app_storefront_base/cartridge/scripts/experience/utilities/carouselBuilder.js
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/einstein/einsteinCarousel.isml
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/product/productTileWrapper.isml
 ./cartridges/app_storefront_base/cartridge/templates/resources/error.properties
 ./cartridges/app_storefront_base/cartridge/templates/resources/pageDesigner.properties
 ./cartridges/app_storefront_base/cartridge/experience/editors/einstein/categoryrecommenderselector.js
@@ -100,46 +100,48 @@ Enables a shopper to visually cycle through [Product Tile](#Product-Tile) compon
 ./cartridges/app_storefront_base/cartridge/experience/editors/einstein/globalrecommenderselector.json
 ./cartridges/app_storefront_base/cartridge/experience/editors/einstein/productrecommenderselector.js
 ./cartridges/app_storefront_base/cartridge/static/default/experience/editors/einstein/recommenderselector.js
-./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/einsteinCarousel.properties
-./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/einsteinCarouselCategory.properties
-./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/einsteinCarouselProduct.properties
+./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/einstein/einsteinCarousel.properties
+./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/einstein/einsteinCarouselCategory.properties
+./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/einstein/einsteinCarouselProduct.properties
 ```
 
 ### Notes
 
 This component has configurable display attributes for phone and desktop. It reuses and overrides the Bootstrap Carousel.
 
+This component runs on a PIG instance and requires support access to be enabled.
+
 This component uses the product tile component isml file.
 
 There are three Einstein components to choose from.
 
-    1. Einstein recommendations Component recommenders
+    1. Einstein Carousel (Recently Viewed)
         a. recently viewed
         b. viewed-recently-einstein
         c. products-in-all-categories
         d. home-page-recommender-mens
         e. home-page-recommender-womens
-    2. Einstein recommendations (product) Component recommenders
+    2. Einstein Carousel (Product)
         a. Product to Product Recommendation
         b. pdp
-    3. Einstein recommendations (category) Component recommenders
+    3. Einstein Carousel (Category) Component recommenders
         a. products-in-a-category-einstein
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-## Shop Category
+## Link Banner
 
 Shows a navigation bar with links to categories.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/category.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/category.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/category.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/category.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/category.properties
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerce_assets/category.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/category.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/category.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/category.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/category.properties
 ```
 
 ### Notes
@@ -194,10 +196,10 @@ A component showing combined image and text.
 ### Notes
 
 Has an image picker attribute and focal point
-Has an optional alt text attribute 
+Has an optional alt text attribute
 Has an optional text overlay attribute
 Has an optional image link attribute
-Has an optional text under image attribute 
+Has an optional text under image attribute
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -401,7 +403,7 @@ Has a single image picker attribute.
 
 ## Popular Categories
 
-Shows one or more [Popular Category](#Popular-Category) components.
+Shows one or more [Round Category Tile with Caption](#Round Category Tile with Caption) components.
 
 ### Files
 ```
@@ -414,23 +416,23 @@ Shows one or more [Popular Category](#Popular-Category) components.
 
 ### Notes
 
-Has a text headline attribute. This component can hold an arbitrary number of [Popular Category](#Popular-Category) components.
+Has a text headline attribute. This component can hold an arbitrary number of [Round Category Tile with Caption](#Round Category Tile with Caption) components.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
 -------------------
 
-## Popular Category
+## Round Category Tile with Caption
 
-Shows a popular category.
+Shows a Round Category Tile with Caption.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/popularCategory.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategory.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/popularCategory.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/popularCategory.isml
-./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/storefront/popularCategory.properties
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerce_assets/popularCategory.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/popularCategory.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/popularCategory.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/popularCategory.isml
+./cartridges/app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/popularCategory.properties
 
 ```
 
