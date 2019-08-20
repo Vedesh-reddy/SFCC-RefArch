@@ -6,8 +6,8 @@ SFRA uses the following Page Designer components:
 * [Carousel](#Carousel)
 * [Einstein Carousel](#Einstein-Carousel)
 * [Link Banner](#Link-Banner)
-* [Editorial Rich Text](#Editorial-Rich-Text)
-* [Image and Text](#Image-and-Text)
+* [Textbox](#Textbox)
+* [Image with Text](#Image-with-Text)
 * [Main Banner](#Main-Banner)
 * [Mobile Grid 1 Row 1 Column](#Mobile-Grid-1-Row-1-Column)
 * [Mobile Grid 2 Rows 1 Column](#Mobile-Grid-2-Rows-1-Column)
@@ -16,11 +16,11 @@ SFRA uses the following Page Designer components:
 * [Mobile Grid 3 Rows 1 Column](#Mobile-Grid-3-Rows-1-Column)
 * [Mobile Grid 3 Rows 2 Columns](#Mobile-Grid-3-Rows-2-Columns)
 * [Mobile Grid Shop The Look](#Mobile-Grid-Shop-The-Look)
-* [Photo Tile](#Photo-Tile)
+* [Image Tile](#Image-Tile)
 * [Popular Categories](#Popular-Categories)
 * [Round Category Tile with Caption](#Round-Category-Tile-with-Caption)
 * [Product Tile](#Product-Tile)
-* [Shop the Look](#Shop-the-Look)
+* [Shop The Look Product Tile](#Shop-The-Look-Product-Tile)
 
 -------------------
 
@@ -81,7 +81,7 @@ Enables a shopper to visually cycle through [Product Tile](#Product-Tile) compon
 ```
 ./cartridges/app_storefront_base/cartridge/client/default/js/carousel.js
 ./cartridges/app_storefront_base/cartridge/client/default/js/einstienCarousel.js
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/einsteinCarousel.scss
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/einstein/einsteinCarousel.scss
 ./cartridges/app_storefront_base/cartridge/controllers/EinsteinCarousel.js
 ./cartridges/app_storefront_base/cartridge/experience/components/einstein/einsteinCarousel.js
 ./cartridges/app_storefront_base/cartridge/experience/components/einstein/einsteinCarousel.json
@@ -160,16 +160,16 @@ Has four required and eight optional category attributes.
 
 -------------------
 
-## Editorial Rich Text
+## Textbox
 
 Shows text or pictures within a section.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/editorialRichText.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/editorialRichText.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/editorialRichText.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/editorialRichText.properties
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/editorialRichText.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/editorialRichText.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/editorialRichText.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/editorialRichText.properties
 ```
 
 ### Notes
@@ -180,17 +180,17 @@ Has one rich text attribute.
 
 -------------------
 
-## Image and Text
+## Image with Text
 
 A component showing combined image and text.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/imageAndText.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/imageAndText.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/imageAndText.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/imageAndText.properties
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/imageAndTextCommon.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/imageAndText.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/imageAndText.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/imageAndText.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/imageAndText.properties
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceAssets/imageAndTextCommon.scss
 ```
 
 ### Notes
@@ -211,11 +211,11 @@ Shows a hero image with a text overlay and a ‘Shop Now’ link.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mainBanner.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/mainBanner.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/assets/mainBanner.isml
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/imageAndTextCommon.scss
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/mainBanner.properties
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/mainBanner.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/mainBanner.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/mainBanner.isml
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceAssets/imageAndTextCommon.scss
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/mainBanner.properties
 ```
 
 ### Notes
@@ -379,17 +379,17 @@ Mobile Phone and Tablet mode show 1 double width / double height row on top of o
 
 -------------------
 
-## Photo Tile
+## Image Tile
 
 Adds an image to a page or section.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/photoTile.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/photoTile.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/photoTile.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/photoTile.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/photoTile.properties
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceAssets/photoTile.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/photoTile.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/photoTile.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/photoTile.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/photoTile.properties
 ```
 
 ### Notes
@@ -454,12 +454,12 @@ Shows a product in a tile and a ‘Shop Now’ overlay.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/productTile.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/productTile.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/productTile.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/product/productTile.isml
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceAssets/productTile.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/productTile.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/productTile.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/product/productTile.isml
 ./cartridges/app_storefront_base/cartridge/templates/resources/productTile.properties
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/productTile.properties
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/productTile.properties
 ```
 
 ### Notes
@@ -470,17 +470,17 @@ Has a product picker attribute and a boolean attribute to toggle display ratings
 
 -------------------
 
-## Shop the Look
+## Shop The Look Product Tile
 
-Shows [Shop The Look](#Shop-The-Look) components that link to the Quick View of a product.
+Shows [Shop The Look Product Tile](#Shop-The-Look-Product-Tile) components that link to the Quick View of a product.
 
 ### Files
 ```
-./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/storefront/shopTheLook.scss
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/shopTheLook.js
-./cartridges/app_storefront_base/cartridge/experience/components/storefront/shopTheLook.json
-./cartridges/app_storefront_base/cartridge/templates/default/experience/components/storefront/shopTheLook.isml
-./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/storefront/shopTheLook.properties
+./cartridges/app_storefront_base/cartridge/client/default/scss/experience/components/commerceAssets/shopTheLook.scss
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/shopTheLook.js
+./cartridges/app_storefront_base/cartridge/experience/components/commerce_assets/shopTheLook.json
+./cartridges/app_storefront_base/cartridge/templates/default/experience/components/commerce_assets/shopTheLook.isml
+./cartridges/bm_app_storefront_base/cartridge/templates/resources/experience/components/commerce_assets/shopTheLook.properties
 ```
 
 ### Notes
