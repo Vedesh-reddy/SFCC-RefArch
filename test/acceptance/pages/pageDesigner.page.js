@@ -6,6 +6,8 @@ var carousel2Item3Selector = '.carousel:nth-child(2) .carousel-item:nth-child(3)
 var prodTile3ComponentSel = carousel2Item3Selector + ' .product-tile-pd';
 
 var shopCategoryComponent = '.mobile-1r-1c .shop-category-component';
+var shopTheLookCell1 = '.cell1 .shopthelook-figure-lg';
+var shopTheLookCell4 = '.cell4 .shopthelook-figure-lg';
 
 module.exports = {
     locators: {
@@ -14,6 +16,25 @@ module.exports = {
         mainBannerSubHeading: '.mainbanner-sub-text',
         mainBannerLink: '.mainbanner-container a',
         pageTitle: '.page-title',
+
+        ITC: '.ITC-container',
+        ITCOverlay: '.ITC-image-heading-text',
+        ITCImageLink: '.ITC-figure a',
+
+        photo: '.photo-tile-container',
+
+        richText: '.editorialRichText-component-container',
+        richTextTitle: '.text-center',
+
+        shopTheLookContainer: '.shop-the-look-container',
+        shopTheLookTextOverlay: shopTheLookCell1 + ' .product-text-center',
+        shopTheLookImage: '.shopthelook-figure-lg img',
+        shopTheLookSetItems: shopTheLookCell1 + ' .set-count-text-center',
+        shopTheLookButton: shopTheLookCell1 + ' .shopthelook-text',
+        shopTheLook4thImage: shopTheLookCell4 + ' img',
+        shopTheLookProductName: shopTheLookCell4 + ' .product-text-center',
+        shopTheLook4thSetItems: shopTheLookCell4 + ' .set-count-text-center',
+        shopTheLook4thButton: shopTheLookCell4 + ' .shopthelook-text',
 
         campaignBanner: '.campaign-banner',
         campaignBannerMessage: '.campaign-banner-message',

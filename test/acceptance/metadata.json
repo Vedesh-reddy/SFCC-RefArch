@@ -31,8 +31,12 @@
         "./test/acceptance/steps/pageDesigner/mainBanner/mainBanner.steps.js",
         "./test/acceptance/steps/pageDesigner/popularCategory/popularCategory.steps.js",
         "./test/acceptance/steps/pageDesigner/category/category.steps.js",
+        "./test/acceptance/steps/pageDesigner/imageAndText/imageAndText.steps.js",
+        "./test/acceptance/steps/pageDesigner/photoTile/photoTile.steps.js",
         "./test/acceptance/steps/pageDesigner/productTile/productTile.steps.js",
-        "./test/acceptance/steps/pageDesigner/shopCategory/shopCategory.steps"
+        "./test/acceptance/steps/pageDesigner/shopCategory/shopCategory.steps",
+        "./test/acceptance/steps/pageDesigner/richText/richText.steps.js",
+        "./test/acceptance/steps/pageDesigner/shopTheLook/shopTheLook.steps.js"
     ],
     "user1": {
         "fName": "John",
@@ -133,5 +137,14 @@
         "name": "John Smith",
         "addressTitle": "Apartment",
         "newPassword": "Password123!"
+    },
+    "pageDesigner": {
+        "richTextTitle" : "What's New Trending",
+        "shopTheLookOverlayText": "Spring Look",
+        "shopTheLookSetItems": "3 Items",
+        "shopTheLookButton": "Shop The Look",
+        "shopTheLookProductName": "Short Sleeve Raglan Smock Shirt.",
+        "imageAndTextOverlayText": "Summer Look",
+        "imageAndTextNewArrival": "/s/RefArch/new arrivals/?lang=default"
     }
 }
