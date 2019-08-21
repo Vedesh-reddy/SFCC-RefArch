@@ -10,7 +10,7 @@
              <!---Displays large and extra large screens--->
             <figure class="shopthelook-figure-lg d-none d-lg-block">
                 <picture>
-                    <a href="${pdict.urls.quickView}">
+                    <a href="${pdict.urls.product}">
                         <isinclude template="/experience/components/commerce_assets/shopTheLook/imageFile"/>
                         <div class="col-8 product-info">
                             <isinclude template="/experience/components/commerce_assets/shopTheLook/titleAndPrice"/>
