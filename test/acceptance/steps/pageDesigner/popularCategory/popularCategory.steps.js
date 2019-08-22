@@ -1,4 +1,4 @@
-const { I, pageDesigner } = inject();
+const { I, data, pageDesigner } = inject();
 
 Then('shopper should see the popularCategories layout', () => {
     I.waitForElement('.popular-categories');

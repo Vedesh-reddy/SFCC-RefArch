@@ -140,11 +140,47 @@
     },
     "pageDesigner": {
         "richTextTitle" : "What's New Trending",
+
         "shopTheLookOverlayText": "Spring Look",
         "shopTheLookSetItems": "3 Items",
         "shopTheLookButton": "Shop The Look",
         "shopTheLookProductName": "Short Sleeve Raglan Smock Shirt.",
+
         "imageAndTextOverlayText": "Summer Look",
-        "imageAndTextNewArrival": "/s/RefArch/new arrivals/?lang=default"
+        "imageAndTextNewArrival": "/s/RefArch/new arrivals/?lang=default",
+        "campaignBannerMessage": "We're Taking Sale To the Next Level! 80% OFF!",
+
+        "category1": "Shoes",
+        "category2": "Scarves",
+        "category3": "Accessories",
+        "category4": "Men's New Arrivals",
+        "category5": "Women's New Arrivals",
+        "categoryLink": "/s/RefArch/womens/?lang=default",
+
+        "mainBannerHeading": "Dresses\nfor\nBesties",
+        "mainBannerSubHeading": "Shop Now",
+        "mainBannerLink": "/s/RefArch/womens/clothing/dresses/?lang=default",
+
+        "popularCategory1": "Outfits",
+        "popularCategory2": "Tops",
+        "popularCategory3": "Dresses",
+        "popularCategory4": "Bottoms",
+        "popularCategory5": "Jackets & Coats",
+        "popularCategory6": "Feeling Red",
+
+        "productTileQuickView": "Quick Shop",
+        "productTileProductName": "Floral Print Pencil Skirt.",
+        "productTile1ProductPrice": "$129.00",
+        "productTile3ProductStrikeThroughPrice": "$59.00",
+        "productTile3ProductPrice": "$43.99",
+        "productTile1PDPLink": "/s/RefArch/floral-print-pencil-skirt/25696881M.html?lang=default",
+
+        "shopCategory1": "Women's New Arrivals",
+        "shopCategory2": "Men's New Arrivals",
+        "shopCategory3": "Shoes",
+        "shopCategory4": "Scarves",
+        "shopCategory5": "Accessories",
+        "shopCategoryTitle": "Shop Category",
+        "shopCategoryLink": "/s/RefArch/womens/accessories/shoes/?lang=default"
     }
 }

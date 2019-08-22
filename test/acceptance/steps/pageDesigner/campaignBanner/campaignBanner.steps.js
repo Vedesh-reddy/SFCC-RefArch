@@ -1,4 +1,4 @@
-const { I, pageDesigner } = inject();
+const { I, data, pageDesigner } = inject();
 
 Then('shopper should see the campaign banner', () => {
     I.waitForElement(pageDesigner.locators.campaignBanner);
@@ -6,7 +6,7 @@ Then('shopper should see the campaign banner', () => {
 });
 
 Then('shopper should see the campaign banner message', () => {
-    I.see('We\'re Taking Sale To the Next Level! 80% OFF!', pageDesigner.locators.campaignBannerMessage);
+    I.see(data.pageDesigner.campaignBannerMessage, pageDesigner.locators.campaignBannerMessage);
 });
 
 
