@@ -16,19 +16,28 @@
             position: relative;
             border-radius: 0;
         }
+
+        .product-tile-component-figure {
+            width: 100%;
+        }
+
+        .product-tile-component-image {
+            width: 100%;
+        }
     }
 
     .product-tile-image .quick-shop {
         display: none;
     }
 
-    .product-tile-image:hover .quick-shop {
-        margin: -2.875em 1em 0.5em;
-
-        @include media-breakpoint-up(lg) {
-            display: block;
-        }
-    }
+    // DO NOT display quickview for now since we have not yet implemented the feature.
+    //.product-tile-image:hover .quick-shop {
+    //    margin: -2.875em 1em 0.5em;
+    //
+    //    @include media-breakpoint-up(lg) {
+    //        display: block;
+    //    }
+    //}
 
     .product-tile-body {
         @include media-breakpoint-up(md) {

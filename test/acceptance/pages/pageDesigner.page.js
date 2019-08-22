@@ -41,7 +41,7 @@ module.exports = {
         campaignBannerCloseButton: '.campaign-banner .close-button .close',
 
         productTile1: prodTile1ComponentSel,
-        productTile1Image: carousel2Item1Selector + ' .product-tile-image .component-image',
+        productTile1Image: carousel2Item1Selector + ' .product-tile-image .product-tile-component-image',
         productTile1Quickview: prodTile1ComponentSel + ' .quick-shop',
         productTile1ProductName: prodTile1ComponentSel + ' .product-name-link',
         productTile1ProductPrice: prodTile1ComponentSel + ' .product-price .sales',

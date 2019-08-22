@@ -16,12 +16,6 @@ Then('shopper should not see quickview on product tile', () => {
     I.dontSeeElement(pageDesigner.locators.productTile1Quickview);
 });
 
-Then('shopper should see quickview when hover over image', () => {
-    I.moveCursorTo(pageDesigner.locators.productTile1Image);
-    I.seeElement(pageDesigner.locators.productTile1Quickview);
-    I.see('Quick Shop', pageDesigner.locators.productTile1Quickview);
-});
-
 Then('shopper should see the product name on product tile', () => {
     I.see('Floral Print Pencil Skirt.', pageDesigner.locators.productTile1ProductName);
 });

@@ -9,7 +9,6 @@ Feature: Product Tile on Page Designer Home Page
         Then shopper should see the alt attribute on product image
         Then shopper should see the title attribute on product image
         Then shopper should not see quickview on product tile
-        Then shopper should see quickview when hover over image
         Then shopper should see the product name on product tile
         Then shopper should see the regular price on product tile
         Then shopper should see the strike-through price on product tile
