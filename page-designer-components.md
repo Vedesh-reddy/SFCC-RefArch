@@ -147,13 +147,9 @@ Shows a navigation bar with links to categories.
 ### Notes
 
 Has a text headline attribute.
-
-Has a image picker attribute for selecting background image and focal point.
-
-Has applying shade to image attribute
-
-Has change text to white color attribute
-
+Has an image picker attribute for selecting background image and focal point.
+Has applying shade to image attribute.
+Has change text to white color attribute.
 Has four required and eight optional category attributes.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
@@ -195,11 +191,11 @@ A component showing combined image and text.
 
 ### Notes
 
-Has an image picker attribute and focal point
-Has an optional alt text attribute
-Has an optional text overlay attribute
-Has an optional image link attribute
-Has an optional text under image attribute
+Has an image picker attribute and focal point.
+Has an optional alt text attribute.
+Has an optional text overlay attribute.
+Has an optional image link attribute.
+Has an optional text under image attribute.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -220,7 +216,7 @@ Shows a hero image with a text overlay and a ‘Shop Now’ link.
 
 ### Notes
 
-Has an image attribute, a text overlay attribute and a category picker to create a link.
+Has an image attribute, a text overlay attribute, and a category picker to create a link.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -228,7 +224,7 @@ Has an image attribute, a text overlay attribute and a category picker to create
 
 ## 1 Row x 1 Col (Mobile, Desktop)
 
-Shows a grid with 1 region into which a merchant can drop other component.
+Shows a grid with one region into which a merchant can drop other components.
 
 ### Files
 ```
@@ -240,7 +236,7 @@ Shows a grid with 1 region into which a merchant can drop other component.
 
 ### Notes
 
-Mobile phone, tablet and desktop mode all show 1 row by 1 column.
+Mobile phone, tablet, and desktop mode all show one row by one column.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -248,7 +244,7 @@ Mobile phone, tablet and desktop mode all show 1 row by 1 column.
 
 ## 2 Row x 1 Col (Mobile), 1 Row x 2 Col (Desktop)
 
-Shows a grid with 2 region into which a merchant can drop other components.
+Shows a grid with two regions into which a merchant can drop other components.
 
 ### Files
 ```
@@ -260,8 +256,8 @@ Shows a grid with 2 region into which a merchant can drop other components.
 
 ### Notes
 
-Mobile phone, tablet mode will show 2 rows x 1 column
-Desktop mode will show 1 row by 2 columns.
+Mobile phone and tablet mode show two rows by one column.
+Desktop mode shows one row by two columns.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -269,7 +265,7 @@ Desktop mode will show 1 row by 2 columns.
 
 ## 3 Row x 1 Col (Mobile), 1 Row x 3 Col (Desktop)
 
-Shows a grid with 3 regions into which a merchant can drop other components.
+Shows a grid with three regions into which a merchant can drop other components.
 
 ### Files
 ```
@@ -281,8 +277,8 @@ Shows a grid with 3 regions into which a merchant can drop other components.
 
 ### Notes
 
-Mobile phone, tablet mode will show 3 rows x 1 column
-Desktop mode will show 1 row by 3 columns.
+Mobile phone and tablet mode show three rows by one column.
+Desktop mode shows one row by three columns.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -290,7 +286,7 @@ Desktop mode will show 1 row by 3 columns.
 
 ## 2 Row x 2 Col (Mobile), 1 Row x 4 Col (Desktop)
 
-Shows a grid with 4 regions into which a merchant can drop other components.
+Shows a grid with four regions into which a merchant can drop other components.
 
 ### Files
 ```
@@ -302,8 +298,8 @@ Shows a grid with 4 regions into which a merchant can drop other components.
 
 ### Notes
 
-Mobile phone, tablet mode will show 2 rows x 2 columns
-Desktop mode will show 1 row by 4 columns.
+Mobile phone and tablet mode show two rows by two columns.
+Desktop mode shows one row by four columns.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -324,9 +320,9 @@ Shows a grid with six regions into which a merchant can drop other components.
 
 ### Notes
 
-Desktop and Tablet mode show 1 row by 6 columns.
+Desktop and Tablet mode show onr row by six columns.
 
-Mobile Phone mode shows 2 rows by 3 Columns.
+Mobile Phone mode shows two rows by three Columns.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -346,9 +342,9 @@ Shows a grid with six regions into which a merchant can drop other components.
 
 ### Notes
 
-Desktop and Tablet mode show 2 rows by 3 columns.
+Desktop and Tablet mode show two rows by three columns.
 
-Mobile Phone mode shows 3 rows by 2 Columns.
+Mobile Phone mode shows three rows by two columns.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -371,9 +367,9 @@ Shows a grid with six regions into which a merchant can drop other components.
 
 ### Notes
 
-Desktop mode shows 1 double width / double height container next to a 2 rows of 1 column on top of 1 row of three columns
+Desktop mode shows one double-width, double-height container next to two rows of one column on top of one row of three columns.
 
-Mobile Phone and Tablet mode show 1 double width / double height row on top of one row of 2 columns. A show more button to expand to another group of double width / double height on top of one row of 2 columns.
+Mobile Phone and Tablet mode show one double-width, double-height row on top of one row of two columns. A show more button expands to another double-width, double-height row on top of another row of two columns.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -403,7 +399,7 @@ Has a single image picker attribute.
 
 ## Popular Categories Layout
 
-Shows one or more [Round Category Tile with Caption](#Round Category Tile with Caption) components.
+Shows one or more [Round Category Tile with Caption](#Round-Category-Tile-with-Caption) components.
 
 ### Files
 ```
@@ -416,7 +412,7 @@ Shows one or more [Round Category Tile with Caption](#Round Category Tile with C
 
 ### Notes
 
-Has a text headline attribute. This component can hold an arbitrary number of [Round Category Tile with Caption](#Round Category Tile with Caption) components.
+Has a text headline attribute. This component can hold an arbitrary number of [Round Category Tile with Caption](#Round-Category-Tile-with-Caption) components.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
@@ -424,7 +420,7 @@ Has a text headline attribute. This component can hold an arbitrary number of [R
 
 ## Round Category Tile with Caption
 
-Shows a Round Category Tile with Caption.
+Shows a round category tile with a caption.
 
 ### Files
 ```
@@ -442,7 +438,7 @@ This component requires a selection of a category. The merchant can change the c
 
 By default, this component uses one of the images assigned to the category (used in slots). If the fall-back images are used, there are two fields to add inline css rules for adjusting the image display size and css positioning within the circle used to display in the isml template.
 
-The merchant can override the image using the image selector and choosing a focal point.
+The merchant can override the image by using the image selector and choosing a focal point.
 
 [Return to top](#Page-Designer-Components-for-Storefront-Reference-Architecture)
 
