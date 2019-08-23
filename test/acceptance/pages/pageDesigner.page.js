@@ -11,6 +11,9 @@ var shopTheLookCell4 = '.cell4 .shopthelook-figure-lg';
 
 module.exports = {
     locators: {
+        carouselNext: '.carousel-control-next',
+        carouselPrevious: '.carousel-control-prev',
+
         mainBanner: '.mainbanner-container',
         mainBannerHeading: '.image-heading-text',
         mainBannerSubHeading: '.mainbanner-sub-text',
@@ -67,5 +70,19 @@ module.exports = {
         I.seeElement(locator);
         I.click(locator);
         I.seeInCurrentUrl(url);
+    },
+    seeCarousel(position) {
+        I.seeElement('.carousel:nth-child(' + position + ')');
+    },
+    controlsVisible(position) {
+        I.seeElement('.carousel:nth-child(' + position + ') .carousel-control-next');
+        I.seeElement('.carousel:nth-child(' + position + ') .carousel-control-prev');
+    },
+    verifySlide(position, expectedText, limitingElement) {
+        I.seeTextEquals(expectedText, '.carousel:nth-child(' + position + ') .carousel-item.active ' + limitingElement);
+    },
+    carouselControlClick(position, control) {
+        I.click('.carousel:nth-child(' + position + ') ' + control);
+        I.wait(1);
     }
 };
