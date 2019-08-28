@@ -209,7 +209,7 @@ module.exports = {
         $('.store-locator-container .radius').change(function () {
             var radius = $(this).val();
             var searchKeys = $('.results').data('search-key');
-            var url = $('.radius').data('action-url');
+            var url = $(this).data('action-url');
             var urlParams = {};
 
             if (searchKeys.postalCode) {
