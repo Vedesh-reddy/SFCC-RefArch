@@ -2,6 +2,7 @@
 
 'use strict';
 
+var HookMgr = require('dw/system/HookMgr');
 var middleware = require('./middleware');
 var Request = require('./request');
 var Response = require('./response');
@@ -96,6 +97,11 @@ Server.prototype = {
         });
 
         this.routes[name] = route;
+
+        if (HookMgr.hasHook('app.server.registerRoute')) {
+            // register new route, allowing route events to be registered against
+            HookMgr.callHook('app.server.registerRoute', 'registerRoute', route);
+        }
 
         return route;
     },
