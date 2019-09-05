@@ -4,7 +4,7 @@
           method="get"
           name="simpleSearch">
         <input class="form-control search-field"
-               type="search"
+               type="text"
                name="q"
                value=""
                placeholder="${Resource.msg('label.header.searchwatermark', 'common', null)}"
