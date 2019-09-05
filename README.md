@@ -98,4 +98,4 @@ npm run test:integration -- --baseUrl devxx-sitegenesis-dw.demandware.net
 
 
 #Page Designer Components for Storefront Reference Architecture
-See: [Page Desinger Components](./page-designer-components.md)
+See: [Page Designer Components](./page-designer-components.md)
