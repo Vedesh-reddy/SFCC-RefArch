@@ -16,7 +16,8 @@
                aria-autocomplete="list"
                aria-activedescendant=""
                aria-controls="search-results"
-               aria-label="${Resource.msg('simplesearch.searchtext', 'common', null)}" />
+               aria-label="${Resource.msg('simplesearch.searchtext', 'common', null)}"
+               autocomplete="off" />
         <button type="reset" name="reset-button" class="fa fa-times reset-button d-none" aria-label="${Resource.msg('label.header.search.clear', 'common', null)}"></button>
         <button type="submit" name="search-button" class="fa fa-search" aria-label="${Resource.msg('label.header.search.go', 'common', null)}"></button>
         <div class="suggestions-wrapper" data-url="${URLUtils.url('SearchServices-GetSuggestions', 'q')}"></div>
