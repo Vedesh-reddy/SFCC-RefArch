@@ -576,12 +576,14 @@ describe('checkoutHelpers', function () {
         it('should return result with error = false when no exception', function () {
             var currentBasket = {
                 totalGrossPrice: '$200.00',
-                paymentInstrument: {
-                    paymentTransaction: {
-                        setAmount: function (orderTotal) { // eslint-disable-line no-unused-vars
+                paymentInstruments: [
+                    {
+                        paymentTransaction: {
+                            setAmount: function (orderTotal) { // eslint-disable-line no-unused-vars
+                            }
                         }
                     }
-                }
+                ]
             };
 
             var result = checkoutHelpers.calculatePaymentTransaction(currentBasket);
@@ -591,13 +593,15 @@ describe('checkoutHelpers', function () {
         it('should return result with error = true when there is an exception', function () {
             var currentBasket = {
                 totalGrossPrice: '$200.00',
-                paymentInstrument: {
-                    paymentTransaction: {
-                        setAmount: function (value) { // eslint-disable-line no-unused-vars
-                            throw new Error();
+                paymentInstruments: [
+                    {
+                        paymentTransaction: {
+                            setAmount: function (value) { // eslint-disable-line no-unused-vars
+                                throw new Error();
+                            }
                         }
                     }
-                }
+                ]
             };
 
             var result = checkoutHelpers.calculatePaymentTransaction(currentBasket);
