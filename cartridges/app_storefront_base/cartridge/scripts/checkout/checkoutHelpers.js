@@ -370,12 +370,11 @@ function calculatePaymentTransaction(currentBasket) {
 
     try {
         Transaction.wrap(function () {
-            // TODO: This function will need to account for gift certificates at a later date
+            // Assuming that there is only one payment instrument used for the total order amount.
+            // TODO: Will have to rewrite this logic once we start supporting multiple payment instruments for same order
             var orderTotal = currentBasket.totalGrossPrice;
-            var paymentInstruments = currentBasket.paymentInstruments;
-            collections.map(paymentInstruments, function (paymentInstrument) {
-                paymentInstrument.paymentTransaction.setAmount(orderTotal);
-            });
+            var paymentInstrument = currentBasket.paymentInstruments[0];
+            paymentInstrument.paymentTransaction.setAmount(orderTotal);
         });
     } catch (e) {
         result.error = true;
