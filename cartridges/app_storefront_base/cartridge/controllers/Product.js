@@ -83,6 +83,14 @@ server.get('Variation', function (req, res, next) {
         promotionsTemplate
     );
 
+    var optionsContext = { product: { options: product.options } };
+    var optionsTemplate = 'product/components/options';
+
+    product.optionsHtml = renderTemplateHelper.getRenderedHtml(
+        optionsContext,
+        optionsTemplate
+    );
+
     res.json({
         product: product,
         resources: productHelper.getResources()

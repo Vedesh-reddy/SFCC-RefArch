@@ -66,7 +66,7 @@
                                     <isinclude template="product/components/variationAttribute" />
                                 </div>
 
-                                <isif condition="${attributeStatus.last && !isBundle && product.options.length === 0}">
+                                <isif condition="${attributeStatus.last && !isBundle}">
                                     <!-- Quantity Drop Down Menu -->
                                     <div class="attribute quantity col-4">
                                         <isinclude template="product/components/quantity" />
@@ -75,7 +75,7 @@
                             </div>
                         </isloop>
 
-                        <isif condition="${!product.variationAttributes && product.options.length === 0}">
+                        <isif condition="${!product.variationAttributes}">
                             <div class="row">
                                 <div class="col-12">
                                     <div class="simple-quantity">
@@ -85,9 +85,10 @@
                             </div>
                         </isif>
 
-
                         <isif condition="${product.options && product.options.length > 0}">
+                            <div class="product-options">
                                 <isinclude template="product/components/options" />
+                            </div>
                         </isif>
 
                         <!-- Size Chart -->

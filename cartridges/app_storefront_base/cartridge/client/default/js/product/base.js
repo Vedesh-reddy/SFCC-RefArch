@@ -203,18 +203,12 @@ function getAttributesHtml(attributes) {
 /**
  * Updates DOM using post-option selection Ajax response
  *
- * @param {OptionSelectionResponse} options - Ajax response options from selecting a product option
+ * @param {OptionSelectionResponse} optionsHtml - Ajax response optionsHtml from selecting a product option
  * @param {jQuery} $productContainer - DOM element for current product
  */
-function updateOptions(options, $productContainer) {
-    options.forEach(function (option) {
-        var $optionEl = $productContainer.find('.product-option[data-option-id*="' + option.id
-            + '"]');
-        option.values.forEach(function (value) {
-            var valueEl = $optionEl.find('option[data-value-id*="' + value.id + '"]');
-            valueEl.val(value.url);
-        });
-    });
+function updateOptions(optionsHtml, $productContainer) {
+	// Update options
+    $productContainer.find('.product-options').empty().html(optionsHtml);
 }
 
 /**
@@ -281,7 +275,7 @@ function handleVariantResponse(response, $productContainer) {
     }
 
     // Update promotions
-    $('.promotions').empty().html(response.product.promotionsHtml);
+    $productContainer.find('.promotions').empty().html(response.product.promotionsHtml);
 
     updateAvailability(response, $productContainer);
 
@@ -343,7 +337,7 @@ function attributeSelect(selectedValueUrl, $productContainer) {
             method: 'GET',
             success: function (data) {
                 handleVariantResponse(data, $productContainer);
-                updateOptions(data.product.options, $productContainer);
+                updateOptions(data.product.optionsHtml, $productContainer);
                 updateQuantities(data.product.quantities, $productContainer);
                 $('body').trigger('product:afterAttributeSelect',
                     { data: data, container: $productContainer });
