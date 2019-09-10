@@ -85,11 +85,11 @@
                             </div>
                         </isif>
 
-                        <isif condition="${product.options && product.options.length > 0}">
-                            <div class="product-options">
+                        <div class="product-options">
+                            <isif condition="${product.options && product.options.length > 0}">
                                 <isinclude template="product/components/options" />
-                            </div>
-                        </isif>
+                            </isif>
+                        </div>
 
                         <!-- Size Chart -->
                         <isif condition="${product.variationAttributes && product.sizeChartId}">
