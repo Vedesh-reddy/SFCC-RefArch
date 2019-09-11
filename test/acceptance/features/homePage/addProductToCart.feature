@@ -1,7 +1,7 @@
 Feature: Add Product To Cart
     As a shopper, I want to search for a product and add it to cart
 
-@cart
+@homePage @cart
     Scenario: Shopper is able to add a product to a cart
         When shopper selects yes or no for tracking consent
         Given Shopper searches for "Elbow Sleeve Ribbed Sweater"

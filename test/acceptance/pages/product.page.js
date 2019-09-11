@@ -30,6 +30,8 @@ module.exports = {
         filterColor: '.swatch-circle-',
         filterSize: 'span.null',
         filterPrice: 'span',
+        filterOption: '.custom-select',
+        filterPDP: '.pdp-link a.link',
         productTotals: '.result-count.text-center',
         qv_ProductBtn: '.quickview.hidden-sm-down',
         qv_ColorBtn: '.color-attribute',
@@ -64,7 +66,6 @@ module.exports = {
     filterProductColor(color) {
         I.waitForElement(this.locators.filterColor + color);
         I.click(this.locators.filterColor + color);
-        I.wait(1);
     },
     filterProductSize(filterSizeTotal) {
         let locator = locate(this.locators.filterSize)
@@ -72,7 +73,6 @@ module.exports = {
             .withText(filterSizeTotal);
         I.waitForElement(locator);
         I.click(locator);
-        I.wait(1);
     },
     filterProductPrice(filterPriceTotal) {
         let locator = locate(this.locators.filterPrice)
@@ -80,7 +80,18 @@ module.exports = {
             .withText(filterPriceTotal);
         I.waitForElement(locator);
         I.click(locator);
-        I.wait(1);
+    },
+    filterProductOption(filterOption, firstProductName) {
+        let locatorOption = locate(this.locators.filterOption)
+            .withAttr({ 'aria-label': 'Sort By' });
+        I.waitForElement(locatorOption);
+        I.scrollTo(locatorOption);
+        I.selectOption(locatorOption, filterOption);
+        I.wait(1.5);
+
+        let locatorProduct = locate(this.locators.filterPDP).first();
+        I.waitForElement(locatorProduct);
+        I.see(firstProductName, locatorProduct);
     },
     verifyProductTotals(totalItems) {
         let locator = locate(this.locators.productTotals)

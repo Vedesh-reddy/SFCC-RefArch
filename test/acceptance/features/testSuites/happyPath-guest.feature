@@ -7,9 +7,10 @@ Feature: Follow the happy path of a guest user
         When shopper selects yes or no for tracking consent
         Given Shopper searches for "Elbow Sleeve Ribbed Sweater"
         Then selects size "S"
-        Then shopper changes product quantity
         Then he adds the product to cart
-        Then shopper selects checkout from cart
+        Then shopper goes to cart
+        Then shopper changes product quantity to "2"
+        And shopper selects checkout from cart
         And shopper selects checkout as guest
         And shopper fills out shipping information
         Then shopper proceeds to payment section

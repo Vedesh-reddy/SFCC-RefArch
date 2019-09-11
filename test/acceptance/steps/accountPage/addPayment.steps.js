@@ -13,5 +13,5 @@ Then('shopper clicks view payments', () => {
 });
 
 Then('shopper removes a saved credit card', () => {
-    accountPage.removePayment();
+    accountPage.removePayment(data.account.deletePaymentModalText);
 });

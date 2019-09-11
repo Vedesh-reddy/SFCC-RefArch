@@ -2,13 +2,11 @@ const { I, homePage, productPage } = inject();
 var should = require('should'); // eslint-disable-line
 
 Given('shopper goes to the Product Detail Page', () => {
-    // From "test/acceptance/features/productDetailPage/pdpSimpleLayout.feature" {"line":6,"column":9}
     I.amOnPage('/on/demandware.store/Sites-RefArch-Site/en_US/Product-Show?pid=P0150M');
     homePage.accept();
 });
 
 Then('shopper sees all the product related information', async () => {
-    // From "test/acceptance/features/productDetailPage/pdpSimpleLayout.feature" {"line":9,"column":9}
     (await I.grabAttributeFrom(productPage.locators.productImage, 'src'))[0].trim().should.containEql('P0150_001.jpg');
     (await I.grabTextFrom(productPage.locators.productName))[0].trim().should.equal('Upright Case (33L - 3.7Kg)');
     (await I.grabTextFrom(productPage.locators.productId)).trim().should.equal('P0150M');
@@ -19,7 +17,6 @@ Then('shopper sees all the product related information', async () => {
 });
 
 Then('shopper sees the correct breadcrumbs', async () => {
-    // From "test/acceptance/features/productDetailPage/pdpSimpleLayout.feature" {"line":13,"column":9}
     const breadcrumbsHrefs = await I.grabAttributeFrom(productPage.locators.navigationCrumbs, 'href');
     breadcrumbsHrefs[0].should.containEql('mens'); // Mens Category
     breadcrumbsHrefs[1].should.containEql('accessories'); // Accessories Category
@@ -27,7 +24,6 @@ Then('shopper sees the correct breadcrumbs', async () => {
 });
 
 Then('shopper sees the correct social links', async () => {
-    // From "test/acceptance/features/productDetailPage/pdpSimpleLayout.feature" {"line":17,"column":9}
     I.seeElement(productPage.locators.pinterest); // Pinterest
     I.seeElement(productPage.locators.facebook); // Facebook
     I.seeElement(productPage.locators.twitter); // Twitter
@@ -40,12 +36,10 @@ Then('shopper sees the correct social links', async () => {
 });
 
 Then('shopper is able to see Add to Cart Button Enabled', () => {
-    // From "test/acceptance/features/productDetailPage/pdpSimpleLayout.feature" {"line":21,"column":9}
     I.seeElement(productPage.locators.addToCartButtonEnabled);
 });
 
 Then('shopper is able to copy Product URL using Copy Link Icon', () => {
-    // From "test/acceptance/features/productDetailPage/pdpSimpleLayout.feature" {"line":25,"column":9}
     productPage.clickCopyLink();
     I.seeElement(productPage.locators.copyLinkMsgVisible);
 });

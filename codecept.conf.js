@@ -26,17 +26,17 @@ const HOST = DEFAULT_HOST || process.env.HOST;
 
 // Here is where you can target specific browsers/configuration to run on sauce labs.
 const userSpecificBrowsers = {
-    chromePhone: {
+    phone: {
         browser: 'chrome',
         desiredCapabilities: {
             chromeOptions: {
                 mobileEmulation: {
-                    deviceName: "Galaxy S5"
+                    deviceName: "iPhone X"
                 }
             }
         }
     },
-    chromeTablet: {
+    tablet: {
         browser: 'chrome',
         desiredCapabilities: {
             chromeOptions: {
@@ -45,28 +45,6 @@ const userSpecificBrowsers = {
               }
             }
           }
-    },
-    firefox: {
-        capabilities: {
-            'sauce:options': {
-                seleniumVersion: '3.11.0'
-            },
-        }
-    },
-    edge: {
-        capabilities: {
-            'sauce:options': {
-                seleniumVersion: '3.11.0'
-            }
-        }
-    },
-    safari: {
-        windowSize: 'maximize',
-        capabilities: {
-            'sauce:options': {
-                seleniumVersion: '3.11.0'
-            }
-        }
     }
 }
 
@@ -99,4 +77,4 @@ let conf = {
     name: 'storefront-reference-architecture'
 };
 
-exports.config = merge(merge(conf, codeceptjsShared.conf), codeceptJsSauce.conf(SAUCE_USER, SAUCE_KEY, userSpecificBrowsers));
+exports.config = merge(merge(conf, codeceptjsShared.config.master), codeceptJsSauce.config.saucelabs(SAUCE_USER, SAUCE_KEY, userSpecificBrowsers));

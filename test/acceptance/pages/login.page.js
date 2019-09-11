@@ -18,7 +18,14 @@ module.exports = {
         orderNumber: '#trackorder-form-number',
         orderEmail: '#trackorder-form-email',
         orderZipCode: '#trackorder-form-zip',
-        orderReceipt: '.card-body.order-total-summary'
+        orderReceipt: '.card-body.order-total-summary',
+        forgotPassword: '#password-reset',
+        forgotPasswordForm: '#reset-password-email',
+        submitEmailBtn: '#submitEmailButton',
+        verifyPasswordModal: '.modal-content',
+        hamburgerLogin: '.navbar-toggler.d-md-none',
+        loginBtn: '.nav-item.d-lg-none',
+        loginBtnLink: 'a.nav-link'
     },
     login(email, password) {
         // fill login form
@@ -26,6 +33,7 @@ module.exports = {
         I.waitForElement(this.locators.passwordLogin);
         I.fillField(this.locators.emailLogin, email);
         I.fillField(this.locators.passwordLogin, password);
+
         // click login
         I.waitForElement(this.locators.primaryButton);
         I.click(this.locators.primaryButton);
@@ -49,5 +57,20 @@ module.exports = {
         I.see(product.shipping, this.locators.orderReceipt);
         I.see(product.tax, this.locators.orderReceipt);
         I.see(product.estimatedTotal, this.locators.orderReceipt);
+    },
+    forgotPassword(email) {
+        I.wait(2); // Must wait because of modal fade chops the email param off randomly and fails the test
+        let locator = locate(this.locators.forgotPasswordForm)
+            .withAttr({ name: 'loginEmail' });
+        I.waitForElement(locator);
+        I.fillField(locator, email);
+    },
+    verifyPasswordReset() {
+        I.waitForElement(this.locators.submitEmailBtn);
+        I.click(this.locators.submitEmailBtn);
+        I.waitForElement(this.locators.verifyPasswordModal);
+        I.see('Request to Reset Your Password', this.locators.verifyPasswordModal);
+        I.waitForElement(this.locators.submitEmailBtn);
+        I.click(this.locators.submitEmailBtn);
     }
 };

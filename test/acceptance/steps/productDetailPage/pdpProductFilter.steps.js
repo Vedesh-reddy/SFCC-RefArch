@@ -1,4 +1,12 @@
-const { data, productPage } = inject();
+const { data, productPage, homePage } = inject();
+
+Then('shopper searches for category from menu', () => {
+    homePage.searchMenu(data.searchPages.womensTops);
+});
+
+Then('shopper filters product by option', () => {
+    productPage.filterProductOption(data.filterProduct.option, data.filterProduct.productName);
+});
 
 Then('shopper filters product by color', () => {
     productPage.filterProductColor(data.filterProduct.color);

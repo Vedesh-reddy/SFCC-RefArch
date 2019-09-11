@@ -14,13 +14,14 @@
         "./test/acceptance/steps/homePage/addProductToCart.steps.js",
         "./test/acceptance/steps/homePage/emailSignup.steps.js",
         "./test/acceptance/steps/homePage/landHomePage.steps.js",
+        "./test/acceptance/steps/homePage/locateStore.steps.js",
         "./test/acceptance/steps/productDetailPage/pdpSimpleLayout.steps.js",
         "./test/acceptance/steps/productDetailPage/pdpQuickViewSearch.steps.js",
         "./test/acceptance/steps/productDetailPage/pdpProductFilter.steps.js",
         "./test/acceptance/steps/checkoutPage/editCart.steps.js",
-        "./test/acceptance/steps/loginPage/checkOrder.steps.js",
         "./test/acceptance/steps/loginPage/createAccount.steps.js",
         "./test/acceptance/steps/loginPage/loginUser.steps.js",
+        "./test/acceptance/steps/loginPage/forgotPassword.steps.js",
         "./test/acceptance/steps/accountPage/editProfile.steps.js",
         "./test/acceptance/steps/accountPage/changePassword.steps.js",
         "./test/acceptance/steps/accountPage/addPayment.steps.js",
@@ -40,18 +41,17 @@
         "./test/acceptance/steps/pageDesigner/carousel/carousel.steps.js"
     ],
     "user1": {
-        "fName": "John",
-        "lName": "Smith",
-        "address1": "123 Main Street",
-        "address2": "Apt 01",
+        "fName": "Test1",
+        "lName": "User1",
+        "address1": "104 Presidential Way",
         "country": "United States",
         "state": "Massachusetts",
         "stateAbr": "MA",
-        "city": "Burlington",
-        "zip": "11111",
-        "phone": "5555555555",
-        "email": "jsmith@email.com",
-        "password": "Password123!"
+        "city": "Woburn",
+        "zip": "01801",
+        "phone": "781-555-1212",
+        "email": "testuser1@demandware.com",
+        "password": "Test123!"
     },
     "CC": {
         "ccNum": "4111111111111111",
@@ -77,19 +77,19 @@
         "size": "16R"
     },
     "product3": {
-        "name": "Ribbed Cardigan.",
+        "name": "Woven Trimmed Cardigan.",
         "quantity": "1",
-        "color": "Ivory",
-        "size": "M",
-        "productLinkQV": "/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowQuickView?pid=25697194M"
+        "color": "White",
+        "size": "L",
+        "productLinkQV": "/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowQuickView?pid=701644391737M"
     },
     "searchPages": {
         "womensTops": "/on/demandware.store/Sites-RefArch-Site/en_US/Search-Show?cgid=womens-clothing-tops"
     },
     "orderHistory": {
         "number": "00004201",
-        "email": "jsmith@email.com",
-        "zip": "11111"
+        "email": "testuser1@demandware.com",
+        "zip": "01801"
     },
     "filterProduct": {
         "color": "white",
@@ -97,37 +97,46 @@
         "size": "12",
         "sizeTotalItems": "11 Results",
         "price": "$20 - $49.99",
-        "priceTotalItems": "2 Results"
+        "priceTotalItems": "2 Results",
+        "option": "Price Low To High",
+        "productName": "Long Sleeve Seamed Button Front Shirt"
+    },
+    "storeLocator": {
+        "pageURL": "/on/demandware.store/Sites-RefArch-Site/en_US/Stores-Find?showMap=true&horizontalView=true&isForm=true",
+        "zipCode": "01801",
+        "numStores": "5",
+        "radius": "300",
+        "numStoresRadius": "11"
     },
     "home": {
-        "email": "test@user.com"
+        "email": "testuser1@demandware.com"
     },
     "login": {
         "loginPage": "/on/demandware.store/Sites-RefArch-Site/en_US/Account-Show?registration=false",
         "homePage": "/on/demandware.store/Sites-RefArch-Site/en_US/Home-Show",
-        "email": "jsmith@email.com",
-        "password": "Password123!",
+        "email": "testuser1@demandware.com",
+        "password": "Test123!",
         "fName": "John",
         "lName": "Smith",
-        "phone": "5555555555",
-        "regEmail": "jsmith@email.com",
+        "phone": "781-555-1212",
+        "newRegEmail": "jsmith@email.com",
         "loginHomeScreen": "span.user-message",
         "emailLogin": "#login-form-email",
         "passwordLogin": "#login-form-password",
-        "primaryButton": ".btn.btn-block.btn-primary"
+        "primaryButton": ".btn.btn-block.btn-primary",
+        "registrationError": "Username is invalid."
     },
     "checkout": {
-        "fName": "John",
-        "lName": "Smith",
-        "address1": "123 Main Street",
-        "address2": "Apt 01",
+        "fName": "Test1",
+        "lName": "User1",
+        "address1": "104 Presidential Way",
         "country": "United States",
         "state": "Massachusetts",
         "stateAbr": "MA",
-        "city": "Burlington",
-        "zip": "11111",
-        "phone": "5555555555",
-        "email": "jsmith@email.com",
+        "city": "Woburn",
+        "zip": "01801",
+        "phone": "781-555-1212",
+        "email": "testuser1@demandware.com",
         "ccNum": "4111111111111111",
         "ccSecCode": "555",
         "expMonth": "08",
@@ -135,9 +144,12 @@
         "ccExpDate": "8/2023"
     },
     "account": {
+        "accountPage": "/on/demandware.store/Sites-RefArch-Site/en_US/Account-Show",
         "name": "John Smith",
         "addressTitle": "Apartment",
-        "newPassword": "Password123!"
+        "addressHome": "Home",
+        "newPassword": "Test123!",
+        "deletePaymentModalText": "Delete Payment?"
     },
     "pageDesigner": {
         "richTextTitle" : "What's New Trending",
