@@ -19,7 +19,7 @@ function setProductProperties(productSearch, httpParams, selectedCategory, sorti
         productSearch.setCategoryID(selectedCategory.ID);
     }
     if (httpParams.pid) {
-        productSearch.setProductID(httpParams.pid);
+        productSearch.setProductIDs([httpParams.pid]);
     }
     if (httpParams.pmin) {
         productSearch.setPriceMin(parseInt(httpParams.pmin, 10));

@@ -29,7 +29,7 @@ describe('search script', function () {
         var mockProductSearch = {
             setSearchPhrase: function () {},
             setCategoryID: function () {},
-            setProductID: function () {},
+            setProductIDs: function () {},
             setPriceMin: function () {},
             setPriceMax: function () {},
             setSortingRule: function () {},
@@ -49,7 +49,7 @@ describe('search script', function () {
 
         var spySetSearchPhrase = sinon.spy(mockProductSearch, 'setSearchPhrase');
         var spySetCategoryID = sinon.spy(mockProductSearch, 'setCategoryID');
-        var spySetProductID = sinon.spy(mockProductSearch, 'setProductID');
+        var spySetProductIDs = sinon.spy(mockProductSearch, 'setProductIDs');
         var spySetPriceMin = sinon.spy(mockProductSearch, 'setPriceMin');
         var spySetPriceMax = sinon.spy(mockProductSearch, 'setPriceMax');
         var spySetSortingRule = sinon.spy(mockProductSearch, 'setSortingRule');
@@ -76,7 +76,7 @@ describe('search script', function () {
         });
 
         it('should set the product ID', function () {
-            assert.isTrue(spySetProductID.calledWith(mockParams.pid));
+            assert.isTrue(spySetProductIDs.calledWith([mockParams.pid]));
         });
 
         it('should set the minimum price', function () {
