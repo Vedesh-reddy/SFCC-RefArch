@@ -7,13 +7,12 @@ function urlUtils() {}
  * @returns {String}
  */
 urlUtils.stripBasicAuth = function (url) {
-    var splitUrl = url.split('storefront');
-    if (splitUrl.length === 1) {
-        return url;
+    var sfIndex = url.indexOf('storefront');
+    var atIndex = url.indexOf('@');
+    if (sfIndex > -1 && atIndex > -1) {
+        return url.slice(0, sfIndex) + url.slice(atIndex + 1, url.length);
     }
-    var protocol = splitUrl[0];
-    var host = splitUrl[1].split('@');
-    return protocol + host[1];
+    return url;
 };
 
 module.exports = urlUtils;
