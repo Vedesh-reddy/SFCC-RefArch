@@ -3,7 +3,7 @@
 <isinclude template="/components/modules" sf-toolkit="off" />
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="${require('dw/util/Locale').getLocale(request.getLocale()).getLanguage()}">
     <head>
         <!--[if gt IE 9]><!-->
             <isinclude sf-toolkit="off" template="/common/scripts" />
