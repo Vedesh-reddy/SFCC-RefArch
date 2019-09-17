@@ -41,7 +41,7 @@ module.exports = function fullProduct(product, apiProduct, options) {
 
     var category = apiProduct.getPrimaryCategory();
 
-    if (!category&& (options.productType === 'variant' || options.productType === 'variationGroup')) {
+    if (!category && (options.productType === 'variant' || options.productType === 'variationGroup')) {
         category = apiProduct.getMasterProduct().getPrimaryCategory();
     }
 
