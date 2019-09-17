@@ -40,7 +40,8 @@ module.exports = function fullProduct(product, apiProduct, options) {
     decorators.quantitySelector(product, apiProduct.stepQuantity.value, options.variables, options.options);
 
     var category = apiProduct.getPrimaryCategory();
-    if (!category && options.productType !== 'master') {
+
+    if (!category&& (options.productType === 'variant' || options.productType === 'variationGroup')) {
         category = apiProduct.getMasterProduct().getPrimaryCategory();
     }
 
