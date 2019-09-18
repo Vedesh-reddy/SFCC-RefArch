@@ -1,6 +1,9 @@
 'use strict';
 
-var Response = require('../../../../cartridges/modules/server/response');
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
+var Response = proxyquire('../../../../cartridges/modules/server/response', {
+    '*/cartridge/config/httpHeadersConf': [{ 'id': 'testId', 'value': 'testValue' }]
+});
 var Route = require('../../../../cartridges/modules/server/route');
 var sinon = require('sinon');
 var assert = require('chai').assert;
@@ -51,7 +54,7 @@ describe('route', function () {
             res.redirect('test');
             next();
         }
-        var response = new Response({ redirect: function () {} });
+        var response = new Response({ redirect: function () {}, setHttpHeader: function () {} });
         var route = new Route('test', [tempFunc], mockReq, response);
         route.on('route:Redirect', function (req, res) {
             assert.equal(res.redirectUrl, 'test');
@@ -65,7 +68,7 @@ describe('route', function () {
             res.redirect('test');
             next();
         }
-        var response = new Response({ redirect: baseResponseRedirectMock });
+        var response = new Response({ redirect: baseResponseRedirectMock, setHttpHeader: function () {} });
         var route = new Route('test', [tempFunc], mockReq, response);
         route.getRoute()();
         assert.isTrue(baseResponseRedirectMock.calledOnce);
@@ -79,7 +82,7 @@ describe('route', function () {
             res.redirect('test');
             next();
         }
-        var response = new Response({ redirect: baseResponseRedirectMock });
+        var response = new Response({ redirect: baseResponseRedirectMock, setHttpHeader: function () {} });
         var route = new Route('test', [tempFunc], mockReq, response);
         route.getRoute()();
         assert.isTrue(baseResponseRedirectMock.calledOnce);

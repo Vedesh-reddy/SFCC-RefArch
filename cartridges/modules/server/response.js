@@ -1,6 +1,7 @@
 'use strict';
 
 var assign = require('./assign');
+var httpHeadersConfig = require('*/cartridge/config/httpHeadersConf');
 
 /**
  * @constructor
@@ -19,6 +20,9 @@ function Response(response) {
     this.cachePeriodUnit = null;
     this.personalized = false;
     this.renderings = [];
+    httpHeadersConfig.forEach(function (httpHeader) {
+        this.setHttpHeader(httpHeader.id, httpHeader.value);
+    }, this);
 }
 
 /**

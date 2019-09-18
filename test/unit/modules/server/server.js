@@ -62,6 +62,7 @@ describe('server', function () {
         server = proxyquire('../../../../cartridges/modules/server/server', {
             './render': render,
             './request': request,
+            './response': require('../../../mocks/modules/responseMock'),
             'dw/system/HookMgr': {
                 hasHook: function (/* extension */) {
                     return true;
