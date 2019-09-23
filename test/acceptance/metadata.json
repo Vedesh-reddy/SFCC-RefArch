@@ -38,7 +38,10 @@
         "./test/acceptance/steps/pageDesigner/shopCategory/shopCategory.steps",
         "./test/acceptance/steps/pageDesigner/richText/richText.steps.js",
         "./test/acceptance/steps/pageDesigner/shopTheLook/shopTheLook.steps.js",
-        "./test/acceptance/steps/pageDesigner/carousel/carousel.steps.js"
+        "./test/acceptance/steps/pageDesigner/carousel/carousel.steps.js",
+        "./test/acceptance/steps/sourceCodeRedirects/pdpRedirect.steps.js",
+        "./test/acceptance/steps/sourceCodeRedirects/categoryRedirect.steps.js",
+        "./test/acceptance/steps/sourceCodeRedirects/pageRedirect.steps.js"
     ],
     "user1": {
         "fName": "Test1",
