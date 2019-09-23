@@ -13,7 +13,7 @@
             class="form-control"
             id="registration-form-fname"
             data-missing-error="${Resource.msg('error.message.required','forms',null)}"
-            data-range-error="${Resource.msg('error.message.lessthan50','forms',null)}"
+            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
             aria-describedby="form-fname-error"
             <isprint value=${pdict.profileForm.customer.firstname.attributes} encoding="off" />>
         <div class="invalid-feedback" id="form-fname-error"></div>
@@ -29,7 +29,7 @@
             class="form-control"
             id="registration-form-lname"
             data-missing-error="${Resource.msg('error.message.required','forms',null)}"
-            data-range-error="${Resource.msg('error.message.lessthan50','forms',null)}"
+            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
             aria-describedby="form-lname-error"
             <isprint value=${pdict.profileForm.customer.lastname.attributes} encoding="off" />>
         <div class="invalid-feedback" id="form-lname-error"></div>
@@ -46,7 +46,7 @@
             id="registration-form-phone"
             data-missing-error="${Resource.msg('error.message.required','forms',null)}"
             data-pattern-mismatch="${Resource.msg('error.message.parse.phone.profile.form','forms',null)}"
-            data-range-error="${Resource.msg('error.message.lessthan50','forms',null)}"
+            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
             aria-describedby="form-phone-error"
             <isprint value=${pdict.profileForm.customer.phone.attributes} encoding="off" />
             placeholder="${Resource.msg('example.phone','forms',null)}">
@@ -64,7 +64,7 @@
             id="registration-form-email"
             data-missing-error="${Resource.msg('error.message.required','forms',null)}"
             data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form','forms',null)}"
-            data-range-error="${Resource.msg('error.message.lessthan50','forms',null)}"
+            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
             aria-describedby="form-email-error"
             <isprint value=${pdict.profileForm.customer.email.attributes} encoding="off" />>
         <div class="invalid-feedback" id="form-email-error"></div>
@@ -81,7 +81,7 @@
             id="registration-form-email-confirm"
             data-missing-error="${Resource.msg('error.message.required','forms',null)}"
             data-pattern-mismatch="${Resource.msg('error.message.parse.email.profile.form','forms',null)}"
-            data-range-error="${Resource.msg('error.message.lessthan50','forms',null)}"
+            data-range-error="${Resource.msg('error.message.50orless','forms',null)}"
             aria-describedby="form-email-confirm-error"
             <isprint value=${pdict.profileForm.customer.emailconfirm.attributes} encoding="off" />>
         <div class="invalid-feedback" id="form-email-confirm-error"></div>

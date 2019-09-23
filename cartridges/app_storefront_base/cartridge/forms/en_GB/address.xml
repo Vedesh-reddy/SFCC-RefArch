@@ -2,15 +2,15 @@
 <form xmlns="http://www.demandware.com/xml/form/2008-04-19">
 
     <field formid="addressId" label="label.input.addressid" type="string" mandatory="true"
-    	   max-length="20" missing-error="error.message.required" range-error="error.message.lessthan20"/>
+    	   max-length="20" missing-error="error.message.required" range-error="error.message.20orless"/>
     <field formid="firstName" label="label.input.firstname.profile" type="string" mandatory="true" binding="firstName"
-           max-length="50" missing-error="error.message.required" range-error="error.message.lessthan50"/>
+           max-length="50" missing-error="error.message.required" range-error="error.message.50orless"/>
     <field formid="lastName" label="label.input.lastname.profile" type="string" mandatory="true" binding="lastName" max-length="50"
-           missing-error="error.message.required" range-error="error.message.lessthan50"/>
+           missing-error="error.message.required" range-error="error.message.50orless"/>
     <field formid="address1" label="label.input.address1" type="string" mandatory="true" binding="address1" max-length="50"
-           missing-error="error.message.required" range-error="error.message.lessthan50"/>
+           missing-error="error.message.required" range-error="error.message.50orless"/>
     <field formid="address2" label="label.input.address2" type="string" mandatory="false" binding="address2"
-           max-length="50" range-error="error.message.lessthan50"/>
+           max-length="50" range-error="error.message.50orless"/>
     <field formid="city" label="label.input.city" type="string" mandatory="true" binding="city" min-length="2"
            max-length="50" missing-error="error.message.required" range-error="error.message.between2and50"/>
 
