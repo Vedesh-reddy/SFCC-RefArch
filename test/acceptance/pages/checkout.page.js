@@ -40,7 +40,8 @@ module.exports = {
         orderConf_paymentSection: '.payment-details',
         orderConf_quantity: '.line-item-pricing-info',
         orderConf_totalSection: '.order-total-summary',
-        orderConf_orderNumber: 'summary-details.order-number'
+        orderConf_orderNumber: 'summary-details.order-number',
+        logoHome: '.logo-home'
     },
     fillShippingInfo(fName, lName, address1, country, state, city, zipcode, phone) {
         I.scrollTo(this.locators.fName);
@@ -187,5 +188,9 @@ module.exports = {
         I.see(shipping, this.locators.orderConf_totalSection);
         I.see(tax, this.locators.orderConf_totalSection);
         I.see(estimatedTotal, this.locators.orderConf_totalSection);
+    },
+    gotoHomePageFromCheckout() {
+        I.waitForElement(this.locators.logoHome);
+        I.click(this.locators.logoHome);
     }
 };

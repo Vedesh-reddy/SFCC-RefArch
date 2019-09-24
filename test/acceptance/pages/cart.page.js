@@ -15,7 +15,11 @@ module.exports = {
         removeProductBtn: '.remove-btn-lg.remove-product.btn.btn-light',
         removeProductModal: '.modal-content',
         removeProductModalConfirm: '.btn.btn-primary.cart-delete-confirmation-btn',
-        editQuantitySelector: '.form-control.quantity.custom-select'
+        editQuantitySelector: '.form-control.quantity.custom-select',
+        lineItemName: '.line-item-name > span',
+        lineItemAttributes: '.item-attributes .line-item-attributes',
+        subTotal: '.text-right.sub-total',
+        removeProductButton: '.remove-btn.remove-product'
     },
     verifyCart(totalQuantity, itemPrice, totalItemPrice, shipping, tax, estimatedTotal) {
         I.see(totalQuantity, this.locators.lineItemQuantity);
@@ -25,8 +29,25 @@ module.exports = {
         I.see(tax, this.locators.taxTotal);
         I.see(estimatedTotal, this.locators.estimatedTotal);
     },
+    verifyMiniCart(quantity, name, color, size, availability, subTotal) {
+        I.see(quantity, this.locators.lineItemQuantity);
+        I.see(name, this.locators.lineItemName);
+        I.see(color, this.locators.lineItemAttributes);
+        I.see(size, this.locators.lineItemAttributes);
+        I.see(availability, this.locators.lineItemAttributes);
+        I.see(subTotal, this.locators.subTotal);
+    },
     verifyCartQuantity(totalQuantity) {
         I.see(totalQuantity + ' Items', this.locators.totalItemQuantity);
+    },
+    removeProductFromMiniCart(productName) {
+        // Click x to remove product
+        let locator = locate(this.locators.removeProductButton).withAttr({ 'data-name': productName });
+        I.click(locator);
+        // Confirm remove product
+        within(this.locators.removeProductModal, () => {
+            I.click(this.locators.removeProductModalConfirm);
+        });
     },
     removeProduct(productName) {
         // Click x to remove product

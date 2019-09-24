@@ -5,9 +5,11 @@ module.exports = {
         button: 'button',
         selectSize: '.select-size',
         selectQuantity: '.quantity-select',
+        selectColor: '.color-attribute',
         addToCartButton: '.add-to-cart',
         addToCartButtonEnabled: '.add-to-cart:not(:disabled)',
         miniCartIcon: '.minicart-icon.fa.fa-shopping-bag',
+        miniCartCheckoutButton: '.checkout-btn',
         cartHeader: '.cart-header',
         productImage: '.carousel-item.active > img',
         navigationCrumbs: '.product-breadcrumb:not(.d-md-none) .breadcrumb-item a',
@@ -47,6 +49,12 @@ module.exports = {
         I.wait(1);
         I.waitForElement(this.locators.selectQuantity);
         I.selectOption(this.locators.selectQuantity, quantity);
+    },
+    selectColor(color) {
+        let locator = locate(this.locators.selectColor)
+            .withAttr({ 'aria-label': 'Select Color ' + color });
+        I.waitForElement(locator);
+        I.click(locator);
     },
     addToCart() {
         I.scrollTo(this.locators.addToCartButton);
@@ -119,5 +127,9 @@ module.exports = {
     addToCartQuickView() {
         I.waitForElement(this.locators.qv_AddToCart);
         I.click(this.locators.qv_AddToCart);
+    },
+    clickCheckoutBtnOnMiniCart() {
+        I.waitForElement(this.locators.miniCartCheckoutButton);
+        I.click(this.locators.miniCartCheckoutButton);
     }
 };
