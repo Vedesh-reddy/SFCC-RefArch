@@ -2,6 +2,11 @@
 
 var Cleave = require('cleave.js');
 
+// support babel6 esm
+if (Cleave.default !== undefined) {
+    Cleave = Cleave.default;
+}
+
 module.exports = {
     handleCreditCardNumber: function (cardFieldSelector, cardTypeSelector) {
         var cleave = new Cleave(cardFieldSelector, {
