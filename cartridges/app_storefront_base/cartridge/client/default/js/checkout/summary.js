@@ -11,18 +11,18 @@ function updateTotals(totals) {
     $('.grand-total-sum').text(totals.grandTotal);
 
     if (totals.orderLevelDiscountTotal.value > 0) {
-        $('.order-discount').show();
+        $('.order-discount').removeClass('hide-order-discount');
         $('.order-discount-total').text('- ' + totals.orderLevelDiscountTotal.formatted);
     } else {
-        $('.order-discount').hide();
+        $('.order-discount').addClass('hide-order-discount');
     }
 
     if (totals.shippingLevelDiscountTotal.value > 0) {
-        $('.shipping-discount').show();
+        $('.shipping-discount').removeClass('hide-shipping-discount');
         $('.shipping-discount-total').text('- ' +
             totals.shippingLevelDiscountTotal.formatted);
     } else {
-        $('.shipping-discount').hide();
+        $('.shipping-discount').addClass('hide-shipping-discount');
     }
 }
 
