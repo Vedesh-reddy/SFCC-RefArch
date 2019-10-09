@@ -60,6 +60,7 @@
     "cldr-data": "^32.0.1",
     "codeceptjs": "^2.2.1",
     "codeceptjs-cucumber": "^2.0.0",
+    "codeceptjs-saucehelper": "^1.4.0",
     "codeceptjs-saucelabs": "^2.0.0",
     "codeceptjs-shared": "^2.0.0",
     "css-loader": "^0.28.11",
