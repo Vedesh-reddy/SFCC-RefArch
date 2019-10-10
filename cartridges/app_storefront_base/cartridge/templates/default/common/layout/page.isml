@@ -16,6 +16,8 @@
         <isinclude template="/components/schema" />
     </head>
     <body>
+        ${dw.system.HookMgr.callHook('app.template.beforeHeader', 'beforeHeader') || ''}
+
         <div class="page" data-action="${pdict.action}" data-querystring="${pdict.queryString}" >
             <isinclude template="/components/header/pageHeader" />
             <div role="main" id="maincontent">
