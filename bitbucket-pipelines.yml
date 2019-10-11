@@ -12,9 +12,3 @@ pipelines:
           - npm install
           - npm run lint
           - npm test
-          - npm run compile:js
-          - npm run compile:scss
-          - npm run compile:fonts
-          - node node_modules/.bin/dwupload --hostname ${HOSTNAME} --username ${USERNAME} --password "${PASSWORD}" --cartridge cartridges/app_storefront_base
-          - node node_modules/.bin/dwupload --hostname ${HOSTNAME} --username ${USERNAME} --password "${PASSWORD}" --cartridge cartridges/modules
-          - npm run test:integration -- --baseUrl https://${HOSTNAME}/on/demandware.store/Sites-MobileFirst-Site/en_US "test/integration/*"
