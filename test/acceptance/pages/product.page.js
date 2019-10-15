@@ -26,7 +26,6 @@ module.exports = {
         productDescription: '.description-and-detail .description .content',
         productDetails: '.description-and-detail .details .content',
         copyLinkMsgVisible: '.copy-link-message:not(.d-none)',
-        miniCartQuantity: '.minicart-quantity',
         addToCartSuccess: '.add-to-cart-messages .alert-success',
         addToCartFailure: '.add-to-cart-messages .alert-danger',
         filterColor: '.swatch-circle-',
@@ -46,7 +45,6 @@ module.exports = {
         I.selectOption(this.locators.selectSize, size);
     },
     selectQuantity(quantity) {
-        I.wait(1);
         I.waitForElement(this.locators.selectQuantity);
         I.selectOption(this.locators.selectQuantity, quantity);
     },
@@ -57,13 +55,16 @@ module.exports = {
         I.click(locator);
     },
     addToCart() {
-        I.scrollTo(this.locators.addToCartButton);
         I.waitForEnabled(this.locators.addToCartButton);
         I.click(this.locators.addToCartButton);
     },
+    addProductToMiniCart(product) {
+        this.selectSize(product.size);
+        this.selectColor(product.color);
+        this.selectQuantity(product.originalQuantity);
+        this.addToCart();
+    },
     viewCart() {
-        I.scrollPageToTop();
-        I.wait(1);
         I.click(this.locators.miniCartIcon);
         I.waitForElement(this.locators.cartHeader);
     },

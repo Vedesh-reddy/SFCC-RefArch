@@ -99,7 +99,8 @@
         "finalQuantity": "2",
         "originalPrice": "$57.98",
         "finalPrice": "$28.99",
-        "afterRemoveQuantity": "0"
+        "afterRemoveQuantity": "0",
+        "pid": "701642823896M"
     },
     "searchPages": {
         "womensTops": "/on/demandware.store/Sites-RefArch-Site/en_US/Search-Show?cgid=womens-clothing-tops"

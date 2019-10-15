@@ -41,7 +41,8 @@ module.exports = {
         orderConf_quantity: '.line-item-pricing-info',
         orderConf_totalSection: '.order-total-summary',
         orderConf_orderNumber: 'summary-details.order-number',
-        logoHome: '.logo-home'
+        homeLink: 'a>img.hidden-md-down',
+        checkoutStage: '.data-checkout-stage'
     },
     fillShippingInfo(fName, lName, address1, country, state, city, zipcode, phone) {
         I.scrollTo(this.locators.fName);
@@ -190,7 +191,6 @@ module.exports = {
         I.see(estimatedTotal, this.locators.orderConf_totalSection);
     },
     gotoHomePageFromCheckout() {
-        I.waitForElement(this.locators.logoHome);
-        I.click(this.locators.logoHome);
+        I.click(this.locators.homeLink);
     }
 };

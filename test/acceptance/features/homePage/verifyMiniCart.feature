@@ -3,19 +3,13 @@ Feature: Modify & Verify Mini Cart
 
 @miniCart @miniCartGuestUser
     Scenario: Shopper is able to modify mini cart, verify selected product attributes and goto Guest Checkout
-        When shopper selects yes or no for tracking consent
-        Then shopper is able to add a product to minicart for remove
-        Then shopper is able to remove the product from minicart
-        Then shopper is able to add a product to minicart for edit
-        Then shopper is able to modify the quantity and verify the product in minicart
+        Given shopper selects yes or no for tracking consent
+        When shopper is able to add and remove a product from minicart
+        And shopper is able to add a product and edit product quantity in minicart
         Then shopper goes to Guest Checkout page from minicart
 
 @miniCart @miniCartRegisteredUser
     Scenario: Shopper is able to modify mini cart, verify selected product attributes and goto Registered Checkout
         Given shopper logs into the website
-        Then shopper is able to add a product to minicart for edit
-        Then shopper is able to modify the quantity and verify the product in minicart
-        Then shopper goes to Registered Checkout page from minicart
-        Then shopper goes back to home page from Checkout page
-        Then shopper is able to remove the product from minicart
-        
+        When shopper is able to add a product and edit product quantity in minicart
+        And shopper is able to navigate through minicart, registered checkout pages and remove the product from cart
