@@ -113,7 +113,10 @@ server.post('AddProduct', function (req, res, next) {
         });
     }
 
+    var reportingURL = cartHelper.getReportingUrlAddToCart(currentBasket, result.error);
+
     res.json({
+        reportingURL: reportingURL,
         quantityTotal: quantityTotal,
         message: result.message,
         cart: cartModel,

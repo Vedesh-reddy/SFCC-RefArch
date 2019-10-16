@@ -98,6 +98,8 @@ var createApiBasket = function (productInBasket) {
     };
     if (productInBasket) {
         currentBasket.productLineItems = new ArrayList([productLineItemMock]);
+        currentBasket.allLineItems = {};
+        currentBasket.allLineItems.length = 1;
     } else {
         currentBasket.productLineItems = new ArrayList([]);
     }
@@ -285,6 +287,20 @@ describe('cartHelpers', function () {
             assert.equal(newBonusDiscountLineItem.newBonusDiscountLineItem.description, 'description 1');
             assert.equal(newBonusDiscountLineItem.labels.close, 'someString');
             assert.equal(newBonusDiscountLineItem.labels.selectprods, 'someString');
+        });
+
+        it('should return a url string for reporting minicart events', function () {
+            var currentBasket = createApiBasket(true);
+            var resultError = false;
+            var result = cartHelpers.getReportingUrlAddToCart(currentBasket, resultError);
+            assert.equal(result, 'string URL');
+        });
+
+        it('should return false for reporting minicart events', function () {
+            var currentBasket = createApiBasket(true);
+            var resultError = true;
+            var result = cartHelpers.getReportingUrlAddToCart(currentBasket, resultError);
+            assert.equal(result, false);
         });
     });
 });
