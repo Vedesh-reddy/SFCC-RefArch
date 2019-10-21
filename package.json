@@ -100,7 +100,7 @@
   },
   "dependencies": {
     "bootstrap": "4.3.1",
-    "cleave.js": "1.5.0",
+    "cleave.js": "^1.5.3",
     "flag-icon-css": "^2.9.0",
     "font-awesome": "^4.7.0",
     "jquery": "^3.4.1"

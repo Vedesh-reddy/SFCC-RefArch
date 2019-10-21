@@ -1,6 +1,6 @@
 'use strict';
 
-var Cleave = require('cleave.js');
+var Cleave = require('cleave.js').default;
 
 module.exports = {
     handleCreditCardNumber: function (cardFieldSelector, cardTypeSelector) {
