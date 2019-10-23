@@ -131,7 +131,7 @@ function getShowMoreUrl(productSearch, httpParams) {
         currentStart
     );
 
-    if (pageSize > hitsCount) {
+    if (pageSize >= hitsCount) {
         return '';
     } else if (pageSize > DEFAULT_PAGE_SIZE) {
         nextStart = pageSize;
