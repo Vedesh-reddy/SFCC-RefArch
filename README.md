@@ -14,13 +14,13 @@ The latest version of SFRA is 4.3.0
 
 # Getting Started
 
-1 Clone this repository.
+1. Clone this repository.
 
-2 Run `npm install` to install all of the local dependencies (node version 8.x or current LTS release recommended)
+2. Run `npm install` to install all of the local dependencies (node version 8.x or current LTS release recommended)
 
-3 Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
+3. Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
 
-4 Create `dw.json` file in the root of the project:
+4. Create `dw.json` file in the root of the project:
 ```json
 {
     "hostname": "your-sandbox-hostname.demandware.net",
@@ -30,14 +30,13 @@ The latest version of SFRA is 4.3.0
 }
 ```
 
-5 Run `npm run uploadCartridge` command that would upload `app_storefront_base` and `modules` cartridges to the sandbox you specified in dw.json file.
+5. Run `npm run uploadCartridge`. It will upload `app_storefront_base`, `modules` and `bm_app_storefront_base` cartridges to the sandbox you specified in `dw.json` file.
 
-6 Use https://github.com/SalesforceCommerceCloud/storefrontdata to zip and import site date on your sandbox.
+6. Use https://github.com/SalesforceCommerceCloud/storefrontdata to zip and import site data on your sandbox.
 
-7 Add the `app_storefront_base` cartridge to your cartridge path in _Administration >  Sites >  Manage Sites > RefArch - Settings_ (Note: This should already be populated by the sample data in Step 6).
+7. Add the `app_storefront_base` cartridge to your cartridge path in _Administration >  Sites >  Manage Sites > RefArch - Settings_ (Note: This should already be populated by the sample data in Step 6).
 
-8 You should now be ready to navigate to and use your site.
-
+8. You should now be ready to navigate to and use your site.
 
 # NPM scripts
 Use the provided NPM scripts to compile and upload changes to your Sandbox.
@@ -54,15 +53,15 @@ Use the provided NPM scripts to compile and upload changes to your Sandbox.
 
 ## Watching for changes and uploading
 
-`npm run watch` - Watches everything and recompiles (if necessary) and uploads to the sandbox. Requires a valid dw.json file at the root that is configured for the sandbox to upload.
+`npm run watch` - Watches everything and recompiles (if necessary) and uploads to the sandbox. Requires a valid `dw.json` file at the root that is configured for the sandbox to upload.
 
 ## Uploading
 
-`npm run uploadCartridge` - Will upload both `app_storefront_base` and `modules` to the server. Requires a valid dw.json file at the root that is configured for the sandbox to upload.
+`npm run uploadCartridge` - Will upload `app_storefront_base`, `modules` and `bm_app_storefront_base` to the server. Requires a valid `dw.json` file at the root that is configured for the sandbox to upload.
 
-`npm run upload <filepath>` - Will upload a given file to the server. Requires a valid dw.json file.
+`npm run upload <filepath>` - Will upload a given file to the server. Requires a valid `dw.json` file.
 
-#Testing
+# Testing
 ## Running unit tests
 
 You can run `npm test` to execute all unit tests in the project. Run `npm run cover` to get coverage information. Coverage will be available in `coverage` folder under root directory.
@@ -83,7 +82,7 @@ npm run test:integration
 ```
 
 **Note:** Please note that short form of this command will try to locate URL of your sandbox by reading `dw.json` file in the root directory of your project. If you don't have `dw.json` file, integration tests will fail.
-sample dw.json file (this file needs to be in the root of your project)
+sample `dw.json` file (this file needs to be in the root of your project)
 {
     "hostname": "devxx-sitegenesis-dw.demandware.net"
 }
@@ -95,7 +94,6 @@ npm run test:integration -- --baseUrl devxx-sitegenesis-dw.demandware.net
 ```
 
 # [Contributing to SFRA](./CONTRIBUTING.md)
-
 
 #Page Designer Components for Storefront Reference Architecture
 See: [Page Designer Components](./page-designer-components.md)
