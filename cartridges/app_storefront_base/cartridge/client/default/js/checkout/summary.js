@@ -130,6 +130,14 @@ function updateOrderProductSummaryInformation(order) {
     });
 
     $('.product-summary-block').html($productSummary.html());
+
+    // Also update the line item prices, as they might have been altered
+    $('.grand-total-price').text(order.totals.subTotal);
+    order.items.items.forEach(function (item) {
+        if (item.priceTotal && item.priceTotal.renderedPrice) {
+            $('.item-total-' + item.UUID).empty().append(item.priceTotal.renderedPrice);
+        }
+    });
 }
 
 module.exports = {
