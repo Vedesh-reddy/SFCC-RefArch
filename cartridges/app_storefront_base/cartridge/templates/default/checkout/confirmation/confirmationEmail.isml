@@ -62,7 +62,7 @@
 
                     <!--- item price --->
                     ${Resource.msg('label.each.item.price','cart',null)} -
-                    ${lineItem.price.formatted || lineItem.price.sales.formatted}
+                    ${lineItem.priceTotal.price}
                     <br/>
                     <!--- quantity --->
                     ${Resource.msg('field.selectquantity','cart',null)}
@@ -167,7 +167,7 @@
 
                 <!--- item price --->
                 ${Resource.msg('label.each.item.price','cart',null)} -
-                ${lineItem.price.formatted || lineItem.price.sales.formatted}
+                ${lineItem.priceTotal.price}
                 <br/>
                 <!--- quantity --->
                 ${Resource.msg('field.selectquantity','cart',null)}
