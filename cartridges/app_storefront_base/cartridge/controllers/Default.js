@@ -5,6 +5,7 @@ var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
+/** when sitepath is defined in the site aliases from business manager, homepage will be rendered directly */
 server.get('Start', consentTracking.consent, cache.applyDefaultCache, function (req, res, next) {
     var Site = require('dw/system/Site');
     var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
