@@ -45,10 +45,12 @@ Route.prototype.getRoute = function () {
         var i = 0;
 
         if (err && err.ErrorText) {
+            var system = require('dw/system/System');
+            var showError = system.getInstanceType() !== system.PRODUCTION_SYSTEM;
             me.req.error = {
-                errorText: err.ErrorText,
-                controllerName: err.ControllerName,
-                startNodeName: err.CurrentStartNodeName || me.name
+                errorText: showError ? err.ErrorText : '',
+                controllerName: showError ? err.ControllerName : '',
+                startNodeName: showError ? err.CurrentStartNodeName || me.name : ''
             };
         }
 

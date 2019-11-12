@@ -11,7 +11,7 @@ server.use('Start', consentTracking.consent, function (req, res, next) {
         && system.getInstanceType() !== system.STAGING_SYSTEM;
     if (req.httpHeaders.get('x-requested-with') === 'XMLHttpRequest') {
         res.json({
-            error: req.error || {},
+            error: showError ? req.error || {} : {},
             message: Resource.msg('subheading.error.general', 'error', null)
         });
     } else {
