@@ -26,7 +26,7 @@ function getProfile(profile) {
 
 /**
  * Creates an array of plain object that contains address book addresses, if any exist
- * @param {dw.customer.Customer} addressBook - target customer
+ * @param {Object} addressBook - target customer
  * @returns {Array<Object>} an array of customer addresses
  */
 function getAddresses(addressBook) {
@@ -42,7 +42,7 @@ function getAddresses(addressBook) {
 
 /**
  * Creates a plain object that contains the customer's preferred address
- * @param {dw.customer.Customer} addressBook - target customer
+ * @param {Object} addressBook - target customer
  * @returns {Object} an object that contains information about current customer's preferred address
  */
 function getPreferredAddress(addressBook) {
@@ -109,7 +109,7 @@ function getCustomerPaymentInstruments(userPaymentInstruments) {
 
 /**
  * Account class that represents the current customer's profile dashboard
- * @param {dw.customer.Customer} currentCustomer - Current customer
+ * @param {Object} currentCustomer - Current customer
  * @param {Object} addressModel - The current customer's preferred address
  * @param {Object} orderModel - The current customer's order history
  * @constructor
