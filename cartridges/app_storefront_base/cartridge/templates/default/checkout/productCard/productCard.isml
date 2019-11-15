@@ -55,7 +55,7 @@
             </isif>
         </div>
         <!--- quantity --->
-        <div class="col-4 line-item-quantity justify-content-center flex">
+        <div class="col-4 line-item-quantity">
             <isif condition=${miniCart}>
                 <isinclude template="checkout/productCard/productCardQuantitySelector" />
             <iselse>
@@ -63,7 +63,7 @@
             </isif>
         </div>
         <!--- line item total price --->
-        <div class="col-4 line-item-total-price justify-content-end">
+        <div class="col-4 line-item-total-price">
             <p class="line-item-pricing-info">
                 <span class="line-item-total-text line-item-total-price-label">
                     ${Resource.msg('label.total.price','cart',null)}
