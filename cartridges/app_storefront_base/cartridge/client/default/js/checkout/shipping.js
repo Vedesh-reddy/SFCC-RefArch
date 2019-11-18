@@ -1017,6 +1017,8 @@ module.exports = {
                             $.each(response.serverErrors, function (index, element) {
                                 createErrorNotification(element);
                             });
+                        } else if (response.redirectUrl) {
+                            window.location.href = response.redirectUrl;
                         }
                     } else {
                         // Update UI from response

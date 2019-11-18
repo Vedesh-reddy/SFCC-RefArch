@@ -112,7 +112,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                                     $('body').trigger('checkout:updateCheckoutView',
                                         { order: data.order, customer: data.customer });
                                     defer.resolve();
-                                } else if ($('.shipping-error .alert-danger').length < 1) {
+                                } else if (data.message && $('.shipping-error .alert-danger').length < 1) {
                                     var errorMsg = data.message;
                                     var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
                                         'fade show" role="alert">' +
@@ -122,6 +122,8 @@ var scrollAnimate = require('../components/scrollAnimate');
                                     $('.shipping-error').append(errorHtml);
                                     scrollAnimate($('.shipping-error'));
                                     defer.reject();
+                                } else if (data.redirectUrl) {
+                                    window.location.href = data.redirectUrl;
                                 }
                             },
                             error: function () {
