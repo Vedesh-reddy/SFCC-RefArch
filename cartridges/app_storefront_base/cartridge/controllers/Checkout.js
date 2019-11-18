@@ -24,9 +24,15 @@ server.get(
         var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
 
         var currentBasket = BasketMgr.getCurrentBasket();
-        var validatedProducts = validationHelpers.validateProducts(currentBasket);
         var reportingURLs;
-        if (!currentBasket || validatedProducts.error) {
+
+        if (!currentBasket) {
+            res.redirect(URLUtils.url('Cart-Show'));
+            return next();
+        }
+
+        var validatedProducts = validationHelpers.validateProducts(currentBasket);
+        if (validatedProducts.error) {
             res.redirect(URLUtils.url('Cart-Show'));
             return next();
         }
@@ -89,8 +95,13 @@ server.get(
         var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
 
         var currentBasket = BasketMgr.getCurrentBasket();
+        if (!currentBasket) {
+            res.redirect(URLUtils.url('Cart-Show'));
+            return next();
+        }
+
         var validatedProducts = validationHelpers.validateProducts(currentBasket);
-        if (!currentBasket || validatedProducts.error) {
+        if (validatedProducts.error) {
             res.redirect(URLUtils.url('Cart-Show'));
             return next();
         }

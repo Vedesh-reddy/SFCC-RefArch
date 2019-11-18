@@ -11,9 +11,19 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     var OrderModel = require('*/cartridge/models/order');
     var Locale = require('dw/util/Locale');
     var Resource = require('dw/web/Resource');
+    var URLUtils = require('dw/web/URLUtils');
     var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
+    if (!currentBasket) {
+        res.json({
+            redirectUrl: URLUtils.url('Cart-Show').toString(),
+            error: true
+        });
+
+        return next();
+    }
+
     var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
     if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
         req.session.privacyCache.set('usingMultiShipping', false);
@@ -34,7 +44,7 @@ server.get('Get', server.middleware.https, function (req, res, next) {
         message: allValid ? '' : Resource.msg('error.message.shipping.addresses', 'checkout', null)
     });
 
-    next();
+    return next();
 });
 
 /**
@@ -141,11 +151,24 @@ server.post(
             var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
 
             var currentBasket = BasketMgr.getCurrentBasket();
-            var validatedProducts = validationHelpers.validateProducts(currentBasket);
 
             var billingData = res.getViewData();
 
-            if (!currentBasket || validatedProducts.error) {
+            if (!currentBasket) {
+                delete billingData.paymentInformation;
+
+                res.json({
+                    error: true,
+                    cartError: true,
+                    fieldErrors: [],
+                    serverErrors: [],
+                    redirectUrl: URLUtils.url('Cart-Show').toString()
+                });
+                return;
+            }
+
+            var validatedProducts = validationHelpers.validateProducts(currentBasket);
+            if (validatedProducts.error) {
                 delete billingData.paymentInformation;
 
                 res.json({
@@ -347,9 +370,20 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
     var addressHelpers = require('*/cartridge/scripts/helpers/addressHelpers');
 
     var currentBasket = BasketMgr.getCurrentBasket();
-    var validatedProducts = validationHelpers.validateProducts(currentBasket);
 
-    if (!currentBasket || validatedProducts.error) {
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return next();
+    }
+
+    var validatedProducts = validationHelpers.validateProducts(currentBasket);
+    if (validatedProducts.error) {
         res.json({
             error: true,
             cartError: true,

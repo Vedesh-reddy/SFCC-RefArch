@@ -290,8 +290,19 @@ server.post(
         var validationHelpers = require('*/cartridge/scripts/helpers/basketValidationHelpers');
 
         var currentBasket = BasketMgr.getCurrentBasket();
+        if (!currentBasket) {
+            res.json({
+                error: true,
+                cartError: true,
+                fieldErrors: [],
+                serverErrors: [],
+                redirectUrl: URLUtils.url('Cart-Show').toString()
+            });
+            return next();
+        }
+
         var validatedProducts = validationHelpers.validateProducts(currentBasket);
-        if (!currentBasket || validatedProducts.error) {
+        if (validatedProducts.error) {
             res.json({
                 error: true,
                 cartError: true,

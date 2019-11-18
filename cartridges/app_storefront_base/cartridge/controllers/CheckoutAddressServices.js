@@ -68,6 +68,7 @@ server.post(
         var Transaction = require('dw/system/Transaction');
         var AccountModel = require('*/cartridge/models/account');
         var OrderModel = require('*/cartridge/models/order');
+        var URLUtils = require('dw/web/URLUtils');
         var UUIDUtils = require('dw/util/UUIDUtils');
         var ShippingHelper = require('*/cartridge/scripts/checkout/shippingHelpers');
         var Locale = require('dw/util/Locale');
@@ -78,7 +79,17 @@ server.post(
 
         var form = server.forms.getForm('shipping');
         var shippingFormErrors = COHelpers.validateShippingForm(form.shippingAddress.addressFields);
+
         var basket = BasketMgr.getCurrentBasket();
+        if (!basket) {
+            res.json({
+                redirectUrl: URLUtils.url('Cart-Show').toString(),
+                error: true
+            });
+
+            return next();
+        }
+
         var result = {};
 
         var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
