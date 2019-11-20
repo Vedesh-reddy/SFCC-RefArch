@@ -113,46 +113,48 @@ describe('locale', function () {
         };
         var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
+        var localeLinksFixtureGB = [
+            {
+                'country': 'JP',
+                'currencyCode': 'JPY',
+                'displayCountry': '日本',
+                'localID': 'ja_JP',
+                'displayName': '日本の',
+                'language': 'ja',
+                'displayLanguage': '日本語'
+            }, {
+                'country': 'CN',
+                'currencyCode': 'CNY',
+                'displayCountry': '中国',
+                'localID': 'zh_CN',
+                'displayName': '日本',
+                'language': 'zh',
+                'displayLanguage': '中国語'
+            }, {
+                'country': 'FR',
+                'currencyCode': 'EUR',
+                'displayCountry': 'France',
+                'localID': 'fr_FR',
+                'displayName': 'français',
+                'language': 'fr',
+                'displayLanguage': 'Français'
+            }, {
+                'country': 'IT',
+                'currencyCode': 'EUR',
+                'displayCountry': 'Italia',
+                'localID': 'it_IT',
+                'displayName': 'italiano',
+                'language': 'it',
+                'displayLanguage': 'Italiano'
+            }
+        ];
 
         assert.deepEqual(localeModel, {
             'locale': {
                 'countryCode': 'GB',
                 'currencyCode': 'GBP',
-                'localLinks': [
-                    {
-                        'country': 'JP',
-                        'currencyCode': 'JPY',
-                        'displayCountry': '日本',
-                        'localID': 'ja_JP',
-                        'displayName': '日本の',
-                        'language': 'ja',
-                        'displayLanguage': '日本語'
-                    }, {
-                        'country': 'CN',
-                        'currencyCode': 'CNY',
-                        'displayCountry': '中国',
-                        'localID': 'zh_CN',
-                        'displayName': '日本',
-                        'language': 'zh',
-                        'displayLanguage': '中国語'
-                    }, {
-                        'country': 'FR',
-                        'currencyCode': 'EUR',
-                        'displayCountry': 'France',
-                        'localID': 'fr_FR',
-                        'displayName': 'français',
-                        'language': 'fr',
-                        'displayLanguage': 'Français'
-                    }, {
-                        'country': 'IT',
-                        'currencyCode': 'EUR',
-                        'displayCountry': 'Italia',
-                        'localID': 'it_IT',
-                        'displayName': 'italiano',
-                        'language': 'it',
-                        'displayLanguage': 'Italiano'
-                    }
-                ],
+                'localeLinks': localeLinksFixtureGB,
+                'localLinks': localeLinksFixtureGB,
                 'name': 'United Kingdom',
                 'displayName': 'English (UK)',
                 'language': 'en',
@@ -171,45 +173,48 @@ describe('locale', function () {
         };
         var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
+        var localeLinksFixtureFR = [
+            {
+                'country': 'GB',
+                'currencyCode': 'GBP',
+                'displayCountry': 'United Kingdom',
+                'localID': 'en_GB',
+                'displayName': 'English (UK)',
+                'language': 'en',
+                'displayLanguage': 'English'
+            }, {
+                'country': 'JP',
+                'currencyCode': 'JPY',
+                'displayCountry': '日本',
+                'localID': 'ja_JP',
+                'displayName': '日本の',
+                'language': 'ja',
+                'displayLanguage': '日本語'
+            }, {
+                'country': 'CN',
+                'currencyCode': 'CNY',
+                'displayCountry': '中国',
+                'localID': 'zh_CN',
+                'displayName': '日本',
+                'language': 'zh',
+                'displayLanguage': '中国語'
+            }, {
+                'country': 'IT',
+                'currencyCode': 'EUR',
+                'displayCountry': 'Italia',
+                'localID': 'it_IT',
+                'displayName': 'italiano',
+                'language': 'it',
+                'displayLanguage': 'Italiano'
+            }
+        ];
+
         assert.deepEqual(localeModel, {
             'locale': {
                 'countryCode': 'FR',
                 'currencyCode': 'EUR',
-                'localLinks': [
-                    {
-                        'country': 'GB',
-                        'currencyCode': 'GBP',
-                        'displayCountry': 'United Kingdom',
-                        'localID': 'en_GB',
-                        'displayName': 'English (UK)',
-                        'language': 'en',
-                        'displayLanguage': 'English'
-                    }, {
-                        'country': 'JP',
-                        'currencyCode': 'JPY',
-                        'displayCountry': '日本',
-                        'localID': 'ja_JP',
-                        'displayName': '日本の',
-                        'language': 'ja',
-                        'displayLanguage': '日本語'
-                    }, {
-                        'country': 'CN',
-                        'currencyCode': 'CNY',
-                        'displayCountry': '中国',
-                        'localID': 'zh_CN',
-                        'displayName': '日本',
-                        'language': 'zh',
-                        'displayLanguage': '中国語'
-                    }, {
-                        'country': 'IT',
-                        'currencyCode': 'EUR',
-                        'displayCountry': 'Italia',
-                        'localID': 'it_IT',
-                        'displayName': 'italiano',
-                        'language': 'it',
-                        'displayLanguage': 'Italiano'
-                    }
-                ],
+                'localeLinks': localeLinksFixtureFR,
+                'localLinks': localeLinksFixtureFR,
                 'name': 'France',
                 'displayName': 'français',
                 'language': 'fr',
@@ -228,45 +233,48 @@ describe('locale', function () {
         };
         var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
+        var localeLinksFixtureIT = [
+            {
+                'country': 'GB',
+                'currencyCode': 'GBP',
+                'displayCountry': 'United Kingdom',
+                'localID': 'en_GB',
+                'displayName': 'English (UK)',
+                'language': 'en',
+                'displayLanguage': 'English'
+            }, {
+                'country': 'JP',
+                'currencyCode': 'JPY',
+                'displayCountry': '日本',
+                'localID': 'ja_JP',
+                'displayName': '日本の',
+                'language': 'ja',
+                'displayLanguage': '日本語'
+            }, {
+                'country': 'CN',
+                'currencyCode': 'CNY',
+                'displayCountry': '中国',
+                'localID': 'zh_CN',
+                'displayName': '日本',
+                'language': 'zh',
+                'displayLanguage': '中国語'
+            }, {
+                'country': 'FR',
+                'currencyCode': 'EUR',
+                'displayCountry': 'France',
+                'localID': 'fr_FR',
+                'displayName': 'français',
+                'language': 'fr',
+                'displayLanguage': 'Français'
+            }
+        ];
+
         assert.deepEqual(localeModel, {
             'locale': {
                 'countryCode': 'IT',
                 'currencyCode': 'EUR',
-                'localLinks': [
-                    {
-                        'country': 'GB',
-                        'currencyCode': 'GBP',
-                        'displayCountry': 'United Kingdom',
-                        'localID': 'en_GB',
-                        'displayName': 'English (UK)',
-                        'language': 'en',
-                        'displayLanguage': 'English'
-                    }, {
-                        'country': 'JP',
-                        'currencyCode': 'JPY',
-                        'displayCountry': '日本',
-                        'localID': 'ja_JP',
-                        'displayName': '日本の',
-                        'language': 'ja',
-                        'displayLanguage': '日本語'
-                    }, {
-                        'country': 'CN',
-                        'currencyCode': 'CNY',
-                        'displayCountry': '中国',
-                        'localID': 'zh_CN',
-                        'displayName': '日本',
-                        'language': 'zh',
-                        'displayLanguage': '中国語'
-                    }, {
-                        'country': 'FR',
-                        'currencyCode': 'EUR',
-                        'displayCountry': 'France',
-                        'localID': 'fr_FR',
-                        'displayName': 'français',
-                        'language': 'fr',
-                        'displayLanguage': 'Français'
-                    }
-                ],
+                'localeLinks': localeLinksFixtureIT,
+                'localLinks': localeLinksFixtureIT,
                 'name': 'Italia',
                 'displayName': 'italiano',
                 'language': 'it',
@@ -285,45 +293,48 @@ describe('locale', function () {
         };
         var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
+        var localeLinksFixtureJP = [
+            {
+                'country': 'GB',
+                'currencyCode': 'GBP',
+                'displayCountry': 'United Kingdom',
+                'localID': 'en_GB',
+                'displayName': 'English (UK)',
+                'language': 'en',
+                'displayLanguage': 'English'
+            }, {
+                'country': 'CN',
+                'currencyCode': 'CNY',
+                'displayCountry': '中国',
+                'localID': 'zh_CN',
+                'displayName': '日本',
+                'language': 'zh',
+                'displayLanguage': '中国語'
+            }, {
+                'country': 'FR',
+                'currencyCode': 'EUR',
+                'displayCountry': 'France',
+                'localID': 'fr_FR',
+                'displayName': 'français',
+                'language': 'fr',
+                'displayLanguage': 'Français'
+            }, {
+                'country': 'IT',
+                'currencyCode': 'EUR',
+                'displayCountry': 'Italia',
+                'localID': 'it_IT',
+                'displayName': 'italiano',
+                'language': 'it',
+                'displayLanguage': 'Italiano'
+            }
+        ];
+
         assert.deepEqual(localeModel, {
             'locale': {
                 'countryCode': 'JA',
                 'currencyCode': 'JPY',
-                'localLinks': [
-                    {
-                        'country': 'GB',
-                        'currencyCode': 'GBP',
-                        'displayCountry': 'United Kingdom',
-                        'localID': 'en_GB',
-                        'displayName': 'English (UK)',
-                        'language': 'en',
-                        'displayLanguage': 'English'
-                    }, {
-                        'country': 'CN',
-                        'currencyCode': 'CNY',
-                        'displayCountry': '中国',
-                        'localID': 'zh_CN',
-                        'displayName': '日本',
-                        'language': 'zh',
-                        'displayLanguage': '中国語'
-                    }, {
-                        'country': 'FR',
-                        'currencyCode': 'EUR',
-                        'displayCountry': 'France',
-                        'localID': 'fr_FR',
-                        'displayName': 'français',
-                        'language': 'fr',
-                        'displayLanguage': 'Français'
-                    }, {
-                        'country': 'IT',
-                        'currencyCode': 'EUR',
-                        'displayCountry': 'Italia',
-                        'localID': 'it_IT',
-                        'displayName': 'italiano',
-                        'language': 'it',
-                        'displayLanguage': 'Italiano'
-                    }
-                ],
+                'localeLinks': localeLinksFixtureJP,
+                'localLinks': localeLinksFixtureJP,
                 'name': '日本',
                 'displayName': '日本の',
                 'language': 'ja',
@@ -342,45 +353,48 @@ describe('locale', function () {
         };
         var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
+        var localeLinksFixtureZN = [
+            {
+                'country': 'GB',
+                'currencyCode': 'GBP',
+                'displayCountry': 'United Kingdom',
+                'localID': 'en_GB',
+                'displayName': 'English (UK)',
+                'language': 'en',
+                'displayLanguage': 'English'
+            }, {
+                'country': 'JP',
+                'currencyCode': 'JPY',
+                'displayCountry': '日本',
+                'localID': 'ja_JP',
+                'displayName': '日本の',
+                'language': 'ja',
+                'displayLanguage': '日本語'
+            }, {
+                'country': 'FR',
+                'currencyCode': 'EUR',
+                'displayCountry': 'France',
+                'localID': 'fr_FR',
+                'displayName': 'français',
+                'language': 'fr',
+                'displayLanguage': 'Français'
+            }, {
+                'country': 'IT',
+                'currencyCode': 'EUR',
+                'displayCountry': 'Italia',
+                'localID': 'it_IT',
+                'displayName': 'italiano',
+                'language': 'it',
+                'displayLanguage': 'Italiano'
+            }
+        ];
+
         assert.deepEqual(localeModel, {
             'locale': {
                 'countryCode': 'CN',
                 'currencyCode': 'CNY',
-                'localLinks': [
-                    {
-                        'country': 'GB',
-                        'currencyCode': 'GBP',
-                        'displayCountry': 'United Kingdom',
-                        'localID': 'en_GB',
-                        'displayName': 'English (UK)',
-                        'language': 'en',
-                        'displayLanguage': 'English'
-                    }, {
-                        'country': 'JP',
-                        'currencyCode': 'JPY',
-                        'displayCountry': '日本',
-                        'localID': 'ja_JP',
-                        'displayName': '日本の',
-                        'language': 'ja',
-                        'displayLanguage': '日本語'
-                    }, {
-                        'country': 'FR',
-                        'currencyCode': 'EUR',
-                        'displayCountry': 'France',
-                        'localID': 'fr_FR',
-                        'displayName': 'français',
-                        'language': 'fr',
-                        'displayLanguage': 'Français'
-                    }, {
-                        'country': 'IT',
-                        'currencyCode': 'EUR',
-                        'displayCountry': 'Italia',
-                        'localID': 'it_IT',
-                        'displayName': 'italiano',
-                        'language': 'it',
-                        'displayLanguage': 'Italiano'
-                    }
-                ],
+                'localeLinks': localeLinksFixtureZN,
+                'localLinks': localeLinksFixtureZN,
                 'name': '中国',
                 'displayName': '日本',
                 'language': 'zh',
@@ -400,11 +414,14 @@ describe('locale', function () {
         };
         var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
+        var localeLinksFixtureUS = [];
+
         assert.deepEqual(localeModel, {
             'locale': {
                 'countryCode': 'US',
                 'currencyCode': 'USD',
-                'localLinks': [],
+                'localeLinks': localeLinksFixtureUS,
+                'localLinks': localeLinksFixtureUS,
                 'name': 'United States',
                 'displayName': 'English (US)',
                 'language': 'en',
@@ -423,6 +440,18 @@ describe('locale', function () {
         };
         var siteId = 'RefArch';
         var localeModel = new LocaleModel(currentLocale, allowedLocales, siteId);
+        var localeLinksFixtureNA = [
+            {
+                'country': 'US',
+                'currencyCode': 'USD',
+                'displayCountry': 'United States',
+                'displayLanguage': 'English',
+                'displayName': 'English (US)',
+                'language': 'en',
+                'localID': 'en_US'
+            }
+        ];
+
         assert.deepEqual(localeModel, {
             'locale': {
                 'countryCode': '',
@@ -431,16 +460,8 @@ describe('locale', function () {
                 'displayName': '',
                 'language': '',
                 'displayLanguage': '',
-                'localLinks': [{
-                    'country': 'US',
-                    'currencyCode': 'USD',
-                    'displayCountry': 'United States',
-                    'displayLanguage': 'English',
-                    'displayName': 'English (US)',
-                    'language': 'en',
-                    'localID': 'en_US'
-                }
-                ]
+                'localeLinks': localeLinksFixtureNA,
+                'localLinks': localeLinksFixtureNA
             }
         });
     });

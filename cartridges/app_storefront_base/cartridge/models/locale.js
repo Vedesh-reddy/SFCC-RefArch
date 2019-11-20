@@ -56,10 +56,15 @@ function Locale(currentLocale, allowedLocales, siteId) {
             return country.id === currentLocale.ID;
         })[0];
 
+    // storing reference to the returned Object so the backward compatibility key below: 'localLinks' can use a reference and prevent duplicate function calls.
+    var localeLinks = getLocaleLinks(allowedLocales, siteId, currentLocale.ID);
+
+    /* @TODO: the 'localLinks' key was a typo introduced in SFRA before GA. The key should have been: 'localeLinks'. For backward compatibility reasons, both are retained until the SFRA team prioritizes removing the backward compatibility support for the 'localLinks' typo. */
     this.locale = {
         countryCode: currentLocale.country,
         name: currentLocale.displayCountry,
-        localLinks: getLocaleLinks(allowedLocales, siteId, currentLocale.ID),
+        localeLinks: localeLinks,
+        localLinks: localeLinks,
         currencyCode: currentCountry.currencyCode,
         displayName: currentLocale.displayName,
         language: currentLocale.language,
