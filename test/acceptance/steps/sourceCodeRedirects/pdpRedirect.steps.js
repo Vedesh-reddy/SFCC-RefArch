@@ -6,6 +6,6 @@ Given('shopper lands on the expected pdp', () => {
     homePage.accept();
 });
 
-Then('shopper sees all the product related information', async () => {
+Then('shopper sees all the product related information v2', async () => {
     (await I.grabTextFrom(productPage.locators.productName))[0].trim().should.equal('Playstation 3 Bundle');
 });
