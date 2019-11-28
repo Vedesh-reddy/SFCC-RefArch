@@ -14,6 +14,7 @@ function Response(response) {
     this.redirectUrl = null;
     this.redirectStatus = null;
     this.messageLog = [];
+    this.statusCode = null;
     this.base = response;
     this.cachePeriod = null;
     this.cachePeriodUnit = null;
@@ -155,6 +156,7 @@ Response.prototype = {
      */
     setStatusCode: function setStatusCode(code) {
         this.base.setStatus(code);
+        this.statusCode = code;
     },
 
     /**
