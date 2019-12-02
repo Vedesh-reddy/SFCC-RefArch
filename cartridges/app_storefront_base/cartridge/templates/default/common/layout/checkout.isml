@@ -12,7 +12,7 @@
         <isactivedatahead/>
     </head>
     <body>
-        ${dw.system.HookMgr.callHook('app.template.beforeHeader', 'beforeHeader') || ''}
+        ${dw.system.HookMgr.callHook('app.template.beforeHeader', 'beforeHeader', pdict) || ''}
 
         <div class="page">
             <isinclude template="/components/header/pageHeaderNomenu" />
@@ -31,7 +31,7 @@
             IMPORTANT: Note that this hook will be called to cached as well as uncached pages
                         which means you need to put privacy information into another remote include
         </iscomment>
-        ${dw.system.HookMgr.callHook('app.template.afterFooter', 'afterFooter') || ''}
+        ${dw.system.HookMgr.callHook('app.template.afterFooter', 'afterFooter', pdict) || ''}
 
         <isinclude url="${URLUtils.url('ConsentTracking-Check')}"/>
     </body>

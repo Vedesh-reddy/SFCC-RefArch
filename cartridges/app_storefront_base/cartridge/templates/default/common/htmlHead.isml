@@ -44,4 +44,4 @@
     IMPORTANT: Note that this hook will be called to cached as well as uncached pages
                which means you need to put privacy information into another remote include
 </iscomment>
-${dw.system.HookMgr.callHook('app.template.htmlHead', 'htmlHead') || ''}
+${dw.system.HookMgr.callHook('app.template.htmlHead', 'htmlHead', pdict) || ''}
