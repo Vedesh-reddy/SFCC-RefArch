@@ -29,7 +29,7 @@
                     <span class="col-12 item" id="product-${listindex.index}" role="option">
                         <div class="row">
                             <div class="col-xs-12 col-sm-10">
-                                <a href="${product.url}" aria‐label="${product.name}">
+                                <a href="${product.url}" aria-label="${product.name}">
                                     <img class="swatch-circle hidden-xs-down" alt="${product.name}" src="${product.imageUrl}" />
                                     <span class="name">${product.name}</span>
                                 </a>
