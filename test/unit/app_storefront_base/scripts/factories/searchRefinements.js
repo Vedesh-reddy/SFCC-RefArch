@@ -9,6 +9,7 @@ var mockPriceRefinementValue = sinon.spy();
 var mockColorRefinementValue = sinon.spy();
 var mockSizeRefinementValue = sinon.spy();
 var mockBooleanRefinementValue = sinon.spy();
+var mockPromotionRefinementValue = sinon.spy();
 var mockGetCategory = sinon.stub();
 
 var searchRefinements = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/factories/searchRefinements', {
@@ -18,6 +19,7 @@ var searchRefinements = proxyquire('../../../../../cartridges/app_storefront_bas
     '*/cartridge/models/search/attributeRefinementValue/color': mockColorRefinementValue,
     '*/cartridge/models/search/attributeRefinementValue/size': mockSizeRefinementValue,
     '*/cartridge/models/search/attributeRefinementValue/boolean': mockBooleanRefinementValue,
+    '*/cartridge/models/search/attributeRefinementValue/promotion': mockPromotionRefinementValue,
     '*/cartridge/models/search/attributeRefinementValue/category': function (temp1, temp2, category) {
         return {
             online: true,
@@ -40,6 +42,7 @@ describe('Search Refinements Factory', function () {
         mockColorRefinementValue.reset();
         mockSizeRefinementValue.reset();
         mockBooleanRefinementValue.reset();
+        mockPromotionRefinementValue.reset();
     });
 
     it('should retrieve price refinements ', function () {
@@ -70,6 +73,14 @@ describe('Search Refinements Factory', function () {
         searchRefinements.get(productSearch, refinementDefinition, refinementValues);
 
         assert.isTrue(mockBooleanRefinementValue.calledWithNew());
+    });
+
+    it('should retrieve promotion refinements ', function () {
+        refinementDefinition = { promotionRefinement: true };
+
+        searchRefinements.get(productSearch, refinementDefinition, refinementValues);
+
+        assert.isTrue(mockPromotionRefinementValue.calledWithNew());
     });
 
     describe('Category Refinements', function () {

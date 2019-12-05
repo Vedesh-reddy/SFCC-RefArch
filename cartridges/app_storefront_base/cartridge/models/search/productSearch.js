@@ -46,6 +46,7 @@ function getRefinements(productSearch, refinements, refinementDefinitions) {
             isCategoryRefinement: definition.categoryRefinement,
             isAttributeRefinement: definition.attributeRefinement,
             isPriceRefinement: definition.priceRefinement,
+            isPromotionRefinement: definition.promotionRefinement,
             values: values
         };
     });

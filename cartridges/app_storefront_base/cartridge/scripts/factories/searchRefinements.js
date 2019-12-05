@@ -18,6 +18,8 @@ function getAttributeRefinementValueModel(refinementDefinition) {
         return require('*/cartridge/models/search/attributeRefinementValue/size');
     } else if (refinementDefinition.categoryRefinement) {
         return require('*/cartridge/models/search/attributeRefinementValue/category');
+    } else if (refinementDefinition.promotionRefinement) {
+        return require('*/cartridge/models/search/attributeRefinementValue/promotion');
     }
 
     return require('*/cartridge/models/search/attributeRefinementValue/boolean');

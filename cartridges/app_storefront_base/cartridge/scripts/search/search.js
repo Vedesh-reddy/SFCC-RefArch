@@ -27,6 +27,9 @@ function setProductProperties(productSearch, httpParams, selectedCategory, sorti
     if (httpParams.pmax) {
         productSearch.setPriceMax(parseInt(httpParams.pmax, 10));
     }
+    if (httpParams.pmid) {
+        productSearch.setPromotionID(httpParams.pmid);
+    }
 
     if (sortingRule) {
         productSearch.setSortingRule(sortingRule);
