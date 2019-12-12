@@ -18,6 +18,7 @@
         "./test/acceptance/steps/productDetailPage/pdpSimpleLayout.steps.js",
         "./test/acceptance/steps/productDetailPage/pdpQuickViewSearch.steps.js",
         "./test/acceptance/steps/productDetailPage/pdpProductFilter.steps.js",
+        "./test/acceptance/steps/productDetailPage/pdpBackToPlp.steps.js",
         "./test/acceptance/steps/checkoutPage/editCart.steps.js",
         "./test/acceptance/steps/loginPage/createAccount.steps.js",
         "./test/acceptance/steps/loginPage/loginUser.steps.js",

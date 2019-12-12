@@ -94,6 +94,39 @@ function updateSortOptions(response) {
     });
 }
 
+/**
+ * set up the qs so that it can be used with the history api to
+ * allow for the back button in the browser to load the plp in old state
+ *
+ * @param {string} oldQS - qs to be altered
+ * @param {Object} $element - jquery object of item clicked/checked
+ * @return {string} - querystring to use for the history api
+ */
+function getNewQS(oldQS, $element) {
+    var qsNew = '';
+    var qsArray = oldQS.split('&');
+    qsArray.forEach(function (qsParam) {
+        if (qsParam.startsWith('start')) {
+            var startArray = qsParam.split('=');
+            qsNew = qsNew === '' ?
+                qsNew += qsParam :
+                qsNew = qsNew + '&' + startArray[0] + '=' + 0;
+        } else if (qsParam.startsWith('sz')) {
+            var szArray = qsParam.split('=');
+            var startPageVar = $('.grid-footer').data('page-number');
+            if ($element.hasClass('more')) { startPageVar++; }
+            qsNew = qsNew === '' ?
+                qsNew += qsParam :
+                qsNew = qsNew + '&' + szArray[0] + '=' + (szArray[1] * (startPageVar));
+        } else {
+            qsNew = qsNew === '' ?
+                qsNew += qsParam :
+                qsNew = qsNew + '&' + qsParam;
+        }
+    });
+    return qsNew;
+}
+
 module.exports = {
     filter: function () {
         // Display refinements bar when Menu icon clicked
@@ -137,13 +170,18 @@ module.exports = {
 
             $.spinner().start();
             $(this).trigger('search:sort', this.value);
+            var $sortSelect = $(this);
+            var url = this.value;
             $.ajax({
-                url: this.value,
+                url: url,
                 data: { selectedUrl: this.value },
                 method: 'GET',
                 success: function (response) {
                     $('.product-grid').empty().html(response);
                     $.spinner().stop();
+                    var qs = $sortSelect.val().split('?')[1];
+                    var qsNew = getNewQS(qs, $sortSelect);
+                    history.pushState({ plpState: true }, '', 'Search-Show?' + qsNew);
                 },
                 error: function () {
                     $.spinner().stop();
@@ -157,7 +195,7 @@ module.exports = {
         $('.container').on('click', '.show-more button', function (e) {
             e.stopPropagation();
             var showMoreUrl = $(this).data('url');
-
+            var $showMorebutton = $(this);
             e.preventDefault();
 
             $.spinner().start();
@@ -170,6 +208,9 @@ module.exports = {
                     $('.grid-footer').replaceWith(response);
                     updateSortOptions(response);
                     $.spinner().stop();
+                    var qs = showMoreUrl.split('?')[1];
+                    var qsNew = getNewQS(qs, $showMorebutton);
+                    history.pushState({ plpState: true }, 'title 1', 'Search-Show?' + qsNew);
                 },
                 error: function () {
                     $.spinner().stop();
@@ -189,8 +230,10 @@ module.exports = {
 
                 $.spinner().start();
                 $(this).trigger('search:filter', e);
+                var url = $(this).data('href');
+                var $filter = $(this);
                 $.ajax({
-                    url: $(this).data('href'),
+                    url: url,
                     data: {
                         page: $('.grid-footer').data('page-number'),
                         selectedUrl: $(this).data('href')
@@ -199,6 +242,14 @@ module.exports = {
                     success: function (response) {
                         parseResults(response);
                         $.spinner().stop();
+                        var qsNew;
+                        if ($filter.hasClass('reset')) {
+                            qsNew = $filter.data('href').split('?')[1];
+                        } else {
+                            var qs = $filter.data('href').split('?')[1];
+                            qsNew = getNewQS(qs, $filter);
+                        }
+                        history.pushState({ plpState: true }, 'title 1', 'Search-Show?' + qsNew);
                     },
                     error: function () {
                         $.spinner().stop();

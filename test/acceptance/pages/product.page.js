@@ -38,7 +38,10 @@ module.exports = {
         qv_ColorBtn: '.color-attribute',
         qv_SizeSelect: '.custom-select.form-control.select-size',
         qv_AddToCart: '.add-to-cart-global.btn.btn-primary',
-        alertAddToCart: '.alert.alert-success.add-to-basket-alert'
+        alertAddToCart: '.alert.alert-success.add-to-basket-alert',
+        moreButton: '.show-more .more',
+        firstProductTile: '.product-tile',
+        pdpClass: '.product-detail'
     },
     selectSize(size) {
         I.waitForElement(this.locators.selectSize);
@@ -101,6 +104,20 @@ module.exports = {
         let locatorProduct = locate(this.locators.filterPDP).first();
         I.waitForElement(locatorProduct);
         I.see(firstProductName, locatorProduct);
+    },
+    clickMoreButton() {
+        I.click(this.locators.moreButton);
+        I.wait(1.5);
+    },
+    clickFirstTile() {
+        I.click(this.locators.firstProductTile)[0]; // eslint-disable-line no-unused-expressions
+    },
+    simulateBackButton() {
+        I.wait(1.5);
+        I.waitForElement(this.locators.pdpClass);
+        I.executeScript('window.history.back();');
+        I.wait(1.5);
+        I.waitNumberOfVisibleElements(this.locators.firstProductTile, 24);
     },
     verifyProductTotals(totalItems) {
         let locator = locate(this.locators.productTotals)
