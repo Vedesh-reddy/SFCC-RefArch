@@ -98,6 +98,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
 
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
         var result = searchHelper.search(req, res);
+        var Resource = require('dw/web/Resource');
 
         if (result.searchRedirect) {
             res.redirect(result.searchRedirect);
@@ -115,7 +116,8 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
             refineurl: result.refineurl,
             category: result.category ? result.category : null,
             canonicalUrl: result.canonicalUrl,
-            schemaData: result.schemaData
+            schemaData: result.schemaData,
+            pushStateTitle: Resource.msg('plp.pushstate.title', 'search', null)
         });
     });
     return next();

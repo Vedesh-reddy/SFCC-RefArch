@@ -41,7 +41,12 @@
     </div>
     <div class="row">
         <div class="tab-content col-12">
-            <div class="tab-pane container active" id="product-search-results" role="tabpanel" aria-labelledby="product-tab">
+            <div class="tab-pane container active" 
+                id="product-search-results"
+                role="tabpanel"
+                aria-labelledby="product-tab"
+                data-plp-back-title="${pdict.pushStateTitle}"
+                >                
 
                     <isif condition="${pdict.productSearch.productIds.length > 0}">
                         <div class="row grid-header">

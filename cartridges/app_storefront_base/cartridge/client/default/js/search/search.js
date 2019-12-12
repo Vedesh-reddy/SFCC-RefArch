@@ -181,7 +181,8 @@ module.exports = {
                     $.spinner().stop();
                     var qs = $sortSelect.val().split('?')[1];
                     var qsNew = getNewQS(qs, $sortSelect);
-                    history.pushState({ plpState: true }, '', 'Search-Show?' + qsNew);
+                    var title = $('#product-search-results').data('plp-back-title');
+                    history.pushState({ plpState: true }, title, 'Search-Show?' + qsNew);
                 },
                 error: function () {
                     $.spinner().stop();
@@ -210,7 +211,8 @@ module.exports = {
                     $.spinner().stop();
                     var qs = showMoreUrl.split('?')[1];
                     var qsNew = getNewQS(qs, $showMorebutton);
-                    history.pushState({ plpState: true }, 'title 1', 'Search-Show?' + qsNew);
+                    var title = $('#product-search-results').data('plp-back-title');
+                    history.pushState({ plpState: true }, title, 'Search-Show?' + qsNew);
                 },
                 error: function () {
                     $.spinner().stop();
@@ -249,7 +251,8 @@ module.exports = {
                             var qs = $filter.data('href').split('?')[1];
                             qsNew = getNewQS(qs, $filter);
                         }
-                        history.pushState({ plpState: true }, 'title 1', 'Search-Show?' + qsNew);
+                        var title = $('#product-search-results').data('plp-back-title');
+                        history.pushState({ plpState: true }, title, 'Search-Show?' + qsNew);
                     },
                     error: function () {
                         $.spinner().stop();
