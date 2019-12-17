@@ -21,9 +21,11 @@ function createToken() {
  * credit card payment instrument is created
  * @param {dw.order.Basket} basket Current users's basket
  * @param {Object} paymentInformation - the payment information
+ * @param {string} paymentMethodID - paymentmethodID
+ * @param {Object} req the request object
  * @return {Object} returns an error object
  */
-function Handle(basket, paymentInformation) {
+function Handle(basket, paymentInformation, paymentMethodID, req) {
     var currentBasket = basket;
     var cardErrors = {};
     var cardNumber = paymentInformation.cardNumber.value;
@@ -33,8 +35,28 @@ function Handle(basket, paymentInformation) {
     var serverErrors = [];
     var creditCardStatus;
 
+
     var cardType = paymentInformation.cardType.value;
     var paymentCard = PaymentMgr.getPaymentCard(cardType);
+
+
+    // Validate payment instrument
+    if (paymentMethodID === PaymentInstrument.METHOD_CREDIT_CARD) {
+        var creditCardPaymentMethod = PaymentMgr.getPaymentMethod(PaymentInstrument.METHOD_CREDIT_CARD);
+        var paymentCardValue = PaymentMgr.getPaymentCard(paymentInformation.cardType.value);
+
+        var applicablePaymentCards = creditCardPaymentMethod.getApplicablePaymentCards(
+            req.currentCustomer.raw,
+            req.geolocation.countryCode,
+            null
+        );
+
+        if (!applicablePaymentCards.contains(paymentCardValue)) {
+            // Invalid Payment Instrument
+            var invalidPaymentMethod = Resource.msg('error.payment.not.valid', 'checkout', null);
+            return { fieldErrors: [], serverErrors: [invalidPaymentMethod], error: true };
+        }
+    }
 
     if (!paymentInformation.creditCardToken) {
         if (paymentCard) {
