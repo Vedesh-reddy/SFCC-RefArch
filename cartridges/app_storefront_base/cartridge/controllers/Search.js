@@ -98,7 +98,6 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
 
     this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
         var result = searchHelper.search(req, res);
-        var Resource = require('dw/web/Resource');
 
         if (result.searchRedirect) {
             res.redirect(result.searchRedirect);
@@ -109,6 +108,11 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
             template = result.categoryTemplate;
         }
 
+        var redirectGridUrl = searchHelper.backButtonDetection(req.session.clickStream);
+        if (redirectGridUrl) {
+            res.redirect(redirectGridUrl);
+        }
+
         res.render(template, {
             productSearch: result.productSearch,
             maxSlots: result.maxSlots,
@@ -116,8 +120,7 @@ server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.cons
             refineurl: result.refineurl,
             category: result.category ? result.category : null,
             canonicalUrl: result.canonicalUrl,
-            schemaData: result.schemaData,
-            pushStateTitle: Resource.msg('plp.pushstate.title', 'search', null)
+            schemaData: result.schemaData
         });
     });
     return next();

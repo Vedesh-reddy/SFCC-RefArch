@@ -261,4 +261,194 @@ describe('search helpers', function () {
             assert.isTrue(searchSpy.calledOnce);
         });
     });
+
+    describe('backButtonDetection', function () {
+        var strContainerURLUTILS = '';
+        var searchHelpersMock4 = proxyquire(searchHelperPath, {
+            'dw/web/URLUtils': {
+                url: function (endPoint) {
+                    strContainerURLUTILS += endPoint + '?';
+                    return {
+                        append: function (param, value) {
+                            var extraChar = strContainerURLUTILS.includes('=') ? '&' : '';
+                            // if(strContainerURLUTILS.includes('&')){}
+                            strContainerURLUTILS += extraChar + param + '=' + value;
+                            return strContainerURLUTILS;
+                        },
+                        toString: function () {
+                            return strContainerURLUTILS;
+                        }
+                    };
+                }
+            },
+            '*/cartridge/config/preferences': {
+                plpBackButtonOn: true,
+                plpBackButtonLimit: 10
+            }
+        });
+
+        var searchHelpersMock5 = proxyquire(searchHelperPath, {
+            '*/cartridge/config/preferences': {
+                plpBackButtonOn: false,
+                plpBackButtonLimit: 10
+            }
+        });
+
+        afterEach(function () {
+            strContainerURLUTILS = '';
+        });
+        it('should detect the old category query string', function () {
+            var clickStream = {
+                clicks: [
+                    {
+                        pipelineName: 'Foo-Bar',
+                        queryString: ''
+                    },
+                    {
+                        pipelineName: 'Search-ShowAjax',
+                        queryString: 'cgid=womens-clothing-tops&prefn1=refinementColor&prefv1=Blue&start=12&sz=12&selectedUrl=qwertyuiop'
+                    },
+                    {
+                        pipelineName: 'Product-Show',
+                        queryString: 'qwertyuiopiutrewerty'
+                    },
+                    {
+                        pipelineName: 'Search-Show',
+                        queryString: 'cgid=womens-clothing-tops'
+                    }]
+            };
+            var result = searchHelpersMock4.backButtonDetection(clickStream);
+            var testURL = clickStream.clicks[0].pipelineName + '?' + clickStream.clicks[2].queryString;
+            assert.equal(testURL.split('&').length, result.split('&').length);
+            assert.isTrue(result.includes('start=0'));
+            assert.isTrue(result.includes('sz=24'));
+        });
+        it('should return null if it has not found a search request after the pdp request', function () {
+            var clickStream = {
+                clicks: [
+                    {
+                        pipelineName: 'Foo-Bar',
+                        queryString: ''
+                    },
+                    {
+                        pipelineName: 'Home-Show',
+                        queryString: 'cgid=womens-clothing-tops&prefn1=refinementColor&prefv1=Blue&start=12&sz=12&selectedUrl=qwertyuiop'
+                    },
+                    {
+                        pipelineName: 'Product-Show',
+                        queryString: 'qwertyuiopiutrewerty'
+                    },
+                    {
+                        pipelineName: 'Search-Show',
+                        queryString: 'cgid=womens-clothing-tops'
+                    }]
+            };
+
+            var result = searchHelpersMock4.backButtonDetection(clickStream);
+            assert.equal(result, null);
+        });
+
+        it('should return null if it has found 2 search request in a row', function () {
+            var clickStream = {
+                clicks: [
+                    {
+                        pipelineName: 'Foo-Bar',
+                        queryString: ''
+                    },
+                    {
+                        pipelineName: 'Product-Show',
+                        queryString: 'qwertyuiopiutrewerty'
+                    },
+                    {
+                        pipelineName: 'Search-UpdateGrid',
+                        queryString: 'q=shirts&prefn1=refinementColor&prefv1=Blue&start=12&sz=12&selectedUrl=qwertyuiop'
+                    },
+                    {
+                        pipelineName: 'Search-Show',
+                        queryString: 'q=shirts'
+                    }]
+            };
+
+            var result = searchHelpersMock4.backButtonDetection(clickStream);
+            assert.equal(result, null);
+        });
+
+        it('should return null if prefernces.plpBackButtonOn is falsy', function () {
+            var clickStream = {
+                clicks: [
+                    {
+                        pipelineName: 'Foo-Bar',
+                        queryString: ''
+                    },
+                    {
+                        pipelineName: 'Search-UpdateGrid',
+                        queryString: 'q=shirts&prefn1=refinementColor&prefv1=Blue&start=12&sz=12&selectedUrl=qwertyuiop'
+                    },
+                    {
+                        pipelineName: 'Product-Show',
+                        queryString: 'qwertyuiopiutrewerty'
+                    },
+                    {
+                        pipelineName: 'Search-Show',
+                        queryString: 'q=shirts'
+                    }]
+            };
+
+            var result = searchHelpersMock5.backButtonDetection(clickStream);
+            assert.equal(result, null);
+        });
+
+        it('should return a redirect url with the old search request paramters', function () {
+            var clickStream = {
+                clicks: [
+                    {
+                        pipelineName: 'Foo-Bar',
+                        queryString: ''
+                    },
+                    {
+                        pipelineName: 'Search-UpdateGrid',
+                        queryString: 'q=shirts&prefn1=refinementColor&prefv1=Blue&start=12&sz=12&selectedUrl=qwertyuiop'
+                    },
+                    {
+                        pipelineName: 'Product-Show',
+                        queryString: 'qwertyuiopiutrewerty'
+                    },
+                    {
+                        pipelineName: 'Search-Show',
+                        queryString: 'q=shirts'
+                    }]
+            };
+
+            var result = searchHelpersMock4.backButtonDetection(clickStream);
+            var testURL = clickStream.clicks[0].pipelineName + '?' + clickStream.clicks[2].queryString;
+            assert.equal(testURL.split('&').length, result.split('&').length);
+            assert.isTrue(result.includes('start=0'));
+            assert.isTrue(result.includes('sz=24'));
+        });
+
+        it('should return null if q does not match between search calls', function () {
+            var clickStream = {
+                clicks: [
+                    {
+                        pipelineName: 'Foo-Bar',
+                        queryString: ''
+                    },
+                    {
+                        pipelineName: 'Search-UpdateGrid',
+                        queryString: 'q=shirts&prefn1=refinementColor&prefv1=Blue&start=12&sz=12&selectedUrl=qwertyuiop'
+                    },
+                    {
+                        pipelineName: 'Product-Show',
+                        queryString: 'qwertyuiopiutrewerty'
+                    },
+                    {
+                        pipelineName: 'Search-Show',
+                        queryString: 'q=pants'
+                    }]
+            };
+
+            var result = searchHelpersMock4.backButtonDetection(clickStream);
+            assert.equal(result, null);
+        });
+    });
 });
