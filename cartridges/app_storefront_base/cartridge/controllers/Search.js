@@ -14,28 +14,21 @@ server.get('UpdateGrid', function (req, res, next) {
 
     var apiProductSearch = new ProductSearchModel();
     apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
-    var viewData = {
-        apiProductSearch: apiProductSearch
-    };
-    res.setViewData(viewData);
+    apiProductSearch.search();
 
-    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-        apiProductSearch.search();
+    if (!apiProductSearch.personalizedSort) {
+        searchHelper.applyCache(res);
+    }
+    var productSearch = new ProductSearch(
+        apiProductSearch,
+        req.querystring,
+        req.querystring.srule,
+        CatalogMgr.getSortingOptions(),
+        CatalogMgr.getSiteCatalog().getRoot()
+    );
 
-        if (!apiProductSearch.personalizedSort) {
-            searchHelper.applyCache(res);
-        }
-        var productSearch = new ProductSearch(
-            apiProductSearch,
-            req.querystring,
-            req.querystring.srule,
-            CatalogMgr.getSortingOptions(),
-            CatalogMgr.getSiteCatalog().getRoot()
-        );
-
-        res.render('/search/productGrid', {
-            productSearch: productSearch
-        });
+    res.render('/search/productGrid', {
+        productSearch: productSearch
     });
 
     next();
@@ -86,43 +79,35 @@ server.get('ShowAjax', cache.applyShortPromotionSensitiveCache, consentTracking.
 }, pageMetaData.computedPageMetaData);
 
 server.get('Show', cache.applyShortPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
-    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
     var template = 'search/searchResults';
 
-    var apiProductSearch = new ProductSearchModel();
-    var viewData = {
-        apiProductSearch: apiProductSearch
-    };
-    res.setViewData(viewData);
+    var result = searchHelper.search(req, res);
 
-    this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-        var result = searchHelper.search(req, res);
+    if (result.searchRedirect) {
+        res.redirect(result.searchRedirect);
+        return next();
+    }
 
-        if (result.searchRedirect) {
-            res.redirect(result.searchRedirect);
-            return;
-        }
+    if (result.category && result.categoryTemplate) {
+        template = result.categoryTemplate;
+    }
 
-        if (result.category && result.categoryTemplate) {
-            template = result.categoryTemplate;
-        }
+    var redirectGridUrl = searchHelper.backButtonDetection(req.session.clickStream);
+    if (redirectGridUrl) {
+        res.redirect(redirectGridUrl);
+    }
 
-        var redirectGridUrl = searchHelper.backButtonDetection(req.session.clickStream);
-        if (redirectGridUrl) {
-            res.redirect(redirectGridUrl);
-        }
-
-        res.render(template, {
-            productSearch: result.productSearch,
-            maxSlots: result.maxSlots,
-            reportingURLs: result.reportingURLs,
-            refineurl: result.refineurl,
-            category: result.category ? result.category : null,
-            canonicalUrl: result.canonicalUrl,
-            schemaData: result.schemaData
-        });
+    res.render(template, {
+        productSearch: result.productSearch,
+        maxSlots: result.maxSlots,
+        reportingURLs: result.reportingURLs,
+        refineurl: result.refineurl,
+        category: result.category ? result.category : null,
+        canonicalUrl: result.canonicalUrl,
+        schemaData: result.schemaData
     });
+
     return next();
 }, pageMetaData.computedPageMetaData);
 

@@ -193,10 +193,7 @@ describe('search helpers', function () {
         var res = {
             cachePeriod: '',
             cachePeriodUnit: '',
-            personalized: false,
-            getViewData: function () {
-                return {};
-            }
+            personalized: false
         };
         var mockRequest1 = {
             querystring: {}
@@ -248,7 +245,7 @@ describe('search helpers', function () {
         });
 
         it('should get a search redirect url', function () {
-            var result = searchHelpersMock3.search(mockRequest2, res);
+            var result = searchHelpersMock3.search(mockRequest2);
 
             assert.equal(result.searchRedirect, 'some value');
             assert.isTrue(searchSpy.notCalled);
