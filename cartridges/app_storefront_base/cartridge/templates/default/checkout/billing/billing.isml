@@ -26,8 +26,8 @@
                         <isinclude template="checkout/billing/addressSelector" />
                         <div class="invalid-feedback"></div>
                         <div class="row">
-                            <a class="col-6 text-center btn-show-details">${Resource.msg('action.update.address', 'checkout', null)}</a>
-                            <a class="col-6 text-center btn-add-new">${Resource.msg('action.add.new', 'checkout', null)}</a>
+                            <button class="col-6 text-center btn-show-details" type="button">${Resource.msg('action.update.address', 'checkout', null)}</button>
+                            <button class="col-6 text-center btn-add-new" type="button">${Resource.msg('action.add.new', 'checkout', null)}</button>
                         </div>
                     </div>
                 </fieldset>

@@ -122,6 +122,13 @@ span.ship-to-city-st-zip {
             display: block;
         }
 
+        .shipment-selector-block {
+            .btn-show-details,
+            .btn-add-new {
+                border: none;
+            }
+        }
+
         [data-address-mode=customer] {
             .shipping-address-block {
                 display: none;
@@ -162,6 +169,13 @@ span.ship-to-city-st-zip {
 
         button.submit-payment {
             display: block;
+        }
+
+        .address-selector-block {
+            .btn-show-details,
+            .btn-add-new {
+                border: none;
+            }
         }
 
         [data-address-mode=customer] {
