@@ -52,7 +52,7 @@ function sendCreateAccountEmail(registeredUser) {
     var emailObj = {
         to: registeredUser.email,
         subject: Resource.msg('email.subject.new.registration', 'registration', null),
-        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@testorganization.com',
         type: emailHelpers.emailTypes.registration
     };
 
@@ -96,7 +96,7 @@ function sendPasswordResetEmail(email, resettingCustomer) {
     var emailObj = {
         to: email,
         subject: Resource.msg('subject.profile.resetpassword.email', 'login', null),
-        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@testorganization.com',
         type: emailHelpers.emailTypes.passwordChanged
     };
 
@@ -121,7 +121,7 @@ function sendAccountEditedEmail(profile) {
     var emailObj = {
         to: profile.email,
         subject: Resource.msg('email.subject.account.edited', 'account', null),
-        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@testorganization.com',
         type: emailHelpers.emailTypes.accountEdited
     };
 

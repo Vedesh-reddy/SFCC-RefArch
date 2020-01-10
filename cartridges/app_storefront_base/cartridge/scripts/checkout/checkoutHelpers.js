@@ -548,7 +548,7 @@ function sendConfirmationEmail(order, locale) {
     var emailObj = {
         to: order.customerEmail,
         subject: Resource.msg('subject.order.confirmation.email', 'order', null),
-        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@salesforce.com',
+        from: Site.current.getCustomPreferenceValue('customerServiceEmail') || 'no-reply@testorganization.com',
         type: emailHelpers.emailTypes.orderConfirmation
     };
 
