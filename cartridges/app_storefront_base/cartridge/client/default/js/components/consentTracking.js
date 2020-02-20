@@ -48,6 +48,7 @@ function showConsentModal() {
         dataType: 'html',
         success: function (response) {
             $('.modal-body').html(response);
+            $('#consent-tracking').modal('show');
         },
         error: function () {
             $('#consent-tracking').remove();
@@ -83,6 +84,15 @@ module.exports = function () {
             showConsentModal();
         });
     }
+
+    $('body').on('shown.bs.modal', '#consent-tracking', function () {
+        $('#consent-tracking').siblings().attr('aria-hidden', 'true');
+        $('#consent-tracking .close').focus();
+    });
+
+    $('body').on('hidden.bs.modal', '#consent-tracking', function () {
+        $('#consent-tracking').siblings().attr('aria-hidden', 'false');
+    });
 
     $('body').on('keydown', '#consent-tracking', function (e) {
         var focusParams = {
