@@ -19,7 +19,9 @@
             </div>
             <ul class="coupon-promotion-relationship">
                 <isloop items="${discount.relationship}" var="relatedPromotion">
-                    <li>${relatedPromotion.callOutMsg}</li>
+                    <isif condition="${relatedPromotion.callOutMsg}">
+                        <li>${relatedPromotion.callOutMsg}</li>
+                    </isif> 
                 </isloop>
             </ul>
         </div>
