@@ -2,16 +2,17 @@
 <isif condition="${product.promotions}">
     <isloop items="${product.promotions}" var="promotion" status="promdet">
         <div class="row collapsible-xl">
-	        <div class="col-12">
-	            <button class="title callout btn text-left btn-block"
-	                    aria-expanded="false" aria-controls="collapsible-promotion-details-${promdet.index}">
-	                ${promotion.calloutMsg}
-	            </button>
-	        </div>
-			<div class="col-12 value content" id="collapsible-promotion-details-${promdet.index}">
-		        <isprint value="${promotion.details}" encoding="htmlcontent" />
+            <div class="col-12">
+                <button class="title callout btn text-left btn-block"
+                        aria-expanded="false" aria-controls="collapsible-promotion-details-${promdet.index}">
+                    <isprint value="${promotion.calloutMsg}" encoding="off" /> 
+                </button>
             </div>
-	    </div>
-	    <hr>
+            <div class="col-12 value content" id="collapsible-promotion-details-${promdet.index}">
+                <isprint value="${promotion.details}" encoding="off" /> 
+            </div>
+        </div>
+        <hr>
     </isloop>
 </isif>
+

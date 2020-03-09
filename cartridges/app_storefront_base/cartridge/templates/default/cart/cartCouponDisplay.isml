@@ -19,9 +19,12 @@
             </div>
             <ul class="coupon-promotion-relationship">
                 <isloop items="${discount.relationship}" var="relatedPromotion">
+
                     <isif condition="${relatedPromotion.callOutMsg}">
-                        <li>${relatedPromotion.callOutMsg}</li>
-                    </isif> 
+                        <li>
+                            <isprint value="${relatedPromotion.callOutMsg}" encoding="off"/>
+                        </li> 
+                    </isif>
                 </isloop>
             </ul>
         </div>
