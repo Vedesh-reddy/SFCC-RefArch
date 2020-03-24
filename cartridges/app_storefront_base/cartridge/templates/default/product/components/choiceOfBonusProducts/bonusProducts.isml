@@ -116,7 +116,6 @@
             </div>
             <div class="col-6 col-sm-3">
                 <button class="btn btn-primary add-bonus-products"
-                    data-pid="${product.id}"
                     ${!product.readyToOrder || !product.available ? "disabled" : ""}>
                         <i class="fa fa-shopping-bag"></i>
                         ${Resource.msg('button.addtocart', 'common', null)}
