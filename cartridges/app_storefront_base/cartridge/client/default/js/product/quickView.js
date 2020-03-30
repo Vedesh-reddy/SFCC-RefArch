@@ -74,6 +74,7 @@ function fillModalElement(selectedValueUrl) {
             $('#quickViewModal .modal-header .close .sr-only').text(data.closeButtonText);
             $('#quickViewModal .enter-message').text(data.enterDialogMessage);
             $('#quickViewModal').modal('show');
+            $('body').trigger('quickview:ready');
 
             $.spinner().stop();
         },

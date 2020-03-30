@@ -300,6 +300,7 @@ function fillModalElement(editProductUrl) {
             $('#editProductModal .modal-header .close .sr-only').text(data.closeButtonText);
             $('#editProductModal .enter-message').text(data.enterDialogMessage);
             $('#editProductModal').modal('show');
+            $('body').trigger('editproductmodal:ready');
             $.spinner().stop();
         },
         error: function () {
