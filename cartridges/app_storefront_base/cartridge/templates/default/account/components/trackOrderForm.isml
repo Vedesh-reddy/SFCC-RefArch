@@ -1,4 +1,4 @@
-<form action="${URLUtils.url('Order-Track')}" class="trackorder" method="GET" name="trackorder-form">
+<form action="${URLUtils.url('Order-Track')}" class="trackorder" method="POST" name="trackorder-form">
     <h2 class="card-header track-order-header">${Resource.msg('header.form.trackorder', 'login', null)}</h2>
     <div class="card-body">
         <isif condition="${pdict.orderTrackFormError}">

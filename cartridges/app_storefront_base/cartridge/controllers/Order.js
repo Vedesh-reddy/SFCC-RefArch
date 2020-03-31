@@ -83,7 +83,7 @@ server.get(
     }
 );
 
-server.get(
+server.post(
     'Track',
     consentTracking.consent,
     server.middleware.https,
@@ -100,10 +100,10 @@ server.get(
         var profileForm = server.forms.getForm('profile');
         profileForm.clear();
 
-        if (req.querystring.trackOrderEmail
-            && req.querystring.trackOrderPostal
-            && req.querystring.trackOrderNumber) {
-            order = OrderMgr.getOrder(req.querystring.trackOrderNumber);
+        if (req.form.trackOrderEmail
+            && req.form.trackOrderPostal
+            && req.form.trackOrderNumber) {
+            order = OrderMgr.getOrder(req.form.trackOrderNumber);
         } else {
             validForm = false;
         }
@@ -130,12 +130,12 @@ server.get(
             );
 
             // check the email and postal code of the form
-            if (req.querystring.trackOrderEmail.toLowerCase()
+            if (req.form.trackOrderEmail.toLowerCase()
                     !== orderModel.orderEmail.toLowerCase()) {
                 validForm = false;
             }
 
-            if (req.querystring.trackOrderPostal
+            if (req.form.trackOrderPostal
                 !== orderModel.billing.billingAddress.address.postalCode) {
                 validForm = false;
             }
