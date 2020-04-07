@@ -15,7 +15,7 @@ function parseRenderParameters(renderParametersJson) {
         try {
             renderParameters = JSON.parse(renderParametersJson);
         } catch (e) {
-            var Logger = require('dw.system.Logger');
+            var Logger = require('dw/system/Logger');
             Logger.error('Unable to parse renderParameters: ' + renderParametersJson);
         }
     }
@@ -38,7 +38,7 @@ module.exports = {
         try {
             cartridgeDecorator = require('*/cartridge/experience/defaultdecorator');
         } catch (e) {
-            var Logger = require('dw.system.Logger');
+            var Logger = require('dw/system/Logger');
             Logger.warn('Unable to determine frontend decorator ' + e);
         }
         // determine decorator
