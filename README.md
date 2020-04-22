@@ -47,6 +47,8 @@ Use the provided NPM scripts to compile and upload changes to your Sandbox.
 * `npm run compile:js` - Compiles all .js files and aggregates them.
 * `npm run compile:fonts` - Copies all needed font files. Usually, this only has to be run once.
 
+ If you are having an issue compiling scss files, try running 'npm rebuild node-sass' from within your local repo.
+
 ## Linting your code
 
 `npm run lint` - Execute linting for all JavaScript and SCSS files in the project. You should run this command before committing your code.
