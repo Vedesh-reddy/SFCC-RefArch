@@ -45,7 +45,7 @@ module.exports = function fullProduct(product, apiProduct, options) {
         category = apiProduct.getMasterProduct().getPrimaryCategory();
     }
 
-    if (category) {
+    if (category && 'sizeChartID' in category.custom) {
         decorators.sizeChart(product, category.custom.sizeChartID);
     }
 
