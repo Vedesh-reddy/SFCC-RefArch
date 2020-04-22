@@ -12,13 +12,14 @@ describe('Tiered Price Model', function () {
     }
 
     var tierValues = {
-        '1-5': '$20',
-        '6-10': '$10'
+        '1-5': { value: 20 },
+        '6-10': { value: 10 }
     };
     var tierQty = Object.keys(tierValues);
     var stubDefaultPrice = sinon.stub();
     var firstTierPrice = { sales: tierValues[tierQty[0]] };
     var secondTierPrice = { sales: tierValues[tierQty[1]] };
+    var lowestTierPrice = secondTierPrice;
     stubDefaultPrice.onCall(0).returns(firstTierPrice);
     stubDefaultPrice.onCall(1).returns(secondTierPrice);
 
@@ -41,9 +42,9 @@ describe('Tiered Price Model', function () {
         stubDefaultPrice.reset();
     });
 
-    it('should set startingFromPrice to the first tier price', function () {
+    it('should set startingFromPrice to the lowest tier price', function () {
         var tieredPrice = new TieredPrice(priceTable);
-        assert.equal(tieredPrice.startingFromPrice, firstTierPrice);
+        assert.equal(tieredPrice.startingFromPrice, lowestTierPrice);
     });
 
     it('should set a tier to its proper quantity/price pairing', function () {

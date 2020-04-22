@@ -18,7 +18,7 @@ function TieredPrice(priceTable, useSimplePrice) {
     this.tiers = collections.map(priceTable.getQuantities(), function (quantity) {
         var price = new DefaultPrice(priceTable.getPrice(quantity));
 
-        if (!startingFromPrice) {
+        if (!startingFromPrice || price.sales.value < startingFromPrice.sales.value) {
             startingFromPrice = price;
         }
 
