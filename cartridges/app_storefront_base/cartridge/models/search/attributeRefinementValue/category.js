@@ -11,13 +11,13 @@ var ACTION_ENDPOINT = 'Search-ShowAjax';
  * @param {dw.catalog.ProductSearchModel} productSearch - ProductSearchModel instance
  * @param {dw.catalog.ProductSearchRefinementDefinition} refinementDefinition - Refinement
  *     definition
- * @param {dw.catalog.ProductSearchRefinementValue} refinementValue - Raw DW refinement value
+ * @param {dw.catalog.Category} category - a Category instance
  * @param {boolean} selected - Selected flag
  */
-function CategoryAttributeValue(productSearch, refinementDefinition, refinementValue, selected) {
+function CategoryAttributeValue(productSearch, refinementDefinition, category, selected) {
     this.productSearch = productSearch;
     this.refinementDefinition = refinementDefinition;
-    this.refinementValue = refinementValue;
+    this.category = category;
     this.subCategories = [];
     this.selected = selected;
 
@@ -29,10 +29,10 @@ CategoryAttributeValue.prototype = Object.create(BaseAttributeValue.prototype);
 CategoryAttributeValue.prototype.initialize = function () {
     this.type = 'category';
     this.selectable = true;
-    this.id = this.refinementValue.ID;
+    this.id = this.category.ID;
     this.actionEndpoint = ACTION_ENDPOINT;
 
-    this.displayValue = this.refinementValue.displayName;
+    this.displayValue = this.category.displayName;
 
     this.url = this.getUrl(
         this.productSearch,
@@ -81,18 +81,18 @@ CategoryAttributeValue.prototype.getUrl = function (
  * @param {dw.catalog.ProductSearchModel} productSearch - ProductSearchModel instance
  * @param {dw.catalog.ProductSearchRefinementDefinition} refinementDefinition - Refinement
  *     definition
- * @param {dw.catalog.ProductSearchRefinementValue} refinementValue - Raw DW refinement value
+ * @param {dw.catalog.Category} category - a Category instance
  * @param {boolean} selected - Selected flag
  */
 function CategoryRefinementValueWrapper(
     productSearch,
     refinementDefinition,
-    refinementValue,
+    category,
     selected) {
     var value = new CategoryAttributeValue(
         productSearch,
         refinementDefinition,
-        refinementValue,
+        category,
         selected
     );
     var items = [
