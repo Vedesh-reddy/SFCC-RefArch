@@ -528,16 +528,19 @@ module.exports = function () {
                     $('.promo-code-form .form-control').addClass('is-invalid');
                     $('.promo-code-form .form-control').attr('aria-describedby', 'invalidCouponCode');
                     $('.coupon-error-message').empty().append(data.errorMessage);
+                    $('body').trigger('promotion:error', data);
                 } else {
                     $('.coupons-and-promos').empty().append(data.totals.discountsHtml);
                     updateCartTotals(data);
                     updateApproachingDiscounts(data.approachingDiscounts);
                     validateBasket(data);
+                    $('body').trigger('promotion:success', data);
                 }
                 $('.coupon-code-field').val('');
                 $.spinner().stop();
             },
             error: function (err) {
+                $('body').trigger('promotion:error', err);
                 if (err.responseJSON.redirectUrl) {
                     window.location.href = err.responseJSON.redirectUrl;
                 } else {
@@ -589,8 +592,10 @@ module.exports = function () {
                 updateApproachingDiscounts(data.approachingDiscounts);
                 validateBasket(data);
                 $.spinner().stop();
+                $('body').trigger('promotion:success', data);
             },
             error: function (err) {
+                $('body').trigger('promotion:error', err);
                 if (err.responseJSON.redirectUrl) {
                     window.location.href = err.responseJSON.redirectUrl;
                 } else {
