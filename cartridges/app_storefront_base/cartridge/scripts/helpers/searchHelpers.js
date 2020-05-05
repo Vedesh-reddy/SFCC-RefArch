@@ -146,7 +146,8 @@ function search(req, res) {
         maxSlots: maxSlots,
         reportingURLs: reportingURLs,
         refineurl: refineurl,
-        canonicalUrl: canonicalUrl
+        canonicalUrl: canonicalUrl,
+        apiProductSearch: apiProductSearch
     };
 
     if (productSearch.isCategorySearch && !productSearch.isRefinedCategorySearch && categoryTemplate && apiProductSearch.category.parent.ID === 'root') {

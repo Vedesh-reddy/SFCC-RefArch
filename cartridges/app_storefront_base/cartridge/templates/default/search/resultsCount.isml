@@ -35,5 +35,7 @@
     </isif>
 </isif>
 <isif condition="${!pdict.productSearch.productIds.length}">
-    <isinclude template="search/noResultsProduct" />
+    <isobject object="${pdict.apiProductSearch}" view="none">
+        <isinclude template="search/noResultsProduct"/>
+    </isobject>
 </isif>
