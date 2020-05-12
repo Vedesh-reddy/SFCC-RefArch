@@ -27,7 +27,7 @@ Template Notes:
                     >
                     </span>
             </isif>
-            <isif condition="${product.productType === 'master' && !attrValue.selected}">
+            <isif condition="${product.productType === 'master'}">
                 <button class="color-attribute"
                         aria-label="${Resource.msg('label.select', 'common', null)} ${attr.displayName} ${attrValue.displayValue}"
                         data-url="${attrValue.url}" ${ product.productType === "master"}
