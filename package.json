@@ -1,6 +1,6 @@
 {
   "name": "sfra",
-  "version": "5.0.0",
+  "version": "5.0.1",
   "description": "Storefront Reference Architecture",
   "main": "index.js",
   "engines": {
@@ -71,6 +71,7 @@
     "eslint-plugin-import": "^1.16.0",
     "eslint-plugin-sitegenesis": "~1.0.0",
     "globalize": "^1.4.2",
+    "husky": "^4.2.5",
     "istanbul": "^0.4.5",
     "lodash": "^4.17.15",
     "minimist": "^1.2.0",
@@ -114,5 +115,11 @@
     "presets": [
       "env"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint",
+      "pre-push": "npm run test"
+    }
   }
 }
