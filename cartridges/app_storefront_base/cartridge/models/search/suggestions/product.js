@@ -1,8 +1,9 @@
 'use strict';
 
 var URLUtils = require('dw/web/URLUtils');
-var ACTION_ENDPOINT = 'Product-Show';
-var IMAGE_SIZE = 'medium';
+var preferences = require('*/cartridge/config/preferences');
+var ACTION_ENDPOINT = preferences.suggestionsActionEnpoint ? preferences.suggestionsActionEnpoint : 'Product-Show';
+var IMAGE_SIZE = preferences.imageSize ? preferences.imageSize : 'medium';
 
 
 /**
@@ -24,7 +25,7 @@ function getImageUrl(product) {
  *
  * @param {dw.util.Iterator.<dw.suggest.SuggestedProduct>} suggestedProducts - Iterator to retrieve
  *                                                                             SuggestedProducts
-*  @param {number} maxItems - Maximum number of products to retrieve
+ *  @param {number} maxItems - Maximum number of products to retrieve
  * @return {Object[]} - Array of suggested products
  */
 function getProducts(suggestedProducts, maxItems) {

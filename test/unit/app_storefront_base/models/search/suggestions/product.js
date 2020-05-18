@@ -10,7 +10,11 @@ describe('Product Suggestions model', function () {
     var nextPhraseStub = sinon.stub();
     var urlStub = sinon.stub();
     var ProductSuggestions = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/suggestions/product.js', {
-        'dw/web/URLUtils': { url: urlStub }
+        'dw/web/URLUtils': { url: urlStub },
+        '*/cartridge/config/preferences': {
+            suggestionsActionEnpoint: 'Product-Show',
+            imageSize: 'medium'
+        }
     });
     var variationModel = {
         defaultVariant: {
