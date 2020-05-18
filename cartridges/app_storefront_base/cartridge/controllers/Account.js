@@ -565,9 +565,15 @@ server.post(
                     );
                 });
                 if (status.error) {
-                    formInfo.profileForm.login.currentpassword.valid = false;
-                    formInfo.profileForm.login.currentpassword.error =
-                        Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
+                    if (!CustomerMgr.isAcceptablePassword(newPasswords.newpassword.value)) {
+                        formInfo.profileForm.login.newpasswords.newpassword.valid = false;
+                        formInfo.profileForm.login.newpasswords.newpassword.error =
+                            Resource.msg('error.message.password.constraints.not.matched', 'forms', null);
+                    } else {
+                        formInfo.profileForm.login.currentpassword.valid = false;
+                        formInfo.profileForm.login.currentpassword.error =
+                            Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
+                    }
 
                     delete formInfo.currentPassword;
                     delete formInfo.newPassword;
