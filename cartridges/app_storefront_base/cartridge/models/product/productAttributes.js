@@ -132,6 +132,7 @@ function VariationAttributesModel(variationModel, attrConfig, selectedOptionsQue
                 displayName: attr.displayName,
                 id: attr.ID,
                 swatchable: isSwatchable(attr.attributeID),
+                displayValue: selectedValue && selectedValue.displayValue ? selectedValue.displayValue : '',
                 values: values,
                 resetUrl: resetUrl
             });

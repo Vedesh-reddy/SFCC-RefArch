@@ -63,6 +63,21 @@ describe('productAttributes', function () {
             displayName: 'color',
             ID: 'COLOR_ID'
         }]);
+
+        tempMock.getSelectedValue = {
+            return: {
+                description: 'lorum ipsum',
+                displayValue: 'Black',
+                ID: 'BlackFB',
+                value: 'BlackFB',
+                equals: {
+                    return: true,
+                    type: 'function'
+                }
+            },
+            type: 'function'
+        };
+
         var mock = toProductMock(tempMock);
         var attributeConfig = {
             attributes: ['color'],
@@ -76,6 +91,7 @@ describe('productAttributes', function () {
         assert.equal(attrs[0].id, 'COLOR_ID');
         assert.isTrue(attrs[0].swatchable);
         assert.equal(attrs[0].values.length, 0);
+        assert.equal(attrs[0].displayValue, 'Black');
     });
 
     it('should return color attributes with multiple values', function () {
