@@ -230,8 +230,6 @@ exports.calculateTax = function(basket) {
     var totalShippingGrossPrice = 0;
     var totalShippingNetPrice = 0;
 
-    var containsGlobalPriceAdjustments = false;
-
     // update taxes for all line items
     collections.forEach(lineItems, function (lineItem) {
         var tax = taxesMap[lineItem.UUID];

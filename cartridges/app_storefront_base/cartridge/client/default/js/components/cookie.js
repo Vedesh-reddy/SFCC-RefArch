@@ -38,7 +38,6 @@ module.exports = function () {
         } else {
             // Clear the previousSessionID from localStorage
             // when user session is changed or expired
-            previousSessionID = '';
             window.localStorage.removeItem('previousSid');
         }
     }

@@ -58,7 +58,7 @@ function getFirstApplicableShippingMethod(methods, filterPickupInStore) {
     var iterator = methods.iterator();
     while (iterator.hasNext()) {
         method = iterator.next();
-        if (!filterPickupInStore || (filterPickupInStore && !method.custom.storePickupEnabled)) {
+        if (!filterPickupInStore || !method.custom.storePickupEnabled) {
             break;
         }
     }

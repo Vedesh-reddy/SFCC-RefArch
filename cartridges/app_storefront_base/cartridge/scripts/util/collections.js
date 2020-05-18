@@ -78,7 +78,7 @@ function reduce(collection, callback) {
     if (arguments.length === 3) {
         value = arguments[2];
         index = 0;
-    } else if (iterator.hasNext() && (collection.getLength() !== 1 && !value)) {
+    } else if (iterator.hasNext() && (collection.getLength() !== 1)) {
         value = iterator.next();
     }
 

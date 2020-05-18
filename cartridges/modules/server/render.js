@@ -99,7 +99,7 @@ function applyRenderings(res) {
             if (element.type === 'render') {
                 switch (element.subType) {
                     case 'isml':
-                        template(element.view, res.viewData, res);
+                        template(element.view, res.viewData);
                         break;
                     case 'json':
                         json(res.viewData, res);

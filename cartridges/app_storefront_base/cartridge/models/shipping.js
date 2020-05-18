@@ -55,7 +55,7 @@ function getAssociatedAddress(shipment, customer) {
     if (!address) return false;
 
     // If we still haven't found a match, then loop through customer addresses to find a match
-    if (!matchingId && customer && customer.addressBook && customer.addressBook.addresses) {
+    if (customer && customer.addressBook && customer.addressBook.addresses) {
         for (var j = 0, jj = customer.addressBook.addresses.length; j < jj; j++) {
             anAddress = customer.addressBook.addresses[j];
 

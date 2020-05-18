@@ -130,7 +130,7 @@ function processResponse(response) {
 
     $.spinner().stop();
 
-    if (!(typeof (response) === 'object')) {
+    if (typeof (response) !== 'object') {
         $suggestionsWrapper.append(response).show();
         $(this).siblings('.reset-button').addClass('d-sm-block');
         positionSuggestions(this);

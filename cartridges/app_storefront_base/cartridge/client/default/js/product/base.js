@@ -311,7 +311,7 @@ function handleVariantResponse(response, $productContainer) {
  * @param {jQuery} $productContainer - DOM container for a given product
  */
 function updateQuantities(quantities, $productContainer) {
-    if (!($productContainer.parent('.bonus-product-item').length > 0)) {
+    if ($productContainer.parent('.bonus-product-item').length <= 0) {
         var optionsHtml = quantities.map(function (quantity) {
             var selected = quantity.selected ? ' selected ' : '';
             return '<option value="' + quantity.value + '"  data-url="' + quantity.url + '"' +
