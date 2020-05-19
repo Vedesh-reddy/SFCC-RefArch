@@ -55,29 +55,27 @@ function copyObjectToForm(object, currentForm) {
 }
 
 /**
- * Copy the values of an object to form
- * @param {Object} formGroup - the object to set the new form values to
- * @param {Object} name - the object representing the current form
- * @return {Object} Object with a nested value
+ * Get values of a formGroup to object
+ * @param {dw.web.FormGroup} formGroup - Form group
+ * @param {string} name - The name of the formGroup
+ * @return {Object} Object with nested values
  */
 function findValue(formGroup, name) {
     var ObjectWrapper = {};
     ObjectWrapper[name] = {};
-    var nestedProperty = ObjectWrapper[name];
-    var result;
+
     Object.keys(formGroup).forEach(function (key) {
         var formField = formGroup[key];
         if (formField instanceof Object) {
             if (formField.formType === 'formField') {
-                nestedProperty[key] = formField.value;
-                var itest = ObjectWrapper;
-                result = itest;
+                ObjectWrapper[name][key] = formField.value;
             } else if (formField.formType === 'formGroup') {
-                result[key] = findValue(formField, key);
+                ObjectWrapper[name][key] = findValue(formField, key)[key];
             }
         }
     });
-    return result;
+
+    return ObjectWrapper;
 }
 
 module.exports = function (session) {

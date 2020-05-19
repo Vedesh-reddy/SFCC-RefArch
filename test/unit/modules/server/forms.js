@@ -473,6 +473,26 @@ describe('forms', function () {
                             regEx: '/[a-zA-Z]*/',
                             maxLength: 50,
                             minLength: 1
+                        }),
+                        innerForm: new FormGroup({
+                            valid: true,
+                            error: null,
+                            htmlName: 'dwfrm_address_innerForm',
+                            dynamicHtmlName: 'dwfrm_address_innerForm_a90a9s8fasd',
+                            firstName: new FormField({
+                                value: 'Jon',
+                                htmlValue: 'Jon',
+                                valid: true,
+                                mandatory: true,
+                                htmlName: 'dwfrm_address_innerForm_firstName',
+                                dynamicHtmlName: 'dwfrm_address_innerForm_firstName_asdf8979asd8f',
+                                type: 1,
+                                FIELD_TYPE_STRING: 1,
+                                label: 'hello',
+                                regEx: '/[a-zA-Z]*/',
+                                maxLength: 50,
+                                minLength: 1
+                            })
                         })
                     })
                 }
@@ -481,7 +501,10 @@ describe('forms', function () {
         var expectedObject = {
             intField: 10,
             innerForm: {
-                firstName: 'Jon'
+                firstName: 'Jon',
+                innerForm: {
+                    firstName: 'Jon'
+                }
             }
         };
         var forms = formsRequire(session);
