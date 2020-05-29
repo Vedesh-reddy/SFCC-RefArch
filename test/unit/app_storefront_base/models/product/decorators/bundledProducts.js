@@ -7,7 +7,10 @@ var ArrayList = require('../../../../../mocks/dw.util.Collection');
 var productMock = {
     bundledProducts: new ArrayList([{
         ID: 'some id'
-    }])
+    }]),
+    getBundledProductQuantity: function () {
+        return 'quantity of individual product';
+    }
 };
 
 var quantity = 1;

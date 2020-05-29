@@ -14,7 +14,7 @@ function getBundledProducts(apiProduct, quantity, factory) {
     return collection.map(apiProduct.bundledProducts, function (bundledProduct) {
         return factory.get({
             pid: bundledProduct.ID,
-            quantity: quantity
+            quantity: apiProduct.getBundledProductQuantity(bundledProduct)
         });
     });
 }
