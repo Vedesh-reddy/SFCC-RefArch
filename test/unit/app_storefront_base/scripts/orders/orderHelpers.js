@@ -1,1 +1,98 @@
-// orderHelpers.js
+'use strict';
+
+var assert = require('chai').assert;
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
+
+describe('orderHelpers', function () {
+    describe('getLastOrder', function () {
+        it('should return an order model', function () {
+            var orderHelpers = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/order/orderHelpers', {
+                '*/cartridge/models/order': function () {
+                    return {
+                        id: 'order ID 123'
+                    };
+                },
+                'dw/order/OrderMgr': {
+                    searchOrders: function () {
+                        return {
+                            first: function () {
+                                return {
+                                    id: 'order ID 123'
+                                };
+                            }
+                        };
+                    }
+                },
+                'dw/order/Order': {
+                    ORDER_STATUS_REPLACED: 'yes'
+                },
+                'dw/web/Resource': {},
+                'dw/web/URLUtils': {},
+                'dw/util/Locale': {
+                    getLocale: function () {
+                        return {
+                            country: 'US'
+                        };
+                    }
+                }
+            });
+
+            var req = {
+                currentCustomer: {
+                    profile: {
+                        customerNo: '12345678'
+                    }
+                },
+                locale: {
+                    id: 'en_US'
+                }
+            };
+
+            var orderModel = orderHelpers.getLastOrder(req);
+            assert.equal(orderModel.id, 'order ID 123');
+        });
+
+        it('should return null if no order', function () {
+            var orderHelpers = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/order/orderHelpers', {
+                '*/cartridge/models/order': function () {
+                    return null;
+                },
+                'dw/order/OrderMgr': {
+                    searchOrders: function () {
+                        return {
+                            first: function () {
+                                return null;
+                            }
+                        };
+                    }
+                },
+                'dw/order/Order': {
+                    ORDER_STATUS_REPLACED: 'yes'
+                },
+                'dw/web/Resource': {},
+                'dw/web/URLUtils': {},
+                'dw/util/Locale': {
+                    getLocale: function () {
+                        return {
+                            country: 'US'
+                        };
+                    }
+                }
+            });
+
+            var req = {
+                currentCustomer: {
+                    profile: {
+                        customerNo: '12345678'
+                    }
+                },
+                locale: {
+                    id: 'en_US'
+                }
+            };
+
+            var orderModel = orderHelpers.getLastOrder(req);
+            assert.isNull(orderModel);
+        });
+    });
+});

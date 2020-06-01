@@ -98,6 +98,37 @@ function getOrders(currentCustomer, querystring, locale) {
     };
 }
 
+/**
+ * Creates an order model for the current customer
+ * @param {Object} req - the request object
+ * @returns {Object} an object of the customer's last order
+ */
+function getLastOrder(req) {
+    var orderModel = null;
+    var customerNo = req.currentCustomer.profile.customerNo;
+    var customerOrders = OrderMgr.searchOrders(
+        'customerNo={0} AND status!={1}',
+        'creationDate desc',
+        customerNo,
+        Order.ORDER_STATUS_REPLACED
+    );
+
+    var order = customerOrders.first();
+
+    if (order) {
+        var currentLocale = Locale.getLocale(req.locale.id);
+
+        var config = {
+            numberOfLineItems: 'single'
+        };
+
+        orderModel = new OrderModel(order, { config: config, countryCode: currentLocale.country });
+    }
+
+    return orderModel;
+}
+
 module.exports = {
-    getOrders: getOrders
+    getOrders: getOrders,
+    getLastOrder: getLastOrder
 };
