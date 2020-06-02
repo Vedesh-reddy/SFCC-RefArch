@@ -767,6 +767,8 @@ server.get('GetProduct', function (req, res, next) {
 });
 
 server.post('EditProductLineItem', function (req, res, next) {
+    var renderTemplateHelper = require('*/cartridge/scripts/renderTemplateHelper');
+    var arrayHelper = require('*/cartridge/scripts/util/array');
     var BasketMgr = require('dw/order/BasketMgr');
     var ProductMgr = require('dw/catalog/ProductMgr');
     var Resource = require('dw/web/Resource');
@@ -897,6 +899,18 @@ server.post('EditProductLineItem', function (req, res, next) {
         if (uuidToBeDeleted) {
             responseObject.uuidToBeDeleted = uuidToBeDeleted;
         }
+
+        var cartItem = arrayHelper.find(cartModel.items, function (item) {
+            return item.UUID === uuid;
+        });
+
+        var productCardContext = { lineItem: cartItem };
+        var productCardTemplate = 'cart/productCard/cartProductCardServer.isml';
+
+        responseObject.renderedTemplate = renderTemplateHelper.getRenderedHtml(
+            productCardContext,
+            productCardTemplate
+        );
 
         res.json(responseObject);
     } else {

@@ -170,7 +170,7 @@ function updateAvailability(data, uuid) {
  * @param {function} match - function that takes an element and returns a boolean indicating if the match is made
  * @returns {Object|null} - returns an element of the array that matched the query.
  */
-function findItem(array, match) {
+function findItem(array, match) { // eslint-disable-line no-unused-vars
     for (var i = 0, l = array.length; i < l; i++) {
         if (match.call(this, array[i])) {
             return array[i];
@@ -185,59 +185,7 @@ function findItem(array, match) {
  * @param {string} uuid - The uuid of the product line item to update
  */
 function updateProductDetails(data, uuid) {
-    var lineItem = findItem(data.cartModel.items, function (item) {
-        return item.UUID === uuid;
-    });
-
-    if (lineItem.variationAttributes) {
-        var colorAttr = findItem(lineItem.variationAttributes, function (attr) {
-            return attr.attributeId === 'color';
-        });
-
-        if (colorAttr) {
-            var colorSelector = '.Color-' + uuid;
-            var newColor = 'Color: ' + colorAttr.displayValue;
-            $(colorSelector).text(newColor);
-        }
-
-        var sizeAttr = findItem(lineItem.variationAttributes, function (attr) {
-            return attr.attributeId === 'size';
-        });
-
-        if (sizeAttr) {
-            var sizeSelector = '.Size-' + uuid;
-            var newSize = 'Size: ' + sizeAttr.displayValue;
-            $(sizeSelector).text(newSize);
-        }
-
-        var imageSelector = '.card.product-info.uuid-' + uuid + ' .item-image > img';
-        $(imageSelector).attr('src', lineItem.images.small[0].url);
-        $(imageSelector).attr('alt', lineItem.images.small[0].alt);
-        $(imageSelector).attr('title', lineItem.images.small[0].title);
-    }
-
-    if (lineItem.options && lineItem.options.length) {
-        var option = lineItem.options[0];
-        var optSelector = '.lineItem-options-values[data-option-id="' + option.optionId + '"]';
-        $(optSelector).data('value-id', option.selectedValueId);
-        $(optSelector + ' .line-item-attributes').text(option.displayName);
-    }
-
-    var qtySelector = '.quantity[data-uuid="' + uuid + '"]';
-    $(qtySelector).val(lineItem.quantity);
-    $(qtySelector).data('pid', data.newProductId);
-
-    $('.remove-product[data-uuid="' + uuid + '"]').data('pid', data.newProductId);
-
-    var priceSelector = '.line-item-price-' + uuid + ' .sales .value';
-    $(priceSelector).text(lineItem.price.sales.formatted);
-    $(priceSelector).attr('content', lineItem.price.sales.decimalPrice);
-
-    if (lineItem.price.list) {
-        var listPriceSelector = '.line-item-price-' + uuid + ' .list .value';
-        $(listPriceSelector).text(lineItem.price.list.formatted);
-        $(listPriceSelector).attr('content', lineItem.price.list.decimalPrice);
-    }
+    $('.card.product-info.uuid-' + uuid).replaceWith(data.renderedTemplate);
 }
 
 /**
