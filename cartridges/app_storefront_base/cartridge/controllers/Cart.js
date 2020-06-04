@@ -904,7 +904,7 @@ server.post('EditProductLineItem', function (req, res, next) {
             return item.UUID === uuid;
         });
 
-        var productCardContext = { lineItem: cartItem };
+        var productCardContext = { lineItem: cartItem, actionUrls: cartModel.actionUrls };
         var productCardTemplate = 'cart/productCard/cartProductCardServer.isml';
 
         responseObject.renderedTemplate = renderTemplateHelper.getRenderedHtml(
