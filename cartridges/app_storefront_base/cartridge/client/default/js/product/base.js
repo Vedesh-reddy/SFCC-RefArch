@@ -26,9 +26,16 @@ function getPidValue($el) {
  * @return {jquery} - quantity selector DOM container
  */
 function getQuantitySelector($el) {
-    return $el && $('.set-items').length
-        ? $($el).closest('.product-detail').find('.quantity-select')
-        : $('.quantity-select');
+    var quantitySelected;
+    if ($el && $('.set-items').length) {
+        quantitySelected = $($el).closest('.product-detail').find('.quantity-select');
+    } else if ($el && $('.product-bundle').length) {
+        quantitySelected = $($el).closest('.modal-footer').find('.quantity-select');
+    } else {
+        quantitySelected = $('.quantity-select');
+    }
+
+    return quantitySelected;
 }
 
 /**
