@@ -30,11 +30,16 @@ function getQuantitySelector($el) {
     if ($el && $('.set-items').length) {
         quantitySelected = $($el).closest('.product-detail').find('.quantity-select');
     } else if ($el && $('.product-bundle').length) {
-        quantitySelected = $($el).closest('.modal-footer').find('.quantity-select');
+        var quantitySelectedModal = $($el).closest('.modal-footer').find('.quantity-select');
+        var quantitySelectedPDP = $($el).closest('.bundle-footer').find('.quantity-select');
+        if (quantitySelectedModal.val() === undefined) {
+            quantitySelected = quantitySelectedPDP;
+        } else {
+            quantitySelected = quantitySelectedModal;
+        }
     } else {
         quantitySelected = $('.quantity-select');
     }
-
     return quantitySelected;
 }
 
