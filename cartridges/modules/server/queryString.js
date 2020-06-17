@@ -112,27 +112,33 @@ querystring.prototype.toString = function () {
     var preferences = {};
 
     Object.keys(this).forEach(function (key) {
-        if (key === 'variables') {
+        if (key === 'variables' && this.variables instanceof Object) {
             Object.keys(this.variables).forEach(function (variable) {
                 result.push('dwvar_' +
                     this.variables[variable].id.replace(/_/g, '__') + '_' +
                     variable + '=' + encodeURIComponent(this.variables[variable].value));
             }, this);
-        } else if (key === 'options') {
+        } else if (key === 'options' && this.options instanceof Array) {
             this.options.forEach(function (option) {
                 result.push('dwopt_' +
                     option.productId.replace(/_/g, '__') + '_' +
                     option.optionId + '=' + encodeURIComponent(option.selectedValueId));
             });
-        } else if (key === 'preferences') {
+        } else if (key === 'preferences' && this.preferences instanceof Object) {
             preferences = this.preferences;
             Object.keys(preferences).forEach(function (prefKey) {
-                result.push('prefn' + prefKeyIdx + '=' + encodeURIComponent(prefKey));
-                if (preferences[prefKey].min) {
-                    result.push('prefmin' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey].min));
-                    result.push('prefmax' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey].max));
+                // Due to the nature of what is passed to this function this may be the literal string "undefined"
+                if (prefKey !== 'undefined' && preferences[prefKey]) {
+                    result.push('prefn' + prefKeyIdx + '=' + encodeURIComponent(prefKey));
+                    if (preferences[prefKey].min) {
+                        result.push('prefmin' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey].min));
+                        result.push('prefmax' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey].max));
+                    } else {
+                        result.push('prefv' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey]));
+                    }
                 } else {
-                    result.push('prefv' + prefKeyIdx + '=' + encodeURIComponent(preferences[prefKey]));
+                    var Logger = require('dw/system/Logger');
+                    Logger.warn('We were passed a key "undefined in the preferences object in queryString.js');
                 }
                 prefKeyIdx++;
             });

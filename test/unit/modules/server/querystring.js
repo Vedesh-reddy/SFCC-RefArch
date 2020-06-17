@@ -1,9 +1,20 @@
 'use strict';
 
 var assert = require('chai').assert;
-var QueryString = require('../../../../cartridges/modules/server/queryString');
+var sinon = require('sinon');
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
+var QueryString;
+var logSpy;
 
 describe('querystring', function () {
+    beforeEach(function () {
+        logSpy = sinon.spy();
+        QueryString = proxyquire('../../../../cartridges/modules/server/queryString', {
+            'dw/system/Logger': {
+                warn: logSpy
+            }
+        });
+    });
     describe('options parsing', function () {
         it('should parse product option query parameters', function () {
             var params = 'dwopt_microsoft-xbox360-console_consoleWarranty=002&' +
@@ -62,6 +73,14 @@ describe('querystring', function () {
             assert.equal(paramsOutput, 'dwopt_microsoft__xbox360__console_console_Warranty=002&' +
                 'dwopt_microsoft__xbox360__console_gpsWarranty=003');
         });
+        it('creates a single key "x=y" when options is not an array', function () {
+            var params = 'dwopt_microsoft__xbox360__console_console_Warranty=002&' +
+            'dwopt_microsoft__xbox360__console_gpsWarranty=003';
+            var rangeResult = new QueryString(params);
+            rangeResult.options = 'a simple string';
+            var paramsOutput = rangeResult.toString();
+            assert.equal(paramsOutput, 'options=a%20simple%20string');
+        });
     });
 
 
@@ -94,6 +113,13 @@ describe('querystring', function () {
                     value: 'L'
                 }
             }, querystring.variables);
+        });
+        it('creates a single key "x=y" when variables is not an object', function () {
+            var params = 'dwvar_my__test__product_color=blue&dwvar_my__test__product_pv_size=L';
+            var rangeResult = new QueryString(params);
+            rangeResult.variables = 'a simple string';
+            var paramsOutput = rangeResult.toString();
+            assert.equal(paramsOutput, 'variables=a%20simple%20string');
         });
     });
 
@@ -129,6 +155,25 @@ describe('querystring', function () {
             var rangeResult = new QueryString(rangeParams);
             var paramsOutput = rangeResult.toString();
             assert.deepEqual(paramsOutput, 'prefmax1=100&prefmin1=0&prefn1=prefName');
+        });
+        it('outputs range preference without "undefined" when one or more query params is empty or "undefined"', function () {
+            var rangeParams = 'prefv1=&prefn1=prefName&prefmin1=0&prefmax1=100';
+            var rangeResult = new QueryString(rangeParams);
+            var paramsOutput = rangeResult.toString();
+            assert.deepEqual(paramsOutput, 'prefmax1=100&prefmin1=0&prefn1=prefName');
+        });
+        it('warns via Logger when one or more query params is empty or "undefined"', function () {
+            var rangeParams = 'prefv1=&prefn1=prefName&prefmin1=0&prefmax1=100';
+            var rangeResult = new QueryString(rangeParams);
+            var paramsOutput = rangeResult.toString(); // eslint-disable-line no-unused-vars
+            assert.equal(logSpy.args[0][0], 'We were passed a key "undefined in the preferences object in queryString.js');
+        });
+        it('creates a single key "x=y" when preferences is not an object', function () {
+            var rangeParams = 'prefv1=&prefn1=prefName&prefmin1=0&prefmax1=100';
+            var rangeResult = new QueryString(rangeParams);
+            rangeResult.preferences = 'a simple string';
+            var paramsOutput = rangeResult.toString();
+            assert.equal(paramsOutput, 'preferences=a%20simple%20string');
         });
     });
 
