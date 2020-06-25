@@ -53,16 +53,7 @@ server.get(
 
         var reportingURLs = reportingUrlsHelper.getOrderReportingURLs(order);
 
-        var CustomerMgr = require('dw/customer/CustomerMgr');
-        var profile = CustomerMgr.searchProfile('email={0}', orderModel.orderEmail);
-        if (profile) {
-            var Transaction = require('dw/system/Transaction');
-            Transaction.wrap(function () {
-                order.setCustomer(profile.getCustomer());
-            });
-        }
-
-        if (!req.currentCustomer.profile && !profile) {
+        if (!req.currentCustomer.profile) {
             passwordForm = server.forms.getForm('newPasswords');
             passwordForm.clear();
             res.render('checkout/confirmation/confirmation', {
