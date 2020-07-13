@@ -6,7 +6,7 @@
             <isif condition="${shippingModel.shippingAddress !== null}">
                 <isset name="address" value="${shippingModel.shippingAddress}" scope="page"/>
             <iselse>
-                <isset name="address" value="{}" scope="page"/>
+                <isset name="address" value="${{}}" scope="page"/>
             </isif>
             <div class="summary-details shipping">
                 <isinclude template="checkout/addressSummary" />

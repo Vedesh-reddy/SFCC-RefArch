@@ -62,7 +62,7 @@
         <div class="row">
             <div class="col-12 col-sm-6 offset-sm-6 bundle-footer">
                 <!-- Quantity -->
-                <isset name="loopState" value="{count: 1}" scope="page" />
+                <isset name="loopState" value="${{count: 1}}" scope="page" />
                 <isset name="product" value="${bundle}" scope="page" />
                 <isinclude template="product/components/quantity" />
 
