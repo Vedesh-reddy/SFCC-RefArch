@@ -207,8 +207,7 @@ server.get(
     userLoggedIn.validateLoggedIn,
     function (req, res, next) {
         var OrderMgr = require('dw/order/OrderMgr');
-        var OrderModel = require('*/cartridge/models/order');
-        var Locale = require('dw/util/Locale');
+        var orderHelpers = require('*/cartridge/scripts/order/orderHelpers');
 
         var order = OrderMgr.getOrder(req.querystring.orderID);
         var orderCustomerNo = req.currentCustomer.profile.customerNo;
@@ -229,16 +228,7 @@ server.get(
         ];
 
         if (order && orderCustomerNo === currentCustomerNo) {
-            var config = {
-                numberOfLineItems: '*'
-            };
-
-            var currentLocale = Locale.getLocale(req.locale.id);
-
-            var orderModel = new OrderModel(
-                order,
-                { config: config, countryCode: currentLocale.country, containerView: 'order' }
-            );
+            var orderModel = orderHelpers.getOrderDetails(req);
             var exitLinkText = Resource.msg('link.orderdetails.orderhistory', 'account', null);
             var exitLinkUrl =
                 URLUtils.https('Order-History', 'orderFilter', req.querystring.orderFilter);

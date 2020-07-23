@@ -128,7 +128,30 @@ function getLastOrder(req) {
     return orderModel;
 }
 
+/**
+ * Creates an order model for the current customer
+ * @param {Object} req - the request object
+ * @returns {Object} an object of the customer's order
+ */
+function getOrderDetails(req) {
+    var order = OrderMgr.getOrder(req.querystring.orderID);
+
+    var config = {
+        numberOfLineItems: '*'
+    };
+
+    var currentLocale = Locale.getLocale(req.locale.id);
+
+    var orderModel = new OrderModel(
+        order,
+        { config: config, countryCode: currentLocale.country, containerView: 'order' }
+    );
+
+    return orderModel;
+}
+
 module.exports = {
     getOrders: getOrders,
-    getLastOrder: getLastOrder
+    getLastOrder: getLastOrder,
+    getOrderDetails: getOrderDetails
 };
