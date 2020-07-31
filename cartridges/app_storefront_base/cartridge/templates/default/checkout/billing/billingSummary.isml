@@ -7,9 +7,7 @@
 
 <div class="summary-details billing">
      <isinclude template="checkout/addressSummary" />
-     <isif condition="${pdict.order.orderEmail !== null}">
         <span class="order-summary-email">${pdict.order.orderEmail}</span>
-	</isif>
     <br/>
     <isif condition="${pdict.order.billing.billingAddress.address !== null}">
         <span class="order-summary-phone">${pdict.order.billing.billingAddress.address.phone}</span>

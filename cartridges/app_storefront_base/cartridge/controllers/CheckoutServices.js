@@ -204,13 +204,8 @@ server.post(
                 }
                 billingAddress.setCountryCode(billingData.address.countryCode.value);
 
-                if (billingData.storedPaymentUUID) {
-                    billingAddress.setPhone(req.currentCustomer.profile.phone);
-                    currentBasket.setCustomerEmail(req.currentCustomer.profile.email);
-                } else {
-                    billingAddress.setPhone(billingData.phone.value);
-                    currentBasket.setCustomerEmail(billingData.email.value);
-                }
+                billingAddress.setPhone(billingData.phone.value);
+                currentBasket.setCustomerEmail(billingData.email.value);
             });
 
             // if there is no selected payment option and balance is greater than zero
