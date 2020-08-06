@@ -61,7 +61,7 @@
     <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
     <div class="row">
         <div class="col form-group">
-            <span class="${pdict.tracking_consent == null ? '' : 'consented' } tracking-consent" 
+            <span class="${pdict.tracking_consent == null ? '' : 'consented' } tracking-consent"
                 data-url="${URLUtils.url('ConsentTracking-GetContent', 'cid', 'tracking_hint')}"
                 data-reject="${URLUtils.url('ConsentTracking-SetSession', 'consent', 'false')}"
                 data-accept="${URLUtils.url('ConsentTracking-SetSession', 'consent', 'true')}"

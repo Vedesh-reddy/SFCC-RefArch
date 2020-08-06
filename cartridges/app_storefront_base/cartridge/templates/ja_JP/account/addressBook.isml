@@ -46,7 +46,7 @@
                                 data-toggle="modal"
                                 data-target="#deleteAddressModal"
                                 data-id="${address.address.ID}"
-                                data-url="${pdict.actionUrls.deleteActionUrl}" 
+                                data-url="${pdict.actionUrls.deleteActionUrl}"
                                 aria-label="${Resource.msg('label.addressbook.deleteaddress','account',null)}"
                                 ${ address.address.ID == pdict.addressBook[0].address.ID ? data-default="true" : '' }>
                                 &times;

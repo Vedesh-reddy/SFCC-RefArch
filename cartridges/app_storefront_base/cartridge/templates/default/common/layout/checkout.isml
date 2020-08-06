@@ -27,7 +27,7 @@
 
         <iscomment>
             hook for Marketing Cloud connector & other integration which need to inject
-            logic at the page end 
+            logic at the page end
             IMPORTANT: Note that this hook will be called to cached as well as uncached pages
                         which means you need to put privacy information into another remote include
         </iscomment>

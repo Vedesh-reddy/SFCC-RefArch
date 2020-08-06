@@ -10,19 +10,19 @@
                    background-position-y: ${pdict.image.focalPointY};"
         </isif>
     >
-        <div class="col-auto shop-category-header 
+        <div class="col-auto shop-category-header
                     ${pdict.image && pdict.changeTextColor ? 'shop-category-header-text-color-other' : ''}
                     text-center mw-100 m-auto"
         >
             <isprint value="${pdict.textHeadline}" encoding="off">
         </div>
-        
+
         <div class="mw-100 m-auto">
             <div class="row">
                 <isif condition="${pdict.categories}">
                     <isloop items="${pdict.categories}" var="category">
                         <div class="col-auto m-auto text-center mw-100 text-truncate shop-category-label">
-                            <a href="${category.url}" id="${category.id}" 
+                            <a href="${category.url}" id="${category.id}"
                                class="shop-category-label-a ${pdict.image && pdict.changeTextColor ? 'shop-category-label-a-color-other ' : ''}"
                             >
                                 ${pdict.customCategoryNames[category.id] ? pdict.customCategoryNames[category.id] : category.name}

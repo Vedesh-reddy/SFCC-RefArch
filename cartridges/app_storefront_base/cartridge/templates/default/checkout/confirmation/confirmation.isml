@@ -30,9 +30,9 @@
             <div class="${pdict.returningCustomer ? 'col-sm-6 offset-sm-3' : 'col-sm-6 offset-sm-3 offset-md-0 pull-md-6' }">
                 <isinclude template="checkout/confirmation/confirmationDetails" />
                 <div class="mb-3">
-	                <a href="${URLUtils.url('Home-Show')}" class="btn btn-primary btn-block order-confirmation-continue-shopping" role="button" aria-pressed="true">
-	                    ${Resource.msg('button.continue.shopping','confirmation',null)}
-	                </a>
+                    <a href="${URLUtils.url('Home-Show')}" class="btn btn-primary btn-block order-confirmation-continue-shopping" role="button" aria-pressed="true">
+                        ${Resource.msg('button.continue.shopping','confirmation',null)}
+                    </a>
                 </div>
             </div>
         </div>

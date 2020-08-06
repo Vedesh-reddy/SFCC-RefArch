@@ -3,8 +3,8 @@
         ${Resource.msg('heading.ship.to.address', 'checkout', null)}
     </label>
 
-    <select id="shipmentSelector-${lineItem ? lineItem.UUID : 'default'}" 
-            name="shipmentSelector" 
+    <select id="shipmentSelector-${lineItem ? lineItem.UUID : 'default'}"
+            name="shipmentSelector"
             class="addressSelector form-control custom-select"
             data-create-shipment-url="${URLUtils.https('CheckoutAddressServices-CreateNewAddress')}"
     >

@@ -7,4 +7,4 @@
          checked>
      <iselse/>
      <input id="shippingMethod-${shippingMethod.ID}-${shippingModel.UUID}" name="${shippingAddress.shippingMethodID.htmlName}" type="radio" value="${shippingMethod.ID}" class="form-check-input">
- </isif> 
+ </isif>

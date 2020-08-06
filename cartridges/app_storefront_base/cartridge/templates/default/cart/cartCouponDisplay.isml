@@ -23,7 +23,7 @@
                     <isif condition="${relatedPromotion.callOutMsg}">
                         <li>
                             <isprint value="${relatedPromotion.callOutMsg}" encoding="off"/>
-                        </li> 
+                        </li>
                     </isif>
                 </isloop>
             </ul>

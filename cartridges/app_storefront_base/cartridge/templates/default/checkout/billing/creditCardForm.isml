@@ -34,7 +34,7 @@
             ${creditFields.expirationMonth.htmlName}">
             <label class="form-control-label" for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
             <select class="form-control expirationMonth custom-select" id="expirationMonth"
-                <isprint value=${creditFields.expirationMonth.attributes} encoding="off"/> 
+                <isprint value=${creditFields.expirationMonth.attributes} encoding="off"/>
                 autocomplete="cc-exp-month"
                 aria-describedby="expirationMonthInvalidMessage">
                 <isloop items=${creditFields.expirationMonth.options} var="month">

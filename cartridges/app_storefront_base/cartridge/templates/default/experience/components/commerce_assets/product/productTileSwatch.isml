@@ -7,8 +7,8 @@
                                 && swatch.images.swatch[0] != null
                                 && swatch.images.swatch[0].url != null}">
                     <li class="swatch-li">
-                        <button class="swatch-button-li" 
-                                style="background-image: url(${swatch.images.swatch[0].url}); 
+                        <button class="swatch-button-li"
+                                style="background-image: url(${swatch.images.swatch[0].url});
                                 background-position:0px;background-color:transparent;"
                         >
                             <span class="sr-only selected-assistive-text">
@@ -24,7 +24,7 @@
                     <isbreak>
                 </isif>
             </isloop>
-            
+
             <isif condition="${product.variationAttributes[0].values.length > 3}">
                 <li class="more-swatches-li-sm">
                     <span class="more-swatches-sm"> 3+ </span>

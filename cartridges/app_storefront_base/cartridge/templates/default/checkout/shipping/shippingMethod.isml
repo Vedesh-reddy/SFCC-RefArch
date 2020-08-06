@@ -1,6 +1,6 @@
 <isset name="shippingAddress" value="${pdict.forms.shippingForm.shippingAddress}" scope="page"/>
 <div class="row leading-lines shipping-method-list" data-select-shipping-method-url="${URLUtils.https('CheckoutShippingServices-SelectShippingMethod')}" data-action-url="${URLUtils.https('CheckoutShippingServices-UpdateShippingMethodsList')}">
-	<input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
+    <input name="shipmentUUID" type="hidden" value="${shippingModel.UUID}" />
     <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod">
         <div class="form-check col-9 start-lines">
             <isinclude template="checkout/shipping/selectedShippingMethod"/>

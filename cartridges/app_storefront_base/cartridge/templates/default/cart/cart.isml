@@ -83,7 +83,6 @@
                     </div>
                 </div>
             </div>
-            
             <isinclude template="cart/cartRemoveProductModal"/>
         </div>
 

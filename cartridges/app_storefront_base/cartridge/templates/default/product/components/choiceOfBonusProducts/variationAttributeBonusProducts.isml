@@ -55,7 +55,7 @@ Template Notes:
         <label class="${attr.id}" for="bonus-${attr.id}-${productLoopStatus && productLoopStatus.count ? productLoopStatus.count : '1' }">
             ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
         </label>
-    
+
         <!-- Attribute Values Drop Down Menu -->
         <select class="custom-select form-control select-${attr.id}" id="bonus-${attr.id}-${productLoopStatus && productLoopStatus.count ? productLoopStatus.count : '1' }" ${ product.productType === "variant" ? "disabled" : "" }>
             <option value="${attr.resetUrl}">

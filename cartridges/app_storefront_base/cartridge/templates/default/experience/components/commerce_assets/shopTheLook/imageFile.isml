@@ -1,4 +1,4 @@
-<img 
+<img
     class="shopthelook-image image-fluid"
     src="${pdict.image.url}"
     title="${product.productName}"

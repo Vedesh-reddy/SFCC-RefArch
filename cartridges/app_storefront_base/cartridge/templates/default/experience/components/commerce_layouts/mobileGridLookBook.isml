@@ -15,7 +15,7 @@
             </div>
         </div>
     </div>
- 
+
     <div class="show-more">
         <button type="button" class="show-more-button">
             <span class="show-more-text"> ${Resource.msg('button.name.show.more', 'mobileGridLookBook', null)} </span>

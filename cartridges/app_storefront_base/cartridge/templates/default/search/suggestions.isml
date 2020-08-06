@@ -54,11 +54,11 @@
                                     <a href="${category.url}">
                                         <img class="swatch-circle hidden-xs-down" alt="${category.name}" src="${category.imageUrl}" />
                                         <span class="name">
-		                                	${category.name}
-		                                    <isif condition="${category.parentID !== 'root'}">
-		                                        <span class="category-parent"> ${Resource.msg('label.suggest.in', 'search', null)} ${category.parentName}</span>
-		                                    </isif>
-		                            	</span>
+                                            ${category.name}
+                                            <isif condition="${category.parentID !== 'root'}">
+                                                <span class="category-parent"> ${Resource.msg('label.suggest.in', 'search', null)} ${category.parentName}</span>
+                                            </isif>
+                                        </span>
                                     </a>
                                 </isif>
                             </div>

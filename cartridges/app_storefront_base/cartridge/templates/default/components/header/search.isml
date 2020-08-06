@@ -1,5 +1,5 @@
 <div class="site-search">
-	<form role="search"
+    <form role="search"
           action="${URLUtils.url('Search-Show')}"
           method="get"
           name="simpleSearch">
@@ -22,5 +22,5 @@
         <button type="submit" name="search-button" class="fa fa-search" aria-label="${Resource.msg('label.header.search.go', 'common', null)}"></button>
         <div class="suggestions-wrapper" data-url="${URLUtils.url('SearchServices-GetSuggestions', 'q')}"></div>
         <input type="hidden" value="${pdict.locale}" name="lang">
-	</form>
+    </form>
 </div>

@@ -21,7 +21,7 @@
                         <isloop items="${pdict.filterValues}" var="filterValue">
                             <option
                                 value="${filterValue.optionValue}"
-                                <isif condition="${pdict.orderFilter === filterValue.displayValue 
+                                <isif condition="${pdict.orderFilter === filterValue.displayValue
                                     || pdict.filterValues === Resource.msg('orderhistory.sixmonths.option','order',null)
                                     || pdict.filterValues === Resource.msg('orderhistory.twelvemonths.option','order',null)}"> selected</isif>>
                                     ${filterValue.displayValue}
