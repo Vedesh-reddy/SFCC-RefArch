@@ -1,0 +1,6 @@
+<div class="strike-through
+<isif condition=${!lineItem.priceTotal.nonAdjustedPrice}>non-adjusted-price</isif>"
+>
+    ${lineItem.price.list.formatted}
+</div>
+<div class="pricing line-item-price-amount item-price-${lineItem.UUID}">${lineItem.price.sales.formatted}</div>
