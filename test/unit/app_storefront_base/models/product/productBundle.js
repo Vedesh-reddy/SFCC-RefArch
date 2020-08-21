@@ -16,7 +16,11 @@ var productMock = {
             getPrimaryCategory: function () { return { custom: { sizeChartID: 'someID' } }; }
         };
     },
-    ID: 'someID'
+    ID: 'someID',
+    pageTitle: 'some title',
+    pageDescription: 'some description',
+    pageKeywords: 'some keywords',
+    pageMetaData: [{}]
 };
 
 var optionsMock = {
@@ -58,6 +62,7 @@ describe('Product Bundle Model', function () {
         decorators.stubs.stubBundleReadyToOrder.reset();
         decorators.stubs.stubSetIndividualProducts.reset();
         decorators.stubs.stubBundledProducts.reset();
+        decorators.stubs.stubPageMetaData.reset();
     });
 
     it('should call base for bundle product', function () {
@@ -161,5 +166,13 @@ describe('Product Bundle Model', function () {
         productBundle(object, productMock, optionsMock);
 
         assert.isFalse(decorators.stubs.stubReadyToOrder.calledOnce);
+    });
+
+    it('should call pageMetaData for bundle product', function () {
+        object = {};
+        productMock.getPrimaryCategory = function () { return null; };
+        productBundle(object, productMock, optionsMock);
+
+        assert.isTrue(decorators.stubs.stubPageMetaData.calledOnce);
     });
 });
