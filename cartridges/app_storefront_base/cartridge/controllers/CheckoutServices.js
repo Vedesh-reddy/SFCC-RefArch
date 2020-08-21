@@ -454,6 +454,18 @@ server.post('PlaceOrder', server.middleware.https, function (req, res, next) {
 
     // Handles payment authorization
     var handlePaymentResult = COHelpers.handlePayments(order, order.orderNo);
+
+    // Handle custom processing post authorization
+    var options = {
+        req: req,
+        res: res
+    };
+    var postAuthCustomizations = hooksHelper('app.post.auth', 'postAuthorization', handlePaymentResult, order, options, require('*/cartridge/scripts/hooks/postAuthorizationHandling').postAuthorization);
+    if (postAuthCustomizations && Object.prototype.hasOwnProperty.call(postAuthCustomizations, 'error')) {
+        res.json(postAuthCustomizations);
+        return next();
+    }
+
     if (handlePaymentResult.error) {
         res.json({
             error: true,
