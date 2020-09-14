@@ -54,8 +54,10 @@ module.exports = {
                 success: function (data) {
                     form.spinner().stop();
                     if (!data.success) {
+                        $('form.registration').trigger('login:register:error', data);
                         formValidation(form, data);
                     } else {
+                        $('form.registration').trigger('login:register:success', data);
                         location.href = data.redirectUrl;
                     }
                 },
