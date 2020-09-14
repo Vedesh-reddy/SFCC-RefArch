@@ -49,6 +49,11 @@ describe('search script', function () {
         };
         var mockSortingRule = 'rule3';
 
+        var mockParameterMap = {
+            pmin: { doubleValue: 10 },
+            pmax: { doubleValue: 100 }
+        };
+
         var spySetSearchPhrase = sinon.spy(mockProductSearch, 'setSearchPhrase');
         var spySetCategoryID = sinon.spy(mockProductSearch, 'setCategoryID');
         var spySetProductIDs = sinon.spy(mockProductSearch, 'setProductIDs');
@@ -63,12 +68,9 @@ describe('search script', function () {
             mockProductSearch,
             mockParams,
             mockSelectedCategory,
-            mockSortingRule
+            mockSortingRule,
+            mockParameterMap
         );
-
-        function toNumber(str) {
-            return parseInt(str, 10);
-        }
 
         it('should set the search phrase with spaces decoded', function () {
             assert.isTrue(spySetSearchPhrase.calledWith('toasters galore'));
@@ -83,11 +85,11 @@ describe('search script', function () {
         });
 
         it('should set the minimum price', function () {
-            assert.isTrue(spySetPriceMin.calledWith(toNumber(mockParams.pmin)));
+            assert.isTrue(spySetPriceMin.calledWith(mockParameterMap.pmin.doubleValue));
         });
 
         it('should set the maximum price', function () {
-            assert.isTrue(spySetPriceMax.calledWith(toNumber(mockParams.pmax)));
+            assert.isTrue(spySetPriceMax.calledWith(mockParameterMap.pmax.doubleValue));
         });
 
         it('should set the sort rule', function () {

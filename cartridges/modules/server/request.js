@@ -331,6 +331,12 @@ function Request(request, customer, session) {
         }
     });
 
+    Object.defineProperty(this, 'httpParameterMap', {
+        get: function () {
+            return request.httpParameterMap;
+        }
+    });
+
     Object.defineProperty(this, 'querystring', {
         get: function () {
             return new QueryString(request.httpQueryString);

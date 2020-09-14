@@ -13,7 +13,7 @@ server.get('UpdateGrid', function (req, res, next) {
     var ProductSearch = require('*/cartridge/models/search/productSearch');
 
     var apiProductSearch = new ProductSearchModel();
-    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring, req.httpParameterMap);
     apiProductSearch.search();
 
     if (!apiProductSearch.personalizedSort) {
@@ -41,7 +41,7 @@ server.get('Refinebar', cache.applyDefaultCache, function (req, res, next) {
     var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
 
     var apiProductSearch = new ProductSearchModel();
-    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring);
+    apiProductSearch = searchHelper.setupSearch(apiProductSearch, req.querystring, req.httpParameterMap);
     apiProductSearch.search();
     var productSearch = new ProductSearch(
         apiProductSearch,
