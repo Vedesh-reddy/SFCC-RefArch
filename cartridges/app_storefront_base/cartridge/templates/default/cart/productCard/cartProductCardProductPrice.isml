@@ -4,9 +4,8 @@
             <!---item price--->
             <div class="col-4 line-item-price-${lineItem.UUID}">
                 <p class="line-item-price-info">${Resource.msg('label.each.item.price','cart',null)}</p>
-                <div class="item-price-${lineItem.UUID} price">
-                    <isinclude template="checkout/productCard/productCardProductItemPrice" />
-                </div>
+                <isset name="price" value="${lineItem.price}" scope="page"/>
+                <isinclude template="/product/components/pricing/main" />
             </div>
 
             <!--- quantity --->

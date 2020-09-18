@@ -18,14 +18,14 @@
                 </button>
             </div>
             <ul class="coupon-promotion-relationship">
-                <isloop items="${discount.relationship}" var="relatedPromotion">
+                <isif condition="${discount.relationship}" var="relatedPromotion">
 
                     <isif condition="${relatedPromotion.callOutMsg}">
                         <li>
                             <isprint value="${relatedPromotion.callOutMsg}" encoding="off"/>
                         </li>
                     </isif>
-                </isloop>
+                </isif>
             </ul>
         </div>
     <iselse/>
