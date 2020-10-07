@@ -7,9 +7,13 @@ var URLUtils = require('dw/web/URLUtils');
 /**
  * Render logic for storefront.productTile component.
  * @param {dw.experience.ComponentScriptContext} context The Component script context object.
- * @returns {string} The template to be displayed
+ * @param {dw.util.Map} [modelIn] Additional model values created by another cartridge. This will not be passed in by Commcerce Cloud Plattform.
+ *
+ * @returns {string} The markup to be displayed
  */
-module.exports.render = function (context) {
+module.exports.render = function (context, modelIn) {
+    var model = modelIn || new HashMap();
+
     var ProductFactory = require('*/cartridge/scripts/factories/product');
 
     var content = context.content;
@@ -18,7 +22,6 @@ module.exports.render = function (context) {
 
     var productUrl = URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
 
-    var model = new HashMap();
     model.product = product;
     model.display = {
         swatches: true,

@@ -42,11 +42,24 @@ describe('response', function () {
         assert.equal(response.viewData.foo, 'bar');
     });
 
-    it('should correctly page view and data', function () {
+    it('should correctly store a page rendering and set viewData', function () {
         var response = new Response(res);
         response.page('test', { name: 'value' });
-        assert.equal(response.page, 'test');
         assert.equal(response.viewData.name, 'value');
+        assert.equal(response.renderings.length, 1);
+        assert.deepEqual(response.renderings[0], {
+            type: 'render', subType: 'page', page: 'test', aspectAttributes: undefined
+        });
+    });
+
+    it('should correctly store a page rendering with aspectAttributes and set viewData', function () {
+        var response = new Response(res);
+        response.page('test', { name: 'value' }, { test: 'foo' });
+        assert.equal(response.viewData.name, 'value');
+        assert.equal(response.renderings.length, 1);
+        assert.deepEqual(response.renderings[0], {
+            type: 'render', subType: 'page', page: 'test', aspectAttributes: { test: 'foo' }
+        });
     });
 
     it('should extend viewData for page', function () {

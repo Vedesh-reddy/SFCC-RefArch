@@ -9,7 +9,7 @@
     <div class="storepage" id="${pdict.page.ID}">
         <div class="container">
             <div class="row">
-                <isprint value="${pdict.regions.main.setClassName(" col-12").render()}" encoding="off" />
+                <isprint value="${pdict.regions.main.setClassName("col-12").render()}" encoding="off" />
             </div>
         </div>
     </div>

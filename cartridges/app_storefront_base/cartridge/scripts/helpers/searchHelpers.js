@@ -36,6 +36,41 @@ function getCategoryTemplate(apiProductSearch) {
 }
 
 /**
+ * Retrieves the Category Landing Page, if available in Page Designer
+ * @param {Object} categoryID - the category ID as determined from the request
+ * @returns {Object} a lookup result with these fields:
+ *  * page - the page that is configured for this category, if any
+ *  * invisiblePage - the page that is configured for this category if we ignore visibility, if it is different from page
+ *  * aspectAttributes - the aspect attributes that should be passed to the PageMgr, null if no page was found
+ */
+function getPageDesignerCategoryPage(categoryID) {
+    var CatalogMgr = require('dw/catalog/CatalogMgr');
+    var PageMgr = require('dw/experience/PageMgr');
+    var HashMap = require('dw/util/HashMap');
+
+    var category = CatalogMgr.getCategory(categoryID.toLowerCase());
+    var page = PageMgr.getPage(category, true, 'plp');
+    var invisiblePage = PageMgr.getPage(category, false, 'plp');
+
+    if (page) {
+        var aspectAttributes = new HashMap();
+        aspectAttributes.category = category;
+
+        return {
+            page: page,
+            invisiblePage: page.ID !== invisiblePage.ID ? invisiblePage : null,
+            aspectAttributes: aspectAttributes
+        };
+    }
+
+    return {
+        page: null,
+        invisiblePage: invisiblePage,
+        aspectAttributes: null
+    };
+}
+
+/**
  * Set content search configuration values
  *
  * @param {Object} params - Provided HTTP query parameters
@@ -266,9 +301,30 @@ function backButtonDetection(clickStream) {
     return null;
 }
 
+/**
+ * Retrieves banner image URL
+ *
+ * @param {dw.catalog.Category} category - Subject category
+ * @return {string} - Banner's image URL
+ */
+function getBannerImageUrl(category) {
+    var url = null;
+
+    if (category.custom && 'slotBannerImage' in category.custom &&
+        category.custom.slotBannerImage) {
+        url = category.custom.slotBannerImage.getURL();
+    } else if (category.image) {
+        url = category.image.getURL();
+    }
+
+    return url;
+}
+
 exports.backButtonDetection = backButtonDetection;
 exports.setupSearch = setupSearch;
 exports.getCategoryTemplate = getCategoryTemplate;
+exports.getPageDesignerCategoryPage = getPageDesignerCategoryPage;
 exports.setupContentSearch = setupContentSearch;
 exports.search = search;
 exports.applyCache = applyCache;
+exports.getBannerImageUrl = getBannerImageUrl;

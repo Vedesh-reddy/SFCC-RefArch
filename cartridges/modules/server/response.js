@@ -88,12 +88,12 @@ Response.prototype = {
      * Stores data to be rendered as a page designer page
      * @param {string} page - ID of the page to be rendered
      * @param {Object} data - Data to be passed to the template
+     * @param {dw.util.HashMap} aspectAttributes - (optional) aspect attributes to be passed to the PageMgr
      * @returns {void}
      */
-    page: function (page, data) {
-        this.page = page;
+    page: function (page, data, aspectAttributes) {
         this.viewData = assign(this.viewData, data);
-        appendRenderings(this.renderings, { type: 'render', subType: 'page', page: page });
+        appendRenderings(this.renderings, { type: 'render', subType: 'page', page: page, aspectAttributes: aspectAttributes });
     },
     /**
      * Redirects to a given url right away

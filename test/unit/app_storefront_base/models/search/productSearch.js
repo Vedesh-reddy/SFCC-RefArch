@@ -54,6 +54,9 @@ describe('ProductSearch model', function () {
         '*/cartridge/scripts/helpers/urlHelpers': {
             appendQueryParams: stubAppendQueryParams
         },
+        '*/cartridge/scripts/helpers/searchHelpers': {
+            getBannerImageUrl: function (category) { return (category && category.weAreMockingThings) || ''; }
+        },
         'dw/web/URLUtils': {
             url: function (endpoint, param, value) { return [endpoint, param, value].join(' '); }
         },
@@ -177,41 +180,19 @@ describe('ProductSearch model', function () {
     });
 
     describe('.getBannerImageUrl()', function () {
-        var slotImageUrl = 'http://slot.banner.image.url';
-        var nonSlotImageUrl = 'http://image.url';
-
-        beforeEach(function () {
+        it('should use the searchHelper to resolve the banner URL', function () {
             apiProductSearch = {
                 refinements: {
                     refinementDefinitions: []
                 },
                 url: function () { return 'http://some.url'; },
                 category: {
-                    custom: {
-                        slotBannerImage: {
-                            getURL: function () {
-                                return slotImageUrl;
-                            }
-                        }
-                    },
-                    image: {
-                        getURL: function () {
-                            return nonSlotImageUrl;
-                        }
-                    }
+                    weAreMockingThings: 'withMockData'
                 }
             };
-        });
 
-        it('should use a slot image for a category banner if specified', function () {
             result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
-            assert.equal(result.bannerImageUrl, slotImageUrl);
-        });
-
-        it('should use a regular image for its banner image if no slot image specified', function () {
-            apiProductSearch.category.custom = null;
-            result = new ProductSearch(apiProductSearch, httpParams, 'sorting-rule-1', [], {});
-            assert.equal(result.bannerImageUrl, nonSlotImageUrl);
+            assert.equal(result.bannerImageUrl, 'withMockData');
         });
     });
 

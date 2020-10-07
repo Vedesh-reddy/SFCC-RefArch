@@ -80,12 +80,17 @@ function xml(viewData, response) {
 /**
  * Render a page designer page
  * @param {string} pageID - Path to an ISML template
+ * @param {dw.util.HashMap} aspectAttributes - aspectAttributes to be passed to the PageMgr
  * @param {Object} data - Data to be passed
  * @param {Object} response - Response object
  * @returns {void}
  */
-function page(pageID, data, response) {
-    response.base.writer.print(PageMgr.renderPage(pageID, JSON.stringify(data)));
+function page(pageID, aspectAttributes, data, response) {
+    if (aspectAttributes && !aspectAttributes.isEmpty()) {
+        response.base.writer.print(PageMgr.renderPage(pageID, aspectAttributes, JSON.stringify(data)));
+    } else {
+        response.base.writer.print(PageMgr.renderPage(pageID, JSON.stringify(data)));
+    }
 }
 
 /**
@@ -108,7 +113,7 @@ function applyRenderings(res) {
                         xml(res.viewData, res);
                         break;
                     case 'page':
-                        page(element.page, res.viewData, res);
+                        page(element.page, element.aspectAttributes, res.viewData, res);
                         break;
                     default:
                         throw new Error('Cannot render template without name or data');

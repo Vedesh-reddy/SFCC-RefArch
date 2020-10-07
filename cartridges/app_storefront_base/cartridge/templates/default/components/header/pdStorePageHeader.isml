@@ -1,9 +1,9 @@
 <header>
     <isinclude template="/components/header/skipNav" />
-
-    <!-- Campaign Banner Component renders here -->
-    <isprint value="${pdict.regions.headerbanner.render()}" encoding="off"/>
-
+    <isif condition="${pdict.regions.headerbanner}">
+        <!-- Campaign Banner Component renders here -->
+        <isprint value="${pdict.regions.headerbanner.render()}" encoding="off"/>
+    </isif>
     <nav role="navigation">
         <div class="header container">
             <div class="row">

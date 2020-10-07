@@ -23,6 +23,85 @@ describe('search helpers', function () {
         });
     });
 
+    describe('getPageDesignerCategoryPage', function () {
+        var searchHelpersMock;
+        var catalogMgrMock;
+        var pageMgrMock;
+        var categoryMock;
+
+        beforeEach(function () {
+            categoryMock = {};
+            catalogMgrMock = {
+                getCategory: sinon.stub()
+            };
+            catalogMgrMock.getCategory.returns(categoryMock);
+
+            pageMgrMock = {
+                getPage: sinon.stub()
+            };
+            searchHelpersMock = proxyquire(searchHelperPath, {
+                'dw/catalog/CatalogMgr': catalogMgrMock,
+                'dw/experience/PageMgr': pageMgrMock,
+                'dw/util/HashMap': function () {
+                    this.isHashMap = true;
+                }
+            });
+        });
+
+        it('should return an object with null values, if no suitable page can be found', function () {
+            pageMgrMock.getPage.returns(null);
+
+            var result = searchHelpersMock.getPageDesignerCategoryPage('someId');
+            assert.isNotNull(result);
+            assert.isNull(result.page);
+            assert.isNull(result.invisiblePage);
+            assert.isNull(result.aspectAttributes);
+            assert.isTrue(pageMgrMock.getPage.calledTwice);
+        });
+
+        it('should return only invisible page if no visible page can be found', function () {
+            var invisibleMockPage = { isVisible: function () { return false; }, ID: 'invisible' };
+            pageMgrMock.getPage.withArgs(categoryMock, false, 'plp').returns(invisibleMockPage);
+
+            var result = searchHelpersMock.getPageDesignerCategoryPage('someId');
+            assert.isNotNull(result);
+            assert.isNull(result.page);
+            assert.strictEqual(result.invisiblePage, invisibleMockPage);
+            assert.isNull(result.aspectAttributes);
+            assert.isTrue(pageMgrMock.getPage.calledTwice);
+        });
+
+        it('should return only a visible page and aspect attributes when it is the only page found', function () {
+            var mockPage = { ID: 'mockPageId', isVisible: function () { return true; } };
+            pageMgrMock.getPage.returns(mockPage);
+
+            var result = searchHelpersMock.getPageDesignerCategoryPage('someId');
+            assert.isNotNull(result);
+            assert.strictEqual(result.page, mockPage);
+            assert.isNull(result.invisiblePage);
+            assert.isNotNull(result.aspectAttributes);
+            assert.equal(result.aspectAttributes.category, categoryMock);
+            assert.isTrue(result.aspectAttributes.isHashMap);
+            assert.isTrue(pageMgrMock.getPage.calledTwice);
+        });
+
+        it('should return both a visible page and invisible page and aspect attributes when the pages are different', function () {
+            var mockPage = { ID: 'mockPageId', isVisible: function () { return true; } };
+            pageMgrMock.getPage.returns(mockPage);
+            var invisibleMockPage = { isVisible: function () { return false; }, ID: 'invisible' };
+            pageMgrMock.getPage.withArgs(categoryMock, false, 'plp').returns(invisibleMockPage);
+
+            var result = searchHelpersMock.getPageDesignerCategoryPage('someId');
+            assert.isNotNull(result);
+            assert.strictEqual(result.page, mockPage);
+            assert.strictEqual(result.invisiblePage, invisibleMockPage);
+            assert.isNotNull(result.aspectAttributes);
+            assert.equal(result.aspectAttributes.category, categoryMock);
+            assert.isTrue(result.aspectAttributes.isHashMap);
+            assert.isTrue(pageMgrMock.getPage.calledTwice);
+        });
+    });
+
     describe('setup search', function () {
         var mockApiProductSearch = {};
         var mockParams1 = { srule: 'bestsellers', cgid: 'mens' };
@@ -446,6 +525,38 @@ describe('search helpers', function () {
 
             var result = searchHelpersMock4.backButtonDetection(clickStream);
             assert.equal(result, null);
+        });
+    });
+
+    describe('.getBannerImageUrl()', function () {
+        var slotImageUrl = 'http://slot.banner.image.url';
+        var nonSlotImageUrl = 'http://image.url';
+        var category;
+
+        beforeEach(function () {
+            category = {
+                custom: {
+                    slotBannerImage: {
+                        getURL: function () {
+                            return slotImageUrl;
+                        }
+                    }
+                },
+                image: {
+                    getURL: function () {
+                        return nonSlotImageUrl;
+                    }
+                }
+            };
+        });
+
+        it('should use a slot image for a category banner if specified', function () {
+            assert.equal(searchHelpers.getBannerImageUrl(category), slotImageUrl);
+        });
+
+        it('should use a regular image for its banner image if no slot image specified', function () {
+            category.custom = null;
+            assert.equal(searchHelpers.getBannerImageUrl(category), nonSlotImageUrl);
         });
     });
 });

@@ -1,60 +1,10 @@
 'use strict';
 
+/* global request, dw*/
+
 var RegionModelRegistry = require('*/cartridge/experience/utilities/RegionModelRegistry.js');
 
-/**
- * Parse Render Parameters
- *
- * @param {Object} renderParametersJson The json render parameters
- *
- * @returns {Object} render parameters
- */
-function parseRenderParameters(renderParametersJson) {
-    var renderParameters = {};
-    if (renderParametersJson) {
-        try {
-            renderParameters = JSON.parse(renderParametersJson);
-        } catch (e) {
-            var Logger = require('dw/system/Logger');
-            Logger.error('Unable to parse renderParameters: ' + renderParametersJson);
-        }
-    }
-    return renderParameters;
-}
-
 module.exports = {
-    /**
-     * Assembles the page meta data.
-     *
-     * @param {Object} context The context of the page
-     *
-     * @returns {string} ISML path to decorator template
-     */
-    determineDecorator: function determineDecorator(context) {
-        var renderParameters = parseRenderParameters(context.renderParameters);
-        var decorator;
-        var cartridgeDecorator;
-
-        try {
-            cartridgeDecorator = require('*/cartridge/experience/defaultdecorator');
-        } catch (e) {
-            var Logger = require('dw/system/Logger');
-            Logger.warn('Unable to determine frontend decorator ' + e);
-        }
-        // determine decorator
-        if (renderParameters.decorator) {
-            // overridden on runtime
-            decorator = renderParameters.decorator;
-        } else if (cartridgeDecorator) {
-            // provided by frontend
-            decorator = cartridgeDecorator;
-        } else {
-            // provided by pagedesigner
-            decorator = 'decoration/decorator';
-        }
-        return decorator;
-    },
-
     /**
      * Assembles the page meta data.
      *
@@ -63,13 +13,26 @@ module.exports = {
      * @returns {dw.web.PageMetaData} The page meta data
      */
     getPageMetaData: function getPageMetaData(page) {
-        var pageMetaData = request.pageMetaData; // eslint-disable-line no-undef
+        var computedMetaData = {
+            title: page.pageTitle,
+            description: page.pageDescription,
+            keywords: page.pageKeywords,
+            pageMetaTags: []
+        };
 
-        pageMetaData.title = page.pageTitle;
-        pageMetaData.description = page.pageDescription;
-        pageMetaData.keywords = page.pageKeywords;
+        request.pageMetaData.pageMetaTags.forEach(function (item) {
+            if (item.title) {
+                computedMetaData.title = item.content;
+            } else if (item.name && item.ID === 'description') {
+                computedMetaData.description = item.content;
+            } else if (item.name && item.ID === 'keywords') {
+                computedMetaData.keywords = item.content;
+            } else {
+                computedMetaData.pageMetaTags.push(item);
+            }
+        });
 
-        return pageMetaData;
+        return computedMetaData;
     },
 
     /**
@@ -82,9 +45,9 @@ module.exports = {
      */
     getRegionModelRegistry: function getRegionModelRegistry(container) {
         var containerType;
-        if (container && container instanceof dw.experience.Page) { // eslint-disable-line no-undef
+        if (container && container instanceof dw.experience.Page) {
             containerType = 'pages';
-        } else if (container && container instanceof dw.experience.Component) { // eslint-disable-line no-undef
+        } else if (container && container instanceof dw.experience.Component) {
             containerType = 'components';
         } else {
             return null;
@@ -99,7 +62,7 @@ module.exports = {
      * @returns {boolean} The container regions
      */
     isInEditMode: function isInEditMode() {
-        return request.httpPath.indexOf('__SYSTEM__Page-Show') > 0; // eslint-disable-line no-undef
+        return request.httpPath.indexOf('__SYSTEM__Page-Show') > 0;
     },
 
     /**

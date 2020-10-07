@@ -334,10 +334,12 @@ function getResources() {
     };
 }
 
+
 /**
  * Renders the Product Details Page
  * @param {Object} querystring - query string parameters
  * @param {Object} reqPageMetaData - request pageMetaData object
+ * @param {Object} usePageDesignerTemplates - wether to use the page designer version of the product detail templates, defaults to false
  * @returns {Object} contain information needed to render the product page
  */
 function showProductPage(querystring, reqPageMetaData) {
@@ -350,6 +352,7 @@ function showProductPage(querystring, reqPageMetaData) {
     var addToCartUrl = URLUtils.url('Cart-AddProduct');
     var canonicalUrl = URLUtils.url('Product-Show', 'pid', product.id);
     var breadcrumbs = getAllBreadcrumbs(null, product.id, []).reverse();
+
     var template = 'product/productDetails';
 
     if (product.productType === 'bundle' && !product.template) {
@@ -375,6 +378,58 @@ function showProductPage(querystring, reqPageMetaData) {
     };
 }
 
+/**
+ * Retrieves the Product Detail Page, if available in Page Designer
+ * @param {Object} reqProduct - the product as determined from the request
+ * @returns {Object} a lookup result with these fields:
+ *  * page - the page that is configured for this product, if any
+ *  * invisiblePage - the page that is configured for this product if we ignore visibility, if it is different from page
+ *  * aspectAttributes - the aspect attributes that should be passed to the PageMgr, null if no page was found
+ */
+function getPageDesignerProductPage(reqProduct) {
+    if (reqProduct.template) {
+       // this product uses an individual template, for backwards compatibility this has to be handled as a non-PD page
+        return {
+            page: null,
+            invisiblePage: null,
+            aspectAttributes: null
+        };
+    }
+
+    var PageMgr = require('dw/experience/PageMgr');
+    var HashMap = require('dw/util/HashMap');
+
+    var product = reqProduct.raw;
+    var category = product.variant
+            ? product.masterProduct.primaryCategory
+            : product.primaryCategory;
+    if (!category) {
+        category = product.variant
+            ? product.masterProduct.classificationCategory
+            : product.classificationCategory;
+    }
+
+    var page = PageMgr.getPage(category, true, 'pdp');
+    var invisiblePage = PageMgr.getPage(category, false, 'pdp');
+    if (page) {
+        var aspectAttributes = new HashMap();
+        aspectAttributes.category = category;
+        aspectAttributes.product = product;
+
+        return {
+            page: page,
+            invisiblePage: page.ID !== invisiblePage.ID ? invisiblePage : null,
+            aspectAttributes: aspectAttributes
+        };
+    }
+
+    return {
+        page: null,
+        invisiblePage: invisiblePage,
+        aspectAttributes: null
+    };
+}
+
 module.exports = {
     getOptionValues: getOptionValues,
     getOptions: getOptions,
@@ -388,5 +443,6 @@ module.exports = {
     getLineItemOptionNames: getLineItemOptionNames,
     showProductPage: showProductPage,
     getAllBreadcrumbs: getAllBreadcrumbs,
-    getResources: getResources
+    getResources: getResources,
+    getPageDesignerProductPage: getPageDesignerProductPage
 };

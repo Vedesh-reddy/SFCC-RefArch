@@ -7,10 +7,12 @@ var carouselBuilder = require('*/cartridge/scripts/experience/utilities/carousel
 /**
  * Render logic for storefront.carousel layout.
  * @param {dw.experience.ComponentScriptContext} context The component script context object.
- * @returns {string} The template to be displayed
+ * @param {dw.util.Map} [modelIn] Additional model values created by another cartridge. This will not be passed in by Commcerce Cloud Plattform.
+ *
+ * @returns {string} The markup to be displayed
  */
-module.exports.render = function (context) {
-    var model = new HashMap();
+module.exports.render = function (context, modelIn) {
+    var model = modelIn || new HashMap();
 
     model = carouselBuilder.init(model, context);
 
