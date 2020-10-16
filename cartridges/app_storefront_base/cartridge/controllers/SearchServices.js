@@ -6,6 +6,8 @@ var cache = require('*/cartridge/scripts/middleware/cache');
 
 var Resource = require('dw/web/Resource');
 
+var preferences = require('*/cartridge/config/preferences.js');
+
 server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) {
     var SuggestModel = require('dw/suggest/SuggestModel');
     var CategorySuggestions = require('*/cartridge/models/search/suggestions/category');
@@ -21,7 +23,7 @@ server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) 
     var searchTerms = req.querystring.q;
     var suggestions;
     // TODO: Move minChars and maxSuggestions to Site Preferences when ready for refactoring
-    var minChars = 3;
+    var minChars = preferences.minTermLength;
     // Unfortunately, by default, max suggestions is set to 10 and is not configurable in Business
     // Manager.
     var maxSuggestions = 3;

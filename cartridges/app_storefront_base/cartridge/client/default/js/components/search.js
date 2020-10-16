@@ -2,7 +2,7 @@
 
 var debounce = require('lodash/debounce');
 var endpoint = $('.suggestions-wrapper').data('url');
-var minChars = 3;
+var minChars = 1;
 var UP_KEY = 38;
 var DOWN_KEY = 40;
 var DIRECTION_DOWN = 1;
