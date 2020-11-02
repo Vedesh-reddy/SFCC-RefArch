@@ -23,7 +23,7 @@
         border-top-right-radius: 0.1875rem;
 
         .full-pdp-link {
-            color: $primary;
+            color: #{var(--skin-primary-color-1)};
         }
 
         .close {

@@ -99,7 +99,7 @@ $negative-spacer: -0.625rem;
 }
 
 .optional-promo {
-    color: $primary;
+    color: #{var(--skin-primary-color-1)};
 }
 
 .product-info {

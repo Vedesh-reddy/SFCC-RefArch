@@ -141,7 +141,7 @@
         }
 
         a {
-            color: $primary;
+            color: #{var(--skin-primary-color-1)};
             text-decoration: none;
         }
     }

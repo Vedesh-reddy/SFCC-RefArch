@@ -9,12 +9,12 @@
 }
 
 .card-footer > a {
-    color: $primary;
+    color: #{var(--skin-primary-color-1)};
     text-decoration: underline;
 }
 
 .card-header > a {
-    color: $primary;
+    color: #{var(--skin-primary-color-1)};
     float: right;
     text-decoration: underline;
 }

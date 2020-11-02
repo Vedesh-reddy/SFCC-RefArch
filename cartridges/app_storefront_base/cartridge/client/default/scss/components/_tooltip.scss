@@ -10,7 +10,7 @@ $arrow-height: 1.25em; /* 20/16 */
 
     .icon {
         border-radius: 1.25rem;
-        background-color: #00a1e0;
+        background-color: #{var(--skin-primary-color-1)};
         width: 1.5625rem;
         display: inline-block;
         text-align: center;

@@ -17,6 +17,7 @@ module.exports.render = function (context, modelIn) {
 
     var page = context.page;
     model.page = page;
+    model.content = context.content;
 
     // automatically register configured regions
     model.regions = PageRenderHelper.getRegionModelRegistry(page);

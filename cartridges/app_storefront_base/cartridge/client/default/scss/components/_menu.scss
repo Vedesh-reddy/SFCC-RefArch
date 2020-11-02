@@ -62,6 +62,18 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     }
 }
 
+.navbar-expand-md .navbar-nav.nav-center {
+    justify-content: center;
+}
+
+.navbar-expand-md .navbar-nav.nav-spaced {
+    justify-content: space-evenly;
+}
+
+.navbar-expand-md .navbar-nav.nav-right {
+    justify-content: end;
+}
+
 .nav-item .nav-link:hover,
 .nav-item .nav-link:focus,
 .nav-item.show .nav-link {

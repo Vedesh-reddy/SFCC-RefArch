@@ -38,7 +38,7 @@
     }
 
     a {
-        color: $blue;
+        color: #{var(--skin-link-color-1)};
     }
 }
 

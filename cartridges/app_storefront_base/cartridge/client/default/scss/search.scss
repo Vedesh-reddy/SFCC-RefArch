@@ -86,7 +86,7 @@
 
             button {
                 border: none;
-                color: $blue;
+                color: #{var(--skin-link-color-1)};
                 background-color: transparent;
             }
         }

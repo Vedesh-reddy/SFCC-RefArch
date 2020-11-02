@@ -26,7 +26,7 @@ $checkout-font-weight: 600;
 .edit-button,
 .btn-show-details,
 .btn-add-new {
-    color: $primary;
+    color: #{var(--skin-primary-color-1)};
     float: right;
     cursor: pointer;
 

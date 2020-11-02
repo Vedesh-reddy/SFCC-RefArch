@@ -14,7 +14,7 @@ input[placeholder] {
 }
 
 header ~ #maincontent .container a:not(.btn-primary, .btn-outline-primary) {
-    color: $blue;
+    color: #{var(--skin-link-color-2)};
 }
 
 .hide-order-discount {

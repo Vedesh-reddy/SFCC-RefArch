@@ -43,7 +43,7 @@
         color: $nav-tabs-link-hover-border-color;
 
         &.active {
-            border-bottom: 0.188em solid $primary;
+            border-bottom: 0.188em solid  #{var(--skin-primary-color-1)};
         }
     }
 }
