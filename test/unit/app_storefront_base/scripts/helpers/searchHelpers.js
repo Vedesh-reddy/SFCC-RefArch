@@ -144,6 +144,7 @@ describe('search helpers', function () {
         var mockParams = { q: 'denim', startingPage: 0 };
 
         var setRecursiveFolderSearchSpy = sinon.spy();
+        var setFilteredByFolderSpy = sinon.spy();
         var setSearchPhraseSpy = sinon.spy();
         var searchSpy = sinon.spy();
         var contentSearchSpy = sinon.spy();
@@ -151,6 +152,7 @@ describe('search helpers', function () {
             'dw/content/ContentSearchModel': function () {
                 return {
                     setRecursiveFolderSearch: setRecursiveFolderSearchSpy,
+                    setFilteredByFolder: setFilteredByFolderSpy,
                     setSearchPhrase: setSearchPhraseSpy,
                     search: searchSpy,
                     getContent: function () {
@@ -166,6 +168,9 @@ describe('search helpers', function () {
 
         it('should set setRecursiveFolderSearch to true', function () {
             assert.isTrue(setRecursiveFolderSearchSpy.calledWith(true));
+        });
+        it('should set setFilteredByFolder to false', function () {
+            assert.isTrue(setFilteredByFolderSpy.calledWith(false));
         });
         it('should set setSearchPhrase', function () {
             assert.isTrue(setSearchPhraseSpy.calledWith(mockParams.q));

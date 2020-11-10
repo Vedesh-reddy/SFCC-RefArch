@@ -82,6 +82,7 @@ function setupContentSearch(params) {
     var apiContentSearchModel = new ContentSearchModel();
 
     apiContentSearchModel.setRecursiveFolderSearch(true);
+    apiContentSearchModel.setFilteredByFolder(false);
     apiContentSearchModel.setSearchPhrase(params.q);
     apiContentSearchModel.search();
     var contentSearchResult = apiContentSearchModel.getContent();

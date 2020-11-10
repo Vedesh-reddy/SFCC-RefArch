@@ -30,6 +30,7 @@ server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) 
 
     if (searchTerms && searchTerms.length >= minChars) {
         suggestions = new SuggestModel();
+        suggestions.setFilteredByFolder(false);
         suggestions.setSearchPhrase(searchTerms);
         suggestions.setMaxSuggestions(maxSuggestions);
         categorySuggestions = new CategorySuggestions(suggestions, maxSuggestions);
