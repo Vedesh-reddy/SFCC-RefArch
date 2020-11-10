@@ -177,6 +177,7 @@ describe('addressHelpers', function () {
         var stubSetCompanyName = sinon.stub();
         var stubSetSuffix = sinon.stub();
         var stubSetSuite = sinon.stub();
+        var stubSetTitle = sinon.stub();
 
         var address = {
             firstName: 'Foo',
@@ -201,7 +202,8 @@ describe('addressHelpers', function () {
             setSecondName: stubSetSecondName,
             setCompanyName: stubSetCompanyName,
             setSuffix: stubSetSuffix,
-            setSuite: stubSetSuite
+            setSuite: stubSetSuite,
+            setTitle: stubSetTitle
         };
 
         var formInfo = {
@@ -229,6 +231,7 @@ describe('addressHelpers', function () {
         assert.isTrue(stubSetPostalCode.calledOnce);
         assert.isTrue(stubSetStateCode.calledOnce);
         assert.isTrue(stubSetCountryCode.calledOnce);
+        assert.isTrue(stubSetJobTitle.calledOnce);
         assert.isTrue(stubSetPostBox.calledOnce);
         assert.isTrue(stubSetStateCode.calledOnce);
         assert.isTrue(stubSetSalutation.calledOnce);
@@ -236,7 +239,7 @@ describe('addressHelpers', function () {
         assert.isTrue(stubSetCompanyName.calledOnce);
         assert.isTrue(stubSetSuffix.calledOnce);
         assert.isTrue(stubSetSuite.calledOnce);
-        assert.isTrue(stubSetJobTitle.calledTwice);
+        assert.isTrue(stubSetTitle.calledOnce);
     });
 
     it('Should gather all shipping addresses into one array', function () {
