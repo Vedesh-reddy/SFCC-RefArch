@@ -96,8 +96,8 @@ function updateCartTotals(data) {
         } else {
             $('.item-' + item.UUID).empty();
         }
-        $('.uuid-' + item.UUID + ' .price').empty().append(item.renderedPrice);
-        $('.line-item-price-' + item.UUID + ' .price').empty().append(item.renderedPrice);
+        $('.uuid-' + item.UUID + ' .unit-price').empty().append(item.renderedPrice);
+        $('.line-item-price-' + item.UUID + ' .unit-price').empty().append(item.renderedPrice);
         $('.item-total-' + item.UUID).empty().append(item.priceTotal.renderedPrice);
     });
 }

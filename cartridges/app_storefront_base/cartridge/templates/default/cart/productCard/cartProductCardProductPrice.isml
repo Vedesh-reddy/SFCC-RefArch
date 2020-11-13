@@ -5,7 +5,9 @@
             <div class="col-4 line-item-price-${lineItem.UUID}">
                 <p class="line-item-price-info">${Resource.msg('label.each.item.price','cart',null)}</p>
                 <isset name="price" value="${lineItem.price}" scope="page"/>
-                <isinclude template="/product/components/pricing/main" />
+                <div class="unit-price">
+                    <isinclude template="/product/components/pricing/main" />
+                </div>
             </div>
 
             <!--- quantity --->
