@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @namespace PaymentInstruments
+ */
+
 var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
@@ -113,6 +117,17 @@ function getExpirationYears() {
     return creditCardExpirationYears;
 }
 
+/**
+ * PaymentInstruments-List : The endpoint PaymentInstruments-List is the endpoint that renders a list of shopper saved payment instruments. The rendered list displays the masked card number expiration data and payemnt instrument type
+ * @name Base/PaymentInstruments-List
+ * @function
+ * @memberof PaymentInstruments
+ * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {middleware} - consentTracking.consent
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var Resource = require('dw/web/Resource');
@@ -137,6 +152,18 @@ server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, funct
     next();
 });
 
+/**
+ * PaymentInstruments-AddPayment : The endpoint PaymentInstruments-AddPayment endpoint renders the page that allows a shopper to save a payment instrument to their account
+ * @name Base/PaymentInstruments-AddPayment
+ * @function
+ * @memberof PaymentInstruments
+ * @param {middleware} - csrfProtection.generateToken
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get(
     'AddPayment',
     csrfProtection.generateToken,
@@ -176,6 +203,25 @@ server.get(
     }
 );
 
+/**
+ * PaymentInstruments-SavePayment : The PaymentInstruments-SavePayment endpoint is the endpoit responsible for saving a shopper's payment to their account
+ * @name Base/PaymentInstruments-SavePayment
+ * @function
+ * @memberof PaymentInstruments
+ * @param {middleware} - csrfProtection.validateAjaxRequest
+ * @param {querystringparameter} - UUID - the universally unique identifier of the payment instrument
+ * @param {httpparameter} - dwfrm_creditCard_cardType - Input field credit card type (example visa)
+ * @param {httpparameter} - paymentOption-Credit - Radio button, They payment instrument type (credit card is the only one subborted OOB with SFRA)
+ * @param {httpparameter} - dwfrm_creditCard_cardOwner -  Input field, the name on the credit card
+ * @param {httpparameter} - dwfrm_creditCard_cardNumber -  Input field, the credit card number
+ * @param {httpparameter} - dwfrm_creditCard_expirationMonth -  Input field, the credit card's expiration month
+ * @param {httpparameter} - dwfrm_creditCard_expirationYear -  Input field, the credit card's expiration year
+ * @param {httpparameter} - makeDefaultPayment - Checkbox for whether or not a shopper wants to enbale the payment instrument as the default (This feature does not exist in SFRA OOB)
+ * @param {httpparameter} - csrf_token - hidden input field CSRF token
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
 server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, res, next) {
     var formErrors = require('*/cartridge/scripts/formErrors');
     var HookMgr = require('dw/system/HookMgr');
@@ -233,6 +279,17 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
     return next();
 });
 
+/**
+ * PaymentInstruments-DeletePayment : The PaymentInstruments-DeletePayment is the endpoint responsible for deleting a shopper's saved payment instrument from their account
+ * @name Base/PaymentInstruments-DeletePayment
+ * @function
+ * @memberof PaymentInstruments
+ * @param {middleware} - userLoggedIn.validateLoggedInAjax
+ * @param {querystringparameter} - UUID - the universally unique identifier of the payment instrument to be removed from the shopper's account
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - get
+ */
 server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
     var array = require('*/cartridge/scripts/util/array');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
@@ -279,6 +336,16 @@ server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, re
     return next();
 });
 
+/**
+ * PaymentInstruments-Header : The PaymentInstruments-Header endpoint is used as a remote include that renders the account header ISML template
+ * @name Base/PaymentInstruments-Header
+ * @function
+ * @memberof PaymentInstruments
+ * @param {middleware} - server.middleware.include
+ * @param {category} - sensitive
+ * @param {renders} -isml
+ * @param {serverfunction} - get
+ */
 server.get('Header', server.middleware.include, function (req, res, next) {
     res.render('account/header', { name:
         req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null

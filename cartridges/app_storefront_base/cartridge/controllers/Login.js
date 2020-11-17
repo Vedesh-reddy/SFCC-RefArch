@@ -1,10 +1,28 @@
 'use strict';
 
+/**
+ * @namespace Login
+ */
+
 var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
+/**
+ * Login-Show : This endpoint is called to load the login page
+ * @name Base/Login-Show
+ * @function
+ * @memberof Login
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - csrfProtection.generateToken
+ * @param {querystringparameter} - rurl - Redirect URL
+ * @param {querystringparameter} - action - Action on submit of Login Form
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get(
     'Show',
     consentTracking.consent,
@@ -52,6 +70,14 @@ server.get(
     }
 );
 
+/**
+ * Login-Logout : This endpoint is called to log shopper out of the session
+ * @name Base/Login-Logout
+ * @function
+ * @memberof Login
+ * @param {category} - sensitive
+ * @param {serverfunction} - get
+ */
 server.get('Logout', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var CustomerMgr = require('dw/customer/CustomerMgr');
@@ -61,6 +87,19 @@ server.get('Logout', function (req, res, next) {
     next();
 });
 
+/**
+ * Login-OAuthLogin : This endpoint invokes the External OAuth Providers Login
+ * @name Base/Login-OAuthLogin
+ * @function
+ * @memberof Login
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - consentTracking.consent
+ * @param {querystringparameter} - oauthProvider - ID of the OAuth Provider. e.g. Facebook, Google
+ * @param {querystringparameter} - oauthLoginTargetEndPoint - Valid values for this parameter are 1 or 2. These values are mapped in oAuthRenentryRedirectEndpoints.js
+ * @param {category} - sensitive
+ * @param {renders} - isml if there is an error
+ * @param {serverfunction} - get
+ */
 server.get('OAuthLogin', server.middleware.https, consentTracking.consent, function (req, res, next) {
     var oauthLoginFlowMgr = require('dw/customer/oauth/OAuthLoginFlowMgr');
     var Resource = require('dw/web/Resource');
@@ -107,6 +146,19 @@ server.get('OAuthLogin', server.middleware.https, consentTracking.consent, funct
     return next();
 });
 
+/**
+ * Login-OAuthReentry : This endpoint is called by the External OAuth Login Provider (Facebook, Google etc. to re-enter storefront after shopper logs in using their service
+ * @name Base/Login-OAuthReentry
+ * @function
+ * @memberof Login
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - consentTracking.consent
+ * @param {querystringparameter} - code - given by facebook
+ * @param {querystringparameter} - state - given by facebook
+ * @param {category} - sensitive
+ * @param {renders} - isml only if there is a error
+ * @param {serverfunction} - get
+ */
 server.get('OAuthReentry', server.middleware.https, consentTracking.consent, function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var oauthLoginFlowMgr = require('dw/customer/oauth/OAuthLoginFlowMgr');

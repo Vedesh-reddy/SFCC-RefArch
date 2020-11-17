@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @namespace Order
+ */
+
 var server = require('server');
 
 var Resource = require('dw/web/Resource');
@@ -8,6 +12,19 @@ var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
+/**
+ * Order-Confirm : This endpoint is invoked when the shopper's Order is Placed and Confirmed
+ * @name Base/Order-Confirm
+ * @function
+ * @memberof Order
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - csrfProtection.generateToken
+ * @param {querystringparameter} - ID - Order ID
+ * @param {querystringparameter} - token - token associated with the order
+ * @param {category} - sensitive
+ * @param {serverfunction} - get
+ */
 server.get(
     'Confirm',
     consentTracking.consent,
@@ -74,6 +91,24 @@ server.get(
     }
 );
 
+/**
+ * Order-Track : This endpoint is used to track a placed Order
+ * @name Base/Order-Track
+ * @function
+ * @memberof Order
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - csrfProtection.validateRequest
+ * @param {middleware} - csrfProtection.generateToken
+ * @param {querystringparameter} - trackOrderNumber - Order Number to track
+ * @param {querystringparameter} - trackOrderEmail - Email on the Order to track
+ * @param {querystringparameter} - trackOrderPostal - Postal Code on the Order to track
+ * @param {querystringparameter} - csrf_token - CSRF token
+ * @param {querystringparameter} - submit - This is to submit the form
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - post
+ */
 server.post(
     'Track',
     consentTracking.consent,
@@ -163,6 +198,17 @@ server.post(
     }
 );
 
+/**
+ * Order-History : This endpoint is invoked to get Order History for the logged in shopper
+ * @name Base/Order-History
+ * @function
+ * @memberof Order
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {category} - sensitive
+ * @param {serverfunction} - get
+ */
 server.get(
     'History',
     consentTracking.consent,
@@ -200,6 +246,19 @@ server.get(
     }
 );
 
+/**
+ * Order-Details : This endpoint is called to get Order Details
+ * @name Base/Order-Details
+ * @function
+ * @memberof Order
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {querystringparameter} - orderID - Order ID
+ * @param {querystringparameter} - orderFilter - Order Filter ID
+ * @param {category} - sensitive
+ * @param {serverfunction} - get
+ */
 server.get(
     'Details',
     consentTracking.consent,
@@ -245,6 +304,18 @@ server.get(
     }
 );
 
+/**
+ * Order-Filtered : This endpoint filters the Orders shown on the Order History Page
+ * @name Base/Order-Filtered
+ * @function
+ * @memberof Order
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - userLoggedIn.validateLoggedInAjax
+ * @param {querystringparameter} - orderFilter - Order Filter ID
+ * @param {category} - sensitive
+ * @param {serverfunction} - get
+ */
 server.get(
     'Filtered',
     server.middleware.https,
@@ -277,6 +348,20 @@ server.get(
     }
 );
 
+/**
+ * Order-CreateAccount : This endpoint is invoked when a shopper has already placed an Order as a guest and then tries to create an account
+ * @name Base/Order-CreateAccount
+ * @function
+ * @memberof Order
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - csrfProtection.validateAjaxRequest
+ * @param {querystringparameter} - ID: Order ID
+ * @param {httpparameter} - dwfrm_newPasswords_newpassword - Password
+ * @param {httpparameter} - dwfrm_newPasswords_newpasswordconfirm - Confirm Password
+ * @param {httpparameter} - csrf_token - CSRF token
+ * @param {category} - sensitive
+ * @param {serverfunction} - post
+ */
 server.post(
     'CreateAccount',
     server.middleware.https,

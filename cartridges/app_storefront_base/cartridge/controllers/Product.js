@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @namespace Product
+ */
+
 var server = require('server');
 
 var cache = require('*/cartridge/scripts/middleware/cache');
@@ -16,6 +20,18 @@ var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
  * @property {String} info_selectforstock - Localized string for "Select Styles for Availability"
  */
 
+  /**
+  * Product-Show : This endpoint is called to show the details of the selected product
+  * @name Base/Product-Show
+  * @function
+  * @memberof Product
+  * @param {middleware} - cache.applyPromotionSensitiveCache
+  * @param {middleware} - consentTracking.consent
+  * @param {querystringparameter} - pid - Product ID
+  * @param {category} - non-sensitive
+  * @param {renders} - isml
+  * @param {serverfunction} - get
+  */
 server.get('Show', cache.applyPromotionSensitiveCache, consentTracking.consent, function (req, res, next) {
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
     var showProductPageHelperResult = productHelper.showProductPage(req.querystring, req.pageMetaData);
@@ -47,6 +63,17 @@ server.get('Show', cache.applyPromotionSensitiveCache, consentTracking.consent, 
     next();
 }, pageMetaData.computedPageMetaData);
 
+/**
+ * Product-ShowInCategory : The Product-ShowInCategory endpoint renders the product detail page within the context of a category
+ * @name Base/Product-ShowInCategory
+ * @function
+ * @memberof Product
+ * @param {middleware} - cache.applyPromotionSensitiveCache
+ * @param {querystringparameter} - pid - Product ID
+ * @param {category} - non-sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get('ShowInCategory', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
     var showProductPageHelperResult = productHelper.showProductPage(req.querystring, req.pageMetaData);
@@ -64,6 +91,19 @@ server.get('ShowInCategory', cache.applyPromotionSensitiveCache, function (req, 
     next();
 });
 
+/**
+ * Product-Variation : This endpoint is called when all the product variants are selected
+ * @name Base/Product-Variation
+ * @function
+ * @memberof Product
+ * @param {querystringparameter} - pid - Product ID
+ * @param {querystringparameter} - quantity - Quantity
+ * @param {querystringparameter} - dwvar_<pid>_color - Color Attribute ID
+ * @param {querystringparameter} - dwvar_<pid>_size - Size Attribute ID
+ * @param {category} - non-sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - get
+ */
 server.get('Variation', function (req, res, next) {
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
     var priceHelper = require('*/cartridge/scripts/helpers/pricing');
@@ -110,6 +150,16 @@ server.get('Variation', function (req, res, next) {
     next();
 });
 
+/**
+ * Product-ShowQuickView : This endpoint is called when a product quick view button is clicked
+ * @name Base/Product-ShowQuickView
+ * @function
+ * @memberof Product
+ * @param {middleware} - cache.applyPromotionSensitiveCache
+ * @param {querystringparameter} - pid - Product ID
+ * @param {category} - non-sensitive
+ * @param {serverfunction} - get
+ */
 server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var productHelper = require('*/cartridge/scripts/helpers/productHelpers');
@@ -149,6 +199,16 @@ server.get('ShowQuickView', cache.applyPromotionSensitiveCache, function (req, r
     next();
 });
 
+/**
+ * Product-SizeChart : This endpoint is called when the "Size Chart" link on the product details page is clicked
+ * @name Base/Product-SizeChart
+ * @function
+ * @memberof Product
+ * @param {querystringparameter} - cid - Size Chart ID
+ * @param {category} - non-sensitve
+ * @param {returns} - json
+ * @param {serverfunction} - get
+ */
 server.get('SizeChart', function (req, res, next) {
     var ContentMgr = require('dw/content/ContentMgr');
 
@@ -165,6 +225,19 @@ server.get('SizeChart', function (req, res, next) {
     next();
 });
 
+/**
+ * Product-ShowBonusProducts : This endpoint is called when a product with bonus product is added to Cart
+ * @name Base/Product-ShowBonusProducts
+ * @function
+ * @memberof Product
+ * @param {querystringparameter} - DUUID - Discount Line Item UUID
+ * @param {querystringparameter} - pagesize - Number of products to show on a page
+ * @param {querystringparameter} - pagestart - Starting Page Number
+ * @param {querystringparameter} - maxpids - Limit maximum number of Products
+ * @param {category} - non-sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - get
+ */
 server.get('ShowBonusProducts', function (req, res, next) {
     var Resource = require('dw/web/Resource');
     var ProductFactory = require('*/cartridge/scripts/factories/product');

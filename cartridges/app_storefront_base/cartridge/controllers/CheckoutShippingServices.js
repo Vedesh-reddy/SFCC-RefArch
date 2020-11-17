@@ -1,10 +1,24 @@
 'use strict';
 
+/**
+ * @namespace CheckoutShippingServices
+ */
+
 var server = require('server');
 
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
-
+/**
+ * CheckoutShippingServices-ToggleMultiShip : The CheckoutShippingServices-ToggleMultiShip endpoint handles splitting the basket in to multiple shipments or condenses everything down into one shipment depending on the usingMultiShip flag
+ * @name Base/CheckoutShippingServices-ToggleMultiShip
+ * @function
+ * @memberof CheckoutShippingServices
+ * @param {middleware} - server.middleware.https
+ * @param {httpparameter} - usingMultiShip - A boolean that determins wheter or not the shopper wants to use multishipping in the chekcout process
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
 server.post('ToggleMultiShip', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
     var Transaction = require('dw/system/Transaction');
@@ -105,6 +119,31 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
     next();
 });
 
+/**
+ * CheckoutShippingServices-SelectShippingMethod : The CheckoutShippingServices-SelectShippingMethod endpoint saves the selected shipping method to the basket
+ * @name Base/CheckoutShippingServices-SelectShippingMethod
+ * @function
+ * @memberof CheckoutShippingServices
+ * @param {middleware} - server.middleware.https
+ * @param {querystringparameter} - shipmentUUID - the universally unique identifier of the shipment
+ * @param {querystringparameter} - methodID - the selected shipping method id
+ * @param {httpparameter} - firstName - shipping address input field, shopper's shipping first name
+ * @param {httpparameter} - lastName - shipping address input field, shopper's last name
+ * @param {httpparameter} - address1 - shipping address input field, address line 1
+ * @param {httpparameter} - address2 - shipping address input field address line 2
+ * @param {httpparameter} - city - shipping address input field, city
+ * @param {httpparameter} - postalCode -  shipping address input field, postal code (or zipcode)
+ * @param {httpparameter} - stateCode - shipping address input field, state code (Not all locales have state code)
+ * @param {httpparameter} - countryCode -  shipping address input field, country
+ * @param {httpparameter} - phone - shipping address input field, shopper's phone number
+ * @param {httpparameter} - shipmentUUID - the universally unique identifier of the shipment
+ * @param {httpparameter} - methodID - The selected shipping method id
+ * @param {httpparameter} - isGift - Checkbox that is for determining whether or not this is a gift
+ * @param {httpparameter} - giftMessage - text area for gift message
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
 server.post('SelectShippingMethod', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
     var Resource = require('dw/web/Resource');
@@ -197,7 +236,27 @@ server.post('SelectShippingMethod', server.middleware.https, function (req, res,
     return next();
 });
 
-
+/**
+ * CheckoutShippingServices-UpdateShippingMethodsList : The CheckoutShippingServices-UpdateShippingMethodsList endpoint gets hit once a shopper has entered certain address infromation and gets the applicable shipping methods based on the shopper's supplied shipping address infromation
+ * @name Base/CheckoutShippingServices-UpdateShippingMethodsList
+ * @function
+ * @memberof CheckoutShippingServices
+ * @param {middleware} - server.middleware.https
+ * @param {querystringparameter} - shipmentUUID - the universally unique identifier of the shipment
+ * @param {httpparameter} - firstName - shipping address input field, shopper's shipping first name
+ * @param {httpparameter} - lastName - shipping address input field, shopper's last name
+ * @param {httpparameter} - address1 - shipping address input field, address line 1
+ * @param {httpparameter} - address2 - shipping address nput field address line 2
+ * @param {httpparameter} - city - shipping address input field, city
+ * @param {httpparameter} - postalCode -  shipping address input field, postal code (or zipcode)
+ * @param {httpparameter} - stateCode - shipping address input field, state code (Not all locales have state code)
+ * @param {httpparameter} - countryCode -  shipping address input field, country
+ * @param {httpparameter} - phone - shipping address input field, shopper's phone number
+ * @param {httpparameter} - shipmentUUID - The universally unique identifier of the shipment
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
 server.post('UpdateShippingMethodsList', server.middleware.https, function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
     var Transaction = require('dw/system/Transaction');
@@ -278,6 +337,31 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
 
 /**
  * Handle Ajax shipping form submit
+ */
+/**
+ * CheckoutShippingServices-SubmitShipping : The CheckoutShippingServices-SubmitShipping endpoint submits the shopper's shipping addresse(s) and shipping method(s) and saves them to the basket
+ * @name Base/CheckoutShippingServices-SubmitShipping
+ * @function
+ * @memberof CheckoutShippingServices
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - csrfProtection.validateAjaxRequest
+ * @param {httpparameter} - shipmentUUID - The universally unique identifier of the shipment
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_shippingMethodID - The selected shipping method id
+ * @param {httpparameter} - shipmentSelector - For Guest shopper: A shipment UUID that contains address that matches the selected address, For returning shopper: ab_<address-name-from-address-book>" of the selected address. For both type of shoppers: "new" if a brand new address is entered
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_firstName - shipping address input field, shopper's shipping first name
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_lastName - shipping address input field, shopper's last name
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_address1 - shipping address input field, address line 1
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_address2 - shipping address nput field address line 2
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_country - shipping address input field, country
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_states_stateCode - shipping address input field, state code (Not all locales have state code)
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_city - shipping address input field, city
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_postalCode - shipping address input field, postal code (or zipcode)
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_addressFields_phone - shipping address input field, shopper's phone number
+ * @param {httpparameter} - dwfrm_shipping_shippingAddress_giftMessage - text area for gift message
+ * @param {httpparameter} - csrf_token - Hidden input field CSRF token
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
  */
 server.post(
     'SubmitShipping',

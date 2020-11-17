@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @namespace Address
+ */
+
 var server = require('server');
 
 var URLUtils = require('dw/web/URLUtils');
@@ -28,6 +32,17 @@ function getList(customerNo) {
     return addressBook;
 }
 
+/**
+ * Address-List : Used to show a list of address created by a registered shopper
+ * @name Base/Address-List
+ * @function
+ * @memberof Address
+ * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {middleware} - consentTracking.consent
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
     var actionUrls = {
         deleteActionUrl: URLUtils.url('Address-DeleteAddress').toString(),
@@ -50,6 +65,18 @@ server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, funct
     next();
 });
 
+/**
+ * Address-AddAddress : A link to a page to create a new address
+ * @name Base/Address-AddAddress
+ * @function
+ * @memberof Address
+ * @param {middleware} - csrfProtection.generateToken
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get(
     'AddAddress',
     csrfProtection.generateToken,
@@ -79,6 +106,19 @@ server.get(
     }
 );
 
+/**
+ * Address-EditAddress : A link to edit and existing address
+ * @name Base/Address-EditAddress
+ * @function
+ * @memberof Address
+ * @param {middleware} - csrfProtection.generateToken
+ * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {middleware} - consentTracking.consent
+ * @param {querystringparameter} - addressId - a string used to identify the address record
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get(
     'EditAddress',
     csrfProtection.generateToken,
@@ -123,6 +163,28 @@ server.get(
     }
 );
 
+/**
+ * Address-SaveAddress : Save a new or existing address
+ * @name Base/Address-SaveAddress
+ * @function
+ * @memberof Address
+ * @param {middleware} - csrfProtection.validateAjaxRequest
+ * @param {querystringparameter} - addressId - a string used to identify the address record
+ * @param {httpparameter} - dwfrm_address_addressId - An existing address id (unless new record)
+ * @param {httpparameter} - dwfrm_address_firstName - A person’s first name
+ * @param {httpparameter} - dwfrm_address_lastName - A person’s last name
+ * @param {httpparameter} - dwfrm_address_address1 - A person’s street name
+ * @param {httpparameter} - dwfrm_address_address2 -  A person’s apartment number
+ * @param {httpparameter} - dwfrm_address_country - A person’s country
+ * @param {httpparameter} - dwfrm_address_states_stateCode - A person’s state
+ * @param {httpparameter} - dwfrm_address_city - A person’s city
+ * @param {httpparameter} - dwfrm_address_postalCode - A person’s united states postel code
+ * @param {httpparameter} - dwfrm_address_phone - A person’s phone number
+ * @param {httpparameter} - csrf_token - hidden input field CSRF token
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - post
+ */
 server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
@@ -185,6 +247,18 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
     return next();
 });
 
+/**
+ * Address-DeleteAddress : Delete an existing address
+ * @name Base/Address-DeleteAddress
+ * @function
+ * @memberof Address
+ * @param {middleware} - userLoggedIn.validateLoggedInAjax
+ * @param {querystringparameter} - addressId - a string used to identify the address record
+ * @param {querystringparameter} - isDefault - true if this is the default address. false otherwise
+ * @param {category} - sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - get
+ */
 server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
@@ -233,6 +307,16 @@ server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, re
     return next();
 });
 
+/**
+ * Address-SetDefault : Set an address to be the default address
+ * @name Base/Address-SetDefault
+ * @function
+ * @memberof Address
+ * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {querystringparameter} - addressId - a string used to identify the address record
+ * @param {category} - sensitive
+ * @param {serverfunction} - get
+ */
 server.get('SetDefault', userLoggedIn.validateLoggedIn, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
@@ -257,6 +341,16 @@ server.get('SetDefault', userLoggedIn.validateLoggedIn, function (req, res, next
     next();
 });
 
+/**
+ * Address-Header : The endpoint Address-Header renders an isml
+ * @name Base/Address-Header
+ * @function
+ * @memberof Address
+ * @param {middleware} - server.middleware.include
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get('Header', server.middleware.include, function (req, res, next) {
     if (!req.currentCustomer.profile) {
         res.render('account/header-anon', {});

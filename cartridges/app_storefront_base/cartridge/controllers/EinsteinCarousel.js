@@ -1,10 +1,24 @@
 'use strict';
 
+/**
+ * @namespace EinsteinCarousel
+ */
+
 var server = require('server');
 var Template = require('dw/util/Template');
 var ProductMgr = require('dw/catalog/ProductMgr');
 var HashMap = require('dw/util/HashMap');
 
+/**
+ * EinsteinCarousel-Load : This endpoint is used to populate the model with information needed to display a carousel with product tiles based on einstein recommendations
+ * @name Base/EinsteinCarousel-Load
+ * @function
+ * @memberof EinsteinCarousel
+ * @param {querystringparameter} - limit - a number representing the max number of recommendations that are being request for displaying in the carousel
+ * @param {querystringparameter} - components - an array of objects that represent attributes configured in the BM for this page designer component
+ * @param {category} - non-sensitive
+ * @param {serverfunction} - get
+ */
 server.get('Load', function (req) {
     var newFactory = require('*/cartridge/scripts/factories/product');
     var URLUtils = require('dw/web/URLUtils');

@@ -1,7 +1,19 @@
 'use strict';
 
+/**
+ * @namespace RedirectURL
+ */
+
 var server = require('server');
 
+/**
+ * RedirectURL-Start : The RedirectURL-Start endpoint handles URL redirects
+ * @name Base/RedirectURL-Start
+ * @function
+ * @memberof RedirectURL
+ * @param {category} - non-sensitive
+ * @param {serverfunction} - get
+ */
 server.get('Start', function (req, res, next) {
     var URLRedirectMgr = require('dw/web/URLRedirectMgr');
 
@@ -22,6 +34,15 @@ server.get('Start', function (req, res, next) {
     next();
 });
 
+/**
+ * RedirectURL-Hostname : The RedirectURL-Hostname endpoint handles Hostname-only URL redirects
+ * @name Base/RedirectURL-Hostname
+ * @function
+ * @memberof RedirectURL
+ * @param {querystringparameter} - Location - optional parameter to provide a URL to redirect to
+ * @param {category} - non-sensitive
+ * @param {serverfunction} - get
+ */
 server.get('Hostname', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
 

@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @namespace Checkout
+ */
+
 var server = require('server');
 
 var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
@@ -10,6 +14,18 @@ var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
  * Main entry point for Checkout
  */
 
+  /**
+  * Checkout-Login : The Checkout-Login endpoint will render a checkout landing page that allows the shopper to select checkout as guest or as returning shopper
+  * @name Base/Checkout-Login
+  * @function
+  * @memberof Checkout
+  * @param {middleware} - server.middleware.https
+  * @param {middleware} - consentTracking.consent
+  * @param {middleware} - csrfProtection.generateToken
+  * @param {category} - sensitive
+  * @param {renders} - isml
+  * @param {serverfunction} - get
+  */
 server.get(
     'Login',
     server.middleware.https,
@@ -78,6 +94,19 @@ server.get(
 
 
 // Main entry point for Checkout
+/**
+ * Checkout-Begin : The Checkout-Begin endpoint will render the checkout shipping page for both guest shopper and returning shopper
+ * @name Base/Checkout-Begin
+ * @function
+ * @memberof Checkout
+ * @param {middleware} - server.middleware.https
+ * @param {middleware} - consentTracking.consent
+ * @param {middleware} - csrfProtection.generateToken
+ * @param {querystringparameter} - stage - a flag indicates the checkout stage
+ * @param {category} - sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get(
     'Begin',
     server.middleware.https,

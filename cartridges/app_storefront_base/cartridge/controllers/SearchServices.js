@@ -1,5 +1,9 @@
 'use strict';
 
+/**
+ * @namespace SearchServices
+ */
+
 var server = require('server');
 
 var cache = require('*/cartridge/scripts/middleware/cache');
@@ -8,6 +12,17 @@ var Resource = require('dw/web/Resource');
 
 var preferences = require('*/cartridge/config/preferences.js');
 
+/**
+ * SearchServices-GetSuggestions : The SearchServices-GetSuggestions endpoint is responsible for searching as you type and displaying the suggestions from that search
+ * @name Base/SearchServices-GetSuggestions
+ * @function
+ * @memberof SearchServices
+ * @param {middleware} - cache.applyDefaultCache
+ * @param {querystringparameter} - q - the query string a shopper is searching for
+ * @param {category} - non-sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - get
+ */
 server.get('GetSuggestions', cache.applyDefaultCache, function (req, res, next) {
     var SuggestModel = require('dw/suggest/SuggestModel');
     var CategorySuggestions = require('*/cartridge/models/search/suggestions/category');

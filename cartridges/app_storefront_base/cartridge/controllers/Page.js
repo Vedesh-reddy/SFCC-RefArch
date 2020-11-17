@@ -1,11 +1,27 @@
 'use strict';
 
+/**
+ * @namespace Page
+ */
+
 var server = require('server');
 
 var cache = require('*/cartridge/scripts/middleware/cache');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
 
+/**
+ * Page-Include : This end point is triggered when content assets are embedded within a rendered page ( eg footer content)
+ * @name Base/Page-Include
+ * @function
+ * @memberof Page
+ * @param {middleware} - server.middleware.include
+ * @param {middleware} - cache.applyDefaultCache
+ * @param {querystringparameter} - cid - the id of the content asset to be embeded in a full page
+ * @param {category} - non-sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get(
     'Include',
     server.middleware.include,
@@ -35,6 +51,17 @@ server.get(
     }
 );
 
+/**
+ * Page-IncludeHeaderMenu : This is a local include that includes the navigation in the header
+ * @name Base/Page-IncludeHeaderMenu
+ * @function
+ * @memberof Page
+ * @param {middleware} - server.middleware.include
+ * @param {middleware} - cache.applyDefaultCache
+ * @param {category} - non-sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get(
     'IncludeHeaderMenu',
     server.middleware.include,
@@ -52,6 +79,19 @@ server.get(
     }
 );
 
+/**
+ * Page-SetLocale : This end point is used to change the locale, language and currency of the site, it is not used in the base site, but it is in the base cartridge
+ * @name Base/Page-SetLocale
+ * @function
+ * @memberof Page
+ * @param {querystringparameter} - action - the end point that it should load after changing the locale
+ * @param {querystringparameter} - code - the locale code to switch to
+ * @param {querystringparameter} - currencyCode - the currency code to be assigned to the site
+ * @param {querystringparameter} - queryString - the query string of the current request so that it be reloaded in the new locale (eg pdp)
+ * @param {category} - non-sensitive
+ * @param {returns} - json
+ * @param {serverfunction} - get
+ */
 server.get('SetLocale', function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var Currency = require('dw/util/Currency');
@@ -101,6 +141,16 @@ server.get('SetLocale', function (req, res, next) {
     next();
 });
 
+/**
+ * Page-Locale : The Page-Locale endpoint is used as a remote include that renders the country selector ISML template
+ * @name Base/Page-Locale
+ * @function
+ * @memberof Page
+ * @param {querystringparameter} - mobile - if this value is truthy it will use the mobile version else it will load a more desktop freindly version
+ * @param {category} - non-sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get('Locale', function (req, res, next) {
     var LocaleModel = require('*/cartridge/models/locale');
     var Locale = require('dw/util/Locale');
@@ -120,6 +170,18 @@ server.get('Locale', function (req, res, next) {
     next();
 });
 
+/**
+ * Page-Show : This end point will render a content asset in full storefront page
+ * @name Base/Page-Show
+ * @function
+ * @memberof Page
+ * @param {middleware} - cache.applyDefaultCache
+ * @param {middleware} - consentTracking.consent
+ * @param {querystringparameter} - cid - the id of the content asset to be displayed in a full page
+ * @param {category} - non-sensitive
+ * @param {renders} - isml
+ * @param {serverfunction} - get
+ */
 server.get('Show', cache.applyDefaultCache, consentTracking.consent, function (req, res, next) {
     var ContentMgr = require('dw/content/ContentMgr');
     var Logger = require('dw/system/Logger');
