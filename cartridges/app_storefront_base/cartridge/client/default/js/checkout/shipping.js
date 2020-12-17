@@ -566,6 +566,7 @@ function createNewShipment(url, shipmentData) {
  */
 function selectShippingMethodAjax(url, urlParams, el) {
     $.spinner().start();
+    $('body').trigger('checkout:beforeShippingMethodSelected');
     $.ajax({
         url: url,
         type: 'post',
@@ -590,6 +591,7 @@ function selectShippingMethodAjax(url, urlParams, el) {
                     }
                 );
             }
+            $('body').trigger('checkout:shippingMethodSelected', data);
             $.spinner().stop();
         })
         .fail(function () {

@@ -319,6 +319,9 @@ module.exports = function () {
         $('body > .modal-backdrop').remove();
 
         $.spinner().start();
+
+        $('body').trigger('cart:beforeUpdate');
+
         $.ajax({
             url: url,
             type: 'get',
@@ -358,7 +361,7 @@ module.exports = function () {
                     validateBasket(data.basket);
                 }
 
-                $('body').trigger('cart:update');
+                $('body').trigger('cart:update', data);
 
                 $.spinner().stop();
             },
@@ -389,6 +392,8 @@ module.exports = function () {
 
         $(this).parents('.card').spinner().start();
 
+        $('body').trigger('cart:beforeUpdate');
+
         $.ajax({
             url: url,
             type: 'get',
@@ -403,7 +408,7 @@ module.exports = function () {
                 validateBasket(data);
                 $(this).data('pre-select-qty', quantity);
 
-                $('body').trigger('cart:update');
+                $('body').trigger('cart:update', data);
 
                 $.spinner().stop();
                 if ($(this).parents('.product-info').hasClass('bonus-product-line-item') && $('.cart-page').length) {
@@ -430,6 +435,7 @@ module.exports = function () {
         // url = appendToUrl(url, urlParams);
 
         $('.totals').spinner().start();
+        $('body').trigger('cart:beforeShippingMethodSelected');
         $.ajax({
             url: url,
             type: 'post',
@@ -444,6 +450,8 @@ module.exports = function () {
                     updateApproachingDiscounts(data.approachingDiscounts);
                     validateBasket(data);
                 }
+
+                $('body').trigger('cart:shippingMethodSelected', data);
                 $.spinner().stop();
             },
             error: function (err) {
@@ -702,6 +710,9 @@ module.exports = function () {
         };
 
         $(this).parents('.card').spinner().start();
+
+        $('body').trigger('cart:beforeUpdate');
+
         if (updateProductUrl) {
             $.ajax({
                 url: updateProductUrl,
@@ -724,7 +735,7 @@ module.exports = function () {
 
                     validateBasket(data.cartModel);
 
-                    $('body').trigger('cart:update');
+                    $('body').trigger('cart:update', data);
 
                     $.spinner().stop();
                 },
