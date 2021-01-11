@@ -22,10 +22,10 @@ module.exports = {
                     success: function (data) {
                         $('#uuid-' + data.UUID).remove();
                         if (data.message) {
-                            var toInsert = '<div><h3>' +
+                            var toInsert = '<div class="row justify-content-center h3 no-saved-payments"><p>' +
                             data.message +
-                            '</h3><div>';
-                            $('.paymentInstruments').after(toInsert);
+                            '</p></div>';
+                            $('.paymentInstruments').empty().append(toInsert);
                         }
                     },
                     error: function (err) {

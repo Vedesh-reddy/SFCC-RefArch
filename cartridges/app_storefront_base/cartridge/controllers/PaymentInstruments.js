@@ -133,11 +133,15 @@ server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, funct
     var Resource = require('dw/web/Resource');
     var AccountModel = require('*/cartridge/models/account');
 
+    var paymentInstruments = AccountModel.getCustomerPaymentInstruments(
+        req.currentCustomer.wallet.paymentInstruments
+    );
+
     res.render('account/payment/payment', {
-        paymentInstruments: AccountModel.getCustomerPaymentInstruments(
-            req.currentCustomer.wallet.paymentInstruments
-        ),
+        paymentInstruments: paymentInstruments,
+        noSavedPayments: paymentInstruments.length === 0,
         actionUrl: URLUtils.url('PaymentInstruments-DeletePayment').toString(),
+        addPaymentUrl: URLUtils.url('PaymentInstruments-AddPayment').toString(),
         breadcrumbs: [
             {
                 htmlValue: Resource.msg('global.home', 'common', null),

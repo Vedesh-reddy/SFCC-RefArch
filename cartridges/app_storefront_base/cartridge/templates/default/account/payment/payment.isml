@@ -11,43 +11,12 @@
     <div class="container">
         <!---Breadcrumbs--->
         <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
-        <isif condition="${!pdict.paymentInstruments}">
-            <div class="row justify-content-center">
-                <div class="col">
-                    <h3>${Resource.msg('msg.no.saved.payments','payment',null)}</h3>
-                </div>
+        <isif condition="${pdict.noSavedPayments}">
+            <div class="row justify-content-center h3 no-saved-payments">
+                <p>${Resource.msg('msg.no.saved.payments','payment',null)}</p>
             </div>
         </isif>
-        <!-- Rows for Credit Cards -->
-        <isloop items="${pdict.paymentInstruments}" var="paymentInstrument">
-            <div class="row justify-content-center" id="uuid-${paymentInstrument.UUID}">
-                <div class="col-sm-8 col-md-6">
-                    <div class="card">
-                        <div class="card-header">
-                            <h2 class="pull-left">${paymentInstrument.creditCardHolder}</h2>
-                        </div>
-                        <div class="card-body card-body-positioning">
-                            <div class="card-info-group">
-                                <p>${Resource.msg('label.payment.credit','account',null)} ${paymentInstrument.creditCardType}</p>
-                                <p>${paymentInstrument.maskedCreditCardNumber}</p>
-                                <p>${Resource.msg('label.payment.ending','account',null)} ${paymentInstrument.creditCardExpirationMonth}/${paymentInstrument.creditCardExpirationYear}</p>
-                            </div>
-                            <button
-                                type="button"
-                                class="remove-btn remove-payment btn-light"
-                                data-toggle="modal"
-                                data-target="#deletePaymentModal"
-                                data-id="${paymentInstrument.UUID}"
-                                data-card="${paymentInstrument.maskedCreditCardNumber}"
-                                data-url="${pdict.actionUrl}"
-                                aria-label="${Resource.msg('label.payment.deletepayment','payment',null)}">
-                                &times;
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </isloop>
+        <isinclude template="account/payment/savedPayments"/>
         <div class="row justify-content-center">
             <div class="col-6">
                 <div class="row">
@@ -56,9 +25,11 @@
                           ${Resource.msg('link.profile.backtomyaccount','account',null)}
                         </a>
                     </div>
-                    <div class="col">
-                        <a href="${URLUtils.url('PaymentInstruments-AddPayment')}" class="btn btn-save btn-block btn-primary" aria-label="${Resource.msg('label.payment.addnewpayment','payment',null)}">${Resource.msg('button.addnew','payment',null)}</a>
-                    </div>
+                    <isif condition="${pdict.addPaymentUrl}">
+                        <div class="col">
+                            <a href="${pdict.addPaymentUrl}" class="btn btn-save btn-block btn-primary" aria-label="${Resource.msg('label.payment.addnewpayment','payment',null)}">${Resource.msg('button.addnew','payment',null)}</a>
+                        </div>
+                    </isif>
                 </div>
             </div>
         </div>

@@ -64,7 +64,10 @@ server.get(
                     url: URLUtils.home().toString()
                 }
             ],
-            reportingURLs: reportingURLs
+            reportingURLs: reportingURLs,
+            payment: accountModel.payment,
+            viewSavedPaymentsUrl: URLUtils.url('PaymentInstruments-List').toString(),
+            addPaymentUrl: URLUtils.url('PaymentInstruments-AddPayment').toString()
         });
         next();
     }
