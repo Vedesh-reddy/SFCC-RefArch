@@ -480,6 +480,7 @@ module.exports = function () {
         var $form = $('.promo-code-form');
         $('.promo-code-form .form-control').removeClass('is-invalid');
         $('.coupon-error-message').empty();
+        $('body').trigger('promotion:beforeUpdate');
 
         $.ajax({
             url: $form.attr('action'),
@@ -545,6 +546,7 @@ module.exports = function () {
         $('body > .modal-backdrop').remove();
 
         $.spinner().start();
+        $('body').trigger('promotion:beforeUpdate');
         $.ajax({
             url: url,
             type: 'get',
