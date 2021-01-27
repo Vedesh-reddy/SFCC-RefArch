@@ -67,7 +67,11 @@ header ~ #maincontent .container a:not(.btn-primary, .btn-outline-primary) {
 .navbar .nav-item.dropdown a,
 .dropdown-menu,
 .dropdown-menu a {
-    color: var(--skin-menu-color-1-invert);
+    color: var(--skin-menu-color-1);
+
+    @media (min-width: 769px) { // stylelint-disable-line
+        color: var(--skin-menu-color-1-invert);
+    }
 }
 
 .navbar .nav-item.dropdown,
@@ -105,7 +109,7 @@ header ~ #maincontent .container a:not(.btn-primary, .btn-outline-primary) {
 
 .btn-primary.disabled,
 .btn-primary:disabled {
-    background-color: var(--skin-primary-color);
+    background-color: var(--skin-primary-color-1);
     border-color: var(--skin-primary-color);
     color: var(--skin-primary-color-invert-1);
     opacity: 0.5;
