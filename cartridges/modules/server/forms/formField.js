@@ -48,6 +48,7 @@ function formField(field) {
         }
     });
     Object.defineProperty(result, 'value', {
+        configurable: true,
         get: function () {
             return field.value;
         },
