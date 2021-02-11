@@ -5,7 +5,7 @@
         </div>
         <div class="card-body">
             <form
-                action="${URLUtils.url('Order-CreateAccount', 'ID', pdict.order.orderNumber)}"
+                action="${URLUtils.url('Order-CreateAccount', 'ID', pdict.order.orderNumber, 'UUID', pdict.orderUUID)}"
                 class="checkout-registration"
                 method="POST"
                 name="checkout-register-form" ${pdict.passwordForm.attributes} novalidate>
