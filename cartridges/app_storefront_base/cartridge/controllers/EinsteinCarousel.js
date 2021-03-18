@@ -23,6 +23,8 @@ server.get('Load', function (req) {
     var newFactory = require('*/cartridge/scripts/factories/product');
     var URLUtils = require('dw/web/URLUtils');
     var components = (JSON.parse(req.querystring.components));
+    var recommender = req.querystring.recommender;
+
     var limit = parseInt(req.querystring.limit, 10);
     var successfulrenderings = 0;
     components.forEach(function (component) {
@@ -31,12 +33,14 @@ server.get('Load', function (req) {
         }
         var model = new HashMap();
         model.index = successfulrenderings;
+        model.recommender = recommender;
 
         if (component.model.type === 'product') {
             var product = ProductMgr.getProduct(component.model.id);
             if (!product || !product.online) {
                 return;
             }
+            model.apiProduct = product;
 
             model.product = newFactory.get({ pid: component.model.id, pview: 'tile' });
             model.urls = {

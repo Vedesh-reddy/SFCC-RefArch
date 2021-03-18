@@ -39,7 +39,8 @@ function showControls($parentElement) {
  * @param {jQuery} $parentElement parent element where recommendations will show.
  */
 function fillDomElement(einsteinResponse, $parentElement) {
-    var recommendedProducts = einsteinResponse[$parentElement.data('recommender')].recs;
+    var recommender = $parentElement.data('recommender');
+    var recommendedProducts = einsteinResponse[recommender].recs;
     if (recommendedProducts && recommendedProducts.length > 0) {
         var template = $parentElement.data('template');
         var swatches = $parentElement.data('swatches');
@@ -63,6 +64,7 @@ function fillDomElement(einsteinResponse, $parentElement) {
         var url = new URL($parentElement.data('product-load-url'));
         url.searchParams.append('components', JSON.stringify(components));
         url.searchParams.append('limit', $parentElement.data('limit'));
+        url.searchParams.append('recommender', recommender);
         $.ajax({
             url: url.href,
             type: 'get',
