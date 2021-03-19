@@ -4,7 +4,7 @@
   "description": "Storefront Reference Architecture",
   "main": "index.js",
   "engines": {
-    "node": ">=4.0 <12.0.0"
+    "node": ">=4.0"
   },
   "scripts": {
     "test": "sgmf-scripts --test test/unit/**/*.js",

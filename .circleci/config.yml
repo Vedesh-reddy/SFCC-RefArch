@@ -6,7 +6,7 @@ jobs:
         working_directory: ~/build_only
         executor:
             name: node/default
-            tag: '11.15'
+            tag: '12.21'
         steps:
             - checkout
             - run: npm install
