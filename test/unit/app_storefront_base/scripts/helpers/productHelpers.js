@@ -20,6 +20,8 @@ var categoryMock = {
     }
 };
 
+var stubSearchModel = sinon.stub();
+
 describe('Helpers - Product', function () {
     var productHelpers = proxyquire(
         '../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/productHelpers', {
@@ -53,6 +55,7 @@ describe('Helpers - Product', function () {
             'dw/catalog/CatalogMgr': {
                 getCategory: stubCategoryMock
             },
+            'dw/catalog/ProductSearchModel': stubSearchModel,
             'dw/catalog/ProductMgr': {
                 getProduct: stubGetProduct
             },
@@ -560,6 +563,31 @@ describe('Helpers - Product', function () {
                 }
             ];
             assert.deepEqual(options, expectedOptions);
+        });
+    });
+
+    describe('getAllBreadcrumbs() function', function () {
+        afterEach(function () {
+            stubSearchModel.reset();
+        });
+
+        it('should return the search hit from the search', function () {
+            stubSearchModel.returns({
+                setSearchPhrase: function () {},
+                search: function () {},
+                getProductSearchHit: function () { return 'hit'; },
+                getProductSearchHits: function () {
+                    return {
+                        next: function () {
+                            return { firstRepresentedProductID: 'someID' };
+                        }
+                    };
+                },
+                count: 1
+            });
+
+            var result = productHelpers.getProductSearchHit({ ID: 'someID' });
+            assert.equal(result, 'hit');
         });
     });
 });

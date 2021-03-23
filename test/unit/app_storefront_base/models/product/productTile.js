@@ -2,22 +2,6 @@
 
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
-var sinon = require('sinon');
-
-var stubSearchModel = sinon.stub();
-stubSearchModel.returns({
-    setSearchPhrase: function () {},
-    search: function () {},
-    getProductSearchHit: function () {},
-    getProductSearchHits: function () {
-        return {
-            next: function () {
-                return { firstRepresentedProductID: 'someID' };
-            }
-        };
-    },
-    count: 1
-});
 
 var object = {};
 
@@ -43,7 +27,9 @@ describe('Product Tile Model', function () {
         '*/cartridge/scripts/util/promotionCache': {
             promotions: []
         },
-        'dw/catalog/ProductSearchModel': stubSearchModel
+        '*/cartridge/scripts/helpers/productHelpers': {
+            getProductSearchHit: function () {}
+        }
     });
 
     afterEach(function () {
@@ -101,38 +87,12 @@ describe('Product Tile Model', function () {
     });
 
     it('should call searchVariationAttributes for product tile', function () {
-        stubSearchModel.returns({
-            setSearchPhrase: function () {},
-            search: function () {},
-            getProductSearchHit: function () { return {}; },
-            getProductSearchHits: function () {
-                return {
-                    next: function () {
-                        return { firstRepresentedProductID: 'someID' };
-                    }
-                };
-            },
-            count: 0
-        });
         productTile(object, productMock);
 
         assert.isTrue(decorators.stubs.stubSearchVariationAttributes.calledOnce);
     });
 
     it('should call searchVariationAttributes for product tile', function () {
-        stubSearchModel.returns({
-            setSearchPhrase: function () {},
-            search: function () {},
-            getProductSearchHit: function () {},
-            getProductSearchHits: function () {
-                return {
-                    next: function () {
-                        return { firstRepresentedProductID: 'someOtherID' };
-                    }
-                };
-            },
-            count: 0
-        });
         productTile(object, productMock);
 
         assert.isTrue(decorators.stubs.stubSearchVariationAttributes.calledOnce);

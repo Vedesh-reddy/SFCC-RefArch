@@ -5,6 +5,28 @@ var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../../mocks/dw.util.Collection');
 var sinon = require('sinon');
 
+var stubPriceModel = sinon.stub();
+
+var pricModelMock = {
+    priceInfo: {
+        priceBook: { ID: 'somePriceBook' }
+    }
+};
+
+var searchHitMock = {
+    minPrice: { value: 100, available: true },
+    maxPrice: { value: 100, available: true },
+    firstRepresentedProduct: {
+        ID: 'someProduct',
+        getPriceModel: stubPriceModel
+    },
+    discountedPromotionIDs: ['someID']
+};
+
+function getSearchHit() {
+    return searchHitMock;
+}
+
 
 describe('Helpers - Pricing', function () {
     var templateStub = sinon.stub();
@@ -23,7 +45,17 @@ describe('Helpers - Pricing', function () {
         },
         'dw/value/Money': function () {},
         'dw/util/Template': templateStub,
-        '*/cartridge/scripts/util/collections': collections
+        '*/cartridge/scripts/util/collections': collections,
+        'dw/catalog/PriceBookMgr': {
+            setApplicablePriceBooks: function () {},
+            getApplicablePriceBooks: function () {}
+        },
+        'dw/campaign/PromotionMgr': {
+            getPromotion: function () {
+                return {};
+            }
+        },
+        'dw/util/ArrayList': ArrayList
     });
 
     describe('getHtmlContext', function () {
@@ -83,6 +115,29 @@ describe('Helpers - Pricing', function () {
             var templatePathOverride = '/custom/path';
             priceHelper.renderHtml(context, templatePathOverride);
             assert.isTrue(templateStub.calledWith(templatePathOverride));
+        });
+    });
+
+    describe('getPromotions', function () {
+        it('should return 1 promotions if matching', function () {
+            var promotions = priceHelper.getPromotions({ discountedPromotionIDs: 'matchingID' }, ['matchingID']);
+            assert.equal(promotions.getLength(), 1);
+        });
+
+        it('should return 0 promotions if not matching', function () {
+            var promotions = priceHelper.getPromotions({ discountedPromotionIDs: 'matchingID' }, ['notMatchingID']);
+            assert.equal(promotions.getLength(), 0);
+        });
+    });
+
+    describe('getListPrices', function () {
+        it('should return the list price from the search hit', function () {
+            stubPriceModel.returns(pricModelMock);
+            var listPrice = priceHelper.getListPrices(searchHitMock, getSearchHit);
+            assert.deepEqual({
+                minPrice: searchHitMock.minPrice,
+                maxPrice: searchHitMock.maxPrice
+            }, listPrice);
         });
     });
 });

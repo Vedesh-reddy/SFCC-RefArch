@@ -430,6 +430,32 @@ function getPageDesignerProductPage(reqProduct) {
     };
 }
 
+/**
+ * Get product search hit for a given product
+ * @param {dw.catalog.Product} apiProduct - Product instance returned from the API
+ * @returns {dw.catalog.ProductSearchHit} - product search hit for a given product
+ */
+function getProductSearchHit(apiProduct) {
+    var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+    var searchModel = new ProductSearchModel();
+    searchModel.setSearchPhrase(apiProduct.ID);
+    searchModel.search();
+
+    if (searchModel.count === 0) {
+        searchModel.setSearchPhrase(apiProduct.ID.replace(/-/g, ' '));
+        searchModel.search();
+    }
+
+    var hit = searchModel.getProductSearchHit(apiProduct);
+    if (!hit) {
+        var tempHit = searchModel.getProductSearchHits().next();
+        if (tempHit.firstRepresentedProductID === apiProduct.ID) {
+            hit = tempHit;
+        }
+    }
+    return hit;
+}
+
 module.exports = {
     getOptionValues: getOptionValues,
     getOptions: getOptions,
@@ -444,5 +470,6 @@ module.exports = {
     showProductPage: showProductPage,
     getAllBreadcrumbs: getAllBreadcrumbs,
     getResources: getResources,
-    getPageDesignerProductPage: getPageDesignerProductPage
+    getPageDesignerProductPage: getPageDesignerProductPage,
+    getProductSearchHit: getProductSearchHit
 };

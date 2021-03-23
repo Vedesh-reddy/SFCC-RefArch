@@ -23,10 +23,18 @@ var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
  */
 server.get('Start', consentTracking.consent, cache.applyDefaultCache, function (req, res, next) {
     var Site = require('dw/system/Site');
+    var PageMgr = require('dw/experience/PageMgr');
     var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
 
     pageMetaHelper.setPageMetaTags(req.pageMetaData, Site.current);
-    res.render('/home/homePage');
+
+    var page = PageMgr.getPage('homepage');
+
+    if (page && page.isVisible()) {
+        res.page('homepage');
+    } else {
+        res.render('home/homePage');
+    }
     next();
 }, pageMetaData.computedPageMetaData);
 

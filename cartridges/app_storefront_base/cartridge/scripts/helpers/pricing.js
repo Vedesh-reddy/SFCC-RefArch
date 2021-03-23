@@ -73,9 +73,88 @@ function renderHtml(context, templatePath) {
     return html.text;
 }
 
+/**
+ * Retrieve promotions that apply to current product
+ * @param {dw.catalog.ProductSearchHit} searchHit - current product returned by Search API.
+ * @param {Array<string>} activePromotions - array of ids of currently active promotions
+ * @return {Array<Promotion>} - Array of promotions for current product
+ */
+function getPromotions(searchHit, activePromotions) {
+    var PromotionMgr = require('dw/campaign/PromotionMgr');
+    var ArrayList = require('dw/util/ArrayList');
+
+    var productPromotionIds = searchHit.discountedPromotionIDs;
+
+    var promotions = new ArrayList();
+    activePromotions.forEach(function (promoId) {
+        var index = productPromotionIds.indexOf(promoId);
+        if (index > -1) {
+            promotions.add(PromotionMgr.getPromotion(productPromotionIds[index]));
+        }
+    });
+
+    return promotions;
+}
+
+/**
+ * Get list price for a given product
+ * @param {dw.catalog.ProductSearchHit} hit - current product returned by Search API.
+ * @param {function} getSearchHit - function to find a product using Search API.
+ *
+ * @returns {Object} - price for a product
+ */
+function getListPrices(hit, getSearchHit) {
+    var PriceBookMgr = require('dw/catalog/PriceBookMgr');
+
+    var priceModel = hit.firstRepresentedProduct.getPriceModel();
+    if (!priceModel.priceInfo) {
+        return {};
+    }
+    var rootPriceBook = getRootPriceBook(priceModel.priceInfo.priceBook);
+    if (rootPriceBook.ID === priceModel.priceInfo.priceBook.ID) {
+        return { minPrice: hit.minPrice, maxPrice: hit.maxPrice };
+    }
+    var searchHit;
+    var currentApplicablePriceBooks = PriceBookMgr.getApplicablePriceBooks();
+    try {
+        PriceBookMgr.setApplicablePriceBooks(rootPriceBook);
+        searchHit = getSearchHit(hit.product);
+    } catch (e) {
+        searchHit = hit;
+    } finally {
+        // Clears price book ID's stored to the session.
+        // When switching locales, there is nothing that clears the price book ids stored in the
+        // session, so subsequent searches will continue to use the ids from the originally set
+        // price books which have the wrong currency.
+        if (currentApplicablePriceBooks && currentApplicablePriceBooks.length) {
+            PriceBookMgr.setApplicablePriceBooks(currentApplicablePriceBooks.toArray());
+        } else {
+            PriceBookMgr.setApplicablePriceBooks();
+        }
+    }
+
+    if (searchHit) {
+        if (searchHit.minPrice.available && searchHit.maxPrice.available) {
+            return {
+                minPrice: searchHit.minPrice,
+                maxPrice: searchHit.maxPrice
+            };
+        }
+
+        return {
+            minPrice: hit.minPrice,
+            maxPrice: hit.maxPrice
+        };
+    }
+
+    return {};
+}
+
 module.exports = {
     getHtmlContext: getHtmlContext,
     getRootPriceBook: getRootPriceBook,
     renderHtml: renderHtml,
-    getPromotionPrice: getPromotionPrice
+    getPromotionPrice: getPromotionPrice,
+    getPromotions: getPromotions,
+    getListPrices: getListPrices
 };
