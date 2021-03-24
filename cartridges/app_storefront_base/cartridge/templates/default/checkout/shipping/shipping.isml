@@ -1,9 +1,15 @@
-<div class="shipping-section">
+<div class="card ghost shipping">
+    <div class="card-header">
+        <h2 class="card-header-custom">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h2>
+    </div>
+</div>
+
+<div class="card shipping-section">
     <div class="single-shipping">
         <isset name="shippingModel" value="${pdict.order.shipping[0]}" scope="page" />
         <isset name="shipmentLoopState" value="${null}" scope="page" />
         <isset name="lineItem" value="${null}" scope="page" />
-        <div class="card" data-shipment-uuid="${shippingModel.UUID}">
+        <div data-shipment-uuid="${shippingModel.UUID}">
             <div class="card-header">
                 <h2 class="card-header-custom">${Resource.msg('heading.checkout.shipping', 'checkout', null)}</h2>
             </div>

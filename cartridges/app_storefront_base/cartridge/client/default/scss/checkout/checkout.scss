@@ -23,6 +23,12 @@ $checkout-font-weight: 600;
     font-size: 0.875em;
 }
 
+.customer-information-block .btn-link {
+    color: #{var(--skin-link-color-2)};
+    padding: 0;
+    vertical-align: baseline;
+}
+
 .edit-button,
 .btn-show-details,
 .btn-add-new {
@@ -114,8 +120,47 @@ span.ship-to-city-st-zip {
         }
     }
 
+    // Customer ------------------------------
+    &[data-checkout-stage=customer] {
+        .card.ghost.customer {
+            display: none;
+        }
+
+        .card.customer-summary {
+            display: none;
+        }
+
+        .card.shipping-section {
+            display: none;
+        }
+
+        .card.payment-form {
+            display: none;
+        }
+
+        button.submit-customer {
+            display: block;
+        }
+    }
+
     // Shipping ------------------------------
     &[data-checkout-stage=shipping] {
+        .card.customer-section {
+            display: none;
+        }
+
+        button.submit-customer {
+            display: none;
+        }
+
+        .card.ghost.customer {
+            display: none;
+        }
+
+        .card.ghost {
+            display: none;
+        }
+
         &.multi-ship .order-product-summary {
             display: none;
         }
@@ -163,6 +208,11 @@ span.ship-to-city-st-zip {
 
     // Payment -------------------------------
     &[data-checkout-stage=payment] {
+        button.submit-customer {
+            display: none;
+        }
+
+        .customer-section,
         .shipping-section,
         .card.ghost {
             display: none;
@@ -219,6 +269,8 @@ span.ship-to-city-st-zip {
 
     // Place Order -----------------------------
     &[data-checkout-stage=placeOrder] {
+        button.submit-customer,
+        .customer-section,
         .shipping-section,
         .card.payment-form,
         .card.ghost {
@@ -238,6 +290,7 @@ span.ship-to-city-st-zip {
     &[data-checkout-stage=submitted] {
         .shipping-form,
         .card.payment-form,
+        button.submit-customer,
         .card.ghost {
             display: none;
         }

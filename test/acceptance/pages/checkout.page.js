@@ -3,9 +3,10 @@ const I = actor();
 module.exports = {
     locators: {
         lineItemName: 'div.line-item-name',
-        checkoutAsGuestBtn: '.btn.btn-block.btn-primary.checkout-as-guest',
+        checkoutAsGuestBtn: '.btn.btn-primary.btn-block.submit-customer',
         checkoutAsRegisteredBtn: '.btn.btn-block.btn-primary',
-        email: '#login-form-email',
+        emailGuest: '#email-guest',
+        emailRegistered: '#email',
         password: '#login-form-password',
         fName: '.form-control.shippingFirstName',
         lName: '.form-control.shippingLastName',
@@ -16,7 +17,6 @@ module.exports = {
         zip: '.form-control.shippingZipCode',
         phone: '.form-control.shippingPhoneNumber',
         toPayment: '.btn.btn-primary.btn-block.submit-shipping',
-        payEmail: '#email.form-control.email',
         payPhone: '#phoneNumber',
         payCard: '#cardNumber',
         payExpMonth: '#expirationMonth',
@@ -44,6 +44,9 @@ module.exports = {
         homeLink: 'a>img.hidden-md-down',
         checkoutStage: '.data-checkout-stage'
     },
+    fillPersonalDataGuest(email) {
+        I.fillField(this.locators.emailGuest, email);
+    },
     fillShippingInfo(fName, lName, address1, country, state, city, zipcode, phone) {
         I.scrollTo(this.locators.fName);
         I.fillField(this.locators.fName, fName);
@@ -58,7 +61,7 @@ module.exports = {
         I.fillField(this.locators.phone, phone);
         I.fillField(this.locators.zip, zipcode);
     },
-    fillPaymentInfoGuest(fName, lName, address1, city, stateAbr, zipcode, email, phone, ccNum, expMonth, expYear, ccSecCode) {
+    fillPaymentInfoGuest(fName, lName, address1, city, stateAbr, zipcode, phone, ccNum, expMonth, expYear, ccSecCode) {
         I.waitForElement(this.locators.checkout_prefilledShippingInfo);
         I.see(fName, this.locators.checkout_prefilledShippingInfo);
         I.see(lName, this.locators.checkout_prefilledShippingInfo);
@@ -66,7 +69,6 @@ module.exports = {
         I.see(city, this.locators.checkout_prefilledShippingInfo);
         I.see(stateAbr, this.locators.checkout_prefilledShippingInfo);
         I.see(zipcode, this.locators.checkout_prefilledShippingInfo);
-        I.fillField(this.locators.payEmail, email);
         I.fillField(this.locators.payPhone, phone);
         I.fillField(this.locators.payCard, ccNum);
         I.waitForElement(this.locators.payExpMonth, expMonth);
@@ -76,8 +78,7 @@ module.exports = {
         I.waitForElement(this.locators.paySecCode);
         I.fillField(this.locators.paySecCode, ccSecCode);
     },
-    fillPaymentInfoRegistered(email, phone, ccSecCode) {
-        I.fillField(this.locators.payEmail, email);
+    fillPaymentInfoRegistered(phone, ccSecCode) {
         I.fillField(this.locators.payPhone, phone);
         I.waitForElement(this.locators.paySecCodeSaved);
         I.fillField(this.locators.paySecCodeSaved, ccSecCode);
@@ -116,7 +117,7 @@ module.exports = {
         I.waitForElement(this.locators.billingConfirmation);
         I.waitForText(fName + lName + address1);
     },
-    verifyCheckoutInfo(fName, lName, add1, city, zip, phone, email, ccNum, ccExpDate, quantity,
+    verifyCheckoutInfo(fName, lName, add1, city, zip, phone, ccNum, ccExpDate, quantity,
         totalItemPrice, shipping, tax, estimatedTotal) {
         // verify shipping address is correct
         I.scrollTo(this.locators.checkout_shippingSection);
@@ -134,7 +135,6 @@ module.exports = {
         I.see(add1, this.locators.checkout_paymentSection);
         I.see(city, this.locators.checkout_paymentSection);
         I.see(zip, this.locators.checkout_paymentSection);
-        I.see(email, this.locators.checkout_paymentSection);
         I.see(phone, this.locators.checkout_paymentSection);
 
         // verify payment info is correct

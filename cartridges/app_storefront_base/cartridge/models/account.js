@@ -2,6 +2,7 @@
 
 var AddressModel = require('*/cartridge/models/address');
 var URLUtils = require('dw/web/URLUtils');
+var Customer = require('dw/customer/Customer');
 
 /**
  * Creates a plain object that contains profile information
@@ -15,7 +16,7 @@ function getProfile(profile) {
             firstName: profile.firstName,
             lastName: profile.lastName,
             email: profile.email,
-            phone: profile.phone,
+            phone: Object.prototype.hasOwnProperty.call(profile, 'phone') ? profile.phone : profile.phoneHome,
             password: '********'
         };
     } else {
@@ -119,13 +120,21 @@ function account(currentCustomer, addressModel, orderModel) {
     this.addresses = getAddresses(currentCustomer.addressBook);
     this.preferredAddress = addressModel || getPreferredAddress(currentCustomer.addressBook);
     this.orderHistory = orderModel;
-    this.payment = getPayment(currentCustomer.wallet);
-    this.registeredUser = currentCustomer.raw.authenticated && currentCustomer.raw.registered;
-    this.isExternallyAuthenticated = currentCustomer.raw.externallyAuthenticated;
-    this.customerPaymentInstruments = currentCustomer.wallet
+    this.payment = getPayment(currentCustomer instanceof Customer ? currentCustomer.profile.wallet : currentCustomer.wallet);
+    this.registeredUser = currentCustomer instanceof Customer ? (currentCustomer.authenticated && currentCustomer.registered) : (currentCustomer.raw.authenticated && currentCustomer.raw.registered);
+    this.isExternallyAuthenticated = currentCustomer instanceof Customer ? currentCustomer.externallyAuthenticated : currentCustomer.raw.externallyAuthenticated;
+
+    if (currentCustomer instanceof Customer) {
+        this.customerPaymentInstruments = currentCustomer.profile.wallet
+        && currentCustomer.profile.wallet.paymentInstruments
+        ? getCustomerPaymentInstruments(currentCustomer.profile.wallet.paymentInstruments.toArray())
+        : null;
+    } else {
+        this.customerPaymentInstruments = currentCustomer.wallet
         && currentCustomer.wallet.paymentInstruments
         ? getCustomerPaymentInstruments(currentCustomer.wallet.paymentInstruments)
         : null;
+    }
 }
 
 account.getCustomerPaymentInstruments = getCustomerPaymentInstruments;

@@ -6,6 +6,8 @@ var sinon = require('sinon');
 
 var urlStub = sinon.stub();
 var getPrivacyCacheStub = sinon.stub();
+var mockedAuthStatus = 'AUTH_OK';
+var authErrorMsg = 'NOT_EMPTY_STRING';
 
 describe('accountHelpers', function () {
     var accoutHelpers = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/accountHelpers', {
@@ -15,6 +17,22 @@ describe('accountHelpers', function () {
         '*/cartridge/config/oAuthRenentryRedirectEndpoints': {
             1: 'Account-Show',
             2: 'Checkout-Begin'
+        },
+        'dw/system/Transaction': {
+            wrap: function (callback) {
+                return callback();
+            }
+        },
+        'dw/customer/CustomerMgr': {
+            authenticateCustomer: function () {
+                return { status: mockedAuthStatus, customer: { }, loginCustomer: function () {} };
+            },
+            loginCustomer: function () {}
+        },
+        'dw/web/Resource': {
+            msg: function () {
+                return authErrorMsg;
+            }
         }
     });
 
@@ -84,5 +102,27 @@ describe('accountHelpers', function () {
         assert.isTrue(urlStub.calledOnce);
         assert.isTrue(urlStub.calledWith('Account-Show', 'registration', 'submitted', 'args', 'args'));
         assert.equal(result, 'string url');
+    });
+
+    it('should return no error on sucessfully authenticated customer', function () {
+        getPrivacyCacheStub.returns('args');
+        var email = 'ok@salesforce.com';
+        var password = '122345';
+        var rememberMe = false;
+
+        var result = accoutHelpers.loginCustomer(email, password, rememberMe);
+        assert.isFalse(result.error);
+    });
+
+    it('should return an error on not-sucessfully authenticated customer and an error message', function () {
+        getPrivacyCacheStub.returns('args');
+        var email = 'ok@salesforce.com';
+        var password = '122345';
+        var rememberMe = false;
+        mockedAuthStatus = 'AUTH_NOT_OK';
+
+        var result = accoutHelpers.loginCustomer(email, password, rememberMe);
+        assert.isTrue(result.error);
+        assert.equal(result.errorMessage, authErrorMsg);
     });
 });

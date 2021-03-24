@@ -128,9 +128,55 @@ function sendAccountEditedEmail(profile) {
     emailHelpers.sendEmail(emailObj, 'account/components/accountEditedEmail', userObject);
 }
 
+/**
+ *
+ * @param {string} email - customer email address
+ * @param {string} password - customer password
+ * @param {boolean} rememberMe - remember me setting
+ * @returns {Object} customerLoginResult
+ */
+function loginCustomer(email, password, rememberMe) {
+    var Transaction = require('dw/system/Transaction');
+    var CustomerMgr = require('dw/customer/CustomerMgr');
+    var Resource = require('dw/web/Resource');
+    return Transaction.wrap(function () {
+        var authenticateCustomerResult = CustomerMgr.authenticateCustomer(email, password);
+
+        if (authenticateCustomerResult.status !== 'AUTH_OK') {
+            var errorCodes = {
+                ERROR_CUSTOMER_DISABLED: 'error.message.account.disabled',
+                ERROR_CUSTOMER_LOCKED: 'error.message.account.locked',
+                ERROR_CUSTOMER_NOT_FOUND: 'error.message.login.form',
+                ERROR_PASSWORD_EXPIRED: 'error.message.password.expired',
+                ERROR_PASSWORD_MISMATCH: 'error.message.password.mismatch',
+                ERROR_UNKNOWN: 'error.message.error.unknown',
+                default: 'error.message.login.form'
+            };
+
+            var errorMessageKey = errorCodes[authenticateCustomerResult.status] || errorCodes.default;
+            var errorMessage = Resource.msg(errorMessageKey, 'login', null);
+
+            return {
+                error: true,
+                errorMessage: errorMessage,
+                status: authenticateCustomerResult.status,
+                authenticatedCustomer: null
+            };
+        }
+
+        return {
+            error: false,
+            errorMessage: null,
+            status: authenticateCustomerResult.status,
+            authenticatedCustomer: CustomerMgr.loginCustomer(authenticateCustomerResult, rememberMe)
+        };
+    });
+}
+
 module.exports = {
     getLoginRedirectURL: getLoginRedirectURL,
     sendCreateAccountEmail: sendCreateAccountEmail,
     sendPasswordResetEmail: sendPasswordResetEmail,
-    sendAccountEditedEmail: sendAccountEditedEmail
+    sendAccountEditedEmail: sendAccountEditedEmail,
+    loginCustomer: loginCustomer
 };

@@ -131,11 +131,14 @@ var orderModel = {
     productQuantityTotal: 3
 };
 
+function MockCustomer() {}
+
 describe('account', function () {
     var AddressModel = require('../../../mocks/models/address');
     var AccountModel = proxyquire('../../../../cartridges/app_storefront_base/cartridge/models/account', {
         '*/cartridge/models/address': AddressModel,
-        'dw/web/URLUtils': { staticURL: function () { return 'some URL'; } }
+        'dw/web/URLUtils': { staticURL: function () { return 'some URL'; } },
+        'dw/customer/Customer': MockCustomer
     });
 
     it('should receive customer profile', function () {

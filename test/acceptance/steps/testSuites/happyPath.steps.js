@@ -18,6 +18,7 @@ Then('shopper selects checkout from cart', () => {
 
 Then('shopper selects checkout as guest', () => {
     I.waitForElement(checkoutPage.locators.checkoutAsGuestBtn);
+    checkoutPage.fillPersonalDataGuest(data.checkout.email);
     I.click(checkoutPage.locators.checkoutAsGuestBtn);
 });
 
@@ -39,20 +40,19 @@ Then('shopper proceeds to payment section', () => {
 
 Then('shopper fills out billing information', () => {
     checkoutPage.fillPaymentInfoGuest(data.user1.fName, data.user1.lName, data.user1.address1,
-        data.user1.city, data.user1.stateAbr, data.user1.zip, data.checkout.email, data.checkout.phone, data.checkout.ccNum,
+        data.user1.city, data.user1.stateAbr, data.user1.zip, data.checkout.phone, data.checkout.ccNum,
         data.checkout.expMonth, data.checkout.expYear, data.checkout.ccSecCode);
 });
 
 Then('shopper fills out registered user billing information', () => {
-    checkoutPage.fillPaymentInfoRegistered(data.checkout.email, data.checkout.phone, data.checkout.ccSecCode);
+    checkoutPage.fillPaymentInfoRegistered(data.checkout.phone, data.checkout.ccSecCode);
 });
 
 Then('shopper places order', () => {
     I.waitForElement(checkoutPage.locators.placeOrder);
     I.click(checkoutPage.locators.placeOrder);
     checkoutPage.verifyCheckoutInfo(data.checkout.fName, data.checkout.lName, data.checkout.address1,
-        data.checkout.city, data.checkout.zip, data.checkout.phone,
-        data.checkout.email, data.checkout.ccNum, data.checkout.ccExpDate, data.product.quantity,
+        data.checkout.city, data.checkout.zip, data.checkout.phone, data.checkout.ccNum, data.checkout.ccExpDate, data.product.quantity,
         data.product.totalItemPrice, data.product.shipping, data.product.tax, data.product.estimatedTotal);
     I.waitForElement(checkoutPage.locators.confirmOrder);
     I.click(checkoutPage.locators.confirmOrder);

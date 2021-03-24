@@ -26,6 +26,18 @@ var basketCalculationHelpers = require('*/cartridge/scripts/helpers/basketCalcul
 // static functions needed for Checkout Controller logic
 
 /**
+ * Prepares the Customer form
+ * @returns {Object} processed Customer form object
+ */
+function prepareCustomerForm() {
+    var customerForm = server.forms.getForm('coCustomer');
+
+    customerForm.clear();
+
+    return customerForm;
+}
+
+/**
  * Prepares the Shipping form
  * @returns {Object} processed Shipping form object
  */
@@ -332,7 +344,15 @@ function getProductLineItem(currentBasket, pliUUID) {
 /**
  * Validate billing form fields
  * @param {Object} form - the form object with pre-validated form fields
- * @param {Array} fields - the fields to validate
+ * @returns {Object} the names of the invalid form fields
+ */
+function validateCustomerForm(form) {
+    return validateFields(form);
+}
+
+/**
+ * Validate billing form fields
+ * @param {Object} form - the form object with pre-validated form fields
  * @returns {Object} the names of the invalid form fields
  */
 function validateBillingForm(form) {
@@ -687,6 +707,7 @@ module.exports = {
     ensureNoEmptyShipments: ensureNoEmptyShipments,
     getProductLineItem: getProductLineItem,
     isShippingAddressInitialized: isShippingAddressInitialized,
+    prepareCustomerForm: prepareCustomerForm,
     prepareShippingForm: prepareShippingForm,
     prepareBillingForm: prepareBillingForm,
     copyCustomerAddressToShipment: copyCustomerAddressToShipment,
@@ -694,6 +715,7 @@ module.exports = {
     copyShippingAddressToShipment: copyShippingAddressToShipment,
     copyBillingAddressToBasket: copyBillingAddressToBasket,
     validateFields: validateFields,
+    validateCustomerForm: validateCustomerForm,
     validateShippingForm: validateShippingForm,
     validateBillingForm: validateBillingForm,
     validatePayment: validatePayment,

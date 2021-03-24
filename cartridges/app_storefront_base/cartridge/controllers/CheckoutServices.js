@@ -60,6 +60,113 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     return next();
 });
 
+
+/**
+ *  Handle Ajax customer form submit
+ */
+server.post(
+    'SubmitCustomer',
+    server.middleware.https,
+    csrfProtection.validateAjaxRequest,
+    function (req, res, next) {
+        var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+        var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+        var Resource = require('dw/web/Resource');
+        var viewData = {};
+        var customerForm = server.forms.getForm('coCustomer');
+        var formFieldErrors = [];
+        var customerFormErrors = COHelpers.validateCustomerForm(customerForm);
+        if (Object.keys(customerFormErrors).length) {
+            formFieldErrors.push(customerFormErrors);
+        } else {
+            viewData.customer = {
+                email: { value: customerForm.email.value }
+            };
+        }
+
+        if (formFieldErrors.length) {
+            customerForm.clear();
+            // respond with form data and errors
+            res.json({
+                form: customerForm,
+                fieldErrors: formFieldErrors,
+                serverErrors: [],
+                error: true
+            });
+            return next();
+        }
+
+        viewData.customerLoginResult = null;
+
+        if (customerForm.password && customerForm.password.value) {
+            var customerLoginResult = accountHelpers.loginCustomer(customerForm.email.value, customerForm.password.value, false);
+            if (customerLoginResult.error) {
+                res.json({
+                    form: customerForm,
+                    fieldErrors: formFieldErrors,
+                    serverErrors: [Resource.msg('error.message.login.wrong', 'checkout', null)],
+                    errorMessage: Resource.msg('error.message.login.wrong', 'checkout', null),
+                    error: true
+                });
+                return next();
+            }
+            viewData.customerLoginResult = customerLoginResult;
+            var apiCsrfProtection = require('dw/web/CSRFProtection');
+            // on login the session transforms so we need to retrieve new tokens
+            viewData.csrfToken = apiCsrfProtection.generateToken();
+        }
+
+        res.setViewData(viewData);
+
+        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var URLUtils = require('dw/web/URLUtils');
+            var BasketMgr = require('dw/order/BasketMgr');
+            var Locale = require('dw/util/Locale');
+            var OrderModel = require('*/cartridge/models/order');
+            var customerData = res.getViewData();
+            var currentBasket = BasketMgr.getCurrentBasket();
+            if (!currentBasket) {
+                res.json({
+                    error: true,
+                    cartError: true,
+                    fieldErrors: [],
+                    serverErrors: [],
+                    redirectUrl: URLUtils.url('Cart-Show').toString()
+                });
+                return;
+            }
+
+            var AccountModel = require('*/cartridge/models/account');
+            var accountModel = customerData.customerLoginResult ? new AccountModel(customerData.customerLoginResult.authenticatedCustomer) : new AccountModel(req.currentCustomer);
+            var Transaction = require('dw/system/Transaction');
+            Transaction.wrap(function () {
+                currentBasket.setCustomerEmail(customerData.customer.email.value);
+            });
+
+            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+            if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
+                req.session.privacyCache.set('usingMultiShipping', false);
+                usingMultiShipping = false;
+            }
+
+            var currentLocale = Locale.getLocale(req.locale.id);
+            var basketModel = new OrderModel(
+                currentBasket,
+                { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
+            );
+
+            res.json({
+                customer: accountModel,
+                error: false,
+                order: basketModel,
+                csrfToken: customerData.csrfToken
+            });
+        });
+        return next();
+    }
+);
+
+
 /**
  *  Handle Ajax payment (and billing) form submit
  */
@@ -132,10 +239,6 @@ server.post(
         if (Object.keys(contactInfoFormErrors).length) {
             formFieldErrors.push(contactInfoFormErrors);
         } else {
-            viewData.email = {
-                value: paymentForm.contactInfoFields.email.value
-            };
-
             viewData.phone = { value: paymentForm.contactInfoFields.phone.value };
         }
 
@@ -246,10 +349,9 @@ server.post(
                     billingAddress.setStateCode(billingData.address.stateCode.value);
                 }
                 billingAddress.setCountryCode(billingData.address.countryCode.value);
-
                 billingAddress.setPhone(billingData.phone.value);
-                currentBasket.setCustomerEmail(billingData.email.value);
             });
+
 
             // if there is no selected payment option and balance is greater than zero
             if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
@@ -342,7 +444,7 @@ server.post(
                 usingMultiShipping = false;
             }
 
-            hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, paymentForm.contactInfoFields.email.htmlValue], function () {});
+            hooksHelper('app.customer.subscription', 'subscribeTo', [paymentForm.subscribe.checked, currentBasket.customerEmail], function () {});
 
             var currentLocale = Locale.getLocale(req.locale.id);
 
