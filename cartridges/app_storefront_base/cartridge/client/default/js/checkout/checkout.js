@@ -356,18 +356,28 @@ var scrollAnimate = require('../components/scrollAnimate');
                                     defer.reject(data);
                                 }
                             } else {
-                                var continueUrl = data.continueUrl;
-                                var urlParams = {
-                                    ID: data.orderID,
-                                    token: data.orderToken
-                                };
+                                var redirect = $('<form>')
+                                    .appendTo(document.body)
+                                    .attr({
+                                        method: 'POST',
+                                        action: data.continueUrl
+                                    });
 
-                                continueUrl += (continueUrl.indexOf('?') !== -1 ? '&' : '?') +
-                                    Object.keys(urlParams).map(function (key) {
-                                        return key + '=' + encodeURIComponent(urlParams[key]);
-                                    }).join('&');
+                                $('<input>')
+                                    .appendTo(redirect)
+                                    .attr({
+                                        name: 'orderID',
+                                        value: data.orderID
+                                    });
 
-                                window.location.href = continueUrl;
+                                $('<input>')
+                                    .appendTo(redirect)
+                                    .attr({
+                                        name: 'orderToken',
+                                        value: data.orderToken
+                                    });
+
+                                redirect.submit();
                                 defer.resolve(data);
                             }
                         },

@@ -105,7 +105,6 @@ describe('billingForm', function () {
                         assert.containSubset(strippedBody.address, ExpectedResBody.address, 'Expecting actual response address to be equal match expected response address');
                         assert.isFalse(strippedBody.error);
                         assert.equal(strippedBody.paymentMethod.value, ExpectedResBody.paymentMethod.value);
-                        assert.equal(strippedBody.email.value, ExpectedResBody.email.value);
                         assert.equal(strippedBody.phone.value, ExpectedResBody.phone.value);
                     });
             });
