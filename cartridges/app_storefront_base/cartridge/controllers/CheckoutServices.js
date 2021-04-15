@@ -60,107 +60,159 @@ server.get('Get', server.middleware.https, function (req, res, next) {
     return next();
 });
 
+/**
+ * Validates the given form and creates response JSON if there are errors.
+ * @param {string} form - the customer form to validate
+ * @return {Object} validation result
+ */
+function validateCustomerForm(form) {
+    var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
+
+    var result = COHelpers.validateCustomerForm(form);
+
+    if (result.formFieldErrors.length) {
+        result.customerForm.clear();
+        // prepare response JSON with form data and errors
+        result.json = {
+            form: result.customerForm,
+            fieldErrors: result.formFieldErrors,
+            serverErrors: [],
+            error: true
+        };
+    }
+
+    return result;
+}
 
 /**
- *  Handle Ajax customer form submit
+ * Handles the route:BeforeComplete for a customer form submission.
+ * @param {Object} req - request
+ * @param {Object} res - response
+ * @param {Object} accountModel - Account model object to include in response
+ * @param {string} redirectUrl - redirect URL to send back to client
+ */
+function handleCustomerRouteBeforeComplete(req, res, accountModel, redirectUrl) {
+    var URLUtils = require('dw/web/URLUtils');
+    var BasketMgr = require('dw/order/BasketMgr');
+    var Locale = require('dw/util/Locale');
+    var Transaction = require('dw/system/Transaction');
+    var OrderModel = require('*/cartridge/models/order');
+
+    var customerData = res.getViewData();
+    var currentBasket = BasketMgr.getCurrentBasket();
+    if (!currentBasket) {
+        res.json({
+            error: true,
+            cartError: true,
+            fieldErrors: [],
+            serverErrors: [],
+            redirectUrl: URLUtils.url('Cart-Show').toString()
+        });
+        return;
+    }
+
+    Transaction.wrap(function () {
+        currentBasket.setCustomerEmail(customerData.customer.email.value);
+    });
+
+    var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
+    if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
+        req.session.privacyCache.set('usingMultiShipping', false);
+        usingMultiShipping = false;
+    }
+
+    var currentLocale = Locale.getLocale(req.locale.id);
+    var basketModel = new OrderModel(
+        currentBasket,
+        { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
+    );
+
+    res.json({
+        customer: accountModel,
+        error: false,
+        order: basketModel,
+        csrfToken: customerData.csrfToken,
+        redirectUrl: redirectUrl
+    });
+}
+
+/**
+ * Handle Ajax guest customer form submit.
  */
 server.post(
     'SubmitCustomer',
     server.middleware.https,
     csrfProtection.validateAjaxRequest,
     function (req, res, next) {
-        var COHelpers = require('*/cartridge/scripts/checkout/checkoutHelpers');
-        var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
-        var Resource = require('dw/web/Resource');
-        var viewData = {};
-        var customerForm = server.forms.getForm('coCustomer');
-        var formFieldErrors = [];
-        var customerFormErrors = COHelpers.validateCustomerForm(customerForm);
-        if (Object.keys(customerFormErrors).length) {
-            formFieldErrors.push(customerFormErrors);
-        } else {
-            viewData.customer = {
-                email: { value: customerForm.email.value }
-            };
+        // validate guest customer form
+        var coCustomerForm = server.forms.getForm('coCustomer');
+        var result = validateCustomerForm(coCustomerForm);
+        if (result.json) {
+            res.json(result.json);
+            return next();
         }
 
-        if (formFieldErrors.length) {
-            customerForm.clear();
-            // respond with form data and errors
+        res.setViewData(result.viewData);
+
+        this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
+            var AccountModel = require('*/cartridge/models/account');
+            var accountModel = new AccountModel(req.currentCustomer);
+            handleCustomerRouteBeforeComplete(req, res, accountModel, null);
+        });
+        return next();
+    }
+);
+
+/**
+ * Handle Ajax registered customer form submit.
+ */
+server.post(
+    'LoginCustomer',
+    server.middleware.https,
+    csrfProtection.validateAjaxRequest,
+    function (req, res, next) {
+        var apiCsrfProtection = require('dw/web/CSRFProtection');
+        var Resource = require('dw/web/Resource');
+        var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+
+        // validate registered customer form
+        var coRegisteredCustomerForm = server.forms.getForm('coRegisteredCustomer');
+        var result = validateCustomerForm(coRegisteredCustomerForm);
+        if (result.json) {
+            res.json(result.json);
+            return next();
+        }
+
+        // login the registered customer
+        var viewData = result.viewData;
+        var customerForm = result.customerForm;
+        var formFieldErrors = result.formFieldErrors;
+
+        viewData.customerLoginResult = accountHelpers.loginCustomer(customerForm.email.value, customerForm.password.value, false);
+        if (viewData.customerLoginResult.error) {
+            // add customer error message for invalid password
             res.json({
                 form: customerForm,
                 fieldErrors: formFieldErrors,
                 serverErrors: [],
+                customerErrorMessage: Resource.msg('error.message.login.wrong', 'checkout', null),
                 error: true
             });
             return next();
         }
 
-        viewData.customerLoginResult = null;
-
-        if (customerForm.password && customerForm.password.value) {
-            var customerLoginResult = accountHelpers.loginCustomer(customerForm.email.value, customerForm.password.value, false);
-            if (customerLoginResult.error) {
-                res.json({
-                    form: customerForm,
-                    fieldErrors: formFieldErrors,
-                    serverErrors: [Resource.msg('error.message.login.wrong', 'checkout', null)],
-                    errorMessage: Resource.msg('error.message.login.wrong', 'checkout', null),
-                    error: true
-                });
-                return next();
-            }
-            viewData.customerLoginResult = customerLoginResult;
-            var apiCsrfProtection = require('dw/web/CSRFProtection');
-            // on login the session transforms so we need to retrieve new tokens
-            viewData.csrfToken = apiCsrfProtection.generateToken();
-        }
+        // on login the session transforms so we need to retrieve new tokens
+        viewData.csrfToken = apiCsrfProtection.generateToken();
 
         res.setViewData(viewData);
 
         this.on('route:BeforeComplete', function (req, res) { // eslint-disable-line no-shadow
-            var URLUtils = require('dw/web/URLUtils');
-            var BasketMgr = require('dw/order/BasketMgr');
-            var Locale = require('dw/util/Locale');
-            var OrderModel = require('*/cartridge/models/order');
-            var customerData = res.getViewData();
-            var currentBasket = BasketMgr.getCurrentBasket();
-            if (!currentBasket) {
-                res.json({
-                    error: true,
-                    cartError: true,
-                    fieldErrors: [],
-                    serverErrors: [],
-                    redirectUrl: URLUtils.url('Cart-Show').toString()
-                });
-                return;
-            }
-
             var AccountModel = require('*/cartridge/models/account');
-            var accountModel = customerData.customerLoginResult ? new AccountModel(customerData.customerLoginResult.authenticatedCustomer) : new AccountModel(req.currentCustomer);
-            var Transaction = require('dw/system/Transaction');
-            Transaction.wrap(function () {
-                currentBasket.setCustomerEmail(customerData.customer.email.value);
-            });
+            var URLUtils = require('dw/web/URLUtils');
 
-            var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
-            if (usingMultiShipping === true && currentBasket.shipments.length < 2) {
-                req.session.privacyCache.set('usingMultiShipping', false);
-                usingMultiShipping = false;
-            }
-
-            var currentLocale = Locale.getLocale(req.locale.id);
-            var basketModel = new OrderModel(
-                currentBasket,
-                { usingMultiShipping: usingMultiShipping, countryCode: currentLocale.country, containerView: 'basket' }
-            );
-
-            res.json({
-                customer: accountModel,
-                error: false,
-                order: basketModel,
-                csrfToken: customerData.csrfToken
-            });
+            var accountModel = new AccountModel(viewData.customerLoginResult.authenticatedCustomer);
+            var redirectUrl = URLUtils.https('Checkout-Begin', 'stage', 'shipping').abs().toString();
+            handleCustomerRouteBeforeComplete(req, res, accountModel, redirectUrl);
         });
         return next();
     }

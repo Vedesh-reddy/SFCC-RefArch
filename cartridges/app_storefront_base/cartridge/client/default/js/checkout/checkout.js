@@ -89,10 +89,10 @@ var scrollAnimate = require('../components/scrollAnimate');
                 var defer = $.Deferred(); // eslint-disable-line
 
                 if (stage === 'customer') {
-                       //
+                    //
                     // Clear Previous Errors
                     //
-                    formHelpers.clearPreviousErrors('.customer-information-block');
+                    customerHelpers.methods.clearErrors();
                     //
                     // Submit the Customer Form
                     //
@@ -103,7 +103,11 @@ var scrollAnimate = require('../components/scrollAnimate');
                         type: 'post',
                         data: customerForm.serialize(),
                         success: function (data) {
-                            customerHelpers.methods.customerFormResponse(defer, data);
+                            if (data.redirectUrl) {
+                                window.location.href = data.redirectUrl;
+                            } else {
+                                customerHelpers.methods.customerFormResponse(defer, data);
+                            }
                         },
                         error: function (err) {
                             if (err.responseJSON && err.responseJSON.redirectUrl) {

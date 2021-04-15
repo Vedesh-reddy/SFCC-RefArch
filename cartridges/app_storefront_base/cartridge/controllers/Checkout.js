@@ -55,7 +55,8 @@ server.get(
             return next();
         }
 
-        var currentStage = req.querystring.stage ? req.querystring.stage : 'customer';
+        var requestStage = req.querystring.stage;
+        var currentStage = requestStage || 'customer';
         var billingAddress = currentBasket.billingAddress;
 
         var currentCustomer = req.currentCustomer.raw;
@@ -95,7 +96,8 @@ server.get(
 
         COHelpers.recalculateBasket(currentBasket);
 
-        var customerForm = COHelpers.prepareCustomerForm();
+        var guestCustomerForm = COHelpers.prepareCustomerForm('coCustomer');
+        var registeredCustomerForm = COHelpers.prepareCustomerForm('coRegisteredCustomer');
         var shippingForm = COHelpers.prepareShippingForm();
         var billingForm = COHelpers.prepareBillingForm();
         var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
@@ -136,24 +138,31 @@ server.get(
             'Shipping'
         );
 
-        if (!accountModel.profile && currentBasket.getCustomerEmail()) {
-            orderModel.orderEmail = currentBasket.getCustomerEmail();
-        } else if (accountModel.profile && !accountModel.profile.email && currentBasket.getCustomerEmail()) {
-            accountModel.guestEmail = currentBasket.getCustomerEmail();
-        }
+        if (currentStage === 'customer') {
+            if (accountModel.registeredUser) {
+                // Since the shopper already login upon starting checkout, fast forward to shipping stage
+                currentStage = 'shipping';
 
-        if (accountModel.registeredUser) {
-            currentStage = 'shipping';
-        } else if (currentStage === 'customer') {
-            currentStage = (orderModel.orderEmail || accountModel.guestEmail) ? 'shipping' : currentStage;
+                // Only need to update email address in basket if start checkout from other page like cart or mini-cart
+                // and not on checkout page reload.
+                if (!requestStage) {
+                    Transaction.wrap(function () {
+                        currentBasket.customerEmail = accountModel.profile.email;
+                        orderModel.orderEmail = accountModel.profile.email;
+                    });
+                }
+            } else if (currentBasket.customerEmail) {
+                // Email address has already collected so fast forward to shipping stage
+                currentStage = 'shipping';
+            }
         }
-
 
         res.render('checkout/checkout', {
             order: orderModel,
             customer: accountModel,
             forms: {
-                customerForm: customerForm,
+                guestCustomerForm: guestCustomerForm,
+                registeredCustomerForm: registeredCustomerForm,
                 shippingForm: shippingForm,
                 billingForm: billingForm
             },

@@ -197,10 +197,28 @@ describe('account', function () {
     //     assert.equal(result.preferredAddress, null);
     // });
 
-    it('should receive an account with null payment method', function () {
-        currentCustomer.wallet = null;
-        var result = new AccountModel(currentCustomer);
-        assert.equal(result.payment, null);
+    describe('with a wallet that has no payment instruments', function () {
+        before(function () {
+            currentCustomer.wallet.paymentInstruments = [];
+        });
+
+        it('should receive an account with null payment and empty payment instruments', function () {
+            var result = new AccountModel(currentCustomer);
+            assert.equal(result.payment, null);
+            assert.equal(result.customerPaymentInstruments.length, 0);
+        });
+    });
+
+    describe('with a null wallet', function () {
+        before(function () {
+            currentCustomer.wallet = null;
+        });
+
+        it('should receive an account with null payment and payment instruments', function () {
+            var result = new AccountModel(currentCustomer);
+            assert.equal(result.payment, null);
+            assert.equal(result.customerPaymentInstruments, null);
+        });
     });
 
     it('should receive an account with null order history', function () {

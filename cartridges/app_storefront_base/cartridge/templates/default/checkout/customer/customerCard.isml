@@ -1,6 +1,6 @@
 <div class="card-body">
-    <form autocomplete="on" id="guest-customer" class="guest-form" method="POST" action="${URLUtils.url('CheckoutServices-SubmitCustomer', 'type', 'guest')}"
-        <isprint value=${pdict.forms.customerForm.attributes} encoding="off" /> novalidate>
+    <form autocomplete="on" id="guest-customer" class="guest-form" method="POST" action="${URLUtils.url('CheckoutServices-SubmitCustomer')}"
+        <isprint value=${pdict.forms.guestCustomerForm.attributes} encoding="off" /> novalidate>
         <fieldset class="customer-information-block">
             <div class="row">
                 <div class="col-sm-12">
@@ -9,7 +9,7 @@
                             ${Resource.msg('field.customer.email','checkout',null)}
                         </label>
                         <input type="text" class="form-control email" id="email-guest"
-                                    value="${(pdict.customer.registeredUser && pdict.customer.profile && pdict.customer.profile.email) ? pdict.customer.profile.email : ''}" <isprint value=${pdict.forms.customerForm.email.attributes} encoding="off"/>
+                                    value="${(pdict.customer.registeredUser && pdict.customer.profile && pdict.customer.profile.email) ? pdict.customer.profile.email : ''}" <isprint value=${pdict.forms.guestCustomerForm.email.attributes} encoding="off"/>
                                     aria-describedby="guestEmailInvalidMessage" >
                         <div class="invalid-feedback" id="guestEmailInvalidMessage"></div>
                     </div>
@@ -24,8 +24,8 @@
         </fieldset>
         <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
     </form>
-    <form autocomplete="on" id="registered-customer" method="POST" class="registered-form d-none" action="${URLUtils.url('CheckoutServices-SubmitCustomer', 'type', 'registered')}"
-        <isprint value=${pdict.forms.customerForm.attributes} encoding="off" /> novalidate>
+    <form autocomplete="on" id="registered-customer" method="POST" class="registered-form d-none" action="${URLUtils.url('CheckoutServices-LoginCustomer')}"
+        <isprint value=${pdict.forms.registeredCustomerForm.attributes} encoding="off" /> novalidate>
         <fieldset class="customer-information-block">
             <div class="row">
                 <div class="col-sm-12">
@@ -34,7 +34,7 @@
                             ${Resource.msg('field.customer.email','checkout',null)}
                         </label>
                         <input type="text" class="form-control email" id="email"
-                                    value="${(pdict.customer.registeredUser && pdict.customer.profile && pdict.customer.profile.email) ? pdict.customer.profile.email : ''}" <isprint value=${pdict.forms.customerForm.email.attributes} encoding="off"/>
+                                    value="${(pdict.customer.registeredUser && pdict.customer.profile && pdict.customer.profile.email) ? pdict.customer.profile.email : ''}" <isprint value=${pdict.forms.registeredCustomerForm.email.attributes} encoding="off"/>
                                     aria-describedby="emailInvalidMessage" >
                         <div class="invalid-feedback" id="emailInvalidMessage"></div>
                     </div>
@@ -42,9 +42,10 @@
                         <label class="form-control-label">
                             ${Resource.msg('field.customer.password','checkout',null)}
                         </label>
-                         <input type="password" class="form-control password" id="password"
-                                    <isprint value=${pdict.forms.customerForm.password.attributes} encoding="off"/>
+                        <input type="password" class="form-control password" id="password"
+                                    <isprint value=${pdict.forms.registeredCustomerForm.password.attributes} encoding="off"/>
                                     aria-describedby="passwordInvalidMessage" >
+                        <div class="invalid-feedback" id="passwordInvalidMessage"></div>
                     </div>
                 </div>
             </div>
@@ -64,5 +65,5 @@
         </fieldset>
         <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
     </form>
-    
+
 </div>

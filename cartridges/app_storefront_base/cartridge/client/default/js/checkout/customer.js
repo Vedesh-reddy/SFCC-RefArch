@@ -8,6 +8,21 @@ var REGISTERED_FORM = '#registered-customer';
 var ERROR_SECTION = '.customer-error';
 
 /**
+ * @returns {boolean} If guest is active, registered is not visible
+ */
+function isGuestFormActive() {
+    return $(REGISTERED_FORM).hasClass('d-none');
+}
+
+/**
+ * Clear any previous errors in the customer form.
+ */
+function clearErrors() {
+    $(ERROR_SECTION).children().remove();
+    formHelpers.clearPreviousErrors('.customer-information-block');
+}
+
+/**
  * @param {Object} customerData - data includes checkout related customer information
  * @param {Object} orderData - data includes checkout related order information
  */
@@ -31,23 +46,24 @@ function updateCustomerInformation(customerData, orderData) {
  *  valid model data.
  */
 function customerFormResponse(defer, data) {
-    var formSelector = '.customer-section form';
+    var parentForm = isGuestFormActive() ? GUEST_FORM : REGISTERED_FORM;
+    var formSelector = '.customer-section ' + parentForm;
 
     // highlight fields with errors
     if (data.error) {
-        $(ERROR_SECTION).children().remove();
         if (data.fieldErrors.length) {
             data.fieldErrors.forEach(function (error) {
                 if (Object.keys(error).length) {
-                    $(ERROR_SECTION).children().remove();
-                    createErrorNotification(ERROR_SECTION, error[Object.keys(error)[0]]);
                     formHelpers.loadFormErrors(formSelector, error);
                 }
             });
-            defer.reject(data);
         }
 
-        if (data.serverErrors && data.serverErrors.length) {
+        if (data.customerErrorMessage) {
+            createErrorNotification(ERROR_SECTION, data.customerErrorMessage);
+        }
+
+        if (data.fieldErrors.length || data.customerErrorMessage || (data.serverErrors && data.serverErrors.length)) {
             defer.reject(data);
         }
 
@@ -86,14 +102,6 @@ function chooseLoginBlock(registered) {
     }
 }
 
-
-/**
- * @returns {boolean} If guest is active, registered is not visible
- */
-function isGuestFormActive() {
-    return $(REGISTERED_FORM).hasClass('d-none');
-}
-
 module.exports = {
 
     /**
@@ -121,6 +129,7 @@ module.exports = {
     },
 
     methods: {
+        clearErrors: clearErrors,
         updateCustomerInformation: updateCustomerInformation,
         customerFormResponse: customerFormResponse,
         isGuestFormActive: isGuestFormActive

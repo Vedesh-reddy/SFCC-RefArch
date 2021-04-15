@@ -63,9 +63,8 @@ function getPreferredAddress(addressBook) {
 function getPayment(wallet) {
     if (wallet) {
         var paymentInstruments = wallet.paymentInstruments;
-        var paymentInstrument = paymentInstruments[0];
-
-        if (paymentInstrument) {
+        if (paymentInstruments && paymentInstruments.length > 0) {
+            var paymentInstrument = paymentInstruments[0];
             return {
                 maskedCreditCardNumber: paymentInstrument.maskedCreditCardNumber,
                 creditCardType: paymentInstrument.creditCardType,
