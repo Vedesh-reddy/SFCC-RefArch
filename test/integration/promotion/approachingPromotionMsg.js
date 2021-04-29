@@ -13,7 +13,7 @@ var config = require('../it.config');
 describe('Approaching order level promotion', function () {
     this.timeout(5000);
 
-    var masterPid = '25594767M';
+    var mainPid = '25594767M';
     var variantPid = '799927767720M';
     var qty = 2;
     var cookieString;
@@ -60,7 +60,7 @@ describe('Approaching order level promotion', function () {
 
     it('1. should return a response containing promotional messages for the order and shipping discounts on PDP', function () {
         myRequest.url = config.baseUrl + '/Product-Variation?pid='
-            + masterPid + '&dwvar_' + masterPid + '_color=BLUJEFB&quantity=1';
+            + mainPid + '&dwvar_' + mainPid + '_color=BLUJEFB&quantity=1';
         return request(myRequest, function (error, response) {
             var bodyAsJson = JSON.parse(response.body);
             assert.equal(response.statusCode, 200, 'Expected GET Product-Variation statusCode to be 200.');

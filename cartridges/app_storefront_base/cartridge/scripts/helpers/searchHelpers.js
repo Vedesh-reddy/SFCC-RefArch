@@ -152,11 +152,11 @@ function search(req, res) {
 
     var canonicalUrl = URLUtils.url('Search-Show', 'cgid', req.querystring.cgid);
     var refineurl = URLUtils.url('Search-Refinebar');
-    var whitelistedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule', 'pmid'];
+    var allowedParams = ['q', 'cgid', 'pmin', 'pmax', 'srule', 'pmid'];
     var isRefinedSearch = false;
 
     Object.keys(req.querystring).forEach(function (element) {
-        if (whitelistedParams.indexOf(element) > -1) {
+        if (allowedParams.indexOf(element) > -1) {
             refineurl.append(element, req.querystring[element]);
         }
 

@@ -1,6 +1,6 @@
 {
     "name": "Einstein Product-To-Product Recommender Selector",
-    "description": "Returns a selector for the recommenders available on the instance. Whitelists product-to-product recommender",
+    "description": "Returns a selector for the recommenders available on the instance. Allows product-to-product recommender",
     "resources": {
         "scripts": [
             "/experience/editors/displayFormats.js"

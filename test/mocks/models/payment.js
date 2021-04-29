@@ -34,10 +34,6 @@ function proxyModel() {
                                 UUID: 'some UUID'
                             },
                             {
-                                cardType: 'Master Card',
-                                name: 'MasterCard'
-                            },
-                            {
                                 cardType: 'Discover',
                                 name: 'Discover'
                             }

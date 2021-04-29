@@ -1,6 +1,6 @@
 {
     "name": "Einstein products in a category Recommender Selector",
-    "description": "Returns a selector for the category based recommenders available on the instance. Whitelist products-in-a-category",
+    "description": "Returns a selector for the category based recommenders available on the instance. Allows products-in-a-category",
     "resources": {
         "scripts": [
             "/experience/editors/einstein/recommenderselector.js"

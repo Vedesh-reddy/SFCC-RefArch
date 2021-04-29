@@ -4,10 +4,10 @@ var config = require('../it.config');
 var jsonHelpers = require('../helpers/jsonUtils');
 var urlHelpers = require('../helpers/urlUtils');
 
-describe('ProductVariation - Get product variation with only master product ID', function () {
+describe('ProductVariation - Get product variation with only main product ID', function () {
     this.timeout(5000);
 
-    var masterPid = '25604455M';
+    var mainPid = '25604455M';
     var myGetRequest = {
         url: '',
         method: 'GET',
@@ -17,9 +17,9 @@ describe('ProductVariation - Get product variation with only master product ID',
         }
     };
 
-    it('should returns master product details and variant attributes', function (done) {
+    it('should returns main product details and variant attributes', function (done) {
         var resourcePath = config.baseUrl + '/Product-Variation?';
-        myGetRequest.url = resourcePath + 'pid=' + masterPid;
+        myGetRequest.url = resourcePath + 'pid=' + mainPid;
 
         request(myGetRequest, function (error, response) {
             assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
@@ -34,7 +34,7 @@ describe('ProductVariation - Get product variation with only master product ID',
             // Verify product
             assert.equal(actualRespBodyStripped.product.productName, 'No-Iron Textured Dress Shirt');
             assert.equal(actualRespBodyStripped.product.productType, 'master');
-            assert.equal(actualRespBodyStripped.product.id, masterPid);
+            assert.equal(actualRespBodyStripped.product.id, mainPid);
             assert.equal(actualRespBodyStripped.product.longDescription, 'This cotton dress shirt is available in white or blue. Both colors are a wardrobe necessity.');
 
             // Verify product price

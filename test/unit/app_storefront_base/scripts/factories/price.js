@@ -157,7 +157,7 @@ describe('priceFactory', function () {
             spyDefaultPrice.reset();
         });
 
-        it('should use the first variant if product is a master', function () {
+        it('should use the first variant if product is a main', function () {
             var expectedPrice = { available: true };
             priceModel = {
                 price: { valueOrNull: 'value' },

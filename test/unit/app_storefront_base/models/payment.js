@@ -27,10 +27,6 @@ var paymentCards = new ArrayList([
         UUID: 'some UUID'
     },
     {
-        cardType: 'Master Card',
-        name: 'MasterCard'
-    },
-    {
         cardType: 'Discover',
         name: 'Discover'
     }
@@ -100,7 +96,7 @@ describe('Payment', function () {
     it('should take payment cards and convert to a plain object ', function () {
         var result = new PaymentModel(createApiBasket({ paymentCards: paymentCards }), null);
         assert.equal(
-            result.applicablePaymentCards.length, 4
+            result.applicablePaymentCards.length, 3
         );
         assert.equal(result.applicablePaymentCards[0].cardType, 'Visa');
         assert.equal(result.applicablePaymentCards[0].name, 'Visa');

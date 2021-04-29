@@ -8,7 +8,7 @@ var urlHelpers = require('../helpers/urlUtils');
 describe('ProductVariation - Get product variation with variant ID', function () {
     this.timeout(5000);
 
-    var masterPid = '25604455M';
+    var mainPid = '25604455M';
     var variantPid = '708141676220M';
 
     var myGetRequest = {
@@ -54,7 +54,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             var urlEndPointCleaned = urlHelpers.stripBasicAuth(urlEndPoint);
             assert.equal(urlSplit1[0], urlEndPointCleaned, 'product.variationAttributes Color with id = SLABLFB: actual request end point not equal expected value.');
             assert.equal(urlParams.length, 5, 'product.variationAttributes Color with id = SLABLFB: url does not have 5 parameters.');
-            assert.isTrue(_.includes(urlParams, 'pid=' + masterPid), 'product.variationAttributes Color with id = SLABLFB: url not include parameter pid=' + masterPid);
+            assert.isTrue(_.includes(urlParams, 'pid=' + mainPid), 'product.variationAttributes Color with id = SLABLFB: url not include parameter pid=' + mainPid);
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_width=A'), 'product.variationAttributes Color with id = SLABLFB: url not include parameter dwvar_25604455M_width=A');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_color=SLABLFB'), 'product.variationAttributes Color with id = SLABLFB: url not include parameter dwvar_25604455M_color=SLABLFB');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_size=160'), 'product.variationAttributes Color with id = SLABLFB: url not include parameter dwvar_25604455M_size=160');
@@ -68,7 +68,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             urlParams = urlSplit1[1].split('&');
             assert.equal(urlSplit1[0], urlEndPointCleaned, 'product.variationAttributes Color with id = WHITEFB: actual request end point not equal expected value.');
             assert.equal(urlParams.length, 5, 'product.variationAttributes Color with id = WHITEFB: url does not have 5 parameters.');
-            assert.isTrue(_.includes(urlParams, 'pid=' + masterPid), 'product.variationAttributes Color with id = WHITEFB: url not include parameter pid=' + masterPid);
+            assert.isTrue(_.includes(urlParams, 'pid=' + mainPid), 'product.variationAttributes Color with id = WHITEFB: url not include parameter pid=' + mainPid);
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_width=A'), 'product.variationAttributes Color with id = WHITEFB: url not include parameter dwvar_25604455M_width=A');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_color='), 'product.variationAttributes Color with id = WHITEFB: url not include parameter dwvar_25604455M_color=');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_size=160'), 'product.variationAttributes Color with id = WHITEFB: url not include parameter dwvar_25604455M_size=160');
@@ -81,7 +81,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             urlParams = urlSplit1[1].split('&');
             assert.equal(urlSplit1[0], urlEndPointCleaned, 'product.variationAttributes Size with id = 145: actual request end point not equal expected value.');
             assert.equal(urlParams.length, 5, 'product.variationAttributes Size with id = 145: url does not have 5 parameters.');
-            assert.isTrue(_.includes(urlParams, 'pid=' + masterPid), 'product.variationAttributes Size with id = 145: url not include parameter pid=' + masterPid);
+            assert.isTrue(_.includes(urlParams, 'pid=' + mainPid), 'product.variationAttributes Size with id = 145: url not include parameter pid=' + mainPid);
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_width=A'), 'product.variationAttributes Size with id = 145: url not include parameter dwvar_25604455M_width=A');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_color=WHITEFB'), 'product.variationAttributes Size with id = 145: url not include parameter dwvar_25604455M_color=WHITEFB');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_size=145'), 'product.variationAttributes Size with id = 145: url not include parameter dwvar_25604455M_size=145');
@@ -91,7 +91,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             urlParams = urlSplit1[1].split('&');
             assert.equal(urlSplit1[0], urlEndPointCleaned, 'product.variationAttributes Size with id = 150: actual request end point not equal expected value.');
             assert.equal(urlParams.length, 5, 'product.variationAttributes Size with id = 150: url does not have 5 parameters.');
-            assert.isTrue(_.includes(urlParams, 'pid=' + masterPid), 'product.variationAttributes Size with id = 150: url not include parameter pid=' + masterPid);
+            assert.isTrue(_.includes(urlParams, 'pid=' + mainPid), 'product.variationAttributes Size with id = 150: url not include parameter pid=' + mainPid);
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_width=A'), 'product.variationAttributes Size with id = 150: url not include parameter dwvar_25604455M_width=A');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_color=WHITEFB'), 'product.variationAttributes Size with id = 150: url not include parameter dwvar_25604455M_color=WHITEFB');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_size=150'), 'product.variationAttributes Size with id = 150: url not include parameter dwvar_25604455M_size=150');
@@ -101,7 +101,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             urlParams = urlSplit1[1].split('&');
             assert.equal(urlSplit1[0], urlEndPointCleaned, 'product.variationAttributes Size with id = A: actual request end point not equal expected value.');
             assert.equal(urlParams.length, 5, 'product.variationAttributes Size with id = A: url does not have 5 parameters.');
-            assert.isTrue(_.includes(urlParams, 'pid=' + masterPid), 'product.variationAttributes Size with id = A: url not include parameter pid=' + masterPid);
+            assert.isTrue(_.includes(urlParams, 'pid=' + mainPid), 'product.variationAttributes Size with id = A: url not include parameter pid=' + mainPid);
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_width='), 'product.variationAttributes Size with id = A: url not include parameter dwvar_25604455M_width=');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_color=WHITEFB'), 'product.variationAttributes Size with id = A: url not include parameter dwvar_25604455M_color=WHITEFB');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_size=160'), 'product.variationAttributes Size with id = A: url not include parameter dwvar_25604455M_size=160');
@@ -111,7 +111,7 @@ describe('ProductVariation - Get product variation with variant ID', function ()
             urlParams = urlSplit1[1].split('&');
             assert.equal(urlSplit1[0], urlEndPointCleaned, 'product.variationAttributes Size with id = B: actual request end point not equal expected value.');
             assert.equal(urlParams.length, 5, 'product.variationAttributes Size with id = B: url does not have 5 parameters.');
-            assert.isTrue(_.includes(urlParams, 'pid=' + masterPid), 'product.variationAttributes Size with id = B: url not include parameter pid=' + masterPid);
+            assert.isTrue(_.includes(urlParams, 'pid=' + mainPid), 'product.variationAttributes Size with id = B: url not include parameter pid=' + mainPid);
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_width=B'), 'product.variationAttributes Size with id = B: url not include parameter dwvar_25604455M_width=B');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_color=WHITEFB'), 'product.variationAttributes Size with id = B: url not include parameter dwvar_25604455M_color=WHITEFB');
             assert.isTrue(_.includes(urlParams, 'dwvar_25604455M_size=160'), 'product.variationAttributes Size with id = B: url not include parameter dwvar_25604455M_size=160');

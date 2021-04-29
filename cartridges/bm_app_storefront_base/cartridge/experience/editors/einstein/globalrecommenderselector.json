@@ -1,6 +1,6 @@
 {
     "name": "Einstein Global Recommender Selector",
-    "description": "Returns a selector for the recommenders available on the instance, whitelists products-in-all-categories recommender",
+    "description": "Returns a selector for the recommenders available on the instance, allows products-in-all-categories recommender",
     "resources": {
         "scripts": [
             "/experience/editors/einstein/recommenderselector.js"
