@@ -682,7 +682,7 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
                 receivedMsgHeading: receivedMsgHeading,
                 receivedMsgBody: receivedMsgBody,
                 buttonText: buttonText,
-                mobile: mobile,
+                mobile: mobile === 'true',
                 returnUrl: returnUrl
             });
         } else {
