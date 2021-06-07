@@ -8,7 +8,7 @@
                     <isslot id="header-banner-m" description="Slot above the site header" context="global" />
                 </div>
                 <div class="close-button">
-                    <button type="button" class="close" aria-label="Close">
+                    <button type="button" class="close" aria-label="${Resource.msg('label.header.banner.close', 'common', null)}">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
