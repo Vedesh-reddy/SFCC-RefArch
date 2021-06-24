@@ -25,12 +25,12 @@
                 <ul class="nav nav-tabs nav-fill" role="tablist">
 
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link active product-search" href="#product-search-results" aria-controls="product-search-results" data-toggle="tab" role="tab" aria-selected="true" tabindex="0" id="product-tab">
+                        <a class="nav-link active product-search" href="#product-search-results" aria-controls="product-search-results" data-toggle="tab" role="tab" aria-selected="true" id="product-tab">
                             ${Resource.msg('tab.nav.search.productsresults', 'search', null)}
                         </a>
                     </li>
                     <li class="nav-item" role="presentation">
-                        <a class="nav-link content-search" href="#content-search-results-pane" aria-controls="content-search-results-pane" data-toggle="tab" role="tab" aria-selected="false" tabindex="-1" id="articles-tab"
+                        <a class="nav-link content-search" href="#content-search-results-pane" aria-controls="content-search-results-pane" data-toggle="tab" role="tab" aria-selected="false" id="articles-tab"
                             data-url="${URLUtils.url('Search-Content', 'q', pdict.productSearch.searchKeywords, 'startingPage', 0)}">
                             ${Resource.msg('tab.nav.search.artclesresults', 'search', null)}
                         </a>
