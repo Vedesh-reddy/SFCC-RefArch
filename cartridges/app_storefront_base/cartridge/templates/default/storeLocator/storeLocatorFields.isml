@@ -8,8 +8,8 @@
     <${pdict.isForm === 'true' ? 'form' : 'div'} action="${pdict.stores.actionUrl}" class="store-locator" method="get" name="storelocator">
         <div class="form-group required">
             <label class="form-control-label" for="store-postal-code">${Resource.msg('field.zip.postal.code','storeLocator',null)}</label>
-            <input autofocus type="text" class="form-control" id="store-postal-code" name="postalCode" value="" autocomplete="nofill" required>
-            <div class="invalid-feedback"></div>
+            <input autofocus type="text" class="form-control" aria-required="true" aria-describedby="store-postal-code-error" id="store-postal-code"  name="postalCode" value="" autocomplete="nofill" required>
+            <div class="invalid-feedback" id="store-postal-code-error"></div>
         </div>
         <button class="btn btn-block btn-storelocator-search" type="${pdict.isForm === 'true' ? 'submit' : 'button'}">
             ${Resource.msg('button.find.stores','storeLocator',null)}
