@@ -8,7 +8,7 @@
             </li>
         <iselse/>
             <li class="dropdown-item" role="presentation">
-                <a href="${category.url}" id="${category.id}" role="menuitem" class="dropdown-link" tabindex="-1">${category.name}</a>
+                <a href="${category.url}" id="${category.id}" role="menuitem" class="dropdown-link" tabindex="0">${category.name}</a>
             </li>
         </isif>
     </isloop>
