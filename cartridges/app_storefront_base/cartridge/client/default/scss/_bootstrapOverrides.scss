@@ -1,12 +1,14 @@
 .carousel {
+    $thumb-size: 3rem;
+
     .icon-prev,
     .icon-next {
         background-color: $white;
         font-size: 1.875em;
         // width and height here need to use rem units because the font size used here is 30px
-        height: 3rem;
+        height: $thumb-size;
         padding-top: 0.24em;
-        width: 3rem;
+        width: $thumb-size;
 
         &::before {
             color: black;
@@ -32,6 +34,15 @@
 
     .carousel-control-next {
         justify-content: flex-end;
+    }
+
+    .carousel-control-next,
+    .carousel-control-prev {
+        width: $thumb-size;
+
+        &:focus {
+            outline: auto black;
+        }
     }
 }
 
