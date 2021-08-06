@@ -12,17 +12,7 @@ describe('orderHelpers', function () {
                         id: 'order ID 123'
                     };
                 },
-                'dw/order/OrderMgr': {
-                    searchOrders: function () {
-                        return {
-                            first: function () {
-                                return {
-                                    id: 'order ID 123'
-                                };
-                            }
-                        };
-                    }
-                },
+                'dw/order/OrderMgr': {},
                 'dw/order/Order': {
                     ORDER_STATUS_REPLACED: 'yes'
                 },
@@ -39,6 +29,21 @@ describe('orderHelpers', function () {
 
             var req = {
                 currentCustomer: {
+                    raw: {
+                        getOrderHistory: function () {
+                            return {
+                                getOrders: function () {
+                                    return {
+                                        first: function () {
+                                            return {
+                                                id: 'order ID 123'
+                                            };
+                                        }
+                                    };
+                                }
+                            };
+                        }
+                    },
                     profile: {
                         customerNo: '12345678'
                     }
@@ -57,15 +62,7 @@ describe('orderHelpers', function () {
                 '*/cartridge/models/order': function () {
                     return null;
                 },
-                'dw/order/OrderMgr': {
-                    searchOrders: function () {
-                        return {
-                            first: function () {
-                                return null;
-                            }
-                        };
-                    }
-                },
+                'dw/order/OrderMgr': {},
                 'dw/order/Order': {
                     ORDER_STATUS_REPLACED: 'yes'
                 },
@@ -82,6 +79,19 @@ describe('orderHelpers', function () {
 
             var req = {
                 currentCustomer: {
+                    raw: {
+                        getOrderHistory: function () {
+                            return {
+                                getOrders: function () {
+                                    return {
+                                        first: function () {
+                                            return null;
+                                        }
+                                    };
+                                }
+                            };
+                        }
+                    },
                     profile: {
                         customerNo: '12345678'
                     }

@@ -17,11 +17,10 @@ var OrderModel = require('*/cartridge/models/order');
 * */
 function getOrders(currentCustomer, querystring, locale) {
     // get all orders for this user
-    var customerNo = currentCustomer.profile.customerNo;
-    var customerOrders = OrderMgr.searchOrders(
-        'customerNo={0} AND status!={1}',
+    var orderHistory = currentCustomer.raw.getOrderHistory();
+    var customerOrders = orderHistory.getOrders(
+        'status!={0}',
         'creationDate desc',
-        customerNo,
         Order.ORDER_STATUS_REPLACED
     );
 
@@ -105,11 +104,10 @@ function getOrders(currentCustomer, querystring, locale) {
  */
 function getLastOrder(req) {
     var orderModel = null;
-    var customerNo = req.currentCustomer.profile.customerNo;
-    var customerOrders = OrderMgr.searchOrders(
-        'customerNo={0} AND status!={1}',
+    var orderHistory = req.currentCustomer.raw.getOrderHistory();
+    var customerOrders = orderHistory.getOrders(
+        'status!={0}',
         'creationDate desc',
-        customerNo,
         Order.ORDER_STATUS_REPLACED
     );
 
