@@ -1,4 +1,5 @@
 'use strict';
+/* global response */
 
 var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
@@ -29,6 +30,8 @@ module.exports.render = function (context, modelIn) {
     }
 
     model.CurrentPageMetaData = PageRenderHelper.getPageMetaData(page);
+
+	// no pagecache setting here, this is dynamically determined by the components used within the page
 
     // render the page
     return new Template('experience/pages/storePage').render(model).text;

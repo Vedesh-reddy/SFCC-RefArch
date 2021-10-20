@@ -43,8 +43,10 @@ module.exports.render = function (context, modelIn) {
         model.resetEditPDMode = true;
     }
 
+    // instruct 24 hours relative pagecache as default
+    // this might be adjusted by the components used within the page
     var expires = new Date();
-    expires.setHours(expires.getHours() + 1); // this handles overflow automatically
+    expires.setDate(expires.getDate() + 1); // this handles overflow automatically
     response.setExpires(expires);
 
     model.CurrentPageMetaData = PageRenderHelper.getPageMetaData(page);

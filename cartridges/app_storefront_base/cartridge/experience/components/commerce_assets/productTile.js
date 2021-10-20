@@ -1,36 +1,45 @@
 'use strict';
+/* global response */
 
 var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
-var URLUtils = require('dw/web/URLUtils');
+var collections = require('*/cartridge/scripts/util/collections');
 
 /**
  * Render logic for storefront.productTile component.
  * @param {dw.experience.ComponentScriptContext} context The Component script context object.
- * @param {dw.util.Map} [modelIn] Additional model values created by another cartridge. This will not be passed in by Commcerce Cloud Plattform.
+ * @param {dw.util.Map} [modelIn] Additional model values created by another cartridge (must be serializable). This will not be passed in by Commerce Cloud Platform.
  *
  * @returns {string} The markup to be displayed
  */
 module.exports.render = function (context, modelIn) {
     var model = modelIn || new HashMap();
 
-    var ProductFactory = require('*/cartridge/scripts/factories/product');
-
     var content = context.content;
-    var productTileParams = { pview: 'tile', pid: context.content.product.ID };
-    var product = ProductFactory.get(productTileParams);
 
-    var productUrl = URLUtils.url('Product-Show', 'pid', product.id).relative().toString();
-
-    model.product = product;
-    model.display = {
-        swatches: true,
-        ratings: content.displayRatings
+    // assemble component configuration in serializable manner
+    var serializableModel = {
+        productID: context.content.product.ID,
+        pview: 'tile',
+        display: {
+            swatches: true,
+            ratings: content.displayRatings
+        }
     };
 
-    model.urls = {
-        product: productUrl
-    };
+    // attach all parameters coming through the modelIn extension
+    collections.forEach(model.keySet(), function (key) {
+        serializableModel[key] = model.get(key);
+    });
 
-    return new Template('experience/components/commerce_assets/product/productTile').render(model).text;
+    var remoteModel = new HashMap();
+    remoteModel.data = JSON.stringify(serializableModel);
+
+    // instruct 24 hours relative pagecache
+    var expires = new Date();
+    expires.setDate(expires.getDate() + 1); // this handles overflow automatically
+    response.setExpires(expires);
+    // no need for vary-by as the template is rendered as remote include
+
+    return new Template('experience/components/commerce_assets/product/remoteProductTile').render(remoteModel).text;
 };
