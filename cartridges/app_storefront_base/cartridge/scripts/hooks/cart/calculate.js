@@ -263,20 +263,7 @@ exports.calculateTax = function(basket) {
         }) || collections.first(basket.getShippingPriceAdjustments(), function (shippingPriceAdjustment) {
             return taxesMap[shippingPriceAdjustment.UUID] === null;
         })) {
-            // tax hook didn't provide taxes for global price adjustment, we need to calculate them ourselves.
-            // calculate a mix tax rate from
-            var basketPriceAdjustmentsTaxRate = ((basket.getMerchandizeTotalGrossPrice().value + basket.getShippingTotalGrossPrice().value)
-                / (basket.getMerchandizeTotalNetPrice().value + basket.getShippingTotalNetPrice())) - 1;
-
-                var basketPriceAdjustments = basket.getPriceAdjustments();
-                collections.forEach(basketPriceAdjustments, function (basketPriceAdjustment) {
-                    basketPriceAdjustment.updateTax(basketPriceAdjustmentsTaxRate);
-                });
-
-                var basketShippingPriceAdjustments = basket.getShippingPriceAdjustments();
-                collections.forEach(basketShippingPriceAdjustments, function(basketShippingPriceAdjustment) {
-                    basketShippingPriceAdjustment.updateTax(totalShippingGrossPrice/totalShippingNetPrice - 1);
-                });
+            basket.updateOrderLevelPriceAdjustmentTax();
             }
     }
 

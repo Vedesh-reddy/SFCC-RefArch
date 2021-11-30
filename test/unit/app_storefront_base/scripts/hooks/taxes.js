@@ -3,11 +3,26 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var ArrayList = require('../../../../mocks/dw.util.Collection');
+var sinon = require('sinon');
 
 function createBasket(shipments) {
     return {
         getShipments: function () {
             return new ArrayList(shipments);
+        },
+        updateOrderLevelPriceAdjustmentTax: function () {},
+        getPriceAdjustments: function () {
+            return {
+                empty: false
+            };
+        },
+        getShippingPriceAdjustments: function () {
+            return {
+                empty: false
+            };
+        },
+        getAllLineItems: function () {
+            return [];
         }
     };
 }
@@ -63,7 +78,8 @@ describe('Taxes', function () {
             }
         },
         '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
-            'dw/util/ArrayList': ArrayList
+            'dw/util/ArrayList': ArrayList,
+            first: function () { return true; }
         }),
         'dw/system/Logger': {
             debug: function (text) {
@@ -71,6 +87,37 @@ describe('Taxes', function () {
             },
             error: function (text) {
                 return text;
+            }
+        }
+    });
+
+    var calculate = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/hooks/cart/calculate', {
+        'dw/util/HashMap': {},
+        'dw/campaign/PromotionMgr': {},
+        'dw/order/ShippingMgr': {},
+        'dw/order/TaxMgr': {},
+        'dw/system/Logger': {
+            debug: function (text) {
+                return text;
+            },
+            error: function (text) {
+                return text;
+            }
+        },
+        'dw/system/Status': sinon.stub(),
+        'dw/order/ShippingLocation': {},
+        'dw/system/HookMgr': {},
+        '*/cartridge/scripts/util/collections': {
+            forEach: function () {
+                return;
+            },
+            first: function () { return true; }
+        },
+        '*/cartridge/scripts/helpers/basketCalculationHelpers': {
+            calculateTaxes: function () {
+                return {
+                    taxes: []
+                };
             }
         }
     });
@@ -156,5 +203,13 @@ describe('Taxes', function () {
         var taxResult = taxesHook.calculateTaxes(basket);
 
         assert.isObject(taxResult.custom);
+    });
+
+    it('The order level price adjustment tax calculation is called when there is an order level price adjustment', function () {
+        var testBasket = createBasket([createShipment([createLineItem(false, -1, 'id')], 'address')]);
+        var basketSpy = sinon.spy(testBasket, 'updateOrderLevelPriceAdjustmentTax');
+        calculate.calculateTax(testBasket);
+        assert(basketSpy.calledOnce);
+        basketSpy.restore();
     });
 });
