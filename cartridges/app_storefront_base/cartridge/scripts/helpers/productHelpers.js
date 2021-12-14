@@ -409,6 +409,14 @@ function getPageDesignerProductPage(reqProduct) {
             : product.classificationCategory;
     }
 
+    if (category === null) {
+        return {
+            page: null,
+            invisiblePage: null,
+            aspectAttributes: null
+        };
+    }
+
     var page = PageMgr.getPage(category, true, 'pdp');
     var invisiblePage = PageMgr.getPage(category, false, 'pdp');
     if (page) {
