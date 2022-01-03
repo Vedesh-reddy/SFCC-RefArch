@@ -6,7 +6,7 @@
                                 && swatch.images != null
                                 && swatch.images.swatch[0] != null
                                 && swatch.images.swatch[0].url != null}">
-                    <a href="${swatch.url}">
+                    <a href="${swatch.url}" aria-label="${product.productName}, ${swatch.displayValue}">
                         <span>
                             <img class="swatch swatch-circle"
                                  data-index="${loopState.count-1}"
@@ -17,7 +17,7 @@
                     </a>
                 <iselse/>
                     <span>
-                        <a href="${pdict.urls.product}">...</a>
+                        <a href="${pdict.urls.product}"  aria-label="${Resource.msgf('label.tile.swatch.more', 'product', null, product.productName)}">...</a>
                     </span>
                     <isbreak>
                 </isif>
