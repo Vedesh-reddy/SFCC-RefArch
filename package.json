@@ -52,7 +52,7 @@
     "@tridnguyen/config": "^2.3.1",
     "@wdio/sauce-service": "^5.14.0",
     "@wdio/selenium-standalone-service": "^5.13.2",
-    "allure-commandline": "^2.13.0",
+    "allure-commandline": "^2.17.2",
     "appium": "^1.15.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.6",
