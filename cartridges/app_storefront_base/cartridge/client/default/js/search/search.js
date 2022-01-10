@@ -188,6 +188,7 @@ module.exports = {
 
                 $.spinner().start();
                 $(this).trigger('search:filter', e);
+                var attributeId = '#' + $(this).find('span').last().attr('id');
                 $.ajax({
                     url: $(this).data('href'),
                     data: {
@@ -198,9 +199,11 @@ module.exports = {
                     success: function (response) {
                         parseResults(response);
                         $.spinner().stop();
+                        $(attributeId).parent('button').focus();
                     },
                     error: function () {
                         $.spinner().stop();
+                        $(attributeId).parent('button').focus();
                     }
                 });
             });

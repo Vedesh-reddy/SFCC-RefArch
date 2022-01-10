@@ -1,5 +1,5 @@
 <li class="color-attribute ${!refinementValue.selectable ? 'disabled' : ''}">
-    <button data-href="${refinementValue.url}">
+    <button data-href="${refinementValue.url}" <isif condition="${!refinementValue.selectable}">disabled</isif> >
         <span class="${refinementValue.swatchId} swatch-circle color-value swatch-mark
               <isif condition="${refinementValue.selected && refinementValue.selectable}">selected</isif>
               <isif condition="${!refinementValue.selectable}">disabled</isif>"

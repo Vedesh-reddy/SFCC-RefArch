@@ -12,7 +12,7 @@
             ${refinementValue.displayValue}
         </span>
 
-        <span class="sr-only selected-assistive-text">
+        <span class="sr-only selected-assistive-text" id="${refinementValue.displayValue}-assistive">
             ${refinementValue.selected && refinementValue.selectable ? Resource.msg('msg.assistive.selected.text', 'common', null) : ''}
             ${refinementValue.title}
         </span>
