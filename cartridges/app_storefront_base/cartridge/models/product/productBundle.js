@@ -29,10 +29,17 @@ module.exports = function bundleProduct(product, apiProduct, options, factory) {
     decorators.availability(product, options.quantity, apiProduct.minOrderQuantity.value, apiProduct.availabilityModel);
     decorators.options(product, options.optionModel, options.variables, options.quantity);
     decorators.quantitySelector(product, apiProduct.stepQuantity.value, options.variables, options.options);
-    var category = apiProduct.getPrimaryCategory()
-        ? apiProduct.getPrimaryCategory()
-        : apiProduct.getMasterProduct().getPrimaryCategory();
-    decorators.sizeChart(product, category.custom.sizeChartID);
+
+    var category = apiProduct.getPrimaryCategory();
+
+    if (!category && (options.productType === 'variant' || options.productType === 'variationGroup')) {
+        category = apiProduct.getMasterProduct().getPrimaryCategory();
+    }
+
+    if (category && 'sizeChartID' in category.custom) {
+        decorators.sizeChart(product, category.custom.sizeChartID);
+    }
+
     decorators.currentUrl(product, options.variationModel, options.optionModel, 'Product-Show', apiProduct.ID, options.quantity);
     decorators.bundledProducts(product, apiProduct, options.quantity, factory);
     decorators.bundleReadyToOrder(product);
