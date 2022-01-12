@@ -87,7 +87,7 @@ module.exports = function () {
 
     $('body').on('shown.bs.modal', '#consent-tracking', function () {
         $('#consent-tracking').siblings().attr('aria-hidden', 'true');
-        $('#consent-tracking .close').focus();
+        $('#consent-tracking .affirm').focus();
     });
 
     $('body').on('hidden.bs.modal', '#consent-tracking', function () {

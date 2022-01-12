@@ -342,11 +342,13 @@ server.get(
     userLoggedIn.validateLoggedIn,
     consentTracking.consent,
     function (req, res, next) {
+        var ContentMgr = require('dw/content/ContentMgr');
         var Resource = require('dw/web/Resource');
         var URLUtils = require('dw/web/URLUtils');
         var accountHelpers = require('*/cartridge/scripts/account/accountHelpers');
 
         var accountModel = accountHelpers.getAccountModel(req);
+        var content = ContentMgr.getContent('tracking_hint');
         var profileForm = server.forms.getForm('profile');
         profileForm.clear();
         profileForm.customer.firstname.value = accountModel.profile.firstName;
@@ -354,6 +356,8 @@ server.get(
         profileForm.customer.phone.value = accountModel.profile.phone;
         profileForm.customer.email.value = accountModel.profile.email;
         res.render('account/profile', {
+            consentApi: Object.prototype.hasOwnProperty.call(req.session.raw, 'setTrackingAllowed'),
+            caOnline: content ? content.online : false,
             profileForm: profileForm,
             breadcrumbs: [
                 {

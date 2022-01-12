@@ -61,7 +61,8 @@
     <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
     <div class="row">
         <div class="col form-group">
-            <span class="${pdict.tracking_consent == null ? '' : 'consented' } tracking-consent"
+            <button type="button" class="api-${pdict.consentApi} ${pdict.tracking_consent == null ? '' : 'consented' } tracking-consent tracking-consent-btn"
+                data-caOnline="${pdict.caOnline}"
                 data-url="${URLUtils.url('ConsentTracking-GetContent', 'cid', 'tracking_hint')}"
                 data-reject="${URLUtils.url('ConsentTracking-SetSession', 'consent', 'false')}"
                 data-accept="${URLUtils.url('ConsentTracking-SetSession', 'consent', 'true')}"
@@ -70,7 +71,7 @@
                 data-heading="${Resource.msg('heading.consentTracking.track.consent', 'common', null)}"
             >
                 ${Resource.msg('link.tracking.consent','account',null)}
-            </span>
+            </button>
         </div>
     </div>
     <div class="row">
