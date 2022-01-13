@@ -58,8 +58,8 @@ function getPageDesignerCategoryPage(categoryID) {
         };
     }
 
-    var page = PageMgr.getPage(category, true, 'plp');
-    var invisiblePage = PageMgr.getPage(category, false, 'plp');
+    var page = PageMgr.getPageByCategory(category, true, 'plp');
+    var invisiblePage = PageMgr.getPageByCategory(category, false, 'plp');
 
     if (page) {
         var aspectAttributes = new HashMap();

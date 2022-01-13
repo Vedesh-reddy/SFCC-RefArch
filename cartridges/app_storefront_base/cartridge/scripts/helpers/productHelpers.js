@@ -400,16 +400,7 @@ function getPageDesignerProductPage(reqProduct) {
     var HashMap = require('dw/util/HashMap');
 
     var product = reqProduct.raw;
-    var category = product.variant
-            ? product.masterProduct.primaryCategory
-            : product.primaryCategory;
-    if (!category) {
-        category = product.variant
-            ? product.masterProduct.classificationCategory
-            : product.classificationCategory;
-    }
-
-    if (category === null) {
+    if (product === null) {
         return {
             page: null,
             invisiblePage: null,
@@ -417,8 +408,35 @@ function getPageDesignerProductPage(reqProduct) {
         };
     }
 
-    var page = PageMgr.getPage(category, true, 'pdp');
-    var invisiblePage = PageMgr.getPage(category, false, 'pdp');
+    // determine page on product level, taking precedence over page on category level
+    var lookupProduct = product.variant
+        ? product.masterProduct
+        : product;
+    var page = PageMgr.getPageByProduct(lookupProduct, true, 'pdp');
+    var invisiblePage = PageMgr.getPageByProduct(lookupProduct, false, 'pdp');
+
+    var category = lookupProduct.primaryCategory;
+    if (!category) {
+        category = lookupProduct.classificationCategory;
+    }
+
+    // if no page could be determined on product level try to find it on category level
+    if (!page) {
+        if (category === null) {
+            return {
+                page: null,
+                invisiblePage: invisiblePage,
+                aspectAttributes: null
+            };
+        }
+
+        page = PageMgr.getPageByCategory(category, true, 'pdp');
+
+        if (!invisiblePage) {
+            invisiblePage = PageMgr.getPageByCategory(category, false, 'pdp');
+        }
+    }
+
     if (page) {
         var aspectAttributes = new HashMap();
         aspectAttributes.category = category;

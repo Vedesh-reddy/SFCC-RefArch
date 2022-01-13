@@ -60,7 +60,8 @@ describe('Helpers - Product', function () {
                 getProduct: stubGetProduct
             },
             'dw/experience/PageMgr': {
-                getPage: stubGetPage
+                getPageByProduct: stubGetPage,
+                getPageByCategory: stubGetPage
             },
             'dw/util/HashMap': function () {
                 this.isHashMap = true;
@@ -252,10 +253,10 @@ describe('Helpers - Product', function () {
             assert.isNull(result.page);
             assert.isNull(result.invisiblePage);
             assert.isNull(result.aspectAttributes);
-            assert.isTrue(stubGetPage.calledTwice);
+            assert.equal(stubGetPage.callCount, 4);
         });
 
-        it('should return only invisible page if no visible page can be found', function () {
+        it('should return only invisible category page if no visible category page can be found', function () {
             var invisibleMockPage = { isVisible: function () { return false; }, ID: 'invisible' };
             stubGetPage.withArgs(categoryMock, false, 'pdp').returns(invisibleMockPage);
 
@@ -264,14 +265,54 @@ describe('Helpers - Product', function () {
             assert.isNull(result.page);
             assert.strictEqual(result.invisiblePage, invisibleMockPage);
             assert.isNull(result.aspectAttributes);
-            assert.isTrue(stubGetPage.calledTwice);
+            assert.equal(stubGetPage.callCount, 4);
         });
 
-        it('should return only a visible page and aspect attributes when it is the only page found', function () {
+        it('should return category page if just an invisible product page can be found', function () {
+            var mockPage = { ID: 'mockPageId', isVisible: function () { return true; } };
+            stubGetPage.returns(mockPage);
+
+            var invisibleMockPage = { isVisible: function () { return false; }, ID: 'invisible' };
+            var mockProduct = { variant: false, primaryCategory: categoryMock };
+            stubGetPage.withArgs(mockProduct, true, 'pdp').returns(null);
+            stubGetPage.withArgs(mockProduct, false, 'pdp').returns(invisibleMockPage);
+
+            var result = productHelpers.getPageDesignerProductPage({ id: 'someID', raw: mockProduct }, res);
+            assert.isNotNull(result);
+            assert.strictEqual(result.page, mockPage);
+            assert.strictEqual(result.invisiblePage, invisibleMockPage);
+            assert.isNotNull(result.aspectAttributes);
+            assert.equal(result.aspectAttributes.category, categoryMock);
+            assert.equal(result.aspectAttributes.product, mockProduct);
+            assert.isTrue(result.aspectAttributes.isHashMap);
+            assert.equal(stubGetPage.callCount, 3);
+        });
+
+        it('should return only a visible category page and aspect attributes when it is the only page found', function () {
             var mockPage = { ID: 'mockPageId', isVisible: function () { return true; } };
             stubGetPage.returns(mockPage);
 
             var mockProduct = { variant: false, primaryCategory: categoryMock };
+            stubGetPage.withArgs(mockProduct, true, 'pdp').returns(null);
+            stubGetPage.withArgs(mockProduct, false, 'pdp').returns(null);
+
+            var result = productHelpers.getPageDesignerProductPage({ id: 'someID', raw: mockProduct }, res);
+            assert.isNotNull(result);
+            assert.strictEqual(result.page, mockPage);
+            assert.isNull(result.invisiblePage);
+            assert.isNotNull(result.aspectAttributes);
+            assert.equal(result.aspectAttributes.category, categoryMock);
+            assert.equal(result.aspectAttributes.product, mockProduct);
+            assert.isTrue(result.aspectAttributes.isHashMap);
+            assert.equal(stubGetPage.callCount, 4);
+        });
+
+        it('should return only a visible product page and aspect attributes when it is the only page found', function () {
+            var mockPage = { ID: 'mockPageId', isVisible: function () { return true; } };
+            stubGetPage.returns(mockPage);
+
+            var mockProduct = { variant: false, primaryCategory: categoryMock };
+            stubGetPage.withArgs(mockProduct, true, 'pdp').returns(mockPage);
 
             var result = productHelpers.getPageDesignerProductPage({ id: 'someID', raw: mockProduct }, res);
             assert.isNotNull(result);
@@ -284,13 +325,15 @@ describe('Helpers - Product', function () {
             assert.isTrue(stubGetPage.calledTwice);
         });
 
-        it('should return both a visible page and invisible page and aspect attributes when the pages are different', function () {
+        it('should return both a visible category page and invisible category page and aspect attributes when the pages are different', function () {
             var mockPage = { ID: 'mockPageId', isVisible: function () { return true; } };
             stubGetPage.returns(mockPage);
             var invisibleMockPage = { isVisible: function () { return false; }, ID: 'invisible' };
             stubGetPage.withArgs(categoryMock, false, 'pdp').returns(invisibleMockPage);
 
             var mockProduct = { variant: false, primaryCategory: categoryMock };
+            stubGetPage.withArgs(mockProduct, true, 'pdp').returns(null);
+            stubGetPage.withArgs(mockProduct, false, 'pdp').returns(null);
 
             var result = productHelpers.getPageDesignerProductPage({ id: 'someID', raw: mockProduct }, res);
             assert.isNotNull(result);
@@ -300,43 +343,67 @@ describe('Helpers - Product', function () {
             assert.equal(result.aspectAttributes.category, categoryMock);
             assert.equal(result.aspectAttributes.product, mockProduct);
             assert.isTrue(result.aspectAttributes.isHashMap);
-            assert.isTrue(stubGetPage.calledTwice);
+            assert.equal(stubGetPage.callCount, 4);
         });
 
         it('should use the primary category of a simple product', function () {
             stubGetPage.returns(null);
 
-            productHelpers.getPageDesignerProductPage({ id: 'someID', raw: { variant: false, primaryCategory: categoryMock } }, res);
-            assert.isTrue(stubGetPage.calledTwice);
+            var mockProduct = { variant: false, primaryCategory: categoryMock };
+            stubGetPage.withArgs(mockProduct, true, 'pdp').returns(null);
+            stubGetPage.withArgs(mockProduct, false, 'pdp').returns(null);
+
+            productHelpers.getPageDesignerProductPage({ id: 'someID', raw: mockProduct }, res);
+            assert.equal(stubGetPage.callCount, 4);
             assert.isTrue(stubGetPage.calledWith(categoryMock, true, 'pdp'));
             assert.isTrue(stubGetPage.calledWith(categoryMock, false, 'pdp'));
+            assert.isTrue(stubGetPage.calledWith(mockProduct, true, 'pdp'));
+            assert.isTrue(stubGetPage.calledWith(mockProduct, false, 'pdp'));
         });
 
         it('should use the master products primary category for a variation product', function () {
             stubGetPage.returns(null);
 
-            productHelpers.getPageDesignerProductPage({ id: 'someID', raw: { variant: true, masterProduct: { primaryCategory: categoryMock } } }, res);
-            assert.isTrue(stubGetPage.calledTwice);
+            var mockProduct = { variant: false, primaryCategory: categoryMock };
+            stubGetPage.withArgs(mockProduct, true, 'pdp').returns(null);
+            stubGetPage.withArgs(mockProduct, false, 'pdp').returns(null);
+
+            productHelpers.getPageDesignerProductPage({ id: 'someID', raw: mockProduct }, res);
+            assert.equal(stubGetPage.callCount, 4);
             assert.isTrue(stubGetPage.calledWith(categoryMock, true, 'pdp'));
             assert.isTrue(stubGetPage.calledWith(categoryMock, false, 'pdp'));
+            assert.isTrue(stubGetPage.calledWith(mockProduct, true, 'pdp'));
+            assert.isTrue(stubGetPage.calledWith(mockProduct, false, 'pdp'));
         });
 
         it('should use the classification category of a simple product without primary category', function () {
             stubGetPage.returns(null);
 
-            productHelpers.getPageDesignerProductPage({ id: 'someID', raw: { variant: false, classificationCategory: categoryMock } }, res);
-            assert.isTrue(stubGetPage.calledTwice);
+            var mockProduct = { variant: false, primaryCategory: categoryMock };
+            stubGetPage.withArgs(mockProduct, true, 'pdp').returns(null);
+            stubGetPage.withArgs(mockProduct, false, 'pdp').returns(null);
+
+            productHelpers.getPageDesignerProductPage({ id: 'someID', raw: mockProduct }, res);
+            assert.equal(stubGetPage.callCount, 4);
             assert.isTrue(stubGetPage.calledWith(categoryMock, true, 'pdp'));
             assert.isTrue(stubGetPage.calledWith(categoryMock, false, 'pdp'));
+            assert.isTrue(stubGetPage.calledWith(mockProduct, true, 'pdp'));
+            assert.isTrue(stubGetPage.calledWith(mockProduct, false, 'pdp'));
         });
 
         it('should use the master products classification category for a variation product, if the master has no primary category', function () {
             stubGetPage.returns(null);
 
-            productHelpers.getPageDesignerProductPage({ id: 'someID', raw: { variant: true, masterProduct: { classificationCategory: categoryMock } } }, res);
-            assert.isTrue(stubGetPage.calledTwice);
+            var mockProduct = { variant: false, primaryCategory: categoryMock };
+            stubGetPage.withArgs(mockProduct, true, 'pdp').returns(null);
+            stubGetPage.withArgs(mockProduct, false, 'pdp').returns(null);
+
+            productHelpers.getPageDesignerProductPage({ id: 'someID', raw: mockProduct }, res);
+            assert.equal(stubGetPage.callCount, 4);
             assert.isTrue(stubGetPage.calledWith(categoryMock, true, 'pdp'));
             assert.isTrue(stubGetPage.calledWith(categoryMock, false, 'pdp'));
+            assert.isTrue(stubGetPage.calledWith(mockProduct, true, 'pdp'));
+            assert.isTrue(stubGetPage.calledWith(mockProduct, false, 'pdp'));
         });
     });
 

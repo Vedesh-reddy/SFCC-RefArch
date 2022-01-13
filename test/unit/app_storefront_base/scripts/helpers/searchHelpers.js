@@ -37,7 +37,7 @@ describe('search helpers', function () {
             catalogMgrMock.getCategory.returns(categoryMock);
 
             pageMgrMock = {
-                getPage: sinon.stub()
+                getPageByCategory: sinon.stub()
             };
             searchHelpersMock = proxyquire(searchHelperPath, {
                 'dw/catalog/CatalogMgr': catalogMgrMock,
@@ -49,31 +49,31 @@ describe('search helpers', function () {
         });
 
         it('should return an object with null values, if no suitable page can be found', function () {
-            pageMgrMock.getPage.returns(null);
+            pageMgrMock.getPageByCategory.returns(null);
 
             var result = searchHelpersMock.getPageDesignerCategoryPage('someId');
             assert.isNotNull(result);
             assert.isNull(result.page);
             assert.isNull(result.invisiblePage);
             assert.isNull(result.aspectAttributes);
-            assert.isTrue(pageMgrMock.getPage.calledTwice);
+            assert.isTrue(pageMgrMock.getPageByCategory.calledTwice);
         });
 
         it('should return only invisible page if no visible page can be found', function () {
             var invisibleMockPage = { isVisible: function () { return false; }, ID: 'invisible' };
-            pageMgrMock.getPage.withArgs(categoryMock, false, 'plp').returns(invisibleMockPage);
+            pageMgrMock.getPageByCategory.withArgs(categoryMock, false, 'plp').returns(invisibleMockPage);
 
             var result = searchHelpersMock.getPageDesignerCategoryPage('someId');
             assert.isNotNull(result);
             assert.isNull(result.page);
             assert.strictEqual(result.invisiblePage, invisibleMockPage);
             assert.isNull(result.aspectAttributes);
-            assert.isTrue(pageMgrMock.getPage.calledTwice);
+            assert.isTrue(pageMgrMock.getPageByCategory.calledTwice);
         });
 
         it('should return only a visible page and aspect attributes when it is the only page found', function () {
             var mockPage = { ID: 'mockPageId', isVisible: function () { return true; } };
-            pageMgrMock.getPage.returns(mockPage);
+            pageMgrMock.getPageByCategory.returns(mockPage);
 
             var result = searchHelpersMock.getPageDesignerCategoryPage('someId');
             assert.isNotNull(result);
@@ -82,14 +82,14 @@ describe('search helpers', function () {
             assert.isNotNull(result.aspectAttributes);
             assert.equal(result.aspectAttributes.category, categoryMock);
             assert.isTrue(result.aspectAttributes.isHashMap);
-            assert.isTrue(pageMgrMock.getPage.calledTwice);
+            assert.isTrue(pageMgrMock.getPageByCategory.calledTwice);
         });
 
         it('should return both a visible page and invisible page and aspect attributes when the pages are different', function () {
             var mockPage = { ID: 'mockPageId', isVisible: function () { return true; } };
-            pageMgrMock.getPage.returns(mockPage);
+            pageMgrMock.getPageByCategory.returns(mockPage);
             var invisibleMockPage = { isVisible: function () { return false; }, ID: 'invisible' };
-            pageMgrMock.getPage.withArgs(categoryMock, false, 'plp').returns(invisibleMockPage);
+            pageMgrMock.getPageByCategory.withArgs(categoryMock, false, 'plp').returns(invisibleMockPage);
 
             var result = searchHelpersMock.getPageDesignerCategoryPage('someId');
             assert.isNotNull(result);
@@ -98,7 +98,7 @@ describe('search helpers', function () {
             assert.isNotNull(result.aspectAttributes);
             assert.equal(result.aspectAttributes.category, categoryMock);
             assert.isTrue(result.aspectAttributes.isHashMap);
-            assert.isTrue(pageMgrMock.getPage.calledTwice);
+            assert.isTrue(pageMgrMock.getPageByCategory.calledTwice);
         });
     });
 

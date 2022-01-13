@@ -11,6 +11,6 @@
     }
   ],
   "supported_object_types": [
-    "category"
+    "category", "product"
   ]
 }
