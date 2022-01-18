@@ -167,15 +167,21 @@ function updateShippingMethods(shipping) {
                 //
                 $.each(shippingMethods, function (methodIndex, shippingMethod) {
                     var tmpl = $('#shipping-method-template').clone();
+                    var lineItemUUIDPart = '';
+
+                    if ($(el).parents('.multi-shipping').length) {
+                        lineItemUUIDPart = '-' + shipping.productLineItems.items[0].UUID;
+                    }
+
                     // set input
                     $('input', tmpl)
-                        .prop('id', 'shippingMethod-' + shippingMethod.ID + '-' + shipping.UUID)
+                        .prop('id', 'shippingMethod-' + shippingMethod.ID + '-' + shipping.UUID + lineItemUUIDPart)
                         .prop('name', shippingMethodFormID)
                         .prop('value', shippingMethod.ID)
                         .attr('checked', shippingMethod.ID === selected.ID);
 
                     $('label', tmpl)
-                        .prop('for', 'shippingMethod-' + shippingMethod.ID + '-' + shipping.UUID);
+                        .prop('for', 'shippingMethod-' + shippingMethod.ID + '-' + shipping.UUID + lineItemUUIDPart);
                     // set shipping method name
                     $('.display-name', tmpl).text(shippingMethod.displayName);
                     // set or hide arrival time

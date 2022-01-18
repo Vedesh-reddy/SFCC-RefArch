@@ -4,7 +4,7 @@
     <isloop items="${shippingModel.applicableShippingMethods}" var="shippingMethod">
         <div class="form-check col-9 start-lines">
             <isinclude template="checkout/shipping/selectedShippingMethod"/>
-            <label class="form-check-label shipping-method-option" for="shippingMethod-${shippingMethod.ID}-${shippingModel.UUID}">
+            <label class="form-check-label shipping-method-option" for="shippingMethod-${shippingMethod.ID}-${shippingModel.UUID}${lineItem ? '-' + lineItem.UUID : ''}">
                 <span class="display-name">${shippingMethod.displayName}</span>
                 <isif condition="${shippingMethod.estimatedArrivalTime}">
                     <span class="text-muted arrival-time">(${shippingMethod.estimatedArrivalTime})</span>
@@ -22,8 +22,8 @@
 <!---------------------------------------------------------------------------------->
 <div id="shipping-method-template" style="display:none;" >
     <div class="form-check col-9 start-lines">
-        <input type="radio" class="form-check-input" id="shippingMethodRadioButton">
-        <label class="form-check-label shipping-method-option" for="shippingMethodRadioButton">
+        <input type="radio" class="form-check-input" id="shippingMethodRadioButton-${shippingModel.UUID}${lineItem ? '-' + lineItem.UUID : ''}">
+        <label class="form-check-label shipping-method-option" for="shippingMethodRadioButton-${shippingModel.UUID}${lineItem ? '-' + lineItem.UUID : ''}">
             <span class="display-name"></span>
             <span class="text-muted arrival-time" style="display:none"></span>
         </label>
