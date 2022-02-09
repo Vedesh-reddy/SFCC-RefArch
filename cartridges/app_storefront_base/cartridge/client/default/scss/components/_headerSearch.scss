@@ -76,6 +76,8 @@
 
     .swatch-circle {
         @include swatch(2.5em, $white);
+
+        margin-right: 0.85em;
     }
 
     .header {
@@ -90,6 +92,19 @@
 
     .items {
         padding: 0.313em 0;
+
+        .list {
+            padding: 0;
+            list-style-type: none;
+        }
+
+        .link {
+            text-decoration: none;
+
+            &:hover .name {
+                text-decoration: underline;
+            }
+        }
     }
 
     .item {
@@ -97,6 +112,9 @@
 
         .name {
             margin-top: 0.313em;
+        }
+
+        .ellipsis {
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
