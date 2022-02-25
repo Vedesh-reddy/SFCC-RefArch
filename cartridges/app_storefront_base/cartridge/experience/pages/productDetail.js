@@ -18,6 +18,7 @@ module.exports.render = function (context, modelIn) {
 
     var ProductFactory = require('*/cartridge/scripts/factories/product');
     var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
+    var URLUtils = require('dw/web/URLUtils');
 
     var page = context.page;
     model.page = page;
@@ -29,6 +30,7 @@ module.exports.render = function (context, modelIn) {
 
         pageMetaHelper.setPageMetaData(request.pageMetaData, product);
         pageMetaHelper.setPageMetaTags(request.pageMetaData, product);
+        model.canonicalUrl = URLUtils.url('Product-Show', 'pid', product.id);
     }
 
     // automatically register configured regions

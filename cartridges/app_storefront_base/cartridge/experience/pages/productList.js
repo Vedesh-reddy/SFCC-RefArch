@@ -25,6 +25,7 @@ module.exports.render = function (context, modelIn) {
         var ProductSearchModel = require('dw/catalog/ProductSearchModel');
         var searchHelper = require('*/cartridge/scripts/helpers/searchHelpers');
         var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
+        var URLUtils = require('dw/web/URLUtils');
 
         var apiProductSearch = new ProductSearchModel();
         var params = { cgid: categoryId };
@@ -32,6 +33,7 @@ module.exports.render = function (context, modelIn) {
 
         // we do not need to execute the search, that is handled by a component, we just need the meta tags
         pageMetaHelper.setPageMetaTags(request.pageMetaData, apiProductSearch);
+        model.canonicalUrl = URLUtils.url('Search-Show', 'cgid', categoryId);
     }
 
     // automatically register configured regions
