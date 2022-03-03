@@ -5,7 +5,7 @@
  */
 
 var server = require('server');
-
+var System = require('dw/system/System');
 var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 
 /**
@@ -39,7 +39,7 @@ server.get('AjaxFail', function (req, res, next) {
 });
 
 /**
- * CSRF-Generate : This endpoint generates a CSRF token... This is made for integration test purposes
+ * CSRF-Generate : This endpoint generates a CSRF token... This is made for integration test purposes, and is only available in non-production environments
  * @name Base/CSRF-Generate
  * @function
  * @memberof CSRF
@@ -47,9 +47,11 @@ server.get('AjaxFail', function (req, res, next) {
  * @param {returns} - isml
  * @param {serverfunction} - get
  */
-server.post('Generate', csrfProtection.generateToken, function (req, res, next) {
-    res.json();
-    next();
-});
+if (System.getInstanceType() !== System.PRODUCTION_SYSTEM) {
+    server.post('Generate', csrfProtection.generateToken, function (req, res, next) {
+        res.json();
+        next();
+    });
+}
 
 module.exports = server.exports();

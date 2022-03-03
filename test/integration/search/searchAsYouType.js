@@ -31,18 +31,10 @@ describe('Search As You Type - general product', function () {
             assert.equal(response.statusCode, 200, 'Expected GET SearchServices-GetSuggestions call statusCode to be 200.');
             var $ = cheerio.load(response.body);
 
-            var prod = $('.container a');
-            // Determining if pretty-URLs is enabled to differentiate test case usage
-            var prettyURL = prod.get(0).attribs.href;
-            if (prettyURL.includes('/s/RefArch/')) {
-                assert.isTrue(prod.get(0).children[0].next.attribs.alt.endsWith('Top'));
-                assert.isTrue(prod.get(1).children[0].next.attribs.alt.endsWith('Top'));
-                assert.isTrue(prod.get(2).children[0].next.attribs.alt.endsWith('Top'));
-            } else {
-                assert.isTrue(prod.get(0).children[0].next.next.attribs.alt.endsWith('Top'));
-                assert.isTrue(prod.get(1).children[0].next.next.attribs.alt.endsWith('Top'));
-                assert.isTrue(prod.get(2).children[0].next.next.attribs.alt.endsWith('Top'));
-            }
+            var prod = $('.container a img');
+            assert.isTrue(prod.get(0).attribs.alt.endsWith('Top'));
+            assert.isTrue(prod.get(1).attribs.alt.endsWith('Top'));
+            assert.isTrue(prod.get(2).attribs.alt.endsWith('Top'));
             done();
         });
     });

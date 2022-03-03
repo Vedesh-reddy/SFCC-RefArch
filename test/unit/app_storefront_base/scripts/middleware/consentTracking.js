@@ -1,64 +1,102 @@
 'use strict';
 
-var assert = require('chai').assert;
+var chai = require('chai');
+var chaiSubset = require('chai-subset');
 var sinon = require('sinon');
+var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
+var SimpleCache = require('../../../../../cartridges/modules/server/simpleCache');
+var assert = chai.assert;
 
-var gdprMiddleware = require('../../../../../cartridges/app_storefront_base/cartridge/scripts/middleware/consentTracking');
+chai.use(chaiSubset);
+
+var csrfProtection = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/middleware/csrf', {
+    'dw/web/CSRFProtection': {
+        getTokenName: sinon.stub().returns('token_name'),
+        generateToken: sinon.stub().returns('token_value')
+    },
+    'dw/customer/CustomerMgr': {},
+    'dw/web/URLUtils': {}
+});
+var consentTracking = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/middleware/consentTracking', {
+    '*/cartridge/scripts/middleware/csrf': csrfProtection
+});
+var Response = proxyquire('../../../../../cartridges/modules/server/response', {
+    '*/cartridge/config/httpHeadersConf': []
+});
 
 describe('gdpr consent', function () {
-    var next = sinon.spy();
-    var req = {
-        session: {
-            privacyCache: {
-                map: new Map(), // eslint-disable-line no-undef
-                get: function (key) { // eslint-disable-line no-unused-vars
-                    return this.map.get(key);
-                },
-                set: function (key, value) { // eslint-disable-line no-unused-vars
-                    this.map.set(key, value);
-                },
-                key: 'consent'
-            },
-            raw: {
-                setTrackingAllowed: function () {}
+    var req;
+    var res;
+    var next;
+    var key = 'consent';
+    beforeEach(function () {
+        req = {
+            session: {
+                privacyCache: new SimpleCache(),
+                raw: { setTrackingAllowed: sinon.stub() }
             }
-        }
-    };
-    var res = {
-        redirect: sinon.spy(),
-        setStatusCode: sinon.spy(),
-        setViewData: sinon.spy()
-    };
-
-    afterEach(function () {
-        next.reset();
-        res.setViewData.reset();
+        };
+        res = new Response({});
+        sinon.spy(res, 'setViewData');
+        next = sinon.stub();
     });
 
-    it('Should set the consented flag to null if consent has not been given', function () {
-        req.session.privacyCache.set('consent', null);
-        var consented = req.session.privacyCache.get('consent');
-        gdprMiddleware.consent(req, res, next);
-        assert.equal(consented, null);
-        assert.isTrue(res.setViewData.calledOnce);
+    it('Sets the consented flag to null if it has not been set', function () {
+        req.session.privacyCache.clear();
+        consentTracking.consent(req, res, next);
+        assert.isNull(req.session.privacyCache.get(key));
+    });
+
+    it('Sets tracking allowed to false if consented is false', function () {
+        req.session.privacyCache.set(key, false);
+        consentTracking.consent(req, res, next);
+        assert(req.session.raw.setTrackingAllowed.calledWith(false));
+    });
+
+    it('Sets tracking allowed to true if consented is true', function () {
+        req.session.privacyCache.set(key, true);
+        consentTracking.consent(req, res, next);
+        assert(req.session.raw.setTrackingAllowed.calledWith(true));
+    });
+
+    it('Sets tracking view data to false if consented is false', function () {
+        req.session.privacyCache.set(key, false);
+        consentTracking.consent(req, res, next);
+        assert(res.setViewData.calledWith({ tracking_consent: false }));
+    });
+
+    it('Sets tracking view data to true if consented is true', function () {
+        req.session.privacyCache.set(key, true);
+        consentTracking.consent(req, res, next);
+        assert(res.setViewData.calledWith({ tracking_consent: true }));
+    });
+
+    it('Adds a CSRF token if one is not present', function () {
+        assert.isUndefined(res.getViewData().csrf);
+        consentTracking.consent(req, res, next);
+        assert.containSubset(res.getViewData(), {
+            csrf: {
+                tokenName: 'token_name',
+                token: 'token_value'
+            }
+        });
         assert.isTrue(next.calledOnce);
     });
 
-    it('Should set the consented flag to false if the consented is false', function () {
-        req.session.privacyCache.set('consent', false);
-        var consented = req.session.privacyCache.get('consent');
-        gdprMiddleware.consent(req, res, next);
-        assert.equal(consented, false);
-        assert.isTrue(res.setViewData.calledOnce);
-        assert.isTrue(next.calledOnce);
-    });
-
-    it('Should set the consented flag to true if the consented is true', function () {
-        req.session.privacyCache.set('consent', true);
-        var consented = req.session.privacyCache.get('consent');
-        gdprMiddleware.consent(req, res, next);
-        assert.equal(consented, true);
-        assert.isTrue(res.setViewData.calledOnce);
+    it('Does not add a CSRF token if one is already present', function () {
+        res.setViewData({
+            csrf: {
+                tokenName: 'existing_name',
+                token: 'existing_value'
+            }
+        });
+        consentTracking.consent(req, res, next);
+        assert.containSubset(res.getViewData(), {
+            csrf: {
+                tokenName: 'existing_name',
+                token: 'existing_value'
+            }
+        });
         assert.isTrue(next.calledOnce);
     });
 });

@@ -6,16 +6,19 @@ var focusHelper = require('../components/focus');
  * Renders a modal window that will track the users consenting to accepting site tracking policy
  */
 function showConsentModal() {
-    if (!$('.tracking-consent').data('caonline')) {
+    var trackingConsentData = $('.tracking-consent');
+    if (!trackingConsentData.data('caonline')) {
         return;
     }
 
-    var urlContent = $('.tracking-consent').data('url');
-    var urlAccept = $('.tracking-consent').data('accept');
-    var urlReject = $('.tracking-consent').data('reject');
-    var textYes = $('.tracking-consent').data('accepttext');
-    var textNo = $('.tracking-consent').data('rejecttext');
-    var textHeader = $('.tracking-consent').data('heading');
+    var urlContent = trackingConsentData.data('url');
+    var urlAccept = trackingConsentData.data('accept');
+    var urlReject = trackingConsentData.data('reject');
+    var textYes = trackingConsentData.data('accepttext');
+    var textNo = trackingConsentData.data('rejecttext');
+    var textHeader = trackingConsentData.data('heading');
+    var tokenName = trackingConsentData.data('tokenname');
+    var token = trackingConsentData.data('token');
 
     var htmlString = '<!-- Modal -->'
         + '<div class="modal show" id="consent-tracking" aria-modal="true" role="dialog" style="display: block;">'
@@ -58,17 +61,25 @@ function showConsentModal() {
     $('#consent-tracking .button-wrapper button').click(function (e) {
         e.preventDefault();
         var url = $(this).data('url');
+        var data = {};
+        data[tokenName] = token;
         $.ajax({
             url: url,
-            type: 'get',
+            type: 'post',
+            data: data,
             dataType: 'json',
-            success: function () {
-                $('#consent-tracking').remove();
-                $.spinner().stop();
+            success: function (response) {
+                // Only hide modal if the operation is successful - don't want to give a false impression
+                if (response.success) {
+                    $('#consent-tracking').remove();
+                    $.spinner().stop();
+                }
             },
-            error: function () {
-                $('#consent-tracking').remove();
-                $.spinner().stop();
+            error: function (err) {
+                // Expected error response is for CSRF failure, which will include a redirect to CSRF-Fail
+                if (err.responseJSON.redirectUrl) {
+                    window.location.href = err.responseJSON.redirectUrl;
+                }
             }
         });
     });

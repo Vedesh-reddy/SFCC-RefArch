@@ -1,103 +1,106 @@
 'use strict';
 
-var assert = require('chai').assert;
+var chai = require('chai');
 var sinon = require('sinon');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-var csrfProtection = {
-    validateRequest: function () { return false; },
-    getTokenName: function () { return 'name'; },
-    generateToken: function () { return 'token'; }
-};
-var logoutCustomer = { logoutCustomer: function () { return {}; } };
+// Merge assert libraries for simplicity, with chai taking precedence
+// Only overlap (at this time) is `fail` and `match`
+var assert = Object.assign({}, sinon.assert, chai.assert);
 
-var logoutStub = sinon.stub(logoutCustomer, 'logoutCustomer', function () { return {}; });
-
-var validateRequestStub = sinon.stub(csrfProtection, 'validateRequest');
-var getTokenNameStub = sinon.stub(csrfProtection, 'getTokenName');
-var generateTokenStub = sinon.stub(csrfProtection, 'generateToken');
-
-
-var csrfMiddleware = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/middleware/csrf', {
-    'dw/web/CSRFProtection': {
-        validateRequest: validateRequestStub,
-        getTokenName: getTokenNameStub,
-        generateToken: generateTokenStub
-    },
-    'dw/customer/CustomerMgr': {
-        logoutCustomer: logoutStub
-    },
-    'dw/web/URLUtils': {
-        url: function () {
-            return 'some url';
-        }
-    }
+var Response = proxyquire('../../../../../cartridges/modules/server/response', {
+    '*/cartridge/config/httpHeadersConf': []
 });
 
-describe('middleware', function () {
-    var next = null;
-    var res = {
-        redirect: function () {
-            return 'I got redirected';
-        },
-        setStatusCode: function () {
-            return 'status code set';
-        },
-        setViewData: function () {
-            return 'data set';
-        }
-    };
+var CSRFProtection = {
+    validateRequest: sinon.stub().returns(false),
+    getTokenName: sinon.stub().returns('name'),
+    generateToken: sinon.stub().returns('token')
+};
+
+var CustomerMgr = {
+    logoutCustomer: sinon.stub()
+};
+
+var URLUtils = {
+    url: sinon.stub()
+};
+
+var csrfMiddleware = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/middleware/csrf', {
+    'dw/web/CSRFProtection': CSRFProtection,
+    'dw/customer/CustomerMgr': CustomerMgr,
+    'dw/web/URLUtils': URLUtils
+});
+
+describe('CSRF middleware', function () {
+    var res;
+    var next = sinon.stub();
 
     beforeEach(function () {
-        next = sinon.spy();
+        res = new Response({});
     });
 
     afterEach(function () {
+        CSRFProtection.validateRequest.reset();
+        CSRFProtection.validateRequest.resetBehavior();
+        CustomerMgr.logoutCustomer.reset();
         next.reset();
-        validateRequestStub.reset();
-        logoutStub.reset();
     });
 
     it('Should validate a request', function () {
-        validateRequestStub.onCall(0).returns(true);
-
+        CSRFProtection.validateRequest.returns(true);
         csrfMiddleware.validateRequest(null, res, next);
-        assert.isTrue(validateRequestStub.calledOnce);
-        assert.isTrue(logoutStub.notCalled);
-        assert.isTrue(next.calledOnce);
+        assert.calledOnce(CSRFProtection.validateRequest);
+        assert.notCalled(CustomerMgr.logoutCustomer);
+        assert.calledOnce(next);
     });
 
     it('Should invalidate a request', function () {
-        validateRequestStub.onCall(0).returns(false);
-
+        CSRFProtection.validateRequest.returns(false);
         csrfMiddleware.validateRequest(null, res, next);
-        assert.isTrue(validateRequestStub.calledOnce);
-        assert.isTrue(logoutStub.calledOnce);
-        assert.isTrue(next.calledOnce);
+        assert.calledOnce(CSRFProtection.validateRequest);
+        assert.calledOnce(CustomerMgr.logoutCustomer);
+        assert.calledOnce(next);
     });
 
     it('Should validate an Ajax request', function () {
-        validateRequestStub.onCall(0).returns(true);
-
-        csrfMiddleware.validateAjaxRequest(null, res, next);
-        assert.isTrue(validateRequestStub.calledOnce);
-        assert.isTrue(logoutStub.notCalled);
-        assert.isTrue(next.calledOnce);
+        CSRFProtection.validateRequest.returns(true);
+        csrfMiddleware.validateRequest(null, res, next);
+        assert.calledOnce(CSRFProtection.validateRequest);
+        assert.notCalled(CustomerMgr.logoutCustomer);
+        assert.calledOnce(next);
     });
 
     it('Should invalidate an Ajax request', function () {
-        validateRequestStub.onCall(0).returns(false);
-
+        CSRFProtection.validateRequest.returns(false);
         csrfMiddleware.validateAjaxRequest(null, res, next);
-        assert.isTrue(validateRequestStub.calledOnce);
-        assert.isTrue(logoutStub.calledOnce);
-        assert.isTrue(next.calledOnce);
+        assert.calledOnce(CSRFProtection.validateRequest);
+        assert.calledOnce(CustomerMgr.logoutCustomer);
+        assert.calledOnce(next);
     });
 
-    it('Should generateToken a token', function () {
+    it('Should generate a token', function () {
+        assert.isUndefined(res.viewData.csrf);
         csrfMiddleware.generateToken(null, res, next);
-        assert.isTrue(getTokenNameStub.calledOnce);
-        assert.isTrue(generateTokenStub.calledOnce);
-        assert.isTrue(next.calledOnce);
+        assert.deepEqual(res.viewData.csrf, {
+            tokenName: 'name',
+            token: 'token'
+        });
+        assert.calledOnce(next);
+    });
+
+    it('should not generate a token if one is already present', function () {
+        res.setViewData({
+            csrf: {
+                tokenName: 'original_name',
+                token: 'original_token'
+            }
+        });
+        csrfMiddleware.generateToken(null, res, next);
+        assert.deepEqual(res.viewData.csrf, {
+            tokenName: 'original_name',
+            token: 'original_token'
+        });
+        assert.calledOnce(next);
     });
 });

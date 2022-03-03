@@ -64,11 +64,13 @@
             <button type="button" class="api-${pdict.consentApi} ${pdict.tracking_consent == null ? '' : 'consented' } tracking-consent tracking-consent-btn"
                 data-caOnline="${pdict.caOnline}"
                 data-url="${URLUtils.url('ConsentTracking-GetContent', 'cid', 'tracking_hint')}"
-                data-reject="${URLUtils.url('ConsentTracking-SetSession', 'consent', 'false')}"
-                data-accept="${URLUtils.url('ConsentTracking-SetSession', 'consent', 'true')}"
+                data-reject="${URLUtils.url('ConsentTracking-SetConsent', 'consent', 'false')}"
+                data-accept="${URLUtils.url('ConsentTracking-SetConsent', 'consent', 'true')}"
                 data-acceptText="${Resource.msg('button.consentTracking.yes', 'common', null)}"
                 data-rejectText="${Resource.msg('button.consentTracking.no', 'common', null)}"
                 data-heading="${Resource.msg('heading.consentTracking.track.consent', 'common', null)}"
+                data-tokenName="${pdict.csrf.tokenName}"
+                data-token="${pdict.csrf.token}"
             >
                 ${Resource.msg('link.tracking.consent','account',null)}
             </button>
