@@ -3,6 +3,6 @@
     width: $diameter;
     height: $diameter;
     background: $color;
-    -moz-border-radius: $diameter/2;
-    border-radius: $diameter/2;
+    -moz-border-radius: calc($diameter / 2);
+    border-radius: calc($diameter / 2);
 }

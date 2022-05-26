@@ -28,7 +28,7 @@ $arrow-height: 1.25em; /* 20/16 */
         font-size: 0.928rem;
         min-width: 20rem;
         max-width: 15rem;
-        transform: translate(-50%, -$arrow-height/2);
+        transform: translate(-50%, calc(-1 * $arrow-height / 2));
         left: 50%;
         margin-left: 4px;
         animation: fade-in 0.5s linear forwards;
@@ -49,10 +49,10 @@ $arrow-height: 1.25em; /* 20/16 */
         }
 
         &::after {
-            border-left: solid transparent $arrow-height/2; /* 10/16 */
-            border-right: solid transparent $arrow-height/2; /* 10/16 */
-            border-top: solid $grey6 $arrow-height/2;
-            bottom: -$arrow-height/2;
+            border-left: solid transparent calc($arrow-height / 2); /* 10/16 */
+            border-right: solid transparent calc($arrow-height / 2); /* 10/16 */
+            border-top: solid $grey6 calc($arrow-height / 2);
+            bottom: calc(-1 * $arrow-height / 2);
             content: " ";
             height: 0;
             left: 50%;
