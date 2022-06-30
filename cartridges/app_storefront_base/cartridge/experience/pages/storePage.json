@@ -36,6 +36,14 @@
         "component_type_exclusions": [
           { "type_id": "commerce_assets.campaignBanner" }
         ]
+      },
+      {
+        "id":"legalnotice",
+        "name":"Legal Notice Text",
+        "max_components": 1,
+        "component_type_inclusions": [
+          { "type_id": "commerce_assets.editorialRichText" }
+        ]
       }
     ]
 }

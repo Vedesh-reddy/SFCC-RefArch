@@ -11,6 +11,9 @@
             <div class="row">
                 <isprint value="${pdict.regions.main.setClassName("col-12").render()}" encoding="off" />
             </div>
+            <div class="row">
+                <isprint value="${pdict.regions.legalnotice.setClassName("col-12").render()}" encoding="off" />
+            </div>
         </div>
     </div>
 </isdecorate>
