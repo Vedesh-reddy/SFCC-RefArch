@@ -27,7 +27,7 @@
 			missing-error="error.message.required"
 			parse-error="error.message.parse.email.profile.form"
 			range-error="error.message.50orless"
-			regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$"
+			regexp="^[\w.%+-]+@[\w.-]+\.\w{2,}$"
 			value-error="ValueErrorText"
 			type="string"/>
 			<!-- TODO value-error not comming back from the platform -->
@@ -40,7 +40,7 @@
 			missing-error="error.message.required"
 			parse-error="error.message.parse.email.profile.form"
 			range-error="error.message.50orless"
-			regexp="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$"
+			regexp="^[\w.%+-]+@[\w.-]+\.\w{2,}$"
 			value-error="ValueErrorText"
 			type="string"/>
 			<!-- TODO value-error not comming back from the platform -->

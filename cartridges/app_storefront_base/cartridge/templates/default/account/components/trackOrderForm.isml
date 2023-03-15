@@ -35,7 +35,7 @@
                 id="trackorder-form-email"
                 aria-describedby="form-email-error"
                 name="trackOrderEmail"
-                pattern="^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$"
+                pattern="^[\w.%+-]+@[\w.-]+\.\w{2,}$"
                 maxlength="50">
             <div class="invalid-feedback" id="form-email-error"></div>
         </div>

@@ -28,7 +28,7 @@ function send(emailObj, template, context) {
  * @returns {boolean} Whether email is valid
  */
 function validateEmail(email) {
-    var regex = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
+    var regex = /^[\w.%+-]+@[\w.-]+\.\w{2,}$/;
     return regex.test(email);
 }
 

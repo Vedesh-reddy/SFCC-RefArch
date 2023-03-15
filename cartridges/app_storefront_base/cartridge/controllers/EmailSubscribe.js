@@ -7,16 +7,6 @@
 var server = require('server');
 
 /**
- * Checks if the email value entered is correct format
- * @param {string} email - email string to check if valid
- * @returns {boolean} Whether email is valid
- */
-function validateEmail(email) {
-    var regex = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
-    return regex.test(email);
-}
-
-/**
  * EmailSubscribe-Subscribe : The EmailSubscribe-Subscribe enpoint allows the shopper to submit their eamil address to be added to a mailing list. OOB SFRA does not have a mailing list feature however this endpoint call a hook would allow for a customer to easily allow for custiomization
  * @name Base/EmailSubscribe-Subscribe
  * @function
@@ -29,13 +19,14 @@ function validateEmail(email) {
 server.post('Subscribe', function (req, res, next) {
     var Resource = require('dw/web/Resource');
     var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
+    var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
 
     var email = req.form.emailId;
-    var isValidEmailid;
+    var isValidEmail;
     if (email) {
-        isValidEmailid = validateEmail(email);
+        isValidEmail = emailHelpers.validateEmail(email);
 
-        if (isValidEmailid) {
+        if (isValidEmail) {
             hooksHelper('app.mailingList.subscribe', 'subscribe', [email], function () {});
             res.json({
                 success: true,
