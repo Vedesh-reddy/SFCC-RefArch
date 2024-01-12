@@ -28,7 +28,7 @@ describe('Helpers - URL', function () {
 
     describe('appendQueryParams() function', function () {
         beforeEach(function () {
-            querystringStub.reset()
+            querystringStub.resetHistory()
                 .withArgs(target)
                 .returns({
                     def: 123,

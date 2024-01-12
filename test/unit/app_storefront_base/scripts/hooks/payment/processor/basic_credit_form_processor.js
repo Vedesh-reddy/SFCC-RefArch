@@ -96,7 +96,7 @@ describe('basic credit form processor', function () {
         },
         'dw/customer/CustomerMgr': {
             getCustomerByCustomerNumber: function () {
-                return;
+
             }
         }
     });

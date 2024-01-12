@@ -1,4 +1,8 @@
-const { I, data, pageDesigner, utilities } = inject();
+'use strict';
+
+const {
+    I, data, pageDesigner, utilities
+} = inject();
 
 Then('shopper should see the shop category heading', () => {
     I.see(data.pageDesigner.shopCategoryTitle, pageDesigner.locators.shopCategoryHeading);

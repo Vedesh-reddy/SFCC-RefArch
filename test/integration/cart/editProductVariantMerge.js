@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -8,9 +10,9 @@ chai.use(chaiSubset);
 describe('Edit product variant for merging products', function () {
     this.timeout(45000);
 
-    var variantPid1 = '701643421084M';   // 3/4 Sleeve V-Neck Top: icy mint, XS
+    var variantPid1 = '701643421084M'; // 3/4 Sleeve V-Neck Top: icy mint, XS
     var qty1 = 1;
-    var variantPid2 = '701643421060M';   // 3/4 Sleeve V-Neck Top: yellow, XS
+    var variantPid2 = '701643421060M'; // 3/4 Sleeve V-Neck Top: yellow, XS
     var qty2 = 1;
 
     var newQty1;
@@ -62,7 +64,7 @@ describe('Edit product variant for merging products', function () {
             // ----- select a shipping method. Need to have shipping method so that shipping cost, sales tax,
             //       and grand total can be calculated
             .then(function () {
-                var shipMethodId = '001';   // 001 = Ground
+                var shipMethodId = '001'; // 001 = Ground
 
                 myRequest.method = 'POST';
                 myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
@@ -86,7 +88,7 @@ describe('Edit product variant for merging products', function () {
         newQty1 = 4;
         var newTotalQty = newQty1 + qty2;
 
-        var newVariantPid1 = '701643421060M';   // 3/4 Sleeve V-Neck Top: Yellow, S
+        var newVariantPid1 = '701643421060M'; // 3/4 Sleeve V-Neck Top: Yellow, S
 
         var expectedUpdateRep = {
             'action': 'Cart-EditProductLineItem',
@@ -179,4 +181,3 @@ describe('Edit product variant for merging products', function () {
             });
     });
 });
-

@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -71,7 +73,7 @@ describe('Remove product variant from line item', function () {
             // ----- select a shipping method. Need shipping method so that shipping cost, sales tax,
             //       and grand total can be calculated.
             .then(function () {
-                var shipMethodId = '001';   // 001 = Ground
+                var shipMethodId = '001'; // 001 = Ground
 
                 myRequest.method = 'POST';
                 myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
@@ -175,7 +177,6 @@ describe('Remove product variant from line item', function () {
             });
     });
 
-
     it(' 2>. should return error if PID and UUID does not match', function () {
         var variantUuid3 = prodIdUuidMap[variantPid3];
 
@@ -190,9 +191,11 @@ describe('Remove product variant from line item', function () {
 
                 var bodyAsJson = JSON.parse(err.response.body);
 
-                assert.equal(bodyAsJson.errorMessage,
+                assert.equal(
+                    bodyAsJson.errorMessage,
                     'Unable to remove item from the cart. Please try again! If the issue continues please contact customer service.',
-                    'Actual error message from removing  product item with non-matching PID and UUID  not as expected');
+                    'Actual error message from removing  product item with non-matching PID and UUID  not as expected'
+                );
             });
     });
 
@@ -262,9 +265,11 @@ describe('Remove product variant from line item', function () {
 
                 var bodyAsJson = JSON.parse(err.response.body);
 
-                assert.equal(bodyAsJson.errorMessage,
+                assert.equal(
+                    bodyAsJson.errorMessage,
                     'Unable to remove item from the cart. Please try again! If the issue continues please contact customer service.',
-                    'Actual error message of removing non-existing product item not as expected');
+                    'Actual error message of removing non-existing product item not as expected'
+                );
             });
     });
 });

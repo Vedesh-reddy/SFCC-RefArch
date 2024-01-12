@@ -9,7 +9,7 @@
                 <div class="col-4 col-sm-2">
                     <div class="item-image"><img class="product-image" src="${potentialProduct.images.medium[0].url}" alt="${potentialProduct.images.medium[0].alt}" title="${potentialProduct.images.medium[0].title}"></div>
                 </div>
-                <div class="col-7 col-sm-9"
+                <div class="col-7 col-sm-9">
                     <p class="line-item-attributes">${potentialProduct.productName}</p>
                 </div>
             </div>

@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -63,9 +65,11 @@ describe('Remove bundle from product line item', function () {
 
                 var bodyAsJson = JSON.parse(error.response.body);
 
-                assert.equal(bodyAsJson.errorMessage,
+                assert.equal(
+                    bodyAsJson.errorMessage,
                     'Unable to remove item from the cart. Please try again! If the issue continues please contact customer service.',
-                    'Actual error message from removing  product item with non-matching PID and UUID  not as expected');
+                    'Actual error message from removing  product item with non-matching PID and UUID  not as expected'
+                );
             });
     });
     it('3. should return error if bundle does not exist in Cart', function () {
@@ -80,9 +84,11 @@ describe('Remove bundle from product line item', function () {
 
                 var bodyAsJson = JSON.parse(error.response.body);
 
-                assert.equal(bodyAsJson.errorMessage,
+                assert.equal(
+                    bodyAsJson.errorMessage,
                     'Unable to remove item from the cart. Please try again! If the issue continues please contact customer service.',
-                    'Actual error message from removing  product item with non-matching PID and UUID  not as expected');
+                    'Actual error message from removing  product item with non-matching PID and UUID  not as expected'
+                );
             });
     });
 });

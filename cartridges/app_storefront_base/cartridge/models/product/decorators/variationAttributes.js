@@ -10,7 +10,8 @@ module.exports = function (object, variationModel, config) {
                 variationModel,
                 config,
                 config.selectedOptionsQueryParams,
-                object.selectedQuantity)).slice(0)
+                object.selectedQuantity
+            )).slice(0)
             : null
     });
 };

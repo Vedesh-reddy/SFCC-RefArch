@@ -96,7 +96,8 @@ describe('route', function () {
         }
         var res = {
             log: function () {},
-            setViewData: mockRes.setViewData };
+            setViewData: mockRes.setViewData
+        };
         var route = new Route('test', [tempFunc], mockReq, res);
         assert.throws(function () { route.getRoute()(); });
     });

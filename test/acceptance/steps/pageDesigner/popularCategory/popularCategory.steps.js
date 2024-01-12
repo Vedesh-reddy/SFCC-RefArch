@@ -1,3 +1,5 @@
+'use strict';
+
 const { I, pageDesigner } = inject();
 
 Then('shopper should see the popularCategories layout', () => {
@@ -18,8 +20,6 @@ Then('shopper should see the popularCategory components', () => {
     I.see('Feeling Red', el);
 });
 
-
 Then('shopper can click on a popular category', () => {
     pageDesigner.clickPopulareCategory(1, '.popular-category', '/s/RefArch/new arrivals/womens/?lang=default');
 });
-

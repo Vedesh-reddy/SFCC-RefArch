@@ -37,7 +37,6 @@ var productMock = {
 
 var Money = require('../../../mocks/dw.value.Money');
 
-
 var createApiBasket = function (options) {
     var safeOptions = options || {};
 
@@ -59,7 +58,6 @@ var createApiBasket = function (options) {
         totalTax: new Money(true),
         shippingTotalPrice: new Money(true)
     };
-
 
     if (safeOptions.shipping) {
         basket.shipments = [safeOptions.shipping];
@@ -103,9 +101,8 @@ describe('cart', function () {
 
     it('should get shippingMethods from the shipping model', function () {
         var result = new Cart(createApiBasket());
-        assert.equal(result.shipments[0].shippingMethods[0].description, 'Order received within 7-10 ' +
-            'business days'
-        );
+        assert.equal(result.shipments[0].shippingMethods[0].description, 'Order received within 7-10 '
+            + 'business days');
         assert.equal(result.shipments[0].shippingMethods[0].displayName, 'Ground');
         assert.equal(result.shipments[0].shippingMethods[0].ID, '001');
         assert.equal(result.shipments[0].shippingMethods[0].shippingCost, '$0.00');

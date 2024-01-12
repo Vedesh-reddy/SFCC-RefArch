@@ -2,7 +2,6 @@
 
 var BaseAttributeValue = require('*/cartridge/models/search/attributeRefinementValue/base');
 
-
 /**
  * @constructor
  * @classdesc Color attribute refinement value model

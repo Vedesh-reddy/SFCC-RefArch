@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var searchHelperPath = '../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/searchHelpers';
 var searchHelpers = require(searchHelperPath);
@@ -126,7 +128,6 @@ describe('search helpers', function () {
             }
         });
 
-
         it('should call setProductProperties', function () {
             searchHelpersMock.setupSearch(mockApiProductSearch, mockParams1);
             assert.isTrue(setProductPropertiesSpy.calledWith(mockApiProductSearch, mockParams1, mockSelectedCategory, mockParams2.srule));
@@ -221,10 +222,10 @@ describe('search helpers', function () {
         var searchHelpersMock3 = proxyquire(searchHelperPath, {
             'dw/catalog/CatalogMgr': {
                 getSortingOptions: function () {
-                    return;
+
                 },
                 getSiteCatalog: function () {
-                    return { getRoot: function () { return; } };
+                    return { getRoot: function () { } };
                 },
                 getSortingRule: function (rule) {
                     return rule;
@@ -247,10 +248,10 @@ describe('search helpers', function () {
             },
             '*/cartridge/scripts/helpers/pageMetaHelper': {
                 setPageMetaTags: function () {
-                    return;
+
                 },
                 setPageMetaData: function () {
-                    return;
+
                 }
             },
             '*/cartridge/scripts/helpers/structuredDataHelper': {
@@ -266,10 +267,10 @@ describe('search helpers', function () {
             },
             '*/cartridge/scripts/search/search': {
                 setProductProperties: function () {
-                    return;
+
                 },
                 addRefinementValues: function () {
-                    return;
+
                 }
             }
         });
@@ -283,11 +284,15 @@ describe('search helpers', function () {
             querystring: {}
         };
         var mockRequest2 = { querystring: { q: 'someValue' } };
-        var mockRequest3 = { querystring: { cgid: 'someCategory', preferences: 'preferences', pmin: 'pmin', pmax: 'pmax' } };
+        var mockRequest3 = {
+            querystring: {
+                cgid: 'someCategory', preferences: 'preferences', pmin: 'pmin', pmax: 'pmax'
+            }
+        };
 
         afterEach(function () {
             productSearchStub.reset();
-            searchSpy.reset();
+            searchSpy.resetHistory();
         });
 
         it('should category search', function () {

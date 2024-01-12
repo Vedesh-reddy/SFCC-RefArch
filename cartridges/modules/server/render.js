@@ -1,4 +1,5 @@
 'use strict';
+
 /* global XML */
 
 var isml = require('dw/template/ISML');
@@ -58,8 +59,8 @@ function xml(viewData, response) {
         if (key === 'xml') {
             xmlData += viewData[key];
         } else {
-            xmlData +=
-                '<' + key + '>' + viewData[key].replace(/[<>&"']/g, function (ch) {
+            xmlData
+                += '<' + key + '>' + viewData[key].replace(/[<>&"']/g, function (ch) {
                     return XML_CHAR_MAP[ch];
                 }) + '</' + key + '>';
         }

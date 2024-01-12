@@ -5,7 +5,6 @@ var Template = require('dw/util/Template');
 var money = require('dw/value/Money');
 var collections = require('*/cartridge/scripts/util/collections');
 
-
 /**
  * Return root price book for a given price book
  * @param {dw.catalog.PriceBook} priceBook - Provided price book

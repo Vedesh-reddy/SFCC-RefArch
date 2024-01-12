@@ -1,4 +1,5 @@
 'use strict';
+
 var collections = require('*/cartridge/scripts/util/collections');
 
 module.exports = function (object, promotions) {

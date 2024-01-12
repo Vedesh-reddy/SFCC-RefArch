@@ -1,4 +1,8 @@
-const { I, data, homePage, productPage, cartPage, checkoutPage } = inject();
+'use strict';
+
+const {
+    I, data, homePage, productPage, cartPage, checkoutPage
+} = inject();
 let product;
 
 Given('Shopper searches for {string}', (inputProduct) => {
@@ -22,8 +26,14 @@ When('he adds the product to cart', async () => {
 Then('he is able to see the correct product in cart', () => {
     productPage.viewCart();
     I.see(product, cartPage.locators.lineItemName);
-    cartPage.verifyCart(data.product.quantity, data.product.itemPrice, data.product.totalItemPrice,
-        data.product.shipping, data.product.tax, data.product.estimatedTotal);
+    cartPage.verifyCart(
+        data.product.quantity,
+        data.product.itemPrice,
+        data.product.totalItemPrice,
+        data.product.shipping,
+        data.product.tax,
+        data.product.estimatedTotal
+    );
 });
 
 When('shopper is able to add and remove a product from minicart', () => {

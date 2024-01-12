@@ -32,11 +32,11 @@ describe('userLoggedInMiddleware', function () {
     };
 
     afterEach(function () {
-        next.reset();
-        res.redirect.reset();
-        res.setStatusCode.reset();
-        res.setViewData.reset();
-        req.session.privacyCache.set.reset();
+        next.resetHistory();
+        res.redirect.resetHistory();
+        res.setStatusCode.resetHistory();
+        res.setViewData.resetHistory();
+        req.session.privacyCache.set.resetHistory();
         req.querystring = {};
     });
 

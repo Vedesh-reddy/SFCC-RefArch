@@ -1,4 +1,5 @@
 'use strict';
+
 /* global request, response */
 
 var Template = require('dw/util/Template');

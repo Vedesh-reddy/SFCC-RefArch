@@ -80,10 +80,9 @@ function getDiscounts(lineItemContainer) {
     var discounts = {};
 
     collections.forEach(lineItemContainer.couponLineItems, function (couponLineItem) {
-        var priceAdjustments = collections.map(
-            couponLineItem.priceAdjustments, function (priceAdjustment) {
-                return { callOutMsg: (typeof priceAdjustment.promotion !== 'undefined' && priceAdjustment.promotion !== null) ? priceAdjustment.promotion.calloutMsg : '' };
-            });
+        var priceAdjustments = collections.map(couponLineItem.priceAdjustments, function (priceAdjustment) {
+            return { callOutMsg: (typeof priceAdjustment.promotion !== 'undefined' && priceAdjustment.promotion !== null) ? priceAdjustment.promotion.calloutMsg : '' };
+        });
         discounts[couponLineItem.UUID] = {
             type: 'coupon',
             UUID: couponLineItem.UUID,

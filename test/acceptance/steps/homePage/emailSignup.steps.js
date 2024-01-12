@@ -1,3 +1,5 @@
+'use strict';
+
 const { I, data, homePage } = inject();
 
 Then('shopper enters email in signup form', () => {

@@ -17,6 +17,7 @@
     padding-top in percentages refers to parent width
     this allows us to specify an aspect-ratio
 */
+/* stylelint-disable selector-class-pattern */
 .region_landscape-large::before {
     padding-top: calc(400 / 1024 * 100%);
 }
@@ -36,3 +37,4 @@
 div.sf-interactions-proxyHoverContainer a {
     overflow: visible;
 }
+/* stylelint-enable selector-class-pattern */

@@ -1,3 +1,5 @@
+'use strict';
+
 const { I, homePage, productPage } = inject();
 var should = require('should'); // eslint-disable-line
 

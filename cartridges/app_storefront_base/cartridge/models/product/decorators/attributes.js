@@ -28,7 +28,8 @@ function getAttributes(attributeModel) {
                         definitionResult.value = attributeModel.getDisplayValue(definition).map(
                             function (item) {
                                 return item;
-                            });
+                            }
+                        );
                     } else {
                         definitionResult.value = [attributeModel.getDisplayValue(definition)];
                     }

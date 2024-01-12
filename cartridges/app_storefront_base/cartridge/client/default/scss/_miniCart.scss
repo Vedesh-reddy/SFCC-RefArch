@@ -29,8 +29,7 @@
     .product-summary {
         margin-right: -0.938em;
         max-height: 21.875em;
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden auto;
         padding-right: 0.938em;
     }
 

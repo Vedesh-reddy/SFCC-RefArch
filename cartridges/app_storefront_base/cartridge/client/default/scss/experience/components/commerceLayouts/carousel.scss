@@ -5,6 +5,9 @@
 @import "../../carousel/mediumCarousel";
 @import "../../carousel/smallCarousel";
 
+// Disable linter for kebab case only as certain classes cannot be renamed in the ISML
+// as they are not present in the templates, such as .experience-commerce_layouts-carousel
+/* stylelint-disable selector-class-pattern */
 .carousel-item {
     padding-right: 0.9375rem;
     padding-left: 0.9375rem;
@@ -120,3 +123,4 @@
         background-color: $black;
     }
 }
+/* stylelint-enable selector-class-pattern */

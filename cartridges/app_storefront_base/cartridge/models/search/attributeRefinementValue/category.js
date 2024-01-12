@@ -65,7 +65,8 @@ CategoryAttributeValue.prototype.getUrl = function (
     actionEndpoint,
     id,
     value,
-    selected) {
+    selected
+) {
     var url = '';
 
     if (selected) {
@@ -98,7 +99,8 @@ function CategoryRefinementValueWrapper(
     productSearch,
     refinementDefinition,
     category,
-    selected) {
+    selected
+) {
     var value = new CategoryAttributeValue(
         productSearch,
         refinementDefinition,

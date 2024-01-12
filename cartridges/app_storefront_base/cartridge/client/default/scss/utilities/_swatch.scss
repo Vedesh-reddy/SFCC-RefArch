@@ -3,9 +3,9 @@
 
 @mixin swatch($diameter, $color) {
     @include circle($diameter, $color);
-    @include swatch-check-mark();
+    @include swatch-check-mark;
 
-    border: 0.063em solid rgba(0, 0, 0, 0.3);
+    border: 0.063em solid rgba(0, 0, 0, 30%);
     display: inline-block;
     margin-right: 0.313em;
     position: relative;
@@ -21,11 +21,11 @@
 }
 
 @mixin swatch-check-mark() {
-    &.color-value[data-selected=true]::after {
+    &.color-value[data-selected="true"]::after {
         color: $black;
         content: '\f058';
         display: table-caption;
-        font-family: 'FontAwesome';
+        font-family: FontAwesome, sans-serif;
         font-size: 1.625em;
         left: 0.295em;
         position: absolute;
@@ -37,7 +37,7 @@
         color: $black;
         content: '\f058';
         display: table-caption;
-        font-family: 'FontAwesome';
+        font-family: FontAwesome, sans-serif;
         font-size: 1.625em;
         height: 0.75em;
         left: 0.31em;
@@ -65,11 +65,12 @@ $swatch-colors: (
 );
 
 @each $color in map-keys($swatch-colors) {
-    $colorValue: #{map-get($swatch-colors, $color)};
+    /* stylelint-disable-next-line scss/no-global-function-names */
+    $color-value: #{map-get($swatch-colors, $color)}; 
 
     .swatch-circle-#{$color} {
 
-        @include circle(2.5em, $colorValue);
+        @include circle(2.5em, $color-value);
 
         display: block;
         position: relative;
@@ -81,9 +82,9 @@ $swatch-colors: (
 
     .swatch-filter-#{$color} {
 
-        @include circle(1.38em, $colorValue);
+        @include circle(1.38em, $color-value);
 
-        background-color: $colorValue;
+        background-color: $color-value;
         display: block;
         position: relative;
 
@@ -98,11 +99,11 @@ $swatch-colors: (
     background:
         linear-gradient(
             0deg,
-            rgba(130, 30, 145, 1) 0,
-            rgba(130, 30, 145, 1) 25%,
-            rgba(237, 209, 52, 1) 25%,
-            rgba(255, 255, 0, 1) 50%,
-            rgba(237, 209, 52, 1) 50%,
+            rgba(130, 30, 145, 100%) 0,
+            rgba(130, 30, 145, 100%) 25%,
+            rgba(237, 209, 52, 100%) 25%,
+            rgba(255, 255, 0, 100%) 50%,
+            rgba(237, 209, 52, 100%) 50%,
             #59ba00 50%,
             #59ba00 76%,
             #111 76%,
@@ -110,14 +111,14 @@ $swatch-colors: (
         ),
         linear-gradient(
             0deg,
-            rgba(14, 92, 209, 1) 0,
-            rgba(14, 92, 209, 1) 50%,
-            rgba(226, 11, 11, 1) 50%,
-            rgba(226, 11, 11, 1) 100%
+            rgba(14, 92, 209, 100%) 0,
+            rgba(14, 92, 209, 100%) 50%,
+            rgba(226, 11, 11, 100%) 50%,
+            rgba(226, 11, 11, 100%) 100%
         );
     background-repeat: repeat-y, repeat;
     background-size: 50% 100%, 100% 100%;
-    border: 0.063em solid rgba(0, 0, 0, 0.3);
+    border: 0.063em solid rgba(0, 0, 0, 30%);
     border-radius: 1.25em;
     display: block;
     height: 2.5em;

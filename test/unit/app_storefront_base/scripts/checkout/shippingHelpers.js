@@ -157,7 +157,6 @@ describe('shippingHelpers', function () {
             assert.equal(myShipment.shippingAddress, expectedShippingAddress);
         });
 
-
         it('test 3: should set shipping method when matching shippingMethodID is supplied', function () {
             var shippingMethodID = '002';
             var expectedShippingMethod = {

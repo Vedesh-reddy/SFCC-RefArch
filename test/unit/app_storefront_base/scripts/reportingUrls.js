@@ -37,7 +37,7 @@ describe('Reporting URLs', function () {
         campaignID: 'some ID',
         promotionID: 'some ID',
         price: { value: 'some price' },
-        isCustom: function () { return; },
+        isCustom: function () { },
         basedOnCoupon: false
     }]);
 
@@ -63,7 +63,7 @@ describe('Reporting URLs', function () {
             campaignID: 'some ID',
             promotionID: 'some ID',
             price: { value: 'some price' },
-            isCustom: function () { return; },
+            isCustom: function () { },
             basedOnCoupon: true
         }]),
         productLineItems: productLineItems
@@ -112,7 +112,7 @@ describe('Reporting URLs', function () {
             price: {
                 value: 'some price'
             },
-            isCustom: function () { return; },
+            isCustom: function () { },
             basedOnCoupon: true
         }]),
         shipments: shipments

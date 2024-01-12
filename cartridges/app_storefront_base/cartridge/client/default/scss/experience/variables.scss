@@ -5,14 +5,11 @@ $white: #fff !default;
 $black: #000 !default;
 $red: #c23934 !default;
 $dark-blue: #061c3f;
-
 $gray-1: #222 !default;
 $gray-2: #444 !default;
 $gray-3: #999 !default;
 $gray-4: #ccc !default;
-
-$gray-transparent-1: rgba(0, 0, 0, 0.4) !default;
-
+$gray-transparent-1: rgba(0, 0, 0, 40%) !default;
 $light-gray: $gray-4 !default;
 $dark-gray: $gray-1 !default;
 
@@ -23,7 +20,6 @@ $white-text: $white !default;
 $base-font-size: 1rem !default;
 $xl-font-size: $base-font-size * 1.67 !default;
 $lg-font-size: $base-font-size * 1.5 !default;
-
 $heading-1-font-size: $base-font-size * 4 !default;
 $heading-2-font-size: $base-font-size * 3 !default;
 $heading-3-font-size: $xl-font-size !default;

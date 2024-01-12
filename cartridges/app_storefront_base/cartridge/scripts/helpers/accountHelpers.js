@@ -1,4 +1,5 @@
 'use strict';
+
 var URLUtils = require('dw/web/URLUtils');
 var endpoints = require('*/cartridge/config/oAuthRenentryRedirectEndpoints');
 

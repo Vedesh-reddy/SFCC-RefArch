@@ -3,7 +3,6 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-
 describe('SizeAttributeValue model', function () {
     var productSearch = {};
     var refinementDefinition = {};
@@ -11,13 +10,11 @@ describe('SizeAttributeValue model', function () {
     var sizeAttributeValue = {};
 
     var SizeAttributeValue = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/size', {
-        '*/cartridge/models/search/attributeRefinementValue/base': proxyquire(
-            '../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
-                'dw/web/Resource': {
-                    msgf: function () { return 'some product title'; }
-                }
+        '*/cartridge/models/search/attributeRefinementValue/base': proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
+            'dw/web/Resource': {
+                msgf: function () { return 'some product title'; }
             }
-        )
+        })
     });
 
     it('should instantiate a Size Attribute Value model', function () {

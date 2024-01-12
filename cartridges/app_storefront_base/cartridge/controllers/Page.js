@@ -42,8 +42,10 @@ server.get(
                 res.render('/components/content/offlineContent');
             }
         } else {
-            Logger.warn('Content asset with ID {0} was included but not found',
-                req.querystring.cid);
+            Logger.warn(
+                'Content asset with ID {0} was included but not found',
+                req.querystring.cid
+            );
 
             res.render('/components/content/offlineContent');
         }
@@ -71,8 +73,8 @@ server.get(
         var Categories = require('*/cartridge/models/categories');
         var siteRootCategory = catalogMgr.getSiteCatalog().getRoot();
 
-        var topLevelCategories = siteRootCategory.hasOnlineSubCategories() ?
-            siteRootCategory.getOnlineSubCategories() : null;
+        var topLevelCategories = siteRootCategory.hasOnlineSubCategories()
+            ? siteRootCategory.getOnlineSubCategories() : null;
 
         res.render('/components/header/menu', new Categories(topLevelCategories));
         next();

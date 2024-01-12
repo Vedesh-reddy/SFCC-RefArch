@@ -1,4 +1,8 @@
-const { I, data, cartPage, checkoutPage, accountPage, loginPage } = inject();
+'use strict';
+
+const {
+    I, data, cartPage, checkoutPage, accountPage, loginPage
+} = inject();
 
 var orderHistoryNumber = '';
 
@@ -23,14 +27,27 @@ Then('shopper selects checkout as guest', () => {
 });
 
 Then('shopper fills out shipping information', () => {
-    checkoutPage.fillShippingInfo(data.checkout.fName, data.checkout.lName, data.checkout.address1,
-        data.checkout.country, data.checkout.state, data.checkout.city,
-        data.checkout.zip, data.checkout.phone);
+    checkoutPage.fillShippingInfo(
+        data.checkout.fName,
+        data.checkout.lName,
+        data.checkout.address1,
+        data.checkout.country,
+        data.checkout.state,
+        data.checkout.city,
+        data.checkout.zip,
+        data.checkout.phone
+    );
 });
 
 Then('shopper verifies shipping information', () => {
-    checkoutPage.verifyShipping(data.checkout.fName, data.checkout.lName, data.checkout.address1,
-        data.checkout.city, data.checkout.stateAbr, data.checkout.zip);
+    checkoutPage.verifyShipping(
+        data.checkout.fName,
+        data.checkout.lName,
+        data.checkout.address1,
+        data.checkout.city,
+        data.checkout.stateAbr,
+        data.checkout.zip
+    );
 });
 
 Then('shopper proceeds to payment section', () => {
@@ -39,9 +56,19 @@ Then('shopper proceeds to payment section', () => {
 });
 
 Then('shopper fills out billing information', () => {
-    checkoutPage.fillPaymentInfoGuest(data.user1.fName, data.user1.lName, data.user1.address1,
-        data.user1.city, data.user1.stateAbr, data.user1.zip, data.checkout.phone, data.checkout.ccNum,
-        data.checkout.expMonth, data.checkout.expYear, data.checkout.ccSecCode);
+    checkoutPage.fillPaymentInfoGuest(
+        data.user1.fName,
+        data.user1.lName,
+        data.user1.address1,
+        data.user1.city,
+        data.user1.stateAbr,
+        data.user1.zip,
+        data.checkout.phone,
+        data.checkout.ccNum,
+        data.checkout.expMonth,
+        data.checkout.expYear,
+        data.checkout.ccSecCode
+    );
 });
 
 Then('shopper fills out registered user billing information', () => {
@@ -51,18 +78,42 @@ Then('shopper fills out registered user billing information', () => {
 Then('shopper places order', () => {
     I.waitForElement(checkoutPage.locators.placeOrder);
     I.click(checkoutPage.locators.placeOrder);
-    checkoutPage.verifyCheckoutInfo(data.checkout.fName, data.checkout.lName, data.checkout.address1,
-        data.checkout.city, data.checkout.zip, data.checkout.phone, data.checkout.ccNum, data.checkout.ccExpDate, data.product.quantity,
-        data.product.totalItemPrice, data.product.shipping, data.product.tax, data.product.estimatedTotal);
+    checkoutPage.verifyCheckoutInfo(
+        data.checkout.fName,
+        data.checkout.lName,
+        data.checkout.address1,
+        data.checkout.city,
+        data.checkout.zip,
+        data.checkout.phone,
+        data.checkout.ccNum,
+        data.checkout.ccExpDate,
+        data.product.quantity,
+        data.product.totalItemPrice,
+        data.product.shipping,
+        data.product.tax,
+        data.product.estimatedTotal
+    );
     I.waitForElement(checkoutPage.locators.confirmOrder);
     I.click(checkoutPage.locators.confirmOrder);
 });
 
 Then('shopper verifies the order confirmation page', async () => {
-    checkoutPage.verifyOrderConfirmation(data.checkout.fName, data.checkout.lName, data.checkout.address1,
-        data.checkout.city, data.checkout.zip, data.checkout.phone,
-        data.checkout.email, data.checkout.ccNum, data.checkout.ccExpDate, data.product.quantity,
-        data.product.totalItemPrice, data.product.shipping, data.product.tax, data.product.estimatedTotal);
+    checkoutPage.verifyOrderConfirmation(
+        data.checkout.fName,
+        data.checkout.lName,
+        data.checkout.address1,
+        data.checkout.city,
+        data.checkout.zip,
+        data.checkout.phone,
+        data.checkout.email,
+        data.checkout.ccNum,
+        data.checkout.ccExpDate,
+        data.product.quantity,
+        data.product.totalItemPrice,
+        data.product.shipping,
+        data.product.tax,
+        data.product.estimatedTotal
+    );
     orderHistoryNumber = await I.grabTextFrom('.summary-details.order-number');
 });
 

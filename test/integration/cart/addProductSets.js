@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -388,10 +390,12 @@ describe('Add Product Set to cart', function () {
                         }
                     },
                     variationAttributes:
-                    [{ displayName: 'Color',
+                    [{
+                        displayName: 'Color',
                         displayValue: 'Black'
                     },
-                    { displayName: 'Size',
+                    {
+                        displayName: 'Size',
                         displayValue: '6'
                     }
                     ]
@@ -414,7 +418,8 @@ describe('Add Product Set to cart', function () {
                         displayName: 'color',
                         displayValue: 'Blue'
                     },
-                    { displayName: 'size',
+                    {
+                        displayName: 'size',
                         displayValue: '15L'
                     }
                     ]
@@ -432,7 +437,8 @@ describe('Add Product Set to cart', function () {
                         }
                     },
                     variationAttributes:
-                    [{ displayName: 'Color',
+                    [{
+                        displayName: 'Color',
                         displayValue: 'Ivory'
                     }
                     ],

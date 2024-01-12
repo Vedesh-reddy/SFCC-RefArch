@@ -19,8 +19,8 @@ function updateTotals(totals) {
 
     if (totals.shippingLevelDiscountTotal.value > 0) {
         $('.shipping-discount').removeClass('hide-shipping-discount');
-        $('.shipping-discount-total').text('- ' +
-            totals.shippingLevelDiscountTotal.formatted);
+        $('.shipping-discount-total').text('- '
+            + totals.shippingLevelDiscountTotal.formatted);
     } else {
         $('.shipping-discount').addClass('hide-shipping-discount');
     }
@@ -114,8 +114,10 @@ function updateOrderProductSummaryInformation(order) {
 
         // checking h5 title shipping to or pickup
         var $shippingAddressLabel = $('.shipping-header-text', tmpl);
-        $('body').trigger('shipping:updateAddressLabelText',
-            { selectedShippingMethod: selectedMethod, resources: order.resources, shippingAddressLabel: $shippingAddressLabel });
+        $('body').trigger(
+            'shipping:updateAddressLabelText',
+            { selectedShippingMethod: selectedMethod, resources: order.resources, shippingAddressLabel: $shippingAddressLabel }
+        );
 
         if (shipping.selectedShippingMethod) {
             $('.display-name', tmpl).text(methodNameLine);

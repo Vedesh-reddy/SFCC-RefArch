@@ -3,7 +3,6 @@
 /* eslint no-param-reassign: ["error", { "props": true, "ignorePropertyModificationsFor": ["model"] }] */
 var PageRenderHelper = require('*/cartridge/experience/utilities/PageRenderHelper.js');
 
-
 /**
  * Helper to encapsulate common code for building a carousel
  *
@@ -27,7 +26,6 @@ function init(model, context) {
     model.regions.slides.setComponentClassName('carousel-item active' + sizeExtraSmall + sizeSmall + sizeMedium, { position: 0 });
 
     var numberOfSlides = model.regions.slides.region.size;
-
 
     for (var i = 0; i < numberOfSlides; i++) {
         model.regions.slides.setComponentAttribute('data-position', i, { position: i });

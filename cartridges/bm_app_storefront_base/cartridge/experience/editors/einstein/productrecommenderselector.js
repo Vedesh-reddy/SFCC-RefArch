@@ -1,4 +1,3 @@
-
 'use strict';
 
 var Site = require('dw/system/Site');

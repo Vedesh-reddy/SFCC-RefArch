@@ -85,7 +85,8 @@ function PromotionRefinementValueWrapper(
     productSearch,
     refinementDefinition,
     refinementValue,
-    selected) {
+    selected
+) {
     var value = new PromotionAttributeValue(
         productSearch,
         refinementDefinition,

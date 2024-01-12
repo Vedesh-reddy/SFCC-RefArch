@@ -114,15 +114,15 @@ querystring.prototype.toString = function () {
     Object.keys(this).forEach(function (key) {
         if (key === 'variables' && this.variables instanceof Object) {
             Object.keys(this.variables).forEach(function (variable) {
-                result.push('dwvar_' +
-                    this.variables[variable].id.replace(/_/g, '__') + '_' +
-                    variable + '=' + encodeURIComponent(this.variables[variable].value));
+                result.push('dwvar_'
+                    + this.variables[variable].id.replace(/_/g, '__') + '_'
+                    + variable + '=' + encodeURIComponent(this.variables[variable].value));
             }, this);
         } else if (key === 'options' && this.options instanceof Array) {
             this.options.forEach(function (option) {
-                result.push('dwopt_' +
-                    option.productId.replace(/_/g, '__') + '_' +
-                    option.optionId + '=' + encodeURIComponent(option.selectedValueId));
+                result.push('dwopt_'
+                    + option.productId.replace(/_/g, '__') + '_'
+                    + option.optionId + '=' + encodeURIComponent(option.selectedValueId));
             });
         } else if (key === 'preferences' && this.preferences instanceof Object) {
             preferences = this.preferences;

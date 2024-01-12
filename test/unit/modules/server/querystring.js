@@ -17,9 +17,9 @@ describe('querystring', function () {
     });
     describe('options parsing', function () {
         it('should parse product option query parameters', function () {
-            var params = 'dwopt_microsoft-xbox360-console_consoleWarranty=002&' +
-            'dwopt_microsoft-xbox360-console_gpsWarranty=003&' +
-            'dwopt_microsoft-xbox360-console_gps_warranty=003';
+            var params = 'dwopt_microsoft-xbox360-console_consoleWarranty=002&'
+            + 'dwopt_microsoft-xbox360-console_gpsWarranty=003&'
+            + 'dwopt_microsoft-xbox360-console_gps_warranty=003';
             var querystring = new QueryString(params);
             assert.deepEqual([{
                 optionId: 'gps_warranty',
@@ -37,9 +37,9 @@ describe('querystring', function () {
         });
 
         it('should parse product option for product with underscore', function () {
-            var params = 'dwopt_microsoft__xbox360__console_consoleWarranty=002&' +
-            'dwopt_microsoft__xbox360__console_gpsWarranty=003&' +
-            'dwopt_microsoft__xbox360__console_gps_warranty=003';
+            var params = 'dwopt_microsoft__xbox360__console_consoleWarranty=002&'
+            + 'dwopt_microsoft__xbox360__console_gpsWarranty=003&'
+            + 'dwopt_microsoft__xbox360__console_gps_warranty=003';
             var querystring = new QueryString(params);
             assert.deepEqual([{
                 optionId: 'gps_warranty',
@@ -57,32 +57,31 @@ describe('querystring', function () {
         });
 
         it('should output options query params', function () {
-            var params = 'dwopt_microsoft-xbox360-console_consoleWarranty=002&' +
-            'dwopt_microsoft-xbox360-console_gpsWarranty=003';
+            var params = 'dwopt_microsoft-xbox360-console_consoleWarranty=002&'
+            + 'dwopt_microsoft-xbox360-console_gpsWarranty=003';
             var querystring = new QueryString(params);
             var paramsOutput = querystring.toString();
-            assert.equal(paramsOutput, 'dwopt_microsoft-xbox360-console_consoleWarranty=002&' +
-                'dwopt_microsoft-xbox360-console_gpsWarranty=003');
+            assert.equal(paramsOutput, 'dwopt_microsoft-xbox360-console_consoleWarranty=002&'
+                + 'dwopt_microsoft-xbox360-console_gpsWarranty=003');
         });
 
         it('should output options query params for product with underscore', function () {
-            var params = 'dwopt_microsoft__xbox360__console_console_Warranty=002&' +
-            'dwopt_microsoft__xbox360__console_gpsWarranty=003';
+            var params = 'dwopt_microsoft__xbox360__console_console_Warranty=002&'
+            + 'dwopt_microsoft__xbox360__console_gpsWarranty=003';
             var querystring = new QueryString(params);
             var paramsOutput = querystring.toString();
-            assert.equal(paramsOutput, 'dwopt_microsoft__xbox360__console_console_Warranty=002&' +
-                'dwopt_microsoft__xbox360__console_gpsWarranty=003');
+            assert.equal(paramsOutput, 'dwopt_microsoft__xbox360__console_console_Warranty=002&'
+                + 'dwopt_microsoft__xbox360__console_gpsWarranty=003');
         });
         it('creates a single key "x=y" when options is not an array', function () {
-            var params = 'dwopt_microsoft__xbox360__console_console_Warranty=002&' +
-            'dwopt_microsoft__xbox360__console_gpsWarranty=003';
+            var params = 'dwopt_microsoft__xbox360__console_console_Warranty=002&'
+            + 'dwopt_microsoft__xbox360__console_gpsWarranty=003';
             var rangeResult = new QueryString(params);
             rangeResult.options = 'a simple string';
             var paramsOutput = rangeResult.toString();
             assert.equal(paramsOutput, 'options=a%20simple%20string');
         });
     });
-
 
     describe('variation attribute parsing', function () {
         it('should parse product variation query parameters', function () {

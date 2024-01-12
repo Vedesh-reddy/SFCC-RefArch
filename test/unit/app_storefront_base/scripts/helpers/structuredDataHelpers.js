@@ -1,18 +1,19 @@
+'use strict';
+
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-var structuredDataHelper = proxyquire(
-    '../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/structuredDataHelper', {
-        'dw/web/URLUtils': {
-            url: function () { return 'some url'; },
-            abs: function () { return 'abs url'; }
-        },
-        'dw/web/Resource': {
-            msg: function () {
-                return 'some string';
-            }
+var structuredDataHelper = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/helpers/structuredDataHelper', {
+    'dw/web/URLUtils': {
+        url: function () { return 'some url'; },
+        abs: function () { return 'abs url'; }
+    },
+    'dw/web/Resource': {
+        msg: function () {
+            return 'some string';
         }
-    });
+    }
+});
 
 describe('structured data helpers', function () {
     describe('get schema data', function () {

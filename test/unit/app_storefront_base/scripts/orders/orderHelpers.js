@@ -116,7 +116,7 @@ describe('orderHelpers', function () {
                 },
                 'dw/order/OrderMgr': {
                     getOrder: function () {
-                        return;
+
                     }
                 },
                 'dw/order/Order': {

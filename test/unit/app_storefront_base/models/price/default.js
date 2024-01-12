@@ -3,7 +3,6 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-
 describe('DefaultPrice model', function () {
     var formattedMoney = '₪moolah';
     var DefaultPrice = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/models/price/default.js', {

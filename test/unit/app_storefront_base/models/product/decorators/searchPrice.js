@@ -10,7 +10,6 @@ var stubRangePrice = sinon.stub();
 var stubDefaultPrice = sinon.stub();
 var stubListPrices = sinon.stub();
 
-
 var searchHitMock = {
     minPrice: { value: 100, available: true },
     maxPrice: { value: 100, available: true },
@@ -37,9 +36,9 @@ describe('search price decorator', function () {
     });
 
     afterEach(function () {
-        stubRangePrice.reset();
-        stubDefaultPrice.reset();
-        stubListPrices.reset();
+        stubRangePrice.resetHistory();
+        stubDefaultPrice.resetHistory();
+        stubListPrices.resetHistory();
     });
 
     it('should create a property on the passed in object called price with no active promotions', function () {

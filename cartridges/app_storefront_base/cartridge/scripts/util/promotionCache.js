@@ -1,4 +1,5 @@
 /* globals session request */
+
 'use strict';
 
 var PromotionMgr = require('dw/campaign/PromotionMgr');

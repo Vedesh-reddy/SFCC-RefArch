@@ -70,4 +70,3 @@ describe('formErrors', function () {
         assert.deepEqual(result, { 'someName2': 'someError2' });
     });
 });
-

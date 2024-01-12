@@ -2,6 +2,7 @@
 
 var base = require('../product/base');
 var focusHelper = require('../components/focus');
+var location = window.location;
 
 /**
  * appends params to a url
@@ -26,20 +27,19 @@ function appendToUrl(url, params) {
 function validateBasket(data) {
     if (data.valid.error) {
         if (data.valid.message) {
-            var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
-                'fade show" role="alert">' +
-                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                '<span aria-hidden="true">&times;</span>' +
-                '</button>' + data.valid.message + '</div>';
+            var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error '
+                + 'fade show" role="alert">'
+                + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+                + '<span aria-hidden="true">&times;</span>'
+                + '</button>' + data.valid.message + '</div>';
 
             $('.cart-error').append(errorHtml);
         } else {
-            $('.cart').empty().append('<div class="row"> ' +
-                '<div class="col-12 text-center"> ' +
-                '<h1>' + data.resources.emptyCartMsg + '</h1> ' +
-                '</div> ' +
-                '</div>'
-            );
+            $('.cart').empty().append('<div class="row"> '
+                + '<div class="col-12 text-center"> '
+                + '<h1>' + data.resources.emptyCartMsg + '</h1> '
+                + '</div> '
+                + '</div>');
             $('.number-of-items').empty().append(data.resources.numberOfItems);
             $('.minicart-quantity').empty().append(data.numItems);
             $('.minicart-link').attr({
@@ -81,8 +81,8 @@ function updateCartTotals(data) {
 
     if (data.totals.shippingLevelDiscountTotal.value > 0) {
         $('.shipping-discount').removeClass('hide-shipping-discount');
-        $('.shipping-discount-total').empty().append('- ' +
-            data.totals.shippingLevelDiscountTotal.formatted);
+        $('.shipping-discount-total').empty().append('- '
+            + data.totals.shippingLevelDiscountTotal.formatted);
     } else {
         $('.shipping-discount').addClass('hide-shipping-discount');
     }
@@ -107,11 +107,11 @@ function updateCartTotals(data) {
  * @param {Object} message - Error message to display
  */
 function createErrorNotification(message) {
-    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
-        'fade show" role="alert">' +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        '</button>' + message + '</div>';
+    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error '
+        + 'fade show" role="alert">'
+        + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+        + '<span aria-hidden="true">&times;</span>'
+        + '</button>' + message + '</div>';
 
     $('.cart-error').append(errorHtml);
 }
@@ -328,12 +328,11 @@ module.exports = function () {
             dataType: 'json',
             success: function (data) {
                 if (data.basket.items.length === 0) {
-                    $('.cart').empty().append('<div class="row"> ' +
-                        '<div class="col-12 text-center"> ' +
-                        '<h1>' + data.basket.resources.emptyCartMsg + '</h1> ' +
-                        '</div> ' +
-                        '</div>'
-                    );
+                    $('.cart').empty().append('<div class="row"> '
+                        + '<div class="col-12 text-center"> '
+                        + '<h1>' + data.basket.resources.emptyCartMsg + '</h1> '
+                        + '</div> '
+                        + '</div>');
                     $('.number-of-items').empty().append(data.basket.resources.numberOfItems);
                     $('.minicart-quantity').empty().append(data.basket.numItems);
                     $('.minicart-link').attr({
@@ -633,7 +632,8 @@ module.exports = function () {
         var dialog = $(response.$productContainer)
             .closest('.quick-view-dialog');
 
-        $('.update-cart-product-global', dialog).attr('disabled',
+        $('.update-cart-product-global', dialog).attr(
+            'disabled',
             !$('.global-availability', dialog).data('ready-to-order')
             || !$('.global-availability', dialog).data('available')
         );
@@ -647,7 +647,6 @@ module.exports = function () {
             .find('.availability-msg')
             .empty()
             .html(response.message);
-
 
         var dialog = $(response.$productContainer)
             .closest('.quick-view-dialog');

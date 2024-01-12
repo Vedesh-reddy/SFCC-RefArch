@@ -3,6 +3,14 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "carouselMixins";
 
+// Disable linter for kebab case only as certain classes cannot be renamed in the ISML
+// as they are not present in the templates, such as .experience-commerce_layouts-carousel
+/* stylelint-disable selector-class-pattern */
+
+// Disable linter for css ordering since this file is complex with many selectors
+// and is already logically grouped with md, md-2, md-3, md-4, and md-6
+/* stylelint-disable no-descending-specificity */
+
 @include media-breakpoint-up(md) {
     .experience-einstein-einsteinCarousel .carousel.insufficient-md-slides .carousel-control-next,
     .experience-einstein-einsteinCarousel .carousel.insufficient-md-slides .carousel-control-prev,
@@ -27,7 +35,7 @@
     }
 
     .carousel.indicators-md {
-        @include carousel-indicators();
+        @include carousel-indicators;
     }
 
     .experience-einstein-einsteinCarousel .carousel.controls-md .carousel-control-next,
@@ -63,8 +71,8 @@
         }
     }
 
-    .carousel-md-2 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-md-2 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item {
+    .carousel-md-2 .carousel-item.active:not(.carousel-item-right, .carousel-item-left),
+    .carousel-md-2 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item {
         transition: none;
     }
 
@@ -133,9 +141,9 @@
         }
     }
 
-    .carousel-md-3 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-md-3 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-    .carousel-md-3 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+    .carousel-md-3 .carousel-item.active:not(.carousel-item-right, .carousel-item-left),
+    .carousel-md-3 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item,
+    .carousel-md-3 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item + .carousel-item {
         transition: none;
     }
 
@@ -207,10 +215,10 @@
         }
     }
 
-    .carousel-md-4 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-md-4 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-    .carousel-md-4 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
-    .carousel-md-4 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
+    .carousel-md-4 .carousel-item.active:not(.carousel-item-right, .carousel-item-left),
+    .carousel-md-4 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item,
+    .carousel-md-4 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item + .carousel-item,
+    .carousel-md-4 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item + .carousel-item + .carousel-item {
         transition: none;
     }
 
@@ -285,12 +293,12 @@
         }
     }
 
-    .carousel-md-6 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-md-6 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-    .carousel-md-6 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item,
-    .carousel-md-6 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item,
-    .carousel-md-6 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item + .carousel-item,
-    .carousel-md-6 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
+    .carousel-md-6 .carousel-item.active:not(.carousel-item-right, .carousel-item-left),
+    .carousel-md-6 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item,
+    .carousel-md-6 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item + .carousel-item,
+    .carousel-md-6 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item + .carousel-item + .carousel-item,
+    .carousel-md-6 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item + .carousel-item + .carousel-item + .carousel-item,
+    .carousel-md-6 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
         transition: none;
     }
 
@@ -301,11 +309,11 @@
     }
 
     .carousel-md-6 .active.carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item + .carousel-item {
-        @include carousel-right-most-element(-16.66667%);
+        @include carousel-right-most-element(-16.6667%);
     }
 
     .carousel-md-6 .carousel-item-prev.carousel-item-right {
-        @include carousel-left-most-element(-16.66667%);
+        @include carousel-left-most-element(-16.6667%);
         @include carousel-transform(100%);
     }
 
@@ -352,3 +360,5 @@
         display: block !important;
     }
 }
+/* stylelint-enable selector-class-pattern */
+/* stylelint-enable no-descending-specificity */

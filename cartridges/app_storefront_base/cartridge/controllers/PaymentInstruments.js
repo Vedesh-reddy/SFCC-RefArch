@@ -64,8 +64,7 @@ function verifyCard(req, card, form) {
             switch (item.code) {
                 case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
                     formCardNumber.valid = false;
-                    formCardNumber.error =
-                        Resource.msg('error.message.creditnumber.invalid', 'forms', null);
+                    formCardNumber.error = Resource.msg('error.message.creditnumber.invalid', 'forms', null);
                     error = true;
                     break;
 
@@ -73,8 +72,7 @@ function verifyCard(req, card, form) {
                     var expirationMonth = form.expirationMonth;
                     var expirationYear = form.expirationYear;
                     expirationMonth.valid = false;
-                    expirationMonth.error =
-                        Resource.msg('error.message.creditexpiration.expired', 'forms', null);
+                    expirationMonth.error = Resource.msg('error.message.creditexpiration.expired', 'forms', null);
                     expirationYear.valid = false;
                     error = true;
                     break;
@@ -351,7 +349,8 @@ server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, re
  * @param {serverfunction} - get
  */
 server.get('Header', server.middleware.include, function (req, res, next) {
-    res.render('account/header', { name:
+    res.render('account/header', {
+        name:
         req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
     });
     next();

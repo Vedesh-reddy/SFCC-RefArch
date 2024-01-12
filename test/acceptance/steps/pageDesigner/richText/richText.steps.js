@@ -1,3 +1,5 @@
+'use strict';
+
 const { I, data, pageDesigner } = inject();
 
 Then('shopper should see the rich text component', () => {

@@ -1,6 +1,7 @@
 'use strict';
 
 /* global request, dw */
+
 var RegionModelRegistry = require('*/cartridge/experience/utilities/RegionModelRegistry.js');
 
 module.exports = {

@@ -218,7 +218,6 @@ server.post(
     }
 );
 
-
 /**
  *  Handle Ajax payment (and billing) form submit
  */
@@ -307,7 +306,8 @@ server.post(
 
         var paymentFormResult;
         if (HookManager.hasHook('app.payment.form.processor.' + paymentProcessor.ID.toLowerCase())) {
-            paymentFormResult = HookManager.callHook('app.payment.form.processor.' + paymentProcessor.ID.toLowerCase(),
+            paymentFormResult = HookManager.callHook(
+                'app.payment.form.processor.' + paymentProcessor.ID.toLowerCase(),
                 'processForm',
                 req,
                 paymentForm,
@@ -404,13 +404,11 @@ server.post(
                 billingAddress.setPhone(billingData.phone.value);
             });
 
-
             // if there is no selected payment option and balance is greater than zero
             if (!paymentMethodID && currentBasket.totalGrossPrice.value > 0) {
                 var noPaymentMethod = {};
 
-                noPaymentMethod[billingData.paymentMethod.htmlName] =
-                    Resource.msg('error.no.selected.payment.method', 'payment', null);
+                noPaymentMethod[billingData.paymentMethod.htmlName] = Resource.msg('error.no.selected.payment.method', 'payment', null);
 
                 delete billingData.paymentInformation;
 
@@ -435,7 +433,8 @@ server.post(
             }
 
             if (HookMgr.hasHook('app.payment.processor.' + processor.ID.toLowerCase())) {
-                result = HookMgr.callHook('app.payment.processor.' + processor.ID.toLowerCase(),
+                result = HookMgr.callHook(
+                    'app.payment.processor.' + processor.ID.toLowerCase(),
                     'Handle',
                     currentBasket,
                     billingData.paymentInformation,
@@ -460,7 +459,8 @@ server.post(
             }
 
             if (HookMgr.hasHook('app.payment.form.processor.' + processor.ID.toLowerCase())) {
-                HookMgr.callHook('app.payment.form.processor.' + processor.ID.toLowerCase(),
+                HookMgr.callHook(
+                    'app.payment.form.processor.' + processor.ID.toLowerCase(),
                     'savePaymentInformation',
                     req,
                     currentBasket,

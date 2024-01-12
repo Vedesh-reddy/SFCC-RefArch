@@ -30,7 +30,6 @@ function getIsSelected(shippingMethod, shipment) {
     return (selectedShippingMethodID && shippingMethod.ID === selectedShippingMethodID);
 }
 
-
 /**
  * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
  * @param {dw.order.ShippingMethod} shippingMethod - the default shipment of the current basket

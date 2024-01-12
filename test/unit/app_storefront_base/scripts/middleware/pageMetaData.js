@@ -46,8 +46,8 @@ describe('pageMetaDataMiddleware', function () {
     };
 
     afterEach(function () {
-        next.reset();
-        res.setViewData.reset();
+        next.resetHistory();
+        res.setViewData.resetHistory();
     });
 
     it('Should set computed pageMetaData to the view and call next after pageMetaData has been recomputed', function () {

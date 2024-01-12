@@ -1,4 +1,5 @@
 'use strict';
+
 /* global response */
 
 var Template = require('dw/util/Template');
@@ -20,8 +21,8 @@ module.exports.render = function (context, modelIn) {
     if (content.product && !(content.heading && content.image)) {
         var product = content.product;
         content.category = product.variant
-                ? product.masterProduct.primaryCategory
-                : product.primaryCategory;
+            ? product.masterProduct.primaryCategory
+            : product.primaryCategory;
         if (!content.category) {
             content.category = product.variant
                 ? product.masterProduct.classificationCategory

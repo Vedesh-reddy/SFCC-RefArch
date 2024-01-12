@@ -36,7 +36,6 @@ function getTotalPrice(lineItem) {
     return result;
 }
 
-
 module.exports = function (object, lineItem) {
     Object.defineProperty(object, 'priceTotal', {
         enumerable: true,

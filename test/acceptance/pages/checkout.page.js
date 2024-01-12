@@ -1,3 +1,5 @@
+'use strict';
+
 const I = actor();
 
 module.exports = {
@@ -117,8 +119,21 @@ module.exports = {
         I.waitForElement(this.locators.billingConfirmation);
         I.waitForText(fName + lName + address1);
     },
-    verifyCheckoutInfo(fName, lName, add1, city, zip, phone, ccNum, ccExpDate, quantity,
-        totalItemPrice, shipping, tax, estimatedTotal) {
+    verifyCheckoutInfo(
+        fName,
+        lName,
+        add1,
+        city,
+        zip,
+        phone,
+        ccNum,
+        ccExpDate,
+        quantity,
+        totalItemPrice,
+        shipping,
+        tax,
+        estimatedTotal
+    ) {
         // verify shipping address is correct
         I.scrollTo(this.locators.checkout_shippingSection);
         I.see(fName, this.locators.checkout_shippingSection);
@@ -151,8 +166,22 @@ module.exports = {
         I.see(tax, this.locators.checkout_orderSummary);
         I.see(estimatedTotal, this.locators.checkout_orderSummary);
     },
-    verifyOrderConfirmation(fName, lName, add1, city, zip, phone, email, ccNum, ccExpDate, quantity,
-        totalItemPrice, shipping, tax, estimatedTotal) {
+    verifyOrderConfirmation(
+        fName,
+        lName,
+        add1,
+        city,
+        zip,
+        phone,
+        email,
+        ccNum,
+        ccExpDate,
+        quantity,
+        totalItemPrice,
+        shipping,
+        tax,
+        estimatedTotal
+    ) {
         // verify order is place successfully by verifying the order confirmation page
         I.scrollTo(this.locators.orderConf_thankYou);
         I.see('Thank you for your order.', this.locators.orderConf_thankYou);

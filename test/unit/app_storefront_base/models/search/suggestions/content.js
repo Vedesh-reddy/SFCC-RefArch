@@ -4,7 +4,6 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
-
 describe('Content Suggestions model', function () {
     var nextSuggestionStub = sinon.stub();
     var urlStub = sinon.stub();

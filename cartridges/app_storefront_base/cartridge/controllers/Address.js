@@ -229,8 +229,7 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
                 } else {
                     formInfo.addressForm.valid = false;
                     formInfo.addressForm.addressId.valid = false;
-                    formInfo.addressForm.addressId.error =
-                        Resource.msg('error.message.idalreadyexists', 'forms', null);
+                    formInfo.addressForm.addressId.error = Resource.msg('error.message.idalreadyexists', 'forms', null);
                     res.json({
                         success: false,
                         fields: formErrors.getFormErrors(addressForm)
@@ -299,7 +298,8 @@ server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, re
                 message: Resource.msg('msg.no.saved.addresses', 'address', null)
             });
         } else {
-            res.json({ UUID: UUID,
+            res.json({
+                UUID: UUID,
                 defaultMsg: Resource.msg('label.addressbook.defaultaddress', 'account', null)
             });
         }

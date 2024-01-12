@@ -28,8 +28,8 @@ function categoryToObject(category) {
         url: getCategoryUrl(category),
         id: category.ID
     };
-    var subCategories = category.hasOnlineSubCategories() ?
-        category.getOnlineSubCategories() : null;
+    var subCategories = category.hasOnlineSubCategories()
+        ? category.getOnlineSubCategories() : null;
 
     if (subCategories) {
         collections.forEach(subCategories, function (subcategory) {
@@ -54,7 +54,6 @@ function categoryToObject(category) {
     return result;
 }
 
-
 /**
  * Represents a single category with all of it's children
  * @param {dw.util.ArrayList<dw.catalog.Category>} items - Top level categories
@@ -63,8 +62,8 @@ function categoryToObject(category) {
 function categories(items) {
     this.categories = [];
     collections.forEach(items, function (item) {
-        if (item.custom && item.custom.showInMenu &&
-                (item.hasOnlineProducts() || item.hasOnlineSubCategories())) {
+        if (item.custom && item.custom.showInMenu
+                && (item.hasOnlineProducts() || item.hasOnlineSubCategories())) {
             this.categories.push(categoryToObject(item));
         }
     }, this);

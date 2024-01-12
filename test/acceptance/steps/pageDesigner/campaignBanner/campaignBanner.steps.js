@@ -1,3 +1,5 @@
+'use strict';
+
 const { I, data, pageDesigner } = inject();
 
 Then('shopper should see the campaign banner', () => {
@@ -8,7 +10,6 @@ Then('shopper should see the campaign banner', () => {
 Then('shopper should see the campaign banner message', () => {
     I.see(data.pageDesigner.campaignBannerMessage, pageDesigner.locators.campaignBannerMessage);
 });
-
 
 Then('shopper should see a close button on campaign banner', () => {
     I.seeElement(pageDesigner.locators.campaignBannerCloseButton);

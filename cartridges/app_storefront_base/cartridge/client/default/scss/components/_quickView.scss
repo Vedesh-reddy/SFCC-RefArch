@@ -12,6 +12,7 @@
         padding-bottom: 0.3em;
     }
 
+    /* stylelint-disable-next-line selector-class-pattern */
     .beenSelected {
         background-color: $grey2;
     }
@@ -63,7 +64,7 @@
     }
 
     .modal-content {
-        border: 1px solid rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(0, 0, 0, 20%);
     }
 
     .modal-body {

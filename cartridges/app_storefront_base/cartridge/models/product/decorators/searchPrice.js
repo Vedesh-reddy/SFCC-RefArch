@@ -1,6 +1,5 @@
 'use strict';
 
-
 var pricingHelper = require('*/cartridge/scripts/helpers/pricing');
 var DefaultPrice = require('*/cartridge/models/price/default');
 var RangePrice = require('*/cartridge/models/price/range');

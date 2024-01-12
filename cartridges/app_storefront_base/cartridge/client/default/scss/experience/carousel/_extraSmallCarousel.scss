@@ -3,9 +3,17 @@
 @import "bootstrap/scss/mixins/breakpoints";
 @import "carouselMixins";
 
+// Disable linter for kebab case only as certain classes cannot be renamed in the ISML
+// as they are not present in the templates, such as .experience-commerce_layouts-carousel
+/* stylelint-disable selector-class-pattern */
+
+// Disable linter for css ordering since this file is complex with many selectors
+// and is already logically grouped with xs, xs-2, and xs-3
+/* stylelint-disable no-descending-specificity */
+
 @include media-breakpoint-only(xs) {
     .carousel.indicators-xs {
-        @include carousel-indicators();
+        @include carousel-indicators;
     }
 
     .experience-einstein-einsteinCarousel .carousel.insufficient-xs-slides .carousel-control-next,
@@ -58,8 +66,8 @@
         }
     }
 
-    .carousel-xs-2 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-xs-2 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item {
+    .carousel-xs-2 .carousel-item.active:not(.carousel-item-right, .carousel-item-left),
+    .carousel-xs-2 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item {
         transition: none;
     }
 
@@ -129,9 +137,9 @@
         }
     }
 
-    .carousel-xs-3 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left),
-    .carousel-xs-3 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item,
-    .carousel-xs-3 .carousel-item.active:not(.carousel-item-right):not(.carousel-item-left) + .carousel-item + .carousel-item {
+    .carousel-xs-3 .carousel-item.active:not(.carousel-item-right, .carousel-item-left),
+    .carousel-xs-3 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item,
+    .carousel-xs-3 .carousel-item.active:not(.carousel-item-right, .carousel-item-left) + .carousel-item + .carousel-item {
         transition: none;
     }
 
@@ -184,3 +192,5 @@
         display: block !important;
     }
 }
+/* stylelint-enable selector-class-pattern */
+/* stylelint-enable no-descending-specificity */

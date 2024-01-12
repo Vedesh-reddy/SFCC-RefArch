@@ -213,7 +213,8 @@ module.exports = {
                         $(attributeId).parent('button').focus();
                     }
                 });
-            });
+            }
+        );
     },
 
     showContentTab: function () {

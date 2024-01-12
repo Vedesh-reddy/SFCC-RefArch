@@ -20,7 +20,7 @@ var pageMetaData = require('*/cartridge/scripts/middleware/pageMetaData');
  * @property {String} info_selectforstock - Localized string for "Select Styles for Availability"
  */
 
-  /**
+/**
   * Product-Show : This endpoint is called to show the details of the selected product
   * @name Base/Product-Show
   * @function
@@ -285,7 +285,8 @@ server.get('ShowBonusProducts', function (req, res, next) {
                 product = ProductFactory.get({
                     pid: param,
                     pview: 'bonus',
-                    duuid: duuid });
+                    duuid: duuid
+                });
                 return product;
             });
         } else {

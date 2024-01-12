@@ -34,4 +34,3 @@ describe('renderTemplateHelper', function () {
         templateStub.reset();
     });
 });
-

@@ -3,7 +3,6 @@
 var decorators = require('*/cartridge/models/product/decorators/index');
 var promotionCache = require('*/cartridge/scripts/util/promotionCache');
 
-
 /**
  * Decorate product with product tile information
  * @param {Object} product - Product Model to be decorated

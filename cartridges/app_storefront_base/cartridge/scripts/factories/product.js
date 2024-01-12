@@ -61,7 +61,6 @@ module.exports = {
                             ? productHelper.getLineItemOptionNames(optionLineItemsBundle)
                             : productHelper.getDefaultOptions(optionModelBundle, optionModelBundle.options);
 
-
                         options.variationModel = variationsBundle;
                         options.lineItemOptions = lineItemOptionsBundle;
                         options.currentOptionModel = currentOptionModelBundle;
@@ -110,7 +109,6 @@ module.exports = {
                         var lineItemOptionsPLI = optionLineItemsPLI.length
                             ? productHelper.getLineItemOptionNames(optionLineItemsPLI)
                             : productHelper.getDefaultOptions(optionModelPLI, optionModelPLI.options);
-
 
                         options.variationModel = variationsPLI;
                         options.lineItemOptions = lineItemOptionsPLI;

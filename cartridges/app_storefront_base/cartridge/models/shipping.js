@@ -4,7 +4,6 @@ var AddressModel = require('*/cartridge/models/address');
 var ProductLineItemsModel = require('*/cartridge/models/productLineItems');
 var ShippingMethodModel = require('*/cartridge/models/shipping/shippingMethod');
 
-
 /**
  * Plain JS object that represents a DW Script API dw.order.ShippingMethod object
  * @param {dw.order.Shipment} shipment - the target Shipment

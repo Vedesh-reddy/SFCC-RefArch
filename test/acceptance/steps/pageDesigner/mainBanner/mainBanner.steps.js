@@ -1,4 +1,8 @@
-const { I, data, pageDesigner, utilities } = inject();
+'use strict';
+
+const {
+    I, data, pageDesigner, utilities
+} = inject();
 
 Then('shopper should see the main banner', () => {
     I.waitForElement(pageDesigner.locators.mainBanner);

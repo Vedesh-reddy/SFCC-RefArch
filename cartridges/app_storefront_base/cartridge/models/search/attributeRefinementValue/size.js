@@ -2,7 +2,6 @@
 
 var BaseAttributeValue = require('*/cartridge/models/search/attributeRefinementValue/base');
 
-
 /**
  * @constructor
  * @classdesc Size attribute refinement value model

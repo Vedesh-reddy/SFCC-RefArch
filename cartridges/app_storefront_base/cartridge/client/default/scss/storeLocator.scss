@@ -28,6 +28,11 @@
     }
 }
 
+.store-details {
+    display: block;
+    margin-left: 3.125em;
+}
+
 .gm-style-iw {
     .store-details {
         margin-left: 0;
@@ -55,12 +60,7 @@
     font-weight: 600;
 }
 
-.store-details {
-    display: block;
-    margin-left: 3.125em;
-}
-
-.store-locator-no-apiKey {
+.store-locator-no-api-key {
     display: none;
 }
 
@@ -80,8 +80,7 @@
 .results {
 
     @include media-breakpoint-up(md) {
-        overflow-y: auto;
-        overflow-x: hidden;
+        overflow: hidden auto;
         max-height: 21.875em;
         margin-right: -0.938em;
     }

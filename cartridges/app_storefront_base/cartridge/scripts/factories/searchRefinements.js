@@ -12,13 +12,13 @@ var collections = require('*/cartridge/scripts/util/collections');
 function getAttributeRefinementValueModel(refinementDefinition) {
     if (refinementDefinition.priceRefinement) {
         return require('*/cartridge/models/search/attributeRefinementValue/price');
-    } else if (refinementDefinition.attributeID === 'refinementColor') {
+    } if (refinementDefinition.attributeID === 'refinementColor') {
         return require('*/cartridge/models/search/attributeRefinementValue/color');
-    } else if (refinementDefinition.attributeID === 'size') {
+    } if (refinementDefinition.attributeID === 'size') {
         return require('*/cartridge/models/search/attributeRefinementValue/size');
-    } else if (refinementDefinition.categoryRefinement) {
+    } if (refinementDefinition.categoryRefinement) {
         return require('*/cartridge/models/search/attributeRefinementValue/category');
-    } else if (refinementDefinition.promotionRefinement) {
+    } if (refinementDefinition.promotionRefinement) {
         return require('*/cartridge/models/search/attributeRefinementValue/promotion');
     }
 
@@ -65,10 +65,12 @@ function createCategorySearchRefinement(productSearch, refinementDefinition, Mod
  * @param {CategoryAttributeValue} Model - model of the category class
  * @return {Array} - List of categories
  */
-function createProductSearchRefinement(productSearch,
+function createProductSearchRefinement(
+    productSearch,
     refinementDefinition,
     refinementValues,
-    Model) {
+    Model
+) {
     var catalogMgr = require('dw/catalog/CatalogMgr');
     var tree = [];
     var mappedList = {};
@@ -78,7 +80,8 @@ function createProductSearchRefinement(productSearch,
             productSearch,
             refinementDefinition,
             category,
-            productSearch.categoryID === value.value);
+            productSearch.categoryID === value.value
+        );
         mappedList[value.value].parent = category.parent.ID;
     });
 
@@ -117,7 +120,8 @@ function get(productSearch, refinementDefinition, refinementValues) {
             productSearch,
             refinementDefinition,
             refinementValues,
-            Model);
+            Model
+        );
     }
 
     return collections.map(refinementValues, function (value) {

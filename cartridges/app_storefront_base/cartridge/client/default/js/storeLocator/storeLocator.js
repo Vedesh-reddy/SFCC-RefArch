@@ -1,4 +1,5 @@
 /* globals google */
+
 'use strict';
 
 /**
@@ -40,11 +41,11 @@ function maps() {
 
     // Customized google map marker icon with svg format
     var markerImg = {
-        path: 'M13.5,30.1460153 L16.8554555,25.5 L20.0024287,25.5 C23.039087,25.5 25.5,' +
-            '23.0388955 25.5,20.0024287 L25.5,5.99757128 C25.5,2.96091298 23.0388955,0.5 ' +
-            '20.0024287,0.5 L5.99757128,0.5 C2.96091298,0.5 0.5,2.96110446 0.5,5.99757128 ' +
-            'L0.5,20.0024287 C0.5,23.039087 2.96110446,25.5 5.99757128,25.5 L10.1445445,' +
-            '25.5 L13.5,30.1460153 Z',
+        path: 'M13.5,30.1460153 L16.8554555,25.5 L20.0024287,25.5 C23.039087,25.5 25.5,'
+            + '23.0388955 25.5,20.0024287 L25.5,5.99757128 C25.5,2.96091298 23.0388955,0.5 '
+            + '20.0024287,0.5 L5.99757128,0.5 C2.96091298,0.5 0.5,2.96110446 0.5,5.99757128 '
+            + 'L0.5,20.0024287 C0.5,23.039087 2.96110446,25.5 5.99757128,25.5 L10.1445445,'
+            + '25.5 L13.5,30.1460153 Z',
         fillColor: '#0070d2',
         fillOpacity: 1,
         scale: 1.1,
@@ -107,7 +108,7 @@ function updateStoresResults(data) {
     if ($mapDiv.data('has-google-api')) {
         maps();
     } else {
-        $('.store-locator-no-apiKey').show();
+        $('.store-locator-no-api-key').show();
     }
 
     if (data.storesResultsHtml) {
@@ -152,7 +153,7 @@ module.exports = {
         if ($('.map-canvas').data('has-google-api')) {
             maps();
         } else {
-            $('.store-locator-no-apiKey').show();
+            $('.store-locator-no-api-key').show();
         }
 
         if (!$('.results').data('has-results')) {

@@ -8,7 +8,6 @@ var ShippingModel = require('*/cartridge/models/shipping');
 
 var ShippingMethodModel = require('*/cartridge/models/shipping/shippingMethod');
 
-
 // Public (class) static model functions
 
 /**
@@ -97,8 +96,8 @@ function selectShippingMethod(shipment, shippingMethodID, shippingMethods, addre
         applicableShippingMethods = shippingMethods;
     } else {
         var shipmentModel = ShippingMgr.getShipmentShippingModel(shipment);
-        applicableShippingMethods = address ? shipmentModel.getApplicableShippingMethods(address) :
-            shipmentModel.applicableShippingMethods;
+        applicableShippingMethods = address ? shipmentModel.getApplicableShippingMethods(address)
+            : shipmentModel.applicableShippingMethods;
     }
 
     if (shippingMethodID) {

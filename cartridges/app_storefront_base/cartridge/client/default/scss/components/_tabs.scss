@@ -6,15 +6,15 @@
     color: $grey8;
 }
 
+.nav-tabs .nav-link.active {
+    background-color: transparent;
+}
+
 .form-nav .nav-tabs .nav-link.active,
 .form-nav .nav-tabs .nav-link.active:focus,
 .form-nav .nav-tabs .nav-link.active:hover {
     background-color: $white;
     color: $grey8;
-}
-
-.nav-tabs .nav-link.active {
-    background-color: transparent;
 }
 
 @include media-breakpoint-up(lg) {

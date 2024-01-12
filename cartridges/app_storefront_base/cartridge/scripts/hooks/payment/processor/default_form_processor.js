@@ -1,6 +1,6 @@
 'use strict';
-var Resource = require('dw/web/Resource');
 
+var Resource = require('dw/web/Resource');
 
 /**
  * default hook if no payment form processor is supported
@@ -16,7 +16,7 @@ function processForm() {
  * default hook if no save payment information processor is supported
  */
 function savePaymentInformation() {
-    return;
+
 }
 
 exports.processForm = processForm;

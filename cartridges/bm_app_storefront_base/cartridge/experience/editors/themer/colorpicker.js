@@ -1,5 +1,5 @@
-
 'use strict';
+
 /**
  * Init for the color picker custom editor
  */

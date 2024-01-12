@@ -161,16 +161,13 @@ server.post(
 
             if (Object.prototype.hasOwnProperty
                 .call(form.shippingAddress.addressFields, 'states')) {
-                result.address.stateCode =
-                    form.shippingAddress.addressFields.states.stateCode.value;
+                result.address.stateCode = form.shippingAddress.addressFields.states.stateCode.value;
             }
 
-            result.shippingBillingSame =
-                form.shippingAddress.shippingAddressUseAsBillingAddress.value;
+            result.shippingBillingSame = form.shippingAddress.shippingAddressUseAsBillingAddress.value;
 
-            result.shippingMethod =
-                form.shippingAddress.shippingMethodID.value ?
-                    '' + form.shippingAddress.shippingMethodID.value : null;
+            result.shippingMethod = form.shippingAddress.shippingMethodID.value
+                ? '' + form.shippingAddress.shippingMethodID.value : null;
             result.form = form;
 
             result.isGift = form.shippingAddress.isGift.checked;
@@ -263,8 +260,7 @@ server.post(
                 if (req.currentCustomer.addressBook
                     && req.currentCustomer.addressBook.preferredAddress) {
                     // Copy over preferredAddress (use addressUUID for matching)
-                    COHelpers.copyBillingAddressToBasket(
-                        req.currentCustomer.addressBook.preferredAddress, basket);
+                    COHelpers.copyBillingAddressToBasket(req.currentCustomer.addressBook.preferredAddress, basket);
                 } else {
                     // Copy over first shipping address (use shipmentUUID for matching)
                     COHelpers.copyBillingAddressToBasket(basket.defaultShipment.shippingAddress, basket);

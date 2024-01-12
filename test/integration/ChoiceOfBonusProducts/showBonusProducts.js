@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -5,7 +7,7 @@ var config = require('../it.config');
 describe('Choice Of Bonus Products: Show Bonus Products', function () {
     this.timeout(45000);
 
-    var variantPid1 = '701642842675M';   // Long Center Seam Skirt
+    var variantPid1 = '701642842675M'; // Long Center Seam Skirt
 
     var cookieJar = request.jar();
     var myRequest = {

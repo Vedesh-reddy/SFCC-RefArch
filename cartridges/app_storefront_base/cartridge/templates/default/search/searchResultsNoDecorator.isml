@@ -42,16 +42,20 @@
     <div class="row">
         <div class="tab-content col-12">
             <div class="tab-pane container active" id="product-search-results" role="tabpanel" aria-labelledby="product-tab">
-
                     <isif condition="${pdict.productSearch.productIds.length > 0}">
                         <div class="row grid-header">
                             <div class="result-count text-center col-12 col-md-9 col-sm-6 order-sm-2">
+                                <isinclude template="search/resultsCount" />
+                            </div>
+                        </div>
                     <iselse>
                         <div class="row grid-header justify-content-center">
                             <div class="result-count col">
+                                <isinclude template="search/resultsCount" />
+                            </div>
+                        </div>
                     </isif>
-                        <isinclude template="search/resultsCount" />
-                    </div>
+
                     <isif condition="${pdict.productSearch.productIds.length > 0}">
                         <div class="col-6 col-sm-3 order-sm-1">
                             <isinclude template="search/sortOrderMenu" />
@@ -63,7 +67,6 @@
                             </button>
                         </div>
                     </isif>
-                </div>
 
                 <isif condition="${pdict.productSearch.productIds.length > 0}">
                     <!--- Refinement bar --->

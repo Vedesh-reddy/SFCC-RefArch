@@ -4,7 +4,6 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
-
 describe('Category Suggestions model', function () {
     var nextCategoryStub = sinon.stub();
     var urlStub = sinon.stub();

@@ -49,7 +49,6 @@ server.post('ToggleMultiShip', server.middleware.https, function (req, res, next
 
     req.session.privacyCache.set('usingMultiShipping', usingMultiShipping);
 
-
     if (usingMultiShipping) {
         var UUIDUtils = require('dw/util/UUIDUtils');
         // split line items into separate shipments
@@ -334,7 +333,6 @@ server.post('UpdateShippingMethodsList', server.middleware.https, function (req,
     return next();
 });
 
-
 /**
  * Handle Ajax shipping form submit
  */
@@ -427,12 +425,10 @@ server.post(
             };
             if (Object.prototype.hasOwnProperty
                 .call(form.shippingAddress.addressFields, 'states')) {
-                result.address.stateCode =
-                    form.shippingAddress.addressFields.states.stateCode.value;
+                result.address.stateCode = form.shippingAddress.addressFields.states.stateCode.value;
             }
 
-            result.shippingBillingSame =
-                form.shippingAddress.shippingAddressUseAsBillingAddress.value;
+            result.shippingBillingSame = form.shippingAddress.shippingAddressUseAsBillingAddress.value;
 
             result.shippingMethod = form.shippingAddress.shippingMethodID.value
                 ? form.shippingAddress.shippingMethodID.value.toString()
@@ -475,12 +471,10 @@ server.post(
                     if (req.currentCustomer.addressBook
                         && req.currentCustomer.addressBook.preferredAddress) {
                         // Copy over preferredAddress (use addressUUID for matching)
-                        COHelpers.copyBillingAddressToBasket(
-                            req.currentCustomer.addressBook.preferredAddress, currentBasket);
+                        COHelpers.copyBillingAddressToBasket(req.currentCustomer.addressBook.preferredAddress, currentBasket);
                     } else {
                         // Copy over first shipping address (use shipmentUUID for matching)
-                        COHelpers.copyBillingAddressToBasket(
-                            currentBasket.defaultShipment.shippingAddress, currentBasket);
+                        COHelpers.copyBillingAddressToBasket(currentBasket.defaultShipment.shippingAddress, currentBasket);
                     }
                 }
                 var usingMultiShipping = req.session.privacyCache.get('usingMultiShipping');
@@ -513,6 +507,5 @@ server.post(
         return next();
     }
 );
-
 
 module.exports = server.exports();

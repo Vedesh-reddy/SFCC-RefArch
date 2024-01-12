@@ -179,8 +179,7 @@ server.post(
         ) {
             registrationForm.customer.email.valid = false;
             registrationForm.customer.emailconfirm.valid = false;
-            registrationForm.customer.emailconfirm.error =
-                Resource.msg('error.message.mismatch.email', 'forms', null);
+            registrationForm.customer.emailconfirm.error = Resource.msg('error.message.mismatch.email', 'forms', null);
             registrationForm.valid = false;
         }
 
@@ -189,16 +188,14 @@ server.post(
         ) {
             registrationForm.login.password.valid = false;
             registrationForm.login.passwordconfirm.valid = false;
-            registrationForm.login.passwordconfirm.error =
-                Resource.msg('error.message.mismatch.password', 'forms', null);
+            registrationForm.login.passwordconfirm.error = Resource.msg('error.message.mismatch.password', 'forms', null);
             registrationForm.valid = false;
         }
 
         if (!CustomerMgr.isAcceptablePassword(registrationForm.login.password.value)) {
             registrationForm.login.password.valid = false;
             registrationForm.login.passwordconfirm.valid = false;
-            registrationForm.login.passwordconfirm.error =
-                Resource.msg('error.message.password.constraints.not.matched', 'forms', null);
+            registrationForm.login.passwordconfirm.error = Resource.msg('error.message.password.constraints.not.matched', 'forms', null);
             registrationForm.valid = false;
         }
 
@@ -265,8 +262,7 @@ server.post(
                             registrationForm.validForm = false;
                             registrationForm.form.customer.email.valid = false;
                             registrationForm.form.customer.emailconfirm.valid = false;
-                            registrationForm.form.customer.email.error =
-                                Resource.msg('error.message.username.invalid', 'forms', null);
+                            registrationForm.form.customer.email.error = Resource.msg('error.message.username.invalid', 'forms', null);
                         }
                     }
                 }
@@ -403,8 +399,7 @@ server.post(
             profileForm.valid = false;
             profileForm.customer.email.valid = false;
             profileForm.customer.emailconfirm.valid = false;
-            profileForm.customer.emailconfirm.error =
-                Resource.msg('error.message.mismatch.email', 'forms', null);
+            profileForm.customer.emailconfirm.error = Resource.msg('error.message.mismatch.email', 'forms', null);
         }
 
         var result = {
@@ -436,8 +431,7 @@ server.post(
 
                     if (status.error) {
                         formInfo.profileForm.login.password.valid = false;
-                        formInfo.profileForm.login.password.error =
-                            Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
+                        formInfo.profileForm.login.password.error = Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
                     } else {
                         customerLogin = profile.credentials.setLogin(
                             formInfo.email,
@@ -470,8 +464,7 @@ server.post(
                 } else {
                     if (!status.error) {
                         formInfo.profileForm.customer.email.valid = false;
-                        formInfo.profileForm.customer.email.error =
-                            Resource.msg('error.message.username.invalid', 'forms', null);
+                        formInfo.profileForm.customer.email.error = Resource.msg('error.message.username.invalid', 'forms', null);
                     }
 
                     delete formInfo.profileForm;
@@ -569,8 +562,7 @@ server.post(
             profileForm.valid = false;
             newPasswords.newpassword.valid = false;
             newPasswords.newpasswordconfirm.valid = false;
-            newPasswords.newpasswordconfirm.error =
-                Resource.msg('error.message.mismatch.newpassword', 'forms', null);
+            newPasswords.newpasswordconfirm.error = Resource.msg('error.message.mismatch.newpassword', 'forms', null);
         }
 
         var result = {
@@ -598,12 +590,10 @@ server.post(
                 if (status.error) {
                     if (!CustomerMgr.isAcceptablePassword(newPasswords.newpassword.value)) {
                         formInfo.profileForm.login.newpasswords.newpassword.valid = false;
-                        formInfo.profileForm.login.newpasswords.newpassword.error =
-                            Resource.msg('error.message.password.constraints.not.matched', 'forms', null);
+                        formInfo.profileForm.login.newpasswords.newpassword.error = Resource.msg('error.message.password.constraints.not.matched', 'forms', null);
                     } else {
                         formInfo.profileForm.login.currentpassword.valid = false;
-                        formInfo.profileForm.login.currentpassword.error =
-                            Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
+                        formInfo.profileForm.login.currentpassword.error = Resource.msg('error.message.currentpasswordnomatch', 'forms', null);
                     }
 
                     delete formInfo.currentPassword;
@@ -714,7 +704,6 @@ server.get('PasswordReset', server.middleware.https, function (req, res, next) {
     next();
 });
 
-
 /**
  * Account-SetNewPassword : The Account-SetNewPassword GET endpoint removes the reset token from the
  * URL and redirects to the Account-SetNewPassword POST endpoint
@@ -798,8 +787,7 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
         passwordForm.valid = false;
         passwordForm.newpassword.valid = false;
         passwordForm.newpasswordconfirm.valid = false;
-        passwordForm.newpasswordconfirm.error =
-            Resource.msg('error.message.mismatch.newpassword', 'forms', null);
+        passwordForm.newpasswordconfirm.error = Resource.msg('error.message.mismatch.newpassword', 'forms', null);
     }
 
     if (passwordForm.valid) {
@@ -829,8 +817,7 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
             if (status.error) {
                 passwordForm.newpassword.valid = false;
                 passwordForm.newpasswordconfirm.valid = false;
-                passwordForm.newpasswordconfirm.error =
-                    Resource.msg('error.message.resetpassword.invalidformentry', 'forms', null);
+                passwordForm.newpasswordconfirm.error = Resource.msg('error.message.resetpassword.invalidformentry', 'forms', null);
                 res.render('account/password/newPassword', {
                     passwordForm: passwordForm,
                     token: token
@@ -874,7 +861,8 @@ server.post('SaveNewPassword', server.middleware.https, function (req, res, next
  */
 server.get('Header', server.middleware.include, function (req, res, next) {
     var template = req.querystring.mobile ? 'account/mobileHeader' : 'account/header';
-    res.render(template, { name:
+    res.render(template, {
+        name:
         req.currentCustomer.profile ? req.currentCustomer.profile.firstName : null
     });
     next();

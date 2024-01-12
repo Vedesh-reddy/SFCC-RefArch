@@ -51,10 +51,12 @@ function generateToken(req, res, next) {
     // unnecessary work.
     var viewData = res.getViewData();
     if (!viewData.csrf) {
-        res.setViewData({ csrf: {
-            tokenName: csrfProtection.getTokenName(),
-            token: csrfProtection.generateToken()
-        } });
+        res.setViewData({
+            csrf: {
+                tokenName: csrfProtection.getTokenName(),
+                token: csrfProtection.generateToken()
+            }
+        });
     }
 
     next();

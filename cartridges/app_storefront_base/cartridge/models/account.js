@@ -95,9 +95,9 @@ function getCustomerPaymentInstruments(userPaymentInstruments) {
         };
 
         result.cardTypeImage = {
-            src: URLUtils.staticURL('/images/' +
-                paymentInstrument.creditCardType.toLowerCase().replace(/\s/g, '') +
-                '-dark.svg'),
+            src: URLUtils.staticURL('/images/'
+                + paymentInstrument.creditCardType.toLowerCase().replace(/\s/g, '')
+                + '-dark.svg'),
             alt: paymentInstrument.creditCardType
         };
 
@@ -126,13 +126,13 @@ function account(currentCustomer, addressModel, orderModel) {
     if (currentCustomer instanceof Customer) {
         this.customerPaymentInstruments = currentCustomer.profile.wallet
         && currentCustomer.profile.wallet.paymentInstruments
-        ? getCustomerPaymentInstruments(currentCustomer.profile.wallet.paymentInstruments.toArray())
-        : null;
+            ? getCustomerPaymentInstruments(currentCustomer.profile.wallet.paymentInstruments.toArray())
+            : null;
     } else {
         this.customerPaymentInstruments = currentCustomer.wallet
         && currentCustomer.wallet.paymentInstruments
-        ? getCustomerPaymentInstruments(currentCustomer.wallet.paymentInstruments)
-        : null;
+            ? getCustomerPaymentInstruments(currentCustomer.wallet.paymentInstruments)
+            : null;
     }
 }
 

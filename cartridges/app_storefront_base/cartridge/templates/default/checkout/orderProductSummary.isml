@@ -12,7 +12,7 @@
         <div class="product-summary-block">
             <isloop items="${pdict.order.shipping}" var="shippingModel">
                 <isif condition="${pdict.order.shipping.length > 1}">
-                    <div class="shipment-block">
+                    <div class="shipment-block"></div>
                 </isif>
 
                 <isloop items="${shippingModel.productLineItems.items}" var="lineItem">
@@ -29,7 +29,6 @@
 
                 <isif condition="${pdict.order.shipping.length > 1}">
                     <isinclude template="checkout/shipping/shippingCard" />
-                    </div>
                 </isif>
             </isloop>
         </div>

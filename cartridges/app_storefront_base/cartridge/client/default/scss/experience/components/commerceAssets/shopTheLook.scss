@@ -21,16 +21,6 @@
     text-align: center;
 }
 
-.shopthelook-figure-lg:hover {
-    .shopthelook-image {
-        filter: brightness(40%);
-    }
-
-    .product-info {
-        display: block;
-    }
-}
-
 .shopthelook-text {
     background-color: $white;
     color: $shop-the-look-link-color;
@@ -65,5 +55,15 @@
 
     .shopthelook-set-count {
         color: $shop-the-look-text-color;
+    }
+}
+
+.shopthelook-figure-lg:hover {
+    .shopthelook-image {
+        filter: brightness(40%);
+    }
+
+    .product-info {
+        display: block;
     }
 }

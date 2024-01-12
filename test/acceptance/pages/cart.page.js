@@ -1,3 +1,5 @@
+'use strict';
+
 const I = actor();
 
 module.exports = {

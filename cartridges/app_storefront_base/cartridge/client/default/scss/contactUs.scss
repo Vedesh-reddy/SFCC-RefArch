@@ -10,9 +10,9 @@
 }
 
 .contact-us-signup-message {
-    @include toast-message();
+    @include toast-message;
 }
 
 .contact-us-signup-alert {
-    @include toast-alert();
+    @include toast-alert;
 }

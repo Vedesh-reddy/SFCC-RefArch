@@ -15,8 +15,8 @@ describe('Helpers - Totals', function () {
     });
 
     beforeEach(function () {
-        hookMgrSpy.reset();
-        hookHelperSpy.reset();
+        hookMgrSpy.resetHistory();
+        hookHelperSpy.resetHistory();
     });
 
     it('Should call taxes hook', function () {

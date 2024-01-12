@@ -5,7 +5,6 @@ var assert = require('chai').assert;
 var Money = require('../../../mocks/dw.value.Money');
 var ArrayList = require('../../../mocks/dw.util.Collection');
 
-
 var createApiBasket = function (isAvailable) {
     return {
         totalGrossPrice: new Money(isAvailable),

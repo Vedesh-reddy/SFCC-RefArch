@@ -1,6 +1,6 @@
 'use strict';
-var Resource = require('dw/web/Resource');
 
+var Resource = require('dw/web/Resource');
 
 /**
  * default hook if no payment processor is supported

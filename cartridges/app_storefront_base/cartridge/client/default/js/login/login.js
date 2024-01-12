@@ -3,6 +3,8 @@
 var formValidation = require('../components/formValidation');
 var createErrorNotification = require('../components/errorNotification');
 
+var location = window.location;
+
 module.exports = {
     login: function () {
         $('form.login').submit(function (e) {
@@ -103,8 +105,7 @@ module.exports = {
                                 .html('<a href="'
                                     + data.returnUrl
                                     + '" class="btn btn-primary btn-block">'
-                                    + data.buttonText + '</a>'
-                                );
+                                    + data.buttonText + '</a>');
                         }
                     }
                 },

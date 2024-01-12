@@ -28,40 +28,37 @@ function getApproachingDiscounts(basket, discountPlan) {
     if (basket && basket.productLineItems) {
         // TODO: Account for giftCertificateLineItems once gift certificates are implemented
         approachingOrderDiscounts = discountPlan.getApproachingOrderDiscounts();
-        approachingShippingDiscounts =
-            discountPlan.getApproachingShippingDiscounts(basket.defaultShipment);
+        approachingShippingDiscounts = discountPlan.getApproachingShippingDiscounts(basket.defaultShipment);
 
-        orderDiscountObject =
-            collections.map(approachingOrderDiscounts, function (approachingOrderDiscount) {
-                return {
-                    discountMsg: Resource.msgf(
-                        'msg.approachingpromo',
-                        'cart',
-                        null,
-                        formatMoney(
-                            approachingOrderDiscount.getDistanceFromConditionThreshold()
-                        ),
-                        approachingOrderDiscount.getDiscount()
-                            .getPromotion().getCalloutMsg()
-                    )
-                };
-            });
+        orderDiscountObject = collections.map(approachingOrderDiscounts, function (approachingOrderDiscount) {
+            return {
+                discountMsg: Resource.msgf(
+                    'msg.approachingpromo',
+                    'cart',
+                    null,
+                    formatMoney(
+                        approachingOrderDiscount.getDistanceFromConditionThreshold()
+                    ),
+                    approachingOrderDiscount.getDiscount()
+                        .getPromotion().getCalloutMsg()
+                )
+            };
+        });
 
-        shippingDiscountObject =
-            collections.map(approachingShippingDiscounts, function (approachingShippingDiscount) {
-                return {
-                    discountMsg: Resource.msgf(
-                        'msg.approachingpromo',
-                        'cart',
-                        null,
-                        formatMoney(
-                            approachingShippingDiscount.getDistanceFromConditionThreshold()
-                        ),
-                        approachingShippingDiscount.getDiscount()
-                            .getPromotion().getCalloutMsg()
-                    )
-                };
-            });
+        shippingDiscountObject = collections.map(approachingShippingDiscounts, function (approachingShippingDiscount) {
+            return {
+                discountMsg: Resource.msgf(
+                    'msg.approachingpromo',
+                    'cart',
+                    null,
+                    formatMoney(
+                        approachingShippingDiscount.getDistanceFromConditionThreshold()
+                    ),
+                    approachingShippingDiscount.getDiscount()
+                        .getPromotion().getCalloutMsg()
+                )
+            };
+        });
         discountObject = orderDiscountObject.concat(shippingDiscountObject);
     }
     return discountObject;

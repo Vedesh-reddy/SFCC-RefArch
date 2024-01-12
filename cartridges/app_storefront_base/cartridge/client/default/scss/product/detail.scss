@@ -19,43 +19,6 @@
     }
 }
 
-label.color ~ a:hover {
-    // Removes weird dash after the swatch circle on hover.
-    text-decoration: none;
-}
-
-.description-and-detail {
-    margin-top: 2em;
-
-    @include media-breakpoint-only(xs) {
-        margin-top: 0;
-
-        .title {
-            font-size: 1.5rem;
-            margin-bottom: 0;
-            font-family: 'Dosis', sans-serif;
-        }
-
-        > div:last-child {
-            margin-bottom: 1em;
-        }
-    }
-
-    .description {
-
-        @include media-breakpoint-up(sm) {
-            margin-bottom: 2em;
-        }
-    }
-
-    .content {
-
-        @include media-breakpoint-only(xs) {
-            margin-top: 1em;
-        }
-    }
-}
-
 .social-container {
     padding-top: 0.9375em;
     text-align: center;
@@ -75,6 +38,43 @@ label.color ~ a:hover {
         a {
             color: $grey6;
             padding-right: 0.2em;
+        }
+    }
+}
+
+label.color ~ a:hover {
+    // Removes weird dash after the swatch circle on hover.
+    text-decoration: none;
+}
+
+.description-and-detail {
+    margin-top: 2em;
+
+    @include media-breakpoint-only(xs) {
+        margin-top: 0;
+
+        .title {
+            font-size: 1.5rem;
+            margin-bottom: 0;
+            font-family: Dosis, sans-serif;
+        }
+
+        > div:last-child {
+            margin-bottom: 1em;
+        }
+    }
+
+    .description {
+
+        @include media-breakpoint-up(sm) {
+            margin-bottom: 2em;
+        }
+    }
+
+    .content {
+
+        @include media-breakpoint-only(xs) {
+            margin-top: 1em;
         }
     }
 }

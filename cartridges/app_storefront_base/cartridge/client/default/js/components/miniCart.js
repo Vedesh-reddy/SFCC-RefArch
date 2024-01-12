@@ -3,6 +3,7 @@
 var cart = require('../cart/cart');
 
 var updateMiniCart = true;
+var location = window.location;
 
 module.exports = function () {
     cart();

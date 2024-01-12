@@ -7,7 +7,8 @@ var billingHelpers = require('./billing');
 var summaryHelpers = require('./summary');
 var formHelpers = require('./formErrors');
 var scrollAnimate = require('../components/scrollAnimate');
-
+var location = window.location;
+var history = window.history;
 
 /**
  * Create the jQuery Checkout Plugin.
@@ -118,7 +119,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                         }
                     });
                     return defer;
-                } else if (stage === 'shipping') {
+                } if (stage === 'shipping') {
                     //
                     // Clear Previous Errors
                     //
@@ -128,8 +129,8 @@ var scrollAnimate = require('../components/scrollAnimate');
                     // Submit the Shipping Address Form
                     //
                     var isMultiShip = $('#checkout-main').hasClass('multi-ship');
-                    var formSelector = isMultiShip ?
-                        '.multi-shipping .active form' : '.single-shipping .shipping-form';
+                    var formSelector = isMultiShip
+                        ? '.multi-shipping .active form' : '.single-shipping .shipping-form';
                     var form = $(formSelector);
 
                     if (isMultiShip && form.length === 0) {
@@ -144,16 +145,18 @@ var scrollAnimate = require('../components/scrollAnimate');
                                 // enable the next:Payment button here
                                 $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 if (!data.error) {
-                                    $('body').trigger('checkout:updateCheckoutView',
-                                        { order: data.order, customer: data.customer });
+                                    $('body').trigger(
+                                        'checkout:updateCheckoutView',
+                                        { order: data.order, customer: data.customer }
+                                    );
                                     defer.resolve();
                                 } else if (data.message && $('.shipping-error .alert-danger').length < 1) {
                                     var errorMsg = data.message;
-                                    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
-                                        'fade show" role="alert">' +
-                                        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-                                        '<span aria-hidden="true">&times;</span>' +
-                                        '</button>' + errorMsg + '</div>';
+                                    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error '
+                                        + 'fade show" role="alert">'
+                                        + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+                                        + '<span aria-hidden="true">&times;</span>'
+                                        + '</button>' + errorMsg + '</div>';
                                     $('.shipping-error').append(errorHtml);
                                     scrollAnimate($('.shipping-error'));
                                     defer.reject();
@@ -185,7 +188,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                             type: 'post',
                             data: shippingFormData,
                             success: function (data) {
-                                 // enable the next:Payment button here
+                                // enable the next:Payment button here
                                 $('body').trigger('checkout:enableButton', '.next-step-button button');
                                 shippingHelpers.methods.shippingFormResponse(defer, data);
                             },
@@ -201,7 +204,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                         });
                     }
                     return defer;
-                } else if (stage === 'payment') {
+                } if (stage === 'payment') {
                     //
                     // Submit the Billing Address Form
                     //
@@ -252,31 +255,30 @@ var scrollAnimate = require('../components/scrollAnimate');
                         // if payment method is credit card
                         if ($('.payment-information').data('payment-method-id') === 'CREDIT_CARD') {
                             if (!($('.payment-information').data('is-new-payment'))) {
-                                var cvvCode = $('.saved-payment-instrument.' +
-                                    'selected-payment .saved-payment-security-code').val();
+                                var cvvCode = $('.saved-payment-instrument.'
+                                    + 'selected-payment .saved-payment-security-code').val();
 
                                 if (cvvCode === '') {
-                                    var cvvElement = $('.saved-payment-instrument.' +
-                                        'selected-payment ' +
-                                        '.form-control');
+                                    var cvvElement = $('.saved-payment-instrument.'
+                                        + 'selected-payment '
+                                        + '.form-control');
                                     cvvElement.addClass('is-invalid');
                                     scrollAnimate(cvvElement);
                                     defer.reject();
                                     return defer;
                                 }
 
-                                var $savedPaymentInstrument = $('.saved-payment-instrument' +
-                                    '.selected-payment'
-                                );
+                                var $savedPaymentInstrument = $('.saved-payment-instrument'
+                                    + '.selected-payment');
 
-                                paymentForm += '&storedPaymentUUID=' +
-                                    $savedPaymentInstrument.data('uuid');
+                                paymentForm += '&storedPaymentUUID='
+                                    + $savedPaymentInstrument.data('uuid');
 
                                 paymentForm += '&securityCode=' + cvvCode;
                             }
                         }
                     }
-                     // disable the next:Place Order button here
+                    // disable the next:Place Order button here
                     $('body').trigger('checkout:disableButton', '.next-step-button button');
 
                     $.ajax({
@@ -284,7 +286,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                         method: 'POST',
                         data: paymentForm,
                         success: function (data) {
-                             // enable the next:Place Order button here
+                            // enable the next:Place Order button here
                             $('body').trigger('checkout:enableButton', '.next-step-button button');
                             // look for field validation errors
                             if (data.error) {
@@ -313,8 +315,10 @@ var scrollAnimate = require('../components/scrollAnimate');
                                 //
                                 // Populate the Address Summary
                                 //
-                                $('body').trigger('checkout:updateCheckoutView',
-                                    { order: data.order, customer: data.customer });
+                                $('body').trigger(
+                                    'checkout:updateCheckoutView',
+                                    { order: data.order, customer: data.customer }
+                                );
 
                                 if (data.renderedPaymentInstruments) {
                                     $('.stored-payments').empty().html(
@@ -342,7 +346,7 @@ var scrollAnimate = require('../components/scrollAnimate');
                     });
 
                     return defer;
-                } else if (stage === 'placeOrder') {
+                } if (stage === 'placeOrder') {
                     // disable the placeOrder button here
                     $('body').trigger('checkout:disableButton', '.next-step-button button');
                     $.ajax({
@@ -467,8 +471,8 @@ var scrollAnimate = require('../components/scrollAnimate');
                     // Back button when event state less than current state in ordered
                     // checkoutStages array.
                     //
-                    if (e.state === null ||
-                        checkoutStages.indexOf(e.state) < members.currentStage) {
+                    if (e.state === null
+                        || checkoutStages.indexOf(e.state) < members.currentStage) {
                         members.handlePrevStage(false);
                     } else if (checkoutStages.indexOf(e.state) > members.currentStage) {
                         // Forward button  pressed
@@ -573,7 +577,6 @@ var scrollAnimate = require('../components/scrollAnimate');
     };
 }(jQuery));
 
-
 var exports = {
     initialize: function () {
         $('#checkout-main').checkout();
@@ -616,7 +619,6 @@ var exports = {
             $(button).prop('disabled', false);
         });
     }
-
 
 };
 
