@@ -4,7 +4,6 @@ var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 var sinon = require('sinon');
 
-
 describe('SearchPhrase Suggestions model', function () {
     var nextPhraseStub = sinon.stub();
     var urlStub = sinon.stub();
@@ -32,8 +31,8 @@ describe('SearchPhrase Suggestions model', function () {
     nextPhraseStub.onCall(2).returns(phrase3);
 
     afterEach(function () {
-        urlStub.reset();
-        nextPhraseStub.reset();
+        urlStub.resetHistory();
+        nextPhraseStub.resetHistory();
     });
 
     it('should produce a BrandSuggestions instance', function () {

@@ -4,7 +4,6 @@ var Resource = require('dw/web/Resource');
 
 var ACTION_ENDPOINT = 'Search-ShowAjax';
 
-
 /**
  * @constructor
  * @private

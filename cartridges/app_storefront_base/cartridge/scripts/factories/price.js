@@ -6,7 +6,6 @@ var DefaultPrice = require('*/cartridge/models/price/default');
 var RangePrice = require('*/cartridge/models/price/range');
 var TieredPrice = require('*/cartridge/models/price/tiered');
 
-
 /**
  * Get list price for a product
  *

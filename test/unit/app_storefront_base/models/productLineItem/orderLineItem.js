@@ -96,7 +96,6 @@ describe('Order Line Item Model', function () {
         assert.isTrue(productDecorators.stubs.stubVariationAttributes.calledOnce);
     });
 
-
     it('should call quantity for order line item model', function () {
         orderLineItem(object, productMock, optionsMock);
 

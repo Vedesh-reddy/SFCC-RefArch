@@ -1,4 +1,8 @@
-const { I, data, pageDesigner, utilities } = inject();
+'use strict';
+
+const {
+    I, data, pageDesigner, utilities
+} = inject();
 
 Then('shopper should see the product tile component', () => {
     I.seeElement(pageDesigner.locators.productTile1);
@@ -39,4 +43,3 @@ Then('shopper should go to the product details page clicking on the image', () =
 Then('shopper should go to the product details page clicking on product name', () => {
     utilities.clickToLoadPage(pageDesigner.locators.productTile1NameLinkToPdp, data.pageDesigner.productTile1PDPLink);
 });
-

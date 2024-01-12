@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -134,18 +136,18 @@ describe('Select different State in Shipping Form', function () {
                 'postalCode': '09876'
             };
             return request(myRequest)
-             // Handle response from request
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+            // Handle response from request
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
 
-                     var bodyAsJson = JSON.parse(response.body);
-                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
+                    var bodyAsJson = JSON.parse(response.body);
+                    var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
 
-                     assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                 });
+                    assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                });
         });
     });
 
@@ -174,14 +176,14 @@ describe('Select different State in Shipping Form', function () {
             };
 
             return request(myRequest)
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     cookieString = cookieJar.getCookieString(myRequest.url);
-                 })
-                 .then(function () {
-                     cookie = request.cookie(cookieString);
-                     cookieJar.setCookie(cookie, myRequest.url);
-                 });
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    cookieString = cookieJar.getCookieString(myRequest.url);
+                })
+                .then(function () {
+                    cookie = request.cookie(cookieString);
+                    cookieJar.setCookie(cookie, myRequest.url);
+                });
         });
 
         it('should add surcharge to the Ground Shipping cost for each jewelery item', function () {
@@ -267,18 +269,18 @@ describe('Select different State in Shipping Form', function () {
                 'postalCode': '09876'
             };
             return request(myRequest)
-             // Handle response from request
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+            // Handle response from request
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
 
-                     var bodyAsJson = JSON.parse(response.body);
-                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
+                    var bodyAsJson = JSON.parse(response.body);
+                    var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
 
-                     assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                 });
+                    assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                });
         });
     });
 
@@ -307,14 +309,14 @@ describe('Select different State in Shipping Form', function () {
             };
 
             return request(myRequest)
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     cookieString = cookieJar.getCookieString(myRequest.url);
-                 })
-                 .then(function () {
-                     cookie = request.cookie(cookieString);
-                     cookieJar.setCookie(cookie, myRequest.url);
-                 });
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    cookieString = cookieJar.getCookieString(myRequest.url);
+                })
+                .then(function () {
+                    cookie = request.cookie(cookieString);
+                    cookieJar.setCookie(cookie, myRequest.url);
+                });
         });
 
         it('should return 1 applicableShippingMethods for AK state', function () {
@@ -382,17 +384,17 @@ describe('Select different State in Shipping Form', function () {
                 'postalCode': '09876'
             };
             return request(myRequest)
-             // Handle response from request
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     var bodyAsJson = JSON.parse(response.body);
-                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
+            // Handle response from request
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    var bodyAsJson = JSON.parse(response.body);
+                    var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
 
-                     assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                 });
+                    assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                });
         });
     });
 
@@ -421,14 +423,14 @@ describe('Select different State in Shipping Form', function () {
             };
 
             return request(myRequest)
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     cookieString = cookieJar.getCookieString(myRequest.url);
-                 })
-                 .then(function () {
-                     cookie = request.cookie(cookieString);
-                     cookieJar.setCookie(cookie, myRequest.url);
-                 });
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    cookieString = cookieJar.getCookieString(myRequest.url);
+                })
+                .then(function () {
+                    cookie = request.cookie(cookieString);
+                    cookieJar.setCookie(cookie, myRequest.url);
+                });
         });
 
         it('should return 3 applicableShippingMethods for MA state', function () {
@@ -513,18 +515,18 @@ describe('Select different State in Shipping Form', function () {
                 'postalCode': '09876'
             };
             return request(myRequest)
-             // Handle response from request
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     var bodyAsJson = JSON.parse(response.body);
-                     // var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'ID']);
-                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
+            // Handle response from request
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    var bodyAsJson = JSON.parse(response.body);
+                    // var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'ID']);
+                    var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
 
-                     assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                 });
+                    assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                });
         });
     });
 
@@ -552,14 +554,14 @@ describe('Select different State in Shipping Form', function () {
             };
 
             return request(myRequest)
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     cookieString = cookieJar.getCookieString(myRequest.url);
-                 })
-                 .then(function () {
-                     cookie = request.cookie(cookieString);
-                     cookieJar.setCookie(cookie, myRequest.url);
-                 });
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    cookieString = cookieJar.getCookieString(myRequest.url);
+                })
+                .then(function () {
+                    cookie = request.cookie(cookieString);
+                    cookieJar.setCookie(cookie, myRequest.url);
+                });
         });
 
         it('shipping cost should be increased for State=MA', function () {
@@ -644,17 +646,17 @@ describe('Select different State in Shipping Form', function () {
                 'postalCode': '09876'
             };
             return request(myRequest)
-             // Handle response from request
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     var bodyAsJson = JSON.parse(response.body);
-                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
+            // Handle response from request
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    var bodyAsJson = JSON.parse(response.body);
+                    var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
 
-                     assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                 });
+                    assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                });
         });
     });
 
@@ -683,14 +685,14 @@ describe('Select different State in Shipping Form', function () {
             };
 
             return request(myRequest)
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     cookieString = cookieJar.getCookieString(myRequest.url);
-                 })
-                 .then(function () {
-                     cookie = request.cookie(cookieString);
-                     cookieJar.setCookie(cookie, myRequest.url);
-                 });
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    cookieString = cookieJar.getCookieString(myRequest.url);
+                })
+                .then(function () {
+                    cookie = request.cookie(cookieString);
+                    cookieJar.setCookie(cookie, myRequest.url);
+                });
         });
 
         it('should include UPS as an applicable shipping methods for AP state', function () {
@@ -761,17 +763,17 @@ describe('Select different State in Shipping Form', function () {
                 'postalCode': '09876'
             };
             return request(myRequest)
-             // Handle response from request
-                 .then(function (response) {
-                     assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
-                     var bodyAsJson = JSON.parse(response.body);
-                     var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
+            // Handle response from request
+                .then(function (response) {
+                    assert.equal(response.statusCode, 200, 'Expected statusCode to be 200.');
+                    var bodyAsJson = JSON.parse(response.body);
+                    var actualRespBodyStripped = jsonHelpers.deleteProperties(bodyAsJson, ['selected', 'default', 'countryCode', 'addressId', 'jobTitle', 'postBox', 'salutation', 'secondName', 'companyName', 'suffix', 'suite', 'title']);
 
-                     assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
-                     assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
-                 });
+                    assert.containSubset(bodyAsJson.order.totals, ExpectedResBody.order.totals, 'Actual response.totals not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].applicableShippingMethods, ExpectedResBody.order.shipping[0].applicableShippingMethods, 'applicableShippingMethods not as expected.');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].shippingAddress, ExpectedResBody.order.shipping[0].shippingAddress, 'shippingAddress is not as expected');
+                    assert.containSubset(actualRespBodyStripped.order.shipping[0].selectedShippingMethod, ExpectedResBody.order.shipping[0].selectedShippingMethod, 'selectedShippingMethod is not as expected');
+                });
         });
     });
 });

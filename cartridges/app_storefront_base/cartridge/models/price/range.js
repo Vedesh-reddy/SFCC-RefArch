@@ -2,7 +2,6 @@
 
 var DefaultPrice = require('*/cartridge/models/price/default');
 
-
 /**
  * @constructor
  * @classdesc Range price class

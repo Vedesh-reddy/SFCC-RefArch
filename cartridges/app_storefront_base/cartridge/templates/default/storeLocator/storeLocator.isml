@@ -11,7 +11,7 @@
         <div class="jumbotron map-canvas" data-has-google-api="${pdict.stores.googleMapsApi ? true : false}" data-locations="${pdict.stores.locations}">
             <div class="container">
                 <div class="row">
-                    <p class="store-locator-no-apiKey alert alert-danger">${Resource.msg('error.no.api.key','storeLocator',null)}</p>
+                    <p class="store-locator-no-api-key alert alert-danger">${Resource.msg('error.no.api.key','storeLocator',null)}</p>
                 </div>
             </div>
         </div>

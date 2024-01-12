@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var chai = require('chai');
 var chaiSubset = require('chai-subset');
@@ -5,7 +7,6 @@ chai.use(chaiSubset);
 
 var request = require('request-promise');
 var config = require('../it.config');
-
 
 describe('Test Choice of bonus Products promotion Mini cart response.', function () {
     this.timeout(50000);
@@ -40,7 +41,8 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
                 var bodyAsJson = JSON.parse(myResponse.body);
                 assert.equal(
                     JSON.stringify(bodyAsJson.newBonusDiscountLineItem),
-                    JSON.stringify(expectedResponse));
+                    JSON.stringify(expectedResponse)
+                );
             });
     });
 
@@ -64,28 +66,29 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
         };
 
         return request(myRequest)
-        .then(function (myResponse) {
-            var bodyAsJson = JSON.parse(myResponse.body);
-            UUID = bodyAsJson.newBonusDiscountLineItem.uuid;
-            assert.equal(myResponse.statusCode, 200);
-            assert.equal(bodyAsJson.newBonusDiscountLineItem.bonuspids.length, expectedPidArray.length);
-            assert.containSubset(bodyAsJson.newBonusDiscountLineItem.bonuspids, expectedPidArray);
-            assert.containSubset(bodyAsJson.newBonusDiscountLineItem.maxBonusItems, 2);
-            assert.containSubset(bodyAsJson.newBonusDiscountLineItem.labels, expectedLabels);
-        });
+            .then(function (myResponse) {
+                var bodyAsJson = JSON.parse(myResponse.body);
+                UUID = bodyAsJson.newBonusDiscountLineItem.uuid;
+                assert.equal(myResponse.statusCode, 200);
+                assert.equal(bodyAsJson.newBonusDiscountLineItem.bonuspids.length, expectedPidArray.length);
+                assert.containSubset(bodyAsJson.newBonusDiscountLineItem.bonuspids, expectedPidArray);
+                assert.containSubset(bodyAsJson.newBonusDiscountLineItem.maxBonusItems, 2);
+                assert.containSubset(bodyAsJson.newBonusDiscountLineItem.labels, expectedLabels);
+            });
     });
 
     it('should return an error if too many bonus products are added to the cart', function () {
         // ----- adding product item #1:
-        var urlQuerystring = '?pids=' +
-            JSON.stringify({
+        var urlQuerystring = '?pids='
+            + JSON.stringify({
                 'bonusProducts':
                 [{
                     'pid': '008885004540M',
                     'qty': 3,
                     'options': [null]
                 }],
-                'totalQty': 2 });
+                'totalQty': 2
+            });
         urlQuerystring += '&uuid=' + UUID;
         myRequest.url = config.baseUrl + '/Cart-AddBonusProducts' + urlQuerystring;
 
@@ -96,11 +99,11 @@ describe('Test Choice of bonus Products promotion Mini cart response.', function
         };
 
         return request(myRequest)
-        .then(function (myResponse) {
-            var bodyAsJson = JSON.parse(myResponse.body);
-            assert.equal(myResponse.statusCode, 200);
-            assert.containSubset(bodyAsJson, expectedSubSet);
-        });
+            .then(function (myResponse) {
+                var bodyAsJson = JSON.parse(myResponse.body);
+                assert.equal(myResponse.statusCode, 200);
+                assert.containSubset(bodyAsJson, expectedSubSet);
+            });
     });
 });
 
@@ -159,18 +162,18 @@ describe('Add rule base Bonus Product to cart', function () {
         myRequest.method = 'GET';
         // console.log(myRequest.url);
         return request(myRequest)
-        .then(function (response) {
-            var bodyAsJson = JSON.parse(response.body);
-            assert.equal(bodyAsJson.action, 'Cart-EditBonusProduct');
-            assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Cart-AddBonusProducts');
-            assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts');
-            assert.equal(bodyAsJson.maxBonusItems, 2);
-            assert.equal(pageSize, 6);
-            assert.equal(bodyAsJson.pliUUID, pliuuid);
-            assert.equal(bodyAsJson.uuid, duuid);
-            assert.equal(bodyAsJson.bonusChoiceRuleBased, true);
-            assert.equal(bodyAsJson.showProductsUrlRuleBased, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts?DUUID=' + duuid + '&pagesize=' + pageSize + '&pagestart=0&maxpids=' + bodyAsJson.maxBonusItems);
-        });
+            .then(function (response) {
+                var bodyAsJson = JSON.parse(response.body);
+                assert.equal(bodyAsJson.action, 'Cart-EditBonusProduct');
+                assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Cart-AddBonusProducts');
+                assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts');
+                assert.equal(bodyAsJson.maxBonusItems, 2);
+                assert.equal(pageSize, 6);
+                assert.equal(bodyAsJson.pliUUID, pliuuid);
+                assert.equal(bodyAsJson.uuid, duuid);
+                assert.equal(bodyAsJson.bonusChoiceRuleBased, true);
+                assert.equal(bodyAsJson.showProductsUrlRuleBased, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts?DUUID=' + duuid + '&pagesize=' + pageSize + '&pagestart=0&maxpids=' + bodyAsJson.maxBonusItems);
+            });
     });
 
     it('Add Bonus Product to cart', function () {
@@ -181,14 +184,14 @@ describe('Add rule base Bonus Product to cart', function () {
         };
         myRequest.method = 'POST';
         return request(myRequest)
-        .then(function (response) {
-            var bodyAsJson = JSON.parse(response.body);
-            assert.equal(bodyAsJson.action, 'Cart-AddBonusProducts');
-            assert.equal(bodyAsJson.totalQty, 2);
-            assert.equal(bodyAsJson.msgSuccess, 'Bonus products added to your cart');
-            assert.isTrue(bodyAsJson.success);
-            assert.isFalse(bodyAsJson.error);
-        });
+            .then(function (response) {
+                var bodyAsJson = JSON.parse(response.body);
+                assert.equal(bodyAsJson.action, 'Cart-AddBonusProducts');
+                assert.equal(bodyAsJson.totalQty, 2);
+                assert.equal(bodyAsJson.msgSuccess, 'Bonus products added to your cart');
+                assert.isTrue(bodyAsJson.success);
+                assert.isFalse(bodyAsJson.error);
+            });
     });
 });
 
@@ -255,16 +258,16 @@ describe('Add list base Bonus Product to cart', function () {
         };
         myRequest.method = 'GET';
         return request(myRequest)
-        .then(function (response) {
-            var bodyAsJson = JSON.parse(response.body);
-            assert.equal(bodyAsJson.action, 'Cart-EditBonusProduct');
-            assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Cart-AddBonusProducts');
-            assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts');
-            assert.equal(bodyAsJson.maxBonusItems, 2);
-            assert.equal(bodyAsJson.pliUUID, pliuuid);
-            assert.equal(bodyAsJson.uuid, duuid);
-            assert.equal(bodyAsJson.bonusChoiceRuleBased, false);
-        });
+            .then(function (response) {
+                var bodyAsJson = JSON.parse(response.body);
+                assert.equal(bodyAsJson.action, 'Cart-EditBonusProduct');
+                assert.equal(bodyAsJson.addToCartUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Cart-AddBonusProducts');
+                assert.equal(bodyAsJson.showProductsUrl, '/on/demandware.store/Sites-RefArch-Site/en_US/Product-ShowBonusProducts');
+                assert.equal(bodyAsJson.maxBonusItems, 2);
+                assert.equal(bodyAsJson.pliUUID, pliuuid);
+                assert.equal(bodyAsJson.uuid, duuid);
+                assert.equal(bodyAsJson.bonusChoiceRuleBased, false);
+            });
     });
 
     it('Add Bonus Product to cart', function () {
@@ -275,13 +278,13 @@ describe('Add list base Bonus Product to cart', function () {
         };
         myRequest.method = 'POST';
         return request(myRequest)
-        .then(function (response) {
-            var bodyAsJson = JSON.parse(response.body);
-            assert.equal(bodyAsJson.action, 'Cart-AddBonusProducts');
-            assert.equal(bodyAsJson.totalQty, 6);
-            assert.equal(bodyAsJson.msgSuccess, 'Bonus products added to your cart');
-            assert.isTrue(bodyAsJson.success);
-            assert.isFalse(bodyAsJson.error);
-        });
+            .then(function (response) {
+                var bodyAsJson = JSON.parse(response.body);
+                assert.equal(bodyAsJson.action, 'Cart-AddBonusProducts');
+                assert.equal(bodyAsJson.totalQty, 6);
+                assert.equal(bodyAsJson.msgSuccess, 'Bonus products added to your cart');
+                assert.isTrue(bodyAsJson.success);
+                assert.isFalse(bodyAsJson.error);
+            });
     });
 });

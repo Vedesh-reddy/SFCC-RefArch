@@ -5,7 +5,6 @@ var sinon = require('sinon');
 
 var search = require('../../../../../cartridges/app_storefront_base/cartridge/scripts/search/search');
 
-
 describe('search script', function () {
     describe('addRefinementValues', function () {
         var mockProductSearch = {
@@ -61,8 +60,10 @@ describe('search script', function () {
         var spySetPriceMax = sinon.spy(mockProductSearch, 'setPriceMax');
         var spySetSortingRule = sinon.spy(mockProductSearch, 'setSortingRule');
         var spySetPromotionID = sinon.spy(mockProductSearch, 'setPromotionID');
-        var spySetRecursiveCategorySearch = sinon.spy(mockProductSearch,
-            'setRecursiveCategorySearch');
+        var spySetRecursiveCategorySearch = sinon.spy(
+            mockProductSearch,
+            'setRecursiveCategorySearch'
+        );
 
         search.setProductProperties(
             mockProductSearch,

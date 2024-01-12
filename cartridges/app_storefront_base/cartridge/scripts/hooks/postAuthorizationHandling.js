@@ -7,7 +7,7 @@
  * @param {Object} result - Authorization Result
  */
 function postAuthorization(result) { // eslint-disable-line no-unused-vars
-    return;
+
 }
 
 exports.postAuthorization = postAuthorization;

@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -37,7 +39,7 @@ describe('Shipping Level Coupon - add coupon', function () {
             })
             // select a shipping method in order to get cart content
             .then(function () {
-                var shipMethodId = '001';   // 001 = Ground
+                var shipMethodId = '001'; // 001 = Ground
                 myRequest.method = 'POST';
                 myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
                 var cookie = request.cookie(cookieString);
@@ -54,9 +56,9 @@ describe('Shipping Level Coupon - add coupon', function () {
                     .then(function (csrfResponse) {
                         var csrfJsonResponse = JSON.parse(csrfResponse.body);
                         myRequest.method = 'GET';
-                        myRequest.url = config.baseUrl + '/Cart-AddCoupon?couponCode=' +
-                            couponCode + '&' + csrfJsonResponse.csrf.tokenName + '=' +
-                            csrfJsonResponse.csrf.token;
+                        myRequest.url = config.baseUrl + '/Cart-AddCoupon?couponCode='
+                            + couponCode + '&' + csrfJsonResponse.csrf.tokenName + '='
+                            + csrfJsonResponse.csrf.token;
                     });
             });
     });

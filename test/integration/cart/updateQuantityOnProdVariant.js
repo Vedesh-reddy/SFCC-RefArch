@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -72,7 +74,7 @@ describe('Update quantity for product variant', function () {
             // ----- select a shipping method. Need to have shipping method so that shipping cost, sales tax,
             //       and grand total can be calculated
             .then(function () {
-                var shipMethodId = '001';   // 001 = Ground
+                var shipMethodId = '001'; // 001 = Ground
 
                 myRequest.method = 'POST';
                 myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;

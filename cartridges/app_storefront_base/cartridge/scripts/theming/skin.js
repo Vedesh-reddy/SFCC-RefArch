@@ -1,3 +1,5 @@
+'use strict';
+
 /**
  *  This script creates a base implementation to handle configurable theming options within SFRA.
  *  It is an extensible anchor point for more elaborate implementations and can be overwritten by plugins and custom implementation

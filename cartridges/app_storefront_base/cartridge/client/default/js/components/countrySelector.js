@@ -33,7 +33,8 @@ module.exports = function () {
         });
     });
 
-    keyboardAccessibility('.navbar-header .country-selector',
+    keyboardAccessibility(
+        '.navbar-header .country-selector',
         {
             40: function ($countryOptions) { // down
                 if ($(this).is(':focus')) {

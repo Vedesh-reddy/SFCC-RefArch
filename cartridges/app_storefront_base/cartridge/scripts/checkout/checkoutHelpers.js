@@ -251,7 +251,6 @@ function ensureValidShipments(lineItemContainer) {
     return allValid;
 }
 
-
 /**
  * Ensures that no shipment exists with 0 product line items
  * @param {Object} req - the request object needed to access session.privacyCache
@@ -277,10 +276,12 @@ function ensureNoEmptyShipments(req) {
                     var altValid = req.session.privacyCache.get(altShipment.UUID);
                     req.session.privacyCache.set(currentBasket.defaultShipment.UUID, altValid);
 
-                    collections.forEach(altShipment.productLineItems,
+                    collections.forEach(
+                        altShipment.productLineItems,
                         function (lineItem) {
                             lineItem.setShipment(currentBasket.defaultShipment);
-                        });
+                        }
+                    );
 
                     if (altShipment.shippingAddress) {
                         // Copy from other address
@@ -321,7 +322,6 @@ function recalculateBasket(currentBasket) {
         basketCalculationHelpers.calculateTotals(currentBasket);
     });
 }
-
 
 /**
  * Finds and returns a ProductLineItem by UUID
@@ -396,8 +396,7 @@ function validateCreditCard(form) {
 
     if (!form.paymentMethod.value) {
         if (currentBasket.totalGrossPrice.value > 0) {
-            result[form.paymentMethod.htmlName] =
-                Resource.msg('error.no.selected.payment.method', 'creditCard', null);
+            result[form.paymentMethod.htmlName] = Resource.msg('error.no.selected.payment.method', 'creditCard', null);
         }
 
         return result;
@@ -436,7 +435,6 @@ function calculatePaymentTransaction(currentBasket) {
 
     return result;
 }
-
 
 /**
  * Validates payment
@@ -545,8 +543,8 @@ function handlePayments(order, orderNumber) {
                     paymentInstrument.paymentTransaction.setTransactionID(orderNumber);
                     Transaction.commit();
                 } else {
-                    if (HookMgr.hasHook('app.payment.processor.' +
-                            paymentProcessor.ID.toLowerCase())) {
+                    if (HookMgr.hasHook('app.payment.processor.'
+                            + paymentProcessor.ID.toLowerCase())) {
                         authorizationResult = HookMgr.callHook(
                             'app.payment.processor.' + paymentProcessor.ID.toLowerCase(),
                             'Authorize',

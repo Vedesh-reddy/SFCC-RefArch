@@ -17,16 +17,24 @@ function getItemPromoReportingURLs(productLineItem, reportingURLs) {
     var result = reportingURLs;
     // Each item can have multiple price adjustments
     collections.forEach(productLineItem.priceAdjustments, function (PLIPriceAdjustments) {
-        var ItemPromo = URLUtils.url('ReportingEvent-Start',
-            'ID', 'ItemPromo',
-            'ItemUUID', productLineItem.UUID,
-            'campID', PLIPriceAdjustments.campaignID
+        var ItemPromo = URLUtils.url(
+            'ReportingEvent-Start',
+            'ID',
+            'ItemPromo',
+            'ItemUUID',
+            productLineItem.UUID,
+            'campID',
+            PLIPriceAdjustments.campaignID
                 ? PLIPriceAdjustments.campaignID
                 : 'N/A',
-            'promoID', PLIPriceAdjustments.promotionID,
-            'value', formatHelpers.formatPrice(PLIPriceAdjustments.price.value),
-            'campaign', !PLIPriceAdjustments.isCustom(),
-            'coupon', PLIPriceAdjustments.basedOnCoupon
+            'promoID',
+            PLIPriceAdjustments.promotionID,
+            'value',
+            formatHelpers.formatPrice(PLIPriceAdjustments.price.value),
+            'campaign',
+            !PLIPriceAdjustments.isCustom(),
+            'coupon',
+            PLIPriceAdjustments.basedOnCoupon
         );
 
         result.push(ItemPromo);
@@ -46,15 +54,22 @@ function getShippingPromoReportingURLs(shipment, reportingURLs) {
 
     // The shipment might have one or more price adjustments
     collections.forEach(shipment.shippingPriceAdjustments, function (shippingPriceAdjustment) {
-        var shippingPromoUrl = URLUtils.url('ReportingEvent-Start',
-            'ID', 'ShippingPromo',
-            'campID', shippingPriceAdjustment.campaignID
+        var shippingPromoUrl = URLUtils.url(
+            'ReportingEvent-Start',
+            'ID',
+            'ShippingPromo',
+            'campID',
+            shippingPriceAdjustment.campaignID
                 ? shippingPriceAdjustment.campaignID
                 : 'N/A',
-            'promoID', shippingPriceAdjustment.promotionID,
-            'value', formatHelpers.formatPrice(shippingPriceAdjustment.price.value),
-            'campaign', !shippingPriceAdjustment.isCustom(),
-            'coupon', shippingPriceAdjustment.basedOnCoupon
+            'promoID',
+            shippingPriceAdjustment.promotionID,
+            'value',
+            formatHelpers.formatPrice(shippingPriceAdjustment.price.value),
+            'campaign',
+            !shippingPriceAdjustment.isCustom(),
+            'coupon',
+            shippingPriceAdjustment.basedOnCoupon
         );
 
         result.push(shippingPromoUrl);
@@ -74,13 +89,20 @@ function getOrderPromoReportingURLs(priceAdjustments, reportingURLs) {
 
     // Report all price adjustments for the entire order, such as 25% of entire order.
     collections.forEach(priceAdjustments, function (priceAdjustment) {
-        var OrderPromoUrl = URLUtils.url('ReportingEvent-Start',
-            'ID', 'OrderPromo',
-            'campID', priceAdjustment.campaignID ? priceAdjustment.campaignID : 'N/A',
-            'promoID', priceAdjustment.promotionID,
-            'value', formatHelpers.formatPrice(priceAdjustment.price.value),
-            'campaign', !priceAdjustment.isCustom(),
-            'coupon', priceAdjustment.basedOnCoupon
+        var OrderPromoUrl = URLUtils.url(
+            'ReportingEvent-Start',
+            'ID',
+            'OrderPromo',
+            'campID',
+            priceAdjustment.campaignID ? priceAdjustment.campaignID : 'N/A',
+            'promoID',
+            priceAdjustment.promotionID,
+            'value',
+            formatHelpers.formatPrice(priceAdjustment.price.value),
+            'campaign',
+            !priceAdjustment.isCustom(),
+            'coupon',
+            priceAdjustment.basedOnCoupon
         );
 
         result.push(OrderPromoUrl);
@@ -98,21 +120,30 @@ function getBasketOpenReportingURLs(currentBasket) {
     var reportingURLs = [];
 
     // Some common statistic for this cart
-    var basketOpen = URLUtils.url('ReportingEvent-Start',
-        'ID', 'BasketOpen',
-        'BasketID', currentBasket.UUID,
-        'Items', formatHelpers.formatNumber(currentBasket.productLineItems.length),
-        'MerchandizeTotal', formatHelpers.formatPrice(
+    var basketOpen = URLUtils.url(
+        'ReportingEvent-Start',
+        'ID',
+        'BasketOpen',
+        'BasketID',
+        currentBasket.UUID,
+        'Items',
+        formatHelpers.formatNumber(currentBasket.productLineItems.length),
+        'MerchandizeTotal',
+        formatHelpers.formatPrice(
             currentBasket.merchandizeTotalPrice.value
         ),
-        'AdjMerchandizeTotal', formatHelpers.formatPrice(
+        'AdjMerchandizeTotal',
+        formatHelpers.formatPrice(
             currentBasket.getAdjustedMerchandizeTotalPrice(false).value
         ),
-        'AdjMerchandizeTotalPromo', formatHelpers.formatPrice(
+        'AdjMerchandizeTotalPromo',
+        formatHelpers.formatPrice(
             currentBasket.getAdjustedMerchandizeTotalPrice(true).value
         ),
-        'ShippingTotal', formatHelpers.formatPrice(currentBasket.shippingTotalPrice.value),
-        'AdjShippingTotal', formatHelpers.formatPrice(
+        'ShippingTotal',
+        formatHelpers.formatPrice(currentBasket.shippingTotalPrice.value),
+        'AdjShippingTotal',
+        formatHelpers.formatPrice(
             currentBasket.adjustedShippingTotalPrice.value
         )
     );
@@ -132,7 +163,6 @@ function getBasketOpenReportingURLs(currentBasket) {
             reportingURLs = getItemPromoReportingURLs(productLineItem, reportingURLs);
         });
     });
-
 
     return reportingURLs;
 }
@@ -160,34 +190,52 @@ function getOrderReportingURLs(order) {
     var reportingURLs = [];
 
     // Report the general information about the order
-    var orderEvent = URLUtils.url('ReportingEvent-Start',
-        'ID', 'Order',
-        'CurrencyCode', order.currencyCode,
-        'CreationDate', StringUtils.formatCalendar(
-            new Calendar(order.creationDate), 'yyyyMMdd\'T\'HH:mm:ss.SSSZ'
-        ),
-        'CreatedBy', order.createdBy,
-        'MerchandizeTotalNet', formatHelpers.formatPrice(order.merchandizeTotalNetPrice.value),
-        'MerchandizeTotalTax', formatHelpers.formatPrice(order.merchandizeTotalTax.value),
-        'MerchandizeTotalGross', formatHelpers.formatPrice(order.merchandizeTotalGrossPrice.value),
-        'ShippingNet', formatHelpers.formatPrice(order.shippingTotalNetPrice.value),
-        'ShippingTax', formatHelpers.formatPrice(order.shippingTotalTax.value),
-        'ShippingGross', formatHelpers.formatPrice(order.shippingTotalGrossPrice.value),
-        'AdjMerchandizeTotalNet', formatHelpers.formatPrice(
+    var orderEvent = URLUtils.url(
+        'ReportingEvent-Start',
+        'ID',
+        'Order',
+        'CurrencyCode',
+        order.currencyCode,
+        'CreationDate',
+        StringUtils.formatCalendar(new Calendar(order.creationDate), 'yyyyMMdd\'T\'HH:mm:ss.SSSZ'),
+        'CreatedBy',
+        order.createdBy,
+        'MerchandizeTotalNet',
+        formatHelpers.formatPrice(order.merchandizeTotalNetPrice.value),
+        'MerchandizeTotalTax',
+        formatHelpers.formatPrice(order.merchandizeTotalTax.value),
+        'MerchandizeTotalGross',
+        formatHelpers.formatPrice(order.merchandizeTotalGrossPrice.value),
+        'ShippingNet',
+        formatHelpers.formatPrice(order.shippingTotalNetPrice.value),
+        'ShippingTax',
+        formatHelpers.formatPrice(order.shippingTotalTax.value),
+        'ShippingGross',
+        formatHelpers.formatPrice(order.shippingTotalGrossPrice.value),
+        'AdjMerchandizeTotalNet',
+        formatHelpers.formatPrice(
             order.adjustedMerchandizeTotalNetPrice.value
         ),
-        'AdjMerchandizeTotalTax', formatHelpers.formatPrice(
+        'AdjMerchandizeTotalTax',
+        formatHelpers.formatPrice(
             order.adjustedMerchandizeTotalTax.value
         ),
-        'AdjMerchandizeTotalGross', formatHelpers.formatPrice(
+        'AdjMerchandizeTotalGross',
+        formatHelpers.formatPrice(
             order.adjustedMerchandizeTotalGrossPrice.value
         ),
-        'AdjShippingNet', formatHelpers.formatPrice(order.adjustedShippingTotalNetPrice.value),
-        'AdjShippingTax', formatHelpers.formatPrice(order.adjustedShippingTotalTax.value),
-        'AdjShippingGross', formatHelpers.formatPrice(order.adjustedShippingTotalGrossPrice.value),
-        'Net', formatHelpers.formatPrice(order.totalNetPrice.value),
-        'Tax', formatHelpers.formatPrice(order.totalTax.value),
-        'Gross', formatHelpers.formatPrice(order.totalGrossPrice.value)
+        'AdjShippingNet',
+        formatHelpers.formatPrice(order.adjustedShippingTotalNetPrice.value),
+        'AdjShippingTax',
+        formatHelpers.formatPrice(order.adjustedShippingTotalTax.value),
+        'AdjShippingGross',
+        formatHelpers.formatPrice(order.adjustedShippingTotalGrossPrice.value),
+        'Net',
+        formatHelpers.formatPrice(order.totalNetPrice.value),
+        'Tax',
+        formatHelpers.formatPrice(order.totalTax.value),
+        'Gross',
+        formatHelpers.formatPrice(order.totalGrossPrice.value)
     );
 
     reportingURLs.push(orderEvent);
@@ -203,22 +251,38 @@ function getOrderReportingURLs(order) {
 
         // Log event for each product line item
         collections.forEach(shipment.productLineItems, function (productLineItem) {
-            var itemUrl = URLUtils.url('ReportingEvent-Start',
-                'ID', 'Item',
-                'SKU', productLineItem.productID,
-                'Name', productLineItem.productName,
-                'UUID', productLineItem.UUID,
-                'Quantity', formatHelpers.formatNumber(productLineItem.quantity.value),
-                'CurrencyCode', order.currencyCode,
-                'Base', formatHelpers.formatPrice(productLineItem.basePrice.value),
-                'Net', formatHelpers.formatPrice(productLineItem.netPrice.value),
-                'Tax', formatHelpers.formatPrice(productLineItem.tax.value),
-                'Gross', formatHelpers.formatPrice(productLineItem.grossPrice.value),
-                'AdjNet', formatHelpers.formatPrice(productLineItem.adjustedNetPrice.value),
-                'AdjTax', formatHelpers.formatPrice(productLineItem.adjustedTax.value),
-                'AdjGross', formatHelpers.formatPrice(productLineItem.adjustedGrossPrice.value),
-                'Mfg', productLineItem.manufacturerName,
-                'Bonus', productLineItem.bonusProductLineItem
+            var itemUrl = URLUtils.url(
+                'ReportingEvent-Start',
+                'ID',
+                'Item',
+                'SKU',
+                productLineItem.productID,
+                'Name',
+                productLineItem.productName,
+                'UUID',
+                productLineItem.UUID,
+                'Quantity',
+                formatHelpers.formatNumber(productLineItem.quantity.value),
+                'CurrencyCode',
+                order.currencyCode,
+                'Base',
+                formatHelpers.formatPrice(productLineItem.basePrice.value),
+                'Net',
+                formatHelpers.formatPrice(productLineItem.netPrice.value),
+                'Tax',
+                formatHelpers.formatPrice(productLineItem.tax.value),
+                'Gross',
+                formatHelpers.formatPrice(productLineItem.grossPrice.value),
+                'AdjNet',
+                formatHelpers.formatPrice(productLineItem.adjustedNetPrice.value),
+                'AdjTax',
+                formatHelpers.formatPrice(productLineItem.adjustedTax.value),
+                'AdjGross',
+                formatHelpers.formatPrice(productLineItem.adjustedGrossPrice.value),
+                'Mfg',
+                productLineItem.manufacturerName,
+                'Bonus',
+                productLineItem.bonusProductLineItem
             );
 
             reportingURLs.push(itemUrl);
@@ -239,10 +303,14 @@ function getOrderReportingURLs(order) {
 function getProductSearchReportingURLs(productSearch) {
     var result = [];
 
-    result.push(URLUtils.url('ReportingEvent-Start',
-        'ID', 'ProductSearch',
-        'Phrase', productSearch.searchKeywords,
-        'ResultCount', formatHelpers.formatNumber(productSearch.count)
+    result.push(URLUtils.url(
+        'ReportingEvent-Start',
+        'ID',
+        'ProductSearch',
+        'Phrase',
+        productSearch.searchKeywords,
+        'ResultCount',
+        formatHelpers.formatNumber(productSearch.count)
     ));
 
     return result;
@@ -258,11 +326,16 @@ function getProductSearchReportingURLs(productSearch) {
 function getCheckoutReportingURLs(UUID, step, stepName) {
     var result = [];
 
-    result.push(URLUtils.url('ReportingEvent-Start',
-        'ID', 'Checkout',
-        'BasketID', UUID,
-        'Step', formatHelpers.formatNumber(step),
-        'Name', stepName
+    result.push(URLUtils.url(
+        'ReportingEvent-Start',
+        'ID',
+        'Checkout',
+        'BasketID',
+        UUID,
+        'Step',
+        formatHelpers.formatNumber(step),
+        'Name',
+        stepName
     ));
 
     return result;
@@ -276,9 +349,12 @@ function getCheckoutReportingURLs(UUID, step, stepName) {
 function getAccountOpenReportingURLs(registeredCustomerCount) {
     var result = [];
 
-    result.push(URLUtils.url('ReportingEvent-Start',
-        'ID', 'AccountOpen',
-        'TotalUserCount', formatHelpers.formatNumber(registeredCustomerCount)
+    result.push(URLUtils.url(
+        'ReportingEvent-Start',
+        'ID',
+        'AccountOpen',
+        'TotalUserCount',
+        formatHelpers.formatNumber(registeredCustomerCount)
     ));
 
     return result;

@@ -12,7 +12,7 @@
             <div class="tab-pane container active" id="product-search-results" role="tabpanel" aria-labelledby="product-tab">
 
                 <isif condition="${pdict.productSearch.productIds.length > 0}">
-                
+
                     <div class="row grid-header">
                         <div class="result-count text-center col-12 col-md-9 col-sm-6 order-sm-2">
                             <isinclude template="search/resultsCount" />
@@ -29,20 +29,20 @@
 
                     <iscomment> Refinement bar </iscomment>
                     <div class="row">
-                        <div class="refinement-bar col-md-3">                            
-                            <isinclude template="search/searchRefineBar" />                            
+                        <div class="refinement-bar col-md-3">
+                            <isinclude template="search/searchRefineBar"/>
                         </div>
 
                         <div class="col-sm-12 col-md-9">
                             <iscomment> Selected filters bar </iscomment>
                             <div class="row filter-bar d-md-none">
-                                <isinclude template="search/filterBar" />
+                                <isinclude template="search/filterBar"/>
                             </div>
 
-                            <iscomment> Product Grid </iscomment>                                             
-                            <div class="row product-grid" itemtype="http://schema.org/SomeProducts" itemid="#product">                                 
+                            <iscomment> Product Grid </iscomment>
+                            <div class="row product-grid" itemtype="http://schema.org/SomeProducts" itemid="#product">
                                 <isinclude template="experience/components/dynamic/productList/productGrid" />
-                            </div>                             
+                            </div>
                         </div>
                     </div>
 

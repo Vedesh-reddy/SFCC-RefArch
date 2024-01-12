@@ -1,10 +1,10 @@
 'use strict';
+
 /* global response */
 
 var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
 var ImageTransformation = require('*/cartridge/experience/utilities/ImageTransformation.js');
-
 
 /**
  * Render logic for storefront.imageAndText component.

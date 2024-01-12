@@ -16,11 +16,11 @@ function getAppliedPromotions(lineItem) {
         priceAdjustments = collections.map(lineItem.priceAdjustments, function (priceAdjustment) {
             if (priceAdjustment.promotion) {
                 return {
-                    callOutMsg: priceAdjustment.promotion.calloutMsg ?
-                        priceAdjustment.promotion.calloutMsg.markup : '',
+                    callOutMsg: priceAdjustment.promotion.calloutMsg
+                        ? priceAdjustment.promotion.calloutMsg.markup : '',
                     name: priceAdjustment.promotion.name,
-                    details: priceAdjustment.promotion.details ?
-                        priceAdjustment.promotion.details.markup : ''
+                    details: priceAdjustment.promotion.details
+                        ? priceAdjustment.promotion.details.markup : ''
                 };
             }
             return {

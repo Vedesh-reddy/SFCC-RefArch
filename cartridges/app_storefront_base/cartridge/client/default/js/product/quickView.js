@@ -1,4 +1,5 @@
 'use strict';
+
 var base = require('./base');
 var focusHelper = require('../components/focus');
 
@@ -146,14 +147,17 @@ module.exports = {
     updateAddToCart: function () {
         $('body').on('product:updateAddToCart', function (e, response) {
             // update local add to cart (for sets)
-            $('button.add-to-cart', response.$productContainer).attr('disabled',
-                (!response.product.readyToOrder || !response.product.available));
+            $('button.add-to-cart', response.$productContainer).attr(
+                'disabled',
+                (!response.product.readyToOrder || !response.product.available)
+            );
 
             // update global add to cart (single products, bundles)
             var dialog = $(response.$productContainer)
                 .closest('.quick-view-dialog');
 
-            $('.add-to-cart-global', dialog).attr('disabled',
+            $('.add-to-cart-global', dialog).attr(
+                'disabled',
                 !$('.global-availability', dialog).data('ready-to-order')
                 || !$('.global-availability', dialog).data('available')
             );
@@ -168,7 +172,6 @@ module.exports = {
                 .find('.availability-msg')
                 .empty()
                 .html(response.message);
-
 
             var dialog = $(response.$productContainer)
                 .closest('.quick-view-dialog');

@@ -1,4 +1,4 @@
-node_modules/
+node_modules
 cartridges/app_storefront_base/cartridge/static/
 coverage/
 doc/

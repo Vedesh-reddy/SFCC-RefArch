@@ -1,3 +1,5 @@
+'use strict';
+
 const { data, pageDesigner } = inject();
 
 When('Shopper sees the carousel {string}', (position) => {

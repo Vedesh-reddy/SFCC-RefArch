@@ -55,8 +55,7 @@
 
     .results {
         @include media-breakpoint-up(md) {
-            overflow-y: auto;
-            overflow-x: hidden;
+            overflow: hidden auto;
             max-height: 21.875em;
         }
     }

@@ -88,9 +88,11 @@ describe('Order', function () {
     });
 
     it('should handle a single lineitem basket object ', function () {
-        var result = new Order(createApiBasket(), { config: {
-            numberOfLineItems: 'single'
-        } });
+        var result = new Order(createApiBasket(), {
+            config: {
+                numberOfLineItems: 'single'
+            }
+        });
         assert.equal(result.shippedToFirstName, 'someString');
         assert.equal(result.shippedToLastName, '');
         assert.equal(result.orderNumber, 'some String');

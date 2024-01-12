@@ -95,9 +95,7 @@ describe('Payment', function () {
 
     it('should take payment cards and convert to a plain object ', function () {
         var result = new PaymentModel(createApiBasket({ paymentCards: paymentCards }), null);
-        assert.equal(
-            result.applicablePaymentCards.length, 3
-        );
+        assert.equal(result.applicablePaymentCards.length, 3);
         assert.equal(result.applicablePaymentCards[0].cardType, 'Visa');
         assert.equal(result.applicablePaymentCards[0].name, 'Visa');
         assert.equal(result.applicablePaymentCards[1].cardType, 'Amex');
@@ -106,9 +104,7 @@ describe('Payment', function () {
 
     it('should take payment instruments and convert to a plain object ', function () {
         var result = new PaymentModel(createApiBasket({ paymentInstruments: paymentInstruments }), null);
-        assert.equal(
-            result.selectedPaymentInstruments.length, 2
-        );
+        assert.equal(result.selectedPaymentInstruments.length, 2);
         assert.equal(result.selectedPaymentInstruments[0].lastFour, '1111');
         assert.equal(result.selectedPaymentInstruments[0].owner, 'The Muffin Man');
         assert.equal(result.selectedPaymentInstruments[0].expirationYear, 2018);

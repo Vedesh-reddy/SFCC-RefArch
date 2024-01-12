@@ -49,7 +49,8 @@ server.post(
         req.session.privacyCache.set('consent', consent);
         res.json({ success: true });
         next();
-    });
+    }
+);
 
 /**
  * ConsentTracking-GetContent : This endpoint is called to load the consent tracking content

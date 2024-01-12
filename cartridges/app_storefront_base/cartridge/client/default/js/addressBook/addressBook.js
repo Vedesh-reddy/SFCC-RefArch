@@ -4,17 +4,18 @@ var formValidation = require('../components/formValidation');
 
 var url;
 var isDefault;
+var location = window.location;
 
 /**
  * Create an alert to display the error message
  * @param {Object} message - Error message to display
  */
 function createErrorNotification(message) {
-    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error ' +
-        'fade show" role="alert">' +
-        '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
-        '<span aria-hidden="true">&times;</span>' +
-        '</button>' + message + '</div>';
+    var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error '
+        + 'fade show" role="alert">'
+        + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
+        + '<span aria-hidden="true">&times;</span>'
+        + '</button>' + message + '</div>';
 
     $('.error-messaging').append(errorHtml);
 }
@@ -53,9 +54,9 @@ module.exports = {
                         $('.card .card-make-default-link').first().remove();
                         $('.remove-address').data('default', true);
                         if (data.message) {
-                            var toInsert = '<div><h3>' +
-                                data.message +
-                                '</h3><div>';
+                            var toInsert = '<div><h3>'
+                                + data.message
+                                + '</h3><div>';
                             $('.addressList').after(toInsert);
                         }
                     }

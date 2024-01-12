@@ -1,4 +1,5 @@
 'use strict';
+
 var debounce = require('lodash/debounce');
 
 /**

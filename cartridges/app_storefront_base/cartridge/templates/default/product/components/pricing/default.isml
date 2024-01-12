@@ -21,15 +21,14 @@
     <isset name="price" value="${finalOrigPrice.sales}" scope="page" />
     <span class="sales">
         <isif condition="${isLowPrice == 'range-low'}">
-            <span class="value" content="${price.decimalPrice}">
+            <span class="value" content="${price.decimalPrice}"></span>
         </isif>
         <isif condition="${isLowPrice == 'range-high'}">
-            <span class="value" content="${price.decimalPrice}">
+            <span class="value" content="${price.decimalPrice}"></span>
         </isif>
         <isif condition="${isLowPrice == null}">
-            <span class="value" content="${price.decimalPrice}">
+            <span class="value" content="${price.decimalPrice}"></span>
         </isif>
         <isinclude template="/product/components/pricing/formatted" />
-        </span>
     </span>
 </span>

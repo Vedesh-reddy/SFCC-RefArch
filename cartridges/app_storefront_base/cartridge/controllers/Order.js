@@ -297,8 +297,7 @@ server.get(
         if (order && orderCustomerNo === currentCustomerNo) {
             var orderModel = orderHelpers.getOrderDetails(req);
             var exitLinkText = Resource.msg('link.orderdetails.orderhistory', 'account', null);
-            var exitLinkUrl =
-                URLUtils.https('Order-History', 'orderFilter', req.querystring.orderFilter);
+            var exitLinkUrl = URLUtils.https('Order-History', 'orderFilter', req.querystring.orderFilter);
             res.render('account/orderDetails', {
                 order: orderModel,
                 exitLinkText: exitLinkText,
@@ -385,8 +384,7 @@ server.post(
         if (newPassword !== confirmPassword) {
             passwordForm.valid = false;
             passwordForm.newpasswordconfirm.valid = false;
-            passwordForm.newpasswordconfirm.error =
-                Resource.msg('error.message.mismatch.newpassword', 'forms', null);
+            passwordForm.newpasswordconfirm.error = Resource.msg('error.message.mismatch.newpassword', 'forms', null);
         }
 
         var order = OrderMgr.getOrder(req.querystring.ID);

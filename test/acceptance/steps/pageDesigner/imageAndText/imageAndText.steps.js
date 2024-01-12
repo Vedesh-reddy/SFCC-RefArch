@@ -1,4 +1,8 @@
-const { I, data, pageDesigner, utilities } = inject();
+'use strict';
+
+const {
+    I, data, pageDesigner, utilities
+} = inject();
 
 Then('shopper should see the image and text component', () => {
     I.waitForElement(pageDesigner.locators.ITC);
@@ -14,4 +18,3 @@ Then('shopper should see the overlay message', () => {
 Then('shopper should go to new arrivals page clicking on the image', () => {
     utilities.clickToLoadPage(pageDesigner.locators.ITCImageLink, data.pageDesigner.imageAndTextNewArrival);
 });
-

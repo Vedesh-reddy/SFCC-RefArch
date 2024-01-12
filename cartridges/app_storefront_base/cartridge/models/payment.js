@@ -84,14 +84,12 @@ function Payment(currentBasket, currentCustomer, countryCode) {
 
     // TODO: Should compare currentBasket and currentCustomer and countryCode to see
     //     if we need them or not
-    this.applicablePaymentMethods =
-        paymentMethods ? applicablePaymentMethods(paymentMethods) : null;
+    this.applicablePaymentMethods = paymentMethods ? applicablePaymentMethods(paymentMethods) : null;
 
-    this.applicablePaymentCards =
-        paymentCards ? applicablePaymentCards(paymentCards) : null;
+    this.applicablePaymentCards = paymentCards ? applicablePaymentCards(paymentCards) : null;
 
-    this.selectedPaymentInstruments = paymentInstruments ?
-        getSelectedPaymentInstruments(paymentInstruments) : null;
+    this.selectedPaymentInstruments = paymentInstruments
+        ? getSelectedPaymentInstruments(paymentInstruments) : null;
 }
 
 module.exports = Payment;

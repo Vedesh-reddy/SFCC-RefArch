@@ -14,7 +14,7 @@
 
     @include media-breakpoint-down(sm) {
         background-color: $white;
-        box-shadow: 0 0.313em 0.938em rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0.313em 0.938em rgba(0, 0, 0, 50%);
         display: none;
         left: 0;
         position: fixed;
@@ -78,20 +78,6 @@
         color: $dark-gray;
     }
 
-    ul {
-        overflow: auto;
-
-        li {
-            padding-left: 1px;
-
-            button {
-                border: none;
-                color: #{var(--skin-link-color-1)};
-                background-color: transparent;
-            }
-        }
-    }
-
     li {
         list-style-type: none;
         padding-left: 0;
@@ -107,6 +93,20 @@
 
         &.disabled {
             opacity: 0.5;
+        }
+    }
+
+    ul {
+        overflow: auto;
+
+        li {
+            padding-left: 1px;
+
+            button { /* stylelint-disable-line no-descending-specificity */
+                border: none;
+                color: #{var(--skin-link-color-1)};
+                background-color: transparent;
+            }
         }
     }
 
@@ -229,12 +229,14 @@
         padding-left: calc($grid-gutter-width / 2);
     }
 
+    /* stylelint-disable-next-line no-descending-specificity */
     li {
         list-style: none;
         float: left;
         margin-left: 0.3125em;
         margin-right: 0.3125em;
 
+        /* stylelint-disable-next-line no-descending-specificity */
         &:first-child {
             margin-left: 0;
         }
@@ -252,7 +254,7 @@
 
                 &::after {
                     content: "\f00d";
-                    font: normal normal normal 14px/1 FontAwesome;
+                    font: normal normal normal 14px/1 FontAwesome, sans-serif;
                     text-rendering: auto;
                     position: absolute;
                     right: 10px;
@@ -285,7 +287,7 @@
 
                 &::after {
                     content: "\f057";
-                    font: normal normal normal 14px/1 FontAwesome;
+                    font: normal normal normal 14px/1 FontAwesome, sans-serif;
                     display: inline;
                     text-rendering: auto;
                     position: absolute;
@@ -334,7 +336,7 @@
 }
 
 .swatch-mark {
-    @include swatch-check-mark();
+    @include swatch-check-mark;
 }
 
 .search-nav {

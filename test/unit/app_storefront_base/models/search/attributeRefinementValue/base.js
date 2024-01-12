@@ -3,7 +3,6 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-
 describe('BaseAttributeValue model', function () {
     var refinementDefinition = {};
     var baseAttributeValue = {};

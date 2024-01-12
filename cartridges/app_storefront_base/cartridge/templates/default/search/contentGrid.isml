@@ -6,17 +6,20 @@
                 ${pdict.contentSearch.queryPhrase}
             </span>
             <isslot id="noresults-help" description="Recommendations for no result search" context="global" />
+        </div>
     <iselse>
         <div class="result-count col-sm-8 col-md-6">
             ${Resource.msgf('label.resultsfor', 'search', null, pdict.contentSearch.contentCount)}
             <span class="search-keywords">
                 ${pdict.contentSearch.queryPhrase}
             </span>
+        </div>
     </isif>
 <iselse>
-<div>
+    <div></div>
 </isif>
 
+<div>
     <isloop items="${pdict.contentSearch.contents}" var="contentAsset">
         <div class="row">
             <div class="col-12">
@@ -41,5 +44,4 @@
             </div>
         </div>
     </isif>
-
 </div>

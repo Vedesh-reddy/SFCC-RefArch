@@ -1,4 +1,5 @@
 'use strict';
+
 var base = require('./base');
 
 /**
@@ -72,8 +73,10 @@ module.exports = {
     updateAddToCart: function () {
         $('body').on('product:updateAddToCart', function (e, response) {
             // update local add to cart (for sets)
-            $('button.add-to-cart', response.$productContainer).attr('disabled',
-                (!response.product.readyToOrder || !response.product.available));
+            $('button.add-to-cart', response.$productContainer).attr(
+                'disabled',
+                (!response.product.readyToOrder || !response.product.available)
+            );
 
             var enable = $('.product-availability').toArray().every(function (item) {
                 return $(item).data('available') && $(item).data('ready-to-order');
@@ -132,7 +135,7 @@ module.exports = {
         });
     },
     copyProductLink: function () {
-        $('body').on('click', '#fa-link', function () {
+        $('body').on('click', '#fa-link', function (event) {
             event.preventDefault();
             var $temp = $('<input>');
             $('body').append($temp);

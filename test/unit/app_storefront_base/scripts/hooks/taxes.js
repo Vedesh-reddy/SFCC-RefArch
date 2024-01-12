@@ -109,7 +109,7 @@ describe('Taxes', function () {
         'dw/system/HookMgr': {},
         '*/cartridge/scripts/util/collections': {
             forEach: function () {
-                return;
+
             },
             first: function () { return true; }
         },

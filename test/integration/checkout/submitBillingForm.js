@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -30,7 +32,6 @@ describe('billingForm', function () {
 
         var cookieString;
 
-
         var variantPid1 = '701643421084M';
         var qty1 = 2;
         var addProd = '/Cart-AddProduct';
@@ -55,9 +56,9 @@ describe('billingForm', function () {
             .then(function (csrfResponse) {
                 var csrfJsonResponse = JSON.parse(csrfResponse.body);
                 // step3 : submit billing request with token aquired in step 2
-                myRequest.url = config.baseUrl + '/CheckoutServices-SubmitPayment?' +
-                    csrfJsonResponse.csrf.tokenName + '=' +
-                    csrfJsonResponse.csrf.token;
+                myRequest.url = config.baseUrl + '/CheckoutServices-SubmitPayment?'
+                    + csrfJsonResponse.csrf.tokenName + '='
+                    + csrfJsonResponse.csrf.token;
                 myRequest.form = {
                     dwfrm_billing_shippingAddressUseAsBillingAddress: 'true',
                     dwfrm_billing_addressFields_firstName: 'John',
@@ -110,4 +111,3 @@ describe('billingForm', function () {
             });
     });
 });
-

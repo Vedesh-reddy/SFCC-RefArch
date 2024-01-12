@@ -81,7 +81,7 @@ function fillDomElement(einsteinResponse, $parentElement) {
     }
 }
 
- /**
+/**
  * Processes a recommendation tile, with an already initialized category specific anchors array
  * @param {jQuery} $parentElement parent element where recommendations will show.
  * @param {Object} einsteinUtils cquotient object
@@ -157,7 +157,7 @@ function loadRecommendations() {
             $parentElement.spinner().start();
             if ($(this).closest('.experience-einstein-einsteinCarouselProduct').length) {
                 return processRecommendationsTile($parentElement, einsteinUtils, createProductAnchor($parentElement));
-            } else if ($(this).closest('.experience-einstein-einsteinCarouselCategory').length) {
+            } if ($(this).closest('.experience-einstein-einsteinCarouselCategory').length) {
                 return processRecommendationsTile($parentElement, einsteinUtils, createCategoryAnchor($parentElement));
             }
             return processRecommendationsTile($parentElement, einsteinUtils);

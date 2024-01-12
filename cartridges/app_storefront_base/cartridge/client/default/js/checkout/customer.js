@@ -38,7 +38,6 @@ function updateCustomerInformation(customerData, orderData) {
     }
 }
 
-
 /**
  * Handle response from the server for valid or invalid form fields.
  * @param {Object} defer - the deferred object which will resolve on success or reject.

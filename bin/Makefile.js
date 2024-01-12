@@ -66,7 +66,7 @@ target.compileFonts = function () {
     var fontsDir = 'cartridges/app_storefront_base/cartridge/static/default/fonts';
     mkdir('-p', fontsDir);
     cp('-r', 'node_modules/font-awesome/fonts/', 'cartridges/app_storefront_base/cartridge/static/default');
-    cp('-r', 'node_modules/flag-icon-css/flags', fontsDir + '/flags');
+    cp('-r', 'node_modules/flag-icons/flags', fontsDir + '/flags');
 };
 
 target.functional = function (args) {

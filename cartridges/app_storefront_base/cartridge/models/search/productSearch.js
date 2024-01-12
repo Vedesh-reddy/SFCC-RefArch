@@ -11,7 +11,6 @@ var ACTION_ENDPOINT = 'Search-Show';
 var ACTION_ENDPOINT_AJAX = 'Search-ShowAjax';
 var DEFAULT_PAGE_SIZE = preferences.defaultPageSize ? preferences.defaultPageSize : 12;
 
-
 /**
  * Generates URL that removes refinements, essentially resetting search criteria
  *
@@ -115,7 +114,7 @@ function getShowMoreUrl(productSearch, httpParams) {
 
     if (pageSize >= hitsCount) {
         return '';
-    } else if (pageSize > DEFAULT_PAGE_SIZE) {
+    } if (pageSize > DEFAULT_PAGE_SIZE) {
         nextStart = pageSize;
     } else {
         var endIdx = paging.getEnd();
@@ -168,7 +167,6 @@ function getPhrases(suggestedPhrases) {
     }
     return phrases;
 }
-
 
 /**
  * @constructor

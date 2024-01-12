@@ -1,15 +1,13 @@
 'use strict';
 
-
 var assert = require('chai').assert;
 var ArrayList = require('../../../../mocks/dw.util.Collection.js');
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
 describe('Collections utilities', function () {
-    var collections = proxyquire(
-        '../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
-            'dw/util/ArrayList': ArrayList
-        });
+    var collections = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
+        'dw/util/ArrayList': ArrayList
+    });
 
     describe('every() function', function () {
         var collection = new ArrayList([1, 2, 3, 4]);

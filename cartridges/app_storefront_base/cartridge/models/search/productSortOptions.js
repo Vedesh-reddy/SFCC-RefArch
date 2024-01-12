@@ -5,7 +5,6 @@ var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
 
 var ACTION_ENDPOINT = 'Search-UpdateGrid';
 
-
 /**
  * Retrieves sorting options
  *

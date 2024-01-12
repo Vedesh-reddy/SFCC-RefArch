@@ -2,7 +2,6 @@
 
 var URLUtils = require('dw/web/URLUtils');
 
-
 /**
  * @constructor
  * @classdesc ContentSuggestions class

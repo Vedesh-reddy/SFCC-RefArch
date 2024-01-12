@@ -1,5 +1,8 @@
 'use strict';
+
 var focusHelper = require('../components/focus');
+
+var location = window.location;
 
 /**
  * Retrieves the relevant pid value
@@ -68,8 +71,8 @@ function getQuantitySelected($el) {
  */
 function processSwatchValues(attr, $productContainer, msgs) {
     attr.values.forEach(function (attrValue) {
-        var $attrValue = $productContainer.find('[data-attr="' + attr.id + '"] [data-attr-value="' +
-            attrValue.value + '"]');
+        var $attrValue = $productContainer.find('[data-attr="' + attr.id + '"] [data-attr-value="'
+            + attrValue.value + '"]');
         var $swatchButton = $attrValue.parent();
 
         if (attrValue.selected) {
@@ -219,7 +222,7 @@ function getAttributesHtml(attributes) {
  * @param {jQuery} $productContainer - DOM element for current product
  */
 function updateOptions(optionsHtml, $productContainer) {
-	// Update options
+    // Update options
     $productContainer.find('.product-options').empty().html(optionsHtml);
 }
 
@@ -259,8 +262,7 @@ function createCarousel(imgs, $productContainer) {
  * @param {jQuery} $productContainer - DOM element for a given product.
  */
 function handleVariantResponse(response, $productContainer) {
-    var isChoiceOfBonusProducts =
-        $productContainer.parents('.choose-bonus-product-dialog').length > 0;
+    var isChoiceOfBonusProducts = $productContainer.parents('.choose-bonus-product-dialog').length > 0;
     var isVaraint;
     if (response.product.variationAttributes) {
         updateAttrs(response.product.variationAttributes, $productContainer, response.resources);
@@ -326,8 +328,8 @@ function updateQuantities(quantities, $productContainer) {
     if ($productContainer.parent('.bonus-product-item').length <= 0) {
         var optionsHtml = quantities.map(function (quantity) {
             var selected = quantity.selected ? ' selected ' : '';
-            return '<option value="' + quantity.value + '"  data-url="' + quantity.url + '"' +
-                selected + '>' + quantity.value + '</option>';
+            return '<option value="' + quantity.value + '"  data-url="' + quantity.url + '"'
+                + selected + '>' + quantity.value + '</option>';
         }).join('');
         getQuantitySelector($productContainer).empty().html(optionsHtml);
     }
@@ -341,8 +343,10 @@ function updateQuantities(quantities, $productContainer) {
  */
 function attributeSelect(selectedValueUrl, $productContainer) {
     if (selectedValueUrl) {
-        $('body').trigger('product:beforeAttributeSelect',
-            { url: selectedValueUrl, container: $productContainer });
+        $('body').trigger(
+            'product:beforeAttributeSelect',
+            { url: selectedValueUrl, container: $productContainer }
+        );
 
         $.ajax({
             url: selectedValueUrl,
@@ -351,8 +355,10 @@ function attributeSelect(selectedValueUrl, $productContainer) {
                 handleVariantResponse(data, $productContainer);
                 updateOptions(data.product.optionsHtml, $productContainer);
                 updateQuantities(data.product.quantities, $productContainer);
-                $('body').trigger('product:afterAttributeSelect',
-                    { data: data, container: $productContainer });
+                $('body').trigger(
+                    'product:afterAttributeSelect',
+                    { data: data, container: $productContainer }
+                );
                 $.spinner().stop();
             },
             error: function () {
@@ -615,8 +621,10 @@ module.exports = {
             }
 
             if ($('.bundle-items', $productContainer).length === 0) {
-                attributeSelect($(e.currentTarget).find('option:selected').data('url'),
-                    $productContainer);
+                attributeSelect(
+                    $(e.currentTarget).find('option:selected').data('url'),
+                    $productContainer
+                );
             }
         });
     },
@@ -709,8 +717,7 @@ module.exports = {
                 + $choiceOfBonusProduct.find('.product-name').html()
                 + '</div>'
                 + '<div class="col-1"><i class="fa fa-times" aria-hidden="true"></i></div>'
-                + '</div>'
-                ;
+                + '</div>';
                 $('#chooseBonusProductModal .selected-bonus-products').append(selectedBonusProductHtml);
                 $('.pre-cart-products').html(totalQty);
                 $('.selected-bonus-products .bonus-summary').removeClass('alert-danger');
@@ -736,8 +743,10 @@ module.exports = {
     },
     enableBonusProductSelection: function () {
         $('body').on('bonusproduct:updateSelectButton', function (e, response) {
-            $('button.select-bonus-product', response.$productContainer).attr('disabled',
-                (!response.product.readyToOrder || !response.product.available));
+            $('button.select-bonus-product', response.$productContainer).attr(
+                'disabled',
+                (!response.product.readyToOrder || !response.product.available)
+            );
             var pid = response.product.id;
             $('button.select-bonus-product', response.$productContainer).data('pid', pid);
         });
@@ -771,9 +780,8 @@ module.exports = {
             };
 
             $.each($readyToOrderBonusProducts, function () {
-                var qtyOption =
-                    parseInt($(this)
-                        .data('qty'), 10);
+                var qtyOption = parseInt($(this)
+                    .data('qty'), 10);
 
                 var option = null;
                 if (qtyOption > 0) {

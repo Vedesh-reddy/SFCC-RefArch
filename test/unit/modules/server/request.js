@@ -41,7 +41,7 @@ var Request = proxyquire('../../../../cartridges/modules/server/request', {
 });
 
 var session = {
-    setCurrency: function () { return; }
+    setCurrency: function () { }
 };
 
 var setCurrencyStub = sinon.stub(session, 'setCurrency');
@@ -319,7 +319,7 @@ describe('request', function () {
         assert.deepEqual(
             req.currentCustomer.addressBook.preferredAddress.raw,
             expectedResult.customer.addressBook.preferredAddress
-         );
+        );
     });
 
     it('should contain correct current customer wallet and properties', function () {
@@ -445,7 +445,6 @@ describe('request', function () {
         new Request(fakeRequest, fakeRequest.customer, fakeRequest.session);
         assert.isFalse(setCurrencyStub.calledOnce);
     });
-
 
     it('should contain correct geolocation object and properties wehn co geolocation exists', function () {
         var fakeRequest = createFakeRequest();

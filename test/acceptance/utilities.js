@@ -1,3 +1,5 @@
+'use strict';
+
 const I = actor();
 
 module.exports = {
@@ -17,4 +19,3 @@ module.exports = {
         I.seeCurrentUrlEquals(expectedPageUrl);
     }
 };
-

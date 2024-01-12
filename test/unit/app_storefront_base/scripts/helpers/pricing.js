@@ -27,7 +27,6 @@ function getSearchHit() {
     return searchHitMock;
 }
 
-
 describe('Helpers - Pricing', function () {
     var templateStub = sinon.stub();
     var collections = proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {

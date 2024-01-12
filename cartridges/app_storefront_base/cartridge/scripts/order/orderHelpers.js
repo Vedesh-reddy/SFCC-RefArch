@@ -55,8 +55,7 @@ function getOrders(currentCustomer, querystring, locale) {
         var orderTime = customerOrder.getCreationDate().getTime();
 
         if (years.indexOf(orderYear) === -1) {
-            var optionURL =
-                URLUtils.url('Order-Filtered', 'orderFilter', orderYear).abs().toString();
+            var optionURL = URLUtils.url('Order-Filtered', 'orderFilter', orderYear).abs().toString();
             filterValues.push({
                 displayValue: orderYear,
                 optionValue: optionURL

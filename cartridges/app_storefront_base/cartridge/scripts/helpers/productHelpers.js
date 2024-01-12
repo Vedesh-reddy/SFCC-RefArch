@@ -162,10 +162,14 @@ function getVariationModel(product, productVariables) {
         var variationAttrs = variationModel.productVariationAttributes;
         Object.keys(productVariables).forEach(function (attr) {
             if (attr && productVariables[attr].value) {
-                var dwAttr = collections.find(variationAttrs,
-                    function (item) { return item.ID === attr; });
-                var dwAttrValue = collections.find(variationModel.getAllValues(dwAttr),
-                    function (item) { return item.value === productVariables[attr].value; });
+                var dwAttr = collections.find(
+                    variationAttrs,
+                    function (item) { return item.ID === attr; }
+                );
+                var dwAttrValue = collections.find(
+                    variationModel.getAllValues(dwAttr),
+                    function (item) { return item.value === productVariables[attr].value; }
+                );
                 if (dwAttr && dwAttrValue) {
                     variationModel.setSelectedAttributeValue(dwAttr.ID, dwAttrValue.ID);
                 }
@@ -328,12 +332,14 @@ function getResources() {
     var Resource = require('dw/web/Resource');
 
     return {
-        info_selectforstock: Resource.msg('info.selectforstock', 'product',
-            'Select Styles for Availability'),
+        info_selectforstock: Resource.msg(
+            'info.selectforstock',
+            'product',
+            'Select Styles for Availability'
+        ),
         assistiveSelectedText: Resource.msg('msg.assistive.selected.text', 'common', null)
     };
 }
-
 
 /**
  * Renders the Product Details Page
@@ -388,7 +394,7 @@ function showProductPage(querystring, reqPageMetaData) {
  */
 function getPageDesignerProductPage(reqProduct) {
     if (reqProduct.template) {
-       // this product uses an individual template, for backwards compatibility this has to be handled as a non-PD page
+        // this product uses an individual template, for backwards compatibility this has to be handled as a non-PD page
         return {
             page: null,
             invisiblePage: null,

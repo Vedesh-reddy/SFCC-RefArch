@@ -29,7 +29,6 @@ var searchRefinements = proxyquire('../../../../../cartridges/app_storefront_bas
     }
 });
 
-
 describe('Search Refinements Factory', function () {
     var productSearch;
     var refinementDefinition;
@@ -38,11 +37,11 @@ describe('Search Refinements Factory', function () {
     beforeEach(function () {
         productSearch = {};
         refinementDefinition = {};
-        mockPriceRefinementValue.reset();
-        mockColorRefinementValue.reset();
-        mockSizeRefinementValue.reset();
-        mockBooleanRefinementValue.reset();
-        mockPromotionRefinementValue.reset();
+        mockPriceRefinementValue.resetHistory();
+        mockColorRefinementValue.resetHistory();
+        mockSizeRefinementValue.resetHistory();
+        mockBooleanRefinementValue.resetHistory();
+        mockPromotionRefinementValue.resetHistory();
     });
 
     it('should retrieve price refinements ', function () {

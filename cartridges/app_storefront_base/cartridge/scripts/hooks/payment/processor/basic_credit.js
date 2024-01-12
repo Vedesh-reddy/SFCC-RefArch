@@ -35,10 +35,8 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
     var serverErrors = [];
     var creditCardStatus;
 
-
     var cardType = paymentInformation.cardType.value;
     var paymentCard = PaymentMgr.getPaymentCard(cardType);
-
 
     // Validate payment instrument
     if (paymentMethodID === PaymentInstrument.METHOD_CREDIT_CARD) {
@@ -67,8 +65,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
                 cardSecurityCode
             );
         } else {
-            cardErrors[paymentInformation.cardNumber.htmlName] =
-                Resource.msg('error.invalid.card.number', 'creditCard', null);
+            cardErrors[paymentInformation.cardNumber.htmlName] = Resource.msg('error.invalid.card.number', 'creditCard', null);
 
             return { fieldErrors: [cardErrors], serverErrors: serverErrors, error: true };
         }
@@ -77,20 +74,16 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
             collections.forEach(creditCardStatus.items, function (item) {
                 switch (item.code) {
                     case PaymentStatusCodes.CREDITCARD_INVALID_CARD_NUMBER:
-                        cardErrors[paymentInformation.cardNumber.htmlName] =
-                            Resource.msg('error.invalid.card.number', 'creditCard', null);
+                        cardErrors[paymentInformation.cardNumber.htmlName] = Resource.msg('error.invalid.card.number', 'creditCard', null);
                         break;
 
                     case PaymentStatusCodes.CREDITCARD_INVALID_EXPIRATION_DATE:
-                        cardErrors[paymentInformation.expirationMonth.htmlName] =
-                            Resource.msg('error.expired.credit.card', 'creditCard', null);
-                        cardErrors[paymentInformation.expirationYear.htmlName] =
-                            Resource.msg('error.expired.credit.card', 'creditCard', null);
+                        cardErrors[paymentInformation.expirationMonth.htmlName] = Resource.msg('error.expired.credit.card', 'creditCard', null);
+                        cardErrors[paymentInformation.expirationYear.htmlName] = Resource.msg('error.expired.credit.card', 'creditCard', null);
                         break;
 
                     case PaymentStatusCodes.CREDITCARD_INVALID_SECURITY_CODE:
-                        cardErrors[paymentInformation.securityCode.htmlName] =
-                            Resource.msg('error.invalid.security.code', 'creditCard', null);
+                        cardErrors[paymentInformation.securityCode.htmlName] = Resource.msg('error.invalid.security.code', 'creditCard', null);
                         break;
                     default:
                         serverErrors.push(
@@ -112,9 +105,7 @@ function Handle(basket, paymentInformation, paymentMethodID, req) {
             currentBasket.removePaymentInstrument(item);
         });
 
-        var paymentInstrument = currentBasket.createPaymentInstrument(
-            PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice
-        );
+        var paymentInstrument = currentBasket.createPaymentInstrument(PaymentInstrument.METHOD_CREDIT_CARD, currentBasket.totalGrossPrice);
 
         paymentInstrument.setCreditCardHolder(currentBasket.billingAddress.fullName);
         paymentInstrument.setCreditCardNumber(cardNumber);

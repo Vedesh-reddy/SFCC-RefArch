@@ -6,4 +6,3 @@ module.exports = function (object, apiProduct) {
         value: apiProduct ? !!apiProduct.online : false
     });
 };
-

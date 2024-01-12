@@ -38,7 +38,6 @@ function updateBundleProducts(apiLineItem, childProducts) {
     });
 }
 
-
 /**
  * @typedef urlObject
  * @type Object
@@ -61,7 +60,8 @@ function getNewBonusDiscountLineItem(
     currentBasket,
     previousBonusDiscountLineItems,
     urlObject,
-    pliUUID) {
+    pliUUID
+) {
     var bonusDiscountLineItems = currentBasket.getBonusDiscountLineItems();
     var newBonusDiscountLineItem;
     var result = {};
@@ -306,8 +306,7 @@ function checkBundledProductCanBeAdded(childProducts, productLineItems, quantity
 
     childProducts.forEach(function (childProduct) {
         var apiChildProduct = ProductMgr.getProduct(childProduct.pid);
-        atsValueByChildPid[childProduct.pid] =
-            apiChildProduct.availabilityModel.inventoryRecord.ATS.value;
+        atsValueByChildPid[childProduct.pid] = apiChildProduct.availabilityModel.inventoryRecord.ATS.value;
     });
 
     canBeAdded = childProducts.every(function (childProduct) {
@@ -354,8 +353,7 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
     } else {
         totalQtyRequested = quantity + getQtyAlreadyInCart(productId, productLineItems);
         perpetual = product.availabilityModel.inventoryRecord.perpetual;
-        canBeAdded =
-            (perpetual
+        canBeAdded = (perpetual
             || totalQtyRequested <= product.availabilityModel.inventoryRecord.ATS.value);
     }
 
@@ -371,8 +369,7 @@ function addProductToCart(currentBasket, productId, quantity, childProducts, opt
         return result;
     }
 
-    productInCart = getExistingProductLineItemInCart(
-        product, productId, productLineItems, childProducts, options);
+    productInCart = getExistingProductLineItemInCart(product, productId, productLineItems, childProducts, options);
 
     if (productInCart) {
         productQuantityInCart = productInCart.quantity.value;

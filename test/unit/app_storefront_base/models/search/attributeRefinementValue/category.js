@@ -3,19 +3,16 @@
 var assert = require('chai').assert;
 var proxyquire = require('proxyquire').noCallThru().noPreserveCache();
 
-
 describe('CategoryAttributeValue model', function () {
     var refinementDefinition = {};
     var booleanAttributeValue = {};
 
     var CategoryAttributeValue = proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/category', {
-        '*/cartridge/models/search/attributeRefinementValue/base': proxyquire(
-            '../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
-                'dw/web/Resource': {
-                    msgf: function () { return 'some product title'; }
-                }
+        '*/cartridge/models/search/attributeRefinementValue/base': proxyquire('../../../../../../cartridges/app_storefront_base/cartridge/models/search/attributeRefinementValue/base', {
+            'dw/web/Resource': {
+                msgf: function () { return 'some product title'; }
             }
-        ),
+        }),
         'dw/web/Resource': {
             msg: function () { return 'some display value'; }
         }

@@ -30,4 +30,3 @@ function getAccountModel(req) {
 module.exports = {
     getAccountModel: getAccountModel
 };
-

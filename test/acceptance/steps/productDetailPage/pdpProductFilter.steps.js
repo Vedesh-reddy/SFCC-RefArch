@@ -1,3 +1,5 @@
+'use strict';
+
 const { data, productPage, homePage } = inject();
 
 Then('shopper searches for category from menu', () => {

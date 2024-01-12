@@ -25,7 +25,7 @@ var productLineItemMock = {
         value: 1
     },
     setQuantityValue: function () {
-        return;
+
     },
     quantityValue: 1,
     product: {
@@ -90,7 +90,7 @@ var createApiBasket = function (productInBasket) {
         createProductLineItem: function () {
             return {
                 setQuantityValue: function () {
-                    return;
+
                 }
             };
         },
@@ -207,7 +207,8 @@ describe('cartHelpers', function () {
             assert.equal(3, qtyAlreadyInCart);
         });
 
-        it('should provide the quantities of a product inside a bundle already in the Cart',
+        it(
+            'should provide the quantities of a product inside a bundle already in the Cart',
             function () {
                 var lineItems = new ArrayList([{
                     bundledProductLineItems: new ArrayList([{
@@ -217,7 +218,8 @@ describe('cartHelpers', function () {
                 }]);
                 var qtyAlreadyInCart = cartHelpers.getQtyAlreadyInCart(productId1, lineItems);
                 assert.equal(4, qtyAlreadyInCart);
-            });
+            }
+        );
 
         it('should not include the quantity a product matching the uuid', function () {
             var uuid = 'abc';
@@ -231,7 +233,8 @@ describe('cartHelpers', function () {
             assert.equal(0, qtyAlreadyInCart);
         });
 
-        it('should not include the quantity a product inside a bundle matching the uuid',
+        it(
+            'should not include the quantity a product inside a bundle matching the uuid',
             function () {
                 var uuid = 'abc';
                 var lineItems = new ArrayList([{
@@ -268,11 +271,10 @@ describe('cartHelpers', function () {
                 addToCartUrl: 'Cart-AddBonusProducts'
             };
 
-            var newBonusDiscountLineItem =
-                cartHelpers.getNewBonusDiscountLineItem(
-                    currentBasket,
-                    previousBonusDiscountLineItems,
-                    urlObject
+            var newBonusDiscountLineItem = cartHelpers.getNewBonusDiscountLineItem(
+                currentBasket,
+                previousBonusDiscountLineItems,
+                urlObject
             );
             assert.equal(newBonusDiscountLineItem.maxBonusItems, 1);
             assert.equal(newBonusDiscountLineItem.addToCartUrl, 'Cart-AddBonusProducts');

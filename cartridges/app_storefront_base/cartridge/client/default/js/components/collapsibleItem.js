@@ -1,4 +1,5 @@
 'use strict';
+
 module.exports = function () {
     var sizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 

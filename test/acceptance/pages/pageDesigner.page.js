@@ -1,3 +1,5 @@
+'use strict';
+
 const I = actor();
 
 var carousel2Item1Selector = '.carousel:nth-child(2) .carousel-item:nth-child(1)';

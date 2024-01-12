@@ -39,6 +39,7 @@
     color: $white-text;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .ITC-image-heading-text {
     color: $banner-heading-text-color;
 }
@@ -50,6 +51,7 @@
     text-decoration: underline;
 }
 
+/* stylelint-disable-next-line selector-class-pattern */
 .ITC-text-underneath span {
     color: $black;
     padding-top: 0.75em;

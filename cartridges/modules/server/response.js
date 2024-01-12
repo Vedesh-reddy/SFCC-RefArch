@@ -93,7 +93,9 @@ Response.prototype = {
      */
     page: function (page, data, aspectAttributes) {
         this.viewData = assign(this.viewData, data);
-        appendRenderings(this.renderings, { type: 'render', subType: 'page', page: page, aspectAttributes: aspectAttributes });
+        appendRenderings(this.renderings, {
+            type: 'render', subType: 'page', page: page, aspectAttributes: aspectAttributes
+        });
     },
     /**
      * Redirects to a given url right away

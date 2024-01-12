@@ -1,3 +1,5 @@
+'use strict';
+
 const { I, data, loginPage } = inject();
 
 Then('shopper is able to click tab to create account', () => {

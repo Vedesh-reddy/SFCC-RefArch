@@ -5,6 +5,7 @@
     .icon-next {
         background-color: $white;
         font-size: 1.875em;
+
         // width and height here need to use rem units because the font size used here is 30px
         height: $thumb-size;
         padding-top: 0.24em;
@@ -12,7 +13,7 @@
 
         &::before {
             color: black;
-            font-family: 'FontAwesome';
+            font-family: FontAwesome, sans-serif;
         }
     }
 

@@ -1,3 +1,5 @@
+'use strict';
+
 var assert = require('chai').assert;
 var request = require('request-promise');
 var config = require('../it.config');
@@ -8,9 +10,9 @@ chai.use(chaiSubset);
 describe('Edit product variant', function () {
     this.timeout(45000);
 
-    var variantPid1 = '701643421084M';   // 3/4 Sleeve V-Neck Top: icy mint, XS
+    var variantPid1 = '701643421084M'; // 3/4 Sleeve V-Neck Top: icy mint, XS
     var qty1 = 1;
-    var variantPid2 = '793775362380M';   // Striped Silk Tie: red, 29.99
+    var variantPid2 = '793775362380M'; // Striped Silk Tie: red, 29.99
     var qty2 = 1;
 
     var newQty1;
@@ -63,7 +65,7 @@ describe('Edit product variant', function () {
             // ----- select a shipping method. Need to have shipping method so that shipping cost, sales tax,
             //       and grand total can be calculated
             .then(function () {
-                var shipMethodId = '001';   // 001 = Ground
+                var shipMethodId = '001'; // 001 = Ground
 
                 myRequest.method = 'POST';
                 myRequest.url = config.baseUrl + '/Cart-SelectShippingMethod?methodID=' + shipMethodId;
@@ -90,7 +92,7 @@ describe('Edit product variant', function () {
         var expectQty1 = newQty1;
         var expectQty2 = qty2;
 
-        var newVariantPid1 = '701642923541M';   // 3/4 Sleeve V-Neck Top: Grey Heather, S
+        var newVariantPid1 = '701642923541M'; // 3/4 Sleeve V-Neck Top: Grey Heather, S
 
         var expectedUpdateRep = {
             'action': 'Cart-EditProductLineItem',
@@ -233,7 +235,7 @@ describe('Edit product variant', function () {
 
         var expectQty2 = qty2;
 
-        var newVariantPid2 = '793775370033M';   // Striped Silk Tie: Turquoise, 23.99
+        var newVariantPid2 = '793775370033M'; // Striped Silk Tie: Turquoise, 23.99
 
         var expectedUpdateRep = {
             'action': 'Cart-EditProductLineItem',
@@ -303,4 +305,3 @@ describe('Edit product variant', function () {
             });
     });
 });
-

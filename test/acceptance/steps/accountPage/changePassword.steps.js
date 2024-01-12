@@ -1,3 +1,5 @@
+'use strict';
+
 const { data, accountPage } = inject();
 
 Then('shopper clicks edit password', () => {

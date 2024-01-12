@@ -11,9 +11,11 @@ describe('productAttributes', function () {
         '*/cartridge/scripts/util/collections': proxyquire('../../../../../cartridges/app_storefront_base/cartridge/scripts/util/collections', {
             'dw/util/ArrayList': ArrayList
         }),
-        '*/cartridge/scripts/helpers/urlHelpers': { appendQueryParams: function () {
-            return '?pid=25604524&dwvar_25604524_size=038&dwvar_25604524_color=BLACKFB';
-        } }
+        '*/cartridge/scripts/helpers/urlHelpers': {
+            appendQueryParams: function () {
+                return '?pid=25604524&dwvar_25604524_size=038&dwvar_25604524_color=BLACKFB';
+            }
+        }
     });
 
     var variationsMock = {

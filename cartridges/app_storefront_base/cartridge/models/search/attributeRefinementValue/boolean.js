@@ -3,7 +3,6 @@
 var BaseAttributeValue = require('*/cartridge/models/search/attributeRefinementValue/base');
 var Resource = require('dw/web/Resource');
 
-
 /**
  * @constructor
  * @classdesc Boolean attribute refinement value model

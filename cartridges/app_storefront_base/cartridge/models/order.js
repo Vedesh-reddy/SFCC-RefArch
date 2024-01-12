@@ -155,8 +155,8 @@ function OrderModel(lineItemContainer, options) {
         this.orderStatus = Object.hasOwnProperty.call(lineItemContainer, 'status')
             ? lineItemContainer.status
             : null;
-        this.productQuantityTotal = lineItemContainer.productQuantityTotal ?
-            lineItemContainer.productQuantityTotal : null;
+        this.productQuantityTotal = lineItemContainer.productQuantityTotal
+            ? lineItemContainer.productQuantityTotal : null;
 
         if (modelConfig.numberOfLineItems === '*') {
             this.totals = totalsModel;

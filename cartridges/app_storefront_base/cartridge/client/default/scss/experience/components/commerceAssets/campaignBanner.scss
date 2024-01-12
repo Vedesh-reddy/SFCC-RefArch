@@ -27,13 +27,13 @@
             line-height: 1.5em;
         }
 
-        a:visited {
-            color: $thin-banner-visited-link-color;
-        }
-
         a {
             color: $thin-banner-link-color;
             margin-left: 1em;
+        }
+
+        a:visited {
+            color: $thin-banner-visited-link-color;
         }
 
         p {

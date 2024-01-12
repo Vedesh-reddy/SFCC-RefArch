@@ -14,7 +14,7 @@ describe('middleware', function () {
     });
 
     afterEach(function () {
-        next.reset();
+        next.resetHistory();
     });
 
     it('should call next for http method', function () {
@@ -28,7 +28,6 @@ describe('middleware', function () {
         middleware.http(req, null, next);
         assert.instanceOf(next.firstCall.args[0], Error);
     });
-
 
     it('should call next for https method', function () {
         req.https = true;

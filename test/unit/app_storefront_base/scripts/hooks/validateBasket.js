@@ -111,7 +111,7 @@ describe('validate basket', function () {
                     };
                 }
             },
-            '*/cartridge/scripts/checkout/checkoutHelpers': function () { return; }
+            '*/cartridge/scripts/checkout/checkoutHelpers': function () { }
         })
     });
 

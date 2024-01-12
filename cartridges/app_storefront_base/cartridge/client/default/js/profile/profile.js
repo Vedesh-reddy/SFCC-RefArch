@@ -2,6 +2,8 @@
 
 var formValidation = require('../components/formValidation');
 
+var location = window.location;
+
 module.exports = {
     submitProfile: function () {
         $('form.edit-profile-form').submit(function (e) {

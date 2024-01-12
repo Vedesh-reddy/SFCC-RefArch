@@ -72,7 +72,11 @@ function createStoresResultsHtml(storesInfo) {
     return template.render(context).text;
 }
 
-module.exports = exports = {
+module.exports = {
+    createStoresResultsHtml: createStoresResultsHtml,
+    getStores: getStores
+};
+exports = {
     createStoresResultsHtml: createStoresResultsHtml,
     getStores: getStores
 };

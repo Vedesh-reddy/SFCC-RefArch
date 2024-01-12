@@ -23,19 +23,21 @@
                         <span>${Resource.msg('label.didyoumean', 'search', null)}</span>
                         <a class ="link" title="${phrase.value}" href="${phrase.url}">${phrase.value}</a>
                     </p>
-                <isif condition="${!loopState.last}">
+                <iselseif condition="${!loopState.last}">
                     <p>
                         <span>${Resource.msg('label.ormaybe', 'search', null)}</span>
-                </isif>
+                        <a class ="link" title="${phrase.value}" href="${phrase.url}">${phrase.value}</a>
+                    </p>
                 <iselse>
-                    <a class ="link" title="${phrase.value}" href="${phrase.url}">${phrase.value}</a>
-                    <isif condition="${loopState.last}">
-                    </p><iselse>,&nbsp;</isif>
+                    <p>
+                        <a class ="link" title="${phrase.value}" href="${phrase.url}">${phrase.value}</a>
+                        ,&nbsp;
+                    </p>
                 </isif>
             </isloop>
         </isif>
     </isif>
-    <isif condition="${!pdict.productSearch.productIds.length}">    
+    <isif condition="${!pdict.productSearch.productIds.length}">
         <isinclude template="search/noResultsProduct"/>
     </isif>
 </isobject>

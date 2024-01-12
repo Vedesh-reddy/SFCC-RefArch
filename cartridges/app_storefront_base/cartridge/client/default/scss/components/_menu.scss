@@ -1,12 +1,13 @@
+/* stylelint-disable scss/no-global-function-names */
+
 $breakpoint-name: 'sm';
 $breakpoint-name: 'sm' !default;
 $breakpoint-index: index(map-keys($grid-breakpoints), $breakpoint-name);
 $prev-breakpoint: nth(map-keys($grid-breakpoints), $breakpoint-index - 1);
 $next-breakpoint: nth(map-keys($grid-breakpoints), $breakpoint-index + 1);
-
 $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
 
-@mixin caret-left() {
+@mixin caret-left {
     border-top: 0.3em solid transparent;
     border-bottom: 0.3em solid transparent;
     border-right: 0.3em solid;
@@ -17,7 +18,7 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
     margin-bottom: 0.125em;
 }
 
-@mixin caret-right() {
+@mixin caret-right {
     border-top: 0.3em solid transparent;
     border-bottom: 0.3em solid transparent;
     border-left: 0.3em solid;
@@ -145,16 +146,12 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
                 padding-left: 1rem;
 
                 &::after {
-                    @include caret-right();
+                    @include caret-right;
                 }
             }
 
             .nav-item .nav-link {
                 padding-left: 1rem;
-            }
-
-            .show > .dropdown-menu {
-                left: 0;
             }
 
             .dropdown-menu {
@@ -167,6 +164,10 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
                 transition: $slide-out-animation;
                 display: block;
             }
+
+            .show > .dropdown-menu {
+                left: 0;
+            }
         }
     }
 }
@@ -178,12 +179,12 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         border-radius: 0;
 
         @include media-breakpoint-up($next-breakpoint) {
-            box-shadow: 0 3px 5px rgba(43, 36, 25, 0.4);
+            box-shadow: 0 3px 5px rgba(43, 36, 25, 40%);
         }
     }
 
     .dropdown-item.dropdown > .dropdown-toggle::after {
-        @include caret-right();
+        @include caret-right;
     }
 
     .dropdown-menu > .dropdown > .dropdown-menu {
@@ -194,14 +195,14 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         }
     }
 
-    .navbar > .close-menu > .back {
-        display: none;
-    }
-
     .close-menu .back {
         .caret-left {
-            @include caret-left();
+            @include caret-left;
         }
+    }
+
+    .navbar > .close-menu > .back {
+        display: none;
     }
 
     .dropdown-item {
@@ -225,3 +226,4 @@ $slide-out-animation: left 0.5s cubic-bezier(0, 1, 0.5, 1);
         }
     }
 }
+/* stylelint-enable scss/no-global-function-names */
