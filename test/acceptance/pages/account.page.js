@@ -33,7 +33,18 @@ module.exports = {
         loggedInAccountNav: '.user.nav-item',
         accountLogOut: '.user .popover li'
     },
-    addAddress(addressTitle, fName, lName, address1, country, state, city, zipcode, phone) {
+    addAddress(
+        addressTitle,
+        fName,
+        lName,
+        address1,
+        country,
+        state,
+        city,
+        zipcode,
+        phone
+    ) {
+        I.scrollTo(0, 500);
         I.fillField(this.locators.addressTitle, addressTitle);
         I.fillField(this.locators.fName, fName);
         I.fillField(this.locators.lName, lName);
@@ -46,33 +57,39 @@ module.exports = {
         I.click(this.locators.saveBtn);
     },
     clickAddAddress() {
-        let locator = locate(this.locators.addNew)
-            .withAttr({ 'aria-label': 'Add New Address' });
+        let locator = locate(this.locators.addNew).withAttr({
+            'aria-label': 'Add New Address'
+        });
         I.click(locator);
     },
     clickAddPayment() {
-        let locator = locate(this.locators.addNew)
-            .withAttr({ 'aria-label': 'Add New Payment' });
+        let locator = locate(this.locators.addNew).withAttr({
+            'aria-label': 'Add New Payment'
+        });
         I.click(locator);
     },
     clickEditProfile() {
-        let locator = locate(this.locators.viewAll)
-            .withAttr({ 'aria-label': 'Edit Profile' });
+        let locator = locate(this.locators.viewAll).withAttr({
+            'aria-label': 'Edit Profile'
+        });
         I.click(locator);
     },
     clickEditPassword() {
-        let locator = locate(this.locators.viewAll)
-            .withAttr({ 'aria-label': 'Change Password' });
+        let locator = locate(this.locators.viewAll).withAttr({
+            'aria-label': 'Change Password'
+        });
         I.click(locator);
     },
     clickAddressBook() {
-        let locator = locate(this.locators.viewAll)
-            .withAttr({ 'aria-label': 'View Address Book' });
+        let locator = locate(this.locators.viewAll).withAttr({
+            'aria-label': 'View Address Book'
+        });
         I.click(locator);
     },
     clickEditAddress(addName) {
-        let locator = locate(this.locators.viewAll)
-            .withAttr({ 'aria-label': `Edit Address : ${addName} (Default Address)` });
+        let locator = locate(this.locators.viewAll).withAttr({
+            'aria-label': `Edit Address : ${addName} (Default Address)`
+        });
         I.click(locator);
     },
     editAddress(addName) {
@@ -83,6 +100,7 @@ module.exports = {
         I.click(this.locators.saveBtn);
     },
     addPayment(nameOnCard, ccNum, expMonth, expYear) {
+        I.scrollTo(0, 500);
         I.fillField(this.locators.nameOnCard, nameOnCard);
         I.fillField(this.locators.ccNum, ccNum);
         I.scrollTo(this.locators.expMonth);
@@ -93,25 +111,30 @@ module.exports = {
         I.click(this.locators.backToAccount);
     },
     viewAllPayments() {
-        let locator = locate(this.locators.viewAll)
-            .withAttr({ 'aria-label': 'View saved payment methods' });
+        let locator = locate(this.locators.viewAll).withAttr({
+            'aria-label': 'View saved payment methods'
+        });
         I.click(locator);
     },
     removePayment(deletePaymentModalText) {
         let locator = locate(this.locators.removeProductBtn).last();
         I.click(locator);
+        I.wait(2);
         I.waitForText(deletePaymentModalText);
         within(this.locators.removeProductModal, () => {
             I.click(this.locators.removeProductConfirm);
         });
+        I.wait(3);
     },
     changePassword(currentPassword, newPassword) {
+        I.scrollTo(0, 500);
         I.fillField(this.locators.currentPassword, currentPassword);
         I.fillField(this.locators.newPassword, newPassword);
         I.fillField(this.locators.newPasswordConfirm, newPassword);
         I.click(this.locators.saveBtn);
     },
     editProfile(phone, email, password) {
+        I.scrollTo(0, 500);
         I.fillField(this.locators.phone, phone);
         I.fillField(this.locators.confirmEmail, email);
         I.fillField(this.locators.confirmPassword, password);

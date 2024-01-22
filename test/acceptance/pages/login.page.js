@@ -30,6 +30,7 @@ module.exports = {
         loginBtnLink: 'a.nav-link'
     },
     login(email, password) {
+        I.scrollTo(this.locators.emailLogin);
         // fill login form
         I.waitForElement(this.locators.emailLogin);
         I.waitForElement(this.locators.passwordLogin);
@@ -39,6 +40,7 @@ module.exports = {
         // click login
         I.waitForElement(this.locators.primaryButton);
         I.click(this.locators.primaryButton);
+        I.wait(1);
     },
     createAccount(fName, lName, phone, email, password) {
         I.fillField(this.locators.firstName, fName);
@@ -62,8 +64,9 @@ module.exports = {
     },
     forgotPassword(email) {
         I.wait(2); // Must wait because of modal fade chops the email param off randomly and fails the test
-        let locator = locate(this.locators.forgotPasswordForm)
-            .withAttr({ name: 'loginEmail' });
+        let locator = locate(this.locators.forgotPasswordForm).withAttr({
+            name: 'loginEmail'
+        });
         I.waitForElement(locator);
         I.fillField(locator, email);
     },
@@ -71,7 +74,10 @@ module.exports = {
         I.waitForElement(this.locators.submitEmailBtn);
         I.click(this.locators.submitEmailBtn);
         I.waitForElement(this.locators.verifyPasswordModal);
-        I.see('Request to Reset Your Password', this.locators.verifyPasswordModal);
+        I.see(
+            'Request to Reset Your Password',
+            this.locators.verifyPasswordModal
+        );
         I.waitForElement(this.locators.submitEmailBtn);
         I.click(this.locators.submitEmailBtn);
     }

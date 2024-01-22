@@ -8,6 +8,7 @@ Then('shopper should see the shop the look component', () => {
 });
 
 Then('shopper should see the title when hover over image', () => {
+    I.scrollIntoView(pageDesigner.locators.shopTheLookImage);
     I.moveCursorTo(pageDesigner.locators.shopTheLookImage);
     I.see(data.pageDesigner.shopTheLookOverlayText, pageDesigner.locators.shopTheLookOverlayText);
     I.see(data.pageDesigner.shopTheLookSetItems, pageDesigner.locators.shopTheLookSetItems);
@@ -15,6 +16,7 @@ Then('shopper should see the title when hover over image', () => {
 });
 
 Then('shopper should not see the setItem when hover over image on product', () => {
+    I.scrollIntoView(pageDesigner.locators.shopTheLook4thImage);
     I.moveCursorTo(pageDesigner.locators.shopTheLook4thImage);
     I.see(data.pageDesigner.shopTheLookProductName, pageDesigner.locators.shopTheLookProductName);
     I.dontSeeElement(pageDesigner.locators.shopTheLook4thSetItems);
