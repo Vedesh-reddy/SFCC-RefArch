@@ -6,7 +6,7 @@ module.exports = {
     locators: {
         lineItemQuantity: '.form-control.quantity.custom-select',
         totalItemQuantity: 'h2.number-of-items',
-        lineItemPriceTotal: 'span.value',
+        lineItemPriceTotal: 'span.sales',
         totalItemPrice: '.line-item-total-price',
         shippingCost: '.text-right.shipping-cost',
         taxTotal: '.text-right.tax-total',
@@ -16,7 +16,8 @@ module.exports = {
         removeProductBox: '.hidden-md-down',
         removeProductBtn: '.remove-btn-lg.remove-product.btn.btn-light',
         removeProductModal: '.modal-content',
-        removeProductModalConfirm: '.btn.btn-primary.cart-delete-confirmation-btn',
+        removeProductModalConfirm:
+            '.btn.btn-primary.cart-delete-confirmation-btn',
         editQuantitySelector: '.form-control.quantity.custom-select',
         miniCartEditQty: 'select[data-pid="<pid>"]',
         lineItemName: '.line-item-name',
@@ -28,7 +29,14 @@ module.exports = {
         miniCartQuantity: '.minicart-quantity',
         miniCartPopover: '.popover.popover-bottom.show'
     },
-    verifyCart(totalQuantity, itemPrice, totalItemPrice, shipping, tax, estimatedTotal) {
+    verifyCart(
+        totalQuantity,
+        itemPrice,
+        totalItemPrice,
+        shipping,
+        tax,
+        estimatedTotal
+    ) {
         I.see(totalQuantity, this.locators.lineItemQuantity);
         I.see(itemPrice, this.locators.lineItemPriceTotal);
         I.see(totalItemPrice, this.locators.totalItemPrice);
@@ -41,7 +49,9 @@ module.exports = {
     },
     verifyMiniCartOriginal(product) {
         I.scrollPageToTop();
-        I.executeScript(function (el) { $(el).trigger('touchstart'); }, this.locators.cartIcon);
+        I.executeScript(function (el) {
+            $(el).trigger('touchstart');
+        }, this.locators.cartIcon);
         this.verifyMiniCart(product);
         I.see(product.originalQuantity, this.locators.lineItemQuantity);
         I.see(product.originalPrice, this.locators.subTotal);
@@ -59,8 +69,16 @@ module.exports = {
     },
     removeProductFromMiniCart(product) {
         I.scrollPageToTop();
-        I.executeScript(function (el) { $(el).trigger('touchstart'); }, this.locators.cartIcon);
-        I.click(this.locators.removeFromMiniCartButton.replace('<pid>', product.pid));
+        I.executeScript(function (el) {
+            $(el).trigger('touchstart');
+        }, this.locators.cartIcon);
+        I.wait(2);
+        I.waitForElement(
+            this.locators.removeFromMiniCartButton.replace('<pid>', product.pid)
+        );
+        I.click(
+            this.locators.removeFromMiniCartButton.replace('<pid>', product.pid)
+        );
         // Confirm remove product
         within(this.locators.removeProductModal, () => {
             I.click(this.locators.removeProductModalConfirm);
@@ -72,17 +90,23 @@ module.exports = {
             .find(this.locators.removeProductBtn)
             .withAttr({ 'data-name': productName });
         I.click(locator);
+        I.wait(1);
         // Confirm remove product
         within(this.locators.removeProductModal, () => {
             I.click(this.locators.removeProductModalConfirm);
         });
+        I.waitForInvisible(this.locators.removeProductModal);
+        I.wait(2);
     },
     editQuantity(quantity) {
         I.selectOption(this.locators.editQuantitySelector, quantity);
     },
     editMiniCartQuantity(product) {
         within(this.locators.miniCartPopover, () => {
-            I.selectOption(this.locators.miniCartEditQty.replace('<pid>', product.pid), product.editQuantity);
+            I.selectOption(
+                this.locators.miniCartEditQty.replace('<pid>', product.pid),
+                product.editQuantity
+            );
         });
     }
 };

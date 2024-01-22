@@ -14,8 +14,9 @@ module.exports = {
         });
     },
     clickToLoadPage(elementSelector, expectedPageUrl) {
-        I.click(elementSelector);
         I.wait(1);
+        I.click(elementSelector);
+        I.wait(2);
         I.seeCurrentUrlEquals(expectedPageUrl);
     }
 };

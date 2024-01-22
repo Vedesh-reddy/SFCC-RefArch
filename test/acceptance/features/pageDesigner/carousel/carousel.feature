@@ -11,7 +11,7 @@ Feature: Page Designer Carousel
     Then Shopper should see the next slide in the first carousel
     When Shopper clicks previous in carousel "1"
     Then Shopper should see the previous slide in the first carousel
-  
+
   @Carousel @pageDesigner
   Scenario: Shopper is able to interact with the page designer carousel-2 component
     When shopper load Page Designer home page

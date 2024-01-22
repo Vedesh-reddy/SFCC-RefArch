@@ -7,7 +7,7 @@ module.exports = {
         consentTrackModal: '.modal-content',
         consentTrackAffirm: '.affirm.btn.btn-primary',
         searchField: 'input.form-control.search-field',
-        searchedImage: 'a>img.swatch-circle',
+        searchedImage: 'a>div>img.swatch-circle',
         loginButton: '.user-message',
         subscribeEmail: 'input.form-control',
         subscribeButton: '.subscribe-email',
@@ -28,8 +28,9 @@ module.exports = {
     },
     search(product) {
         I.fillField(this.locators.searchField, product);
-        I.waitForElement(this.locators.searchedImage);
+        I.waitForElement(this.locators.searchedImage, 3);
         I.click(this.locators.searchedImage);
+        I.wait(3);
     },
     subscribeList(email) {
         I.fillField('hpEmailSignUp', email);
@@ -42,8 +43,9 @@ module.exports = {
         I.click(this.locators.searchStoreBtn);
     },
     verifyStoreResults(numStores) {
-        let locator = locate(this.locators.searchStoreCard)
-            .inside(this.locators.searchStoreResults);
+        let locator = locate(this.locators.searchStoreCard).inside(
+            this.locators.searchStoreResults
+        );
         I.seeNumberOfVisibleElements(locator, numStores);
     },
     changeStoreRadius(radius) {

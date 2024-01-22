@@ -95,6 +95,31 @@ You can also supply URL of the sandbox on the command line:
 npm run test:integration -- --baseUrl devxx-sitegenesis-dw.demandware.net
 ```
 
+## Running acceptance tests
+
+**Prerequisite:** The Java Runtime Environment (JRE 8+) is required to run Selenium and the acceptance tests. If you have not done so, install Java on your machine.
+
+Acceptance tests are located in the `storefront-reference-architecture/test/acceptance` directory.
+
+The acceptance tests will run against the site specified in the hostname property of `dw.json`. ie. To run the tests on `abcd-123.dx.commercecloud.salesforce.com`, in your dw.json set the following:
+```
+"hostname": "abcd-123.dx.commercecloud.salesforce.com"
+```
+
+There are several NPM scripts available for running the acceptance tests. They all require a `--profile` parameter for setting the browser the tests will run against. ie. `npm run test:acceptance:smoke --profile chrome`
+
+Tests will generally run on Chrome, Safari, and Firefox.
+
+* `test:acceptance:custom` - runs all tests (Note: some tests will fail as the browser size defaults to desktop)
+* `test:acceptance:deep` - runs all storefront tests
+* `test:acceptance:smoke` - runs happy path tests
+* `test:acceptance:pagedesigner` - runs page designer tests
+* `test:acceptance:desktop` - runs storefront desktop tests
+* `test:acceptance:mobile` - runs storefront mobile tests
+* `test:acceptance:tablet` - runs storefront tablet tests
+
+**Note:** Selenium can be finicky to start. If the tests fail to start, simply rerun the command again until the tests start.
+
 # [Contributing to SFRA](./CONTRIBUTING.md)
 
 # Page Designer Components for Storefront Reference Architecture

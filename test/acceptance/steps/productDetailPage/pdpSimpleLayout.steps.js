@@ -9,8 +9,8 @@ Given('shopper goes to the Product Detail Page', () => {
 });
 
 Then('shopper sees all the product related information', async () => {
-    (await I.grabAttributeFrom(productPage.locators.productImage, 'src'))[0].trim().should.containEql('P0150_001.jpg');
-    (await I.grabTextFrom(productPage.locators.productName))[0].trim().should.equal('Upright Case (33L - 3.7Kg)');
+    (await I.grabAttributeFrom(productPage.locators.productImage, 'src')).trim().should.containEql('P0150_001.jpg');
+    (await I.grabTextFrom(productPage.locators.productName)).trim().should.equal('Upright Case (33L - 3.7Kg)');
     (await I.grabTextFrom(productPage.locators.productId)).trim().should.equal('P0150M');
     (await I.grabTextFrom(productPage.locators.productAvailability)).trim().should.equal('In Stock');
     (await I.grabTextFrom(productPage.locators.productPrice)).trim().should.equal('$99.99');
@@ -19,7 +19,7 @@ Then('shopper sees all the product related information', async () => {
 });
 
 Then('shopper sees the correct breadcrumbs', async () => {
-    const breadcrumbsHrefs = await I.grabAttributeFrom(productPage.locators.navigationCrumbs, 'href');
+    const breadcrumbsHrefs = await I.grabAttributeFromAll(productPage.locators.navigationCrumbs, 'href', 5);
     breadcrumbsHrefs[0].should.containEql('mens'); // Mens Category
     breadcrumbsHrefs[1].should.containEql('accessories'); // Accessories Category
     breadcrumbsHrefs[2].should.containEql('luggage'); // Luggage Category
@@ -30,7 +30,7 @@ Then('shopper sees the correct social links', async () => {
     I.seeElement(productPage.locators.facebook); // Facebook
     I.seeElement(productPage.locators.twitter); // Twitter
     I.seeElement(productPage.locators.copyLink); // Copy Link
-    const socialHrefs = await I.grabAttributeFrom(productPage.locators.socialShare, 'href');
+    const socialHrefs = await I.grabAttributeFromAll(productPage.locators.socialShare, 'href');
     socialHrefs[0].should.containEql('pinterest.com'); // Pinterest href
     socialHrefs[1].should.containEql('facebook.com'); // Facebook href
     socialHrefs[2].should.containEql('twitter.com'); // Twitter href

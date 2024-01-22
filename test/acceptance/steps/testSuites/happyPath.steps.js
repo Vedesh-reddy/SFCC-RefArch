@@ -1,8 +1,6 @@
 'use strict';
 
-const {
-    I, data, cartPage, checkoutPage, accountPage, loginPage
-} = inject();
+const { I, data, cartPage, checkoutPage, accountPage, loginPage } = inject();
 
 var orderHistoryNumber = '';
 
@@ -51,8 +49,9 @@ Then('shopper verifies shipping information', () => {
 });
 
 Then('shopper proceeds to payment section', () => {
-    I.waitForElement(checkoutPage.locators.toPayment);
+    I.waitForElement(checkoutPage.locators.toPayment, 3);
     I.click(checkoutPage.locators.toPayment);
+    I.wait(3);
 });
 
 Then('shopper fills out billing information', () => {
@@ -72,7 +71,10 @@ Then('shopper fills out billing information', () => {
 });
 
 Then('shopper fills out registered user billing information', () => {
-    checkoutPage.fillPaymentInfoRegistered(data.checkout.phone, data.checkout.ccSecCode);
+    checkoutPage.fillPaymentInfoRegistered(
+        data.checkout.phone,
+        data.checkout.ccSecCode
+    );
 });
 
 Then('shopper places order', () => {
@@ -117,19 +119,29 @@ Then('shopper verifies the order confirmation page', async () => {
     orderHistoryNumber = await I.grabTextFrom('.summary-details.order-number');
 });
 
-Then('shopper goes to profile saved payments page and deletes credit card', () => {
-    I.amOnPage(data.account.accountPage);
-    accountPage.viewAllPayments();
-    accountPage.removePayment(data.account.deletePaymentModalText);
-});
+Then(
+    'shopper goes to profile saved payments page and deletes credit card',
+    () => {
+        I.amOnPage(data.account.accountPage);
+        accountPage.viewAllPayments();
+        accountPage.removePayment(data.account.deletePaymentModalText);
+    }
+);
 
 Then('logs out of the account', () => {
     accountPage.logOut();
 });
 
-Then('shopper is able to fill out the order number, email, and zip code', () => {
-    loginPage.checkOrder(orderHistoryNumber, data.orderHistory.email, data.orderHistory.zip);
-});
+Then(
+    'shopper is able to fill out the order number, email, and zip code',
+    () => {
+        loginPage.checkOrder(
+            orderHistoryNumber,
+            data.orderHistory.email,
+            data.orderHistory.zip
+        );
+    }
+);
 
 Then('shopper is able to click the check status button', () => {
     I.waitForElement(loginPage.locators.primaryButton);

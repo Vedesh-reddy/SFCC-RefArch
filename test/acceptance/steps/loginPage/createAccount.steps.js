@@ -2,12 +2,28 @@
 
 const { I, data, loginPage } = inject();
 
+var generateRandomString = function (length) {
+    var randomString = '';
+    var characters =
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    var counter = 0;
+    while (counter < length) {
+        randomString += characters.charAt(
+            Math.floor(Math.random() * charactersLength)
+        );
+        counter += 1;
+    }
+    return randomString;
+};
+
 Then('shopper is able to click tab to create account', () => {
     I.click(loginPage.locators.createAccount);
 });
 
 Then('shopper is able fill out registration information with new email', () => {
-    loginPage.createAccount(data.login.fName, data.login.lName, data.login.phone, data.login.newRegEmail, data.login.password);
+    var newEmail = data.login.newRegEmail + generateRandomString(8);
+    loginPage.createAccount(data.login.fName, data.login.lName, data.login.phone, newEmail, data.login.password);
 });
 
 Then('shopper is able fill out registration information with existing email', () => {
