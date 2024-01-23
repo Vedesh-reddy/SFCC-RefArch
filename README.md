@@ -110,6 +110,8 @@ There are several NPM scripts available for running the acceptance tests. They a
 
 Tests will generally run on Chrome, Safari, and Firefox.
 
+To run the tests in headless mode, set a HEADLESS environment to true before starting the npm run. ie. `HEADLESS=true && npm run test:acceptance:smoke --profile chrome`
+
 * `test:acceptance:custom` - runs all tests (Note: some tests will fail as the browser size defaults to desktop)
 * `test:acceptance:deep` - runs all storefront tests
 * `test:acceptance:smoke` - runs happy path tests
