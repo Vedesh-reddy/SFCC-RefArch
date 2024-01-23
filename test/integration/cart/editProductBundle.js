@@ -89,7 +89,8 @@ describe('Edit product bundle', function () {
                         },
                         'availability': {
                             'messages': [
-                                'In Stock'
+                                '2 Item(s) in Stock',
+                                '1 item(s) are available for pre-order'
                             ],
                             'inStockDate': null
                         },

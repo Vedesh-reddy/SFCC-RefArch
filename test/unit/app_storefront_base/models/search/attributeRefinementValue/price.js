@@ -54,7 +54,8 @@ describe('PriceAttributeValue model', function () {
             displayValue: 'some display value',
             selected: true,
             title: 'some product title',
-            url: 'relax url'
+            url: 'relax url',
+            seoRefineUrl: 'relax url'
         });
     });
 
@@ -68,7 +69,8 @@ describe('PriceAttributeValue model', function () {
             displayValue: 'some display value',
             selected: false,
             title: 'some product title',
-            url: 'select url'
+            url: 'select url',
+            seoRefineUrl: 'select url'
         });
     });
 });

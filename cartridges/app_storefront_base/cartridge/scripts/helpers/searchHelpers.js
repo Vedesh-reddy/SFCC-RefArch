@@ -290,7 +290,7 @@ function backButtonDetection(clickStream) {
             if (strElementSplit2[0] === 'sz') { szPos = i; }
             if (strElementSplit2[0] === 'start') { startPos = i; }
             paramArray.push(strElementSplit2[0]);
-            valueArray.push(strElementSplit2[1]);
+            valueArray.push(decodeURIComponent(strElementSplit2[1]));
         });
 
         // alter the sz and start parameters

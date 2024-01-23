@@ -57,7 +57,8 @@ describe('PromotionAttributeValue model', function () {
             selected: true,
             selectable: true,
             title: 'some product title',
-            url: 'relax url'
+            url: 'relax url',
+            seoRefineUrl: 'relax url'
         });
     });
 
@@ -72,7 +73,8 @@ describe('PromotionAttributeValue model', function () {
             selected: false,
             selectable: true,
             title: 'some product title',
-            url: 'select url'
+            url: 'select url',
+            seoRefineUrl: 'select url'
         });
     });
 
@@ -88,7 +90,8 @@ describe('PromotionAttributeValue model', function () {
             selected: false,
             selectable: false,
             title: 'some product title',
-            url: '#'
+            url: '#',
+            seoRefineUrl: '#'
         });
     });
 });

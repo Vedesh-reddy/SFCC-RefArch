@@ -11,16 +11,6 @@ var userLoggedIn = require('*/cartridge/scripts/middleware/userLoggedIn');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
- * Checks if the email value entered is correct format
- * @param {string} email - email string to check if valid
- * @returns {boolean} Whether email is valid
- */
-function validateEmail(email) {
-    var regex = /^[\w.%+-]+@[\w.-]+\.[\w]{2,6}$/;
-    return regex.test(email);
-}
-
-/**
  * Account-Show : The Account-Show endpoint will render the shopper's account page. Once a shopper logs in they will see is a dashboard that displays profile, address, payment and order information.
  * @name Base/Account-Show
  * @function
@@ -654,10 +644,11 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
     var Resource = require('dw/web/Resource');
     var URLUtils = require('dw/web/URLUtils');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
+    var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
 
     var email = req.form.loginEmail;
     var errorMsg;
-    var isValid;
+    var isValidEmail;
     var resettingCustomer;
     var mobile = req.querystring.mobile;
     var receivedMsgHeading = Resource.msg('label.resetpasswordreceived', 'login', null);
@@ -665,8 +656,8 @@ server.post('PasswordResetDialogForm', server.middleware.https, function (req, r
     var buttonText = Resource.msg('button.text.loginform', 'login', null);
     var returnUrl = URLUtils.url('Login-Show').toString();
     if (email) {
-        isValid = validateEmail(email);
-        if (isValid) {
+        isValidEmail = emailHelpers.validateEmail(email);
+        if (isValidEmail) {
             resettingCustomer = CustomerMgr.getCustomerByLogin(email);
             if (resettingCustomer) {
                 accountHelpers.sendPasswordResetEmail(email, resettingCustomer);

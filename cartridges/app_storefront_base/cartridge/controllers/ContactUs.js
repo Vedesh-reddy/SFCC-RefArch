@@ -44,11 +44,11 @@ server.get('Landing', server.middleware.https, function (req, res, next) {
 server.post('Subscribe', server.middleware.https, function (req, res, next) {
     var Resource = require('dw/web/Resource');
     var hooksHelper = require('*/cartridge/scripts/helpers/hooks');
-    var emailHelper = require('*/cartridge/scripts/helpers/emailHelpers');
+    var emailHelpers = require('*/cartridge/scripts/helpers/emailHelpers');
 
     var myForm = req.form;
-    var isValidEmailid = emailHelper.validateEmail(myForm.contactEmail);
-    if (isValidEmailid) {
+    var isValidEmail = emailHelpers.validateEmail(myForm.contactEmail);
+    if (isValidEmail) {
         var contactDetails = [myForm.contactFirstName, myForm.contactLastName, myForm.contactEmail, myForm.contactTopic, myForm.contactComment];
         hooksHelper('app.contactUs.subscribe', 'subscribe', contactDetails, function () {});
 

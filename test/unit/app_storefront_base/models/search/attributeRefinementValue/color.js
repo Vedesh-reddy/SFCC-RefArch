@@ -48,7 +48,8 @@ describe('ColorAttributeValue model', function () {
             selectable: true,
             swatchId: 'swatch-circle-prez',
             title: 'some product title',
-            url: 'relax url'
+            url: 'relax url',
+            seoRefineUrl: 'relax url'
         });
     });
 });

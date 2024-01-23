@@ -17,6 +17,9 @@ var PageRenderHelper = require('*/cartridge/experience/utilities/PageRenderHelpe
  */
 module.exports.render = function (context, modelIn) {
     var model = modelIn || new HashMap();
+    // Metadata similar to that used by regular SFRA pages
+    // Similar to /cartridges/modules/server/route.js getPageMetadata
+    model.action = '.'; // Relative URL to the current page
 
     var page = context.page;
     model.page = page;

@@ -21,4 +21,10 @@ describe('emailHelper: Validate Email', function () {
         var result = emailHelpers.validateEmail('JaneSmith@abc');
         assert.isFalse(result);
     });
+
+    it('should return true for email with long domain', function () {
+        // Ref: https://en.wikipedia.org/wiki/List_of_Internet_top-level_domains#I
+        var result = emailHelpers.validateEmail('JaneSmith@abc.international');
+        assert.isTrue(result);
+    });
 });

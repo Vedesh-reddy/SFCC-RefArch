@@ -54,7 +54,7 @@ ImageTransformation.scale = function (metaData, device) {
 function constructTransformationObject(options, transform) {
     var result = transform || {};
     Object.keys(options).forEach(function (element) {
-        if (transformationCapabilities.indexOf(element)) {
+        if (transformationCapabilities.indexOf(element) > -1) {
             result[element] = options[element];
         }
     });
@@ -97,9 +97,9 @@ ImageTransformation.url = function (image, options) {
 ImageTransformation.getScaledImage = function (image) {
     return {
         src: {
-            mobile: ImageTransformation.url(image.file, { device: 'mobile' }),
-            tablet: ImageTransformation.url(image.file, { device: 'tablet' }),
-            desktop: ImageTransformation.url(image.file, { device: 'desktop' })
+            mobile: ImageTransformation.url(image, { device: 'mobile' }),
+            tablet: ImageTransformation.url(image, { device: 'tablet' }),
+            desktop: ImageTransformation.url(image, { device: 'desktop' })
         },
         alt: image.file.getAlt(),
         focalPointX: (image.focalPoint.x * 100) + '%',

@@ -1,7 +1,7 @@
 <ul class="values content">
     <isloop items="${categories}" var="category">
         <li>
-            <button data-href="${category.url}">
+            <button data-href="${category.url}" data-seo-href="${category.seoRefineUrl || category.url}">
                 <!--- Radio button --->
                 <isif condition="${category.selected}">
                     <i class="fa fa-check-circle"></i>

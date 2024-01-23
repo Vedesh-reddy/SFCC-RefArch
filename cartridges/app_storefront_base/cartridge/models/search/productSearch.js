@@ -18,12 +18,14 @@ var DEFAULT_PAGE_SIZE = preferences.defaultPageSize ? preferences.defaultPageSiz
  * @param {Object} httpParams - Query params
  * @param {string} [httpParams.q] - Search keywords
  * @param {string} [httpParams.cgid] - Category ID
+ * @param {string} actionEndpoint - the action endpoint to use
  * @return {string} - URL to reset query to original search
  */
-function getResetLink(search, httpParams) {
+function getResetLink(search, httpParams, actionEndpoint) {
+    var endpoint = actionEndpoint || ACTION_ENDPOINT_AJAX;
     return search.categorySearch
-        ? URLUtils.url(ACTION_ENDPOINT_AJAX, 'cgid', httpParams.cgid)
-        : URLUtils.url(ACTION_ENDPOINT_AJAX, 'q', httpParams.q);
+        ? URLUtils.url(endpoint, 'cgid', httpParams.cgid)
+        : URLUtils.url(endpoint, 'q', httpParams.q);
 }
 
 /**
@@ -205,7 +207,8 @@ function ProductSearch(productSearch, httpParams, sortingRule, sortingOptions, r
     this.isRefinedCategorySearch = productSearch.refinedCategorySearch;
     this.searchKeywords = productSearch.searchPhrase;
 
-    this.resetLink = getResetLink(productSearch, httpParams);
+    this.resetLink = getResetLink(productSearch, httpParams, ACTION_ENDPOINT_AJAX);
+    this.resetLinkSeo = getResetLink(productSearch, httpParams, ACTION_ENDPOINT);
     this.bannerImageUrl = productSearch.category ? searchHelper.getBannerImageUrl(productSearch.category) : null;
     this.productIds = collections.map(paging.pageElements, function (item) {
         return {

@@ -3,6 +3,7 @@
 var Resource = require('dw/web/Resource');
 
 var ACTION_ENDPOINT = 'Search-ShowAjax';
+var SEO_REFINE_ENDPOINT = 'Search-Show';
 
 /**
  * @constructor
@@ -30,6 +31,7 @@ BaseAttributeValue.prototype = {
         this.hitCount = this.refinementValue.hitCount;
         this.selectable = this.refinementValue.hitCount > 0;
         this.actionEndpoint = ACTION_ENDPOINT;
+        this.seoRefineEndpoint = SEO_REFINE_ENDPOINT;
     },
     getDisplayValue: function (refinementValue) {
         return refinementValue.displayValue;
@@ -75,3 +77,4 @@ BaseAttributeValue.prototype = {
 
 module.exports = BaseAttributeValue;
 module.exports.actionEndpoint = ACTION_ENDPOINT;
+module.exports.seoRefineEndpoint = SEO_REFINE_ENDPOINT;

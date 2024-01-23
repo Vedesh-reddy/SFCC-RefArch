@@ -36,6 +36,13 @@ PriceAttributeValue.prototype.initialize = function () {
         this.valueFrom,
         this.valueTo
     );
+    this.seoRefineUrl = this.getUrl(
+        this.productSearch,
+        this.seoRefineEndpoint,
+        this.selected,
+        this.valueFrom,
+        this.valueTo
+    );
     this.title = this.getTitle(
         this.selected,
         this.selectable,
@@ -97,7 +104,8 @@ function PriceRefinementValueWrapper(productSearch, refinementDefinition, refine
         'displayValue',
         'selected',
         'title',
-        'url'
+        'url',
+        'seoRefineUrl'
     ];
     items.forEach(function (item) {
         this[item] = value[item];

@@ -39,6 +39,14 @@ SizeAttributeValue.prototype.initialize = function () {
         this.selected,
         this.selectable
     );
+    this.seoRefineUrl = this.getUrl(
+        this.productSearch,
+        this.seoRefineEndpoint,
+        this.id,
+        this.value,
+        this.selected,
+        this.selectable
+    );
     this.title = this.getTitle(
         this.selected,
         this.selectable,
@@ -70,7 +78,8 @@ function SizeRefinementValueWrapper(productSearch, refinementDefinition, refinem
         'selected',
         'selectable',
         'title',
-        'url'
+        'url',
+        'seoRefineUrl'
     ];
     items.forEach(function (item) {
         this[item] = value[item];

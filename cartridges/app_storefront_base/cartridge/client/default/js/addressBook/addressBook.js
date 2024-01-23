@@ -34,7 +34,7 @@ module.exports = {
             } else {
                 url = $(this).data('url') + '?addressId=' + $(this).data('id');
             }
-            $('.product-to-remove').empty().append($(this).data('id'));
+            $('.product-to-remove').empty().text($(this).data('id'));
         });
     },
 
