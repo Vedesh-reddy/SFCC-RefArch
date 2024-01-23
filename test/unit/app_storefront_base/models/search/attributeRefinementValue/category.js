@@ -52,6 +52,7 @@ describe('CategoryAttributeValue model', function () {
             selectable: true,
             title: 'some product title',
             url: 'category url',
+            seoRefineUrl: 'category url',
             subCategories: []
         });
     });
@@ -73,6 +74,7 @@ describe('CategoryAttributeValue model', function () {
             selectable: true,
             title: 'some product title',
             url: 'category url',
+            seoRefineUrl: 'category url',
             subCategories: []
         });
     });
@@ -88,6 +90,7 @@ describe('CategoryAttributeValue model', function () {
             selectable: true,
             title: 'some product title',
             url: 'category url',
+            seoRefineUrl: 'category url',
             subCategories: []
         });
     });

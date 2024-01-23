@@ -50,7 +50,8 @@ describe('SizeAttributeValue model', function () {
             selected: true,
             selectable: true,
             title: 'some product title',
-            url: 'relax url'
+            url: 'relax url',
+            seoRefineUrl: 'relax url'
         });
     });
 });

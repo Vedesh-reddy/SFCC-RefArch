@@ -188,12 +188,19 @@ module.exports = {
 
                 $.spinner().start();
                 $(this).trigger('search:filter', e);
+
+                var searchUrl = $(this).data('href');
+                var seoUrl = $(this).data('seo-href') || searchUrl;
+                if (seoUrl) {
+                    window.history.pushState({}, null, seoUrl);
+                }
+
                 var attributeId = '#' + $(this).find('span').last().attr('id');
                 $.ajax({
-                    url: $(this).data('href'),
+                    url: searchUrl,
                     data: {
                         page: $('.grid-footer').data('page-number'),
-                        selectedUrl: $(this).data('href')
+                        selectedUrl: searchUrl
                     },
                     method: 'GET',
                     success: function (response) {
@@ -221,6 +228,12 @@ module.exports = {
         $('.container').on('click', '.show-more-content button', function () {
             getContent($(this), $('#content-search-results'));
             $('.show-more-content').remove();
+        });
+    },
+
+    onPopState: function () {
+        $(window).on('popstate', function () {
+            window.location = location.href;
         });
     }
 };

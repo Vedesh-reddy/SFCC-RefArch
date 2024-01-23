@@ -2,7 +2,7 @@
     <isloop items="${pdict.productSearch.selectedFilters}" var="refinement">
         <isif condition="${refinement.type === 'color'}">
             <li class="swatch-filter swatch-filter-${refinement.presentationId}">
-                <button data-href="${refinement.url}" class="btn">
+                <button data-href="${refinement.url}" data-seo-href="${refinement.seoRefineUrl || refinement.url}" class="btn">
                     <span class="sr-only">
                         ${Resource.msgf('assistive.text.remove.filter.button', 'search', null, refinement.title)}
                     </span>
