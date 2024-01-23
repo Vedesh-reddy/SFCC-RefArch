@@ -234,7 +234,7 @@ module.exports = {
 
     onPopState: function () {
         $(window).on('popstate', function () {
-            window.location = location.href;
+            window.location = window.location.href;
         });
     }
 };

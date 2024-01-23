@@ -6,4 +6,4 @@ jobs:
     deploy-build:
         uses: ./.github/workflows/plugin-build.yml
         with:
-            NODE_VERSION: 12.21
+            NODE_VERSION: 18.16
