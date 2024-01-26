@@ -2,6 +2,8 @@
 
 ## 7.0.0 (January 23, 2024)
 
+**BREAKING CHANGE:** SFRA v7.0.0 has been updated to support Node 18
+
 -   Document headless mode for acceptance test [#1372](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1372)
 -   Fix: Update acceptance tests [#1371](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1371)
 -   Fix: Reduce warning messages on npm install [#1370](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1370)
