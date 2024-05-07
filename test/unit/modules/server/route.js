@@ -6,6 +6,7 @@ var Response = proxyquire('../../../../cartridges/modules/server/response', {
 });
 var Route = require('../../../../cartridges/modules/server/route');
 
+
 var sinon = require('sinon');
 var assert = require('chai').assert;
 var mockReq = {
@@ -167,5 +168,41 @@ describe('route', function () {
         assert.equal(req.error.errorText, '');
         assert.equal(req.error.controllerName, '');
         assert.equal(req.error.startNodeName, '');
+    });
+    it('page metadata should set Default-Start as action if path does not contain an action', function() {
+        // in a path, the action is the 5th part
+        // ie. /on/demandware.store/Sites-RefArchGlobal-Site/en_GB/Home-Show
+        var rq = {
+            path: '/on/demandware.store/Sites-RefArchGlobal-Site',
+            querystring: {},
+            locale: 'en_GB'
+        };
+        var resp = new Response({ redirect: function () {}, setHttpHeader: function () {} });
+
+        function tempFunc(req, res, next) { next(); }
+        var route = new Route('test', [tempFunc], rq, resp)
+
+        // page metadata is stored in the response's viewData
+        route.on('route:Complete', function (req, res) {
+            assert.equal(res.viewData.action, 'Default-Start');
+        });
+    });
+    it('page metadata should set action if path contains an action', function() {
+        // in a path, the action is the 5th part
+        // ie. /on/demandware.store/Sites-RefArchGlobal-Site/en_GB/Home-Show
+        var rq = {
+            path: '/on/demandware.store/Sites-RefArchGlobal-Site/en_GB/Home-Show',
+            querystring: {},
+            locale: 'en_GB'
+        };
+        var resp = new Response({ redirect: function () {}, setHttpHeader: function () {} });
+
+        function tempFunc(req, res, next) { next(); }
+        var route = new Route('test', [tempFunc], rq, resp)
+
+        // page metadata is stored in the response's viewData
+        route.on('route:Complete', function (req, res) {
+            assert.equal(res.viewData.action, 'Home-Show');
+        });
     });
 });
