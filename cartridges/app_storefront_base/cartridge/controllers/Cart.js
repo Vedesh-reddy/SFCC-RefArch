@@ -359,48 +359,8 @@ server.get('UpdateQuantity', function (req, res, next) {
     var matchingLineItem = collections.find(productLineItems, function (item) {
         return item.productID === productId && item.UUID === uuid;
     });
-    var availableToSell = 0;
-
-    var totalQtyRequested = 0;
-    var qtyAlreadyInCart = 0;
-    var minOrderQuantity = 0;
-    var perpetual = false;
-    var canBeUpdated = false;
-    var bundleItems;
     var bonusDiscountLineItemCount = currentBasket.bonusDiscountLineItems.length;
-
-    if (matchingLineItem) {
-        if (matchingLineItem.product.bundle) {
-            bundleItems = matchingLineItem.bundledProductLineItems;
-            canBeUpdated = collections.every(bundleItems, function (item) {
-                var quantityToUpdate = updateQuantity
-                    * matchingLineItem.product.getBundledProductQuantity(item.product).value;
-                qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
-                    item.productID,
-                    productLineItems,
-                    item.UUID
-                );
-                totalQtyRequested = quantityToUpdate + qtyAlreadyInCart;
-                availableToSell = item.product.availabilityModel.inventoryRecord.ATS.value;
-                perpetual = item.product.availabilityModel.inventoryRecord.perpetual;
-                minOrderQuantity = item.product.minOrderQuantity.value;
-                return (totalQtyRequested <= availableToSell || perpetual)
-                    && (quantityToUpdate >= minOrderQuantity);
-            });
-        } else {
-            availableToSell = matchingLineItem.product.availabilityModel.inventoryRecord.ATS.value;
-            perpetual = matchingLineItem.product.availabilityModel.inventoryRecord.perpetual;
-            qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
-                productId,
-                productLineItems,
-                matchingLineItem.UUID
-            );
-            totalQtyRequested = updateQuantity + qtyAlreadyInCart;
-            minOrderQuantity = matchingLineItem.product.minOrderQuantity.value;
-            canBeUpdated = (totalQtyRequested <= availableToSell || perpetual)
-                && (updateQuantity >= minOrderQuantity);
-        }
-    }
+    var canBeUpdated = cartHelper.checkPliCanBeUpdated(matchingLineItem.product, updateQuantity, matchingLineItem, productLineItems);
 
     if (canBeUpdated) {
         Transaction.wrap(function () {
@@ -972,50 +932,11 @@ server.post('EditProductLineItem', function (req, res, next) {
         return false;
     });
 
-    var availableToSell = 0;
-    var totalQtyRequested = 0;
-    var qtyAlreadyInCart = 0;
-    var minOrderQuantity = 0;
-    var canBeUpdated = false;
-    var perpetual = false;
-    var bundleItems;
-
-    if (requestLineItem) {
-        if (requestLineItem.product.bundle) {
-            bundleItems = requestLineItem.bundledProductLineItems;
-            canBeUpdated = collections.every(bundleItems, function (item) {
-                var quantityToUpdate = updateQuantity
-                    * requestLineItem.product.getBundledProductQuantity(item.product).value;
-                qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
-                    item.productID,
-                    productLineItems,
-                    item.UUID
-                );
-                totalQtyRequested = quantityToUpdate + qtyAlreadyInCart;
-                availableToSell = item.product.availabilityModel.inventoryRecord.ATS.value;
-                perpetual = item.product.availabilityModel.inventoryRecord.perpetual;
-                minOrderQuantity = item.product.minOrderQuantity.value;
-                return (totalQtyRequested <= availableToSell || perpetual)
-                    && (quantityToUpdate >= minOrderQuantity);
-            });
-        } else {
-            availableToSell = requestLineItem.product.availabilityModel.inventoryRecord.ATS.value;
-            perpetual = requestLineItem.product.availabilityModel.inventoryRecord.perpetual;
-            qtyAlreadyInCart = cartHelper.getQtyAlreadyInCart(
-                productId,
-                productLineItems,
-                requestLineItem.UUID
-            );
-            totalQtyRequested = updateQuantity + qtyAlreadyInCart;
-            minOrderQuantity = requestLineItem.product.minOrderQuantity.value;
-            canBeUpdated = (totalQtyRequested <= availableToSell || perpetual)
-                && (updateQuantity >= minOrderQuantity);
-        }
-    }
+    var product = ProductMgr.getProduct(productId);
+    var canBeUpdated = cartHelper.checkPliCanBeUpdated(product, updateQuantity, requestLineItem, productLineItems);
 
     var error = false;
     if (canBeUpdated) {
-        var product = ProductMgr.getProduct(productId);
         try {
             Transaction.wrap(function () {
                 if (newPidAlreadyExist) {
