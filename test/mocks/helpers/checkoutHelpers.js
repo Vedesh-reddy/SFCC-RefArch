@@ -24,6 +24,7 @@ var transaction = {
         return callBack.call();
     },
     begin: function () {},
+    rollback: function () {},
     commit: function () {}
 };
 
