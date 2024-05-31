@@ -7,7 +7,6 @@ Storefront Reference Architecture supplies an [plugin_applepay](https://github.c
 
 Your feedback on the ease-of-use and limitations of this new architecture is invaluable during the developer preview. Particularly, feedback on any issues you encounter or workarounds you develop for efficiently customizing the base cartridge without editing it directly.
 
-
 # The latest version
 
 The latest version of SFRA is 7.0.0
@@ -21,6 +20,7 @@ The latest version of SFRA is 7.0.0
 3. Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
 
 4. Create `dw.json` file in the root of the project. Providing a [WebDAV access key from BM](https://documentation.b2c.commercecloud.salesforce.com/DOC1/index.jsp?topic=%2Fcom.demandware.dochelp%2Fcontent%2Fb2c_commerce%2Ftopics%2Fadmin%2Fb2c_access_keys_for_business_manager.html) in the `password` field is optional, as you will be prompted if it is not provided.
+
 ```json
 {
     "hostname": "your-sandbox-hostname.demandware.net",
@@ -34,20 +34,21 @@ The latest version of SFRA is 7.0.0
 
 6. Use https://github.com/SalesforceCommerceCloud/storefrontdata to zip and import site data on your sandbox.
 
-7. Add the `app_storefront_base` cartridge to your cartridge path in _Administration >  Sites >  Manage Sites > RefArch - Settings_ (Note: This should already be populated by the sample data in Step 6).
+7. Add the `app_storefront_base` cartridge to your cartridge path in _Administration > Sites > Manage Sites > RefArch - Settings_ (Note: This should already be populated by the sample data in Step 6).
 
 8. You should now be ready to navigate to and use your site.
 
 # NPM scripts
+
 Use the provided NPM scripts to compile and upload changes to your Sandbox.
 
 ## Compiling your application
 
-* `npm run compile:scss` - Compiles all .scss files into CSS.
-* `npm run compile:js` - Compiles all .js files and aggregates them.
-* `npm run compile:fonts` - Copies all needed font files. Usually, this only has to be run once.
+-   `npm run compile:scss` - Compiles all .scss files into CSS.
+-   `npm run compile:js` - Compiles all .js files and aggregates them.
+-   `npm run compile:fonts` - Copies all needed font files. Usually, this only has to be run once.
 
- If you are having an issue compiling scss files, try running 'npm rebuild node-sass' from within your local repo.
+If you are having an issue compiling scss files, try running 'npm rebuild node-sass' from within your local repo.
 
 ## Linting your code
 
@@ -64,17 +65,20 @@ Use the provided NPM scripts to compile and upload changes to your Sandbox.
 `npm run upload <filepath>` - Will upload a given file to the server. Requires a valid `dw.json` file.
 
 # Testing
+
 ## Running unit tests
 
 You can run `npm test` to execute all unit tests in the project. Run `npm run cover` to get coverage information. Coverage will be available in `coverage` folder under root directory.
 
-* UNIT test code coverage:
+-   UNIT test code coverage:
+
 1. Open a terminal and navigate to the root directory of the mfsg repository.
 2. Enter the command: `npm run cover`.
 3. Examine the report that is generated. For example: `Writing coverage reports at [/Users/yourusername/SCC/sfra/coverage]`
-3. Navigate to this directory on your local machine, open up the index.html file. This file contains a detailed report.
+4. Navigate to this directory on your local machine, open up the index.html file. This file contains a detailed report.
 
 ## Running integration tests
+
 Integration tests are located in the `storefront-reference-architecture/test/integration` directory.
 
 To run integration tests you can use the following command:
@@ -85,9 +89,12 @@ npm run test:integration
 
 **Note:** Please note that short form of this command will try to locate URL of your sandbox by reading `dw.json` file in the root directory of your project. If you don't have `dw.json` file, integration tests will fail.
 sample `dw.json` file (this file needs to be in the root of your project)
+
+```json
 {
     "hostname": "devxx-sitegenesis-dw.demandware.net"
 }
+```
 
 You can also supply URL of the sandbox on the command line:
 
@@ -102,6 +109,7 @@ npm run test:integration -- --baseUrl devxx-sitegenesis-dw.demandware.net
 Acceptance tests are located in the `storefront-reference-architecture/test/acceptance` directory.
 
 The acceptance tests will run against the site specified in the hostname property of `dw.json`. ie. To run the tests on `abcd-123.dx.commercecloud.salesforce.com`, in your dw.json set the following:
+
 ```
 "hostname": "abcd-123.dx.commercecloud.salesforce.com"
 ```
@@ -112,17 +120,21 @@ Tests will generally run on Chrome, Safari, and Firefox.
 
 To run the tests in headless mode, set a HEADLESS environment to true before starting the npm run. ie. `HEADLESS=true && npm run test:acceptance:smoke --profile chrome`
 
-* `test:acceptance:custom` - runs all tests (Note: some tests will fail as the browser size defaults to desktop)
-* `test:acceptance:deep` - runs all storefront tests
-* `test:acceptance:smoke` - runs happy path tests
-* `test:acceptance:pagedesigner` - runs page designer tests
-* `test:acceptance:desktop` - runs storefront desktop tests
-* `test:acceptance:mobile` - runs storefront mobile tests
-* `test:acceptance:tablet` - runs storefront tablet tests
+-   `test:acceptance:custom` - runs all tests (Note: some tests will fail as the browser size defaults to desktop)
+-   `test:acceptance:deep` - runs all storefront tests
+-   `test:acceptance:smoke` - runs happy path tests
+-   `test:acceptance:pagedesigner` - runs page designer tests
+-   `test:acceptance:desktop` - runs storefront desktop tests
+-   `test:acceptance:mobile` - runs storefront mobile tests
+-   `test:acceptance:tablet` - runs storefront tablet tests
 
-**Note:** Selenium can be finicky to start. If the tests fail to start, simply rerun the command again until the tests start.
+### Notes
+
+-   Selenium can be finicky to start. If the tests fail to start, simply rerun the command again until the tests start.
+-   If you see version compatibility issues between browser and the driver, try configuring specific version of the driver in the [codecept config file](./codecept.conf.js). See the resolved [github issue](https://github.com/codeceptjs/CodeceptJS/issues/2885) for details.
 
 # [Contributing to SFRA](./CONTRIBUTING.md)
 
 # Page Designer Components for Storefront Reference Architecture
+
 See: [Page Designer Components](./page-designer-components.md)
