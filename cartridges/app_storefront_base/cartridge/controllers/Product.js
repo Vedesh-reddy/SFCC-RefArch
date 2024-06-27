@@ -249,7 +249,7 @@ server.get('ShowBonusProducts', function (req, res, next) {
     var duuid = req.querystring.DUUID;
     var collections = require('*/cartridge/scripts/util/collections');
     var BasketMgr = require('dw/order/BasketMgr');
-    var currentBasket = BasketMgr.getCurrentOrNewBasket();
+    var currentBasket = BasketMgr.getCurrentBasket();
     var showMoreButton;
     var selectedBonusProducts;
 

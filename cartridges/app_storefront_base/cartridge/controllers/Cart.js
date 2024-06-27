@@ -770,7 +770,7 @@ server.get('EditBonusProduct', function (req, res, next) {
     var collections = require('*/cartridge/scripts/util/collections');
     var Resource = require('dw/web/Resource');
     var URLUtils = require('dw/web/URLUtils');
-    var currentBasket = BasketMgr.getCurrentOrNewBasket();
+    var currentBasket = BasketMgr.getCurrentBasket();
     var duuid = req.querystring.duuid;
     var bonusDiscountLineItem = collections.find(currentBasket.getBonusDiscountLineItems(), function (item) {
         return item.UUID === duuid;
