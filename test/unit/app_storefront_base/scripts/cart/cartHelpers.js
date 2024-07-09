@@ -20,6 +20,7 @@ var availabilityModelMock = {
 };
 
 var productLineItemMock = {
+    UUID: 'uniqueUUID',
     productID: 'someProductID',
     quantity: {
         value: 1
@@ -187,7 +188,9 @@ describe('cartHelpers', function () {
 
     it('should not add a product to the cart when ATS is already in cart', function () {
         var currentBasket = createApiBasket(true);
+        // TODO: restore productLineItemMock after test case run
         currentBasket.productLineItems.toArray()[0].quantity.value = 3;
+        currentBasket.productLineItems.toArray()[0].quantityValue = 3;
 
         var result = cartHelpers.addProductToCart(currentBasket, 'someProductID', 3, [], mockOptions);
         assert.isTrue(result.error);
@@ -303,6 +306,90 @@ describe('cartHelpers', function () {
             var resultError = true;
             var result = cartHelpers.getReportingUrlAddToCart(currentBasket, resultError);
             assert.equal(result, false);
+        });
+    });
+
+    describe('checkPliCanBeUpdated() function', function () {
+        var newProductMock = {
+            ID: 'someUniqueProductID',
+            availabilityModel: availabilityModelMock,
+            minOrderQuantity: {
+                value: 1
+            }
+        };
+        var existingProductMock = {
+            ID: productLineItemMock.productID,
+            availabilityModel: availabilityModelMock,
+            minOrderQuantity: {
+                value: 1
+            }
+        };
+        var bundleProductMock = {
+            bundle: true,
+            bundledProducts: new ArrayList([existingProductMock])
+        };
+        var anotherProductLineItemMock = {
+            UUID: 'anotherUniqueUUID',
+            productID: 'someProductID',
+            quantityValue: 2,
+            product: {
+                availabilityModel: availabilityModelMock
+            },
+            bundledProductLineItems: new ArrayList([])
+        };
+        var bundleProductLineItemMock = {
+            product: {
+                availabilityModel: availabilityModelMock
+            },
+            bundledProductLineItems: new ArrayList([productLineItemMock])
+        };
+        var anotherBundleProductLineItemMock = {
+            product: {
+                availabilityModel: availabilityModelMock
+            },
+            bundledProductLineItems: new ArrayList([anotherProductLineItemMock])
+        };
+
+        it('should return true for a new product with enough stock', function () {
+            var updateQuantity = Math.max(availabilityModelMock.inventoryRecord.ATS.value, 1);
+            var result = cartHelpers.checkPliCanBeUpdated(newProductMock, updateQuantity, productLineItemMock, new ArrayList([productLineItemMock]));
+            assert.isTrue(result);
+        });
+
+        it('should return false for a new product with not enough stock', function () {
+            var updateQuantity = availabilityModelMock.inventoryRecord.ATS.value + 1;
+            var result = cartHelpers.checkPliCanBeUpdated(newProductMock, updateQuantity, productLineItemMock, new ArrayList([productLineItemMock]));
+            assert.isFalse(result);
+        });
+
+        it('should return true for existing product with enough stock', function () {
+            var updateQuantity = Math.max(availabilityModelMock.inventoryRecord.ATS.value, 1);
+            var result = cartHelpers.checkPliCanBeUpdated(existingProductMock, updateQuantity, productLineItemMock, new ArrayList([productLineItemMock]));
+            assert.isTrue(result);
+        });
+
+        it('should return false for existing product with not enough stock', function () {
+            var updateQuantity = availabilityModelMock.inventoryRecord.ATS.value + 1;
+            var result = cartHelpers.checkPliCanBeUpdated(existingProductMock, updateQuantity, productLineItemMock, new ArrayList([productLineItemMock]));
+            assert.isFalse(result);
+        });
+
+        it('should return false for existing product with not enough stock combined with other PLIs of the same product', function () {
+            var updateQuantity = Math.max((availabilityModelMock.inventoryRecord.ATS.value - anotherProductLineItemMock.quantityValue) + 1, 1);
+            var result = cartHelpers.checkPliCanBeUpdated(existingProductMock, updateQuantity, productLineItemMock, new ArrayList([productLineItemMock, anotherProductLineItemMock]));
+            assert.isFalse(result);
+        });
+
+        it('should return true for existing bundle product with enough stock combined with other PLIs of the same bundle product', function () {
+            var updateQuantity = 1;
+            var result = cartHelpers.checkPliCanBeUpdated(bundleProductMock, updateQuantity, bundleProductLineItemMock, new ArrayList([bundleProductLineItemMock, anotherBundleProductLineItemMock]));
+            assert.isTrue(result);
+        });
+
+        it('should return false for existing bundle product with not enough stock combined with other PLIs of the same bundle product', function () {
+            var updateQuantity = Math.max((availabilityModelMock.inventoryRecord.ATS.value - anotherProductLineItemMock.quantityValue) + 1, 1);
+            var result = cartHelpers.checkPliCanBeUpdated(bundleProductMock, updateQuantity, bundleProductLineItemMock, new ArrayList([bundleProductLineItemMock, anotherBundleProductLineItemMock]));
+            assert.isFalse(result);
         });
     });
 });

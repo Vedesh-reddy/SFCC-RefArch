@@ -202,7 +202,7 @@ server.get('OAuthReentry', server.middleware.https, consentTracking.consent, fun
         return next();
     }
 
-    var userID = externalProfile.id || externalProfile.uid;
+    var userID = externalProfile.id || externalProfile.uid || externalProfile.user_id;
     if (!userID) {
         res.render('/error', {
             message: Resource.msg('error.oauth.login.failure', 'login', null)

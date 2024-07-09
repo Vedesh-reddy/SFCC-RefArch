@@ -10,7 +10,15 @@ function getPageMetadata(req) {
     var pageMetadata = {};
     var action = req.path.split('/');
 
-    pageMetadata.action = action[action.length - 1];
+    // in a path, the action is the 5th part
+    // ie. /on/demandware.store/Sites-RefArchGlobal-Site/en_GB/Home-Show
+    var hasExplicitAction = action.length >= 5
+    if (!hasExplicitAction) {
+        pageMetadata.action = 'Default-Start';
+    } else {
+        pageMetadata.action = action[action.length - 1];
+    }
+
     pageMetadata.queryString = req.querystring.toString();
     pageMetadata.locale = req.locale.id;
 

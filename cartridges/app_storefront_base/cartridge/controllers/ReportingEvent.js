@@ -31,7 +31,7 @@ server.get('Start', function (req, res, next) {
  */
 server.get('MiniCart', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
-    var currentBasket = BasketMgr.getCurrentOrNewBasket();
+    var currentBasket = BasketMgr.getCurrentBasket();
     var reportingUrlsHelper = require('*/cartridge/scripts/reportingUrls');
     var reportingURLs;
     if (currentBasket && currentBasket.allLineItems.length) {

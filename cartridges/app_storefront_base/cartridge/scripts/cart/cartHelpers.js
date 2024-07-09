@@ -225,6 +225,50 @@ function getQtyAlreadyInCart(productId, lineItems, uuid) {
 }
 
 /**
+ * Checks if a product has enough stock in context of existing product line items
+ * @param {dw.catalog.Product} product - Target product
+ * @param {number} updateQuantity - Target quantity
+ * @param {string} matchingLineItemUUID - Product line item UUID to be updated
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Existing product line items
+ * @returns {boolean} - Whether the product has enough stock to be updated
+ */
+function checkInventoryIsEnough(product, updateQuantity, matchingLineItemUUID, productLineItems) {
+    // TODO: check inventory record existence
+    var inventoryRecord = product.availabilityModel.inventoryRecord;
+    var availableToSell = inventoryRecord.ATS.value;
+    var isPerpetual = !!inventoryRecord.perpetual;
+    var qtyAlreadyInCart = getQtyAlreadyInCart(product.ID, productLineItems, matchingLineItemUUID);
+    var totalQtyRequested = updateQuantity + qtyAlreadyInCart;
+    var minOrderQuantity = product.minOrderQuantity.value;
+
+    return (totalQtyRequested <= availableToSell || isPerpetual) &&
+        (updateQuantity >= minOrderQuantity);
+}
+
+/**
+ * Checks if target product has enough stock to be updated in a given product line item
+ * @param {dw.catalog.Product} product - Target product
+ * @param {number} updateQuantity - Target quantity
+ * @param {dw.order.ProductLineItem} matchingLineItem - Product line item to be updated
+ * @param {dw.util.Collection<dw.order.ProductLineItem>} productLineItems - Existing product line items
+ * @returns {boolean} - Whether the product line item can be updated
+ */
+function checkPliCanBeUpdated(product, updateQuantity, matchingLineItem, productLineItems) {
+    if (!product || !matchingLineItem) return false;
+
+    if (!product.bundle) return checkInventoryIsEnough(product, updateQuantity, matchingLineItem.UUID, productLineItems);
+
+    var pliUUIDsByProductIDs = collections.reduce(matchingLineItem.bundledProductLineItems, function (result, item) {
+        result[item.productID] = item.UUID; // eslint-disable-line no-param-reassign
+        return result;
+    }, {});
+    // TODO: check own bundle inventory record instead if exists
+    return collections.every(product.bundledProducts, function (bundledProduct) {
+        return checkInventoryIsEnough(bundledProduct, updateQuantity, pliUUIDsByProductIDs[bundledProduct.ID], productLineItems);
+    });
+}
+
+/**
  * Find all line items that contain the product specified.  A product can appear in different line
  * items that have different option selections or in product bundles.
  *
@@ -434,6 +478,7 @@ module.exports = {
     checkBundledProductCanBeAdded: checkBundledProductCanBeAdded,
     ensureAllShipmentsHaveMethods: ensureAllShipmentsHaveMethods,
     getQtyAlreadyInCart: getQtyAlreadyInCart,
+    checkPliCanBeUpdated: checkPliCanBeUpdated,
     getNewBonusDiscountLineItem: getNewBonusDiscountLineItem,
     getExistingProductLineItemInCart: getExistingProductLineItemInCart,
     getExistingProductLineItemsInCart: getExistingProductLineItemsInCart,

@@ -10,6 +10,7 @@
 function updateDom($results, selector) {
     var $updates = $results.find(selector);
     $(selector).empty().html($updates.html());
+    $('body').trigger('search:updateDom', selector);
 }
 
 /**
@@ -143,6 +144,7 @@ module.exports = {
                 method: 'GET',
                 success: function (response) {
                     $('.product-grid').empty().html(response);
+                    $('body').trigger('search:updateDom', '.product-grid');
                     $.spinner().stop();
                 },
                 error: function () {
@@ -167,6 +169,7 @@ module.exports = {
                 method: 'GET',
                 success: function (response) {
                     $('.grid-footer').replaceWith(response);
+                    $('body').trigger('search:updateDom', '.grid-footer');
                     updateSortOptions(response);
                     $.spinner().stop();
                 },

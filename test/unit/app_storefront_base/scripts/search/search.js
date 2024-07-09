@@ -49,8 +49,8 @@ describe('search script', function () {
         var mockSortingRule = 'rule3';
 
         var mockParameterMap = {
-            pmin: { doubleValue: 10 },
-            pmax: { doubleValue: 100 }
+            pmin: { doubleValue: 10, submitted: true },
+            pmax: { doubleValue: 100, submitted: true }
         };
 
         var spySetSearchPhrase = sinon.spy(mockProductSearch, 'setSearchPhrase');

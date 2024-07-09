@@ -624,6 +624,7 @@ function placeOrder(order, fraudDetectionStatus) {
         order.setExportStatus(Order.EXPORT_STATUS_READY);
         Transaction.commit();
     } catch (e) {
+        Transaction.rollback();
         Transaction.wrap(function () { OrderMgr.failOrder(order, true); });
         result.error = true;
     }

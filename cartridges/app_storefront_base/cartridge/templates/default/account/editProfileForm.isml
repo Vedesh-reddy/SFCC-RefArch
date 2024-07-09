@@ -71,6 +71,8 @@
                 data-heading="${Resource.msg('heading.consentTracking.track.consent', 'common', null)}"
                 data-tokenName="${pdict.csrf.tokenName}"
                 data-token="${pdict.csrf.token}"
+                tabindex="0"
+                role="link"
             >
                 ${Resource.msg('link.tracking.consent','account',null)}
             </button>
