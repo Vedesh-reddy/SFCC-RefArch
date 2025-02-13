@@ -1,5 +1,8 @@
 # Changelog
 
+## 7.0.2-dev
+- Fix acceptance tests [#1396](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1396)
+
 ## 7.0.1(July 8, 2024)
 
 -   Cleanup: Use getCurrentBasket instead of getCurrentOrNewBasket when we are not adding an item [#1383](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1383)

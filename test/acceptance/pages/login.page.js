@@ -73,7 +73,7 @@ module.exports = {
     verifyPasswordReset() {
         I.waitForElement(this.locators.submitEmailBtn);
         I.click(this.locators.submitEmailBtn);
-        I.waitForElement(this.locators.verifyPasswordModal);
+        I.wait(1); // We wait to give the password modal time to rerender after submitting the email
         I.see(
             'Request to Reset Your Password',
             this.locators.verifyPasswordModal

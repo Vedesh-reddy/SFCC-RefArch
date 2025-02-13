@@ -111,6 +111,7 @@ module.exports = {
 
         let locatorProduct = locate(this.locators.filterPDP).first();
         I.waitForElement(locatorProduct);
+        I.scrollTo(locatorProduct);
         I.see(firstProductName, locatorProduct);
     },
     clickMoreButton() {
@@ -128,6 +129,7 @@ module.exports = {
         I.waitNumberOfVisibleElements(this.locators.firstProductTile, 24);
     },
     verifyProductTotals(totalItems) {
+        I.wait(2)
         let locator = locate(this.locators.productTotals).find(
             this.locators.filterPrice
         );

@@ -36,6 +36,7 @@ Then('shopper is able to click the create account button', () => {
 });
 
 Then('shopper sees a username is invalid error', () => {
+    I.wait(1)
     I.see(data.login.registrationError);
 });
 

@@ -120,7 +120,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'value': 0
             },
             'discounts': [],
-            'discountsHtml': '\n'
+            'discountsHtml': ''
         };
 
         var shipMethodId = '003'; // 003 = Overnight
@@ -155,7 +155,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'value': 0
             },
             'discounts': [],
-            'discountsHtml': '\n'
+            'discountsHtml': ''
         };
 
         var shipMethodId = '001'; // 001 = Ground
@@ -188,7 +188,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'value': 0
             },
             'discounts': [],
-            'discountsHtml': '\n'
+            'discountsHtml': ''
         };
 
         var shipMethodId = '002'; // 002 = 2-Day Express
@@ -222,7 +222,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'value': 0
             },
             'discounts': [],
-            'discountsHtml': '\n'
+            'discountsHtml': ''
         };
 
         var shipMethodId = '005'; // 005 = Store Pickup
@@ -256,7 +256,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'value': 0
             },
             'discounts': [],
-            'discountsHtml': '\n'
+            'discountsHtml': ''
         };
 
         var shipMethodId = '012'; // 012 = Express
@@ -290,7 +290,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'value': 0
             },
             'discounts': [],
-            'discountsHtml': '\n'
+            'discountsHtml': ''
         };
 
         var shipMethodId = '021'; // 021 = USPS
@@ -324,7 +324,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'value': 0
             },
             'discounts': [],
-            'discountsHtml': '\n'
+            'discountsHtml': ''
         };
 
         var shipMethodId = '004'; // 004 = Super Saver, has excluded Products
@@ -359,7 +359,7 @@ describe('Cart: Selecting Shipping Methods', function () {
                 'value': 0
             },
             'discounts': [],
-            'discountsHtml': '\n'
+            'discountsHtml': ''
         };
 
         var shipMethodId = '9999';

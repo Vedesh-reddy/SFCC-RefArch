@@ -49,7 +49,8 @@ function parseResults(response) {
         '.header.page-title',
         '.product-grid',
         '.show-more',
-        '.filter-bar'
+        '.filter-bar',
+        '.search-sort'
     ].forEach(function (selector) {
         updateDom($results, selector);
     });
@@ -143,8 +144,7 @@ module.exports = {
                 data: { selectedUrl: this.value },
                 method: 'GET',
                 success: function (response) {
-                    $('.product-grid').empty().html(response);
-                    $('body').trigger('search:updateDom', '.product-grid');
+                    parseResults(response)
                     $.spinner().stop();
                 },
                 error: function () {
