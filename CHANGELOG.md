@@ -1,6 +1,8 @@
 # Changelog
 
 ## 7.0.2-dev
+
+- Bump sgmf-scripts dependency version to 3.1.0 [#1419](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1419)
 - Fix acceptance tests [#1396](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1396)
 
 ## 7.0.1(July 8, 2024)
