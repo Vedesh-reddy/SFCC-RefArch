@@ -6,16 +6,59 @@ on:
             NODE_VERSION:
                 required: true
                 type: string
+            SFRA_BRANCH:
+                required: false
+                type: string
+                default: integration
+                description: 'Branch of storefront-reference-architecture to checkout'
+        secrets:
+            GH_TOKEN:
+                required: true
+                description: 'GitHub Personal Access Token (PAT) with repo scope to access private SFRA repository. The default GITHUB_TOKEN cannot access other private repos.'
 
 jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            - uses: actions/checkout@v3
+            - name: Checkout plugin repository
+              uses: actions/checkout@v3
+              with:
+                  path: plugin
+            # SFRA is required for compilation: Plugin cartridges reference utility functions
+            # and modules from the base storefront-reference-architecture. The webpack build
+            # process needs SFRA present to resolve these dependencies and bundle them into
+            # the plugin cartridge output.
+            # -----------
+            # Authentication: A Personal Access Token (PAT) is required because the default
+            # GITHUB_TOKEN is scoped only to the repository where the workflow runs. It cannot
+            # access other private repositories, even within the same organization. The PAT
+            # must have 'repo' scope to clone private repositories.
+            # -----------
+            # Shallow clone (fetch-depth: 1) fetches only the latest commit without git history
+            # This significantly speeds up checkout time and reduces disk usage in CI
+            - name: Checkout storefront-reference-architecture
+              uses: actions/checkout@v3
+              with:
+                  repository: SalesforceCommerceCloud/storefront-reference-architecture
+                  ref: ${{ inputs.SFRA_BRANCH }}
+                  path: storefront-reference-architecture
+                  token: ${{ secrets.GH_TOKEN }}
+                  fetch-depth: 1
             - uses: actions/setup-node@v3
               with:
                   node-version: ${{ inputs.NODE_VERSION }}
-            - run: npm install
-            - run: npm run lint
-            - run: npm run compile:js
-            - run: npm run compile:scss
+            - name: Install SFRA dependencies
+              working-directory: storefront-reference-architecture
+              run: npm ci
+            - name: Install plugin dependencies
+              working-directory: plugin
+              run: npm install
+            - name: Lint
+              working-directory: plugin
+              run: npm run lint
+            - name: Compile JS
+              working-directory: plugin
+              run: npm run compile:js
+            - name: Compile SCSS
+              working-directory: plugin
+              run: npm run compile:scss
