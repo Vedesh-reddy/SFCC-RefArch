@@ -7,3 +7,5 @@ jobs:
         uses: ./.github/workflows/plugin-build.yml
         with:
             NODE_VERSION: 18.16
+        secrets:
+            GH_TOKEN: ${{ secrets.SFRA_ACCESS_TOKEN }}
