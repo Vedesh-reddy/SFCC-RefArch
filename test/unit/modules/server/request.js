@@ -37,7 +37,15 @@ var Request = proxyquire('../../../../cartridges/modules/server/request', {
         }, {
             'id': 'it_IT',
             'currencyCode': 'EUR'
-        }]
+        }],
+    'dw/system/Logger': {
+        warn: function (text) {
+            return text;
+        },
+        error: function (text) {
+            return text;
+        }
+    }
 });
 
 var session = {
@@ -510,5 +518,269 @@ describe('request', function () {
         fakeRequest.pageMetaData.addPageMetaTags([{ title: true, content: 'TestTitle' }]);
         var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
         assert.deepEqual(req.pageMetaData.pageMetaTags, [{ title: true, content: 'TestTitle' }]);
+    });
+    describe('Caching behavior', function () {
+        it('should cache querystring object on first access', function () {
+            var fakeRequest = createFakeRequest({ httpQueryString: 'id=22&name=foo' });
+            var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+
+            // First access
+            var querystring1 = req.querystring;
+            // Second access
+            var querystring2 = req.querystring;
+            // Third access
+            var querystring3 = req.querystring;
+
+            // All should be the same object reference (cached)
+            assert.strictEqual(querystring1, querystring2, 'First and second querystring should be the same object');
+            assert.strictEqual(querystring2, querystring3, 'Second and third querystring should be the same object');
+            assert.strictEqual(querystring1, querystring3, 'First and third querystring should be the same object');
+
+            // Values should be consistent
+            assert.equal(querystring1.id, 22);
+            assert.equal(querystring2.id, 22);
+            assert.equal(querystring3.id, 22);
+            assert.equal(querystring1.name, 'foo');
+            assert.equal(querystring2.name, 'foo');
+            assert.equal(querystring3.name, 'foo');
+        });
+
+        it('should cache form data on first access', function () {
+            var items = {
+                one: { rawValue: 1 },
+                two: { rawValue: 2 },
+                three: { rawValue: 3 }
+            };
+            var httpParamMap = {
+                parameterNames: {
+                    iterator: function () {
+                        var index = 0;
+                        return {
+                            hasNext: function () {
+                                return index < Object.keys(items).length;
+                            },
+                            next: function () {
+                                var value = Object.keys(items)[index];
+                                index++;
+                                return value;
+                            }
+                        };
+                    },
+                    length: Object.keys(items).length
+                },
+                get: function (name) {
+                    return items[name];
+                }
+            };
+            var fakeRequest = createFakeRequest({ 
+                httpParameterMap: httpParamMap, 
+                httpQueryString: '' 
+            });
+            var req = new Request(fakeRequest, null, createFakeRequest().session);
+
+            // First access
+            var form1 = req.form;
+            // Second access
+            var form2 = req.form;
+            // Third access
+            var form3 = req.form;
+
+            // All should be the same object reference (cached)
+            assert.strictEqual(form1, form2, 'First and second form should be the same object');
+            assert.strictEqual(form2, form3, 'Second and third form should be the same object');
+            assert.strictEqual(form1, form3, 'First and third form should be the same object');
+
+            // Values should be consistent
+            assert.equal(form1.one, 1);
+            assert.equal(form2.one, 1);
+            assert.equal(form3.one, 1);
+            assert.equal(form1.two, 2);
+            assert.equal(form2.two, 2);
+            assert.equal(form3.two, 2);
+        });
+
+        it('should maintain separate cache instances for different Request objects', function () {
+            var fakeRequest1 = createFakeRequest({ httpQueryString: 'id=1' });
+            var fakeRequest2 = createFakeRequest({ httpQueryString: 'id=2' });
+
+            var req1 = new Request(fakeRequest1, createFakeRequest().customer, createFakeRequest().session);
+            var req2 = new Request(fakeRequest2, createFakeRequest().customer, createFakeRequest().session);
+
+            // Each request should have its own cached querystring
+            assert.notStrictEqual(req1.querystring, req2.querystring, 'Different requests should have different querystring instances');
+            assert.equal(req1.querystring.id, 1);
+            assert.equal(req2.querystring.id, 2);
+
+            // Verify they are cached within their own instances
+            assert.strictEqual(req1.querystring, req1.querystring, 'Same request should return same querystring');
+            assert.strictEqual(req2.querystring, req2.querystring, 'Same request should return same querystring');
+        });
+    });
+
+    describe('Agentforce request handling', function () {
+        it('should return empty object for Agentforce request with empty JSON body', function () {
+            var fakeRequest = createFakeRequest({
+                httpHeaders: {
+                    get: function (headerName) {
+                        if (headerName === 'accept') {
+                            return 'application/agentforce+json';
+                        }
+                        return null;
+                    }
+                },
+                httpParameterMap: {
+                    requestBodyAsString: '{}',
+                    parameterNames: {
+                        iterator: function () {
+                            return {
+                                hasNext: function () {
+                                    return false;
+                                },
+                                next: function () {
+                                    return null;
+                                }
+                            };
+                        },
+                        length: 0
+                    }
+                }
+            });
+            var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+            assert.deepEqual(req.form, {});
+        });
+
+        it('should parse JSON string for Agentforce request with valid JSON body', function () {
+            var fakeRequest = createFakeRequest({
+                httpHeaders: {
+                    get: function (headerName) {
+                        if (headerName === 'accept') {
+                            return 'application/agentforce+json';
+                        }
+                        return null;
+                    }
+                },
+                httpParameterMap: {
+                    requestBodyAsString: '{"name":"John","age":30,"city":"Boston"}',
+                    parameterNames: {
+                        iterator: function () {
+                            return {
+                                hasNext: function () {
+                                    return false;
+                                },
+                                next: function () {
+                                    return null;
+                                }
+                            };
+                        },
+                        length: 0
+                    }
+                }
+            });
+            var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+            assert.equal(req.form.name, 'John');
+            assert.equal(req.form.age, 30);
+            assert.equal(req.form.city, 'Boston');
+        });
+
+        it('should handle parsed JSON object for Agentforce request', function () {
+            var fakeRequest = createFakeRequest({
+                httpHeaders: {
+                    get: function (headerName) {
+                        if (headerName === 'accept') {
+                            return 'application/agentforce+json';
+                        }
+                        return null;
+                    }
+                },
+                httpParameterMap: {
+                    requestBodyAsString: { name: 'John', age: 30, city: 'Boston' },
+                    parameterNames: {
+                        iterator: function () {
+                            return {
+                                hasNext: function () {
+                                    return false;
+                                },
+                                next: function () {
+                                    return null;
+                                }
+                            };
+                        },
+                        length: 0
+                    }
+                }
+            });
+            var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+            assert.equal(req.form.name, 'John');
+            assert.equal(req.form.age, 30);
+            assert.equal(req.form.city, 'Boston');
+        });
+
+        it('should handle Agentforce request with nested objects in JSON body', function () {
+            var fakeRequest = createFakeRequest({
+                httpHeaders: {
+                    get: function (headerName) {
+                        if (headerName === 'accept') {
+                            return 'application/agentforce+json';
+                        }
+                        return null;
+                    }
+                },
+                httpParameterMap: {
+                    requestBodyAsString: '{"user":{"name":"John","email":"john@example.com"},"preferences":{"theme":"dark"}}',
+                    parameterNames: {
+                        iterator: function () {
+                            return {
+                                hasNext: function () {
+                                    return false;
+                                },
+                                next: function () {
+                                    return null;
+                                }
+                            };
+                        },
+                        length: 0
+                    }
+                }
+            });
+            var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+            assert.isString(req.form.user);
+            assert.isString(req.form.preferences);
+            var parsedUser = JSON.parse(req.form.user);
+            var parsedPreferences = JSON.parse(req.form.preferences);
+            assert.equal(parsedUser.name, 'John');
+            assert.equal(parsedUser.email, 'john@example.com');
+            assert.equal(parsedPreferences.theme, 'dark');
+        });
+
+        it('should handle Agentforce request with invalid JSON gracefully', function () {
+            var fakeRequest = createFakeRequest({
+                httpHeaders: {
+                    get: function (headerName) {
+                        if (headerName === 'accept') {
+                            return 'application/agentforce+json';
+                        }
+                        return null;
+                    }
+                },
+                httpParameterMap: {
+                    requestBodyAsString: 'invalid json string',
+                    parameterNames: {
+                        iterator: function () {
+                            return {
+                                hasNext: function () {
+                                    return false;
+                                },
+                                next: function () {
+                                    return null;
+                                }
+                            };
+                        },
+                        length: 0
+                    }
+                }
+            });
+            var req = new Request(fakeRequest, createFakeRequest().customer, createFakeRequest().session);
+            assert.deepEqual(req.form, {});
+        });
     });
 });

@@ -53,15 +53,100 @@ function getSessionObject(session) {
 }
 
 /**
+ * Retrieves form data from the request body
+ * @param {string} requestBodyAsString - The request body as a string
+ * @returns {Object} Object containing key value pairs that were sent in the request body
+ */
+function getFormDataFromRequestBody(requestBodyAsString) {
+    var MAX_BODY_SIZE = 1048576; // 1MB
+    var Logger = require('dw/system/Logger');
+    if (typeof requestBodyAsString === 'string') {
+        if (requestBodyAsString.length > MAX_BODY_SIZE) {
+            Logger.warn('Request body exceeds maximum size limit: {0} bytes', requestBodyAsString.length);
+            return {};
+        }
+    }
+    var jsonData = null;
+    var result = {};
+    // Try to get JSON data - it might already be parsed or might be a string
+    // In SFRA, req.body should be available for POST requests with JSON content-type
+    if (requestBodyAsString) {
+        // If req.body is already an object, use it directly
+        if (typeof requestBodyAsString === 'object') {
+            jsonData = requestBodyAsString;
+        } else if (typeof requestBodyAsString === 'string') {
+            // If it's a string, parse it
+            try {
+                jsonData = JSON.parse(requestBodyAsString);
+            } catch (e) {
+                // If JSON parsing fails, return empty object
+                Logger.error('Failed to parse request body as JSON: {0}', e.message);
+                return {};
+            }
+        }
+    }
+
+    // Merge JSON data if we successfully got it
+    if (jsonData) {
+        Object.keys(jsonData).forEach(function (key) {
+            var value = jsonData[key];
+            // Skip null, undefined, and empty string values
+            if (value === null || value === undefined || value === '') {
+                return;
+            }
+            // If value is an object or array, stringify it to match expected form format
+            // This allows the existing code to JSON.parse() these values as it currently does
+            if (typeof value === 'object' && value !== null) {
+                try {
+                    // Handle both objects and arrays
+                    result[key] = JSON.stringify(value);
+                } catch (e) {
+                    Logger.warn('Failed to stringify form data value for key "{0}": {1}', key, e.message);
+                    // Skip this field - don't add it to result
+                }
+            } else {
+                result[key] = value;
+            }
+        });
+    }
+    return result;
+}
+
+/**
+ * Checks if the current request is an agentforce request
+ * @param {Object} request - Global request object
+ * @returns {boolean} True if this is an agentforce request
+ */
+function isAgentforceRequest(request) {
+    if (!request || !request.httpHeaders) {
+        return false;
+    }
+
+    // Check if client accepts agentforce JSON response
+    var accept = request.httpHeaders.get('accept');
+    var hasAgentforceAccept = accept && accept.indexOf('application/agentforce+json') > -1;
+
+    // Check if client is sending agentforce JSON payload
+    var contentType = request.httpHeaders.get('content-type');
+    var hasAgentforceContent = contentType && contentType.indexOf('application/agentforce+json') > -1;
+
+    return hasAgentforceAccept || hasAgentforceContent;
+}
+
+/**
  *
  * Retrieves and normalizes form data from httpParameterMap
- * @param {dw.web.httpParameterMap} items - original parameters
+ * @param {Object} request - Global request object
  * @param {Object} qs - Object containing querystring
  * @return {Object} Object containing key value pairs submitted from the form
  */
-function getFormData(items, qs) {
+function getFormData(request, qs) {
+    var items = request.httpParameterMap;
     if (!items || !items.parameterNames) {
         return {};
+    }
+    if (isAgentforceRequest(request)) {
+        return getFormDataFromRequestBody(items.requestBodyAsString);
     }
     var allKeys = items.parameterNames;
     var result = {};
@@ -325,6 +410,10 @@ function Request(request, customer, session) {
         return request.setLocale(localeID);
     };
 
+    // Cache for form data and querystring to avoid recalculating on multiple accesses
+    var cachedFormData = null;
+    var querystringCache = null;
+
     Object.defineProperty(this, 'session', {
         get: function () {
             return getSessionObject(session);
@@ -339,13 +428,23 @@ function Request(request, customer, session) {
 
     Object.defineProperty(this, 'querystring', {
         get: function () {
-            return new QueryString(request.httpQueryString);
+            if (querystringCache === null) {
+                querystringCache = new QueryString(request.httpQueryString);
+            }
+            return querystringCache;
         }
     });
 
     Object.defineProperty(this, 'form', {
         get: function () {
-            return getFormData(request.httpParameterMap, this.querystring);
+            if (cachedFormData === null) {
+                // Ensure querystring is initialized before using it in getFormData
+                if (querystringCache === null) {
+                    querystringCache = new QueryString(request.httpQueryString);
+                }
+                cachedFormData = getFormData(request, querystringCache);
+            }
+            return cachedFormData;
         }
     });
 
