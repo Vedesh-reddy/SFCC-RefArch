@@ -2,6 +2,7 @@
 
 var QueryString = require('./queryString');
 var SimpleCache = require('./simpleCache');
+var Logger = require('dw/system/Logger');
 
 /**
  * Translates global session object into local object
@@ -59,7 +60,6 @@ function getSessionObject(session) {
  */
 function getFormDataFromRequestBody(requestBodyAsString) {
     var MAX_BODY_SIZE = 1048576; // 1MB
-    var Logger = require('dw/system/Logger');
     if (typeof requestBodyAsString === 'string') {
         if (requestBodyAsString.length > MAX_BODY_SIZE) {
             Logger.warn('Request body exceeds maximum size limit: {0} bytes', requestBodyAsString.length);
@@ -398,6 +398,12 @@ function Request(request, customer, session) {
     // Avoid currency check for remote includes
     if (!request.includeRequest) {
         setCurrency(request, session);
+    }
+
+    // Log User-Agent header for Agentforce requests
+    if (isAgentforceRequest(request)) {
+        var userAgent = request.httpHeaders.get('user-agent');
+        Logger.info('Agentforce request detected - User-Agent: {0}', userAgent || 'not provided');
     }
 
     this.httpMethod = request.httpMethod;

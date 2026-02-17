@@ -44,6 +44,9 @@ var Request = proxyquire('../../../../cartridges/modules/server/request', {
         },
         error: function (text) {
             return text;
+        },
+        info: function (text) {
+            return text;
         }
     }
 });
