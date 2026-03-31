@@ -20,6 +20,11 @@
         <meta name="<isprint value="${pageMetaTag.ID}">" content="<isprint value="${pageMetaTag.content}">">
     <iselseif condition="${pageMetaTag.property}">
         <meta property="<isprint value="${pageMetaTag.ID}">" content="<isprint value="${pageMetaTag.content}">">
+    <iselseif condition="${pageMetaTag.jsonLd}">
+        <iscomment>encoding off as the pageMetaTag.content is already escaped during resolution</iscomment>
+        <script type="application/ld+json">
+            <isprint value="${pageMetaTag.content}" encoding="off"/>
+        </script>
     </isif>
 </isloop>
 
