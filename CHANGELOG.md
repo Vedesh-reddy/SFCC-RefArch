@@ -2,6 +2,7 @@
 
 ## 7.0.2-dev
 
+- Support Node 24 [#1461](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1461/changes)
 - Bump sgmf-scripts dependency version to 3.1.0 [#1419](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1419)
 - Fix acceptance tests [#1396](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1396)
 

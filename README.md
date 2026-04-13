@@ -15,7 +15,7 @@ The latest version of SFRA is 7.0.1
 
 1. Clone this repository.
 
-2. Run `npm install` to install all of the local dependencies (SFRA has been tested with Node v18.19 and is recommended)
+2. Run `npm install` to install all of the local dependencies (SFRA has been tested with v24.x)
 
 3. Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
 
