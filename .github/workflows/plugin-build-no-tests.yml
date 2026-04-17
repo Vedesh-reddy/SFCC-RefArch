@@ -19,11 +19,17 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
+        # Two layouts: (1) Plugin repo calls this workflow — checkout plugin into ./plugin and SFRA
+        # into ./storefront-reference-architecture, then run npm ci in the latter. (2) This same
+        # repo (SFRA) calls it — GitHub already names the workspace …/storefront-reference-architecture/
+        # storefront-reference-architecture; cloning SFRA again under path: storefront-reference-architecture
+        # plus working-directory: storefront-reference-architecture nested the repo a third time and
+        # broke npm ci (wrong tree vs lockfile). For SFRA self-build, SFRA_DIR/PLUGIN_DIR are both '.'
+        # so install and plugin steps use the workspace root only.
+        env:
+            SFRA_DIR: ${{ github.event.repository.name == 'storefront-reference-architecture' && '.' || 'storefront-reference-architecture' }}
+            PLUGIN_DIR: ${{ github.event.repository.name == 'storefront-reference-architecture' && '.' || 'plugin' }}
         steps:
-            - name: Checkout plugin repository
-              uses: actions/checkout@v3
-              with:
-                  path: plugin
             # SFRA is required for compilation: Plugin cartridges reference utility functions
             # and modules from the base storefront-reference-architecture. The webpack build
             # process needs SFRA present to resolve these dependencies and bundle them into
@@ -36,7 +42,17 @@ jobs:
             # -----------
             # Shallow clone (fetch-depth: 1) fetches only the latest commit without git history
             # This significantly speeds up checkout time and reduces disk usage in CI
-            - name: Checkout storefront-reference-architecture
+            #
+            # Plugin builds — on-disk layout: $GITHUB_WORKSPACE/plugin (caller) and
+            # $GITHUB_WORKSPACE/storefront-reference-architecture (SFRA clone for webpack).
+            - name: Checkout plugin repository
+              if: ${{ github.event.repository.name != 'storefront-reference-architecture' }}
+              uses: actions/checkout@v3
+              with:
+                  path: plugin
+                  fetch-depth: 1
+            - name: Checkout storefront-reference-architecture (for plugin builds)
+              if: ${{ github.event.repository.name != 'storefront-reference-architecture' }}
               uses: actions/checkout@v3
               with:
                   repository: SalesforceCommerceCloud/storefront-reference-architecture
@@ -44,21 +60,28 @@ jobs:
                   path: storefront-reference-architecture
                   token: ${{ secrets.GH_TOKEN }}
                   fetch-depth: 1
+            # SFRA self-build — single checkout at $GITHUB_WORKSPACE (no extra subfolder named
+            # storefront-reference-architecture under the workspace; npm ci uses package.json here).
+            - name: Checkout SFRA at workspace root (monorepo / self-build)
+              if: ${{ github.event.repository.name == 'storefront-reference-architecture' }}
+              uses: actions/checkout@v3
+              with:
+                  fetch-depth: 1
             - uses: actions/setup-node@v3
               with:
                   node-version: ${{ inputs.NODE_VERSION }}
             - name: Install SFRA dependencies
-              working-directory: storefront-reference-architecture
+              working-directory: ${{ env.SFRA_DIR }}
               run: npm ci
             - name: Install plugin dependencies
-              working-directory: plugin
+              working-directory: ${{ env.PLUGIN_DIR }}
               run: npm install
             - name: Lint
-              working-directory: plugin
+              working-directory: ${{ env.PLUGIN_DIR }}
               run: npm run lint
             - name: Compile JS
-              working-directory: plugin
+              working-directory: ${{ env.PLUGIN_DIR }}
               run: npm run compile:js
             - name: Compile SCSS
-              working-directory: plugin
+              working-directory: ${{ env.PLUGIN_DIR }}
               run: npm run compile:scss
