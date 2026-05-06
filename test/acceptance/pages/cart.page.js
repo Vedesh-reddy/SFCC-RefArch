@@ -15,11 +15,12 @@ module.exports = {
         checkoutBtn: '.btn.btn-primary.btn-block.checkout-btn',
         removeProductBox: '.hidden-md-down',
         removeProductBtn: '.remove-btn-lg.remove-product.btn.btn-light',
-        removeProductModal: '.modal-content',
+        removeProductModal: '.modal.fade.show',
         removeProductModalConfirm:
             '.btn.btn-primary.cart-delete-confirmation-btn',
         editQuantitySelector: '.form-control.quantity.custom-select',
         miniCartEditQty: 'select[data-pid="<pid>"]',
+        lineItemCard: '.card.product-info',
         lineItemName: '.line-item-name',
         miniCartLineItemName: '.line-item-name > span',
         lineItemAttributes: '.item-attributes .line-item-attributes',
@@ -37,6 +38,7 @@ module.exports = {
         tax,
         estimatedTotal
     ) {
+        I.wait(2)
         I.see(totalQuantity, this.locators.lineItemQuantity);
         I.see(itemPrice, this.locators.lineItemPriceTotal);
         I.see(totalItemPrice, this.locators.totalItemPrice);
@@ -62,6 +64,7 @@ module.exports = {
         I.see(product.finalPrice, this.locators.subTotal);
     },
     verifyMiniCart(product) {
+        I.wait(1)
         I.see(product.name, this.locators.miniCartLineItemName);
         I.see(product.colorAttribute, this.locators.lineItemAttributes);
         I.see(product.sizeAttribute, this.locators.lineItemAttributes);
@@ -79,6 +82,7 @@ module.exports = {
         I.click(
             this.locators.removeFromMiniCartButton.replace('<pid>', product.pid)
         );
+        I.wait(2)
         // Confirm remove product
         within(this.locators.removeProductModal, () => {
             I.click(this.locators.removeProductModalConfirm);
@@ -96,10 +100,19 @@ module.exports = {
             I.click(this.locators.removeProductModalConfirm);
         });
         I.waitForInvisible(this.locators.removeProductModal);
-        I.wait(2);
+        I.wait(2)
     },
     editQuantity(quantity) {
         I.selectOption(this.locators.editQuantitySelector, quantity);
+    },
+    editQuantityForProduct(product) {
+        let productName = product.name
+        let quantity = product.quantity
+
+        let locator = locate(this.locators.lineItemCard).withText(productName);
+        within(locator, () => {
+            I.selectOption(this.locators.editQuantitySelector, quantity);
+        })
     },
     editMiniCartQuantity(product) {
         within(this.locators.miniCartPopover, () => {

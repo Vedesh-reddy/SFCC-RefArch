@@ -20,9 +20,7 @@ const DEFAULT_HOST = 'https://' + getDwJson().hostname;
 const HOST = DEFAULT_HOST || process.env.HOST;
 
 // turn on headless mode when running with HEADLESS=true environment variable
-// export HEADLESS=true && npx codeceptjs run
 setHeadlessWhen(process.env.HEADLESS);
-
 const browser = process.env.profile || 'chrome';
 const windowSize = process.env.windowSize || '1440x1200'
 let conf = {
@@ -46,7 +44,7 @@ let conf = {
   plugins: {
     wdio: {
         enabled: true,
-        services: ['selenium-standalone']
+        services: []
     },
     retryFailedStep: {
       enabled: true,

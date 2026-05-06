@@ -108,6 +108,7 @@ module.exports = {
         I.selectOption(this.locators.expYear, expYear);
         I.click(this.locators.defaultPayment);
         I.click(this.locators.saveBtn);
+        I.wait(1)
         I.click(this.locators.backToAccount);
     },
     viewAllPayments() {

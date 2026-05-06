@@ -63,6 +63,9 @@ function createApiBasket(options) {
     var basket = {
         totalGrossPrice: {
             value: 'some value'
+        },
+        adjustedMerchandizeTotalGrossPrice: {
+            value: 'some value'
         }
     };
 

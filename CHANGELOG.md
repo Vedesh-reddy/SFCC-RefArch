@@ -1,6 +1,12 @@
 # Changelog
 
-## 7.0.1(July 8, 2024)
+## 7.1.0 (April 28, 2026)
+
+- Support Node 24 [#1461](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1461/changes)
+- Bump sgmf-scripts dependency version to 3.1.0 [#1419](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1419)
+- Fix acceptance tests [#1396](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1396)
+
+## 7.0.1 (July 8, 2024)
 
 -   Cleanup: Use getCurrentBasket instead of getCurrentOrNewBasket when we are not adding an item [#1383](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1383)
 -   Fix: Variable syntax issue in calc function in tooltip.scss [#1333](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1333)

@@ -32,7 +32,7 @@ function setProductProperties(productSearch, httpParams, selectedCategory, sorti
         if (httpParameterMap.pmin && httpParameterMap.pmin.submitted) {
             productSearch.setPriceMin(httpParameterMap.pmin.doubleValue);
         }
-        if (httpParameterMap.pmax && httpParameterMap.pmin.submitted) {
+        if (httpParameterMap.pmax && httpParameterMap.pmax.submitted) {
             productSearch.setPriceMax(httpParameterMap.pmax.doubleValue);
         }
     }

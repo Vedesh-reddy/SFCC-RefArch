@@ -38,9 +38,10 @@ Then('he is able to see the correct product in cart', () => {
 When('shopper is able to add and remove a product from minicart', () => {
     homePage.search(data.product4.searchWord);
     productPage.addProductToMiniCart(data.product4);
-    I.wait(1);
+    I.wait(2);
     cartPage.verifyMiniCartOriginal(data.product4);
     cartPage.removeProductFromMiniCart(data.product4);
+    I.wait(2);
     I.see(
         data.product4.afterRemoveQuantity,
         cartPage.locators.miniCartQuantity
@@ -50,6 +51,7 @@ When('shopper is able to add and remove a product from minicart', () => {
 Then(
     'shopper is able to add a product and edit product quantity in minicart',
     () => {
+        I.wait(1)
         homePage.search(data.product4.searchWord);
         productPage.addProductToMiniCart(data.product4);
         I.wait(1);
@@ -71,6 +73,7 @@ Then(
         checkoutPage.gotoHomePageFromCheckout();
         I.wait(2);
         cartPage.removeProductFromMiniCart(data.product4);
+        I.wait(2)
         I.see(
             data.product4.afterRemoveQuantity,
             cartPage.locators.miniCartQuantity
