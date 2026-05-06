@@ -82,7 +82,7 @@ describe('Add Product Set to cart', function () {
                                 'formatted': '$0.00'
                             },
                             'discounts': [],
-                            'discountsHtml': '\n'
+                            'discountsHtml': ''
                         },
                         'shipments': [
                             {

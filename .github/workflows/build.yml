@@ -6,4 +6,6 @@ jobs:
     deploy-build:
         uses: ./.github/workflows/plugin-build.yml
         with:
-            NODE_VERSION: 18.16
+            NODE_VERSION: 24.6
+        secrets:
+            GH_TOKEN: ${{ secrets.SFRA_ACCESS_TOKEN }}

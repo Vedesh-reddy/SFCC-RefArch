@@ -72,7 +72,7 @@ describe('Select different State in Shipping Form', function () {
                             'value': 0
                         },
                         'discounts': [],
-                        'discountsHtml': '\n'
+                        'discountsHtml': ''
                     },
                     'shipping': [
                         {
@@ -203,7 +203,7 @@ describe('Select different State in Shipping Form', function () {
                             'value': 0
                         },
                         'discounts': [],
-                        'discountsHtml': '\n'
+                        'discountsHtml': ''
                     },
                     'shipping': [
                         {
@@ -336,7 +336,7 @@ describe('Select different State in Shipping Form', function () {
                             'value': 0
                         },
                         'discounts': [],
-                        'discountsHtml': '\n'
+                        'discountsHtml': ''
                     },
                     'shipping': [
                         {
@@ -450,7 +450,7 @@ describe('Select different State in Shipping Form', function () {
                             'value': 0
                         },
                         'discounts': [],
-                        'discountsHtml': '\n'
+                        'discountsHtml': ''
                     },
                     'shipping': [
                         {
@@ -581,7 +581,7 @@ describe('Select different State in Shipping Form', function () {
                             'value': 0
                         },
                         'discounts': [],
-                        'discountsHtml': '\n'
+                        'discountsHtml': ''
                     },
                     'shipping': [
                         {
@@ -712,7 +712,7 @@ describe('Select different State in Shipping Form', function () {
                             'value': 0
                         },
                         'discounts': [],
-                        'discountsHtml': '\n'
+                        'discountsHtml': ''
                     },
                     'shipping': [
                         {

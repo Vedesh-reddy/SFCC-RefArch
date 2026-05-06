@@ -19,6 +19,10 @@ var createApiBasket = function () {
             available: true,
             value: 180.00
         },
+        adjustedMerchandizeTotalGrossPrice: {
+            available: true,
+            value: 180.00
+        },
         totalTax: {
             available: true,
             value: 20.00

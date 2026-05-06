@@ -72,7 +72,7 @@ function getSelectedPaymentInstruments(selectedPaymentInstruments) {
  * @constructor
  */
 function Payment(currentBasket, currentCustomer, countryCode) {
-    var paymentAmount = currentBasket.totalGrossPrice;
+    var paymentAmount = currentBasket.adjustedMerchandizeTotalGrossPrice;
     var paymentMethods = PaymentMgr.getApplicablePaymentMethods(
         currentCustomer,
         countryCode,

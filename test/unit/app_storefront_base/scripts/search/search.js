@@ -93,6 +93,78 @@ describe('search script', function () {
             assert.isTrue(spySetPriceMax.calledWith(mockParameterMap.pmax.doubleValue));
         });
 
+        it('should set min price and not set max price when pmin is submitted and pmax is not', function () {
+            var mockSearchForPmaxTest = {
+                setPriceMin: function () {},
+                setPriceMax: function () {},
+                setRecursiveCategorySearch: function () {}
+            };
+            var pminSpy = sinon.spy(mockSearchForPmaxTest, 'setPriceMin');
+            var pmaxSpy = sinon.spy(mockSearchForPmaxTest, 'setPriceMax');
+
+            search.setProductProperties(
+                mockSearchForPmaxTest,
+                {},
+                null,
+                null,
+                {
+                    pmin: { doubleValue: 10, submitted: true },
+                    pmax: { doubleValue: 100, submitted: false }
+                }
+            );
+
+            assert.isTrue(pminSpy.calledWith(10));
+            assert.isFalse(pmaxSpy.called);
+        });
+
+        it('should not set min price and set max price when pmin is not submitted and pmax is submitted', function () {
+            var mockSearchForPmaxOnlyTest = {
+                setPriceMin: function () {},
+                setPriceMax: function () {},
+                setRecursiveCategorySearch: function () {}
+            };
+            var pminSpy = sinon.spy(mockSearchForPmaxOnlyTest, 'setPriceMin');
+            var pmaxSpy = sinon.spy(mockSearchForPmaxOnlyTest, 'setPriceMax');
+
+            search.setProductProperties(
+                mockSearchForPmaxOnlyTest,
+                {},
+                null,
+                null,
+                {
+                    pmin: { doubleValue: 10, submitted: false },
+                    pmax: { doubleValue: 100, submitted: true }
+                }
+            );
+
+            assert.isFalse(pminSpy.called);
+            assert.isTrue(pmaxSpy.calledWith(100));
+        });
+
+        it('should not set min price or max price when neither pmin nor pmax is submitted', function () {
+            var mockSearchForNoPriceSubmissionsTest = {
+                setPriceMin: function () {},
+                setPriceMax: function () {},
+                setRecursiveCategorySearch: function () {}
+            };
+            var pminSpy = sinon.spy(mockSearchForNoPriceSubmissionsTest, 'setPriceMin');
+            var pmaxSpy = sinon.spy(mockSearchForNoPriceSubmissionsTest, 'setPriceMax');
+
+            search.setProductProperties(
+                mockSearchForNoPriceSubmissionsTest,
+                {},
+                null,
+                null,
+                {
+                    pmin: { doubleValue: 10, submitted: false },
+                    pmax: { doubleValue: 100, submitted: false }
+                }
+            );
+
+            assert.isFalse(pminSpy.called);
+            assert.isFalse(pmaxSpy.called);
+        });
+
         it('should set the sort rule', function () {
             assert.isTrue(spySetSortingRule.calledWith(mockSortingRule));
         });

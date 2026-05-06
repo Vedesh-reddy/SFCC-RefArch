@@ -9,13 +9,13 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 
 # The latest version
 
-The latest version of SFRA is 7.0.1
+The latest version of SFRA is 7.1.0
 
 # Getting Started
 
 1. Clone this repository.
 
-2. Run `npm install` to install all of the local dependencies (SFRA has been tested with Node v18.19 and is recommended)
+2. Run `npm install` to install all of the local dependencies (SFRA has been tested with v24.x)
 
 3. Run `npm run compile:js` from the command line that would compile all client-side JS files. Run `npm run compile:scss` and `npm run compile:fonts` that would do the same for css and fonts.
 
@@ -114,11 +114,11 @@ The acceptance tests will run against the site specified in the hostname propert
 "hostname": "abcd-123.dx.commercecloud.salesforce.com"
 ```
 
-There are several NPM scripts available for running the acceptance tests. They all require a `--profile` parameter for setting the browser the tests will run against. ie. `npm run test:acceptance:smoke --profile chrome`
+There are several NPM scripts available for running the acceptance tests.
 
-Tests will generally run on Chrome, Safari, and Firefox.
+Tests will generally run on Chrome, Safari, and Firefox. To change the browser the tests are run in, add `-- --profile=safari` ie. `npm run test:acceptance:smoke -- --profile=safari`
 
-To run the tests in headless mode, set a HEADLESS environment to true before starting the npm run. ie. `HEADLESS=true && npm run test:acceptance:smoke --profile chrome`
+To run the tests in chrome headless mode, set a HEADLESS environment to true before starting the npm run. ie. `HEADLESS=true && npm run test:acceptance:smoke -- --profile=chrome`
 
 -   `test:acceptance:custom` - runs all tests (Note: some tests will fail as the browser size defaults to desktop)
 -   `test:acceptance:deep` - runs all storefront tests
@@ -132,6 +132,15 @@ To run the tests in headless mode, set a HEADLESS environment to true before sta
 
 -   Selenium can be finicky to start. If the tests fail to start, simply rerun the command again until the tests start.
 -   If you see version compatibility issues between browser and the driver, try configuring specific version of the driver in the [codecept config file](./codecept.conf.js). See the resolved [github issue](https://github.com/codeceptjs/CodeceptJS/issues/2885) for details.
+
+#### Running the tests in Safari
+
+After every test, Webdriverio's automated drivers will close and start a new safaridriver instance. Sometimes, the existing safaridriver does not close before webdriverio attempts to start a new instance and the test execution will error out because the selected port is still in use.
+
+To workaround this:
+-   In a separate terminal manually start the safaridriver: `safaridriver -p 4444`
+-   In codecept.conf.js, update the Webdriver helper to point to `port: 4444,`. This will [force webdriverio to use your safaridriver instance for every test.](https://webdriver.io/docs/driverbinaries#safaridriver)
+-   Start the tests: `npm run test:acceptance:smoke -- --profile=safari`
 
 # [Contributing to SFRA](./CONTRIBUTING.md)
 

@@ -3,7 +3,7 @@
 var collections = require('*/cartridge/scripts/util/collections');
 var urlHelper = require('*/cartridge/scripts/helpers/urlHelpers');
 
-var ACTION_ENDPOINT = 'Search-UpdateGrid';
+var ACTION_ENDPOINT = 'Search-ShowAjax';
 
 /**
  * Retrieves sorting options
