@@ -1,5 +1,9 @@
 # Changelog
 
+## v7.1.1 (June 4, 2026)
+-   Version bump for the coordinated SFRA 7.1.1 release.
+
+
 ## 7.1.0 (April 28, 2026)
 
 - Support Node 24 [#1461](https://github.com/SalesforceCommerceCloud/storefront-reference-architecture/pull/1461/changes)
