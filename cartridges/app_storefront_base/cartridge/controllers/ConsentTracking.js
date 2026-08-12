@@ -9,25 +9,6 @@ var csrfProtection = require('*/cartridge/scripts/middleware/csrf');
 var consentTracking = require('*/cartridge/scripts/middleware/consentTracking');
 
 /**
- * ConsentTracking-SetSession : DEPRECATED - Replaced by ConsentTracking-SetConsent, which includes CSRF protection
- * @name Base/ConsentTracking-SetSession
- * @function
- * @memberof ConsentTracking
- * @deprecated
- * @param {querystringparameter} - consent -  The value of this is a boolean. If the boolean value is true, tracking is enabled for the current session; if false, tracking is disabled
- * @param {category} - sensitive
- * @param {returns} - json
- * @param {serverfunction} - get
- */
-server.get('SetSession', function (req, res, next) {
-    var consent = (req.querystring.consent === 'true');
-    req.session.raw.setTrackingAllowed(consent);
-    req.session.privacyCache.set('consent', consent);
-    res.json({ success: true });
-    next();
-});
-
-/**
  * ConsentTracking-SetConsent : This endpoint is called when the shopper agrees/disagrees to tracking consent
  * @name Base/ConsentTracking-SetConsent
  * @function
