@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+
+**BREAKING CHANGE:** State-changing account routes now require a CSRF token. Affected endpoints: `Address-DeleteAddress`, `Address-SetDefault`, and `PaymentInstruments-DeletePayment`. Storefronts or cartridges that call these routes without a valid CSRF token must be updated.
+
+- Security: Require a CSRF token on the state-changing account address and saved-payment routes.
+- Removed the deprecated `ConsentTracking-SetSession` endpoint, which was superseded by the CSRF-protected `ConsentTracking-SetConsent`.
+
 ## v7.1.1 (June 4, 2026)
 -   Version bump for the coordinated SFRA 7.1.1 release.
 

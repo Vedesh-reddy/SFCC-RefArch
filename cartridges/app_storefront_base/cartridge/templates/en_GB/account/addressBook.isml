@@ -37,7 +37,7 @@
                             <div>${address.address.phone}</div>
                             <isif condition="${address.address.ID !== pdict.addressBook[0].address.ID}">
                                 <div class="card-make-default-link">
-                                    <a href="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID)}" class="normal" aria-label="${Resource.msg('label.addressbook.makedefaultaddress','account',null)}">${Resource.msg('link.addressbook.makedefault','account',null)}</a>
+                                    <a href="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID, pdict.csrf.tokenName, pdict.csrf.token)}" class="normal" aria-label="${Resource.msg('label.addressbook.makedefaultaddress','account',null)}">${Resource.msg('link.addressbook.makedefault','account',null)}</a>
                                 </div>
                             </isif>
                             <button
@@ -47,6 +47,8 @@
                                 data-target="#deleteAddressModal"
                                 data-id="${address.address.ID}"
                                 data-url="${pdict.actionUrls.deleteActionUrl}"
+                                data-token-name="${pdict.csrf.tokenName}"
+                                data-token="${pdict.csrf.token}"
                                 aria-label="${Resource.msg('label.addressbook.deleteaddress','account',null)}"
                                 ${ address.address.ID == pdict.addressBook[0].address.ID ? data-default="true" : '' }>
                                 &times;

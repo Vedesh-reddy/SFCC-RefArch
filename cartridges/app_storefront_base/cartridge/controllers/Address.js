@@ -37,13 +37,14 @@ function getList(customerNo) {
  * @name Base/Address-List
  * @function
  * @memberof Address
+ * @param {middleware} - csrfProtection.generateToken
  * @param {middleware} - userLoggedIn.validateLoggedIn
  * @param {middleware} - consentTracking.consent
  * @param {category} - sensitive
  * @param {renders} - isml
  * @param {serverfunction} - get
  */
-server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
+server.get('List', csrfProtection.generateToken, userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
     var actionUrls = {
         deleteActionUrl: URLUtils.url('Address-DeleteAddress').toString(),
         listActionUrl: URLUtils.url('Address-List').toString()
@@ -252,13 +253,15 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
  * @function
  * @memberof Address
  * @param {middleware} - userLoggedIn.validateLoggedInAjax
+ * @param {middleware} - csrfProtection.validateAjaxRequest
  * @param {querystringparameter} - addressId - a string used to identify the address record
  * @param {querystringparameter} - isDefault - true if this is the default address. false otherwise
+ * @param {querystringparameter} - csrf_token - CSRF token
  * @param {category} - sensitive
  * @param {returns} - json
  * @param {serverfunction} - get
  */
-server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
+server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, csrfProtection.validateAjaxRequest, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
@@ -313,11 +316,13 @@ server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, function (req, re
  * @function
  * @memberof Address
  * @param {middleware} - userLoggedIn.validateLoggedIn
+ * @param {middleware} - csrfProtection.validateRequest
  * @param {querystringparameter} - addressId - a string used to identify the address record
+ * @param {querystringparameter} - csrf_token - CSRF token
  * @param {category} - sensitive
  * @param {serverfunction} - get
  */
-server.get('SetDefault', userLoggedIn.validateLoggedIn, function (req, res, next) {
+server.get('SetDefault', userLoggedIn.validateLoggedIn, csrfProtection.validateRequest, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
