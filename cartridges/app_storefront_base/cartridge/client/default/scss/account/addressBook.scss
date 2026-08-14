@@ -12,6 +12,14 @@
     margin-top: 0.625em; /* 10/16 */
 }
 
+.make-default-link {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: #{var(--skin-primary-color-1)};
+    text-decoration: underline;
+}
+
 .remove-btn {
     @include delete-card-button;
 

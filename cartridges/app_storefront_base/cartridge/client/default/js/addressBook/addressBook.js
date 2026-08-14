@@ -46,7 +46,7 @@ module.exports = {
             e.preventDefault();
             $.ajax({
                 url: url,
-                type: 'get',
+                type: 'post',
                 dataType: 'json',
                 data: csrfData,
                 success: function (data) {

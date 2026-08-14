@@ -41,6 +41,10 @@ describe('PaymentInstruments controller CSRF wiring', function () {
         routes = server.registrations;
     });
 
+    it('serves DeletePayment over POST so the CSRF token leaves the query string', function () {
+        assert.equal(routes.DeletePayment.method, 'post');
+    });
+
     it('guards DeletePayment with validateAjaxRequest', function () {
         assert.include(routes.DeletePayment.chain, csrf.validateAjaxRequest);
     });

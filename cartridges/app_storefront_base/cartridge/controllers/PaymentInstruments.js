@@ -290,12 +290,12 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
  * @param {middleware} - userLoggedIn.validateLoggedInAjax
  * @param {middleware} - csrfProtection.validateAjaxRequest
  * @param {querystringparameter} - UUID - the universally unique identifier of the payment instrument to be removed from the shopper's account
- * @param {querystringparameter} - csrf_token - CSRF token
+ * @param {httpparameter} - csrf_token - CSRF token
  * @param {category} - sensitive
  * @param {returns} - json
- * @param {serverfunction} - get
+ * @param {serverfunction} - post
  */
-server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, csrfProtection.validateAjaxRequest, function (req, res, next) {
+server.post('DeletePayment', userLoggedIn.validateLoggedInAjax, csrfProtection.validateAjaxRequest, function (req, res, next) {
     var array = require('*/cartridge/scripts/util/array');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
