@@ -39,8 +39,16 @@ describe('Address controller CSRF wiring', function () {
         routes = server.registrations;
     });
 
+    it('serves DeleteAddress over POST so the CSRF token leaves the query string', function () {
+        assert.equal(routes.DeleteAddress.method, 'post');
+    });
+
     it('guards DeleteAddress with validateAjaxRequest', function () {
         assert.include(routes.DeleteAddress.chain, csrf.validateAjaxRequest);
+    });
+
+    it('serves SetDefault over POST so the CSRF token leaves the query string', function () {
+        assert.equal(routes.SetDefault.method, 'post');
     });
 
     it('guards SetDefault with validateRequest', function () {

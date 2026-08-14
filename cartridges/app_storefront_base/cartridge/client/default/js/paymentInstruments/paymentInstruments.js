@@ -21,7 +21,7 @@ module.exports = {
                 $('.remove-payment').trigger('payment:remove', f);
                 $.ajax({
                     url: url,
-                    type: 'get',
+                    type: 'post',
                     dataType: 'json',
                     data: csrfData,
                     success: function (data) {

@@ -256,12 +256,12 @@ server.post('SaveAddress', csrfProtection.validateAjaxRequest, function (req, re
  * @param {middleware} - csrfProtection.validateAjaxRequest
  * @param {querystringparameter} - addressId - a string used to identify the address record
  * @param {querystringparameter} - isDefault - true if this is the default address. false otherwise
- * @param {querystringparameter} - csrf_token - CSRF token
+ * @param {httpparameter} - csrf_token - CSRF token
  * @param {category} - sensitive
  * @param {returns} - json
- * @param {serverfunction} - get
+ * @param {serverfunction} - post
  */
-server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, csrfProtection.validateAjaxRequest, function (req, res, next) {
+server.post('DeleteAddress', userLoggedIn.validateLoggedInAjax, csrfProtection.validateAjaxRequest, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
@@ -318,11 +318,11 @@ server.get('DeleteAddress', userLoggedIn.validateLoggedInAjax, csrfProtection.va
  * @param {middleware} - userLoggedIn.validateLoggedIn
  * @param {middleware} - csrfProtection.validateRequest
  * @param {querystringparameter} - addressId - a string used to identify the address record
- * @param {querystringparameter} - csrf_token - CSRF token
+ * @param {httpparameter} - csrf_token - CSRF token
  * @param {category} - sensitive
- * @param {serverfunction} - get
+ * @param {serverfunction} - post
  */
-server.get('SetDefault', userLoggedIn.validateLoggedIn, csrfProtection.validateRequest, function (req, res, next) {
+server.post('SetDefault', userLoggedIn.validateLoggedIn, csrfProtection.validateRequest, function (req, res, next) {
     var CustomerMgr = require('dw/customer/CustomerMgr');
     var Transaction = require('dw/system/Transaction');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');

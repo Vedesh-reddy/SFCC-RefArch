@@ -4,7 +4,10 @@
 
 **BREAKING CHANGE:** State-changing account routes now require a CSRF token. Affected endpoints: `Address-DeleteAddress`, `Address-SetDefault`, and `PaymentInstruments-DeletePayment`. Storefronts or cartridges that call these routes without a valid CSRF token must be updated.
 
+**BREAKING CHANGE:** `Address-DeleteAddress`, `Address-SetDefault`, and `PaymentInstruments-DeletePayment` are now `POST` routes. Callers issuing these requests over `GET` must switch to `POST` and send the CSRF token in the request body instead of the query string.
+
 - Security: Require a CSRF token on the state-changing account address and saved-payment routes.
+- Security: Reclassify the state-changing account address and saved-payment routes from `GET` to `POST` so the CSRF token no longer travels on the query string.
 - Removed the deprecated `ConsentTracking-SetSession` endpoint, which was superseded by the CSRF-protected `ConsentTracking-SetConsent`.
 
 ## v7.1.1 (June 4, 2026)
