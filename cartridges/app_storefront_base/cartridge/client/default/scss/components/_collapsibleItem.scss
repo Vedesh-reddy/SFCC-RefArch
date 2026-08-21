@@ -1,6 +1,7 @@
 @each $size in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($size);
 
-    @include media-breakpoint-down($size) {
+    @include media-breakpoint-down(if($next, $next, xxl)) {
         .collapsible-#{$size} {
             .title {
                 line-height: 2.5rem; /* 40/16 */

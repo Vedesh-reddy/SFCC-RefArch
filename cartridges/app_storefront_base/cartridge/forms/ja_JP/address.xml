@@ -16,7 +16,7 @@
 
     <!--  postal code -->
     <field formid="postalCode" label="label.input.zipcode" type="string" mandatory="true" min-length="5" max-length="10"
-           regexp="(^([0-9]){3}[-]([0-9]){4}$)"
+           regexp="(^([0-9]){3}[\-]([0-9]){4}$)"
            binding="postalCode"
            range-error="error.message.between5and10"
            missing-error="error.message.required"
@@ -39,7 +39,7 @@
            missing-error="error.message.required"
            range-error="error.message.between10and20"
            parse-error="error.message.parse.phone"
-           regexp="^(0([1-9]{1}[-,\s]?[1-9]\d{3}|[1-9]{2}-?\d{3}|[1-9]{2}\d{1}-?\d{2}|[1-9]{2}\d{2}-?\d{1})[-,\s]?\d{4}|0[789]0-?\d{4}-?\d{4}|050-?\d{4}-?\d{4})$"/>
+           regexp="^(0([1-9]{1}[\-,\s]?[1-9]\d{3}|[1-9]{2}-?\d{3}|[1-9]{2}\d{1}-?\d{2}|[1-9]{2}\d{2}-?\d{1})[\-,\s]?\d{4}|0[789]0-?\d{4}-?\d{4}|050-?\d{4}-?\d{4})$"/>
 
     <!-- actions provided by the edit shipping address dialog -->
     <action formid="apply" valid-form="true"/>

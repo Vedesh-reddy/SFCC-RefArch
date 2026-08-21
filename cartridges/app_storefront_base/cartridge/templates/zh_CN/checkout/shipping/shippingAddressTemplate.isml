@@ -18,7 +18,7 @@
             <span class="display-name"></span>
             <span class="text-muted arrival-time"></span>
         </p>
-        <p class="col-4 end-lines text-right">
+        <p class="col-4 end-lines text-end">
             <span class="price"></span>
         </p>
     </div>

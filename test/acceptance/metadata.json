@@ -143,7 +143,7 @@
         "loginHomeScreen": "span.user-message",
         "emailLogin": "#login-form-email",
         "passwordLogin": "#login-form-password",
-        "primaryButton": ".btn.btn-block.btn-primary",
+        "primaryButton": ".btn.btn-primary",
         "registrationError": "Username is invalid."
     },
     "checkout": {

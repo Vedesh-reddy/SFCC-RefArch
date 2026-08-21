@@ -6,7 +6,7 @@
                 <isprint value="${pdict.bannerMessage}" encoding="off"/>
             </div>
             <div class="close-button">
-                <button class="close pt-3" aria-label="${Resource.msg('button.close','campaignBanner',null)}">
+                <button type="button" class="campaign-banner-close pt-3" aria-label="${Resource.msg('button.close','campaignBanner',null)}">
                     <img src="${URLUtils.staticURL('/images/close-icon.svg')}"/>
                 </button>
             </div>

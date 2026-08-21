@@ -24,8 +24,8 @@
                 <div class="col-sm-8 col-md-6">
                     <div class="card">
                         <div class="card-header">
-                            <h2 class="address-heading pull-left">${address.address.ID == pdict.addressBook[0].address.ID ? pdict.addressBook[0].address.ID+' ('+Resource.msg('label.addressbook.defaultaddress','account',null)+')' : address.address.ID}</h2>
-                            <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="pull-right" aria-label="${Resource.msg('label.addressbook.editaddress','account',null)} : ${address.address.ID == pdict.addressBook[0].address.ID ? pdict.addressBook[0].address.ID+' ('+Resource.msg('label.addressbook.defaultaddress','account',null)+')' : address.address.ID}">${Resource.msg('link.edit','account',null)}</a>
+                            <h2 class="address-heading float-start">${address.address.ID == pdict.addressBook[0].address.ID ? pdict.addressBook[0].address.ID+' ('+Resource.msg('label.addressbook.defaultaddress','account',null)+')' : address.address.ID}</h2>
+                            <a href="${URLUtils.url('Address-EditAddress', 'addressId', address.address.ID)}" class="float-end" aria-label="${Resource.msg('label.addressbook.editaddress','account',null)} : ${address.address.ID == pdict.addressBook[0].address.ID ? pdict.addressBook[0].address.ID+' ('+Resource.msg('label.addressbook.defaultaddress','account',null)+')' : address.address.ID}">${Resource.msg('link.edit','account',null)}</a>
                         </div>
                         <div class="card-body card-body-positioning">
                             <div>${address.address.postalCode} </div>
@@ -44,8 +44,8 @@
                             <button
                                 type="button"
                                 class="remove-btn remove-address btn-light"
-                                data-toggle="modal"
-                                data-target="#deleteAddressModal"
+                                data-bs-toggle="modal"
+                                data-bs-target="#deleteAddressModal"
                                 data-id="${address.address.ID}"
                                 data-url="${pdict.actionUrls.deleteActionUrl}"
                                 aria-label="${Resource.msg('label.addressbook.deleteaddress','account',null)}"
@@ -66,7 +66,9 @@
                         </a>
                     </div>
                     <div class="col">
-                        <a href="${URLUtils.url('Address-AddAddress')}" class="btn btn-save btn-block btn-primary" aria-label="${Resource.msg('label.addressbook.addnewaddress','account',null)}">${Resource.msg('button.addnew','account',null)}</a>
+                        <div class="d-grid">
+                            <a href="${URLUtils.url('Address-AddAddress')}" class="btn btn-save btn-primary" aria-label="${Resource.msg('label.addressbook.addnewaddress','account',null)}">${Resource.msg('button.addnew','account',null)}</a>
+                        </div>
                     </div>
                 </div>
             </div>

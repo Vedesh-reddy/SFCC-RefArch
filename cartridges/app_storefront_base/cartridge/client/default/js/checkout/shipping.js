@@ -464,8 +464,7 @@ function updateMultiShipInformation(order) {
 function createErrorNotification(message) {
     var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error '
     + 'fade show" role="alert">'
-    + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-    + '<span aria-hidden="true">&times;</span>'
+    + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">'
     + '</button>' + message + '</div>';
 
     $('.shipping-error').append(errorHtml);

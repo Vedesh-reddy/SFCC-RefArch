@@ -11,7 +11,7 @@
     </div>
 
     <div class="container home-categories homepage">
-        <div class="row home-main-categories no-gutters">
+        <div class="row home-main-categories g-0">
             <isslot id="home-categories-m" description="Categories slots on the home page." context="global" />
         </div>
     </div>
@@ -32,9 +32,7 @@
                     <div class="col-sm-5">
                         <div class="input-group">
                             <input type="text" class="form-control" name="hpEmailSignUp" placeholder="${Resource.msg('placeholdertext.form.emailsignup', 'homePage', null)}" aria-label="${Resource.msg('placeholdertext.form.emailsignup', 'homePage', null)}">
-                            <span class="input-group-append">
-                                <button type="submit" class="btn btn-primary subscribe-email" data-href="${URLUtils.url('EmailSubscribe-Subscribe')}">${Resource.msg('button.form.emailsignup', 'homePage', null)} </button>
-                            </span>
+                            <button type="submit" class="btn btn-primary subscribe-email" data-href="${URLUtils.url('EmailSubscribe-Subscribe')}">${Resource.msg('button.form.emailsignup', 'homePage', null)} </button>
                         </div>
                     </div>
                     <div class="col-sm-7 email-description">${Resource.msg('description.form.emailsignup', 'homePage', null)}</div>

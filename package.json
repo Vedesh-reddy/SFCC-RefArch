@@ -103,8 +103,9 @@
     "xml2js": "^0.4.22"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.8",
     "autoprefixer": "^10.4.14",
-    "bootstrap": "^4.6.2",
+    "bootstrap": "^5.3.3",
     "cleave.js": "^1.5.3",
     "flag-icons": "7.1.0",
     "font-awesome": "^4.7.0",
@@ -112,7 +113,8 @@
   },
   "browserslist": [
     "last 2 versions",
-    "ie >= 10"
+    "not dead",
+    "not ie > 0"
   ],
   "packageName": "app_storefront_base",
   "babel": {

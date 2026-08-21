@@ -12,7 +12,7 @@
         padding-left: 0;
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         background-color: $white;
         box-shadow: 0 0.313em 0.938em rgba(0, 0, 0, 50%);
         display: none;
@@ -23,7 +23,7 @@
         z-index: 1;
     }
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         position: fixed;
         height: 100%;
     }
@@ -110,7 +110,7 @@
         }
     }
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         padding: 0;
     }
 
@@ -130,7 +130,7 @@
 
     button.reset {
 
-        @include media-breakpoint-down(sm) {
+        @include media-breakpoint-down(md) {
             float: right;
         }
     }
@@ -180,7 +180,7 @@
 .refinement {
     margin-bottom: 1em;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         &.card {
             border-top: 0 none;
             border-left: 0 none;
@@ -302,7 +302,7 @@
 
 .tab-content {
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         padding-left: 0;
         padding-right: 0;
     }
@@ -310,7 +310,7 @@
 
 .product-grid {
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         padding-top: 0.938em;
 
         .col-6 {
@@ -346,7 +346,7 @@
     .nav-tabs-wrapper {
         padding: 0;
 
-        @include media-breakpoint-down(xs) {
+        @include media-breakpoint-down(sm) {
             width: 100%;
         }
 

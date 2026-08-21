@@ -43,7 +43,7 @@ Template Notes:
                           style="background-image: url(${attrValue.images['swatch'][0].url})"
                     >
                     </span>
-                    <span id="${attrValue.id}" class="sr-only selected-assistive-text">
+                    <span id="${attrValue.id}" class="visually-hidden selected-assistive-text">
                         ${attrValue.selected ? Resource.msg('msg.assistive.selected.text', 'common', null) : ''}
                     </span>
                 </button>
@@ -57,7 +57,7 @@ Template Notes:
         </label>
 
         <!-- Attribute Values Drop Down Menu -->
-        <select class="custom-select form-control select-${attr.id}" id="bonus-${attr.id}-${productLoopStatus && productLoopStatus.count ? productLoopStatus.count : '1' }" ${ product.productType === "variant" ? "disabled" : "" }>
+        <select class="form-select select-${attr.id}" id="bonus-${attr.id}-${productLoopStatus && productLoopStatus.count ? productLoopStatus.count : '1' }" ${ product.productType === "variant" ? "disabled" : "" }>
             <option value="${attr.resetUrl}">
                 ${Resource.msg('label.select', 'common', null)} ${attr.displayName}
             </option>

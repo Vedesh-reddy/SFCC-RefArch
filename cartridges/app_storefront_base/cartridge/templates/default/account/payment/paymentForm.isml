@@ -7,25 +7,25 @@
     <!-- Credit Card Type -->
     <input type="hidden" class="form-control" id="cardType" value="" <isprint value="${pdict.paymentForm.cardType.attributes}" encoding="off" /> autocomplete="cc-type">
 
-    <div class="form-group custom-control custom-radio">
+    <div class="mb-3 form-check">
         <input
             id="paymentOption-Credit"
             name="paymentOption-Credit"
             type="radio"
-            class="custom-control-input"
+            class="form-check-input"
             checked
             <isprint value="${pdict.paymentForm.paymentMethod.attributes}" encoding="off" />
         >
-        <label for="paymentOption-Credit" class="custom-control-label">
+        <label for="paymentOption-Credit" class="form-check-label">
             <span>${Resource.msg('label.payment.credit','payment',null)}</span>
         </label>
         <div class="invalid-feedback"></div>
     </div>
 
     <!-- Name on Card -->
-    <div class="form-group
+    <div class="mb-3
         <isif condition="${pdict.paymentForm.cardOwner.mandatory === true}">required</isif>">
-        <label class="form-control-label" for="cardOwner">
+        <label class="form-label" for="cardOwner">
             <isprint value="${pdict.paymentForm.cardOwner.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="cardOwner"
@@ -38,9 +38,9 @@
 
 
     <!-- Card Number -->
-    <div class="form-group
+    <div class="mb-3
         <isif condition="${pdict.paymentForm.cardNumber.mandatory === true}">required</isif>">
-        <label class="form-control-label" for="cardNumber">
+        <label class="form-label" for="cardNumber">
             <isprint value="${pdict.paymentForm.cardNumber.label}" encoding="htmlcontent" />
         </label>
         <div class="card-number-wrapper">
@@ -56,12 +56,12 @@
     <!-- Month -->
     <div class="row">
         <div class="col-6">
-            <div class="form-group
+            <div class="mb-3
                 <isif condition="${pdict.paymentForm.expirationMonth.mandatory === true}">required</isif>">
-                <label class="form-control-label" for="month">
+                <label class="form-label" for="month">
                     <isprint value="${pdict.paymentForm.expirationMonth.label}" encoding="htmlcontent" />
                 </label>
-                <select class="form-control custom-select" id="month" <isprint value="${pdict.paymentForm.expirationMonth.attributes}" encoding="off" /> autocomplete="cc-exp-month">
+                <select class="form-select" id="month" <isprint value="${pdict.paymentForm.expirationMonth.attributes}" encoding="off" /> autocomplete="cc-exp-month">
                     <isloop items=${pdict.paymentForm.expirationMonth.options} var="month">
                         <option id="${month.id}" value="${month.htmlValue}" <isif condition="${month.selected}">selected</isif> >${month.label}</option>
                     </isloop>
@@ -73,12 +73,12 @@
         </div>
 
         <div class="col-6">
-            <div class="form-group
+            <div class="mb-3
                 <isif condition="${pdict.paymentForm.expirationYear.mandatory === true}">required</isif>">
-                <label class="form-control-label" for="year">
+                <label class="form-label" for="year">
                     <isprint value="${pdict.paymentForm.expirationYear.label}" encoding="htmlcontent" />
                 </label>
-                <select class="form-control custom-select" id="year" <isprint value="${pdict.paymentForm.expirationYear.attributes}" encoding="off" /> autocomplete="cc-exp-year">
+                <select class="form-select" id="year" <isprint value="${pdict.paymentForm.expirationYear.attributes}" encoding="off" /> autocomplete="cc-exp-year">
                     <option value="${pdict.paymentForm.expirationYear.options[0].htmlValue}">${pdict.paymentForm.expirationYear.options[0].label}</option>
                     <isloop items=${pdict.expirationYears} var="year">
                         <option id="${year}" value="${year}" <isif condition="${year == pdict.paymentForm.expirationYear.value}">selected</isif> >${year}</option>
@@ -90,9 +90,9 @@
     </div>
 
     <div class="make-default-payment">
-        <div class="form-group custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="makeDefaultPayment" name="makeDefaultPayment">
-            <label class="custom-control-label" for="makeDefaultPayment">
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="makeDefaultPayment" name="makeDefaultPayment">
+            <label class="form-check-label" for="makeDefaultPayment">
                 ${Resource.msg('label.payment.checkbox.makedefault', 'payment', null)}
             </label>
         </div>
@@ -103,10 +103,14 @@
     <!-- Cancel and Save Buttons -->
     <div class="row">
         <div class="col">
-            <a href="${URLUtils.url('PaymentInstruments-List')}" class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
+            <div class="d-grid">
+                <a href="${URLUtils.url('PaymentInstruments-List')}" class="btn btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
+            </div>
         </div>
         <div class="col">
-            <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save','account',null)}</button>
+            <div class="d-grid">
+                <button type="submit" name="save" class="btn btn-save btn-primary">${Resource.msg('button.save','account',null)}</button>
+            </div>
         </div>
     </div>
 

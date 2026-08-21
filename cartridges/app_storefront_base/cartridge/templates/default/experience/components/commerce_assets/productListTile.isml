@@ -23,7 +23,7 @@
                 <figcaption>
                     <div class="image-heading-container common-image-height">
                         <div class="row ITC-image-heading-text">
-                            <div class="col-12 text-sm-left text-center">
+                            <div class="col-12 text-sm-start text-center">
                                 <span>
                                     <isprint value="${pdict.heading ? pdict.heading : ''}" encoding="off"/>
                                 </span>

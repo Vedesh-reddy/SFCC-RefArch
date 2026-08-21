@@ -1,8 +1,8 @@
 <div class="card">
     <div class="card-header clearfix">
-        <h4 class="pull-left">${Resource.msg('label.addressbook','account',null)}</h4>
+        <h4 class="float-start">${Resource.msg('label.addressbook','account',null)}</h4>
         <isif condition="${pdict.account.preferredAddress}">
-            <a href="${URLUtils.url('Address-List')}" class="pull-right" aria-label="${Resource.msg('label.addressbook.viewaddress','account',null)}">${Resource.msg('link.view','account',null)}</a>
+            <a href="${URLUtils.url('Address-List')}" class="float-end" aria-label="${Resource.msg('label.addressbook.viewaddress','account',null)}">${Resource.msg('link.view','account',null)}</a>
         </isif>
     </div>
     <isif condition="${pdict.account.preferredAddress}">

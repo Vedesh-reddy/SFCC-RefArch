@@ -99,13 +99,13 @@ module.exports = {
                             .append('<p>' + data.receivedMsgBody + '</p>');
                         if (!data.mobile) {
                             $('#submitEmailButton').text(data.buttonText)
-                                .attr('data-dismiss', 'modal');
+                                .attr('data-bs-dismiss', 'modal');
                         } else {
                             $('.send-email-btn').empty()
-                                .html('<a href="'
+                                .html('<div class="d-grid"><a href="'
                                     + data.returnUrl
-                                    + '" class="btn btn-primary btn-block">'
-                                    + data.buttonText + '</a>');
+                                    + '" class="btn btn-primary">'
+                                    + data.buttonText + '</a></div>');
                         }
                     }
                 },

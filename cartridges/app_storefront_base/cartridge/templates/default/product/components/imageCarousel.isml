@@ -1,12 +1,12 @@
 <div class="primary-images col-12 col-sm-6">
-    <div id="pdpCarousel-${product.id}" class="carousel slide" data-interval="0" data-prev="${Resource.msg('button.previous', 'common', null)}" data-next="${Resource.msg('button.next', 'common', null)}">
+    <div id="pdpCarousel-${product.id}" class="carousel slide" data-bs-interval="0" data-prev="${Resource.msg('button.previous', 'common', null)}" data-next="${Resource.msg('button.next', 'common', null)}">
         <isif condition="${product.images['large'].length > 1}">
-            <ol class="carousel-indicators" aria-hidden="true">
+            <div class="carousel-indicators">
                 <isloop items="${product.images['large']}" var="image" status="loopStatus">
-                    <li data-target="${"#"}pdpCarousel-${product.id}" data-slide-to="${loopStatus.index}" class='<isif condition="${loopStatus.index == 0}">active</isif>'>
-                    </li>
+                    <button type="button" data-bs-target="${"#"}pdpCarousel-${product.id}" data-bs-slide-to="${loopStatus.index}" class='<isif condition="${loopStatus.index == 0}">active</isif>'>
+                    </button>
                 </isloop>
-            </ol>
+            </div>
         </isif>
 
         <div class="carousel-inner" role="listbox">
@@ -17,13 +17,13 @@
             </isloop>
         </div>
         <isif condition="${product.images['large'].length > 1}">
-            <a class="carousel-control-prev" href="${"#"}pdpCarousel-${product.id}" role="button" data-slide="prev">
+            <a class="carousel-control-prev" href="${"#"}pdpCarousel-${product.id}" role="button" data-bs-slide="prev">
                 <span class="fa icon-prev" aria-hidden="true"></span>
-                <span class="sr-only">${Resource.msg('button.previous', 'common', null)}</span>
+                <span class="visually-hidden">${Resource.msg('button.previous', 'common', null)}</span>
             </a>
-            <a class="carousel-control-next" href="${"#"}pdpCarousel-${product.id}" role="button" data-slide="next">
+            <a class="carousel-control-next" href="${"#"}pdpCarousel-${product.id}" role="button" data-bs-slide="next">
                 <span class="fa icon-next" aria-hidden="true"></span>
-                <span class="sr-only">${Resource.msg('button.next', 'common', null)}</span>
+                <span class="visually-hidden">${Resource.msg('button.next', 'common', null)}</span>
             </a>
         </isif>
     </div>

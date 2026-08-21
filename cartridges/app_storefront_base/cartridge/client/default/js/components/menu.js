@@ -6,10 +6,26 @@ var clearSelection = function (element) {
     $(element).closest('.dropdown').children('.dropdown-menu').children('.top-category')
         .detach();
     $(element).closest('.dropdown.show').children('.nav-link').attr('aria-expanded', 'false');
-    $(element).closest('.dropdown.show').children('.dropdown-menu').attr('aria-hidden', 'true');
     $(element).closest('.dropdown.show').removeClass('show');
     $('div.menu-group > ul.nav.navbar-nav > li.nav-item > a').attr('aria-hidden', 'false');
     $(element).closest('li').detach();
+};
+
+var openTopLevelMenu = function (menuItem, e) {
+    if (!menuItem.hasClass('dropdown')) { // leaf category — let the browser follow the link
+        return;
+    }
+    if (e) {
+        e.preventDefault();
+    }
+    $('.navbar-nav .show').removeClass('show')
+        .children('.dropdown-menu')
+        .removeClass('show');
+    menuItem.addClass('show').children('.dropdown-menu').addClass('show');
+    menuItem.children('.nav-link').attr('aria-expanded', 'true');
+    menuItem.find('ul > li > a')
+        .first()
+        .focus();
 };
 
 module.exports = function () {
@@ -18,7 +34,7 @@ module.exports = function () {
     };
 
     var headerBannerStatus = window.sessionStorage.getItem('hide_header_banner');
-    $('.header-banner .close').on('click', function () {
+    $('.header-banner .btn-close').on('click', function () {
         $('.header-banner').addClass('d-none');
         window.sessionStorage.setItem('hide_header_banner', '1');
     });
@@ -30,15 +46,19 @@ module.exports = function () {
     keyboardAccessibility(
         '.main-menu .nav-link, .main-menu .dropdown-link',
         {
-            40: function (menuItem) { // down
+            13: function (menuItem, e) { // enter
                 if (menuItem.hasClass('nav-item')) { // top level
-                    $('.navbar-nav .show').removeClass('show')
-                        .children('.dropdown-menu')
-                        .removeClass('show');
-                    menuItem.addClass('show').children('.dropdown-menu').addClass('show');
-                    menuItem.find('ul > li > a')
-                        .first()
-                        .focus();
+                    openTopLevelMenu(menuItem, e);
+                }
+            },
+            32: function (menuItem, e) { // space
+                if (menuItem.hasClass('nav-item')) { // top level
+                    openTopLevelMenu(menuItem, e);
+                }
+            },
+            40: function (menuItem, e) { // down
+                if (menuItem.hasClass('nav-item')) { // top level
+                    openTopLevelMenu(menuItem, e);
                 } else {
                     menuItem.removeClass('show').children('.dropdown-menu').removeClass('show');
                     if (!(menuItem.next().length > 0)) { // if this is the last menuItem
@@ -106,14 +126,13 @@ module.exports = function () {
         }
     );
 
-    $('.dropdown:not(.disabled) [data-toggle="dropdown"]')
+    $('.dropdown:not(.disabled) > .dropdown-toggle')
         .on('click', function (e) {
             if (!isDesktop(this)) {
                 $('.modal-background').show();
                 // copy parent element into current UL
                 var li = $('<li class="dropdown-item top-category" role="button"></li>');
                 var link = $(this).clone().removeClass('dropdown-toggle')
-                    .removeAttr('data-toggle')
                     .removeAttr('aria-expanded')
                     .attr('aria-haspopup', 'false');
                 li.append(link);
@@ -121,8 +140,7 @@ module.exports = function () {
                 closeMenu.append($('.close-menu').first().clone());
                 $(this).parent().children('.dropdown-menu')
                     .prepend(li)
-                    .prepend(closeMenu)
-                    .attr('aria-hidden', 'false');
+                    .prepend(closeMenu);
                 // copy navigation menu into view
                 $(this).parent().addClass('show');
                 $(this).attr('aria-expanded', 'true');

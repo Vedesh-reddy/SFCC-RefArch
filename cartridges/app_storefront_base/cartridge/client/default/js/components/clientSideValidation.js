@@ -55,7 +55,7 @@ module.exports = {
                 if (this.validity.valueMissing && $(this).data('missing-error')) {
                     validationMessage = $(this).data('missing-error');
                 }
-                $(this).parents('.form-group').find('.invalid-feedback')
+                $(this).parents('.mb-3').find('.invalid-feedback')
                     .text(validationMessage);
             }
         });

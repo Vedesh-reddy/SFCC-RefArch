@@ -65,6 +65,10 @@ $menu-item-margin: 0.625em;
     .user {
         position: relative;
 
+        > a {
+            text-decoration: none;
+        }
+
         .popover {
             position: absolute;
             display: none;
@@ -108,7 +112,7 @@ $menu-item-margin: 0.625em;
         padding-top: 0.5em;
     }
 
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
         width: 4em; /* 64/16 */
         margin-left: -2em;
         padding-top: 0.8em;
@@ -134,9 +138,8 @@ $menu-item-margin: 0.625em;
     .close-button {
         width: 1.5em + $banner-padding * 2;
 
-        .close {
+        .btn-close {
             opacity: 1;
-            color: $white;
             width: 100%;
             height: 100%;
             background-color: #{var(--skin-primary-color-1)};

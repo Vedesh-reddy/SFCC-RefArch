@@ -147,3 +147,7 @@ To workaround this:
 # Page Designer Components for Storefront Reference Architecture
 
 See: [Page Designer Components](./page-designer-components.md)
+
+# Bootstrap 5 Migration
+
+See: [Bootstrap 5 Migration Guide](./bootstrap-5-migration.md)

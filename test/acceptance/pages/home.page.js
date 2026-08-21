@@ -19,7 +19,7 @@ module.exports = {
         searchStoreBtn: '.btn-storelocator-search',
         searchStoreResults: '.results.striped',
         searchStoreCard: '.card-body',
-        searchStoreRadius: '.form-control.custom-select.radius'
+        searchStoreRadius: '.form-select.radius'
     },
     accept() {
         within(this.locators.consentTrackModal, () => {

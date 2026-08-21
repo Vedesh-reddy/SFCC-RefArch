@@ -9,9 +9,9 @@
                 class="checkout-registration"
                 method="POST"
                 name="checkout-register-form" ${pdict.passwordForm.attributes} novalidate>
-                <div class="form-group
+                <div class="mb-3
                     <isif condition="${pdict.passwordForm.newpassword.mandatory === true}">required</isif>">
-                    <label class="form-control-label" for="newPassword">
+                    <label class="form-label" for="newPassword">
                         ${Resource.msg('field.password','confirmation',null)}
                     </label>
                     <input
@@ -23,9 +23,9 @@
                         <isprint value="${pdict.passwordForm.newpassword.attributes}" encoding="off" />>
                     <div class="invalid-feedback"></div>
                 </div>
-                <div class="form-group
+                <div class="mb-3
                     <isif condition="${pdict.passwordForm.newpasswordconfirm.mandatory === true}">required</isif>">
-                    <label class="form-control-label" for="newPasswordConfirm">
+                    <label class="form-label" for="newPasswordConfirm">
                         ${Resource.msg('field.confirm.password','confirmation',null)}
                     </label>
                     <input
@@ -42,9 +42,11 @@
 
                 <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
 
-                <button class="btn btn-primary btn-block">
-                    ${Resource.msg('button.create.account','confirmation',null)}
-                </button>
+                <div class="d-grid">
+                    <button class="btn btn-primary">
+                        ${Resource.msg('button.create.account','confirmation',null)}
+                    </button>
+                </div>
             </form>
         </div>
     </div>

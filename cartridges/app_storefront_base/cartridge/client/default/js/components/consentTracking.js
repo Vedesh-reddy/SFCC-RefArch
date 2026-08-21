@@ -1,7 +1,5 @@
 'use strict';
 
-var focusHelper = require('../components/focus');
-
 /**
  * Renders a modal window that will track the users consenting to accepting site tracking policy
  */
@@ -31,10 +29,10 @@ function showConsentModal() {
         + '<div class="modal-body"></div>'
         + '<div class="modal-footer">'
         + '<div class="button-wrapper">'
-        + '<button class="affirm btn btn-primary" data-url="' + urlAccept + '" autofocus data-dismiss="modal">'
+        + '<button class="affirm btn btn-primary" data-url="' + urlAccept + '" autofocus data-bs-dismiss="modal">'
         + textYes
         + '</button>'
-        + '<button class="decline btn btn-primary" data-url="' + urlReject + '" data-dismiss="modal" >'
+        + '<button class="decline btn btn-primary" data-url="' + urlReject + '" data-bs-dismiss="modal" >'
         + textNo
         + '</button>'
         + '</div>'
@@ -51,7 +49,7 @@ function showConsentModal() {
         dataType: 'html',
         success: function (response) {
             $('.modal-body').html(response);
-            $('#consent-tracking').modal('show');
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('consent-tracking')).show();
         },
         error: function () {
             $('#consent-tracking').remove();
@@ -97,22 +95,14 @@ module.exports = function () {
     }
 
     $('body').on('shown.bs.modal', '#consent-tracking', function () {
-        $('#consent-tracking').siblings().attr('aria-hidden', 'true');
         $('#consent-tracking .affirm').focus();
     });
 
-    $('body').on('hidden.bs.modal', '#consent-tracking', function () {
-        $('#consent-tracking').siblings().attr('aria-hidden', 'false');
-    });
-
-    $('body').on('keydown', '#consent-tracking', function (e) {
-        var focusParams = {
-            event: e,
-            containerSelector: '#consent-tracking',
-            firstElementSelector: '.affirm',
-            lastElementSelector: '.decline',
-            nextToLastElementSelector: '.affirm'
-        };
-        focusHelper.setTabNextFocus(focusParams);
+    $('body').on('hide.bs.modal', '#consent-tracking', function () {
+        // BS5 sets aria-hidden on the modal root while the affirm/decline button
+        // still holds focus, tripping a WCAG focus-order warning; drop focus before then.
+        if (this.contains(document.activeElement)) {
+            document.activeElement.blur();
+        }
     });
 };

@@ -37,7 +37,7 @@
 .half-height {
     min-height: 23.125em;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         min-height: 15.375em;
     }
 }
@@ -45,7 +45,7 @@
 .full-height {
     min-height: 51.725em;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         min-height: 35.375em;
     }
 
@@ -61,7 +61,7 @@
         background-size: auto 100%;
     }
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(md) {
         background-position-y: 8%;
     }
 }
@@ -82,11 +82,11 @@
     background-position-y: 60%;
     min-height: 28.65em;
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         min-height: 15.375em;
     }
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         background-position: 45% 85%;
     }
 }
@@ -111,18 +111,18 @@
         text-align: center;
         border: 0;
 
-        @include media-breakpoint-down(xs) {
+        @include media-breakpoint-down(sm) {
             min-height: 20.375em;
         }
 
         span {
             font-size: 1em;
 
-            @include media-breakpoint-down(sm) {
+            @include media-breakpoint-down(md) {
                 font-size: 0.85em;
             }
 
-            @include media-breakpoint-down(xs) {
+            @include media-breakpoint-down(sm) {
                 font-size: 0.65em;
             }
         }
@@ -132,13 +132,13 @@
             font-size: 5.5em;
             font-weight: 200;
 
-            @include media-breakpoint-down(lg) { font-size: 4.5em; }
+            @include media-breakpoint-down(xl) { font-size: 4.5em; }
 
-            @include media-breakpoint-down(md) { font-size: 3.4em; }
+            @include media-breakpoint-down(lg) { font-size: 3.4em; }
 
-            @include media-breakpoint-down(sm) { font-size: 3em; }
+            @include media-breakpoint-down(md) { font-size: 3em; }
 
-            @include media-breakpoint-down(xs) { font-size: 2.5em; }
+            @include media-breakpoint-down(sm) { font-size: 2.5em; }
         }
 
         a {

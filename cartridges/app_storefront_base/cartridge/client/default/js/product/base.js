@@ -233,20 +233,23 @@ function updateOptions(optionsHtml, $productContainer) {
  */
 function createCarousel(imgs, $productContainer) {
     var carousel = $productContainer.find('.carousel');
-    $(carousel).carousel('dispose');
+    var carouselEl = carousel[0];
+    var existingCarousel = bootstrap.Carousel.getInstance(carouselEl);
+    if (existingCarousel) {
+        existingCarousel.dispose();
+    }
     var carouselId = $(carousel).attr('id');
-    $(carousel).empty().append('<ol class="carousel-indicators"></ol><div class="carousel-inner" role="listbox"></div><a class="carousel-control-prev" href="#' + carouselId + '" role="button" data-slide="prev"><span class="fa icon-prev" aria-hidden="true"></span><span class="sr-only">' + $(carousel).data('prev') + '</span></a><a class="carousel-control-next" href="#' + carouselId + '" role="button" data-slide="next"><span class="fa icon-next" aria-hidden="true"></span><span class="sr-only">' + $(carousel).data('next') + '</span></a>');
+    $(carousel).empty().append('<div class="carousel-indicators"></div><div class="carousel-inner" role="listbox"></div><a class="carousel-control-prev" href="#' + carouselId + '" role="button" data-bs-slide="prev"><span class="fa icon-prev" aria-hidden="true"></span><span class="visually-hidden">' + $(carousel).data('prev') + '</span></a><a class="carousel-control-next" href="#' + carouselId + '" role="button" data-bs-slide="next"><span class="fa icon-next" aria-hidden="true"></span><span class="visually-hidden">' + $(carousel).data('next') + '</span></a>');
     for (var i = 0; i < imgs.length; i++) {
         $('<div class="carousel-item"><img src="' + imgs[i].url + '" class="d-block img-fluid" alt="' + imgs[i].alt + ' image number ' + parseInt(imgs[i].index, 10) + '" title="' + imgs[i].title + '" itemprop="image" /></div>').appendTo($(carousel).find('.carousel-inner'));
-        $('<li data-target="#' + carouselId + '" data-slide-to="' + i + '" class=""></li>').appendTo($(carousel).find('.carousel-indicators'));
+        $('<button type="button" data-bs-target="#' + carouselId + '" data-bs-slide-to="' + i + '" class=""></button>').appendTo($(carousel).find('.carousel-indicators'));
     }
     $($(carousel).find('.carousel-item')).first().addClass('active');
-    $($(carousel).find('.carousel-indicators > li')).first().addClass('active');
+    $($(carousel).find('.carousel-indicators > button')).first().addClass('active');
     if (imgs.length === 1) {
         $($(carousel).find('.carousel-indicators, a[class^="carousel-control-"]')).detach();
     }
-    $(carousel).carousel();
-    $($(carousel).find('.carousel-indicators')).attr('aria-hidden', true);
+    bootstrap.Carousel.getOrCreateInstance(carouselEl);
 }
 
 /**
@@ -412,7 +415,7 @@ function chooseBonusProducts(data) {
 
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="chooseBonusProductModal" tabindex="-1" role="dialog">'
-        + '<span class="enter-message sr-only" ></span>'
+        + '<span class="enter-message visually-hidden" ></span>'
         + '<div class="modal-dialog choose-bonus-product-dialog" '
         + 'data-total-qty="' + data.maxBonusItems + '"'
         + 'data-UUID="' + data.uuid + '"'
@@ -426,9 +429,8 @@ function chooseBonusProducts(data) {
         + '<div class="modal-content">'
         + '<div class="modal-header">'
         + '    <span class="">' + data.labels.selectprods + '</span>'
-        + '    <button type="button" class="close pull-right" data-dismiss="modal">'
-        + '        <span aria-hidden="true">&times;</span>'
-        + '        <span class="sr-only"> </span>'
+        + '    <button type="button" class="btn-close float-end" data-bs-dismiss="modal">'
+        + '        <span class="visually-hidden"> </span>'
         + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
@@ -447,10 +449,10 @@ function chooseBonusProducts(data) {
             var parsedHtml = parseHtml(response.renderedTemplate);
             $('#chooseBonusProductModal .modal-body').empty();
             $('#chooseBonusProductModal .enter-message').text(response.enterDialogMessage);
-            $('#chooseBonusProductModal .modal-header .close .sr-only').text(response.closeButtonText);
+            $('#chooseBonusProductModal .modal-header .btn-close .visually-hidden').text(response.closeButtonText);
             $('#chooseBonusProductModal .modal-body').html(parsedHtml.body);
             $('#chooseBonusProductModal .modal-footer').html(parsedHtml.footer);
-            $('#chooseBonusProductModal').modal('show');
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('chooseBonusProductModal')).show();
             $.spinner().stop();
         },
         error: function () {
@@ -560,14 +562,7 @@ module.exports = {
 
     focusChooseBonusProductModal: function () {
         $('body').on('shown.bs.modal', '#chooseBonusProductModal', function () {
-            $('#chooseBonusProductModal').siblings().attr('aria-hidden', 'true');
-            $('#chooseBonusProductModal .close').focus();
-        });
-    },
-
-    onClosingChooseBonusProductModal: function () {
-        $('body').on('hidden.bs.modal', '#chooseBonusProductModal', function () {
-            $('#chooseBonusProductModal').siblings().attr('aria-hidden', 'false');
+            $('#chooseBonusProductModal .btn-close').focus();
         });
     },
 
@@ -576,7 +571,7 @@ module.exports = {
             var focusParams = {
                 event: e,
                 containerSelector: '#chooseBonusProductModal',
-                firstElementSelector: '.close',
+                firstElementSelector: '.btn-close',
                 lastElementSelector: '.add-bonus-products'
             };
             focusHelper.setTabNextFocus(focusParams);
@@ -809,7 +804,7 @@ module.exports = {
                 success: function (data) {
                     $.spinner().stop();
                     if (data.error) {
-                        $('#chooseBonusProductModal').modal('hide');
+                        bootstrap.Modal.getOrCreateInstance(document.getElementById('chooseBonusProductModal')).hide();
                         if ($('.add-to-cart-messages').length === 0) {
                             $('body').append('<div class="add-to-cart-messages"></div>');
                         }
@@ -824,7 +819,7 @@ module.exports = {
                     } else {
                         $('.configure-bonus-product-attributes').html(data);
                         $('.bonus-products-step2').removeClass('hidden-xl-down');
-                        $('#chooseBonusProductModal').modal('hide');
+                        bootstrap.Modal.getOrCreateInstance(document.getElementById('chooseBonusProductModal')).hide();
 
                         if ($('.add-to-cart-messages').length === 0) {
                             $('body').append('<div class="add-to-cart-messages"></div>');

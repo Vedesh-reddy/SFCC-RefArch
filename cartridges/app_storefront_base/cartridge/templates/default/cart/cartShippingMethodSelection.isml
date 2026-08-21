@@ -1,7 +1,7 @@
 <div class="col-12">
-    <div class="form-group">
+    <div class="mb-3">
         <label for="shippingMethods">${Resource.msg('field.selectshippingmethod','cart',null)}</label>
-        <select class="custom-select form-control shippingMethods"
+        <select class="form-select shippingMethods"
                 id="shippingMethods" name="shippingMethods"
                 data-actionUrl="${pdict.actionUrls.selectShippingUrl}">
             <isloop items="${pdict.shipments[0].shippingMethods}" var="option">

@@ -24,7 +24,7 @@ body,
     color: var(--skin-banner-text-color-1);
 }
 
-.header-banner .close-button .close {
+.header-banner .close-button .btn-close {
     background-color: var(--skin-primary-color-1);
 }
 
@@ -43,7 +43,7 @@ h1.header.page-title::before {
     color: var(--skin-primary-color-1);
 }
 
-.custom-select {
+.form-select {
     background-color: var(--skin-selectbox-background-color-1);
     color: var(--skin-selectbox-text-color-1);
 }
@@ -95,6 +95,16 @@ a {
     background-color: #{var(--skin-primary-color-1)};
     border-color: #{var(--skin-primary-color-1)};
     color: var(--skin-primary-color-invert-1);
+
+    // BS5 drives .btn state text color from --bs-btn-*-color, which default to
+    // #000 for btn-primary. .btn:focus-visible and .btn:first-child:active read
+    // those, so a focused or pressed primary button (e.g. the autofocused Yes in
+    // the tracking-consent modal) flipped from the skin's white resting color to
+    // black. The resting `color` above doesn't touch the state vars; pin the
+    // active var to the same invert color so every non-hover state stays white.
+    // Hover is left to the intentional inverted swap in .btn-primary:hover below.
+    --bs-btn-hover-color: var(--skin-primary-color-invert-1);
+    --bs-btn-active-color: var(--skin-primary-color-invert-1);
 }
 
 .btn-primary:hover {
@@ -114,6 +124,17 @@ a {
 .btn-outline-primary {
     color: var(--skin-primary-color-1);
     border-color: var(--skin-primary-color-1);
+
+    // BS5's .btn:focus-visible repaints from the --bs-btn-hover-* vars, which for
+    // outline-primary default to a solid brand-blue fill with color-contrast() black
+    // text — so a keyboard-focused outline button lost its outline look entirely. Pin
+    // the hover vars back to the resting outline appearance (transparent fill, blue
+    // text and border) so focus keeps the outline plus BS5's focus ring. The explicit
+    // :hover rule below still overrides these vars, so actual hover keeps its filled
+    // swap; this only reaches the var-driven focus-visible state.
+    --bs-btn-hover-color: var(--skin-primary-color-1);
+    --bs-btn-hover-bg: transparent;
+    --bs-btn-hover-border-color: var(--skin-primary-color-1);
 }
 
 .btn-outline-primary:hover {

@@ -8,9 +8,11 @@
         <h2 class='text-center error-message'>${Resource.msg('message.page.not.found', 'error', null)}</h2>
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
-                <a href="${URLUtils.url('Home-Show')}" class="btn btn-primary btn-block error continue-shopping" role="button" aria-pressed="true">
-                    ${Resource.msg('button.continue.shopping', 'confirmation', null)}
-                </a>
+                <div class="d-grid">
+                    <a href="${URLUtils.url('Home-Show')}" class="btn btn-primary error continue-shopping" role="button" aria-pressed="true">
+                        ${Resource.msg('button.continue.shopping', 'confirmation', null)}
+                    </a>
+                </div>
             </div>
         </div>
     </div>

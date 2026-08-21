@@ -29,8 +29,7 @@ function validateBasket(data) {
         if (data.valid.message) {
             var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error '
                 + 'fade show" role="alert">'
-                + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-                + '<span aria-hidden="true">&times;</span>'
+                + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">'
                 + '</button>' + data.valid.message + '</div>';
 
             $('.cart-error').append(errorHtml);
@@ -109,8 +108,7 @@ function updateCartTotals(data) {
 function createErrorNotification(message) {
     var errorHtml = '<div class="alert alert-danger alert-dismissible valid-cart-error '
         + 'fade show" role="alert">'
-        + '<button type="button" class="close" data-dismiss="alert" aria-label="Close">'
-        + '<span aria-hidden="true">&times;</span>'
+        + '<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">'
         + '</button>' + message + '</div>';
 
     $('.cart-error').append(errorHtml);
@@ -199,18 +197,17 @@ function updateProductDetails(data, uuid) {
  */
 function getModalHtmlElement() {
     if ($('#editProductModal').length !== 0) {
-        $('#editProductModal').remove();
+        return;
     }
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="editProductModal" tabindex="-1" role="dialog">'
-        + '<span class="enter-message sr-only" ></span>'
+        + '<span class="enter-message visually-hidden" ></span>'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
         + '<div class="modal-content">'
         + '<div class="modal-header">'
-        + '    <button type="button" class="close pull-right" data-dismiss="modal">'
-        + '        <span aria-hidden="true">&times;</span>'
-        + '        <span class="sr-only"> </span>'
+        + '    <button type="button" class="btn-close float-end" data-bs-dismiss="modal">'
+        + '        <span class="visually-hidden"> </span>'
         + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
@@ -252,9 +249,9 @@ function fillModalElement(editProductUrl) {
             $('#editProductModal .modal-body').empty();
             $('#editProductModal .modal-body').html(parsedHtml.body);
             $('#editProductModal .modal-footer').html(parsedHtml.footer);
-            $('#editProductModal .modal-header .close .sr-only').text(data.closeButtonText);
+            $('#editProductModal .modal-header .btn-close .visually-hidden').text(data.closeButtonText);
             $('#editProductModal .enter-message').text(data.enterDialogMessage);
-            $('#editProductModal').modal('show');
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('editProductModal')).show();
             $('body').trigger('editproductmodal:ready');
             $.spinner().stop();
         },
@@ -608,19 +605,14 @@ module.exports = function () {
     });
 
     $('body').on('shown.bs.modal', '#editProductModal', function () {
-        $('#editProductModal').siblings().attr('aria-hidden', 'true');
-        $('#editProductModal .close').focus();
-    });
-
-    $('body').on('hidden.bs.modal', '#editProductModal', function () {
-        $('#editProductModal').siblings().attr('aria-hidden', 'false');
+        $('#editProductModal .btn-close').focus();
     });
 
     $('body').on('keydown', '#editProductModal', function (e) {
         var focusParams = {
             event: e,
             containerSelector: '#editProductModal',
-            firstElementSelector: '.close',
+            firstElementSelector: '.btn-close',
             lastElementSelector: '.update-cart-product-global',
             nextToLastElementSelector: '.modal-footer .quantity-select'
         };
@@ -722,7 +714,7 @@ module.exports = function () {
                 data: form,
                 dataType: 'json',
                 success: function (data) {
-                    $('#editProductModal').modal('hide');
+                    bootstrap.Modal.getOrCreateInstance(document.getElementById('editProductModal')).hide();
 
                     $('.coupons-and-promos').empty().append(data.cartModel.totals.discountsHtml);
                     updateCartTotals(data.cartModel);
@@ -761,5 +753,4 @@ module.exports = function () {
     base.addBonusProductsToCart();
     base.focusChooseBonusProductModal();
     base.trapChooseBonusProductModalFocus();
-    base.onClosingChooseBonusProductModal();
 };

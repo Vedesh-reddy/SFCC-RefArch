@@ -11,7 +11,7 @@
                 </isif>
             </label>
         </div>
-        <div class="col-3 text-right shipping-method-pricing end-lines">
+        <div class="col-3 text-end shipping-method-pricing end-lines">
             <span class="shipping-cost">${shippingMethod.shippingCost}</span>
         </div>
     </isloop>
@@ -28,7 +28,7 @@
             <span class="text-muted arrival-time" style="display:none"></span>
         </label>
     </div>
-    <div class="col-3 text-right shipping-method-pricing end-lines">
+    <div class="col-3 text-end shipping-method-pricing end-lines">
         <span class="shipping-cost"></span>
     </div>
 </div>

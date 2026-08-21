@@ -46,11 +46,15 @@ $checkout-font-weight: 600;
     padding-right: 0;
     padding-left: 0;
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         background-color: rgba(255, 255, 255, 95%);
         box-shadow: 0 2px 10px rgba(0, 0, 0, 20%);
 
-        div {
+        // Pad only the direct wrapper. Bootstrap 5 dropped .btn-block, so each
+        // button is now wrapped in its own .d-grid; a descendant `div` selector
+        // would pad those inner wrappers too and stack padding around every
+        // button.
+        > div {
             padding: $spacer;
         }
     }

@@ -111,9 +111,9 @@ $(document).ready(function () {
             $(this).one('touchmove', function (touchMoveEvent) {
                 var xMove = touchMoveEvent.originalEvent.touches[0].pageX;
                 if (Math.floor(xClick - xMove) > 5) {
-                    $(this).carousel('next');
+                    bootstrap.Carousel.getOrCreateInstance(this).next();
                 } else if (Math.floor(xClick - xMove) < -5) {
-                    $(this).carousel('prev');
+                    bootstrap.Carousel.getOrCreateInstance(this).prev();
                 }
             });
             $('.experience-commerce_layouts-carousel .carousel, .experience-einstein-einsteinCarousel .carousel, .experience-einstein-einsteinCarouselCategory .carousel, .experience-einstein-einsteinCarouselProduct .carousel').on('touchend', function () {

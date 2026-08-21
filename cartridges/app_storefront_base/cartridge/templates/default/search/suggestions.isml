@@ -141,10 +141,10 @@
             <i class="fa fa-long-arrow-down" aria-hidden="true"></i>
         </li>
     </ul>
-    <span id="search-result-count" class="sr-only">
+    <span id="search-result-count" class="visually-hidden">
         ${pdict.suggestions.message}
     </span>
-    <span id="search-assistive-text" class="sr-only">
+    <span id="search-assistive-text" class="visually-hidden">
         ${Resource.msg('label.header.search.assistive_msg', 'common', null)}
     </span>
 </div>
