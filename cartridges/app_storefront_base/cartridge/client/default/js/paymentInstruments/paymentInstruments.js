@@ -4,6 +4,7 @@ var formValidation = require('../components/formValidation');
 var cleave = require('../components/cleave');
 
 var url;
+var csrfData;
 var location = window.location;
 
 module.exports = {
@@ -11,6 +12,8 @@ module.exports = {
         $('.remove-payment').on('click', function (e) {
             e.preventDefault();
             url = $(this).data('url') + '?UUID=' + $(this).data('id');
+            csrfData = {};
+            csrfData[$(this).data('token-name')] = $(this).data('token');
             $('.payment-to-remove').empty().append($(this).data('card'));
 
             $('.delete-confirmation-btn').click(function (f) {
@@ -18,8 +21,9 @@ module.exports = {
                 $('.remove-payment').trigger('payment:remove', f);
                 $.ajax({
                     url: url,
-                    type: 'get',
+                    type: 'post',
                     dataType: 'json',
+                    data: csrfData,
                     success: function (data) {
                         $('#uuid-' + data.UUID).remove();
                         if (data.message) {

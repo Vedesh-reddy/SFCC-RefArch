@@ -20,6 +20,8 @@
                             data-id="${paymentInstrument.UUID}"
                             data-card="${paymentInstrument.maskedCreditCardNumber}"
                             data-url="${pdict.actionUrl}"
+                            data-token-name="${pdict.csrf.tokenName}"
+                            data-token="${pdict.csrf.token}"
                             aria-label="${Resource.msg('label.payment.deletepayment','payment',null)}">
                             &times;
                         </button>

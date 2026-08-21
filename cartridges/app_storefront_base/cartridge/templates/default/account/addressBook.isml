@@ -37,7 +37,10 @@
                             <div>${address.address.phone}</div>
                             <isif condition="${address.address.ID !== pdict.addressBook[0].address.ID}">
                                 <div class="card-make-default-link">
-                                    <a href="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID)}" class="normal" aria-label="${Resource.msg('label.addressbook.makedefaultaddress','account',null)}">${Resource.msg('link.addressbook.makedefault','account',null)}</a>
+                                    <form action="${URLUtils.url('Address-SetDefault', 'addressId', address.address.ID)}" method="POST">
+                                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
+                                        <button type="submit" class="make-default-link" aria-label="${Resource.msg('label.addressbook.makedefaultaddress','account',null)}">${Resource.msg('link.addressbook.makedefault','account',null)}</button>
+                                    </form>
                                 </div>
                             </isif>
                             <button
@@ -47,6 +50,8 @@
                                 data-bs-target="#deleteAddressModal"
                                 data-id="${address.address.ID}"
                                 data-url="${pdict.actionUrls.deleteActionUrl}"
+                                data-token-name="${pdict.csrf.tokenName}"
+                                data-token="${pdict.csrf.token}"
                                 aria-label="${Resource.msg('label.addressbook.deleteaddress','account',null)}"
                                 <isprint value="${ address.address.ID == pdict.addressBook[0].address.ID ? 'data-default="true"' : '' }" encoding="off" />>
                                 &times;

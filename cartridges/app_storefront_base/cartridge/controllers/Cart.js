@@ -47,6 +47,16 @@ server.get('MiniCart', server.middleware.include, function (req, res, next) {
  * @param {returns} - json
  * @param {serverfunction} - post
  */
+// AddProduct intentionally omits CSRF validation, matching the same decision on
+// Wishlist-AddProduct. CSRF tokens expire after a short window (~30 minutes), but
+// shoppers routinely leave items in a cart or wishlist far longer and return to add
+// more, treating them as persistent lists. Enforcing a token here would reject the add
+// once the token expired, log the shopper out, and bounce them to a CSRF error page --
+// a guest would lose their cart and wishlist entirely and likely abandon the site. That
+// abandonment risk is judged worse than the abuse a forged add allows, whose
+// worst outcome is an unwanted item in the shopper's own cart (no account, order, or
+// payment state is touched). This is a long-standing, reviewed decision; do not add
+// csrfProtection here without revisiting that tradeoff.
 server.post('AddProduct', function (req, res, next) {
     var BasketMgr = require('dw/order/BasketMgr');
     var Resource = require('dw/web/Resource');

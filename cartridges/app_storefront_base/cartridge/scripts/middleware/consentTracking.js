@@ -20,12 +20,11 @@ function consent(req, res, next) {
 
     res.setViewData({ tracking_consent: consented });
 
-    // The endpoint ConsentTracking-SetConsent requires a CSRF token.
-    // It replaced ConsentTracking-SetSession, which didn't require a CSRF token,
-    // so this middleware is commonly used alongside `csrfProtection.generateToken`,
-    // rather than used exclusively. The order in which the two methods are executed
-    // is not guaranteed, so both methods check for the existence of `csrf` on the
-    // view data to avoid unnecessary work.
+    // Consent is submitted to a CSRF-protected endpoint, so this middleware is
+    // commonly listed alongside `csrfProtection.generateToken` rather than used
+    // exclusively. The order in which the two methods run is not guaranteed, so
+    // both check for the existence of `csrf` on the view data to avoid
+    // unnecessary work.
     var viewData = res.getViewData();
     if (viewData.csrf) {
         next();

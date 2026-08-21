@@ -4,6 +4,7 @@ var formValidation = require('../components/formValidation');
 
 var url;
 var isDefault;
+var csrfData;
 var location = window.location;
 
 /**
@@ -33,6 +34,8 @@ module.exports = {
             } else {
                 url = $(this).data('url') + '?addressId=' + $(this).data('id');
             }
+            csrfData = {};
+            csrfData[$(this).data('token-name')] = $(this).data('token');
             $('.product-to-remove').empty().text($(this).data('id'));
         });
     },
@@ -42,8 +45,9 @@ module.exports = {
             e.preventDefault();
             $.ajax({
                 url: url,
-                type: 'get',
+                type: 'post',
                 dataType: 'json',
+                data: csrfData,
                 success: function (data) {
                     $('#uuid-' + data.UUID).remove();
                     if (isDefault) {

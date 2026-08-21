@@ -120,13 +120,14 @@ function getExpirationYears() {
  * @name Base/PaymentInstruments-List
  * @function
  * @memberof PaymentInstruments
+ * @param {middleware} - csrfProtection.generateToken
  * @param {middleware} - userLoggedIn.validateLoggedIn
  * @param {middleware} - consentTracking.consent
  * @param {category} - sensitive
  * @param {renders} - isml
  * @param {serverfunction} - get
  */
-server.get('List', userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
+server.get('List', csrfProtection.generateToken, userLoggedIn.validateLoggedIn, consentTracking.consent, function (req, res, next) {
     var URLUtils = require('dw/web/URLUtils');
     var Resource = require('dw/web/Resource');
     var AccountModel = require('*/cartridge/models/account');
@@ -287,12 +288,14 @@ server.post('SavePayment', csrfProtection.validateAjaxRequest, function (req, re
  * @function
  * @memberof PaymentInstruments
  * @param {middleware} - userLoggedIn.validateLoggedInAjax
+ * @param {middleware} - csrfProtection.validateAjaxRequest
  * @param {querystringparameter} - UUID - the universally unique identifier of the payment instrument to be removed from the shopper's account
+ * @param {httpparameter} - csrf_token - CSRF token
  * @param {category} - sensitive
  * @param {returns} - json
- * @param {serverfunction} - get
+ * @param {serverfunction} - post
  */
-server.get('DeletePayment', userLoggedIn.validateLoggedInAjax, function (req, res, next) {
+server.post('DeletePayment', userLoggedIn.validateLoggedInAjax, csrfProtection.validateAjaxRequest, function (req, res, next) {
     var array = require('*/cartridge/scripts/util/array');
     var accountHelpers = require('*/cartridge/scripts/helpers/accountHelpers');
 
