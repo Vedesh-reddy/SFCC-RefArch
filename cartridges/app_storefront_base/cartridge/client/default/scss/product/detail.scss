@@ -30,7 +30,7 @@
         padding: 0;
         color: $grey6;
 
-        @include media-breakpoint-down(md) {
+        @include media-breakpoint-down(lg) {
             font-size: 1.5625em;
         }
 
@@ -148,7 +148,7 @@ label.availability {
     margin-left: -1rem;
     margin-bottom: 0;
 
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
         border-top: 1px solid $grey3;
     }
 }
@@ -196,7 +196,7 @@ label.availability {
 
 .product-grid {
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         padding-top: 0.938em;
 
         .col-6 {

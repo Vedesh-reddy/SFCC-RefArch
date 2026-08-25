@@ -2,6 +2,9 @@
     "env": {
         "jquery": true
     },
+    "globals": {
+        "bootstrap": "readonly"
+    },
     "rules": {
         "global-require": "off",
         "no-var": "off",

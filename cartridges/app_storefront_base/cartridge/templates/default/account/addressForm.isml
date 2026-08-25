@@ -4,9 +4,9 @@
     method="POST"
     <isprint value="${pdict.addressForm.attributes}" encoding="off" />>
     <!-- Address Title -->
-    <div class="form-group
+    <div class="mb-3
         ${pdict.addressForm.addressId.mandatory === true ? 'required' : ''}">
-        <label class="form-control-label" for="addressId">
+        <label class="form-label" for="addressId">
             <isprint value="${pdict.addressForm.addressId.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="addressId"
@@ -18,9 +18,9 @@
     <div class="row">
         <!-- First Name -->
         <div class="col-6">
-            <div class="form-group
+            <div class="mb-3
                 ${pdict.addressForm.firstName.mandatory === true ? 'required' : ''}">
-                <label class="form-control-label" for="firstName">
+                <label class="form-label" for="firstName">
                     <isprint value="${pdict.addressForm.firstName.label}" encoding="htmlcontent" />
                 </label>
                 <input type="text" class="form-control" id="firstName"
@@ -32,9 +32,9 @@
 
         <!-- Last Name -->
         <div class="col-6">
-            <div class="form-group
+            <div class="mb-3
                 ${pdict.addressForm.lastName.mandatory === true ? 'required' : ''}">
-                <label class="form-control-label" for="lastName">
+                <label class="form-label" for="lastName">
                     <isprint value="${pdict.addressForm.lastName.label}" encoding="htmlcontent" />
                 </label>
                 <input type="text" class="form-control" id="lastName"
@@ -46,9 +46,9 @@
     </div>
 
     <!-- Address 1 -->
-    <div class="form-group
+    <div class="mb-3
         ${pdict.addressForm.address1.mandatory === true ? 'required' : ''}">
-        <label class="form-control-label" for="address1">
+        <label class="form-label" for="address1">
             <isprint value="${pdict.addressForm.address1.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="address1"
@@ -58,9 +58,9 @@
     </div>
 
     <!-- Address 2 -->
-    <div class="form-group
+    <div class="mb-3
         ${pdict.addressForm.address2.mandatory === true ? 'required' : ''}">
-        <label class="form-control-label" for="address2">
+        <label class="form-label" for="address2">
             <isprint value="${pdict.addressForm.address2.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="address2"
@@ -73,12 +73,12 @@
     <div class="row">
         <!-- Country  -->
         <div class="col-6">
-            <div class="form-group
+            <div class="mb-3
                 ${pdict.addressForm.country.mandatory === true ? 'required' : ''}">
-                <label class="form-control-label" for="country">
+                <label class="form-label" for="country">
                     <isprint value="${pdict.addressForm.country.label}" encoding="htmlcontent" />
                 </label>
-                <select class="form-control" id="country"
+                <select class="form-select" id="country"
                     <isprint value="${pdict.addressForm.country.attributes}" encoding="off" />
                     autocomplete="country">
                     <isloop items=${pdict.addressForm.country.options} var="country">
@@ -91,12 +91,12 @@
 
         <!-- State  -->
         <div class="col-6">
-            <div class="form-group
+            <div class="mb-3
                 ${pdict.addressForm.states.stateCode.mandatory === true ? 'required' : ''}">
-                <label class="form-control-label" for="state">
+                <label class="form-label" for="state">
                     <isprint value="${pdict.addressForm.states.stateCode.label}" encoding="htmlcontent" />
                 </label>
-                <select class="form-control" id="state"
+                <select class="form-select" id="state"
                     <isprint value="${pdict.addressForm.states.stateCode.attributes}" encoding="off" />
                     autocomplete="address-level1">
                     <isloop items=${pdict.addressForm.states.stateCode.options} var="state">
@@ -112,9 +112,9 @@
     <div class="row">
         <div class="col-6">
         <!-- City  -->
-            <div class="form-group
+            <div class="mb-3
                 ${pdict.addressForm.city.mandatory === true ? 'required' : ''}">
-                <label class="form-control-label" for="city">
+                <label class="form-label" for="city">
                     <isprint value="${pdict.addressForm.city.label}" encoding="htmlcontent" />
                 </label>
                 <input type="text" class="form-control" id="city"
@@ -126,9 +126,9 @@
 
         <!-- ZIP Code -->
         <div class="col-6">
-            <div class="form-group
+            <div class="mb-3
                 ${pdict.addressForm.postalCode.mandatory === true ? 'required' : ''}">
-                <label class="form-control-label" for="zipCode">
+                <label class="form-label" for="zipCode">
                     <isprint value="${pdict.addressForm.postalCode.label}" encoding="htmlcontent" />
                 </label>
                 <input type="text" class="form-control" id="zipCode"
@@ -140,9 +140,9 @@
     </div>
 
     <!-- Phone Number -->
-    <div class="form-group
+    <div class="mb-3
         ${pdict.addressForm.phone.mandatory === true ? 'required' : ''}">
-        <label class="form-control-label" for="phone">
+        <label class="form-label" for="phone">
             <isprint value="${pdict.addressForm.phone.label}" encoding="htmlcontent" />
         </label>
         <input type="text" class="form-control" id="phone"
@@ -156,10 +156,14 @@
     <!-- Cancel and Save Buttons -->
     <div class="row">
         <div class="col-6">
-            <a href="${URLUtils.url('Address-List')}" class="btn btn-block btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
+            <div class="d-grid">
+                <a href="${URLUtils.url('Address-List')}" class="btn btn-outline-primary">${Resource.msg('button.cancel','account',null)}</a>
+            </div>
         </div>
         <div class="col-6">
-            <button type="submit" name="save" class="btn btn-save btn-block btn-primary">${Resource.msg('button.save','account',null)}</button>
+            <div class="d-grid">
+                <button type="submit" name="save" class="btn btn-save btn-primary">${Resource.msg('button.save','account',null)}</button>
+            </div>
         </div>
     </div>
 

@@ -1,11 +1,11 @@
-<div class="form-group">
-    <label class="form-control-label" for="shipmentSelector-${lineItem ? lineItem.UUID : 'default'}">
+<div class="mb-3">
+    <label class="form-label" for="shipmentSelector-${lineItem ? lineItem.UUID : 'default'}">
         ${Resource.msg('heading.ship.to.address', 'checkout', null)}
     </label>
 
     <select id="shipmentSelector-${lineItem ? lineItem.UUID : 'default'}"
             name="shipmentSelector"
-            class="addressSelector form-control custom-select"
+            class="addressSelector form-select"
             data-create-shipment-url="${URLUtils.https('CheckoutAddressServices-CreateNewAddress')}"
     >
         <isinclude template="checkout/shipping/shipmentSelectorOptions" />

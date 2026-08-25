@@ -1,6 +1,6 @@
 <label>${option.name}</label>
 
-<select class="options-select custom-select form-control">
+<select class="options-select form-select">
     <isloop items="${option.values}" var="value">
         <option data-value-id="${value.id}"
             value="${value.url}"

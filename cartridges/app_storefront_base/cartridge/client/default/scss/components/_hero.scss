@@ -87,7 +87,7 @@ h1.page-title {
         left: calc((100% - #{map-get($container-max-widths, md)}) / 2);
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         left: 0;
     }
 }

@@ -7,10 +7,10 @@
 
 <div class="row">
     <div class="col-12">
-        <div class="form-group
+        <div class="mb-3
             <isif condition=${creditFields.cardNumber.mandatory === true}>required</isif>
             ${creditFields.cardNumber.htmlName}">
-            <label class="form-control-label" for="cardNumber">${Resource.msg('field.credit.card.number','creditCard',null)}</label>
+            <label class="form-label" for="cardNumber">${Resource.msg('field.credit.card.number','creditCard',null)}</label>
             <div class="card-number-wrapper">
                 <input type="text" class="form-control cardNumber" id="cardNumber"
                     value="${pdict.order.billing.payment.selectedPaymentInstruments
@@ -29,11 +29,11 @@
 
 <div class="row">
     <div class="col-6">
-        <div class="form-group
+        <div class="mb-3
             <isif condition=${creditFields.expirationMonth.mandatory === true}>required</isif>
             ${creditFields.expirationMonth.htmlName}">
-            <label class="form-control-label" for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
-            <select class="form-control expirationMonth custom-select" id="expirationMonth"
+            <label class="form-label" for="expirationMonth">${Resource.msg('field.credit.card.expiration.month','creditCard',null)}</label>
+            <select class="expirationMonth form-select" id="expirationMonth"
                 <isprint value=${creditFields.expirationMonth.attributes} encoding="off"/>
                 autocomplete="cc-exp-month"
                 aria-describedby="expirationMonthInvalidMessage">
@@ -52,11 +52,11 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="form-group
+        <div class="mb-3
             <isif condition=${creditFields.expirationYear.mandatory === true}>required</isif>
             ${creditFields.expirationYear.htmlName}">
-            <label class="form-control-label" for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
-            <select class="form-control expirationYear custom-select" id="expirationYear"
+            <label class="form-label" for="expirationYear">${Resource.msg('field.credit.card.expiration.year','creditCard',null)}</label>
+            <select class="expirationYear form-select" id="expirationYear"
                 <isprint value=${creditFields.expirationYear.attributes} encoding="off"/>
                 autocomplete="cc-exp-year"
                 aria-describedby="expirationYearInvalidMessage">
@@ -78,14 +78,14 @@
 
 <div class="row">
     <div class="col-sm-6">
-        <div class="form-group
+        <div class="mb-3
             <isif condition=${creditFields.securityCode.mandatory === true}>required</isif>
             ${creditFields.securityCode.htmlName}">
-            <label class="form-control-label" for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
+            <label class="form-label" for="securityCode">${Resource.msg('field.credit.card.security.code','creditCard',null)}</label>
 
             <button type="button" class="info-icon">
                 <span class="icon" aria-hidden="true">i</span>
-                <span class="sr-only">${Resource.msg('button.help.assistive.text','common',null)}</span>
+                <span class="visually-hidden">${Resource.msg('button.help.assistive.text','common',null)}</span>
                 <span class="tooltip d-none">
                     ${Resource.msg('tooltip.security.code','creditCard',null)}
                 </span>
@@ -102,9 +102,9 @@
 <div class="row">
     <div class="col">
         <isif condition="${pdict.customer.registeredUser}">
-            <div class="save-credit-card custom-control custom-checkbox ">
-                <input type="checkbox" class="custom-control-input" id="saveCreditCard" name="${creditFields.saveCard.htmlName}" value="true" checked>
-                <label class="custom-control-label" for="saveCreditCard">
+            <div class="save-credit-card form-check ">
+                <input type="checkbox" class="form-check-input" id="saveCreditCard" name="${creditFields.saveCard.htmlName}" value="true" checked>
+                <label class="form-check-label" for="saveCreditCard">
                     ${creditFields.saveCard.label}
                 </label>
             </div>

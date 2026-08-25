@@ -9,19 +9,18 @@ var focusHelper = require('../components/focus');
  */
 function getModalHtmlElement() {
     if ($('#quickViewModal').length !== 0) {
-        $('#quickViewModal').remove();
+        return;
     }
     var htmlString = '<!-- Modal -->'
         + '<div class="modal fade" id="quickViewModal" role="dialog">'
-        + '<span class="enter-message sr-only" ></span>'
+        + '<span class="enter-message visually-hidden" ></span>'
         + '<div class="modal-dialog quick-view-dialog">'
         + '<!-- Modal content-->'
         + '<div class="modal-content">'
         + '<div class="modal-header">'
         + '    <a class="full-pdp-link" href=""></a>'
-        + '    <button type="button" class="close pull-right" data-dismiss="modal">'
-        + '        <span aria-hidden="true">&times;</span>'
-        + '        <span class="sr-only"> </span>'
+        + '    <button type="button" class="btn-close float-end" data-bs-dismiss="modal">'
+        + '        <span class="visually-hidden"> </span>'
         + '    </button>'
         + '</div>'
         + '<div class="modal-body"></div>'
@@ -72,9 +71,9 @@ function fillModalElement(selectedValueUrl) {
             $('.full-pdp-link').text(data.quickViewFullDetailMsg);
             $('#quickViewModal .full-pdp-link').attr('href', data.productUrl);
             $('#quickViewModal .size-chart').attr('href', data.productUrl);
-            $('#quickViewModal .modal-header .close .sr-only').text(data.closeButtonText);
+            $('#quickViewModal .modal-header .btn-close .visually-hidden').text(data.closeButtonText);
             $('#quickViewModal .enter-message').text(data.enterDialogMessage);
-            $('#quickViewModal').modal('show');
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('quickViewModal')).show();
             $('body').trigger('quickview:ready');
 
             $.spinner().stop();
@@ -97,7 +96,16 @@ module.exports = {
     },
     focusQuickview: function () {
         $('body').on('shown.bs.modal', '#quickViewModal', function () {
-            $('#quickViewModal .close').focus();
+            $('#quickViewModal .btn-close').focus();
+        });
+    },
+    blurQuickviewFocus: function () {
+        $('body').on('hide.bs.modal', '#quickViewModal', function () {
+            // BS5 sets aria-hidden on the modal root while .btn-close still holds
+            // focus, tripping a WCAG focus-order warning; drop focus before then.
+            if (this.contains(document.activeElement)) {
+                document.activeElement.blur();
+            }
         });
     },
     trapQuickviewFocus: function () {
@@ -121,7 +129,7 @@ module.exports = {
     },
     hideDialog: function () {
         $('body').on('product:afterAddToCart', function () {
-            $('#quickViewModal').modal('hide');
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('quickViewModal')).hide();
         });
     },
     beforeUpdateAttribute: function () {

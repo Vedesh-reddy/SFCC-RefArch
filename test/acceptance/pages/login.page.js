@@ -7,7 +7,8 @@ module.exports = {
         loginHomeScreen: 'span.user-message',
         emailLogin: '#login-form-email',
         passwordLogin: '#login-form-password',
-        primaryButton: '.btn.btn-block.btn-primary',
+        primaryButton: '.btn.btn-primary',
+        loginSubmit: '#login .btn.btn-primary',
         rememberMe: '.remember-me',
         createAccount: '#register-tab',
         firstName: '#registration-form-fname',
@@ -38,8 +39,8 @@ module.exports = {
         I.fillField(this.locators.passwordLogin, password);
 
         // click login
-        I.waitForElement(this.locators.primaryButton);
-        I.click(this.locators.primaryButton);
+        I.waitForElement(this.locators.loginSubmit);
+        I.click(this.locators.loginSubmit);
         I.wait(1);
     },
     createAccount(fName, lName, phone, email, password) {

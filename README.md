@@ -9,7 +9,7 @@ Your feedback on the ease-of-use and limitations of this new architecture is inv
 
 # The latest version
 
-The latest version of SFRA is 7.1.1
+The latest version of SFRA is 8.0.0
 
 # Getting Started
 
@@ -147,3 +147,7 @@ To workaround this:
 # Page Designer Components for Storefront Reference Architecture
 
 See: [Page Designer Components](./page-designer-components.md)
+
+# Bootstrap 5 Migration
+
+See: [Bootstrap 5 Migration Guide](./bootstrap-5-migration.md)

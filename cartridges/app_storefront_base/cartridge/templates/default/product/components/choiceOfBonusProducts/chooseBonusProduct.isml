@@ -25,20 +25,28 @@
     <div class="row align-items-end">
         <div class="col-sm-3 hidden-xs-down"></div>
         <div class="col-6 col-sm-3">
-            <button class="btn btn-block bonus-products-step1 btn-primary cancel-bonus-products">
-                ${Resource.msg('button.choiceofbonus.cancel', 'product', null)}
-            </button>
-            <button class="bonus-products-back btn btn-block btn-primary bonus-products-step2 hidden-xl-down">
-                ${Resource.msg('button.choiceofbonus.back', 'product', null)}
-            </button>
+            <div class="d-grid">
+                <button class="btn bonus-products-step1 btn-primary cancel-bonus-products">
+                    ${Resource.msg('button.choiceofbonus.cancel', 'product', null)}
+                </button>
+            </div>
+            <div class="d-grid">
+                <button class="bonus-products-back btn btn-primary bonus-products-step2 hidden-xl-down">
+                    ${Resource.msg('button.choiceofbonus.back', 'product', null)}
+                </button>
+            </div>
         </div>
         <div class="col-6 col-sm-3">
-            <button class="next-bonus-products btn btn-block btn-primary bonus-products-step1" data-selected-pids="" disabled="true">
-                ${Resource.msg('button.choiceofbonus.next', 'product', null)}
-            </button>
-            <button class="select-bonus-products btn btn-block btn-primary bonus-products-step2 hidden-xl-down">
-                ${Resource.msg('button.choiceofbonus.select', 'product', null)}
-            </button>
+            <div class="d-grid">
+                <button class="next-bonus-products btn btn-primary bonus-products-step1" data-selected-pids="" disabled="true">
+                    ${Resource.msg('button.choiceofbonus.next', 'product', null)}
+                </button>
+            </div>
+            <div class="d-grid">
+                <button class="select-bonus-products btn btn-primary bonus-products-step2 hidden-xl-down">
+                    ${Resource.msg('button.choiceofbonus.select', 'product', null)}
+                </button>
+            </div>
         </div>
         <div class="col-sm-3 hidden-xs-down"></div>
     </div>

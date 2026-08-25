@@ -27,7 +27,9 @@
                     </div>
                     <isif condition="${pdict.addPaymentUrl}">
                         <div class="col">
-                            <a href="${pdict.addPaymentUrl}" class="btn btn-save btn-block btn-primary" aria-label="${Resource.msg('label.payment.addnewpayment','payment',null)}">${Resource.msg('button.addnew','payment',null)}</a>
+                            <div class="d-grid">
+                                <a href="${pdict.addPaymentUrl}" class="btn btn-save btn-primary" aria-label="${Resource.msg('label.payment.addnewpayment','payment',null)}">${Resource.msg('button.addnew','payment',null)}</a>
+                            </div>
                         </div>
                     </isif>
                 </div>

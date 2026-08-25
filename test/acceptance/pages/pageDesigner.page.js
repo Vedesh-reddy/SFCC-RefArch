@@ -43,7 +43,7 @@ module.exports = {
 
         campaignBanner: '.campaign-banner',
         campaignBannerMessage: '.campaign-banner-message',
-        campaignBannerCloseButton: '.campaign-banner .close-button .close',
+        campaignBannerCloseButton: '.campaign-banner .close-button .campaign-banner-close',
 
         productTile1: prodTile1ComponentSel,
         productTile1Image: carousel2Item1Selector + ' .product-tile-image .product-tile-component-image',

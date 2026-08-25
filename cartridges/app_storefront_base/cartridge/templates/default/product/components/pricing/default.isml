@@ -6,11 +6,11 @@
         <del>
             <span class="strike-through list">
                 <span class="value" content="${price.decimalPrice}">
-                    <span class="sr-only">
+                    <span class="visually-hidden">
                         ${Resource.msg('label.price.reduced.from', 'pricing', null)}
                     </span>
                     <isinclude template="/product/components/pricing/formatted" />
-                    <span class="sr-only">
+                    <span class="visually-hidden">
                         ${Resource.msg('label.price.to', 'pricing', null)}
                     </span>
                 </span>

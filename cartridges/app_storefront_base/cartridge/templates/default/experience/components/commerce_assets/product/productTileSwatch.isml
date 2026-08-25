@@ -11,7 +11,7 @@
                                 style="background-image: url(${swatch.images.swatch[0].url});
                                 background-position:0px;background-color:transparent;"
                         >
-                            <span class="sr-only selected-assistive-text">
+                            <span class="visually-hidden selected-assistive-text">
                                 ${swatch.images.swatch[0].alt}
                             </span>
                         </button>

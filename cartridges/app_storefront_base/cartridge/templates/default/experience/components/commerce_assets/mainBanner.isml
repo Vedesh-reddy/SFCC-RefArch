@@ -20,14 +20,14 @@
                     </picture>
                     <figcaption class="image-heading-container">
                         <div class="row image-heading-text">
-                            <div class="col-12 text-sm-left text-center">
+                            <div class="col-12 text-sm-start text-center">
                                 <span>
                                     <isprint value="${pdict.heading}" encoding="off"/>
                                 </span>
                             </div>
                         </div>
                         <div class="row mainbanner-sub-text">
-                            <div class="col-12 text-sm-left text-center">
+                            <div class="col-12 text-sm-start text-center">
                                 <p class="link-large">${Resource.msg('pd.main.banner.shop.now','pageDesigner',null)}</p>
                             </div>
                         </div>

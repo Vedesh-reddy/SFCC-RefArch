@@ -70,6 +70,14 @@
     .modal-body {
         max-height: 28.125em; /* 450/16 */
         overflow-y: auto;
+
+        // A variation change that momentarily shortens the body toggles this
+        // scroll container's scrollbar off and on during the AJAX swap. With a
+        // space-consuming scrollbar that toggle shifts the body's content width
+        // by the scrollbar width, which cascades into the col-6 image column
+        // and, through the square carousel box below, into a visible height
+        // jump. Reserve the gutter so the width stays fixed across the swap.
+        scrollbar-gutter: stable;
     }
 
     button.close {
@@ -97,12 +105,12 @@
     }
 
     .bonus-summary {
-        @include media-breakpoint-down(sm) {
+        @include media-breakpoint-down(md) {
             font-size: 0.625em;
         }
 
         .bonus-product-name {
-            @include media-breakpoint-down(sm) {
+            @include media-breakpoint-down(md) {
                 padding: 0;
             }
         }
@@ -122,4 +130,29 @@
         display: block;
         margin-bottom: 0.5rem;
     }
+}
+
+// A variation change rebuilds the carousel via createCarousel(), which empties
+// .carousel-inner, appends fresh bare .carousel-item children, then marks the
+// first active. A just-swapped <img> has no resolved height until it decodes, so
+// without a reserved box the carousel height snaps once the image loads. Give
+// .carousel-inner a square box (RefArch product images are 1:1) and size the
+// image to fill it so height is stable before decode; object-fit letterboxes a
+// non-square variant and overflow clips any overshoot.
+/* stylelint-disable-next-line selector-id-pattern */
+#quickViewModal .primary-images .carousel-inner {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+}
+
+/* stylelint-disable-next-line selector-id-pattern */
+#quickViewModal .primary-images .carousel-item {
+    height: 100%;
+}
+
+/* stylelint-disable-next-line selector-id-pattern */
+#quickViewModal .primary-images .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }

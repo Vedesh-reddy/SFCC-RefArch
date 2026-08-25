@@ -1,0 +1,12 @@
+{
+    "name":"Component Wrapper Page",
+    "description":"A page type that renders a single component in isolation for the Page Designer editor iframe.",
+    "region_definitions":[
+      {
+        "id":"main",
+        "name":"Main Region",
+        "max_components": 1
+      }
+    ],
+    "preview": "default"
+}

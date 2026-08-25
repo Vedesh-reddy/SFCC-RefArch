@@ -77,22 +77,61 @@ dt {
     font-weight: normal;
 }
 
-.custom-checkbox .custom-control-label::before {
-    border: 1px solid black;
-    background: $grey1; /* For browsers that do not support gradients */
-    background: linear-gradient($grey1, $grey3); /* Standard syntax */
+// Preserve SFRA's branded checkbox/radio skin under Bootstrap 5's shared
+// .form-check-input. BS4 painted these on a label pseudo-element while
+// hiding the input; BS5 exposes the input as the drawn control, so the
+// branded gradient goes directly on the input, and BS5's --bs-form-check-bg-image
+// custom property renders the checkmark/dot on top when :checked.
+.form-check-input[type="checkbox"] {
+    border-color: black;
+    background-color: $grey1;
+    background-image: linear-gradient($grey1, $grey3);
+
+    &:checked {
+        border-color: black;
+        background-image: var(--bs-form-check-bg-image), linear-gradient($grey1, $grey3);
+    }
 }
 
-.custom-checkbox .custom-control-input:checked ~ .custom-control-label::after {
-    background-image: $svg-check;
-}
+.form-check-input[type="radio"] {
+    border-color: black;
+    background-color: $grey3;
+    background-image: linear-gradient($grey3, $grey5);
 
-.custom-radio .custom-control-label::before {
-    border: 1px solid black;
-    background: $grey3; /* For browsers that do not support gradients */
-    background: linear-gradient($grey3, $grey5); /* Standard syntax */
+    &:checked {
+        border-color: black;
+        background-image: var(--bs-form-check-bg-image), linear-gradient($grey3, $grey5);
+    }
 }
 
 .form-control.is-invalid {
     background-image: none;
+}
+
+// Promotion callout renders as a <button class="title callout btn"> so
+// collapse can toggle it; the BS4 baseline treated it as text, without
+// button chrome. BS5's .btn drives its border, background, and every
+// shadow from --bs-btn-* variables. This theme enables $enable-shadows,
+// so .btn carries an inset box-shadow at rest — a faint box around the
+// callout even when idle — on top of the hover/active background swap and
+// focus ring. Zero all of those variables on the callout so every state,
+// resting included, resolves to no chrome regardless of the selector
+// specificity BS5 uses (e.g. .btn:first-child:active:focus-visible), which
+// a plain :hover/:focus override cannot beat.
+// The hover/active text color must resolve to the button's own resting
+// color (--bs-btn-color), not `inherit`: inside the quick-view modal the
+// parent .promotions container is red, so `inherit` would repaint the
+// title red on click and keep it red while the button holds focus. The PDP
+// paints the callout red on purpose through a higher-specificity rule that
+// still wins here, so pinning to --bs-btn-color leaves PDP untouched.
+.callout.btn {
+    --bs-btn-box-shadow: none;
+    --bs-btn-hover-bg: transparent;
+    --bs-btn-hover-border-color: transparent;
+    --bs-btn-hover-color: var(--bs-btn-color);
+    --bs-btn-active-bg: transparent;
+    --bs-btn-active-border-color: transparent;
+    --bs-btn-active-color: var(--bs-btn-color);
+    --bs-btn-active-shadow: none;
+    --bs-btn-focus-box-shadow: none;
 }

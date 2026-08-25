@@ -6,9 +6,9 @@
 <div class="row">
     <div class="col-12">
         <form action="${pdict.actionUrls.submitCouponCodeUrl}" class="promo-code-form" method="GET" name="promo-code-form">
-            <div class="form-group">
-                <label for="couponCode">${Resource.msg('label.promo.code','cart',null)}</label>
-                <div class="row">
+            <div class="mb-3">
+                <label for="couponCode" class="form-label">${Resource.msg('label.promo.code','cart',null)}</label>
+                <div class="row align-items-start g-2">
                     <div class="col-7">
                         <input type="text" class="form-control coupon-code-field" id="couponCode" name="couponCode" placeholder="${Resource.msg('placholder.text.promo.code.input','cart',null)}">
                         <div class="coupon-error">
@@ -20,9 +20,11 @@
                     <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}"/>
 
                     <div class="col-5 promo-code-submit">
-                        <button type="submit" class="btn btn-primary btn-block promo-code-btn">
-                            ${Resource.msg('button.submit.promo.code','cart',null)}
-                        </button>
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary promo-code-btn">
+                                ${Resource.msg('button.submit.promo.code','cart',null)}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

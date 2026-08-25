@@ -1,6 +1,6 @@
 <isif condition="${pdict.localeModel.locale.localeLinks.length > 0}">
     <div class="dropdown country-selector" data-url="${URLUtils.url('Page-SetLocale')}" tabindex="0">
-        <span class="btn dropdown-toggle" id="dropdownCountrySelector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <span class="btn dropdown-toggle" id="dropdownCountrySelector" aria-haspopup="true" aria-expanded="false">
             <i class="fi fi-${pdict.localeModel.locale.countryCode.toLowerCase()}"></i>
             ${pdict.localeModel.locale.displayName}
         </span>

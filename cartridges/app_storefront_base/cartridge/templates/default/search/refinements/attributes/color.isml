@@ -5,7 +5,7 @@
               <isif condition="${!refinementValue.selectable}">disabled</isif>"
         >
         </span>
-        <span id="${refinementValue.swatchId}-assistive" class="sr-only selected-assistive-text">
+        <span id="${refinementValue.swatchId}-assistive" class="visually-hidden selected-assistive-text">
             ${refinementValue.selected && refinementValue.selectable ? Resource.msg('msg.assistive.selected.text', 'common', null) : ''}
             ${refinementValue.title}
         </span>
