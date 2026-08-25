@@ -8,8 +8,8 @@
     </a>
     <isif condition="${pdict.display.showQuickView !== false}">
         <a class="quickview hidden-sm-down" href="${pdict.urls.quickView}"
-           data-toggle="modal"
-           data-target="#quickViewModal"
+           data-bs-toggle="modal"
+           data-bs-target="#quickViewModal"
            title="${Resource.msgf('button.quickview', 'common', null, product.productName)}"
            aria-label="${Resource.msgf('button.quickview', 'common', null, product.productName)}"
         >

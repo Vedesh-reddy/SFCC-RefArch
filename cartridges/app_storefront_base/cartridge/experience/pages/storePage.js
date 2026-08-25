@@ -1,11 +1,12 @@
 'use strict';
 
 // eslint-disable-next-line no-unused-vars
-/* global response */
+/* global request, response */
 
 var Template = require('dw/util/Template');
 var HashMap = require('dw/util/HashMap');
 var PageRenderHelper = require('*/cartridge/experience/utilities/PageRenderHelper.js');
+var pageMetaHelper = require('*/cartridge/scripts/helpers/pageMetaHelper');
 
 /**
  * Render logic for the storepage.
@@ -34,6 +35,7 @@ module.exports.render = function (context, modelIn) {
         model.resetEditPDMode = true;
     }
 
+    pageMetaHelper.setPageMetaTags(request.pageMetaData, page);
     model.CurrentPageMetaData = PageRenderHelper.getPageMetaData(page);
 
     // no pagecache setting here, this is dynamically determined by the components used within the page

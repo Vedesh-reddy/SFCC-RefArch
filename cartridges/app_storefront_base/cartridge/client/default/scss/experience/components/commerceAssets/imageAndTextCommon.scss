@@ -16,7 +16,7 @@
 
 .mainbanner-image {
     height: 43.75vw;
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         height: 75vw;
     }
 }

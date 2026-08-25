@@ -39,7 +39,7 @@ footer {
 
         @include clearfix;
 
-        @include media-breakpoint-down(xs) {
+        @include media-breakpoint-down(sm) {
             width: 80%;
         }
 
@@ -49,7 +49,7 @@ footer {
             float: left;
             margin: 0.313em;
 
-            @include media-breakpoint-down(xs) {
+            @include media-breakpoint-down(sm) {
                 width: 20%;
                 text-align: center;
             }
@@ -66,7 +66,7 @@ footer {
 
     .store {
 
-        @include media-breakpoint-down(xs) {
+        @include media-breakpoint-down(sm) {
             border-bottom: 1px solid $dark-gray;
 
             .content {
@@ -123,7 +123,7 @@ footer {
 
 .footer-item {
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         border-bottom: 1px solid $dark-gray;
     }
 }

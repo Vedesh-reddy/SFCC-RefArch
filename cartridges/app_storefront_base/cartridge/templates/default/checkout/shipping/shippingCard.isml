@@ -18,7 +18,7 @@
                 <span class="text-muted arrival-time">(${shippingModel.selectedShippingMethod.estimatedArrivalTime})</span>
             </isif>
         </p>
-        <p class="col-4 end-lines text-right">
+        <p class="col-4 end-lines text-end">
             <span class="price">
                 ${shippingModel.selectedShippingMethod.shippingCost}
             </span>

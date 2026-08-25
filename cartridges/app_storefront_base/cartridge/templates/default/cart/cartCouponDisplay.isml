@@ -8,11 +8,11 @@
                 <iselse/>
                     <span class="coupon-not-applied">${Resource.msg('msg.coupon.not.applied','cart',null)}</span>
                 </isif>
-                <button type="button" class="float-right remove-coupon"
+                <button type="button" class="float-end remove-coupon"
                         data-code="${discount.couponCode}"
                         aria-label="${Resource.msgf('text.remove.coupon','cart', null, discount.couponCode)}"
-                        data-toggle="modal"
-                        data-target="#removeCouponModal"
+                        data-bs-toggle="modal"
+                        data-bs-target="#removeCouponModal"
                         data-uuid="${discount.UUID}">
                     <span aria-hidden="true">&times;</span>
                 </button>

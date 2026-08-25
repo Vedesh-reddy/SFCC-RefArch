@@ -8,7 +8,7 @@
             <div class="col-6">
                 <h1>${Resource.msg('title.your.shopping.cart','cart',null)}</h1>
             </div>
-            <div class="col-6 text-right">
+            <div class="col-6 text-end">
                 <a class="normal" href="${URLUtils.https('Cart-Show')}" title="${Resource.msg('link.view.cart','cart',null)}">
                     ${Resource.msg('link.view.cart','cart',null)}
                 </a>
@@ -17,8 +17,7 @@
         <div class="minicart-error cart-error">
             <isif condition="${pdict.valid.error && pdict.items.length !== 0}">
                 <div class="alert alert-danger alert-dismissible valid-cart-error fade show" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
                     </button>
                     ${pdict.valid.message}
                 </div>
@@ -59,7 +58,7 @@
                 <p class="sub-total-label">${Resource.msg('label.estimatedtotal','cart',null)}</p>
             </div>
             <div class="col-4">
-                <p class="text-right sub-total">${pdict.totals.subTotal}</p>
+                <p class="text-end sub-total">${pdict.totals.subTotal}</p>
             </div>
         </div>
         <div class="row">

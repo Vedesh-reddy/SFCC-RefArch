@@ -20,7 +20,7 @@
                         <div class="col-6 col-sm-3 order-sm-1">
                             <isinclude template="search/sortOrderMenu" />
                         </div>
-                        <div class="col-6 col-sm-3 text-right d-md-none order-sm-3">
+                        <div class="col-6 col-sm-3 text-end d-md-none order-sm-3">
                             <button type="button" class="btn btn-primary filter-results col-12">
                                 ${Resource.msg('button.filter', 'search', null)}
                             </button>

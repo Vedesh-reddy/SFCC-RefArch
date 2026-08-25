@@ -46,6 +46,11 @@
     }
 
     .popover {
+        // Bootstrap 5 no longer sets position on the base .popover (it defers
+        // to Popper's inline styles). The mini-cart is a static popover toggled
+        // by .show with no Popper instance, so restore absolute positioning or
+        // it renders in flow and pushes the header open.
+        position: absolute;
         top: 100%;
         left: auto;
         right: 0;
@@ -109,7 +114,7 @@
         display: none;
     }
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         display: none;
     }
 }

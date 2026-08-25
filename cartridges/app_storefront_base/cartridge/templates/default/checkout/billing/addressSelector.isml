@@ -1,7 +1,7 @@
 <isset name="billingAddress" scope="page" value="${pdict.order.billing.billingAddress.address}">
 <select id="billingAddressSelector"
         name="addressSelector"
-        class="addressSelector form-control"
+        class="addressSelector form-select"
         data-create-shipment-url="${URLUtils.https('Checkout-SetBillingAddress')}">
     <isif condition="${pdict.order.billing.matchingAddressId || !billingAddress}">
         <option value="new"

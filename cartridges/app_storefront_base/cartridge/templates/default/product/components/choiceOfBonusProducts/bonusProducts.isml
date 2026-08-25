@@ -73,11 +73,13 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <button class="btn btn-block btn-outline-primary select-bonus-product"
-                                                data-pid="${product.id}"
-                                        ${!product.readyToOrder || !product.available ? "disabled" : ""}>
-                                        ${Resource.msg('button.choiceofbonus.select', 'product', null)}
-                                    </button>
+                                        <div class="d-grid">
+                                            <button class="btn btn-outline-primary select-bonus-product"
+                                                    data-pid="${product.id}"
+                                            ${!product.readyToOrder || !product.available ? "disabled" : ""}>
+                                            ${Resource.msg('button.choiceofbonus.select', 'product', null)}
+                                        </button>
+                                        </div>
                                 </div>
                             </div>
                         </div>

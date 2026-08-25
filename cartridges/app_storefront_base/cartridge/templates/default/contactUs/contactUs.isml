@@ -18,8 +18,8 @@
                             <!--- contact us first name, last name --->
                             <div class="row contact-us-name">
                                 <div class="col-sm-6">
-                                    <div class="form-group required">
-                                        <label class="form-control-label" for="contact-first-name">
+                                    <div class="mb-3 required">
+                                        <label class="form-label" for="contact-first-name">
                                             ${Resource.msg('label.input.contact-us-first-name', 'contactUs', null)}
                                         </label>
                                         <input type="text" required class="form-control required" aria-describedby="form-contact-first-name-error" id="contact-first-name" name="contactFirstName">
@@ -27,8 +27,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
-                                    <div class="form-group required">
-                                        <label class="form-control-label" for="contact-last-name">
+                                    <div class="mb-3 required">
+                                        <label class="form-label" for="contact-last-name">
                                             ${Resource.msg('label.input.contact-us-last-name', 'contactUs', null)}
                                         </label>
                                         <input type="text" required class="form-control required" aria-describedby="form-contact-last-name-error" id="contact-last-name" name="contactLastName">
@@ -40,8 +40,8 @@
                             <!--- contact us email --->
                             <div class="row contact-us-email">
                                 <div class="col">
-                                    <div class="form-group required">
-                                        <label class="form-control-label" for="contact-email">
+                                    <div class="mb-3 required">
+                                        <label class="form-label" for="contact-email">
                                             ${Resource.msg('label.input.contact-us-email', 'contactUs', null)}
                                         </label>
                                         <input type="email" required class="form-control required" aria-describedby="form-contact-email-error" id="contact-email" name="contactEmail">
@@ -53,11 +53,11 @@
                             <!--- contact us topic --->
                             <div class="row contact-us-topic">
                                 <div class="col">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="contact-topic">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="contact-topic">
                                             ${Resource.msg('label.input.contact-us-topic', 'contactUs', null)}
                                         </label>
-                                        <select type="text" required class="form-control required" id="contact-topic" name="contactTopic">
+                                        <select type="text" required class="form-select required" id="contact-topic" name="contactTopic">
                                             <option value="GI">
                                                 ${Resource.msg('label.input.contact-topic-general-information', 'contactUs', null)}
                                             </option>
@@ -78,8 +78,8 @@
                             <!--- contact us comment --->
                             <div class="row contact-us-comment">
                                 <div class="col">
-                                    <div class="form-group">
-                                        <label class="form-control-label" for="contact-comment">
+                                    <div class="mb-3">
+                                        <label class="form-label" for="contact-comment">
                                             ${Resource.msg('label.input.contact-us-comment', 'contactUs', null)}
                                         </label>
                                         <textarea class="form-control" id="contact-comment" name="contactComment" rows="4" maxlength="250"></textarea>
@@ -92,10 +92,12 @@
                                 <div class="col-sm-6">
                                 </div>
                                 <div class="col">
-                                    <div class="form-group">
-                                        <button class="btn btn-block btn-primary subscribe-contact-us" type="submit" name="submit" value="submit">
-                                            ${Resource.msg('label.input.contact-us-submit', 'contactUs', null)}
-                                        </button>
+                                    <div class="mb-3">
+                                        <div class="d-grid">
+                                            <button class="btn btn-primary subscribe-contact-us" type="submit" name="submit" value="submit">
+                                                ${Resource.msg('label.input.contact-us-submit', 'contactUs', null)}
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -29,7 +29,7 @@
                     </p>
                 </div>
                 <div class="col-4 end-lines">
-                    <p class="text-right pricing shipping-method-price">
+                    <p class="text-end pricing shipping-method-price">
                         ${shippingModel.selectedShippingMethod.shippingCost}
                     </p>
                 </div>

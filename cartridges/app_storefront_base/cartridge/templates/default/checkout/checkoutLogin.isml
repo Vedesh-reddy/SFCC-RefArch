@@ -15,8 +15,8 @@
     <div class="container">
         <div class="row d-sm-none">
             <div class="col-12 cleafix">
-                <span class="total-items-label pull-left">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.details.totalQuantity)}</span>
-                <span class="total-price pull-right">${pdict.details.subTotal}</span>
+                <span class="total-items-label float-start">${Resource.msgf('label.number.items.in.cart','cart', null, pdict.details.totalQuantity)}</span>
+                <span class="total-price float-end">${pdict.details.subTotal}</span>
             </div>
         </div>
         <div class="row justify-content-center">
@@ -30,11 +30,13 @@
                             ${Resource.msg('msg.guest.checkout1', 'checkout', null)}
                             ${Resource.msg('msg.guest.checkout2', 'checkout', null)}
                         </p>
-                        <a
-                            href="${URLUtils.https('Checkout-Begin')}"
-                            class="btn btn-block btn-primary checkout-as-guest">
-                            ${Resource.msg('button.checkout.as.guest', 'checkout', null)}
-                        </a>
+                        <div class="d-grid">
+                            <a
+                                href="${URLUtils.https('Checkout-Begin')}"
+                                class="btn btn-primary checkout-as-guest">
+                                ${Resource.msg('button.checkout.as.guest', 'checkout', null)}
+                            </a>
+                        </div>
                     </div>
                 </div>
                 <div class="card">
@@ -52,9 +54,11 @@
                         <h2 class="card-header-custom">${Resource.msg('heading.create.account', 'checkout', null)}</h2>
                     </div>
                     <div class="card-body">
-                        <a href="${URLUtils.https('Login-Show', 'action', 'register')}" class="btn btn-block btn-outline-primary">
-                            ${Resource.msg('button.create.customer.account', 'checkout', null)}
-                        </a>
+                        <div class="d-grid">
+                            <a href="${URLUtils.https('Login-Show', 'action', 'register')}" class="btn btn-outline-primary">
+                                ${Resource.msg('button.create.customer.account', 'checkout', null)}
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

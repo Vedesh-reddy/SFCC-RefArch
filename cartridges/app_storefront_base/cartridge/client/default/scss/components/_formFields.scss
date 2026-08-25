@@ -1,7 +1,8 @@
-
-.form-group {
-    &.required .form-control-label::before {
-        content: "*";
-        color: $danger;
-    }
+// `required` sits on the field wrapper (alongside `mb-3`), driven by
+// form.<field>.mandatory in every address/billing/registration template;
+// the asterisk is a descendant marker on the child label.
+.required .form-label::before,
+.required .form-check-label::before {
+    content: "*";
+    color: $danger;
 }

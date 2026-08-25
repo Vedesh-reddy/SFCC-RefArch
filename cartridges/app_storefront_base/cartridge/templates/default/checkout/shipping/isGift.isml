@@ -1,14 +1,14 @@
 <div class="row">
     <div class="col-12">
-        <div class="form-group">
-            <div class="custom-control custom-checkbox">
-                <input class="custom-control-input gift" type="checkbox" id="isGift-${lineItem ? lineItem.UUID : 'default'}-${shippingModel.UUID}"
+        <div class="mb-3">
+            <div class="form-check">
+                <input class="form-check-input gift" type="checkbox" id="isGift-${lineItem ? lineItem.UUID : 'default'}-${shippingModel.UUID}"
                     <isif condition="${shippingModel.isGift}">
                         checked
                     </isif>
                     <isprint value="${pdict.forms.shippingForm.shippingAddress.isGift.attributes}" encoding="off" />
                 >
-                <label for="isGift-${lineItem ? lineItem.UUID : 'default'}-${shippingModel.UUID}" class="custom-control-label checkout-checkbox">
+                <label for="isGift-${lineItem ? lineItem.UUID : 'default'}-${shippingModel.UUID}" class="form-check-label checkout-checkbox">
                     ${Resource.msg('check.gift', 'checkout', null)}
                 </label>
             </div>
@@ -18,7 +18,7 @@
 
 <div class="row gift-message ${shippingModel.isGift ? '' : 'd-none'}">
     <div class="col-12">
-        <div class="form-group">
+        <div class="mb-3">
             <label for="giftMessage-${lineItem ? lineItem.UUID : 'default'}-${shippingModel.UUID}">${Resource.msg('label.input.giftmessage', 'forms', null)}</label>
             <textarea class="form-control gift-message-${shippingModel.UUID}" id="giftMessage-${lineItem ? lineItem.UUID : 'default'}-${shippingModel.UUID}" rows="3"
             <isprint value="${pdict.forms.shippingForm.shippingAddress.giftMessage.attributes}" encoding="off" />

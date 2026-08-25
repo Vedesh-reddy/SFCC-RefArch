@@ -5,7 +5,7 @@
             <div class="col-sm-8 col-md-6">
                 <div class="card">
                     <div class="card-header">
-                        <h2 class="pull-left">${paymentInstrument.creditCardHolder}</h2>
+                        <h2 class="float-start">${paymentInstrument.creditCardHolder}</h2>
                     </div>
                     <div class="card-body card-body-positioning">
                         <div class="card-info-group">
@@ -15,8 +15,8 @@
                         <button
                             type="button"
                             class="remove-btn remove-payment btn-light"
-                            data-toggle="modal"
-                            data-target="#deletePaymentModal"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deletePaymentModal"
                             data-id="${paymentInstrument.UUID}"
                             data-card="${paymentInstrument.maskedCreditCardNumber}"
                             data-url="${pdict.actionUrl}"

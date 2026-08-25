@@ -27,10 +27,22 @@ $pull: left, right;
     }
 }
 
+
+// Bootstrap 5 flipped `media-breakpoint-down` semantics from "bp and narrower"
+// to "below bp", and returns a max of null for xs. Preserve the legacy
+// `.hidden-*-down` behavior by passing the next breakpoint up.
+
 @each $bp in map-keys($grid-breakpoints) {
+    $next: breakpoint-next($bp);
+
     .hidden-#{$bp}-down {
 
-        @include media-breakpoint-down($bp) {
+        @if $next {
+
+            @include media-breakpoint-down($next) {
+                display: none !important;
+            }
+        } @else {
             display: none !important;
         }
     }
@@ -38,4 +50,37 @@ $pull: left, right;
 
 .row.equal-height > [class^="col"] {
     display: flex;
+}
+
+// Bootstrap 5 removed several Bootstrap 4 utility classes. The storefront's
+// content assets and Page Designer components are authored and stored in the
+// database, so their markup still references the old class names and cannot be
+// updated from this cartridge. Restore the BS4 rules verbatim so that
+// database-authored markup keeps rendering as it did before the upgrade:
+// .no-gutters (now .g-0) for flush grids such as the home category tiles,
+// .btn-block (now .d-grid) for full-width buttons such as footer collapse
+// titles, and .text-left / .text-right (now .text-start / .text-end).
+
+.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+
+    > .col,
+    > [class*="col-"] {
+        padding-right: 0;
+        padding-left: 0;
+    }
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+.text-left {
+    text-align: left !important;
+}
+
+.text-right {
+    text-align: right !important;
 }

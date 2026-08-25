@@ -2,13 +2,13 @@
     <div class="card-body multi-shipping-checkbox-block">
         <form action="${URLUtils.url('CheckoutShippingServices-ToggleMultiShip')}" novalidate>
             <fieldset>
-                <div class="custom-control custom-checkbox">
-                    <input name="usingMultiShipping" class="custom-control-input" id="multiShipCheck" type="checkbox"
+                <div class="form-check">
+                    <input name="usingMultiShipping" class="form-check-input" id="multiShipCheck" type="checkbox"
                     <isif condition="${pdict.order.usingMultiShipping && pdict.order.shipping.length > 1}">
                         checked
                     </isif>
                     >
-                    <label class="checkout-checkbox custom-control-label" for="multiShipCheck">
+                    <label class="checkout-checkbox form-check-label" for="multiShipCheck">
                         ${Resource.msg('check.shipping.multiship', 'checkout', null)}
                     </label>
                 </div>

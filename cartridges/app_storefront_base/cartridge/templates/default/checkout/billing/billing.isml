@@ -18,8 +18,8 @@
                 <!-- Billing Address Selector                                             -->
                 <!-------------------------------------------------------------------------->
                 <fieldset class="address-selector-block">
-                    <div class="form-group">
-                        <label class="form-control-label" for="billingAddressSelector">
+                    <div class="mb-3">
+                        <label class="form-label" for="billingAddressSelector">
                             ${Resource.msg('heading.billing.address', 'checkout', null)}
                         </label>
 
@@ -49,14 +49,14 @@
             <fieldset class="contact-info-block">
                 <div class="row">
                     <div class="col-sm-12">
-                        <div class="form-group
+                        <div class="mb-3
                             <isif condition=${pdict.forms.billingForm.contactInfoFields.phone.mandatory === true}>required</isif>
                             ${pdict.forms.billingForm.contactInfoFields.phone.htmlName}">
-                            <label class="form-control-label" for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
+                            <label class="form-label" for="phoneNumber">${Resource.msg('field.customer.phone.number','checkout',null)}</label>
 
                             <button type="button" class="info-icon">
                                 <span class="icon" aria-hidden="true">i</span>
-                                <span class="sr-only">${Resource.msg('button.help.assistive.text','common',null)}</span>
+                                <span class="visually-hidden">${Resource.msg('button.help.assistive.text','common',null)}</span>
                                 <span class="tooltip d-none">
                                     ${Resource.msg('tooltip.phone.number','creditCard',null)}
                                 </span>

@@ -4,15 +4,15 @@
 
 .product-tile {
 
-    @include media-breakpoint-down(md) {
+    @include media-breakpoint-down(lg) {
         min-height: 23.4375em;
     }
 
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
         min-height: 19.6875em;
     }
 
-    @include media-breakpoint-down(xs) {
+    @include media-breakpoint-down(sm) {
         min-height: 13.4375em;
     }
 
@@ -65,11 +65,11 @@
                 cursor: pointer;
                 font-size: 1em;
 
-                @include media-breakpoint-down(md) {
+                @include media-breakpoint-down(lg) {
                     font-size: 0.9375em;
                 }
 
-                @include media-breakpoint-down(sm) {
+                @include media-breakpoint-down(md) {
                     font-size: 0.8125em;
                 }
             }
@@ -79,11 +79,11 @@
             font-size: 1.125em;
             margin-bottom: 0;
 
-            @include media-breakpoint-down(md) {
+            @include media-breakpoint-down(lg) {
                 font-size: 1.0625em;
             }
 
-            @include media-breakpoint-down(sm) {
+            @include media-breakpoint-down(md) {
                 font-size: 1em;
             }
 
@@ -107,11 +107,11 @@
                 font-size: 1em;
                 text-decoration: none;
 
-                @include media-breakpoint-down(md) {
+                @include media-breakpoint-down(lg) {
                     font-size: 0.9375em;
                 }
 
-                @include media-breakpoint-down(sm) {
+                @include media-breakpoint-down(md) {
                     font-size: 0.8125em;
                 }
             }

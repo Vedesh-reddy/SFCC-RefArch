@@ -15,9 +15,11 @@
         </div>
         <div class="row">
             <div class="col-sm-6 offset-sm-3">
-                <a href="${URLUtils.url('Home-Show')}" class="btn btn-primary btn-block continue-shopping" role="button" aria-pressed="true">
-                    ${Resource.msg('button.continue.shopping','confirmation',null)}
-                </a>
+                <div class="d-grid">
+                    <a href="${URLUtils.url('Home-Show')}" class="btn btn-primary continue-shopping" role="button" aria-pressed="true">
+                        ${Resource.msg('button.continue.shopping','confirmation',null)}
+                    </a>
+                </div>
             </div>
         </div>
     </div>

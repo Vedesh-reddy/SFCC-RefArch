@@ -1,5 +1,5 @@
-<button type="button" class="remove-btn-lg remove-product btn btn-light" data-toggle="modal"
-        data-target=".cart.cart-page #removeProductModal" data-pid="${lineItem.id}"
+<button type="button" class="remove-btn-lg remove-product btn btn-light" data-bs-toggle="modal"
+        data-bs-target=".cart.cart-page #removeProductModal" data-pid="${lineItem.id}"
         data-name="${lineItem.productName}"
         data-action="${pdict.actionUrls.removeProductLineItemUrl}"
         data-uuid="${lineItem.UUID}"

@@ -13,7 +13,7 @@
                 <span title="${category.title}" class="${category.selected ? 'selected' : ''}" aria-hidden="true">
                     ${category.displayValue}
                 </span>
-                <span class="sr-only selected-assistive-text">
+                <span class="visually-hidden selected-assistive-text">
                     ${category.selected ? Resource.msg('msg.assistive.selected.text', 'common', null) : ''}
                     ${category.title}
                 </span>

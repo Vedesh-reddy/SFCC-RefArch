@@ -9,7 +9,7 @@ module.exports = function (selector, keyFunctions, preFunction) {
         }
         var returnedScope = preFunction.call(this);
         if (keyFunctions[key]) {
-            keyFunctions[key].call(this, returnedScope);
+            keyFunctions[key].call(this, returnedScope, e);
         }
     });
 };

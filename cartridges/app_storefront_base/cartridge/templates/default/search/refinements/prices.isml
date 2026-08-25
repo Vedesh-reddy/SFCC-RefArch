@@ -11,7 +11,7 @@
                 <span aria-hidden="true">
                     ${refinementValue.displayValue}
                 </span>
-                <span class="sr-only selected-assistive-text" id="price-${status.index}-assistive">
+                <span class="visually-hidden selected-assistive-text" id="price-${status.index}-assistive">
                     ${refinementValue.selected ? Resource.msg('msg.assistive.selected.text', 'common', null) : ''}
                     ${refinementValue.title}
                 </span>

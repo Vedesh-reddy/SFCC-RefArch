@@ -4,8 +4,8 @@
         <fieldset class="customer-information-block">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="form-group">
-                        <label class="form-control-label">
+                    <div class="mb-3">
+                        <label class="form-label">
                             ${Resource.msg('field.customer.email','checkout',null)}
                         </label>
                         <input type="text" class="form-control email" id="email-guest"
@@ -16,9 +16,11 @@
                 </div>
             </div>
             <isif condition="${!pdict.customer.registeredUser}">
-                <button class="btn btn-primary btn-block submit-customer" type="submit" name="submit" value="submit-customer">
-                    ${Resource.msg('button.guest.customer.continue', 'checkout', null)}
-                </button>
+                <div class="d-grid">
+                    <button class="btn btn-primary submit-customer" type="submit" name="submit" value="submit-customer">
+                        ${Resource.msg('button.guest.customer.continue', 'checkout', null)}
+                    </button>
+                </div>
             </isif>
              <strong>${Resource.msg('msg.guest.customer.exists', 'checkout', null)} <button type="button" class="btn btn-link js-login-customer">${Resource.msg('action.customer.login', 'checkout', null)}</button></strong>
         </fieldset>
@@ -29,8 +31,8 @@
         <fieldset class="customer-information-block">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="form-group">
-                        <label class="form-control-label">
+                    <div class="mb-3">
+                        <label class="form-label">
                             ${Resource.msg('field.customer.email','checkout',null)}
                         </label>
                         <input type="text" class="form-control email" id="email"
@@ -38,8 +40,8 @@
                                     aria-describedby="emailInvalidMessage" >
                         <div class="invalid-feedback" id="emailInvalidMessage"></div>
                     </div>
-                    <div class="form-group password-form">
-                        <label class="form-control-label">
+                    <div class="mb-3 password-form">
+                        <label class="form-label">
                             ${Resource.msg('field.customer.password','checkout',null)}
                         </label>
                         <input type="password" class="form-control password" id="password"
@@ -52,13 +54,17 @@
             <div class="row">
                     <div class="col-12">
                         <div class="mb-sm-3">
-                            <button class="btn btn-primary btn-block submit-customer-login" type="submit" name="submit" value="submit-login">
-                                ${Resource.msg('button.customer.login', 'checkout', null)}
-                            </button>
+                            <div class="d-grid">
+                                <button class="btn btn-primary submit-customer-login" type="submit" name="submit" value="submit-login">
+                                    ${Resource.msg('button.customer.login', 'checkout', null)}
+                                </button>
+                            </div>
 
-                            <button class="btn btn-light btn-block js-cancel-login" name="submit" value="cancel-login">
-                                ${Resource.msg('button.customer.login.cancel', 'checkout', null)}
-                            </button>
+                            <div class="d-grid">
+                                <button class="btn btn-light js-cancel-login" name="submit" value="cancel-login">
+                                    ${Resource.msg('button.customer.login.cancel', 'checkout', null)}
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
