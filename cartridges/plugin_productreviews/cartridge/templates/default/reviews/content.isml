@@ -1,0 +1,112 @@
+<isif condition="${pdict.unavailable}">
+    <p class="alert alert-warning" role="status">${pdict.error || Resource.msg('error.unavailable', 'reviews', null)}</p>
+<iselse>
+    <div class="review-content" data-summary="${pdict.summary}">
+        <h2 class="review-heading" tabindex="-1">${Resource.msg('heading.reviews', 'reviews', null)}</h2>
+        <isif condition="${pdict.notice}">
+            <p class="alert alert-success" role="status"><isprint value="${pdict.notice}" encoding="htmlcontent" /></p>
+        </isif>
+        <isif condition="${pdict.error}">
+            <p class="alert alert-danger" role="alert"><isprint value="${pdict.error}" encoding="htmlcontent" /></p>
+        </isif>
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <p class="h4 review-summary"><isprint value="${pdict.summary}" encoding="htmlcontent" /></p>
+                <isif condition="${pdict.reviews.total > 0}">
+                    <ul class="list-unstyled review-distribution">
+                        <isloop items="${pdict.reviews.distribution}" var="bucket">
+                            <li class="d-flex align-items-center gap-2 mb-2">
+                                <span class="review-bucket-label">${Resource.msgf('label.stars', 'reviews', null, bucket.rating)}</span>
+                                <meter min="0" max="${pdict.reviews.total}" value="${bucket.count}"
+                                    aria-label="${Resource.msgf('label.bucket', 'reviews', null, bucket.rating, bucket.count)}">${bucket.count}</meter>
+                                <span>${bucket.count}</span>
+                            </li>
+                        </isloop>
+                    </ul>
+                </isif>
+                <a class="btn btn-outline-primary" href="#review-form">${Resource.msg(pdict.ownStatus ? 'link.edit' : 'link.write', 'reviews', null)}</a>
+            </div>
+            <div class="col-lg-8">
+                <isif condition="${!pdict.reviews.total}">
+                    <p>${Resource.msg('message.empty', 'reviews', null)}</p>
+                </isif>
+                <isloop items="${pdict.reviews.items}" var="review">
+                    <article class="review-entry border-bottom pb-3 mb-3">
+                        <p class="mb-1">
+                            <span class="review-stars" aria-hidden="true"><isloop items="${[1, 2, 3, 4, 5]}" var="star"><isif condition="${review.rating >= star}">★<iselse>☆</isif></isloop></span>
+                            <span class="visually-hidden">${Resource.msgf('label.ratingvalue', 'reviews', null, review.rating)}</span>
+                        </p>
+                        <h3 class="h5"><isprint value="${review.title}" encoding="htmlcontent" /></h3>
+                        <p class="small text-muted"><isprint value="${review.displayName}" encoding="htmlcontent" /> · <isprint value="${review.submittedAt}" style="DATE_SHORT" /></p>
+                        <p class="review-body"><isprint value="${review.body}" encoding="htmlcontent" /></p>
+                    </article>
+                </isloop>
+                <isif condition="${pdict.reviews.pages > 1}">
+                    <nav class="d-flex align-items-center gap-3" aria-label="${Resource.msg('label.pagination', 'reviews', null)}">
+                        <isif condition="${pdict.previousUrl}">
+                            <a class="review-page btn btn-outline-secondary" href="${pdict.previousUrl}" data-url="${pdict.previousDataUrl}">${Resource.msg('link.previous', 'reviews', null)}</a>
+                        </isif>
+                        <span>${Resource.msgf('label.page', 'reviews', null, pdict.reviews.page, pdict.reviews.pages)}</span>
+                        <isif condition="${pdict.nextUrl}">
+                            <a class="review-page btn btn-outline-secondary" href="${pdict.nextUrl}" data-url="${pdict.nextDataUrl}">${Resource.msg('link.next', 'reviews', null)}</a>
+                        </isif>
+                    </nav>
+                </isif>
+            </div>
+        </div>
+        <div id="review-form" class="mt-4 pt-4 border-top">
+            <h3>${Resource.msg(pdict.ownStatus ? 'link.edit' : 'link.write', 'reviews', null)}</h3>
+            <isif condition="${!pdict.loggedIn}">
+                <p>${Resource.msg('message.login', 'reviews', null)}</p>
+                <a class="btn btn-primary" href="${pdict.loginUrl}">${Resource.msg('link.login', 'reviews', null)}</a>
+            <iselse>
+                <isif condition="${pdict.ownStatus}">
+                    <p class="alert alert-info">${Resource.msg('status.' + pdict.ownStatus, 'reviews', null)}</p>
+                </isif>
+                <p>${Resource.msg(pdict.settings.moderation ? 'message.moderated' : 'message.public', 'reviews', null)}</p>
+                <form class="review-form" action="${URLUtils.https('Reviews-Submit')}" method="post">
+                    <input type="hidden" name="pid" value="${pdict.reviewProduct.id}" />
+                    <input type="hidden" class="review-csrf" name="${pdict.csrf.name}" value="${pdict.csrf.value}" />
+                    <p class="small">${Resource.msg('message.required', 'reviews', null)}</p>
+                    <fieldset class="mb-3">
+                        <legend class="h6">${Resource.msg('label.rating', 'reviews', null)}</legend>
+                        <div class="review-rating-options">
+                            <isloop items="${[1, 2, 3, 4, 5]}" var="rating">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="rating" id="review-rating-${Number(rating).toFixed(0)}" value="${Number(rating).toFixed(0)}" required
+                                        aria-describedby="review-rating-error" aria-invalid="${pdict.fieldErrors.rating ? 'true' : 'false'}"
+                                        <isif condition="${Number(pdict.values.rating) === rating}">checked</isif> />
+                                    <label class="form-check-label" for="review-rating-${Number(rating).toFixed(0)}">${Resource.msgf('label.stars', 'reviews', null, rating)}</label>
+                                </div>
+                            </isloop>
+                        </div>
+                        <div id="review-rating-error" class="review-field-error text-danger">${pdict.fieldErrors.rating || ''}</div>
+                    </fieldset>
+                    <div class="mb-3">
+                        <label class="form-label" for="review-displayName">${Resource.msg('label.displayName', 'reviews', null)}</label>
+                        <input class="form-control" id="review-displayName" name="displayName" type="text" required minlength="2" maxlength="40"
+                            value="${pdict.values.displayName || ''}" aria-describedby="review-displayName-help review-displayName-error"
+                            aria-invalid="${pdict.fieldErrors.displayName ? 'true' : 'false'}" />
+                        <div id="review-displayName-help" class="form-text">${Resource.msg('help.displayName', 'reviews', null)}</div>
+                        <div id="review-displayName-error" class="review-field-error text-danger">${pdict.fieldErrors.displayName || ''}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="review-title">${Resource.msg('label.title', 'reviews', null)}</label>
+                        <input class="form-control" id="review-title" name="title" type="text" required minlength="3" maxlength="100"
+                            value="${pdict.values.title || ''}" aria-describedby="review-title-error"
+                            aria-invalid="${pdict.fieldErrors.title ? 'true' : 'false'}" />
+                        <div id="review-title-error" class="review-field-error text-danger">${pdict.fieldErrors.title || ''}</div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="review-body">${Resource.msg('label.body', 'reviews', null)}</label>
+                        <textarea class="form-control" id="review-body" name="body" rows="5" required minlength="10" maxlength="2000"
+                            aria-describedby="review-body-help review-body-error" aria-invalid="${pdict.fieldErrors.body ? 'true' : 'false'}"><isprint value="${pdict.values.body || ''}" encoding="htmlcontent" /></textarea>
+                        <div id="review-body-help" class="form-text">${Resource.msg('help.body', 'reviews', null)}</div>
+                        <div id="review-body-error" class="review-field-error text-danger">${pdict.fieldErrors.body || ''}</div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">${Resource.msg('button.submit', 'reviews', null)}</button>
+                </form>
+            </isif>
+        </div>
+    </div>
+</isif>
