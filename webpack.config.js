@@ -1,6 +1,7 @@
 'use strict';
 
 var path = require('path');
+var cartridgeName = require('minimist')(process.argv.slice(2)).cartridgeName || 'app_storefront_base';
 var RemoveEmptyScriptsPlugin = require('webpack-remove-empty-scripts');
 var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
@@ -14,7 +15,7 @@ module.exports = [
         entry: jsFiles,
         output: {
             path: path.resolve(
-                './cartridges/app_storefront_base/cartridge/static'
+                './cartridges/' + cartridgeName + '/cartridge/static'
             ),
             filename: '[name].js'
         },
@@ -43,7 +44,7 @@ module.exports = [
         entry: scssFiles,
         output: {
             path: path.resolve(
-                './cartridges/app_storefront_base/cartridge/static'
+                './cartridges/' + cartridgeName + '/cartridge/static'
             )
         },
         module: {

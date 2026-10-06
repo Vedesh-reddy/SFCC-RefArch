@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="productReviewsEnabled">
+                <display-name xml:lang="x-default">Enable product reviews</display-name>
+                <type>boolean</type>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="productReviewsModeration">
+                <display-name xml:lang="x-default">Require review approval</display-name>
+                <description xml:lang="x-default">New and edited reviews need approval. Disabling this publishes future submissions immediately; existing pending reviews stay pending.</description>
+                <type>boolean</type>
+                <default-value>true</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="ProductReviews">
+                <display-name xml:lang="x-default">Product Reviews</display-name>
+                <attribute attribute-id="productReviewsEnabled" />
+                <attribute attribute-id="productReviewsModeration" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

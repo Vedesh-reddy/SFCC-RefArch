@@ -1,0 +1,14 @@
+<isscript>
+    var reviewAssets = require('*/cartridge/scripts/assets');
+    reviewAssets.addJs('/js/productReviews.js');
+    reviewAssets.addCss('/css/productReviews.css');
+</isscript>
+<section id="product-reviews" class="product-reviews my-4 py-4 border-top" aria-label="${Resource.msg('heading.reviews', 'reviews', null)}"
+    data-reviews-url="${URLUtils.https('Reviews-List', 'pid', product.id)}"
+    data-review-pid="${product.id}" data-error="${Resource.msg('error.unavailable', 'reviews', null)}">
+    <div class="review-message" role="status" aria-live="polite" tabindex="-1"></div>
+    <div class="review-panel">
+        <h2>${Resource.msg('heading.reviews', 'reviews', null)}</h2>
+        <a href="${URLUtils.https('Reviews-Show', 'pid', product.id)}">${Resource.msg('link.read', 'reviews', null)}</a>
+    </div>
+</section>
