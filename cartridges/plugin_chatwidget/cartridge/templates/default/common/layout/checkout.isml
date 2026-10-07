@@ -1,0 +1,28 @@
+<iscontent type="text/html" charset="UTF-8" compact="true" />
+<isinclude template="/components/modules" sf-toolkit="off" />
+<!DOCTYPE html>
+<html lang="${require('dw/util/Locale').getLocale(request.getLocale()).getLanguage()}">
+
+<head>
+    <isinclude sf-toolkit="off" template="/common/scripts" />
+    <isinclude template="/common/htmlHead" />
+    <link rel="stylesheet" href="${URLUtils.staticURL('/css/chatWidget.css')}" />
+    <isactivedatahead/>
+</head>
+
+<body>
+    ${dw.system.HookMgr.callHook('app.template.beforeHeader', 'beforeHeader', pdict) || ''}
+    <div class="page">
+        <isinclude template="/components/header/pageHeaderNomenu" />
+        <div role="main" id="maincontent">
+            <isreplace/>
+        </div>
+        <isinclude template="/components/footer/pageFooter" />
+    </div>
+    <isinclude template="components/chatwidget/widget" />
+    <script defer src="${URLUtils.staticURL('/js/chatWidget.js')}"></script>
+    ${dw.system.HookMgr.callHook('app.template.afterFooter', 'afterFooter', pdict) || ''}
+    <isinclude url="${URLUtils.url('ConsentTracking-Check')}" />
+</body>
+
+</html>
