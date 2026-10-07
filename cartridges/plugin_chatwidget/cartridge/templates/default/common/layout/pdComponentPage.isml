@@ -1,0 +1,22 @@
+<iscontent type="text/html" charset="UTF-8" compact="true" />
+<isinclude template="/components/modules" sf-toolkit="off" />
+<!DOCTYPE html>
+<html lang="${require('dw/util/Locale').getLocale(request.getLocale()).getLanguage()}">
+
+<head>
+    <isinclude sf-toolkit="off" template="/common/scripts" />
+    <isinclude template="/common/htmlHead" />
+    <link rel="stylesheet" href="${URLUtils.staticURL('/css/chatWidget.css')}" />
+</head>
+
+<body>
+    <div class="page">
+        <div role="main" id="maincontent">
+            <isreplace/>
+        </div>
+    </div>
+    <isinclude template="components/chatwidget/widget" />
+    <script defer src="${URLUtils.staticURL('/js/chatWidget.js')}"></script>
+</body>
+
+</html>

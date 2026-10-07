@@ -1,0 +1,61 @@
+<isscript>
+    var chatWidgetUrls = {
+        token: URLUtils.https('ChatWidget-AuthToken').toString(),
+        activity: URLUtils.url('ChatWidget-Activity').toString(),
+        capabilities: URLUtils.url('ChatWidget-Capabilities').toString(),
+        categories: URLUtils.url('ChatWidget-Categories').toString(),
+        products: URLUtils.url('ChatWidget-Products').toString(),
+        product: URLUtils.url('ChatWidget-Product').toString(),
+        addToCart: URLUtils.url('Cart-AddProduct').toString(),
+        cart: URLUtils.url('ChatWidget-Cart').toString(),
+        updateQuantity: URLUtils.url('Cart-UpdateQuantity').toString(),
+        removeLine: URLUtils.url('Cart-RemoveProductLineItem').toString(),
+        addCoupon: URLUtils.url('Cart-AddCoupon').toString(),
+        removeCoupon: URLUtils.url('Cart-RemoveCouponLineItem').toString(),
+        selectShippingMethod: URLUtils.url('Cart-SelectShippingMethod').toString(),
+        promotions: URLUtils.url('ChatWidget-Promotions').toString(),
+        login: URLUtils.https('Account-Login', 'rurl', 1).toString(),
+        register: URLUtils.https('Account-SubmitRegistration', 'rurl', 1).toString(),
+        passwordReset: URLUtils.https('ChatWidget-PasswordReset').toString(),
+        logout: URLUtils.https('ChatWidget-Logout').toString(),
+        account: URLUtils.https('ChatWidget-Account').toString(),
+        saveProfile: URLUtils.https('Account-SaveProfile').toString(),
+        addresses: URLUtils.https('ChatWidget-Addresses').toString(),
+        saveAddress: URLUtils.https('Address-SaveAddress').toString(),
+        deleteAddress: URLUtils.https('Address-DeleteAddress').toString(),
+        defaultAddress: URLUtils.https('ChatWidget-SetDefaultAddress').toString(),
+        payments: URLUtils.https('ChatWidget-Payments').toString(),
+        deletePayment: URLUtils.https('PaymentInstruments-DeletePayment').toString(),
+        orders: URLUtils.https('ChatWidget-Orders').toString(),
+        order: URLUtils.https('ChatWidget-Order').toString(),
+        checkout: URLUtils.https('ChatWidget-Checkout').toString(),
+        submitShipping: URLUtils.https('CheckoutShippingServices-SubmitShipping').toString(),
+        submitPayment: URLUtils.https('CheckoutServices-SubmitPayment').toString(),
+        placeOrder: URLUtils.https('CheckoutServices-PlaceOrder').toString(),
+        confirmation: URLUtils.https('ChatWidget-Confirmation').toString(),
+        review: URLUtils.https('ChatWidget-Review').toString()
+    };
+    // Only Order-Confirm renders with orderUUID; SEO URLs make pdict.action unreliable.
+    var chatWidgetConfirmedOrder = pdict.orderUUID && pdict.order && pdict.order.orderNumber ? pdict.order.orderNumber : '';
+</isscript>
+<div class="chat-widget" data-chat-widget data-urls="${JSON.stringify(chatWidgetUrls)}"
+    data-confirmed-order="${chatWidgetConfirmedOrder}">
+    <section id="chat-widget-panel" class="chat-widget-panel flex-column" role="dialog" aria-modal="false"
+        aria-labelledby="chat-widget-title" data-chat-panel hidden>
+        <header class="chat-widget-header d-flex align-items-center">
+            <button class="chat-widget-icon" type="button" aria-label="Back" data-chat-back hidden>&#8592;</button>
+            <h2 id="chat-widget-title" class="chat-widget-title flex-grow-1 mb-0">Shopping assistant</h2>
+            <button class="chat-widget-icon" type="button" aria-label="Main menu" data-chat-home hidden>&#8962;</button>
+            <button class="chat-widget-icon" type="button" aria-label="Close shopping assistant" data-chat-close>&times;</button>
+        </header>
+        <p class="chat-widget-status mb-0" role="status" aria-live="polite" data-chat-status hidden></p>
+        <div class="chat-widget-body" data-chat-body>
+            <div data-chat-selection hidden></div>
+            <div class="chat-widget-stage d-flex flex-column" aria-busy="false" data-chat-stage></div>
+        </div>
+    </section>
+    <button class="chat-widget-launcher d-flex align-items-center justify-content-center" type="button"
+        aria-label="Open shopping assistant" aria-expanded="false" aria-controls="chat-widget-panel" data-chat-launcher>
+        <span aria-hidden="true">&#128172;</span>
+    </button>
+</div>
