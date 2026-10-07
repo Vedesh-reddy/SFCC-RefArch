@@ -14,6 +14,19 @@ and Page Designer product details while keeping personal review forms out of cac
 Configure it at **Merchant Tools → Site Preferences → Custom Site Preference Groups → Product Reviews**.
 Moderate submissions at **Merchant Tools → Custom Objects → Manage Custom Objects**.
 
+## Custom wishlist extension
+
+This workspace includes `plugin_customwishlist`. Signed-in shoppers save products to a
+wishlist. A scheduled job compares saved prices with the price books and, when a price
+drops, emails the shopper and shows a popup at their next sign-in.
+
+[Setup and screenshot walkthrough](cartridges/plugin_customwishlist/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-custom-wishlist)
+
+![Price-drop popup after sign-in](cartridges/plugin_customwishlist/docs/images/price-drop-popup.png)
+
+Run the check at **Administration → Operations → Jobs → CustomWishlist-PriceDropCheck**.
+
 
 This is a repository for the Storefront Reference Architecture reference application.
 
