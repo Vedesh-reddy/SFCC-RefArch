@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="CustomWishlist-PriceDropCheck" priority="0">
+        <description>Daily wishlist price-drop check: flags login popups and emails owners.</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="PriceDropCheck" type="custom.CustomWishlist.PriceDropCheck" enforce-restart="false">
+                <description>Compare wishlist prices with price books</description>
+                <parameters/>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="true">
+                <recurrence>
+                    <date-from>2026-10-08Z</date-from>
+                    <start-time>02:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+</jobs>
