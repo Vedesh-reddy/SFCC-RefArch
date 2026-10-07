@@ -1,0 +1,50 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.ChatWidget.PurgeJourneyData",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Deletes expired shopping-assistant journeys and activities, and erases one customer's journal on request.",
+                "module": "plugin_chatwidget/cartridge/scripts/jobs/purgeJourneyData.js",
+                "function": "execute",
+                "transactional": "false",
+                "timeout-in-seconds": "3600",
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "ActivityRetentionDays",
+                            "@type": "long",
+                            "@required": "true",
+                            "@trim": "true",
+                            "default-value": "90",
+                            "description": "Delete ChatWidgetActivity records older than this many days."
+                        },
+                        {
+                            "@name": "JourneyRetentionDays",
+                            "@type": "long",
+                            "@required": "true",
+                            "@trim": "true",
+                            "default-value": "365",
+                            "description": "Delete ChatWidgetJourney records (including reviews) inactive for longer than this many days."
+                        },
+                        {
+                            "@name": "CustomerNo",
+                            "@type": "string",
+                            "@required": "false",
+                            "@trim": "true",
+                            "description": "Optional. Erase all journeys and activities of this customer number (data-subject deletion request)."
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        { "@code": "OK", "description": "Retention completed." },
+                        { "@code": "ERROR", "description": "Retention failed; see the journey-retention log category." }
+                    ]
+                }
+            }
+        ]
+    }
+}
