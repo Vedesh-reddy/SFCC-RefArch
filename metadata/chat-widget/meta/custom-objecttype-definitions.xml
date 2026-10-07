@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="ChatWidgetJourney">
+        <display-name xml:lang="x-default">Chat widget journey</display-name>
+        <description xml:lang="x-default">One shopping-assistant journey per browser session, including the optional order review.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Journey key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="siteID">
+                <display-name xml:lang="x-default">Site ID</display-name>
+                <type>string</type>
+                <field-length>64</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="locale">
+                <display-name xml:lang="x-default">Locale</display-name>
+                <type>string</type>
+                <field-length>16</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">Customer number (private)</display-name>
+                <description xml:lang="x-default">Set once the shopper signs in. Used for erasure requests.</description>
+                <type>string</type>
+                <field-length>64</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">Status</display-name>
+                <description xml:lang="x-default">active, ordered, reviewed or closed.</description>
+                <type>string</type>
+                <field-length>16</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="startedAt">
+                <display-name xml:lang="x-default">Started at</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastActivityAt">
+                <display-name xml:lang="x-default">Last activity at</display-name>
+                <description xml:lang="x-default">Retention job deletes journeys older than JourneyRetentionDays based on this value.</description>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">Order number</display-name>
+                <type>string</type>
+                <field-length>64</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="reviewRating">
+                <display-name xml:lang="x-default">Review rating (1-5)</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="reviewComment">
+                <display-name xml:lang="x-default">Review comment</display-name>
+                <description xml:lang="x-default">Stored only when reviewCommentConsent is true.</description>
+                <type>text</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="reviewCommentConsent">
+                <display-name xml:lang="x-default">Comment storage consent</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="reviewSubmittedAt">
+                <display-name xml:lang="x-default">Review submitted at</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="ChatWidgetJourney">
+                <display-name xml:lang="x-default">Chat widget journey</display-name>
+                <attribute attribute-id="key" system="true"/>
+                <attribute attribute-id="siteID"/>
+                <attribute attribute-id="locale"/>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="startedAt"/>
+                <attribute attribute-id="lastActivityAt"/>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="reviewRating"/>
+                <attribute attribute-id="reviewComment"/>
+                <attribute attribute-id="reviewCommentConsent"/>
+                <attribute attribute-id="reviewSubmittedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="ChatWidgetActivity">
+        <display-name xml:lang="x-default">Chat widget activity</display-name>
+        <description xml:lang="x-default">Append-only shopping-assistant activity linked to a ChatWidgetJourney by journeyKey.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Activity key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="journeyKey">
+                <display-name xml:lang="x-default">Journey key</display-name>
+                <description xml:lang="x-default">Key of the parent ChatWidgetJourney.</description>
+                <type>string</type>
+                <mandatory-flag>true</mandatory-flag>
+                <field-length>64</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="action">
+                <display-name xml:lang="x-default">Action</display-name>
+                <type>string</type>
+                <mandatory-flag>true</mandatory-flag>
+                <field-length>100</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="result">
+                <display-name xml:lang="x-default">Result</display-name>
+                <description xml:lang="x-default">success, error or redirect when the action has an outcome.</description>
+                <type>string</type>
+                <field-length>20</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="entityID">
+                <display-name xml:lang="x-default">Entity ID</display-name>
+                <description xml:lang="x-default">Non-sensitive identifier such as a product ID, category ID or order number.</description>
+                <type>string</type>
+                <field-length>256</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="context">
+                <display-name xml:lang="x-default">Context</display-name>
+                <description xml:lang="x-default">Non-sensitive key=value details. Never contains passwords, card data, CVV, tokens or addresses.</description>
+                <type>string</type>
+                <field-length>1000</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">Customer number (private)</display-name>
+                <type>string</type>
+                <field-length>64</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="occurredAt">
+                <display-name xml:lang="x-default">Occurred at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>true</mandatory-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="ChatWidgetActivity">
+                <display-name xml:lang="x-default">Chat widget activity</display-name>
+                <attribute attribute-id="key" system="true"/>
+                <attribute attribute-id="journeyKey"/>
+                <attribute attribute-id="action"/>
+                <attribute attribute-id="result"/>
+                <attribute attribute-id="entityID"/>
+                <attribute attribute-id="context"/>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="occurredAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>
