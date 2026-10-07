@@ -39,6 +39,9 @@ privacy-safe custom objects that merchants read in Business Manager.
 
 ![Shopping assistant on the storefront](cartridges/plugin_chatwidget/docs/images/storefront-widget-open.png)
 
+Orders placed in the widget are real SFCC orders: the walkthrough includes the store's
+confirmation email for order 00000102 placed through the assistant.
+
 Read journeys at **Merchant Tools → Custom Objects → Manage Custom Objects → ChatWidgetJourney**.
 
 
