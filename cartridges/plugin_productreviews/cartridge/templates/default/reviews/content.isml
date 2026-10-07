@@ -1,3 +1,4 @@
+<iscomment>Uncached fragment shared by the PDP widget and full review page. Escape every user-authored field.</iscomment>
 <isif condition="${pdict.unavailable}">
     <p class="alert alert-warning" role="status">${pdict.error || Resource.msg('error.unavailable', 'reviews', null)}</p>
 <iselse>

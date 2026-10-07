@@ -1,6 +1,13 @@
 'use strict';
 
 /**
+ * Progressive review-panel interactions. SFRA supplies global jQuery.
+ * Full-page links and native POST forms remain available without JavaScript.
+ * Server messages are inserted as text; only server-rendered ISML becomes HTML.
+ * @module client/productReviews
+ */
+
+/**
  * Display messages as text, including server validation failures.
  * @param {jQuery} $widget - Review widget
  * @param {string} message - Message
