@@ -27,6 +27,20 @@ drops, emails the shopper and shows a popup at their next sign-in.
 
 Run the check at **Administration → Operations → Jobs → CustomWishlist-PriceDropCheck**.
 
+## Shopping assistant chat widget
+
+This workspace includes `plugin_chatwidget`, a shopping and account assistant in the
+corner of every page. Shoppers browse, search, manage the cart and account, check out
+with a saved card, and review the order inside the widget. Each journey is recorded in
+privacy-safe custom objects that merchants read in Business Manager.
+
+[Setup and screenshot walkthrough](cartridges/plugin_chatwidget/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-chat-widget)
+
+![Shopping assistant on the storefront](cartridges/plugin_chatwidget/docs/images/storefront-widget-open.png)
+
+Read journeys at **Merchant Tools → Custom Objects → Manage Custom Objects → ChatWidgetJourney**.
+
 
 This is a repository for the Storefront Reference Architecture reference application.
 
