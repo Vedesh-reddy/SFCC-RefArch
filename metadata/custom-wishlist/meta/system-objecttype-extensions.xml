@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="ProductListItem">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="wishlistAddedPrice">
+                <display-name xml:lang="x-default">Price when added to wishlist</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="wishlistPriceCurrency">
+                <display-name xml:lang="x-default">Currency of the added price</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="wishlistLastNotifiedPrice">
+                <display-name xml:lang="x-default">Last price-drop price notified</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="wishlistPriceAlertPending">
+                <display-name xml:lang="x-default">Price-drop popup pending</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="CustomWishlist">
+                <display-name xml:lang="x-default">Custom Wishlist</display-name>
+                <attribute attribute-id="wishlistAddedPrice" />
+                <attribute attribute-id="wishlistPriceCurrency" />
+                <attribute attribute-id="wishlistLastNotifiedPrice" />
+                <attribute attribute-id="wishlistPriceAlertPending" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

@@ -1,0 +1,30 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.CustomWishlist.PriceDropCheck",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Compares wishlist item prices with the price at the time they were added, flags drops for the login popup and emails the owner.",
+                "module": "plugin_customwishlist/cartridge/scripts/jobs/priceDropCheck.js",
+                "function": "execute",
+                "transactional": "false",
+                "timeout-in-seconds": "3600",
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "ERROR",
+                            "description": "One or more wishlists could not be processed"
+                        },
+                        {
+                            "@code": "OK",
+                            "description": "All wishlists processed"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
