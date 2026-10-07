@@ -131,6 +131,10 @@ The reset response is the same whether or not the account exists, so the widget 
 | --- | --- |
 | ![Delete confirmation](docs/images/address-delete-confirm.png) | ![Address deleted](docs/images/address-deleted.png) |
 
+Address changes go through SFRA's own `Address-SaveAddress` and `Address-DeleteAddress`, so the shopper also receives the store's standard "Account edited" email:
+
+![Account edited email sent after the widget changed the address book](docs/images/account-edited-email.png)
+
 | Saved cards | Order history | Order details |
 | --- | --- | --- |
 | ![Masked saved Visa](docs/images/saved-cards.png) | ![Order list](docs/images/order-history.png) | ![Order details](docs/images/order-details.png) |
@@ -146,9 +150,18 @@ The reset response is the same whether or not the account exists, so the widget 
 | ![Review and place order](docs/images/checkout-review.png) | ![Order 00000102 placed](docs/images/order-confirmation.png) |
 
 The security code goes only to `CheckoutServices-SubmitPayment` and is never stored.
-The store's standard confirmation email follows:
 
-![Order confirmation email for 00000102](docs/images/order-confirmation-email.png)
+#### Proof the order is real
+
+The widget places a genuine SFCC order through `CheckoutServices-PlaceOrder`. The store's
+standard confirmation email arrived at 16:52 for the same order number and total the widget
+showed (00000102, $213.14), with the variant, saved card, address and shipping method chosen
+in the widget:
+
+![Order confirmation email for 00000102, total $213.14](docs/images/order-confirmation-email.png)
+
+The order's journey in Business Manager carries the same order number and the review
+([see below](#journeys-and-reviews)).
 
 ### 8. Review the order and sign out
 
