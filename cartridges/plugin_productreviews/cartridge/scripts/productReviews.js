@@ -1,5 +1,13 @@
 'use strict';
 
+/**
+ * Review domain service: product identity, validation, approved reads and writes.
+ * Persistence is site-scoped. Callers must derive customer identity from the session
+ * and pass validate(form).values to save; request-controlled status is never used.
+ * See the linked standalone repository's code reference for return shapes and queries.
+ * @module scripts/productReviews
+ */
+
 var CustomObjectMgr = require('dw/object/CustomObjectMgr');
 var ProductMgr = require('dw/catalog/ProductMgr');
 var Site = require('dw/system/Site');
@@ -117,7 +125,7 @@ function countRating(pid, rating) {
 }
 
 /**
- * Read approved reviews only, with bounded page size and deterministic ordering.
+ * Read approved reviews only, with bounded page size and newest-first ordering.
  * @param {string} pid - Canonical product ID
  * @param {string|number} requestedPage - One-based page
  * @returns {Object} Summary, histogram and a single page

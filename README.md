@@ -1,5 +1,20 @@
 # Storefront Reference Architecture (SFRA)
 
+## Product reviews extension
+
+This workspace includes `plugin_productreviews` for customer ratings, authenticated
+review submissions and editing, and Business Manager approval. It extends standard
+and Page Designer product details while keeping personal review forms out of cached pages.
+
+[Setup and screenshot gallery](cartridges/plugin_productreviews/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge)
+
+![Customer reviews on the storefront](cartridges/plugin_productreviews/docs/images/reviews-guest.png)
+
+Configure it at **Merchant Tools → Site Preferences → Custom Site Preference Groups → Product Reviews**.
+Moderate submissions at **Merchant Tools → Custom Objects → Manage Custom Objects**.
+
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.

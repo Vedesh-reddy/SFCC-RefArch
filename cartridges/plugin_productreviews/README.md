@@ -1,4 +1,15 @@
-# Product reviews
+<div align="center">
+
+# Product Reviews for SFRA
+
+**Customer ratings, review editing, and merchant approval in one cartridge.**
+
+[Setup](#installation) · [Moderation](#moderation) · [Code reference](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge/blob/main/docs/CODE-REFERENCE.md) · [Standalone repository](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge)
+
+</div>
+
+![Published reviews with ratings and the guest sign-in prompt](docs/images/reviews-guest.png)
+
 
 An SFRA overlay for product ratings and customer reviews. Install it before
 `app_storefront_base` in the site's cartridge path. It uses the repository's
@@ -143,3 +154,46 @@ and closes [SeekableIterator](https://salesforcecommercecloud.github.io/b2c-dev-
 resources after reading. Counts use database queries per rating bucket; lists only
 materialize one page. High-traffic sites should measure query latency and may need
 an aggregate strategy with explicit invalidation on moderation.
+
+## Storefront gallery
+
+### Submit a review
+
+![Authenticated review submission form](docs/images/review-form.png)
+
+<details>
+<summary><strong>Edit a published review and see the empty state</strong></summary>
+
+![Published review and prefilled edit form](docs/images/review-edit.png)
+
+![No reviews yet](docs/images/reviews-empty.png)
+
+</details>
+
+## Business Manager gallery
+
+**Merchant Tools → Site Preferences → Custom Site Preference Groups → Product Reviews**
+
+![Product Reviews preferences](docs/images/site-preferences.png)
+
+**Merchant Tools → Custom Objects → Manage Custom Objects**
+
+![ProductReview moderation fields](docs/images/review-moderation.png)
+
+Screenshots were supplied from the working sandbox on October 6, 2026.
+
+## Developer documentation
+
+The dedicated repository documents the same review implementation with its own standalone tooling:
+
+| Guide | Covers |
+| --- | --- |
+| [Architecture](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge/blob/main/docs/ARCHITECTURE.md) | Data model, request flow, moderation, identity, caching, and query behavior |
+| [Code reference](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge/blob/main/docs/CODE-REFERENCE.md) | Every controller, service function, template, browser event, resource, and metadata file |
+| [Merchant guide](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge/blob/main/docs/MERCHANT-GUIDE.md) | Configuration, approval, rejection, editing, and record removal |
+| [Testing](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge/blob/main/docs/TESTING.md) | Unit coverage, browser checks, live sandbox evidence, and acceptance checklist |
+| [Troubleshooting](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge/blob/main/docs/TROUBLESHOOTING.md) | Deployment paths, cache headers, rating serialization, and integration issues |
+| [Development phases](https://github.com/Vedesh-reddy/sfcc-reviews-cartridge/blob/main/docs/DEVELOPMENT-PHASES.md) | Five feature branches and their pull requests |
+
+Use this RefArch workspace's root npm scripts and `dw.json` for this integration.
+The dedicated repository's build scripts are independent and are not required here.

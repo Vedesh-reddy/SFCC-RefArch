@@ -1,3 +1,4 @@
+<iscomment>Full-page fallback; data-loaded avoids fetching a duplicate personal fragment.</iscomment>
 <isdecorate template="common/layout/page">
     <isscript>
         var reviewAssets = require('*/cartridge/scripts/assets');

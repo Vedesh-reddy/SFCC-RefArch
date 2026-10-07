@@ -1,5 +1,12 @@
 'use strict';
 
+/**
+ * HTTPS storefront routes for the full page, AJAX panel, submission and login return.
+ * Personal form data is rendered outside the cached PDP. Each rejected POST exits
+ * before persistence; JSON and ordinary HTML requests share the same validation.
+ * @module controllers/Reviews
+ */
+
 var server = require('server');
 var reviews = require('*/cartridge/scripts/productReviews');
 var Resource = require('dw/web/Resource');
@@ -96,9 +103,12 @@ function renderReviews(template) {
     };
 }
 
+// Full-page fallback: supports ordinary links and JavaScript-disabled browsers.
 server.get('Show', server.middleware.https, renderReviews('reviews/page'));
+// Fragment endpoint: public reviews plus this session's form, always expired.
 server.get('List', server.middleware.https, renderReviews('reviews/content'));
 
+// Store only a canonical product ID; never accept a free-form return URL.
 server.get('Login', server.middleware.https, function (req, res, next) {
     noCache(res);
     var product = reviews.getProduct(req.querystring.pid);
@@ -112,6 +122,7 @@ server.get('Login', server.middleware.https, function (req, res, next) {
     return next();
 });
 
+// Consume the return target after SFRA login or registration completes.
 server.get('Return', server.middleware.https, function (req, res, next) {
     noCache(res);
     var pid = req.session.privacyCache.get('productReviewsReturnPID');
@@ -122,6 +133,7 @@ server.get('Return', server.middleware.https, function (req, res, next) {
     return next();
 });
 
+// Authentication and CSRF gates are explicit early returns, not redirect-only guards.
 server.post('Submit', server.middleware.https, function (req, res, next) {
     noCache(res);
     var ajax = req.httpHeaders['x-requested-with'] === 'XMLHttpRequest';

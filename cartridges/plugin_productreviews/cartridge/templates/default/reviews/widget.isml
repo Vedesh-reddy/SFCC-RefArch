@@ -1,3 +1,4 @@
+<iscomment>Public PDP shell only: customer-specific content is fetched by Reviews-List.</iscomment>
 <isscript>
     var reviewAssets = require('*/cartridge/scripts/assets');
     reviewAssets.addJs('/js/productReviews.js');
