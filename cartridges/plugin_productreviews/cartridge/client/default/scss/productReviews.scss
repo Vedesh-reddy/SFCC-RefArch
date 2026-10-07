@@ -1,0 +1,49 @@
+// Plugin styles are scoped to the review widget; Bootstrap comes from the host storefront.
+.product-reviews {
+    scroll-margin-top: 2rem;
+
+    .review-message:empty {
+        display: none;
+    }
+
+    .review-stars {
+        color: #795600;
+        font-size: 1.25rem;
+        letter-spacing: 0.1em;
+    }
+
+    .review-body {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+    }
+
+    .review-distribution {
+        max-width: 24rem;
+
+        meter {
+            flex: 1;
+            min-width: 3rem;
+            height: 1.25rem;
+        }
+    }
+
+    .review-bucket-label {
+        min-width: 4rem;
+    }
+
+    .review-form {
+        max-width: 42rem;
+    }
+
+    .review-field-error:empty {
+        display: none;
+    }
+
+    [aria-invalid="true"] {
+        border-color: #b00020;
+    }
+
+    .review-entry h3 {
+        overflow-wrap: anywhere;
+    }
+}

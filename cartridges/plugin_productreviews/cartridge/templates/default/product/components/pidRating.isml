@@ -1,0 +1,10 @@
+<div class="product-number-rating clearfix">
+    <div class="product-number float-start">
+        <isinclude template="product/components/productNumber" />
+    </div>
+    <isif condition="${require('*/cartridge/scripts/productReviews').getSettings().enabled}">
+        <div class="ratings float-end">
+            <a href="${URLUtils.https('Reviews-Show', 'pid', product.id)}" data-review-summary-pid="${product.id}">${Resource.msg('link.read', 'reviews', null)}</a>
+        </div>
+    </isif>
+</div>

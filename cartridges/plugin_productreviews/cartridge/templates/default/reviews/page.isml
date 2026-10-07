@@ -1,0 +1,21 @@
+<iscomment>Full-page fallback; data-loaded avoids fetching a duplicate personal fragment.</iscomment>
+<isdecorate template="common/layout/page">
+    <isscript>
+        var reviewAssets = require('*/cartridge/scripts/assets');
+        reviewAssets.addJs('/js/productReviews.js');
+        reviewAssets.addCss('/css/productReviews.css');
+    </isscript>
+    <div class="container py-4">
+        <isif condition="${pdict.reviewProduct}">
+            <h1><isprint value="${pdict.reviewProduct.name}" encoding="htmlcontent" /></h1>
+            <a href="${URLUtils.https('Product-Show', 'pid', pdict.reviewProduct.id)}">${Resource.msg('link.product', 'reviews', null)}</a>
+        </isif>
+        <section id="product-reviews" class="product-reviews my-4" data-loaded="true"
+            aria-label="${Resource.msg('heading.reviews', 'reviews', null)}"
+            data-reviews-url="${pdict.reviewProduct ? URLUtils.https('Reviews-List', 'pid', pdict.reviewProduct.id) : ''}"
+            data-error="${Resource.msg('error.unavailable', 'reviews', null)}">
+            <div class="review-message" role="status" aria-live="polite" tabindex="-1"></div>
+            <div class="review-panel"><isinclude template="reviews/content" /></div>
+        </section>
+    </div>
+</isdecorate>

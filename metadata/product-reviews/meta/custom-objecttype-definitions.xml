@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="ProductReview">
+        <display-name xml:lang="x-default">Product Review</display-name>
+        <description xml:lang="x-default">One review per product and customer. Only approved reviews are public.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="reviewID">
+            <display-name xml:lang="x-default">Review ID</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="productID">
+                <display-name xml:lang="x-default">Product ID (master for variants)</display-name>
+                <type>string</type>
+                <mandatory-flag>true</mandatory-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">Customer number (private)</display-name>
+                <type>string</type>
+                <mandatory-flag>true</mandatory-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="displayName">
+                <display-name xml:lang="x-default">Public display name</display-name>
+                <type>string</type>
+                <mandatory-flag>true</mandatory-flag>
+                <min-length>2</min-length>
+                <field-length>40</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="rating">
+                <display-name xml:lang="x-default">Star rating</display-name>
+                <type>int</type>
+                <mandatory-flag>true</mandatory-flag>
+                <min-value>1</min-value>
+                <max-value>5</max-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="title">
+                <display-name xml:lang="x-default">Title</display-name>
+                <type>string</type>
+                <mandatory-flag>true</mandatory-flag>
+                <min-length>3</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="body">
+                <display-name xml:lang="x-default">Review text</display-name>
+                <type>text</type>
+                <mandatory-flag>true</mandatory-flag>
+                <field-height>8</field-height>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">Moderation status</display-name>
+                <description xml:lang="x-default">Set to approved to publish, rejected to hide, or pending to hold for review.</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>true</mandatory-flag>
+                <value-definitions>
+                    <value-definition><display xml:lang="x-default">Pending</display><value>pending</value></value-definition>
+                    <value-definition><display xml:lang="x-default">Approved</display><value>approved</value></value-definition>
+                    <value-definition><display xml:lang="x-default">Rejected</display><value>rejected</value></value-definition>
+                </value-definitions>
+                <default-value>pending</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="submittedAt">
+                <display-name xml:lang="x-default">Last submitted</display-name>
+                <type>datetime</type>
+                <mandatory-flag>true</mandatory-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="ProductReviews">
+                <display-name xml:lang="x-default">Product review moderation</display-name>
+                <attribute attribute-id="reviewID" system="true" />
+                <attribute attribute-id="productID" />
+                <attribute attribute-id="customerNo" />
+                <attribute attribute-id="status" />
+                <attribute attribute-id="rating" />
+                <attribute attribute-id="displayName" />
+                <attribute attribute-id="title" />
+                <attribute attribute-id="body" />
+                <attribute attribute-id="submittedAt" />
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>
