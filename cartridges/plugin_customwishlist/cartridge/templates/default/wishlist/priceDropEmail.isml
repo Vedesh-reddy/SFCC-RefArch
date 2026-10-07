@@ -1,0 +1,17 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<html>
+<body>
+    <p>${Resource.msgf('email.greeting', 'customwishlist', null, pdict.firstName || '')}</p>
+    <p>${Resource.msg('email.body', 'customwishlist', null)}</p>
+    <table role="presentation" cellpadding="6">
+        <isloop items="${pdict.items}" var="item">
+            <tr>
+                <td><a href="${item.url}">${item.name}</a></td>
+                <td><del>${item.addedPrice}</del></td>
+                <td><strong>${item.currentPrice}</strong></td>
+            </tr>
+        </isloop>
+    </table>
+    <p><a href="${pdict.wishlistUrl}">${Resource.msg('email.cta', 'customwishlist', null)}</a></p>
+</body>
+</html>

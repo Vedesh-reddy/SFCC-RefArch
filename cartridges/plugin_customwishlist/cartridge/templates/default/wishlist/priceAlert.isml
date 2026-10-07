@@ -1,0 +1,18 @@
+<dialog id="wishlist-price-alert" class="wishlist-price-alert border-0 rounded p-4" aria-labelledby="wishlist-price-alert-title">
+    <h2 id="wishlist-price-alert-title" class="h4">${Resource.msg('alert.title', 'customwishlist', null)}</h2>
+    <p>${Resource.msg('alert.body', 'customwishlist', null)}</p>
+    <ul class="list-unstyled">
+        <isloop items="${pdict.alerts}" var="item">
+            <li class="py-1">
+                <a href="${item.url}">${item.name}</a>:
+                <del>${item.addedPrice}</del>
+                <strong class="ms-1">${item.currentPrice}</strong>
+            </li>
+        </isloop>
+    </ul>
+    <form method="dialog" class="d-flex justify-content-end">
+        <a class="btn btn-primary me-2" href="${pdict.wishlistUrl}">${Resource.msg('link.view', 'customwishlist', null)}</a>
+        <button type="submit" class="btn btn-outline-secondary">${Resource.msg('button.close', 'customwishlist', null)}</button>
+    </form>
+</dialog>
+<script defer src="${URLUtils.staticURL('/js/customWishlist.js')}"></script>

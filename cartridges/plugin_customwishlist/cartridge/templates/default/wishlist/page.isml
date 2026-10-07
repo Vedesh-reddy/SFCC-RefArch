@@ -1,0 +1,37 @@
+<isdecorate template="common/layout/page">
+    <div class="container custom-wishlist-page py-4">
+        <h1 class="page-title">${Resource.msg('page.title', 'customwishlist', null)}</h1>
+        <isif condition="${pdict.items.length}">
+            <ul class="list-unstyled">
+                <isloop items="${pdict.items}" var="item">
+                    <li class="wishlist-item d-flex flex-row align-items-center border-bottom py-3">
+                        <isif condition="${item.image}">
+                            <img class="wishlist-item-image me-3" src="${item.image.url}" alt="${item.image.alt}" width="80" />
+                        </isif>
+                        <div class="flex-grow-1">
+                            <a class="wishlist-item-name" href="${item.url}">${item.name}</a>
+                            <div class="small">
+                                ${Resource.msg('label.added.price', 'customwishlist', null)}: ${item.addedPrice || Resource.msg('label.price.unavailable', 'customwishlist', null)}
+                            </div>
+                            <div class="small">
+                                ${Resource.msg('label.current.price', 'customwishlist', null)}: ${item.currentPrice || Resource.msg('label.price.unavailable', 'customwishlist', null)}
+                                <isif condition="${item.dropped}">
+                                    <span class="badge bg-success ms-1">${Resource.msg('label.price.dropped', 'customwishlist', null)}</span>
+                                </isif>
+                            </div>
+                        </div>
+                        <form action="${URLUtils.https('CustomWishlist-Remove')}" method="post">
+                            <input type="hidden" name="itemId" value="${item.id}" />
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                            <button type="submit" class="btn btn-link" aria-label="${Resource.msg('button.remove', 'customwishlist', null)} ${item.name}">
+                                ${Resource.msg('button.remove', 'customwishlist', null)}
+                            </button>
+                        </form>
+                    </li>
+                </isloop>
+            </ul>
+        <iselse/>
+            <p>${Resource.msg('page.empty', 'customwishlist', null)}</p>
+        </isif>
+    </div>
+</isdecorate>

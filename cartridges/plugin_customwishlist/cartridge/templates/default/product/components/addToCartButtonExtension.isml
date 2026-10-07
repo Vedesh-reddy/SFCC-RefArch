@@ -1,0 +1,5 @@
+<iscomment>
+    Base extension point next to Add to Cart. The button carries a CSRF token and
+    login state, so it is an uncached remote include inside the cached PDP.
+</iscomment>
+<isinclude url="${URLUtils.url('CustomWishlist-Button', 'pid', product.id)}" />
