@@ -44,6 +44,20 @@ confirmation email for order 00000102 placed through the assistant.
 
 Read journeys at **Merchant Tools → Custom Objects → Manage Custom Objects → ChatWidgetJourney**.
 
+## Smart commerce features
+
+This workspace includes `plugin_smartcommerce`: email-code sign-in and registration,
+product price history with the lowest price in 30 days, price-drop and back-in-stock alerts,
+product comparison, order tracking without an account, a 15-minute order modification window,
+store pickup with a pickup code verified in Business Manager, and price lock.
+
+[Setup and screenshot walkthrough](cartridges/plugin_smartcommerce/README.md)
+
+![Product page panel with price history, alerts, store pickup and price lock](cartridges/plugin_smartcommerce/docs/images/pdp-panel.png)
+
+Run the jobs at **Administration → Operations → Jobs → SmartCommerce-PriceHistory** and
+**SmartCommerce-Hourly**. Verify pickups at **Merchant Tools → Smart Commerce → Store Pickup Desk**.
+
 
 This is a repository for the Storefront Reference Architecture reference application.
 
