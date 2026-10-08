@@ -1,0 +1,102 @@
+{
+  "step-types": {
+    "script-module-step": [
+      {
+        "@type-id": "custom.SocialGifting.RegistryLifecycleJob",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "RegistryLifecycleJob",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/registryLifecycle.js",
+        "function": "execute",
+        "transactional": "false",
+        "timeout-in-seconds": 300,
+        "parameters": {},
+        "status-codes": {
+          "status": [
+            {
+              "@code": "OK",
+              "description": "Complete"
+            },
+            {
+              "@code": "ERROR",
+              "description": "Partial failure; retry and inspect logs"
+            }
+          ]
+        }
+      },
+      {
+        "@type-id": "custom.SocialGifting.ReconcileRegistryOrders",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "ReconcileRegistryOrders",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/reconcileOrders.js",
+        "function": "execute",
+        "transactional": "false",
+        "timeout-in-seconds": 300,
+        "parameters": {},
+        "status-codes": {
+          "status": [
+            {
+              "@code": "OK",
+              "description": "Complete"
+            },
+            {
+              "@code": "ERROR",
+              "description": "Partial failure; retry and inspect logs"
+            }
+          ]
+        }
+      },
+      {
+        "@type-id": "custom.SocialGifting.SendRegistryNotifications",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "SendRegistryNotifications",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/sendNotifications.js",
+        "function": "execute",
+        "transactional": "false",
+        "timeout-in-seconds": 300,
+        "parameters": {},
+        "status-codes": {
+          "status": [
+            {
+              "@code": "OK",
+              "description": "Complete"
+            },
+            {
+              "@code": "ERROR",
+              "description": "Partial failure; retry and inspect logs"
+            }
+          ]
+        }
+      },
+      {
+        "@type-id": "custom.SocialGifting.FulfillGroupGifts",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "Fulfill funded campaigns through the merchant funding integration",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/fulfillGroupGifts.js",
+        "function": "execute",
+        "transactional": "false",
+        "timeout-in-seconds": 300,
+        "parameters": {},
+        "status-codes": {
+          "status": [
+            {
+              "@code": "OK",
+              "description": "Complete"
+            },
+            {
+              "@code": "ERROR",
+              "description": "Partial failure; retry and inspect logs"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
