@@ -1,0 +1,7 @@
+<iscomment>
+    Base extension point next to Add to Cart. The button carries a CSRF token and
+    login state, so it is an uncached remote include inside the cached PDP.
+</iscomment>
+<isinclude url="${URLUtils.url('CustomWishlist-Button', 'pid', product.id)}" />
+
+<isif condition="${dw.system.Site.current.getCustomPreferenceValue('SocialGiftingEnabled')}"><isinclude template="registry/assets" /><isinclude url="${URLUtils.https('Registry-Button', 'pid', product.id)}" /></isif>
