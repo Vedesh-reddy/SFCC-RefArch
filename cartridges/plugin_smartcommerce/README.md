@@ -4,26 +4,384 @@
 
 **Email-code login, price history, alerts, compare, guest tracking, order edits, click & collect and price lock.**
 
-[Setup](#installation) · [Walkthrough](#walkthrough-with-sandbox-screenshots) · [How it works](#how-each-feature-works) · [Known limits](#known-limits)
+[Features](#features) · [Setup](#installation) · [Extension points](#extension-points-used) · [Standalone repository](https://github.com/Vedesh-reddy/sfcc-smart-commerce)
 
 </div>
 
 ![Product page panel with price history, alerts, store pickup and price lock](docs/images/pdp-panel.png)
 
-`plugin_smartcommerce` is an SFRA overlay with eight shopper features. They share one cartridge,
-one resource bundle (`smartcommerce.properties`), one storefront script and one OTP helper.
+`plugin_smartcommerce` is an SFRA overlay cartridge. Its features share one cartridge, one
+resource bundle (`smartcommerce.properties`), one storefront script (`smart-commerce.js`) and
+one one-time-code helper. No base cartridge file is edited.
 
-| Feature | Storefront entry | Data | Job |
-| --- | --- | --- | --- |
-| Email OTP sign-in and registration | `EmailOtp-Show`, button on the login page | `session.privacy` (hashed code), customer external profile `SmartEmailOtp` | — |
-| Product price history, lowest price in 30 days | Product page panel, `SmartProduct-PriceHistory?pid=` (JSON) | `SmartPriceHistory` custom object | `SmartCommerce-PriceHistory` (daily) |
-| Price-drop alerts | Product page panel | `SmartProductAlert` (type `price`) | Daily and hourly |
-| Back-in-stock alerts (per variant) | Product page panel | `SmartProductAlert` (type `stock`) | `SmartCommerce-Hourly` |
-| Product comparison (2–4 products) | Compare toggles on tiles and the product page, `ProductCompare-Show?pids=` | Browser `localStorage` | — |
-| Order tracking without an account | `OrderLookup-Show`, link in the login page's track-order form | `session.privacy` | — |
-| Order modification window | Panel on the order details page | Order export held with `exportAfter` | — |
-| Store pickup (click and collect) | Product page panel, BM **Smart Commerce → Store Pickup Desk** | SFRA pickup attributes, order pickup-code hash | — |
-| Price lock | Product page panel | `SmartPriceLock` custom object | `SmartCommerce-Hourly` |
+It uses the repository's root `package.json`, build configuration and `dw.json`.
+
+## Features
+
+Each feature below is self-contained: what it does, how a shopper or store employee uses it,
+what to configure, what it stores, and the rules it enforces. Screenshots were captured on
+sandbox `zyeu-002`, site `RefArch_Practice`, on October 7–8, 2026, against the deployed
+cartridge; the emails arrived in a real inbox and the orders are real SFCC orders.
+
+| # | Feature | Shopper entry point | Data | Job |
+| --- | --- | --- | --- | --- |
+| 1 | [Email OTP sign-in and registration](#1-email-otp-sign-in-and-registration) | Login page button, `EmailOtp-Show` | Session (hashed code), external profile `SmartEmailOtp` | — |
+| 2 | [Price history and lowest price in 30 days](#2-price-history-and-lowest-price-in-30-days) | Product page panel, `SmartProduct-PriceHistory` API | `SmartPriceHistory` | `SmartCommerce-PriceHistory` |
+| 3 | [Price-drop alerts](#3-price-drop-alerts) | Product page panel | `SmartProductAlert` (`price`) | Both jobs |
+| 4 | [Back-in-stock alerts](#4-back-in-stock-alerts) | Product page panel | `SmartProductAlert` (`stock`) | `SmartCommerce-Hourly` |
+| 5 | [Product comparison](#5-product-comparison) | Tiles, product page, `ProductCompare-Show` | Browser storage | — |
+| 6 | [Order tracking without an account](#6-order-tracking-without-an-account) | Track-order form link, `OrderLookup-Show` | Session | — |
+| 7 | [Order modification window](#7-order-modification-window) | Order details page | Order (`exportAfter`) | — |
+| 8 | [Store pickup (click & collect)](#8-store-pickup-click--collect) | Product page panel; BM Store Pickup Desk | Order pickup-code hash | — |
+| 9 | [Price lock](#9-price-lock) | Product page panel | `SmartPriceLock` | `SmartCommerce-Hourly` |
+
+Features 2, 3, 4, 8 and 9 share one **product page panel**, inserted below Add to Cart and
+reloaded whenever the shopper selects another variant, so every action applies to the exact SKU.
+
+![Product page panel](docs/images/pdp-panel.png)
+
+---
+
+### 1. Email OTP sign-in and registration
+
+**What it does.** Shoppers sign in or create an account with a 6-digit code sent to their email
+instead of a password.
+
+**Shopper flow**
+
+1. The login page shows **Sign in with an email code instead** next to the password form.
+
+   ![Login page with the email-code button](docs/images/login-email-code-button.png)
+
+2. To sign in, the shopper enters an email. To register, they also enter a first and last name.
+
+   ![Registration with an email code](docs/images/otp-register-request.png)
+
+3. The code page never says whether the email has an account. A wrong code is rejected.
+
+   ![Code sent](docs/images/otp-verify.png)
+
+   ![Wrong code rejected](docs/images/otp-wrong-code.png)
+
+4. The right code signs the shopper in. Here it signed into an existing password account.
+
+   ![Signed in with the emailed code](docs/images/otp-signed-in.png)
+
+**Configuration.** None. The sender address is the `customerServiceEmail` site preference.
+
+**What it stores.** Only a salted SHA-256 hash of the code, in `session.privacy`. Verified
+customers get an external profile with provider ID `SmartEmailOtp` and their email as ID.
+
+**Rules**
+
+- A code is valid for 10 minutes, allows 5 attempts and works once.
+- Requesting again within 60 seconds keeps the code already sent.
+- An existing password account is linked on first use; without an account, registering creates
+  one with the entered name. Signing in with no account asks the shopper to register.
+- Disabled or locked accounts are refused.
+
+**Limits.** The resend throttle is per session, not per email address.
+
+---
+
+### 2. Price history and lowest price in 30 days
+
+**What it does.** Records every price change per SKU and shows the lowest price of the last
+30 days and the change history on the product page, with the same data as a public JSON API.
+
+**Shopper flow**
+
+1. The panel shows **Lowest price in the last 30 days** and an expandable price history. Here
+   the job recorded $99.00, then $79.00 after the price book changed.
+
+   ![Lowest price and price history](docs/images/price-history-panel.png)
+
+2. Integrations read `SmartProduct-PriceHistory?pid=<SKU>`:
+
+   ![Price history JSON](docs/images/price-history-api.png)
+
+   ```json
+   { "productID": "74974310M-1", "currencyCode": "USD", "current": 79, "lowest30": 79,
+     "history": [{ "date": "2026-10-08T05:29:09.967Z", "price": 79 }, { "date": "2026-10-07T15:21:18.816Z", "price": 99 }] }
+   ```
+
+**Configuration.** Schedule `SmartCommerce-PriceHistory` (imported to run daily at 01:00 UTC).
+
+**What it stores.** One `SmartPriceHistory` custom object per SKU and currency, keyed
+`productID|currency`, holding the change points as JSON.
+
+**Rules**
+
+- A point is written only when the price-book price (without promotions) differs from the last one.
+- Points older than 90 days are dropped, except the one in force at the cutoff.
+- "Lowest in 30 days" counts every price in force during the window, including the price at the
+  window start and today's price.
+- Masters and sets have no history of their own; the panel shows the selected variant's.
+
+---
+
+### 3. Price-drop alerts
+
+**What it does.** A shopper leaves an email on a product and gets one email when its price
+falls below the price at the time of subscribing.
+
+**Shopper flow**
+
+1. The shopper enters an email (prefilled when signed in) and subscribes.
+
+   ![Price-drop alert subscribed](docs/images/price-alert-subscribed.png)
+
+2. When the price dropped from $99.00 to $79.00, the next job run sent one email.
+
+   ![Price drop email](docs/images/email-price-drop.png)
+
+**Configuration.** `smartAlertExpiryDays` (default 30). The send step runs in both jobs.
+
+**What it stores.** A `SmartProductAlert` keyed `price|SKU|email` with the reference price,
+status (`pending`, `sent`, `expired`, `failed`) and expiry. Records are deleted after 90 days.
+
+**Rules**
+
+- One subscription per SKU and email; subscribing again while pending changes nothing.
+- Masters are rejected, so every alert is for a specific variant.
+- A price in another currency never triggers an alert.
+- Each alert is sent at most once; a mail failure marks it `failed` instead of retrying.
+
+---
+
+### 4. Back-in-stock alerts
+
+**What it does.** Shoppers subscribe to an unavailable variant and get one email when it can be
+ordered again.
+
+**Shopper flow**
+
+1. On an unavailable size, the panel offers **Notify me when available**.
+
+   ![Back-in-stock form on an unavailable variant](docs/images/stock-alert-form.png)
+
+2. A second subscription is recognised and not duplicated.
+
+   ![Duplicate subscription recognised](docs/images/stock-alert-deduplicated.png)
+
+3. When stock returned, the hourly job sent one email.
+
+   ![Back in stock email](docs/images/email-back-in-stock.png)
+
+**Configuration.** `smartAlertExpiryDays`; schedule `SmartCommerce-Hourly`.
+
+**What it stores.** A `SmartProductAlert` keyed `stock|SKU|email`, with the same statuses and
+retention as price alerts.
+
+**Rules**
+
+- Only offered for variants or simple products that cannot be ordered.
+- Triggered by `availabilityModel.isOrderable()`, so backorder and preorder settings are respected.
+- Pending alerts past their expiry date become `expired` without an email.
+
+---
+
+### 5. Product comparison
+
+**What it does.** Shoppers pick 2–4 products and compare configurable attributes side by side
+with price, availability, offers and delivery estimate. For jewellery, configure for example
+metal, karatage, gross weight, stone and diamond clarity.
+
+**Shopper flow**
+
+1. Every product tile and the product panel get a **Compare** toggle; a tray at the bottom
+   counts the selection and opens the comparison.
+
+   ![Compare toggles and tray](docs/images/compare-listing-tray.png)
+
+2. The compare page shows one column per product.
+
+   ![Compare page](docs/images/compare-page.png)
+
+**Configuration.** `smartCompareAttributes`: comma-separated product attribute IDs, e.g.
+`metal,karatage,grossWeight,stone,diamondClarity`. Rows with no value for any product are hidden.
+
+**What it stores.** Nothing on the server. The selection stays in the shopper's browser, and the
+page URL `ProductCompare-Show?pids=a,b,c` carries it, so the page is cacheable and shareable.
+
+**Rules**
+
+- Enum, set, number and markup attribute values are displayed in readable form.
+- Attribute IDs not defined in the catalog are skipped instead of breaking the page.
+- Price uses the storefront's pricing template; offers are promotion callouts; delivery is the
+  first home-delivery method with its `estimatedArrivalTime`.
+
+---
+
+### 6. Order tracking without an account
+
+**What it does.** A guest enters the order number and the order email or phone, confirms a code
+sent to the order email, and sees the order.
+
+**Shopper flow**
+
+1. The base track-order form links to the code-based lookup.
+
+   ![Track with a one-time code link](docs/images/track-order-link.png)
+
+2. The guest enters the order number and email or phone.
+
+   ![Order lookup](docs/images/order-lookup.png)
+
+3. The code goes to the email on the order, whatever was entered.
+
+   ![Code sent to the order email](docs/images/order-lookup-verify.png)
+
+4. After the code, the order details page opens (shown in [feature 7](#7-order-modification-window)).
+
+**Configuration.** None.
+
+**What it stores.** The verified order number and order token in `session.privacy`.
+
+**Rules**
+
+- The response is identical whether or not an order matched, so order numbers cannot be probed.
+- Phone numbers match on the last 10 digits of the billing phone.
+- Unplaced and failed orders are never found.
+- After verification, the order is read with `OrderMgr.getOrder(orderNo, orderToken)`.
+
+**Limits.** Phone matches still receive the code by email (no SMS provider). The first lookup has
+no order token, as in base `Order-Track`; test it on sites with *Limit Storefront Order Access*.
+
+---
+
+### 7. Order modification window
+
+**What it does.** For a configured time after placement (15 minutes by default), the customer can
+change the delivery address, cancel an item, swap to another variant or cancel the order. After
+the cutoff the controls disappear.
+
+**Shopper flow**
+
+1. A guest who verified by code sees the change panel on the order page. Here the address was
+   changed to 22 Cambridge Street.
+
+   ![Guest changed the delivery address](docs/images/order-edit-guest-address-saved.png)
+
+2. A signed-in customer sees the same panel under **My Account → Order History**.
+
+   ![Change panel for a registered order](docs/images/order-edit-account-panel.png)
+
+3. **Cancel the whole order** asks for confirmation and cancels it.
+
+   ![Order cancelled](docs/images/order-edit-cancelled.png)
+
+**Configuration.** `smartOrderEditWindowMinutes` (default 15).
+
+**What it stores.** Nothing extra. Placement sets the order's `exportAfter` to the end of the
+window, so fulfilment does not export an order that can still change.
+
+**Rules**
+
+- Only the order's owner or the session that verified it by code may change it; every request
+  re-checks ownership and the window on the server.
+- Edits require status NEW or OPEN, not shipped, not exported, and before the cutoff.
+- The order is never re-priced: unchanged lines keep their prices, discounts and taxes, so the
+  total only stays the same or goes down.
+- Country and state cannot change, because they decide the tax already charged.
+- Single items can be cancelled only when the order has no order-level discount or bonus item.
+- Variant swaps offer only siblings with the same price that are in stock; the line's discounts are kept.
+- Cancelling the order uses `OrderMgr.cancelOrder`, which rolls inventory back.
+
+**Limits.** A cancelled item or swapped-out variant stays allocated until the next inventory
+import or an OMS update. Cancellation does not void the payment at the gateway.
+
+---
+
+### 8. Store pickup (click & collect)
+
+**What it does.** Shows stores that have the selected variant in stock, reserves it at the chosen
+store, keeps the order's pickup address correct through checkout, and emails a pickup code that
+store staff verify before handing over the order.
+
+**Shopper and staff flow**
+
+1. The shopper enters a postal code, or leaves it empty to use their location, and sees nearby
+   stores with stock.
+
+   ![Stores near the shopper with stock](docs/images/pickup-stores-near-me.png)
+
+2. **Pick up here** adds the item to a pickup shipment for that store and opens the cart.
+3. At checkout the shipping form was filled with a home address in Burlington; the order still
+   carries the store's address and the Store Pickup method. A pickup code is emailed.
+
+   ![Pickup order confirmation with the store address](docs/images/pickup-order-confirmation.png)
+
+4. In Business Manager, **Smart Commerce → Store Pickup Desk**, staff enter the order number and
+   the customer's code. A correct code marks the order collected.
+
+   ![Store Pickup Desk marking order 00000103 collected](docs/images/bm-pickup-desk.png)
+
+**Configuration**
+
+- `smartPickupShippingMethodID`: the pickup shipping method (SFRA demo data has `005`). Mark it
+  `storePickupEnabled` so it stays out of the home-delivery list.
+- Each store needs an inventory list, set in the store's `inventoryListId`.
+- Add the cartridge to the Business Manager cartridge path and grant the **Store Pickup Desk**
+  module to the staff role.
+
+**What it stores.** SFRA's in-store pickup attributes (`fromStoreId`, `shipmentType`), and on the
+order a salted hash of the pickup code, the wrong-attempt count and the collection time.
+
+**Rules**
+
+- Pickup lines reserve stock from the store's inventory list when the order is created.
+- Right before order creation, every pickup shipment gets the store address and pickup method
+  again, whatever the shipping form submitted.
+- The pickup code is never stored in clear text. Five wrong codes lock the handover.
+- A correct code sets `smartPickupCollectedAt` and the order's shipping status to SHIPPED.
+
+**Limits.** Postal-code search needs the platform's Store Locator Data for the shopper's country
+(the sandbox has Germany and the US only); without it, the shopper's location is used. With only
+pickup items, base checkout still shows the shipping form, although the order is corrected.
+
+---
+
+### 9. Price lock
+
+**What it does.** A signed-in customer locks today's price of a variant for a number of hours.
+Members of chosen customer groups lock for free; others pay a small fee through normal checkout.
+
+**Shopper flow**
+
+1. The panel offers to lock today's price.
+
+   ![Price lock offer](docs/images/price-lock-offer.png)
+
+2. The lock shows its price and expiry.
+
+   ![Price locked](docs/images/price-lock-active.png)
+
+3. The price later rose from $135.00 to $150.00. The order placed with the lock paid $135.00.
+
+   ![Order line paid at the locked price](docs/images/price-lock-order-line.png)
+
+**Configuration**
+
+- `smartPriceLockHours` (default 24).
+- `smartPriceLockFreeGroups`: customer groups that lock for free (the sandbox uses `Registered`).
+- `smartPriceLockFeeProductID`: product bought as the lock fee. Leave empty to offer free locks only.
+
+**What it stores.** A `SmartPriceLock` per lock: customer, SKU, locked price, currency, status
+(`pending`, `active`, `used`, `expired`), expiry and the fee and usage order numbers. Records are
+deleted after 90 days.
+
+**Rules**
+
+- One active or pending lock per customer and SKU.
+- Paid locks add the fee product to the cart; the lock activates when that order is placed, so
+  the site's payment integration collects the fee.
+- While active, basket calculation adds a `Price lock` discount worth (current − locked price) ×
+  quantity. If the price is at or below the locked price, no discount is added.
+- Placing an order with the discount uses the lock. Expired locks stop applying immediately;
+  the hourly job sets their status.
+
+**Limits.** The fee is not credited against the later purchase.
 
 ## Installation
 
@@ -68,193 +426,6 @@ one resource bundle (`smartcommerce.properties`), one storefront script and one 
 8. **Email.** All emails go through `emailHelpers.sendEmail`, so an `app.customer.email` hook
    (ESP integration) receives them too. The sender is the `customerServiceEmail` preference.
 
-## Walkthrough with sandbox screenshots
-
-Captured on sandbox `zyeu-002`, site `RefArch_Practice`, on October 7–8, 2026. Every step ran
-against the deployed cartridge; the emails arrived in a real inbox and the orders are real
-SFCC orders (00000103, 00000201, 00000202).
-
-### 1. Email OTP sign-in and registration
-
-The login page gets an email-code button next to the password form and social logins.
-
-![Login page with the Sign in with an email code button](docs/images/login-email-code-button.png)
-
-Registration asks for a name and an email; sign-in asks for the email only.
-
-![Create an account with an email code](docs/images/otp-register-request.png)
-
-The verify page never says whether the email has an account. A wrong code is rejected and
-counts toward the 5 allowed attempts.
-
-![Code sent page](docs/images/otp-verify.png)
-
-![Wrong code rejected](docs/images/otp-wrong-code.png)
-
-The right code signs into the existing password account for that email — no password typed.
-
-![Signed in to My Account with the emailed code](docs/images/otp-signed-in.png)
-
-### 2. Product page panel
-
-One panel below Add to Cart, reloaded for each selected variant. Guests see sign-in prompts
-for features that need an account.
-
-![Product page with the Smart Commerce panel](docs/images/pdp-panel.png)
-
-### 3. Price history and lowest price in 30 days
-
-The daily job recorded $99.00; after the price book changed to $79.00 the next run recorded
-the drop. The same data is public JSON at `SmartProduct-PriceHistory?pid=`.
-
-![Lowest price in the last 30 days with the price history list](docs/images/price-history-panel.png)
-
-![Price history JSON API](docs/images/price-history-api.png)
-
-### 4. Price-drop alert
-
-Subscribing stores the current price. When the job saw $79.00, it sent one email.
-
-![Price-drop alert subscribed](docs/images/price-alert-subscribed.png)
-
-![Price drop email](docs/images/email-price-drop.png)
-
-### 5. Back-in-stock alert for one variant
-
-Size 15L (`74974310M-3`) was out of stock. Subscribing twice is deduplicated. When stock
-returned, the hourly job sent one email.
-
-![Back-in-stock form on an unavailable variant](docs/images/stock-alert-form.png)
-
-![Second subscription deduplicated](docs/images/stock-alert-deduplicated.png)
-
-![Back in stock email](docs/images/email-back-in-stock.png)
-
-### 6. Compare 2–4 products
-
-Compare toggles appear on every tile, with a tray at the bottom of the page. The compare page
-shows the configured attributes, price, availability, offers and delivery estimate.
-
-![Listing page with compare toggles and the compare tray](docs/images/compare-listing-tray.png)
-
-![Compare page](docs/images/compare-page.png)
-
-### 7. Store pickup (click & collect)
-
-With the postal code left empty, the browser location finds stores that stock the selected
-variant. Choosing a store reserves from that store's inventory list.
-
-![Stores near the shopper with stock counts](docs/images/pickup-stores-near-me.png)
-
-The shipping form at checkout was submitted with a Burlington address; the order still carries
-the store's address and the Store Pickup method, because pickup shipments are pinned to the store
-right before the order is created. A pickup code was emailed.
-
-![Pickup order confirmation with the store address](docs/images/pickup-order-confirmation.png)
-
-Store staff enter the order number and the customer's code in Business Manager.
-
-![Store Pickup Desk in Business Manager marking order 00000103 collected](docs/images/bm-pickup-desk.png)
-
-### 8. Price lock
-
-A registered shopper locks today's price for 24 hours (free here for the `Registered` group).
-
-![Price lock offer](docs/images/price-lock-offer.png)
-
-![Price locked until the next day](docs/images/price-lock-active.png)
-
-The price later rose from $135.00 to $150.00. The order placed with the lock paid $135.00 and
-used up the lock.
-
-![Order line paid at the locked price](docs/images/price-lock-order-line.png)
-
-### 9. Order tracking without an account
-
-The base track-order form links to the code-based lookup. Order number plus the order email
-or billing phone; the code always goes to the order email.
-
-![Track with a one-time code link](docs/images/track-order-link.png)
-
-![Order lookup](docs/images/order-lookup.png)
-
-![Code sent to the order email](docs/images/order-lookup-verify.png)
-
-### 10. Order modification window
-
-The verified guest sees the change panel on the order page for 15 minutes. Here the address
-was changed to 22 Cambridge Street.
-
-![Guest changed the delivery address](docs/images/order-edit-guest-address-saved.png)
-
-The signed-in owner sees the same panel under My Account, and cancelled the whole order.
-No variant swap is offered because no sibling size has the same price and stock.
-
-![Change panel for a registered order](docs/images/order-edit-account-panel.png)
-
-![Order cancelled](docs/images/order-edit-cancelled.png)
-
-## How each feature works
-
-**Email OTP.** The shopper enters an email address. To register, they also enter a first and last
-name. A 6-digit code is emailed. Only a salted SHA-256 hash of the code is kept in `session.privacy`.
-The code is valid for 10 minutes, allows 5 attempts and is single use. Resends within 60 seconds keep
-the same code. The verified email signs into its account through `CustomerMgr.loginExternallyAuthenticatedCustomer`
-with provider ID `SmartEmailOtp`. Password accounts get that external profile linked on first use.
-If no account exists, one is created with the names entered. The responses do not reveal whether an
-account exists until the code is verified.
-
-**Price history.** The daily job stores a price change point only when the price-book price
-(without promotions) differs from the last recorded price. Points are kept for 90 days. "Lowest in 30
-days" counts every price in force during the window, including the price at the window start and
-the current price. Masters have no price history of their own. The panel shows the history of the
-selected variant.
-
-**Alerts.** Each subscription is one custom object keyed `type|SKU|email`, so repeated
-subscriptions are deduplicated. Masters are rejected, which makes every alert variant-specific.
-Status moves from `pending` to `sent`, `expired` or `failed`, and an alert is never sent twice.
-Price alerts trigger below the price at the time of subscription.
-
-**Compare.** The selection stays in the browser and opens `ProductCompare-Show?pids=a,b,c`. The page
-has no personal data, so it uses the promotion-sensitive page cache. Rows show the configured
-attributes (only those with at least one value), price (base pricing template), availability,
-promotion callouts and the delivery estimate (`ShippingMethod.custom.estimatedArrivalTime`).
-
-**Order tracking.** The shopper enters the order number and either the order email or the billing
-phone (the last 10 digits are compared). The code always goes to the order email. After
-verification, the session stores the order number and token, and later reads use
-`OrderMgr.getOrder(orderNo, orderToken)`. The first lookup has no token, as in base `Order-Track`.
-With **Limit Storefront Order Access** active, test that lookup on your instance.
-
-**Modification window.** Placement sets `exportAfter` to the end of the window, so fulfilment does
-not export the order while it can still change. Until then, the owner or the OTP-verified session can:
-- change the delivery address (country and state are fixed because they set the tax);
-- cancel one item, offered only when the order has no order-level discounts or bonus items;
-- swap to a sibling variant with the same price, keeping the item's discounts;
-- cancel the whole order with `OrderMgr.cancelOrder`, which rolls back inventory.
-
-Edits never re-price the order, so the total can only stay the same or go down. After an item
-cancellation, the payment amount is lowered.
-
-**Store pickup.** The shopper searches stores by postal code (base store locator) and sees only
-stores with stock (`ATS` of the store inventory list). Postal codes need Store Locator Data for
-the shopper's country (the sandbox has Germany and the US only); with the field empty, the
-browser's location is used, else the IP location. Choosing a store adds the SKU to a shipment
-for that store. The shipment uses the store's address and the pickup method, and the line reserves
-from the store's inventory list. Just before the order is created, every pickup shipment gets the
-store address and method again, whatever the shipping form submitted. When the order is placed, a
-6-digit pickup code is emailed and only its hash is saved on the order. At the desk, staff enter
-the order number and code. A correct code marks the order collected (`smartPickupCollectedAt`,
-shipping status SHIPPED). Five wrong codes lock the handover.
-
-**Price lock.** A signed-in shopper locks today's price of a variant. Members of
-`smartPriceLockFreeGroups` lock for free and the lock is active at once. Other shoppers get the fee
-product added to the cart, and the lock activates when that order is placed. This means any payment
-integration on the site collects the fee. While a lock is active, basket calculation
-(`basketCalculationHelpers.calculateTotals`, wrapped) adds a custom price adjustment `smart-price-lock`
-worth `(current − locked) × quantity`. Placing an order uses the lock. Expired locks stop applying
-straight away, and the hourly job sets their status.
-
 ## Extension points used
 
 | Base file or route | How |
@@ -269,19 +440,6 @@ straight away, and the hourly job sets their status.
 The product page panel is inserted by the script after `.prices-add-to-cart-actions` and reloaded on
 `product:afterAttributeSelect`. No product template is overridden, so it works alongside the wishlist
 and reviews plugins.
-
-## Known limits
-
-Each of these is marked in the code with a `ponytail:` comment.
-
-- OTP resend throttling is per session.
-- Phone lookups send the code by email; there is no SMS provider.
-- A cancelled item, or the variant swapped out, stays allocated until the next inventory import or
-  an OMS update.
-- Order cancellation does not void the payment at the gateway.
-- With an empty home-delivery shipment, base checkout still shows the shipping form. Pickup shipments
-  are corrected before the order is created. Dedicated pickup checkout templates would remove the form.
-- The price lock fee is not credited against the later purchase.
 
 ## Verified on a sandbox
 
