@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="smartOrderEditWindowMinutes">
+                <display-name xml:lang="x-default">Order modification window (minutes)</display-name>
+                <description xml:lang="x-default">Minutes after placement during which shoppers can change or cancel an order. Default 15.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>15</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartAlertExpiryDays">
+                <display-name xml:lang="x-default">Product alert expiry (days)</display-name>
+                <description xml:lang="x-default">Days a back-in-stock or price-drop subscription stays active. Default 30.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartCompareAttributes">
+                <display-name xml:lang="x-default">Compare attributes</display-name>
+                <description xml:lang="x-default">Comma-separated product attribute IDs shown on the compare page, e.g. metal,karatage,grossWeight,stone,diamondClarity.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>1000</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartPickupShippingMethodID">
+                <display-name xml:lang="x-default">Store pickup shipping method ID</display-name>
+                <description xml:lang="x-default">Shipping method used for click and collect; mark it storePickupEnabled.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartPriceLockHours">
+                <display-name xml:lang="x-default">Price lock duration (hours)</display-name>
+                <description xml:lang="x-default">Hours a price lock stays active. Default 24.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>24</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartPriceLockFreeGroups">
+                <display-name xml:lang="x-default">Price lock free customer groups</display-name>
+                <description xml:lang="x-default">Comma-separated customer group IDs that lock prices without a fee.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>1000</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartPriceLockFeeProductID">
+                <display-name xml:lang="x-default">Price lock fee product ID</display-name>
+                <description xml:lang="x-default">Product added to the cart for paid price locks. Leave empty to offer free locks only.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartCommerce">
+                <display-name xml:lang="x-default">Smart Commerce</display-name>
+                <attribute attribute-id="smartOrderEditWindowMinutes"/>
+                <attribute attribute-id="smartAlertExpiryDays"/>
+                <attribute attribute-id="smartCompareAttributes"/>
+                <attribute attribute-id="smartPickupShippingMethodID"/>
+                <attribute attribute-id="smartPriceLockHours"/>
+                <attribute attribute-id="smartPriceLockFreeGroups"/>
+                <attribute attribute-id="smartPriceLockFeeProductID"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Order">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="smartPickupCodeHash">
+                <display-name xml:lang="x-default">Pickup code hash</display-name>
+                <description xml:lang="x-default">Salted SHA-256 of the pickup code; the code itself is never stored.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>64</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartPickupCodeSalt">
+                <display-name xml:lang="x-default">Pickup code salt</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>64</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartPickupAttempts">
+                <display-name xml:lang="x-default">Wrong pickup code attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="smartPickupCollectedAt">
+                <display-name xml:lang="x-default">Collected at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartCommerce">
+                <display-name xml:lang="x-default">Smart Commerce</display-name>
+                <attribute attribute-id="smartPickupCodeHash"/>
+                <attribute attribute-id="smartPickupCodeSalt"/>
+                <attribute attribute-id="smartPickupAttempts"/>
+                <attribute attribute-id="smartPickupCollectedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="ProductLineItem">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="smartPriceLockID">
+                <display-name xml:lang="x-default">Price lock paid by this line</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>64</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="fromStoreId">
+                <display-name xml:lang="x-default">Pickup store ID</display-name>
+                <description xml:lang="x-default">SFRA in-store pickup attribute.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>50</field-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartCommerce">
+                <display-name xml:lang="x-default">Smart Commerce</display-name>
+                <attribute attribute-id="smartPriceLockID"/>
+                <attribute attribute-id="fromStoreId"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Shipment">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="fromStoreId">
+                <display-name xml:lang="x-default">Pickup store ID</display-name>
+                <description xml:lang="x-default">SFRA in-store pickup attribute.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>50</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="shipmentType">
+                <display-name xml:lang="x-default">Shipment type</display-name>
+                <description xml:lang="x-default">instore for store pickup (SFRA).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>20</field-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartCommerce">
+                <display-name xml:lang="x-default">Smart Commerce</display-name>
+                <attribute attribute-id="fromStoreId"/>
+                <attribute attribute-id="shipmentType"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Store">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="inventoryListId">
+                <display-name xml:lang="x-default">Inventory list ID</display-name>
+                <description xml:lang="x-default">Store inventory list used for pickup (SFRA).</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartCommerce">
+                <display-name xml:lang="x-default">Smart Commerce</display-name>
+                <attribute attribute-id="inventoryListId"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="ShippingMethod">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="storePickupEnabled">
+                <display-name xml:lang="x-default">Store pickup enabled</display-name>
+                <description xml:lang="x-default">Marks the in-store pickup method (SFRA).</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartCommerce">
+                <display-name xml:lang="x-default">Smart Commerce</display-name>
+                <attribute attribute-id="storePickupEnabled"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

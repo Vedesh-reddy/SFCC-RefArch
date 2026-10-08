@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="SmartPriceHistory">
+        <display-name xml:lang="x-default">Smart price history</display-name>
+        <description xml:lang="x-default">Price change points per product and currency, written by the RecordPriceHistory job.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">productID|currencyCode</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="productID">
+                <display-name xml:lang="x-default">Product ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="currencyCode">
+                <display-name xml:lang="x-default">Currency</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>3</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="priceHistory">
+                <display-name xml:lang="x-default">Price change points</display-name>
+                <description xml:lang="x-default">JSON array of [timeMs, price], oldest first, pruned to 90 days.</description>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartPriceHistory">
+                <display-name xml:lang="x-default">Smart price history</display-name>
+                <attribute attribute-id="productID"/>
+                <attribute attribute-id="currencyCode"/>
+                <attribute attribute-id="priceHistory"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="SmartProductAlert">
+        <display-name xml:lang="x-default">Smart product alert</display-name>
+        <description xml:lang="x-default">Back-in-stock and price-drop subscriptions, one per alert type, SKU and email.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <retention-days>90</retention-days>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">alertType|productID|email</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="alertType">
+                <display-name xml:lang="x-default">Alert type</display-name>
+                <description xml:lang="x-default">stock or price.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>8</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="productID">
+                <display-name xml:lang="x-default">Product ID</display-name>
+                <description xml:lang="x-default">Variant or simple product.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="email">
+                <display-name xml:lang="x-default">Email</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="referencePrice">
+                <display-name xml:lang="x-default">Price at subscription</display-name>
+                <description xml:lang="x-default">Price-drop alerts fire below this price.</description>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="currencyCode">
+                <display-name xml:lang="x-default">Currency</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>3</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">Status</display-name>
+                <description xml:lang="x-default">pending, sent, expired or failed.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>16</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">Expires at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="notifiedAt">
+                <display-name xml:lang="x-default">Notified at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartProductAlert">
+                <display-name xml:lang="x-default">Smart product alert</display-name>
+                <attribute attribute-id="alertType"/>
+                <attribute attribute-id="productID"/>
+                <attribute attribute-id="email"/>
+                <attribute attribute-id="referencePrice"/>
+                <attribute attribute-id="currencyCode"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="expiresAt"/>
+                <attribute attribute-id="notifiedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="SmartPriceLock">
+        <display-name xml:lang="x-default">Smart price lock</display-name>
+        <description xml:lang="x-default">A shopper lock on today&apos;s price of one SKU.</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <retention-days>90</retention-days>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Lock UUID</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">Customer number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="productID">
+                <display-name xml:lang="x-default">Product ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>100</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="lockedPrice">
+                <display-name xml:lang="x-default">Locked unit price</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="currencyCode">
+                <display-name xml:lang="x-default">Currency</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>3</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">Status</display-name>
+                <description xml:lang="x-default">pending (fee unpaid), active, used or expired.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>16</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">Expires at</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="feeOrderNo">
+                <display-name xml:lang="x-default">Fee order number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>50</field-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="usedOrderNo">
+                <display-name xml:lang="x-default">Used in order number</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <field-length>50</field-length>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SmartPriceLock">
+                <display-name xml:lang="x-default">Smart price lock</display-name>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="productID"/>
+                <attribute attribute-id="lockedPrice"/>
+                <attribute attribute-id="currencyCode"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="expiresAt"/>
+                <attribute attribute-id="feeOrderNo"/>
+                <attribute attribute-id="usedOrderNo"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>
