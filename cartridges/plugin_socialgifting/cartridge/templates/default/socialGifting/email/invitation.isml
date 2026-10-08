@@ -1,0 +1,1 @@
+<p>${Resource.msg('email.invitation', 'socialgifting', null)}</p><p><a href="${pdict.invitationURL}">${Resource.msg('invitation.accept', 'socialgifting', null)}</a></p>

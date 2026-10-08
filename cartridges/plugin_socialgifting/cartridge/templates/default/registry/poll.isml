@@ -1,0 +1,7 @@
+<section class="sg-card"><h2><isprint value="${poll.title}" encoding="htmlcontent" /></h2><time datetime="${poll.endAt}"><isprint value="${poll.endAt}" encoding="htmlcontent" /></time>
+    <form class="sg-form" action="${URLUtils.https('RegistryPoll-Vote')}" method="post"><isinclude template="registry/context" /><input type="hidden" name="pollKey" value="${poll.key}" /><input type="hidden" name="choices" />
+        <isloop items="${poll.options}" var="option"><label class="sg-check d-flex align-items-center"><input type="${poll.multiple ? 'checkbox' : 'radio'}" name="sgVote" value="${option.key}" <isif condition="${!poll.canVote}">disabled</isif> /> <isprint value="${option.name}" encoding="htmlcontent" /><isif condition="${option.percent !== null}"> — ${option.percent}%</isif></label></isloop>
+        <isif condition="${poll.canVote}"><button class="btn btn-primary" type="submit">${Resource.msg('poll.vote', 'socialgifting', null)}</button></isif>
+    </form>
+    <isif condition="${pdict.registry.canManage}"><form class="sg-form" action="${URLUtils.https('RegistryPoll-Close')}" method="post"><isinclude template="registry/context" /><input type="hidden" name="pollKey" value="${poll.key}" /><button class="btn btn-link" type="submit">${Resource.msg('poll.close', 'socialgifting', null)}</button></form></isif>
+</section>
