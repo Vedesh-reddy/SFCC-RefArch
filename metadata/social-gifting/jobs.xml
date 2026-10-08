@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="SocialGifting-RegistryLifecycleJob" priority="0"><description>Social gifting RegistryLifecycleJob; schedule every five minutes after configuration.</description><parameters/><flow><context site-id="RefArch_Practice"/><step step-id="RegistryLifecycleJob" type="custom.SocialGifting.RegistryLifecycleJob" enforce-restart="false"><parameters/></step></flow><rules/><triggers/></job>
+    <job job-id="SocialGifting-ReconcileRegistryOrders" priority="0"><description>Social gifting ReconcileRegistryOrders; schedule every five minutes after configuration.</description><parameters/><flow><context site-id="RefArch_Practice"/><step step-id="ReconcileRegistryOrders" type="custom.SocialGifting.ReconcileRegistryOrders" enforce-restart="false"><parameters/></step></flow><rules/><triggers/></job>
+    <job job-id="SocialGifting-SendRegistryNotifications" priority="0"><description>Social gifting SendRegistryNotifications; schedule every five minutes after configuration.</description><parameters/><flow><context site-id="RefArch_Practice"/><step step-id="SendRegistryNotifications" type="custom.SocialGifting.SendRegistryNotifications" enforce-restart="false"><parameters/></step></flow><rules/><triggers/></job>
+</jobs>

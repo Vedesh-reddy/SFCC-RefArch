@@ -1,0 +1,5 @@
+<isscript>
+    var assets = require('*/cartridge/scripts/assets');
+    assets.addJs('/js/socialGifting.js');
+    assets.addCss('/css/socialGifting.css');
+</isscript>

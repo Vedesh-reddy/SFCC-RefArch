@@ -1,0 +1,34 @@
+<isdecorate template="common/layout/page">
+    <isinclude template="registry/assets" />
+    <main class="container sg-page">
+        <header class="sg-header">
+            <p>${Resource.msg('type.' + pdict.registry.eventType, 'socialgifting', pdict.registry.eventType)}</p>
+            <h1><isprint value="${pdict.registry.name}" encoding="htmlcontent" /></h1>
+            <p><isprint value="${pdict.registry.description}" encoding="htmlcontent" /></p>
+            <isif condition="${pdict.registry.eventAt}"><time datetime="${pdict.registry.eventAt}" class="sg-countdown"><isprint value="${pdict.registry.eventAt}" encoding="htmlcontent" /></time></isif>
+            <isif condition="${pdict.registry.secret}"><p>${Resource.msgf('gifts.secret', 'socialgifting', null, pdict.registry.giftCount)}</p></isif>
+            <isif condition="${pdict.registry.canManage}">
+                <a class="btn btn-outline-primary" href="${URLUtils.https('Registry-Edit', 'key', pdict.registry.key)}">${Resource.msg('registry.manage', 'socialgifting', null)}</a>
+                <form class="sg-form" action="${URLUtils.https('Registry-Share')}" method="post"><isinclude template="registry/context" /><button class="btn btn-link" type="submit">${Resource.msg('registry.share', 'socialgifting', null)}</button></form>
+                <isif condition="${pdict.registry.role === 'OWNER'}"><form class="sg-form" action="${URLUtils.https('Registry-Archive')}" method="post"><isinclude template="registry/context" /><button class="btn btn-link" type="submit">${Resource.msg('registry.archive', 'socialgifting', null)}</button></form></isif>
+            </isif>
+        </header>
+        <p class="sg-message" role="status" aria-live="polite"></p>
+        <isif condition="${pdict.registry.canAdd}">
+            <details class="sg-card"><summary>${Resource.msg('product.add', 'socialgifting', null)}</summary>
+                <form class="sg-form" action="${URLUtils.https('Registry-AddProduct')}" method="post">
+                    <isinclude template="registry/context" />
+                    <label>${Resource.msg('product.variant', 'socialgifting', null)}<input class="form-control" name="pid" required maxlength="100" /></label>
+                    <label>${Resource.msg('quantity', 'socialgifting', null)}<input class="form-control" type="number" name="quantity" min="1" max="1000" value="1" required /></label>
+                    <label>${Resource.msg('notes', 'socialgifting', null)}<textarea class="form-control" name="notes" maxlength="1000"></textarea></label>
+                    <label class="sg-check"><input type="checkbox" name="allowGroupGifting" value="true" /> ${Resource.msg('group.allow', 'socialgifting', null)}</label>
+                    <button class="btn btn-primary" type="submit">${Resource.msg('product.add', 'socialgifting', null)}</button>
+                </form>
+            </details>
+        </isif>
+        <div class="sg-grid"><isloop items="${pdict.registry.items}" var="item"><isinclude template="registry/registryItem" /></isloop></div>
+        <isloop items="${pdict.registry.polls}" var="poll"><isinclude template="registry/poll" /></isloop>
+        <isif condition="${pdict.registry.canManage}"><isinclude template="registry/collaborators" /></isif>
+        <section class="sg-card"><h2>${Resource.msg('activity.title', 'socialgifting', null)}</h2><ul><isloop items="${pdict.registry.activity}" var="event"><li><time datetime="${event.at}"><isprint value="${event.at}" encoding="htmlcontent" /></time> — ${Resource.msg('activity.' + event.type, 'socialgifting', event.type)}</li></isloop></ul></section>
+    </main>
+</isdecorate>

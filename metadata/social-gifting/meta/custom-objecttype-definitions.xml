@@ -1,0 +1,761 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="SGRegistry">
+        <display-name xml:lang="x-default">Social gifting Registry</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="publicKey">
+                <display-name xml:lang="x-default">publicKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="listID">
+                <display-name xml:lang="x-default">listID</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="ownerNo">
+                <display-name xml:lang="x-default">ownerNo</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="name">
+                <display-name xml:lang="x-default">name</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="description">
+                <display-name xml:lang="x-default">description</display-name>
+                <type>text</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="eventType">
+                <display-name xml:lang="x-default">eventType</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="eventAt">
+                <display-name xml:lang="x-default">eventAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="revealAt">
+                <display-name xml:lang="x-default">revealAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="visibility">
+                <display-name xml:lang="x-default">visibility</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="slug">
+                <display-name xml:lang="x-default">slug</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="partnerName">
+                <display-name xml:lang="x-default">partnerName</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="coverReference">
+                <display-name xml:lang="x-default">coverReference</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="activateAt">
+                <display-name xml:lang="x-default">activateAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="shareHash">
+                <display-name xml:lang="x-default">shareHash</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="showOwnerNames">
+                <display-name xml:lang="x-default">showOwnerNames</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="showEventDate">
+                <display-name xml:lang="x-default">showEventDate</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="showContributorNames">
+                <display-name xml:lang="x-default">showContributorNames</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="showComments">
+                <display-name xml:lang="x-default">showComments</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="showPolls">
+                <display-name xml:lang="x-default">showPolls</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="showPurchasedItems">
+                <display-name xml:lang="x-default">showPurchasedItems</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="allowAnonymousGifts">
+                <display-name xml:lang="x-default">allowAnonymousGifts</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="allowGuestVoting">
+                <display-name xml:lang="x-default">allowGuestVoting</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="allowGroupGifting">
+                <display-name xml:lang="x-default">allowGroupGifting</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="secretGiftMode">
+                <display-name xml:lang="x-default">secretGiftMode</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="eventReminderSent">
+                <display-name xml:lang="x-default">eventReminderSent</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistrySlug">
+        <display-name xml:lang="x-default">Social gifting RegistrySlug</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryMember">
+        <display-name xml:lang="x-default">Social gifting RegistryMember</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">customerNo</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="role">
+                <display-name xml:lang="x-default">role</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryInvitation">
+        <display-name xml:lang="x-default">Social gifting RegistryInvitation</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="invitedEmail">
+                <display-name xml:lang="x-default">invitedEmail</display-name>
+                <type>email</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="role">
+                <display-name xml:lang="x-default">role</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="acceptedAt">
+                <display-name xml:lang="x-default">acceptedAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryItemState">
+        <display-name xml:lang="x-default">Social gifting RegistryItemState</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="publicKey">
+                <display-name xml:lang="x-default">publicKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="itemID">
+                <display-name xml:lang="x-default">itemID</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="desired">
+                <display-name xml:lang="x-default">desired</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="purchased">
+                <display-name xml:lang="x-default">purchased</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="reserved">
+                <display-name xml:lang="x-default">reserved</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryActivity">
+        <display-name xml:lang="x-default">Social gifting RegistryActivity</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="publicKey">
+                <display-name xml:lang="x-default">publicKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="type">
+                <display-name xml:lang="x-default">type</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="itemKey">
+                <display-name xml:lang="x-default">itemKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="anonymous">
+                <display-name xml:lang="x-default">anonymous</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="occurredAt">
+                <display-name xml:lang="x-default">occurredAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryComment">
+        <display-name xml:lang="x-default">Social gifting RegistryComment</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="publicKey">
+                <display-name xml:lang="x-default">publicKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="itemKey">
+                <display-name xml:lang="x-default">itemKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="authorNo">
+                <display-name xml:lang="x-default">authorNo</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="text">
+                <display-name xml:lang="x-default">text</display-name>
+                <type>text</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="state">
+                <display-name xml:lang="x-default">state</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="editedAt">
+                <display-name xml:lang="x-default">editedAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryPoll">
+        <display-name xml:lang="x-default">Social gifting RegistryPoll</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="publicKey">
+                <display-name xml:lang="x-default">publicKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="title">
+                <display-name xml:lang="x-default">title</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="description">
+                <display-name xml:lang="x-default">description</display-name>
+                <type>text</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="options">
+                <display-name xml:lang="x-default">options</display-name>
+                <type>text</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="counts">
+                <display-name xml:lang="x-default">counts</display-name>
+                <type>text</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="startAt">
+                <display-name xml:lang="x-default">startAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="endAt">
+                <display-name xml:lang="x-default">endAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="visibility">
+                <display-name xml:lang="x-default">visibility</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="allowGuest">
+                <display-name xml:lang="x-default">allowGuest</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="multiple">
+                <display-name xml:lang="x-default">multiple</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="resultsEarly">
+                <display-name xml:lang="x-default">resultsEarly</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="reminderSent">
+                <display-name xml:lang="x-default">reminderSent</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryVote">
+        <display-name xml:lang="x-default">Social gifting RegistryVote</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="pollKey">
+                <display-name xml:lang="x-default">pollKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="choices">
+                <display-name xml:lang="x-default">choices</display-name>
+                <type>text</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryReservation">
+        <display-name xml:lang="x-default">Social gifting RegistryReservation</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="publicKey">
+                <display-name xml:lang="x-default">publicKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="itemKey">
+                <display-name xml:lang="x-default">itemKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="actorHash">
+                <display-name xml:lang="x-default">actorHash</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="quantity">
+                <display-name xml:lang="x-default">quantity</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">orderNo</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastCheckedAt">
+                <display-name xml:lang="x-default">lastCheckedAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGGroupGift">
+        <display-name xml:lang="x-default">Social gifting GroupGift</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="publicKey">
+                <display-name xml:lang="x-default">publicKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="itemKey">
+                <display-name xml:lang="x-default">itemKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="target">
+                <display-name xml:lang="x-default">target</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="paid">
+                <display-name xml:lang="x-default">paid</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="held">
+                <display-name xml:lang="x-default">held</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="refunded">
+                <display-name xml:lang="x-default">refunded</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="currency">
+                <display-name xml:lang="x-default">currency</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="fulfillmentOrderNo">
+                <display-name xml:lang="x-default">fulfillmentOrderNo</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastCheckedAt">
+                <display-name xml:lang="x-default">lastCheckedAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="unitHeld">
+                <display-name xml:lang="x-default">Campaign holds one registry unit</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGContribution">
+        <display-name xml:lang="x-default">Social gifting Contribution</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="publicKey">
+                <display-name xml:lang="x-default">publicKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="giftKey">
+                <display-name xml:lang="x-default">giftKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="amount">
+                <display-name xml:lang="x-default">amount</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="refundedAmount">
+                <display-name xml:lang="x-default">refundedAmount</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="currency">
+                <display-name xml:lang="x-default">currency</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">customerNo</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="actorHash">
+                <display-name xml:lang="x-default">actorHash</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="displayName">
+                <display-name xml:lang="x-default">displayName</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="anonymous">
+                <display-name xml:lang="x-default">anonymous</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="holdExpiresAt">
+                <display-name xml:lang="x-default">holdExpiresAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">orderNo</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentID">
+                <display-name xml:lang="x-default">paymentID</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastCheckedAt">
+                <display-name xml:lang="x-default">lastCheckedAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGPaymentClaim">
+        <display-name xml:lang="x-default">Social gifting PaymentClaim</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="contributionKey">
+                <display-name xml:lang="x-default">contributionKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGPaymentEvent">
+        <display-name xml:lang="x-default">Social gifting PaymentEvent</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="contributionKey">
+                <display-name xml:lang="x-default">contributionKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="kind">
+                <display-name xml:lang="x-default">kind</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGRegistryPurchase">
+        <display-name xml:lang="x-default">Social gifting RegistryPurchase</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">orderNo</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="lineItemID">
+                <display-name xml:lang="x-default">lineItemID</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="itemKey">
+                <display-name xml:lang="x-default">itemKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="quantity">
+                <display-name xml:lang="x-default">quantity</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="anonymous">
+                <display-name xml:lang="x-default">anonymous</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastCheckedAt">
+                <display-name xml:lang="x-default">Last reconciliation</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGNotification">
+        <display-name xml:lang="x-default">Social gifting Notification</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="registryKey">
+                <display-name xml:lang="x-default">registryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="eventType">
+                <display-name xml:lang="x-default">eventType</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="attempts">
+                <display-name xml:lang="x-default">attempts</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="nextAttemptAt">
+                <display-name xml:lang="x-default">nextAttemptAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGAbuseBucket">
+        <display-name xml:lang="x-default">Social gifting AbuseBucket</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="count">
+                <display-name xml:lang="x-default">count</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+    <custom-type type-id="SGMutation">
+        <display-name xml:lang="x-default">Social gifting Mutation</display-name>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="key">
+            <display-name xml:lang="x-default">Key</display-name>
+            <type>string</type>
+            <min-length>1</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="scope">
+                <display-name xml:lang="x-default">scope</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+        </attribute-definitions>
+    </custom-type>
+</metadata>

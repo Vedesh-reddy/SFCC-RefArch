@@ -1,0 +1,1 @@
+<p>${Resource.msg('email.update', 'socialgifting', null)}</p><p><a href="${pdict.registryURL}">${Resource.msg('email.open', 'socialgifting', null)}</a></p>

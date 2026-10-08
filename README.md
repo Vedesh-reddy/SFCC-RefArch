@@ -210,3 +210,7 @@ See: [Page Designer Components](./page-designer-components.md)
 # Bootstrap 5 Migration
 
 See: [Bootstrap 5 Migration Guide](./bootstrap-5-migration.md)
+
+## Social gifting
+
+`plugin_socialgifting` adds event registries, collaboration, reservations and group contribution accounting using existing card checkout. See the [installation and validation guide](cartridges/plugin_socialgifting/README.md). Transactional features default to disabled pending sandbox verification.
