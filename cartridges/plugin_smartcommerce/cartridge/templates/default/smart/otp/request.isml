@@ -1,0 +1,38 @@
+<isdecorate template="common/layout/page">
+    <isset name="register" value="${pdict.mode === 'register'}" scope="page" />
+    <div class="container smart-otp-page py-4">
+        <div class="row justify-content-center">
+            <div class="col-sm-8 col-md-6">
+                <h1 class="page-title">${Resource.msg(register ? 'otp.title.register' : 'otp.title.login', 'smartcommerce', null)}</h1>
+                <p>${Resource.msg(register ? 'otp.intro.register' : 'otp.intro.login', 'smartcommerce', null)}</p>
+                <isif condition="${pdict.error}">
+                    <div class="alert alert-danger" role="alert">${pdict.error}</div>
+                </isif>
+                <form action="${pdict.actionUrl}" method="post" class="smart-otp-request-form">
+                    <input type="hidden" name="mode" value="${pdict.mode}" />
+                    <isif condition="${register}">
+                        <div class="mb-3">
+                            <label class="form-label" for="smart-otp-first-name">${Resource.msg('otp.label.firstname', 'smartcommerce', null)}</label>
+                            <input type="text" class="form-control" id="smart-otp-first-name" name="firstName" value="${pdict.firstName || ''}" maxlength="50" autocomplete="given-name" required />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="smart-otp-last-name">${Resource.msg('otp.label.lastname', 'smartcommerce', null)}</label>
+                            <input type="text" class="form-control" id="smart-otp-last-name" name="lastName" value="${pdict.lastName || ''}" maxlength="50" autocomplete="family-name" required />
+                        </div>
+                    </isif>
+                    <div class="mb-3">
+                        <label class="form-label" for="smart-otp-email">${Resource.msg('otp.label.email', 'smartcommerce', null)}</label>
+                        <input type="email" class="form-control" id="smart-otp-email" name="email" value="${pdict.email || ''}" maxlength="100" autocomplete="email" required />
+                    </div>
+                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                    <button type="submit" class="btn btn-primary w-100">${Resource.msg('otp.button.send', 'smartcommerce', null)}</button>
+                </form>
+                <p class="mt-3">
+                    <a href="${URLUtils.https('EmailOtp-Show', 'mode', register ? 'login' : 'register')}">
+                        ${Resource.msg(register ? 'otp.switch.login' : 'otp.switch.register', 'smartcommerce', null)}
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</isdecorate>

@@ -1,0 +1,25 @@
+<isif condition="${pdict.stores.length > 0}">
+    <ul class="list-unstyled mb-0">
+        <isloop items="${pdict.stores}" var="store">
+            <li class="smart-store border-bottom py-2">
+                <form action="${URLUtils.https('StorePickup-Reserve')}" method="post" class="smart-ajax-form d-flex flex-row justify-content-between align-items-center">
+                    <div>
+                        <strong>${store.name}</strong>
+                        <div class="small">${store.address1}, ${store.city} ${store.postalCode}</div>
+                        <div class="small">${Resource.msgf('pickup.available', 'smartcommerce', null, store.available.toFixed(0))}</div>
+                        <p class="smart-form-message small mb-0" role="status"></p>
+                    </div>
+                    <input type="hidden" name="pid" value="${pdict.pid}" />
+                    <input type="hidden" name="storeId" value="${store.ID}" />
+                    <input type="hidden" name="quantity" value="1" />
+                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                    <button type="submit" class="btn btn-primary btn-sm" aria-label="${Resource.msg('pickup.button.reserve', 'smartcommerce', null)}: ${store.name}">
+                        ${Resource.msg('pickup.button.reserve', 'smartcommerce', null)}
+                    </button>
+                </form>
+            </li>
+        </isloop>
+    </ul>
+<iselseif condition="${pdict.searched}">
+    <p class="small mb-0">${Resource.msg('pickup.stores.none', 'smartcommerce', null)}</p>
+</isif>

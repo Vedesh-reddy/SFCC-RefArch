@@ -1,0 +1,9 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<html>
+<body>
+    <p>${Resource.msg('email.code.body', 'smartcommerce', null)}</p>
+    <p style="font-size: 24px; letter-spacing: 4px;"><strong>${pdict.code}</strong></p>
+    <p>${pdict.reason}</p>
+    <p>${Resource.msg('email.code.ignore', 'smartcommerce', null)}</p>
+</body>
+</html>
