@@ -1,0 +1,18 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<html>
+<body>
+    <p>${Resource.msg('email.alert.body.' + pdict.alertType, 'smartcommerce', null)}</p>
+    <table role="presentation" cellpadding="6">
+        <tr>
+            <isif condition="${pdict.image}">
+                <td><img src="${pdict.image}" alt="${pdict.name}" width="80" /></td>
+            </isif>
+            <td>
+                <a href="${pdict.url}">${pdict.name}</a>
+                <isif condition="${pdict.price}"><div><strong>${pdict.price}</strong></div></isif>
+            </td>
+        </tr>
+    </table>
+    <p><a href="${pdict.url}">${Resource.msg('email.alert.cta', 'smartcommerce', null)}</a></p>
+</body>
+</html>
