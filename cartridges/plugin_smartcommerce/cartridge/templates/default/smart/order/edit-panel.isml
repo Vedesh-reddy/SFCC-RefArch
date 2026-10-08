@@ -1,0 +1,75 @@
+<section class="smart-order-edit card mt-3" aria-labelledby="smart-order-edit-title">
+    <div class="card-body">
+        <isif condition="${pdict.message}">
+            <div class="alert alert-info" role="status">${pdict.message}</div>
+        </isif>
+        <isif condition="${pdict.edit}">
+            <isset name="edit" value="${pdict.edit}" scope="page" />
+            <h2 class="h5" id="smart-order-edit-title">${Resource.msg('edit.title', 'smartcommerce', null)}</h2>
+            <p>${Resource.msg('edit.until', 'smartcommerce', null)} <isprint value="${edit.editableUntil}" formatter="d MMM yyyy, h:mm a" timezone="SITE" />.</p>
+
+            <isif condition="${edit.addressFields}">
+                <h3 class="h6 mt-3">${Resource.msg('edit.address.title', 'smartcommerce', null)}</h3>
+                <form action="${URLUtils.https('OrderEdit-Address')}" method="post" class="smart-edit-address-form">
+                    <isloop items="${edit.addressFields}" var="field">
+                        <div class="mb-2">
+                            <label class="form-label" for="smart-edit-${field.name}">${field.label}</label>
+                            <isif condition="${field.required}">
+                                <input type="text" class="form-control" id="smart-edit-${field.name}" name="${field.name}" value="${field.value}" maxlength="50" required />
+                            <iselse/>
+                                <input type="text" class="form-control" id="smart-edit-${field.name}" name="${field.name}" value="${field.value}" maxlength="50" />
+                            </isif>
+                        </div>
+                    </isloop>
+                    <p class="small text-muted">${Resource.msg('edit.address.note', 'smartcommerce', null)}</p>
+                    <input type="hidden" name="orderNo" value="${edit.orderNo}" />
+                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                    <button type="submit" class="btn btn-outline-primary">${Resource.msg('edit.address.save', 'smartcommerce', null)}</button>
+                </form>
+            </isif>
+
+            <h3 class="h6 mt-4">${Resource.msg('edit.items.title', 'smartcommerce', null)}</h3>
+            <ul class="list-unstyled">
+                <isloop items="${edit.items}" var="item">
+                    <li class="smart-edit-item border-bottom py-2">
+                        <div class="d-flex flex-row justify-content-between align-items-center">
+                            <span>${item.name} &times; ${item.quantity}</span>
+                            <isif condition="${item.canCancel}">
+                                <form action="${URLUtils.https('OrderEdit-CancelItem')}" method="post">
+                                    <input type="hidden" name="orderNo" value="${edit.orderNo}" />
+                                    <input type="hidden" name="uuid" value="${item.uuid}" />
+                                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                                    <button type="submit" class="btn btn-link" aria-label="${Resource.msg('edit.item.cancel', 'smartcommerce', null)}: ${item.name}">
+                                        ${Resource.msg('edit.item.cancel', 'smartcommerce', null)}
+                                    </button>
+                                </form>
+                            </isif>
+                        </div>
+                        <isif condition="${item.variants.length > 0}">
+                            <form action="${URLUtils.https('OrderEdit-ChangeVariant')}" method="post" class="d-flex flex-row align-items-end mt-2">
+                                <div class="flex-grow-1 me-2">
+                                    <label class="form-label" for="smart-edit-variant-${item.uuid}">${Resource.msg('edit.item.variant', 'smartcommerce', null)}</label>
+                                    <select class="form-select" id="smart-edit-variant-${item.uuid}" name="pid">
+                                        <isloop items="${item.variants}" var="variant">
+                                            <option value="${variant.pid}">${variant.label}</option>
+                                        </isloop>
+                                    </select>
+                                </div>
+                                <input type="hidden" name="orderNo" value="${edit.orderNo}" />
+                                <input type="hidden" name="uuid" value="${item.uuid}" />
+                                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                                <button type="submit" class="btn btn-outline-primary">${Resource.msg('edit.item.variant.save', 'smartcommerce', null)}</button>
+                            </form>
+                        </isif>
+                    </li>
+                </isloop>
+            </ul>
+
+            <form action="${URLUtils.https('OrderEdit-Cancel')}" method="post" class="smart-edit-cancel-form mt-3" data-confirm="${Resource.msg('edit.order.cancel.confirm', 'smartcommerce', null)}">
+                <input type="hidden" name="orderNo" value="${edit.orderNo}" />
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                <button type="submit" class="btn btn-outline-danger">${Resource.msg('edit.order.cancel', 'smartcommerce', null)}</button>
+            </form>
+        </isif>
+    </div>
+</section>
