@@ -1,0 +1,354 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="ProductList">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sgRegistryKey">
+                <display-name xml:lang="x-default">sgRegistryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="sgRegistryKey" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="ProductListItem">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sgItemKey">
+                <display-name xml:lang="x-default">sgItemKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgNotes">
+                <display-name xml:lang="x-default">sgNotes</display-name>
+                <type>text</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgAddedBy">
+                <display-name xml:lang="x-default">sgAddedBy</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgStatus">
+                <display-name xml:lang="x-default">sgStatus</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgAllowGroupGifting">
+                <display-name xml:lang="x-default">sgAllowGroupGifting</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgGroupGiftKey">
+                <display-name xml:lang="x-default">sgGroupGiftKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="sgItemKey" />
+                <attribute attribute-id="sgNotes" />
+                <attribute attribute-id="sgAddedBy" />
+                <attribute attribute-id="sgStatus" />
+                <attribute attribute-id="sgAllowGroupGifting" />
+                <attribute attribute-id="sgGroupGiftKey" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Product">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sgContributionProduct">
+                <display-name xml:lang="x-default">sgContributionProduct</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="sgContributionProduct" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Basket">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sgRegistryKey">
+                <display-name xml:lang="x-default">sgRegistryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgActorHash">
+                <display-name xml:lang="x-default">sgActorHash</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgContributionKey">
+                <display-name xml:lang="x-default">sgContributionKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="sgRegistryKey" />
+                <attribute attribute-id="sgActorHash" />
+                <attribute attribute-id="sgContributionKey" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="ProductLineItem">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sgRegistryKey">
+                <display-name xml:lang="x-default">sgRegistryKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgRegistryItemKey">
+                <display-name xml:lang="x-default">sgRegistryItemKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgReservationKey">
+                <display-name xml:lang="x-default">sgReservationKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgAnonymousGift">
+                <display-name xml:lang="x-default">sgAnonymousGift</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgContributionKey">
+                <display-name xml:lang="x-default">sgContributionKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="sgRegistryKey" />
+                <attribute attribute-id="sgRegistryItemKey" />
+                <attribute attribute-id="sgReservationKey" />
+                <attribute attribute-id="sgAnonymousGift" />
+                <attribute attribute-id="sgContributionKey" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Shipment">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sgPrivateRegistryDelivery">
+                <display-name xml:lang="x-default">sgPrivateRegistryDelivery</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="sgPrivateRegistryDelivery" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="OrderAddress">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sgPrivateDelivery">
+                <display-name xml:lang="x-default">sgPrivateDelivery</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="sgPrivateDelivery" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Order">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sgHasRegistryGifts">
+                <display-name xml:lang="x-default">sgHasRegistryGifts</display-name>
+                <type>boolean</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgContributionKey">
+                <display-name xml:lang="x-default">sgContributionKey</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgRegistryProcessedAt">
+                <display-name xml:lang="x-default">sgRegistryProcessedAt</display-name>
+                <type>datetime</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="sgGroupGiftKey">
+                <display-name xml:lang="x-default">Funded campaign</display-name>
+                <type>string</type>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="sgHasRegistryGifts" />
+                <attribute attribute-id="sgContributionKey" />
+                <attribute attribute-id="sgRegistryProcessedAt" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="SocialGiftingEnabled">
+                <display-name xml:lang="x-default">SocialGiftingEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="WeddingRegistryEnabled">
+                <display-name xml:lang="x-default">WeddingRegistryEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="GroupGiftingEnabled">
+                <display-name xml:lang="x-default">GroupGiftingEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="AnonymousGiftingEnabled">
+                <display-name xml:lang="x-default">AnonymousGiftingEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryCommentsEnabled">
+                <display-name xml:lang="x-default">RegistryCommentsEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryPollsEnabled">
+                <display-name xml:lang="x-default">RegistryPollsEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryReservationEnabled">
+                <display-name xml:lang="x-default">RegistryReservationEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="GuestVotingEnabled">
+                <display-name xml:lang="x-default">GuestVotingEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryPurchaseEnabled">
+                <display-name xml:lang="x-default">RegistryPurchaseEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryAnalyticsEnabled">
+                <display-name xml:lang="x-default">RegistryAnalyticsEnabled</display-name>
+                <type>boolean</type>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryReservationMinutes">
+                <display-name xml:lang="x-default">RegistryReservationMinutes</display-name>
+                <type>int</type>
+                <default-value>15</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryArchiveDays">
+                <display-name xml:lang="x-default">RegistryArchiveDays</display-name>
+                <type>int</type>
+                <default-value>90</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="InvitationExpirationHours">
+                <display-name xml:lang="x-default">InvitationExpirationHours</display-name>
+                <type>int</type>
+                <default-value>72</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="GroupGiftExpirationDays">
+                <display-name xml:lang="x-default">GroupGiftExpirationDays</display-name>
+                <type>int</type>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="MaxRegistryItems">
+                <display-name xml:lang="x-default">MaxRegistryItems</display-name>
+                <type>int</type>
+                <default-value>100</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="MaxRegistryCollaborators">
+                <display-name xml:lang="x-default">MaxRegistryCollaborators</display-name>
+                <type>int</type>
+                <default-value>20</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="MaxPollOptions">
+                <display-name xml:lang="x-default">MaxPollOptions</display-name>
+                <type>int</type>
+                <default-value>6</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="MaxRegistriesPerCustomer">
+                <display-name xml:lang="x-default">MaxRegistriesPerCustomer</display-name>
+                <type>int</type>
+                <default-value>10</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="MaxCommentLength">
+                <display-name xml:lang="x-default">MaxCommentLength</display-name>
+                <type>int</type>
+                <default-value>2000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryPageSize">
+                <display-name xml:lang="x-default">RegistryPageSize</display-name>
+                <type>int</type>
+                <default-value>20</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryJobBatchSize">
+                <display-name xml:lang="x-default">RegistryJobBatchSize</display-name>
+                <type>int</type>
+                <default-value>100</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="GroupGiftPaymentHoldMinutes">
+                <display-name xml:lang="x-default">GroupGiftPaymentHoldMinutes</display-name>
+                <type>int</type>
+                <default-value>15</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryActivityRetentionDays">
+                <display-name xml:lang="x-default">RegistryActivityRetentionDays</display-name>
+                <type>int</type>
+                <default-value>180</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="GroupGiftContributionProductID">
+                <display-name xml:lang="x-default">GroupGiftContributionProductID</display-name>
+                <type>string</type>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryInvitationRetentionDays">
+                <display-name xml:lang="x-default">RegistryInvitationRetentionDays</display-name>
+                <type>int</type>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryEventReminderDays">
+                <display-name xml:lang="x-default">RegistryEventReminderDays</display-name>
+                <type>int</type>
+                <default-value>7</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="RegistryPollReminderHours">
+                <display-name xml:lang="x-default">RegistryPollReminderHours</display-name>
+                <type>int</type>
+                <default-value>24</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="SocialGifting">
+                <display-name xml:lang="x-default">Social Gifting</display-name>
+                <attribute attribute-id="SocialGiftingEnabled" />
+                <attribute attribute-id="WeddingRegistryEnabled" />
+                <attribute attribute-id="GroupGiftingEnabled" />
+                <attribute attribute-id="AnonymousGiftingEnabled" />
+                <attribute attribute-id="RegistryCommentsEnabled" />
+                <attribute attribute-id="RegistryPollsEnabled" />
+                <attribute attribute-id="RegistryReservationEnabled" />
+                <attribute attribute-id="GuestVotingEnabled" />
+                <attribute attribute-id="RegistryPurchaseEnabled" />
+                <attribute attribute-id="RegistryAnalyticsEnabled" />
+                <attribute attribute-id="RegistryReservationMinutes" />
+                <attribute attribute-id="RegistryArchiveDays" />
+                <attribute attribute-id="InvitationExpirationHours" />
+                <attribute attribute-id="GroupGiftExpirationDays" />
+                <attribute attribute-id="MaxRegistryItems" />
+                <attribute attribute-id="MaxRegistryCollaborators" />
+                <attribute attribute-id="MaxPollOptions" />
+                <attribute attribute-id="MaxRegistriesPerCustomer" />
+                <attribute attribute-id="MaxCommentLength" />
+                <attribute attribute-id="RegistryPageSize" />
+                <attribute attribute-id="RegistryJobBatchSize" />
+                <attribute attribute-id="GroupGiftPaymentHoldMinutes" />
+                <attribute attribute-id="RegistryActivityRetentionDays" />
+                <attribute attribute-id="GroupGiftContributionProductID" />
+                <attribute attribute-id="RegistryInvitationRetentionDays" />
+                <attribute attribute-id="RegistryEventReminderDays" />
+                <attribute attribute-id="RegistryPollReminderHours" />
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
