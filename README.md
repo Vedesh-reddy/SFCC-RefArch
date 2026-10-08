@@ -59,6 +59,18 @@ store pickup with a pickup code verified in Business Manager, and price lock.
 Run the jobs at **Administration → Operations → Jobs → SmartCommerce-PriceHistory** and
 **SmartCommerce-Hourly**. Verify pickups at **Merchant Tools → Smart Commerce → Store Pickup Desk**.
 
+## Social gifting
+
+This workspace includes `plugin_socialgifting`: event registries with exact product variants,
+reservations with double-gift protection, comments, polls, collaborator invitations, group gifts and
+a private gift checkout that keeps the recipient's address hidden.
+
+[Feature guide with sandbox screenshots](https://github.com/Vedesh-reddy/sfcc-social-gifting#features) ·
+[Installation and integration guide](cartridges/plugin_socialgifting/README.md)
+
+![Public registry page](cartridges/plugin_socialgifting/docs/screenshots/registry-guest-view.png)
+
+Import `metadata/social-gifting` before adding the cartridge to the site path.
 
 This is a repository for the Storefront Reference Architecture reference application.
 
@@ -211,16 +223,3 @@ See: [Page Designer Components](./page-designer-components.md)
 # Bootstrap 5 Migration
 
 See: [Bootstrap 5 Migration Guide](./bootstrap-5-migration.md)
-
-## Social gifting
-
-This workspace includes `plugin_socialgifting`: event registries with exact product variants,
-reservations with double-gift protection, comments, polls, collaborator invitations, group gifts and
-a private gift checkout that keeps the recipient's address hidden.
-
-[Feature guide with sandbox screenshots](https://github.com/Vedesh-reddy/sfcc-social-gifting#features) ·
-[Installation and integration guide](cartridges/plugin_socialgifting/README.md)
-
-![Public registry page](cartridges/plugin_socialgifting/docs/screenshots/registry-guest-view.png)
-
-Import `metadata/social-gifting` before adding the cartridge to the site path.
