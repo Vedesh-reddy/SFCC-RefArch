@@ -1,0 +1,20 @@
+<details class="sg-card"><summary>${Resource.msg('collaborators.title', 'socialgifting', null)}</summary>
+    <ul><isloop items="${pdict.registry.members}" var="member"><li><isprint value="${member.name}" encoding="htmlcontent" /> — <isprint value="${member.role}" encoding="htmlcontent" /><isif condition="${member.role !== 'OWNER'}"><form class="sg-form" action="${URLUtils.https('Registry-RevokeMember')}" method="post"><isinclude template="registry/context" /><input type="hidden" name="memberKey" value="${member.key}" /><button class="btn btn-link" type="submit">${Resource.msg('remove', 'socialgifting', null)}</button></form></isif></li></isloop></ul>
+    <form class="sg-form" action="${URLUtils.https('Registry-Invite')}" method="post"><isinclude template="registry/context" />
+        <label>${Resource.msg('email', 'socialgifting', null)}<input class="form-control" type="email" name="email" required maxlength="254" /></label>
+        <label>${Resource.msg('role', 'socialgifting', null)}<select class="form-select" name="role"><option value="VIEWER">Viewer</option><option value="EDITOR">Editor</option><option value="CO_OWNER">Co-owner</option></select></label>
+        <button class="btn btn-primary" type="submit">${Resource.msg('invite', 'socialgifting', null)}</button>
+    </form>
+    <form class="sg-form" action="${URLUtils.https('RegistryPoll-Create')}" method="post"><isinclude template="registry/context" />
+        <h2>${Resource.msg('poll.create', 'socialgifting', null)}</h2>
+        <label>${Resource.msg('poll.title', 'socialgifting', null)}<input class="form-control" name="title" required maxlength="150" /></label>
+        <fieldset><legend>${Resource.msg('poll.options', 'socialgifting', null)}</legend><isloop items="${pdict.registry.items}" var="option"><label class="sg-check d-flex align-items-center"><input type="checkbox" name="sgPollOption" value="${option.key}" /> <isprint value="${option.name}" encoding="htmlcontent" /></label></isloop></fieldset>
+        <input type="hidden" name="options" />
+        <label>${Resource.msg('poll.end', 'socialgifting', null)}<input class="form-control" name="endAt" required placeholder="2026-12-12T18:00:00+05:30" /></label>
+        <label>${Resource.msg('field.visibility', 'socialgifting', null)}<select class="form-select" name="visibility"><option value="MEMBERS">Members</option><option value="REGISTRY">Registry visitors</option></select></label>
+        <label class="sg-check d-flex align-items-center"><input type="checkbox" name="allowGuest" value="true" /> ${Resource.msg('poll.guests', 'socialgifting', null)}</label>
+        <label class="sg-check d-flex align-items-center"><input type="checkbox" name="multiple" value="true" /> ${Resource.msg('poll.multiple', 'socialgifting', null)}</label>
+        <label class="sg-check d-flex align-items-center"><input type="checkbox" name="resultsEarly" value="true" /> ${Resource.msg('poll.resultsEarly', 'socialgifting', null)}</label>
+        <button class="btn btn-primary" type="submit">${Resource.msg('poll.create', 'socialgifting', null)}</button>
+    </form>
+</details>
