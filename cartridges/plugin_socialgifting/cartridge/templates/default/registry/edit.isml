@@ -1,0 +1,32 @@
+<isdecorate template="common/layout/page">
+    <isinclude template="registry/assets" />
+    <main class="container sg-page">
+        <h1>${Resource.msg('registry.manage', 'socialgifting', null)}</h1>
+        <form class="sg-form sg-card" action="${URLUtils.https('Registry-Save')}" method="post">
+            <isinclude template="registry/csrf" />
+            <input type="hidden" name="registryKey" value="${pdict.registry ? pdict.registry.key : ''}" />
+            <label>${Resource.msg('field.name', 'socialgifting', null)}<input class="form-control" name="name" required maxlength="120" value="${pdict.registry ? pdict.registry.name : ''}" /></label>
+            <label>${Resource.msg('field.partner', 'socialgifting', null)}<input class="form-control" name="partnerName" maxlength="100" value="${pdict.registry ? pdict.registry.partnerName : ''}" /></label>
+            <label>${Resource.msg('field.slug', 'socialgifting', null)}<input class="form-control" name="slug" required pattern="[a-z0-9]+(-[a-z0-9]+)*" maxlength="80" value="${pdict.registry ? pdict.registry.slug : ''}" /></label>
+            <label>${Resource.msg('field.description', 'socialgifting', null)}<textarea class="form-control" name="description" maxlength="2000"><isprint value="${pdict.registry ? pdict.registry.description : ''}" encoding="htmlcontent" /></textarea></label>
+            <label>${Resource.msg('field.eventType', 'socialgifting', null)}<select class="form-select" name="eventType">
+                <isloop items="${['WEDDING', 'BIRTHDAY', 'ANNIVERSARY', 'BABY_SHOWER', 'HOUSEWARMING', 'FESTIVAL', 'CUSTOM']}" var="type">
+                    <option value="${type}" <isif condition="${pdict.registry && pdict.registry.eventType === type}">selected</isif>>${Resource.msg('type.' + type, 'socialgifting', type)}</option>
+                </isloop>
+            </select></label>
+            <label>${Resource.msg('field.eventAt', 'socialgifting', null)}<input class="form-control" name="eventAt" required placeholder="2026-12-12T18:00:00+05:30" value="${pdict.registry ? pdict.registry.eventAt : ''}" /></label>
+            <small>${Resource.msg('date.help', 'socialgifting', null)}</small>
+            <label>${Resource.msg('field.address', 'socialgifting', null)}<select class="form-select" name="addressID"><option value="">${Resource.msg('address.keep', 'socialgifting', null)}</option><isloop items="${pdict.addresses}" var="address"><option value="${address.id}"><isprint value="${address.id}" encoding="htmlcontent" /></option></isloop></select></label>
+            <small>${Resource.msg('address.help', 'socialgifting', null)}</small>
+            <label>${Resource.msg('field.visibility', 'socialgifting', null)}<select class="form-select" name="visibility">
+                <isloop items="${['PRIVATE', 'LINK_ONLY', 'PUBLIC']}" var="value"><option value="${value}" <isif condition="${pdict.registry && pdict.registry.visibility === value}">selected</isif>>${Resource.msg('visibility.' + value, 'socialgifting', value)}</option></isloop>
+            </select></label>
+            <label>${Resource.msg('field.status', 'socialgifting', null)}<select class="form-select" name="status"><option value="DRAFT">${Resource.msg('status.DRAFT', 'socialgifting', null)}</option><option value="ACTIVE" <isif condition="${pdict.registry && pdict.registry.status === 'ACTIVE'}">selected</isif>>${Resource.msg('status.ACTIVE', 'socialgifting', null)}</option></select></label>
+            <fieldset><legend>${Resource.msg('privacy.title', 'socialgifting', null)}</legend>
+                <isloop items="${pdict.privacyFields}" var="field"><label class="sg-check"><input type="checkbox" name="${field}" value="true" <isif condition="${pdict.registry && pdict.registry[field]}">checked</isif> /> ${Resource.msg('privacy.' + field, 'socialgifting', field)}</label></isloop>
+            </fieldset>
+            <button class="btn btn-primary" type="submit">${Resource.msg('save', 'socialgifting', null)}</button>
+        </form>
+        <p class="sg-message" role="status" aria-live="polite"></p>
+    </main>
+</isdecorate>

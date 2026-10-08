@@ -1,0 +1,2 @@
+<isinclude template="registry/csrf" />
+<input type="hidden" name="registryKey" value="${pdict.registry.key}" />
