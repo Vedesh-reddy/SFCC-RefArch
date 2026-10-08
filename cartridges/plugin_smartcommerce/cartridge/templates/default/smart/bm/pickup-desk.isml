@@ -1,0 +1,22 @@
+<isdecorate template="application/MenuFrame">
+    <iscontent type="text/html" charset="UTF-8" />
+    <h1>${Resource.msg('desk.title', 'smartcommerce', null)}</h1>
+    <p>${Resource.msg('desk.intro', 'smartcommerce', null)}</p>
+    <isif condition="${pdict.result}">
+        <p class="smart-desk-result" role="status">
+            <strong>${Resource.msgf('desk.result.' + pdict.result, 'smartcommerce', null, pdict.orderNo)}</strong>
+        </p>
+    </isif>
+    <form action="${URLUtils.url('PickupDesk-Verify')}" method="post" class="smart-desk-form">
+        <p>
+            <label for="smart-desk-order">${Resource.msg('desk.label.order', 'smartcommerce', null)}</label><br/>
+            <input type="text" id="smart-desk-order" name="orderNo" maxlength="50" required />
+        </p>
+        <p>
+            <label for="smart-desk-code">${Resource.msg('desk.label.code', 'smartcommerce', null)}</label><br/>
+            <input type="text" id="smart-desk-code" name="code" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="off" required />
+        </p>
+        <input type="hidden" name="${dw.web.CSRFProtection.getTokenName()}" value="${dw.web.CSRFProtection.generateToken()}" />
+        <button type="submit" class="button">${Resource.msg('desk.button', 'smartcommerce', null)}</button>
+    </form>
+</isdecorate>

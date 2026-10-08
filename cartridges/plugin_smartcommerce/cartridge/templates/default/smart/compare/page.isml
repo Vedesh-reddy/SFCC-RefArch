@@ -1,0 +1,76 @@
+<isdecorate template="common/layout/page">
+    <div class="container smart-compare-page py-4">
+        <h1 class="page-title">${Resource.msg('compare.title', 'smartcommerce', null)}</h1>
+        <isif condition="${pdict.compare}">
+            <isset name="compare" value="${pdict.compare}" scope="page" />
+            <div class="table-responsive">
+                <table class="table align-middle smart-compare-table">
+                    <thead>
+                        <tr>
+                            <td></td>
+                            <isloop items="${compare.columns}" var="column">
+                                <th scope="col" class="text-center">
+                                    <isif condition="${column.image}">
+                                        <img src="${column.image.url}" alt="${column.image.alt}" width="120" class="d-block mx-auto mb-2" />
+                                    </isif>
+                                    <a href="${column.url}">${column.name}</a>
+                                    <button type="button" class="btn btn-link btn-sm d-block mx-auto smart-compare-remove" data-pid="${column.id}"
+                                        aria-label="${Resource.msgf('compare.col.remove', 'smartcommerce', null, column.name)}">
+                                        ${Resource.msg('compare.remove.short', 'smartcommerce', null)}
+                                    </button>
+                                </th>
+                            </isloop>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">${Resource.msg('compare.row.price', 'smartcommerce', null)}</th>
+                            <isloop items="${compare.columns}" var="column">
+                                <td class="text-center">
+                                    <isset name="price" value="${column.price}" scope="page" />
+                                    <isinclude template="product/components/pricing/main" />
+                                </td>
+                            </isloop>
+                        </tr>
+                        <isloop items="${compare.rows}" var="row">
+                            <tr>
+                                <th scope="row">${row.label}</th>
+                                <isloop items="${row.values}" var="value">
+                                    <td class="text-center">${value}</td>
+                                </isloop>
+                            </tr>
+                        </isloop>
+                        <tr>
+                            <th scope="row">${Resource.msg('compare.row.availability', 'smartcommerce', null)}</th>
+                            <isloop items="${compare.columns}" var="column">
+                                <td class="text-center">
+                                    <isloop items="${column.availability}" var="message">
+                                        <div>${message}</div>
+                                    </isloop>
+                                </td>
+                            </isloop>
+                        </tr>
+                        <tr>
+                            <th scope="row">${Resource.msg('compare.row.offers', 'smartcommerce', null)}</th>
+                            <isloop items="${compare.columns}" var="column">
+                                <td class="text-center">
+                                    <isloop items="${column.promotions}" var="promotion">
+                                        <div><isprint value="${promotion.calloutMsg}" encoding="off" /></div>
+                                    </isloop>
+                                </td>
+                            </isloop>
+                        </tr>
+                        <tr>
+                            <th scope="row">${Resource.msg('compare.row.delivery', 'smartcommerce', null)}</th>
+                            <isloop items="${compare.columns}" var="column">
+                                <td class="text-center">${column.delivery}</td>
+                            </isloop>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        <iselse/>
+            <p>${Resource.msg('compare.empty', 'smartcommerce', null)}</p>
+        </isif>
+    </div>
+</isdecorate>

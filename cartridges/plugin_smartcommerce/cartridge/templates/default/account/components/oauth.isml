@@ -1,0 +1,28 @@
+<form action="" class="login-oauth" method="post" name="login-oauth-form">
+    <div class="mb-3">
+        <div class="d-grid">
+            <a href="${URLUtils.https('EmailOtp-Show')}" class="btn btn-outline-primary smart-otp-login" role="button">
+                <i class="fa fa-envelope" aria-hidden="true"></i>
+                ${Resource.msg('otp.login.link', 'smartcommerce', null)}
+            </a>
+        </div>
+    </div>
+    <div class="mb-3">
+        <div class="d-grid">
+            <a href="${URLUtils.https('Login-OAuthLogin', 'oauthProvider', 'Google', 'oauthLoginTargetEndPoint', pdict.oAuthReentryEndpoint)}" class="btn btn-outline-primary oauth-google"
+               role="button" aria-pressed="true">
+                <i class="fa fa-google" aria-hidden="true"></i>
+                ${Resource.msg('button.text.oauth.google', 'login', null)}
+            </a>
+        </div>
+    </div>
+    <div class="mb-3">
+        <div class="d-grid">
+            <a href="${URLUtils.https('Login-OAuthLogin', 'oauthProvider', 'Facebook', 'oauthLoginTargetEndPoint', pdict.oAuthReentryEndpoint)}" class="btn btn-outline-primary oauth-facebook"
+               role="button" aria-pressed="true">
+                    <i class="fa fa-facebook-official" aria-hidden="true"></i>
+                    ${Resource.msg('button.text.oauth.facebook', 'login', null)}
+            </a>
+        </div>
+    </div>
+</form>

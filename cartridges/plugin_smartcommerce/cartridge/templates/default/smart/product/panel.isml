@@ -1,0 +1,98 @@
+<section class="smart-product-panel border-top mt-3 pt-3" aria-label="${Resource.msg('panel.title', 'smartcommerce', null)}" data-pid="${pdict.pid}">
+    <isif condition="${pdict.history}">
+        <div class="smart-price-history mb-3">
+            <p class="mb-1">${Resource.msgf('history.lowest', 'smartcommerce', null, pdict.history.lowest30Formatted)}</p>
+            <details>
+                <summary>${Resource.msg('history.toggle', 'smartcommerce', null)}</summary>
+                <isif condition="${pdict.history.history.length > 0}">
+                    <ul class="list-unstyled small mb-0">
+                        <isloop items="${pdict.history.history}" var="point" end="9">
+                            <li><isprint value="${point.date}" style="DATE_SHORT" />: ${point.priceFormatted}</li>
+                        </isloop>
+                    </ul>
+                <iselse/>
+                    <p class="small mb-0">${Resource.msg('history.empty', 'smartcommerce', null)}</p>
+                </isif>
+            </details>
+        </div>
+    </isif>
+
+    <isif condition="${!pdict.sellable}">
+        <p class="small text-muted">${Resource.msg('panel.select', 'smartcommerce', null)}</p>
+    <iselse/>
+        <isif condition="${!pdict.inStock}">
+            <form action="${URLUtils.https('SmartProduct-Subscribe')}" method="post" class="smart-ajax-form smart-stock-alert mb-3">
+                <h2 class="h6">${Resource.msg('alert.stock.title', 'smartcommerce', null)}</h2>
+                <label class="form-label" for="smart-stock-email">${Resource.msg('otp.label.email', 'smartcommerce', null)}</label>
+                <div class="d-flex flex-row">
+                    <input type="email" class="form-control me-2" id="smart-stock-email" name="email" value="${pdict.email}" maxlength="100" autocomplete="email" required />
+                    <button type="submit" class="btn btn-outline-primary text-nowrap">${Resource.msg('alert.stock.button', 'smartcommerce', null)}</button>
+                </div>
+                <input type="hidden" name="type" value="stock" />
+                <input type="hidden" name="pid" value="${pdict.pid}" />
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                <p class="smart-form-message small mt-1" role="status"></p>
+            </form>
+        </isif>
+
+        <isif condition="${pdict.priced}">
+            <form action="${URLUtils.https('SmartProduct-Subscribe')}" method="post" class="smart-ajax-form smart-price-alert mb-3">
+                <h2 class="h6">${Resource.msg('alert.price.title', 'smartcommerce', null)}</h2>
+                <label class="form-label" for="smart-price-email">${Resource.msg('otp.label.email', 'smartcommerce', null)}</label>
+                <div class="d-flex flex-row">
+                    <input type="email" class="form-control me-2" id="smart-price-email" name="email" value="${pdict.email}" maxlength="100" autocomplete="email" required />
+                    <button type="submit" class="btn btn-outline-primary text-nowrap">${Resource.msg('alert.price.button', 'smartcommerce', null)}</button>
+                </div>
+                <input type="hidden" name="type" value="price" />
+                <input type="hidden" name="pid" value="${pdict.pid}" />
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                <p class="smart-form-message small mt-1" role="status"></p>
+            </form>
+        </isif>
+
+        <isif condition="${pdict.pickup}">
+            <div class="smart-pickup mb-3">
+                <h2 class="h6">${Resource.msg('pickup.title', 'smartcommerce', null)}</h2>
+                <form action="${URLUtils.url('StorePickup-Stores')}" method="get" class="smart-store-search d-flex flex-row align-items-end">
+                    <div class="flex-grow-1 me-2">
+                        <label class="form-label" for="smart-pickup-postal">${Resource.msg('pickup.label.postal', 'smartcommerce', null)}</label>
+                        <input type="text" class="form-control" id="smart-pickup-postal" name="postalCode" maxlength="10" autocomplete="postal-code" aria-describedby="smart-pickup-hint" />
+                    </div>
+                    <input type="hidden" name="pid" value="${pdict.pid}" />
+                    <button type="submit" class="btn btn-outline-primary">${Resource.msg('pickup.button.search', 'smartcommerce', null)}</button>
+                </form>
+                <p class="small text-muted mb-0 mt-1" id="smart-pickup-hint">${Resource.msg('pickup.hint', 'smartcommerce', null)}</p>
+                <div class="smart-store-results mt-2" aria-live="polite"></div>
+            </div>
+        </isif>
+    </isif>
+
+    <isif condition="${pdict.lock && pdict.sellable}">
+        <div class="smart-price-lock mb-3">
+            <h2 class="h6">${Resource.msg('lock.title', 'smartcommerce', null)}</h2>
+            <isif condition="${pdict.lock.lock}">
+                <p class="mb-0">
+                    <isif condition="${pdict.lock.lock.status === 'active'}">
+                        ${Resource.msgf('lock.active', 'smartcommerce', null, pdict.lock.lock.price)} <isprint value="${pdict.lock.lock.expiresAt}" formatter="d MMM yyyy, h:mm a" timezone="SITE" />.
+                    <iselse/>
+                        ${Resource.msgf('lock.pending', 'smartcommerce', null, pdict.lock.lock.price)}
+                    </isif>
+                </p>
+            <iselseif condition="${pdict.lock.registered}">
+                <form action="${URLUtils.https('PriceLock-Create')}" method="post" class="smart-ajax-form">
+                    <p class="small mb-1">${Resource.msgf(pdict.lock.free ? 'lock.intro' : 'lock.intro.fee', 'smartcommerce', null, pdict.lock.hours.toFixed(0))}</p>
+                    <input type="hidden" name="pid" value="${pdict.pid}" />
+                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                    <button type="submit" class="btn btn-outline-primary">${Resource.msg('lock.button', 'smartcommerce', null)}</button>
+                    <p class="smart-form-message small mt-1" role="status"></p>
+                </form>
+            <iselse/>
+                <a class="btn btn-outline-primary" href="${URLUtils.https('Login-Show')}">${Resource.msg('lock.signin', 'smartcommerce', null)}</a>
+            </isif>
+        </div>
+    </isif>
+
+    <button type="button" class="btn btn-link px-0 smart-compare-toggle" data-pid="${pdict.pid}" data-name="${pdict.name}" aria-pressed="false">
+        ${Resource.msg('compare.add', 'smartcommerce', null)}
+    </button>
+</section>
