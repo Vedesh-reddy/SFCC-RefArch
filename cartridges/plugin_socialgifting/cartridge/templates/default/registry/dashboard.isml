@@ -1,0 +1,22 @@
+<isdecorate template="common/layout/page">
+    <isinclude template="registry/assets" />
+    <main class="container sg-page">
+        <h1>${Resource.msg('dashboard.title', 'socialgifting', null)}</h1>
+        <a class="btn btn-primary" href="${URLUtils.https('Registry-Create')}">${Resource.msg('registry.create', 'socialgifting', null)}</a>
+        <div class="sg-grid d-flex flex-wrap">
+            <isloop items="${pdict.registries}" var="registry">
+                <article class="sg-card">
+                    <h2><a href="${registry.url}"><isprint value="${registry.name}" encoding="htmlcontent" /></a></h2>
+                    <p>${Resource.msg('status.' + registry.status, 'socialgifting', registry.status)}</p>
+                    <p>${registry.itemCount.toFixed(0)} ${Resource.msg('dashboard.items', 'socialgifting', null)}<isif condition="${registry.giftCount !== null}"> · ${registry.giftCount.toFixed(0)} ${Resource.msg('quantity.purchased', 'socialgifting', null)}</isif><isif condition="${registry.reservedCount !== null}"> · ${registry.reservedCount.toFixed(0)} ${Resource.msg('quantity.reserved', 'socialgifting', null)}</isif></p>
+                    <isif condition="${registry.eventAt}"><time datetime="${registry.eventAt}"><isprint value="${registry.eventAt}" encoding="htmlcontent" /></time></isif>
+                </article>
+            </isloop>
+        </div>
+        <form class="sg-form" action="${URLUtils.https('RegistryCheckout-Cancel')}" method="post">
+            <isinclude template="registry/csrf" />
+            <button class="btn btn-outline-secondary" type="submit">${Resource.msg('checkout.cancel', 'socialgifting', null)}</button>
+        </form>
+        <p class="sg-message" role="status" aria-live="polite"></p>
+    </main>
+</isdecorate>
