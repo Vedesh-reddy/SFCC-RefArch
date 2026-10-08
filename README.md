@@ -51,7 +51,8 @@ product price history with the lowest price in 30 days, price-drop and back-in-s
 product comparison, order tracking without an account, a 15-minute order modification window,
 store pickup with a pickup code verified in Business Manager, and price lock.
 
-[Setup and screenshot walkthrough](cartridges/plugin_smartcommerce/README.md)
+[Feature guide with screenshots](cartridges/plugin_smartcommerce/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-smart-commerce)
 
 ![Product page panel with price history, alerts, store pickup and price lock](cartridges/plugin_smartcommerce/docs/images/pdp-panel.png)
 
