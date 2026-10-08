@@ -115,3 +115,19 @@ Then verify in a real browser: create/edit/share/revoke; invitation login and ac
 ## Browser verification
 
 See the [verification report and storefront screenshots](docs/verification.md). The current storefront has not activated this cartridge; the registry screenshot records that blocker.
+
+## Social gifting storefront screenshots
+
+Actual Chrome captures of the current storefront. The registry feature is not active yet.
+
+### Existing storefront
+
+The homepage loads successfully (HTTP 200).
+
+![Existing storefront homepage](docs/screenshots/existing-storefront.png)
+
+### Registry activation blocker
+
+`Registry-Dashboard` returns HTTP 500: “Pipeline not found (Registry)”. This records the missing activation, not a working registry screen.
+
+![Registry route showing the missing controller error](docs/screenshots/registry-route-unavailable.png)
