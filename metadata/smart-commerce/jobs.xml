@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="SmartCommerce-PriceHistory" priority="0">
+        <description>Daily: records price changes, then sends price-drop alerts.</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="RecordPriceHistory" type="custom.SmartCommerce.RecordPriceHistory" enforce-restart="false">
+                <description>Record price change points</description>
+                <parameters/>
+            </step>
+            <step step-id="SendProductAlerts" type="custom.SmartCommerce.SendProductAlerts" enforce-restart="false">
+                <description>Send triggered product alerts</description>
+                <parameters/>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="true">
+                <recurrence>
+                    <date-from>2026-10-08Z</date-from>
+                    <start-time>01:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="SmartCommerce-Hourly" priority="0">
+        <description>Hourly: sends back-in-stock alerts and expires price locks.</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="SendProductAlerts" type="custom.SmartCommerce.SendProductAlerts" enforce-restart="false">
+                <description>Send triggered product alerts</description>
+                <parameters/>
+            </step>
+            <step step-id="ExpirePriceLocks" type="custom.SmartCommerce.ExpirePriceLocks" enforce-restart="false">
+                <description>Expire price locks</description>
+                <parameters/>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="true">
+                <recurrence>
+                    <date-from>2026-10-08Z</date-from>
+                    <start-time>00:15:00.000Z</start-time>
+                    <interval>1h</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+</jobs>
