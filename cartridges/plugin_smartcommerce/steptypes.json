@@ -1,0 +1,60 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.SmartCommerce.RecordPriceHistory",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Records a price change point for every online product whose price changed since the last run.",
+                "module": "plugin_smartcommerce/cartridge/scripts/jobs/recordPriceHistory.js",
+                "function": "execute",
+                "transactional": "false",
+                "timeout-in-seconds": "7200",
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        { "@code": "ERROR", "description": "One or more products could not be recorded" },
+                        { "@code": "OK", "description": "All products processed" }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.SmartCommerce.SendProductAlerts",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Emails triggered back-in-stock and price-drop alerts and expires old ones.",
+                "module": "plugin_smartcommerce/cartridge/scripts/jobs/sendProductAlerts.js",
+                "function": "execute",
+                "transactional": "false",
+                "timeout-in-seconds": "3600",
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        { "@code": "ERROR", "description": "One or more alerts failed" },
+                        { "@code": "OK", "description": "All alerts processed" }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.SmartCommerce.ExpirePriceLocks",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Marks pending and active price locks past their expiry as expired.",
+                "module": "plugin_smartcommerce/cartridge/scripts/jobs/expirePriceLocks.js",
+                "function": "execute",
+                "transactional": "false",
+                "timeout-in-seconds": "1800",
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        { "@code": "ERROR", "description": "One or more locks failed" },
+                        { "@code": "OK", "description": "All locks processed" }
+                    ]
+                }
+            }
+        ]
+    }
+}
