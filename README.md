@@ -72,6 +72,21 @@ a private gift checkout that keeps the recipient's address hidden.
 
 Import `metadata/social-gifting` before adding the cartridge to the site path.
 
+## Affiliate rewards (AffiliateX)
+
+This workspace includes `plugin_affiliateproduct`: customers generate a permanent affiliate code,
+share product links, and earn a single-use 10% voucher for each referred order that is paid,
+delivered and past its return window. Referral codes can also be entered at checkout, referred
+orders must be prepaid, and vouchers work only for the affiliate who earned them.
+
+[Feature guide with sandbox screenshots](cartridges/plugin_affiliateproduct/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-affiliate-product)
+
+![Affiliate dashboard with a rewarded referral and a redeemed voucher](cartridges/plugin_affiliateproduct/docs/images/dashboard-history.png)
+
+Import `metadata/affiliate-product`, then schedule **AffiliateProduct-ProcessRewards** and
+**AffiliateProduct-MaintainRewards** at **Administration → Operations → Jobs**.
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
