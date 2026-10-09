@@ -37,6 +37,7 @@
     "watch:static": "sgmf-scripts --watch static",
     "release": "node bin/Makefile release --",
     "test:socialgifting": "mocha 'test/unit/plugin_socialgifting/domain.js'",
+    "test:affiliateproduct": "mocha 'test/unit/plugin_affiliateproduct/affiliate.js'",
     "lint:socialgifting": "eslint cartridges/plugin_socialgifting/cartridge --ext .js",
     "build:socialgifting": "sgmf-scripts --compile js --cartridgeName plugin_socialgifting && sgmf-scripts --compile css --cartridgeName plugin_socialgifting"
   },
