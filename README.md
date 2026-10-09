@@ -87,6 +87,20 @@ orders must be prepaid, and vouchers work only for the affiliate who earned them
 Import `metadata/affiliate-product`, then schedule **AffiliateProduct-ProcessRewards** and
 **AffiliateProduct-MaintainRewards** at **Administration → Operations → Jobs**.
 
+## Loyalty program
+
+This workspace includes `plugin_loyalty`: shoppers earn 5% of every delivered order back as points
+(10 points = 1), redeem them at checkout from 100 points for up to 50% of an order, climb Silver, Gold
+and Platinum tiers that earn more, and collect welcome, birthday, profile and review bonuses. Points
+expire after 12 months, oldest first, with a reminder.
+
+[Feature guide with sandbox screenshots](cartridges/plugin_loyalty/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-loyalty-program)
+
+![My Points with earned, refunded and bonus points](cartridges/plugin_loyalty/docs/images/dashboard-gold.png)
+
+Import `metadata/loyalty-program`, then schedule **Loyalty-ProcessOrders** and **Loyalty-Maintain**.
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
