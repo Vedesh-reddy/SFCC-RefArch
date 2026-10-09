@@ -110,7 +110,8 @@ pick dates on the product page, pay a refundable deposit and can book a size tri
 Business Manager Rental Desk runs dispatch, returns, damage inspection with photos and deposit
 refunds, and a job charges late fees.
 
-[Feature guide with sandbox screenshots](cartridges/plugin_rentals/README.md)
+[Feature guide with sandbox screenshots](cartridges/plugin_rentals/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-rentals)
 
 ![Rental dates and live availability on the product page](cartridges/plugin_rentals/docs/images/pdp-rental-dates.png)
 
