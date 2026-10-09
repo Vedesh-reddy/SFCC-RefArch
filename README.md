@@ -101,6 +101,22 @@ expire after 12 months, oldest first, with a reminder.
 
 Import `metadata/loyalty-program`, then schedule **Loyalty-ProcessOrders** and **Loyalty-Maintain**.
 
+## Rentals
+
+This workspace includes `plugin_rentals`: rent pieces such as lehengas, sherwanis and jewellery
+sets for 3, 5 or 7 days. Every physical unit has its own calendar with cleaning days between
+rentals, and a custom object unique key stops two shoppers from booking the same day. Shoppers
+pick dates on the product page, pay a refundable deposit and can book a size trial. The
+Business Manager Rental Desk runs dispatch, returns, damage inspection with photos and deposit
+refunds, and a job charges late fees.
+
+[Feature guide with sandbox screenshots](cartridges/plugin_rentals/README.md)
+
+![Rental dates and live availability on the product page](cartridges/plugin_rentals/docs/images/pdp-rental-dates.png)
+
+Import `metadata/rentals`, then schedule **Rentals-ReleaseHolds** and **Rentals-LateFees** at
+**Administration → Operations → Jobs**.
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
