@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field formid="campaignId" type="string" mandatory="true" regexp="^[a-z0-9][a-z0-9-]{2,40}$" />
+    <field formid="termsVersion" type="string" mandatory="true" max-length="20" />
+    <field formid="region" type="string" mandatory="true" regexp="^[A-Z]{2}$" />
+    <field formid="acceptTerms" type="boolean" mandatory="true" />
+    <field formid="ageConfirmed" type="boolean" mandatory="true" />
+</form>

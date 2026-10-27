@@ -1,0 +1,79 @@
+<isset name="me" value="${pdict.me}" scope="page" />
+<section class="card mb-4" aria-labelledby="luckydraw-me-title">
+    <div class="card-body">
+        <h2 class="h4" id="luckydraw-me-title">${Resource.msg('me.heading', 'luckydraw', null)}</h2>
+        <isloop items="${me.rewards}" var="won">
+            <isif condition="${won.status === 'ISSUED'}">
+                <p class="alert alert-success luckydraw-celebration" role="status">${Resource.msgf('me.won', 'luckydraw', null, won.label)}</p>
+            </isif>
+        </isloop>
+        <p class="mb-1">${Resource.msgf('me.total', 'luckydraw', null, me.totalEntries.toFixed(0), me.maxEntries.toFixed(0))}</p>
+        <div class="progress mb-3" role="progressbar" aria-label="${Resource.msg('me.progress', 'luckydraw', null)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${me.progressPercent.toFixed(0)}">
+            <div class="progress-bar" style="width: ${me.progressPercent.toFixed(0)}%"></div>
+        </div>
+
+        <h3 class="h6">${Resource.msg('badges.heading', 'luckydraw', null)}</h3>
+        <ul class="list-unstyled d-flex flex-wrap mb-3">
+            <isloop items="${me.badges}" var="b">
+                <li class="mr-2 me-2 mb-1">
+                    <span class="badge ${b.earned ? 'badge-success bg-success' : 'badge-light bg-light text-dark'} luckydraw-badge">${Resource.msgf('badges.item', 'luckydraw', null, b.threshold.toFixed(0))}<span class="sr-only visually-hidden">: ${Resource.msg(b.earned ? 'badges.earned' : 'badges.open', 'luckydraw', null)}</span></span>
+                </li>
+            </isloop>
+        </ul>
+
+        <isif condition="${me.entries.length === 0}">
+            <p>${Resource.msg('me.empty', 'luckydraw', null)}</p>
+        <iselse/>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">${Resource.msg('entries.date', 'luckydraw', null)}</th>
+                            <th scope="col">${Resource.msg('entries.source', 'luckydraw', null)}</th>
+                            <th scope="col">${Resource.msg('entries.count', 'luckydraw', null)}</th>
+                            <th scope="col">${Resource.msg('entries.status', 'luckydraw', null)}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <isloop items="${me.entries}" var="e">
+                            <tr>
+                                <td>${e.entryAt.toISOString().slice(0, 10)}</td>
+                                <td>${Resource.msgf('entry.source.' + e.sourceType, 'luckydraw', null, e.orderNo || '')}</td>
+                                <td>${e.entryCount.toFixed(0)}</td>
+                                <td>${Resource.msg('entry.status.' + e.status, 'luckydraw', e.status)}</td>
+                            </tr>
+                        </isloop>
+                    </tbody>
+                </table>
+            </div>
+        </isif>
+
+        <h3 class="h6 mt-3">${Resource.msg('rewards.heading', 'luckydraw', null)}</h3>
+        <isif condition="${me.rewards.length === 0}">
+            <p>${Resource.msg('rewards.empty', 'luckydraw', null)}</p>
+        <iselse/>
+            <ul class="list-unstyled">
+                <isloop items="${me.rewards}" var="rw">
+                    <li class="border rounded p-2 mb-2 luckydraw-reward">
+                        <p class="mb-1 font-weight-bold fw-bold">${rw.label} &middot; ${Resource.msg('reward.status.' + rw.status, 'luckydraw', rw.status)}</p>
+                        <isif condition="${!empty(rw.couponCode)}">
+                            <p class="mb-1">${Resource.msgf('reward.code', 'luckydraw', null, rw.couponCode)}</p>
+                            <p class="mb-0 small">${Resource.msgf('reward.expires', 'luckydraw', null, rw.expiresAt.toISOString().slice(0, 10))}</p>
+                        </isif>
+                    </li>
+                </isloop>
+            </ul>
+        </isif>
+
+        <isif condition="${!me.optedOut}">
+            <form action="${URLUtils.url('LuckyDraw-OptOut')}" method="post" class="mt-3">
+                <input type="hidden" name="campaignId" value="${pdict.campaign.campaignId}" />
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                <p class="small mb-1">${Resource.msg('me.optout.text', 'luckydraw', null)}</p>
+                <button type="submit" class="btn btn-outline-secondary btn-sm">${Resource.msg('me.optout', 'luckydraw', null)}</button>
+            </form>
+        <iselse/>
+            <p class="mt-3">${Resource.msg('me.optedout', 'luckydraw', null)}</p>
+        </isif>
+    </div>
+</section>

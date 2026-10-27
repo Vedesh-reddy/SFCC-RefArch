@@ -1,0 +1,13 @@
+// Lucky draw visual treatment only; layout comes from Bootstrap utilities in the templates.
+
+.luckydraw-legal {
+    background-color: var(--luckydraw-legal-background, #f8f9fa);
+}
+
+.luckydraw-countdown {
+    font-variant-numeric: tabular-nums;
+}
+
+.luckydraw-facts dd {
+    margin-bottom: 0.75rem;
+}

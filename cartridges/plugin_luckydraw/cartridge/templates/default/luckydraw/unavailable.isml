@@ -1,0 +1,5 @@
+<isdecorate template="common/layout/page">
+    <div class="container luckydraw-page py-5">
+        <p>${Resource.msg('unavailable.text', 'luckydraw', null)}</p>
+    </div>
+</isdecorate>
