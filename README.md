@@ -133,6 +133,20 @@ Merchant Tools › Marketplace. Sandbox and demo use only.
 Import `metadata/plugin_seller` after setting the cartridge paths, then create the
 `IMPEX/plugin-seller-private/documents` and `.../images` folders (see `docs/plugin_seller/DEPLOYMENT.md`).
 
+## Smart Wallet
+
+This workspace includes `plugin_wallet`: a stored-value wallet in USD on a double-entry ledger.
+Shoppers add money through a sandbox gateway, pay in checkout with the wallet alone or together with
+a card, invite family members with limits, and lock the wallet. Payments from a new session need a
+one-time e-mail code. Customer service works wallets, cases and the audit trail in Business Manager.
+Sandbox use only: Not for Live Money.
+
+[Feature guide with sandbox screenshots](docs/plugin_wallet/README.md)
+
+![My wallet](docs/plugin_wallet/images/wallet-dashboard.png)
+
+Import `metadata/plugin_wallet`; it adds the `WALLET` payment method and processor.
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
