@@ -1,0 +1,18 @@
+<isdecorate template="common/layout/page">
+    <div class="container wallet-page py-4">
+        <h1 class="wallet-title">${Resource.msg('history.heading', 'wallet', null)}</h1>
+        <isset name="historyItems" value="${pdict.history.items}" scope="page" />
+        <isinclude template="wallet/components/history-table" />
+        <nav class="d-flex justify-content-between mt-3" aria-label="${Resource.msg('pager.label', 'wallet', null)}">
+            <isif condition="${pdict.offset > 0}">
+                <a class="btn btn-outline-primary btn-sm" href="${URLUtils.url('Wallet-History', 'offset', Math.max(0, pdict.offset - pdict.pageSize).toFixed(0), 'type', pdict.type || '')}">${Resource.msg('pager.previous', 'wallet', null)}</a>
+            <iselse/>
+                <span></span>
+            </isif>
+            <isif condition="${pdict.offset + pdict.pageSize < pdict.history.total}">
+                <a class="btn btn-outline-primary btn-sm" href="${URLUtils.url('Wallet-History', 'offset', (pdict.offset + pdict.pageSize).toFixed(0), 'type', pdict.type || '')}">${Resource.msg('pager.next', 'wallet', null)}</a>
+            </isif>
+        </nav>
+        <p class="mt-3"><a href="${URLUtils.url('Wallet-Show')}">${Resource.msg('dashboard.heading', 'wallet', null)}</a></p>
+    </div>
+</isdecorate>

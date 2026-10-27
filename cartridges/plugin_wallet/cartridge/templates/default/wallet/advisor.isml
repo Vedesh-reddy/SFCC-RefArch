@@ -1,0 +1,35 @@
+<iscomment>Remote include on the cart page (Wallet-Advisor). Basket-specific, not cached.</iscomment>
+<isscript>var formatCents = require('*/cartridge/scripts/helpers/walletHelpers').formatCents;</isscript>
+<isif condition="${pdict.advice}">
+    <isset name="advice" value="${pdict.advice}" scope="page" />
+    <section class="wallet-advisor card my-3" aria-labelledby="wallet-advisor-title">
+        <div class="card-body">
+            <h2 class="h6" id="wallet-advisor-title">${Resource.msgf('advisor.away', 'wallet', null, formatCents(advice.distanceCents))}</h2>
+            <isif condition="${!empty(advice.promotionName)}"><p class="small mb-2">${advice.promotionName}</p></isif>
+            <p class="small text-muted">${Resource.msg('advisor.note', 'wallet', null)}</p>
+            <isif condition="${advice.nearPrice.length > 0}">
+                <h3 class="h6">${Resource.msgf('advisor.near', 'wallet', null, formatCents(advice.distanceCents))}</h3>
+                <ul class="list-unstyled d-flex flex-wrap">
+                    <isloop items="${advice.nearPrice}" var="item">
+                        <li class="mr-3 me-3 mb-2 wallet-advisor-item">
+                            <a href="${item.url}">
+                                <isif condition="${!empty(item.imageUrl)}"><img class="d-block mb-1 wallet-advisor-image" src="${item.imageUrl}" alt="${item.imageAlt}" /></isif>
+                                <span class="d-block small">${item.name}</span>
+                                <span class="d-block small font-weight-bold fw-bold">${formatCents(item.priceCents)}</span>
+                            </a>
+                        </li>
+                    </isloop>
+                </ul>
+            </isif>
+            <isif condition="${advice.accessories.length > 0}">
+                <h3 class="h6">${Resource.msg('advisor.accessories', 'wallet', null)}</h3>
+                <ul class="list-unstyled d-flex flex-wrap">
+                    <isloop items="${advice.accessories}" var="item">
+                        <li class="mr-3 me-3 mb-2 wallet-advisor-item"><a href="${item.url}"><span class="d-block small">${item.name}</span><span class="d-block small font-weight-bold fw-bold">${formatCents(item.priceCents)}</span></a></li>
+                    </isloop>
+                </ul>
+            </isif>
+            <a class="btn btn-outline-primary btn-sm" href="${advice.browseUrl}">${Resource.msg('advisor.browse', 'wallet', null)}</a>
+        </div>
+    </section>
+</isif>

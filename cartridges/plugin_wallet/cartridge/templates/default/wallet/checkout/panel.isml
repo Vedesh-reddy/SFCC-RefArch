@@ -1,0 +1,59 @@
+<isscript>
+    var walletPanel = require('*/cartridge/scripts/helpers/walletPaymentHelpers').getCheckoutPanel(customer, require('dw/order/BasketMgr').getCurrentBasket());
+    var assets = require('*/cartridge/scripts/assets.js');
+    assets.addJs('/js/wallet-checkout.js');
+</isscript>
+<isif condition="${walletPanel}">
+    <section class="wallet-checkout card mb-3" aria-labelledby="wallet-checkout-title"
+        data-apply-url="${URLUtils.url('Wallet-Apply')}" data-remove-url="${URLUtils.url('Wallet-Remove')}"
+        data-code-url="${URLUtils.url('Wallet-PaymentCode')}" data-verify-url="${URLUtils.url('Wallet-VerifyPaymentCode')}"
+        data-approval-url="${URLUtils.url('Wallet-RequestApproval')}" data-method-id="${walletPanel.methodId}"
+        data-covers-total="${walletPanel.applied && walletPanel.applied.coversTotal ? 'true' : 'false'}">
+        <div class="card-body">
+            <h2 class="h6" id="wallet-checkout-title">${Resource.msg('checkout.title', 'wallet', null)}</h2>
+            <isif condition="${walletPanel.sandbox}">
+                <p class="badge badge-warning bg-warning text-dark wallet-sandbox-badge">${Resource.msg('sandbox.badge', 'wallet', null)}</p>
+            </isif>
+            <isif condition="${walletPanel.own}">
+                <div class="d-flex flex-wrap align-items-end mb-2">
+                    <div class="mr-3 me-3">
+                        <span class="d-block small text-muted">${Resource.msg('checkout.available', 'wallet', null)}</span>
+                        <span class="font-weight-bold fw-bold">${walletPanel.own.availableFormatted}</span>
+                    </div>
+                    <div class="form-group mb-0 mr-2 me-2">
+                        <label class="form-control-label small" for="wallet-amount">${Resource.msg('checkout.amount', 'wallet', null)}</label>
+                        <input class="form-control form-control-sm wallet-amount-input" id="wallet-amount" inputmode="decimal" pattern="\d{1,9}(\.\d{1,2})?" placeholder="${Resource.msg('checkout.amount.max', 'wallet', null)}" />
+                    </div>
+                    <button type="button" class="btn btn-outline-primary btn-sm wallet-apply" data-mode="OWN">${Resource.msg('checkout.apply', 'wallet', null)}</button>
+                </div>
+            </isif>
+            <isif condition="${walletPanel.family}">
+                <div class="mb-2">
+                    <p class="small mb-1">${Resource.msgf('checkout.family', 'wallet', null, walletPanel.family.nickname, walletPanel.family.perOrderFormatted, walletPanel.family.remainingTodayFormatted)}</p>
+                    <button type="button" class="btn btn-outline-primary btn-sm wallet-apply" data-mode="FAMILY">${Resource.msg('checkout.apply.family', 'wallet', null)}</button>
+                </div>
+            </isif>
+            <div class="wallet-applied ${walletPanel.applied ? '' : 'd-none'}">
+                <p class="mb-1">
+                    ${Resource.msg('checkout.applied', 'wallet', null)} <span class="wallet-applied-amount font-weight-bold fw-bold">${walletPanel.applied ? walletPanel.applied.amountFormatted : ''}</span>
+                    &middot; ${Resource.msg('checkout.remaining', 'wallet', null)} <span class="wallet-remaining-amount">${walletPanel.applied ? walletPanel.applied.remainingFormatted : ''}</span>
+                </p>
+                <button type="button" class="btn btn-link btn-sm p-0 wallet-remove">${Resource.msg('checkout.remove', 'wallet', null)}</button>
+            </div>
+            <div class="wallet-step-up d-none mt-2">
+                <p class="small mb-1 wallet-step-up-text">${Resource.msg('checkout.stepup', 'wallet', null)}</p>
+                <button type="button" class="btn btn-outline-secondary btn-sm wallet-send-code">${Resource.msg('checkout.sendcode', 'wallet', null)}</button>
+                <div class="d-flex align-items-end mt-2">
+                    <label class="sr-only visually-hidden" for="wallet-code">${Resource.msg('checkout.code', 'wallet', null)}</label>
+                    <input class="form-control form-control-sm mr-2 me-2 wallet-code-input" id="wallet-code" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6,8}" placeholder="${Resource.msg('checkout.code', 'wallet', null)}" />
+                    <button type="button" class="btn btn-primary btn-sm wallet-verify-code">${Resource.msg('checkout.verify', 'wallet', null)}</button>
+                </div>
+            </div>
+            <div class="wallet-owner-approval d-none mt-2">
+                <p class="small mb-1">${Resource.msg('checkout.ownerapproval', 'wallet', null)}</p>
+                <button type="button" class="btn btn-outline-secondary btn-sm wallet-request-approval">${Resource.msg('checkout.requestapproval', 'wallet', null)}</button>
+            </div>
+            <p class="wallet-checkout-status small mt-2 mb-0" role="status" aria-live="polite"></p>
+        </div>
+    </section>
+</isif>

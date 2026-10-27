@@ -1,0 +1,7 @@
+<isset name="walletFlash" value="${pdict.flash}" scope="page" />
+<isif condition="${walletFlash && walletFlash.message}">
+    <p class="alert alert-success wallet-flash" role="status">${Resource.msg('flash.' + walletFlash.message, 'wallet', Resource.msg('flash.saved', 'wallet', null))}</p>
+</isif>
+<isif condition="${walletFlash && walletFlash.error}">
+    <p class="alert alert-danger wallet-flash" role="alert">${Resource.msg('error.' + walletFlash.error, 'wallet', Resource.msg('error.general', 'wallet', null))}</p>
+</isif>

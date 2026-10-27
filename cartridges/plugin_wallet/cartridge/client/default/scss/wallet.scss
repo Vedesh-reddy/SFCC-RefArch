@@ -1,0 +1,20 @@
+// Visual accents only; layout comes from Bootstrap utilities in the templates.
+.wallet-page {
+    .wallet-available {
+        color: var(--skin-primary-color-1, currentcolor);
+    }
+
+    .wallet-member {
+        border-color: var(--light, #f8f9fa);
+    }
+}
+
+.wallet-advisor-image {
+    max-width: 6rem;
+    height: auto;
+}
+
+.wallet-sandbox-badge,
+.wallet-sandbox-banner {
+    letter-spacing: 0.02em;
+}

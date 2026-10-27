@@ -1,0 +1,5 @@
+<isdecorate template="common/layout/page">
+    <div class="container wallet-page py-5">
+        <p>${Resource.msg('unavailable.text', 'wallet', null)}</p>
+    </div>
+</isdecorate>

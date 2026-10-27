@@ -1,0 +1,8 @@
+<isscript>
+    var Money = require('dw/value/Money');
+    var walletAmount = require('dw/util/StringUtils').formatMoney(new Money(payment.amount, 'USD'));
+</isscript>
+<div class="wallet-payment-summary">
+    <span>${Resource.msg('checkout.summary', 'wallet', null)}</span>
+    <span class="font-weight-bold fw-bold">${walletAmount}</span>
+</div>

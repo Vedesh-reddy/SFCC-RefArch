@@ -1,0 +1,25 @@
+<isdecorate template="common/layout/page">
+    <div class="container wallet-page py-4">
+        <h1 class="wallet-title">${Resource.msg('notifications.heading', 'wallet', null)}</h1>
+        <isif condition="${pdict.inbox.items.length === 0}"><p>${Resource.msg('notifications.empty', 'wallet', null)}</p></isif>
+        <ul class="list-group">
+            <isloop items="${pdict.inbox.items}" var="n">
+                <li class="list-group-item d-flex justify-content-between align-items-start flex-wrap">
+                    <span>
+                        <span class="font-weight-bold fw-bold d-block">${n.subject}</span>
+                        <span class="d-block">${n.body}</span>
+                        <span class="small text-muted">${n.createdAt.toISOString().slice(0, 16).replace('T', ' ')}</span>
+                    </span>
+                    <isif condition="${!n.read}">
+                        <form action="${URLUtils.url('Wallet-MarkRead')}" method="post">
+                            <input type="hidden" name="id" value="${n.id}" />
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                            <button class="btn btn-link btn-sm" type="submit">${Resource.msg('notifications.markread', 'wallet', null)}</button>
+                        </form>
+                    </isif>
+                </li>
+            </isloop>
+        </ul>
+        <p class="mt-3"><a href="${URLUtils.url('Wallet-Show')}">${Resource.msg('dashboard.heading', 'wallet', null)}</a></p>
+    </div>
+</isdecorate>

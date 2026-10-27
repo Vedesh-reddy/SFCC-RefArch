@@ -1,0 +1,86 @@
+<isscript>var formatCents = require('*/cartridge/scripts/helpers/walletHelpers').formatCents; var mf = pdict.memberForm;</isscript>
+<section class="card mb-4" aria-labelledby="wallet-family-title">
+    <div class="card-body">
+        <h2 class="h5" id="wallet-family-title">${Resource.msg('family.heading', 'wallet', null)}</h2>
+        <isif condition="${pdict.approvals.length > 0}">
+            <h3 class="h6">${Resource.msg('family.approvals', 'wallet', null)}</h3>
+            <ul class="list-group mb-3">
+                <isloop items="${pdict.approvals}" var="a">
+                    <li class="list-group-item d-flex flex-wrap justify-content-between align-items-center">
+                        <span>${Resource.msgf('family.approval.text', 'wallet', null, a.nickname, formatCents(a.amountCents))}</span>
+                        <form class="d-flex" action="${URLUtils.url('Wallet-ApprovalDecision')}" method="post">
+                            <input type="hidden" name="approvalId" value="${a.approvalId}" />
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                            <button class="btn btn-primary btn-sm mr-2 me-2" type="submit" name="decision" value="APPROVED">${Resource.msg('family.approve', 'wallet', null)}</button>
+                            <button class="btn btn-outline-secondary btn-sm" type="submit" name="decision" value="DECLINED">${Resource.msg('family.decline', 'wallet', null)}</button>
+                        </form>
+                    </li>
+                </isloop>
+            </ul>
+        </isif>
+        <isif condition="${pdict.members.length > 0}">
+            <ul class="list-unstyled">
+                <isloop items="${pdict.members}" var="member">
+                    <li class="border rounded p-2 mb-2 wallet-member">
+                        <p class="mb-1"><span class="font-weight-bold fw-bold">${member.nickname}</span> &middot; ${Resource.msg('member.' + member.status, 'wallet', member.status)}</p>
+                        <form class="form-row row align-items-end" action="${URLUtils.url('Wallet-UpdateMember')}" method="post">
+                            <div class="form-group col-6 col-md-3">
+                                <label class="form-control-label small" for="per-order-${member.customerNo}">${Resource.msg('family.perorder', 'wallet', null)}</label>
+                                <input class="form-control form-control-sm" id="per-order-${member.customerNo}" name="${mf.perOrderLimit.htmlName}" inputmode="decimal" value="${(member.perOrderLimitCents / 100).toFixed(2)}" />
+                            </div>
+                            <div class="form-group col-6 col-md-3">
+                                <label class="form-control-label small" for="daily-${member.customerNo}">${Resource.msg('family.daily', 'wallet', null)}</label>
+                                <input class="form-control form-control-sm" id="daily-${member.customerNo}" name="${mf.dailyLimit.htmlName}" inputmode="decimal" value="${(member.dailyLimitCents / 100).toFixed(2)}" />
+                            </div>
+                            <div class="form-group col-6 col-md-3">
+                                <label class="form-control-label small" for="monthly-${member.customerNo}">${Resource.msg('family.monthly', 'wallet', null)}</label>
+                                <input class="form-control form-control-sm" id="monthly-${member.customerNo}" name="${mf.monthlyLimit.htmlName}" inputmode="decimal" value="${(member.monthlyLimitCents / 100).toFixed(2)}" />
+                            </div>
+                            <div class="form-group col-6 col-md-3 custom-control custom-checkbox form-check">
+                                <input class="custom-control-input form-check-input" type="checkbox" id="approval-${member.customerNo}" name="${mf.requireOwnerApproval.htmlName}" value="true" <isif condition="${member.requireOwnerApproval}">checked</isif> />
+                                <label class="custom-control-label form-check-label small" for="approval-${member.customerNo}">${Resource.msg('family.requireapproval', 'wallet', null)}</label>
+                            </div>
+                            <div class="form-group col-12">
+                                <label class="form-control-label small" for="categories-${member.customerNo}">${Resource.msg('family.categories', 'wallet', null)}</label>
+                                <input class="form-control form-control-sm" id="categories-${member.customerNo}" name="${mf.allowedCategoryIds.htmlName}" value="${member.allowedCategoryIds.join(', ')}" />
+                            </div>
+                            <input type="hidden" name="customerNo" value="${member.customerNo}" />
+                            <input type="hidden" name="revision" value="${member.revision.toFixed(0)}" />
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                            <div class="col-12"><button class="btn btn-outline-primary btn-sm" type="submit">${Resource.msg('family.save', 'wallet', null)}</button></div>
+                        </form>
+                        <form class="d-flex mt-2" action="${URLUtils.url('Wallet-MemberStatus')}" method="post">
+                            <input type="hidden" name="customerNo" value="${member.customerNo}" />
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                            <isif condition="${member.status === 'ACTIVE'}">
+                                <button class="btn btn-outline-secondary btn-sm mr-2 me-2" type="submit" name="action" value="freeze">${Resource.msg('family.freeze', 'wallet', null)}</button>
+                            <iselse/>
+                                <button class="btn btn-outline-secondary btn-sm mr-2 me-2" type="submit" name="action" value="activate">${Resource.msg('family.activate', 'wallet', null)}</button>
+                            </isif>
+                            <isif condition="${member.status !== 'REVOKED'}">
+                                <button class="btn btn-outline-danger btn-sm" type="submit" name="action" value="revoke">${Resource.msg('family.revoke', 'wallet', null)}</button>
+                            </isif>
+                        </form>
+                    </li>
+                </isloop>
+            </ul>
+        </isif>
+        <h3 class="h6">${Resource.msg('family.invite', 'wallet', null)}</h3>
+        <form class="form-row row align-items-end" action="${URLUtils.url('Wallet-Invite')}" method="post">
+            <div class="form-group col-12 col-md-5">
+                <label class="form-control-label" for="invite-email">${Resource.msg('family.email', 'wallet', null)}</label>
+                <input class="form-control" id="invite-email" name="${mf.email.htmlName}" type="email" required />
+            </div>
+            <div class="form-group col-12 col-md-4">
+                <label class="form-control-label" for="invite-nickname">${Resource.msg('family.nickname', 'wallet', null)}</label>
+                <input class="form-control" id="invite-nickname" name="${mf.nickname.htmlName}" maxlength="40" />
+            </div>
+            <div class="form-group col-6 col-md-3">
+                <label class="form-control-label" for="invite-per-order">${Resource.msg('family.perorder', 'wallet', null)}</label>
+                <input class="form-control" id="invite-per-order" name="${mf.perOrderLimit.htmlName}" inputmode="decimal" />
+            </div>
+            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+            <div class="col-12"><button class="btn btn-primary btn-sm" type="submit">${Resource.msg('family.send', 'wallet', null)}</button></div>
+        </form>
+    </div>
+</section>

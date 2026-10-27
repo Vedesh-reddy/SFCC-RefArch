@@ -1,0 +1,32 @@
+<iscomment>Expects page variable historyItems.</iscomment>
+<isscript>var formatCents = require('*/cartridge/scripts/helpers/walletHelpers').formatCents;</isscript>
+<isif condition="${historyItems.length === 0}">
+    <p>${Resource.msg('history.empty', 'wallet', null)}</p>
+<iselse/>
+    <div class="table-responsive">
+        <table class="table table-sm wallet-history">
+            <thead>
+                <tr>
+                    <th scope="col">${Resource.msg('history.date', 'wallet', null)}</th>
+                    <th scope="col">${Resource.msg('history.type', 'wallet', null)}</th>
+                    <th scope="col">${Resource.msg('history.order', 'wallet', null)}</th>
+                    <th scope="col" class="text-right text-end">${Resource.msg('history.available', 'wallet', null)}</th>
+                    <th scope="col" class="text-right text-end">${Resource.msg('history.held', 'wallet', null)}</th>
+                    <th scope="col" class="text-right text-end">${Resource.msg('history.balance', 'wallet', null)}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <isloop items="${historyItems}" var="e">
+                    <tr>
+                        <td>${e.createdAt.toISOString().slice(0, 16).replace('T', ' ')}</td>
+                        <td>${Resource.msg('tx.' + e.txType, 'wallet', e.txType)}<isif condition="${e.byMember}"> <span class="badge badge-light bg-light">${Resource.msg('history.family', 'wallet', null)}</span></isif></td>
+                        <td>${e.orderNo || ''}</td>
+                        <td class="text-right text-end">${formatCents(e.availableDeltaCents)}</td>
+                        <td class="text-right text-end">${formatCents(e.heldDeltaCents)}</td>
+                        <td class="text-right text-end">${formatCents(e.availableAfterCents)}</td>
+                    </tr>
+                </isloop>
+            </tbody>
+        </table>
+    </div>
+</isif>
