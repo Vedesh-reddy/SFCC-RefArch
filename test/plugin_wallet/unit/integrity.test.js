@@ -222,6 +222,8 @@ describe('plugin_wallet integrity', function () {
     });
 
     it('keeps the base cartridges untouched', function () {
+        // only meaningful where the SFRA base cartridges live in the same repository (SFCC-RefArch)
+        if (!require('fs').existsSync(require('path').join(repo, 'cartridges/app_storefront_base'))) this.skip();
         var changed = require('child_process').execFileSync('git', ['status', '--porcelain', '--', 'cartridges/app_storefront_base', 'cartridges/bm_app_storefront_base', 'cartridges/modules'], { cwd: repo }).toString().trim();
         assert.equal(changed, '');
     });
