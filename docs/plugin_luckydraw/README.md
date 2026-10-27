@@ -81,6 +81,10 @@ The code works in the cart like any coupon. Here it applies the 10% prize promot
 
 ![Prize code applied in the cart](images/luckydraw-reward-redeemed.png)
 
+Another shopper cannot use the code.
+
+![Prize code refused for another account](images/luckydraw-code-refused.png)
+
 ![Recent winners](images/luckydraw-winners.png)
 
 ![Lucky draw audit trail](images/bm-luckydraw-audit.png)
@@ -129,4 +133,4 @@ All are open. They are explained in [SECURITY.md](SECURITY.md#production-blocker
 3. **Winner verification process.** Decide whether to use affidavits, identity and age checks, and how to collect tax forms. Keep `requireWinnerVerification` on until that process exists.
 4. **Randomness source.** For high-value prizes, decide whether a third-party draw service or a public randomness beacon is required (`randomSource = EXTERNAL`, hook `app.plugin.luckydraw.randomness`).
 5. **Scale.** For campaigns that may exceed `luckyDrawMaxSnapshotEntries` entries per draw, or custom object quotas, use an external campaign store (see [ARCHITECTURE.md](ARCHITECTURE.md#limitations)).
-6. **Sandbox verification.** L1 to L4 and L8 passed on `zyeu-002` on 2026-10-27. Run L5 to L7, L9 and L10 in [TESTING.md](TESTING.md#sandbox-verification-plan).
+6. **Sandbox verification.** L1 to L4, L7 and L8 passed on `zyeu-002` on 2026-10-27, and all nine jobs ran OK. L5, L6, L9 and L10 remain open; see [TESTING.md](TESTING.md#sandbox-verification-plan).

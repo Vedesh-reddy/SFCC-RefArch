@@ -39,7 +39,8 @@ The cartridge follows the base SFRA layout. Business logic lives in `scripts/hel
 |---|---|
 | `controllers/` | `Seller.js` (Seller Central), `Marketplace.js` (shopper pages), `MarketplaceWebhook.js` (provider results), `Cart.js` (prepend on `Cart-EditProductLineItem`) |
 | `forms/default/` | `sellerApplication.xml`, `sellerSettings.xml`, `sellerOffer.xml`, `sellerProduct.xml`, used with `server.forms.getForm()` |
-| `models/productLineItem/productLineItem.js` | `module.superModule` extension: offer price, seller availability, "Sold by" |
+| `models/productLineItem/productLineItem.js` | `module.superModule` extension: offer price, seller availability, "Sold by". Returns a copy of the base model, because the base decorators define price and availability read-only |
+| `models/productLineItem/orderLineItem.js` | `module.superModule` extension: "Sold by" on the confirmation and order details |
 | `scripts/cart/cartHelpers.js`, `scripts/helpers/basketValidationHelpers.js` | `module.superModule` overrides for offer lines |
 | `scripts/helpers/marketplaceHelpers.js` | Shared pieces: on/off check, bounded queries, IDs and HMAC, webhook signature, rate limits, status moves, audit, notifications, cents formatting, API responses, job state |
 | `scripts/helpers/sellerHelpers.js` | Application, e-mail code, approval decisions, members and roles, `getSellerContext()`, settings, provider hooks |

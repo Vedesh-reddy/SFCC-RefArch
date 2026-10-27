@@ -46,7 +46,8 @@ Login returns to Seller Central through `rurl=7` (`config/oAuthRenentryRedirectE
 | `Cart-EditProductLineItem` | prepend: offer lines cannot be edited (the product is removed and re-added instead) |
 | `scripts/cart/cartHelpers` | `addProductToCart`, `checkPliCanBeUpdated` for offer lines |
 | `scripts/helpers/basketValidationHelpers` | `validateProducts` checks offer lines |
-| `models/productLineItem/productLineItem` | offer unit price, seller availability, `marketplace` info |
+| `models/productLineItem/productLineItem` | offer unit price, seller availability, `marketplace` info (returns a copy, because the base decorators define price and availability read-only) |
+| `models/productLineItem/orderLineItem` | `marketplace` info on order views (confirmation, order details) |
 | `product/components/addToCartButtonExtension.isml` | offers block (an extension point that is empty in base) |
 | `product/productTileFooter.isml`, `cart/productCard/cartProductCardHeader.isml`, `checkout/productCard/productCardProductName.isml` | "Sold by" |
 | hook `dw.order.calculateTax` | offer prices and seller shipping fees (see [ARCHITECTURE.md](ARCHITECTURE.md#pricing)) |
