@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="luckyDrawEnabled">
+                <display-name xml:lang="x-default">Enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawCurrency">
+                <display-name xml:lang="x-default">Currency</display-name>
+                <description xml:lang="x-default">Required. Must be USD, the site default currency.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawLegalApproved">
+                <display-name xml:lang="x-default">Legal approved</display-name>
+                <description xml:lang="x-default">Set only after legal sign-off. Without it campaigns cannot be scheduled on production.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawAllowedCountries">
+                <display-name xml:lang="x-default">Allowed countries</display-name>
+                <description xml:lang="x-default">Only US is supported; empty means US.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawAllowedTimeZones">
+                <display-name xml:lang="x-default">Allowed time zones</display-name>
+                <description xml:lang="x-default">IANA time zones campaigns may use. Empty means the US zones (New York, Chicago, Denver, Phoenix, Los Angeles, Anchorage, Honolulu).</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawEntryLookbackHours">
+                <display-name xml:lang="x-default">Entry lookback hours</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>720</max-value>
+                <default-value>72</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawVelocityMaxEntriesPerDay">
+                <display-name xml:lang="x-default">Velocity max entries per day</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>1000</max-value>
+                <default-value>10</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawFreeEntryRateLimitPerHour">
+                <display-name xml:lang="x-default">Free entry rate limit per hour</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>1000</max-value>
+                <default-value>10</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawMaxSnapshotEntries">
+                <display-name xml:lang="x-default">Max snapshot entries</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>10</min-value>
+                <max-value>200000</max-value>
+                <default-value>50000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawLockMinutes">
+                <display-name xml:lang="x-default">Lock minutes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>5</min-value>
+                <max-value>240</max-value>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawSnapshotDirectory">
+                <display-name xml:lang="x-default">Snapshot directory</display-name>
+                <description xml:lang="x-default">Folder below IMPEX: letters, digits, hyphens and slashes only.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>src/plugin-luckydraw/snapshots</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawAuditExportDirectory">
+                <display-name xml:lang="x-default">Audit export directory</display-name>
+                <description xml:lang="x-default">Folder below IMPEX: letters, digits, hyphens and slashes only.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>src/plugin-luckydraw/audit</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawRewardMaxAttempts">
+                <display-name xml:lang="x-default">Reward max attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawPublishWinners">
+                <display-name xml:lang="x-default">Publish winners</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawNotificationChannels">
+                <display-name xml:lang="x-default">Notification channels</display-name>
+                <description xml:lang="x-default">Empty means INBOX.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawNotificationMaxAttempts">
+                <display-name xml:lang="x-default">Notification max attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawFromEmail">
+                <display-name xml:lang="x-default">From email</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawAdminNotificationEmails">
+                <display-name xml:lang="x-default">Admin notification emails</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawBadgeThresholds">
+                <display-name xml:lang="x-default">Badge thresholds</display-name>
+                <description xml:lang="x-default">Entry counts that earn a badge. Empty means 1, 5 and 10.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawRecommendationsEnabled">
+                <display-name xml:lang="x-default">Recommendations enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawRecommendationsMax">
+                <display-name xml:lang="x-default">Recommendations max</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>12</max-value>
+                <default-value>4</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawHistoryPageSize">
+                <display-name xml:lang="x-default">History page size</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>5</min-value>
+                <max-value>100</max-value>
+                <default-value>20</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawApiMaxPageSize">
+                <display-name xml:lang="x-default">API max page size</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>200</max-value>
+                <default-value>50</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="luckyDrawRequestKeyRetentionDays">
+                <display-name xml:lang="x-default">Request key retention days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>365</max-value>
+                <default-value>30</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginLuckyDraw">
+                <display-name xml:lang="x-default">Lucky Draw (plugin_luckydraw)</display-name>
+                <attribute attribute-id="luckyDrawEnabled"/>
+                <attribute attribute-id="luckyDrawCurrency"/>
+                <attribute attribute-id="luckyDrawLegalApproved"/>
+                <attribute attribute-id="luckyDrawAllowedCountries"/>
+                <attribute attribute-id="luckyDrawAllowedTimeZones"/>
+                <attribute attribute-id="luckyDrawEntryLookbackHours"/>
+                <attribute attribute-id="luckyDrawVelocityMaxEntriesPerDay"/>
+                <attribute attribute-id="luckyDrawFreeEntryRateLimitPerHour"/>
+                <attribute attribute-id="luckyDrawMaxSnapshotEntries"/>
+                <attribute attribute-id="luckyDrawLockMinutes"/>
+                <attribute attribute-id="luckyDrawSnapshotDirectory"/>
+                <attribute attribute-id="luckyDrawAuditExportDirectory"/>
+                <attribute attribute-id="luckyDrawRewardMaxAttempts"/>
+                <attribute attribute-id="luckyDrawPublishWinners"/>
+                <attribute attribute-id="luckyDrawNotificationChannels"/>
+                <attribute attribute-id="luckyDrawNotificationMaxAttempts"/>
+                <attribute attribute-id="luckyDrawFromEmail"/>
+                <attribute attribute-id="luckyDrawAdminNotificationEmails"/>
+                <attribute attribute-id="luckyDrawBadgeThresholds"/>
+                <attribute attribute-id="luckyDrawRecommendationsEnabled"/>
+                <attribute attribute-id="luckyDrawRecommendationsMax"/>
+                <attribute attribute-id="luckyDrawHistoryPageSize"/>
+                <attribute attribute-id="luckyDrawApiMaxPageSize"/>
+                <attribute attribute-id="luckyDrawRequestKeyRetentionDays"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

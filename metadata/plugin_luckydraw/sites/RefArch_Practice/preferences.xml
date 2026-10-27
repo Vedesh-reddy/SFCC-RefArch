@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences xmlns="http://www.demandware.com/xml/impex/preferences/2007-03-31">
+    <custom-preferences>
+        <all-instances>
+            <preference preference-id="luckyDrawEnabled">true</preference>
+            <preference preference-id="luckyDrawCurrency">USD</preference>
+            <preference preference-id="luckyDrawLegalApproved">false</preference>
+            <preference preference-id="luckyDrawAllowedCountries">
+                <value>US</value>
+            </preference>
+            <preference preference-id="luckyDrawPublishWinners">true</preference>
+            <preference preference-id="luckyDrawNotificationChannels">
+                <value>INBOX</value>
+                <value>EMAIL</value>
+            </preference>
+            <preference preference-id="luckyDrawFromEmail">no-reply@example.com</preference>
+            <preference preference-id="luckyDrawAdminNotificationEmails">
+                <value>luckydraw-admin@example.com</value>
+            </preference>
+        </all-instances>
+    </custom-preferences>
+</preferences>

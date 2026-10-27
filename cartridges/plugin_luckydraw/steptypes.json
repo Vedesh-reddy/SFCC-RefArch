@@ -1,0 +1,402 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.LuckyDraw.Status",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Start scheduled campaigns and complete finished ones",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "status",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.LuckyDraw.Entries",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Create entries from paid orders of running campaigns",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "entries",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "1000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.LuckyDraw.Reconcile",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Entry reconciliation: cancel entries of cancelled or unpaid orders, activate entries after the hold period",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "reconcile",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "1000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.LuckyDraw.Draw",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Commit seeds of opened windows and execute due draws",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "draw",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "1000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.LuckyDraw.Verify",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Winner verification: revalidate winners, recompute finished draws, release alternates",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "verify",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.LuckyDraw.Rewards",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Issue coupon rewards with retries, sync redemptions, expire codes",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "rewards",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.LuckyDraw.Notifications",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Deliver queued lucky draw e-mails with retries",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "notifications",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.LuckyDraw.Cleanup",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Remove expired locks, rate buckets and old request keys",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "cleanup",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "1000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.LuckyDraw.AuditExport",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Export new audit events to IMPEX as JSON lines",
+                "module": "plugin_luckydraw/cartridge/scripts/jobs/luckydraw.js",
+                "function": "auditExport",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "5000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Finished"
+                        },
+                        {
+                            "@code": "DISABLED",
+                            "description": "Lucky draw disabled"
+                        },
+                        {
+                            "@code": "ATTENTION",
+                            "description": "Finished with failures; see the log and cases"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}
