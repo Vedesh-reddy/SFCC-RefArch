@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+    <menuitem id="plugin-luckydraw-menu" position="99020" site="true">
+        <name xml:lang="x-default">Lucky Draw</name>
+        <short_description xml:lang="x-default">Lucky draw campaigns</short_description>
+        <description xml:lang="x-default">Campaigns, draws, winners, rewards, entries, cases and audit</description>
+        <sldsIconName>trophy</sldsIconName>
+    </menuitem>
+    <menuaction id="plugin-luckydraw-home" menupath="plugin-luckydraw-menu" position="10" site="true">
+        <name xml:lang="x-default">Overview</name>
+        <short_description xml:lang="x-default">Campaign status, attention items and configuration</short_description>
+        <description xml:lang="x-default">Campaign status, attention items and configuration</description>
+        <exec pipeline="LuckyDrawAdmin" node="Home"/>
+        <sub-pipelines>
+            <pipeline name="LuckyDrawAdmin-Home"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-luckydraw-campaigns" menupath="plugin-luckydraw-menu" position="20" site="true">
+        <name xml:lang="x-default">Campaigns</name>
+        <short_description xml:lang="x-default">Create, schedule, pause and cancel campaigns; record mail-in entries</short_description>
+        <description xml:lang="x-default">Create, schedule, pause and cancel campaigns; record mail-in entries</description>
+        <exec pipeline="LuckyDrawAdmin" node="Campaigns"/>
+        <sub-pipelines>
+            <pipeline name="LuckyDrawAdmin-Campaigns"/>
+            <pipeline name="LuckyDrawAdmin-Campaign"/>
+            <pipeline name="LuckyDrawAdmin-CampaignAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-luckydraw-draws" menupath="plugin-luckydraw-menu" position="30" site="true">
+        <name xml:lang="x-default">Draws and winners</name>
+        <short_description xml:lang="x-default">Draw verification, winner confirmation and disqualification, rewards</short_description>
+        <description xml:lang="x-default">Draw verification, winner confirmation and disqualification, rewards</description>
+        <exec pipeline="LuckyDrawAdmin" node="Draws"/>
+        <sub-pipelines>
+            <pipeline name="LuckyDrawAdmin-Draws"/>
+            <pipeline name="LuckyDrawAdmin-Draw"/>
+            <pipeline name="LuckyDrawAdmin-DrawAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-luckydraw-entries" menupath="plugin-luckydraw-menu" position="40" site="true">
+        <name xml:lang="x-default">Entries and cases</name>
+        <short_description xml:lang="x-default">Entry search, fraud flags, cancellations and review cases</short_description>
+        <description xml:lang="x-default">Entry search, fraud flags, cancellations and review cases</description>
+        <exec pipeline="LuckyDrawAdmin" node="Entries"/>
+        <sub-pipelines>
+            <pipeline name="LuckyDrawAdmin-Entries"/>
+            <pipeline name="LuckyDrawAdmin-EntryAction"/>
+            <pipeline name="LuckyDrawAdmin-Cases"/>
+            <pipeline name="LuckyDrawAdmin-Case"/>
+            <pipeline name="LuckyDrawAdmin-CaseAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-luckydraw-audit" menupath="plugin-luckydraw-menu" position="50" site="true">
+        <name xml:lang="x-default">Audit trail</name>
+        <short_description xml:lang="x-default">Read the lucky draw audit trail</short_description>
+        <description xml:lang="x-default">Read the lucky draw audit trail</description>
+        <exec pipeline="LuckyDrawAdmin" node="Audit"/>
+        <sub-pipelines>
+            <pipeline name="LuckyDrawAdmin-Audit"/>
+        </sub-pipelines>
+    </menuaction>
+</extensions>
