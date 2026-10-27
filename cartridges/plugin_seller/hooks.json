@@ -1,0 +1,8 @@
+{
+    "hooks": [
+        {
+            "name": "dw.order.calculateTax",
+            "script": "./cartridge/scripts/hooks/offerPricing.js"
+        }
+    ]
+}

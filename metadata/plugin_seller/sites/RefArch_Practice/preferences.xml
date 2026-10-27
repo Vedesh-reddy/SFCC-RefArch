@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences xmlns="http://www.demandware.com/xml/impex/preferences/2007-03-31">
+    <custom-preferences>
+        <all-instances>
+            <preference preference-id="sellerMarketplaceEnabled">true</preference>
+            <preference preference-id="sellerRegistrationEnabled">true</preference>
+            <preference preference-id="sellerCurrency">USD</preference>
+            <preference preference-id="sellerApprovalRequired">true</preference>
+            <preference preference-id="sellerProductApprovalRequired">true</preference>
+            <preference preference-id="sellerOfferApprovalRequired">false</preference>
+            <preference preference-id="sellerAgreementVersion">2026-10</preference>
+            <preference preference-id="sellerRequiredDocumentTypes">
+                <value>BUSINESS_REGISTRATION</value>
+                <value>IDENTITY</value>
+            </preference>
+            <preference preference-id="sellerRequireCleanDocumentScan">false</preference>
+            <preference preference-id="sellerDocumentAllowedTypes">
+                <value>application/pdf</value>
+                <value>image/png</value>
+                <value>image/jpeg</value>
+            </preference>
+            <preference preference-id="sellerMasterCatalogId">apparel-m-catalog</preference>
+            <preference preference-id="sellerSiteCatalogId">storefront-catalog-m-en</preference>
+            <preference preference-id="sellerPriceBookId">marketplace-usd-list-prices</preference>
+            <preference preference-id="sellerSiteInventoryListId">inventory_m</preference>
+            <preference preference-id="sellerAllowedCategoryIds">
+                <value>electronics</value>
+                <value>womens</value>
+                <value>mens</value>
+            </preference>
+            <preference preference-id="sellerRestrictedCategoryIds"/>
+            <preference preference-id="sellerProvisioningStrategy">IMPEX</preference>
+            <preference preference-id="sellerNotificationChannels">
+                <value>INBOX</value>
+                <value>EMAIL</value>
+            </preference>
+            <preference preference-id="sellerFromEmail">no-reply@example.com</preference>
+            <preference preference-id="sellerAdminNotificationEmails">
+                <value>marketplace-admin@example.com</value>
+            </preference>
+            <preference preference-id="sellerShippingFeesEnabled">true</preference>
+        </all-instances>
+    </custom-preferences>
+</preferences>

@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="MarketplaceSeller-ProvisionProducts" priority="0">
+        <description>Publish approved seller product submissions and verify them</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Prepare" type="custom.MarketplaceSeller.ProvisionPrepare" enforce-restart="false">
+                <description>Prepare</description>
+                <parameters>
+                    <parameter name="MaxItems">50</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <flow>
+            <context site-id="Sites"/>
+            <step step-id="ImportProducts" type="ImportCatalog" enforce-restart="false">
+                <description>ImportProducts</description>
+                <parameters>
+                    <parameter name="WorkingFolder">plugin-seller/provision/catalog</parameter>
+                    <parameter name="FileNamePattern">.*\.xml</parameter>
+                    <parameter name="NoFilesFoundHandling">NO_FILES_FOUND</parameter>
+                    <parameter name="ImportMode">Merge</parameter>
+                    <parameter name="ImportFailedHandling">ERROR</parameter>
+                    <parameter name="AfterImportFileHandling">Archive Zipped</parameter>
+                    <parameter name="ArchiveFolder">archive/plugin-seller</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="ImportPrices" type="ImportPriceBook" enforce-restart="false">
+                <description>ImportPrices</description>
+                <parameters>
+                    <parameter name="WorkingFolder">plugin-seller/provision/pricebook</parameter>
+                    <parameter name="FileNamePattern">.*\.xml</parameter>
+                    <parameter name="NoFilesFoundHandling">NO_FILES_FOUND</parameter>
+                    <parameter name="ImportMode">Merge</parameter>
+                    <parameter name="ImportFailedHandling">ERROR</parameter>
+                    <parameter name="AfterImportFileHandling">Archive Zipped</parameter>
+                    <parameter name="ArchiveFolder">archive/plugin-seller</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="ImportInventory" type="ImportInventoryLists" enforce-restart="false">
+                <description>ImportInventory</description>
+                <parameters>
+                    <parameter name="WorkingFolder">plugin-seller/provision/inventory</parameter>
+                    <parameter name="FileNamePattern">.*\.xml</parameter>
+                    <parameter name="NoFilesFoundHandling">NO_FILES_FOUND</parameter>
+                    <parameter name="ImportMode">Merge</parameter>
+                    <parameter name="ImportFailedHandling">ERROR</parameter>
+                    <parameter name="AfterImportFileHandling">Archive Zipped</parameter>
+                    <parameter name="ArchiveFolder">archive/plugin-seller</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Verify" type="custom.MarketplaceSeller.ProvisionVerify" enforce-restart="false">
+                <description>Verify</description>
+                <parameters>
+                    <parameter name="MaxItems">200</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>30m</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-SyncOffers" priority="0">
+        <description>Write seller stock, featured prices and aggregates; then confirm</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Prepare" type="custom.MarketplaceSeller.SyncPrepare" enforce-restart="false">
+                <description>Prepare</description>
+                <parameters>
+                    <parameter name="MaxItems">1000</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <flow>
+            <context site-id="Sites"/>
+            <step step-id="ImportInventory" type="ImportInventoryLists" enforce-restart="false">
+                <description>ImportInventory</description>
+                <parameters>
+                    <parameter name="WorkingFolder">plugin-seller/sync/inventory</parameter>
+                    <parameter name="FileNamePattern">.*\.xml</parameter>
+                    <parameter name="NoFilesFoundHandling">NO_FILES_FOUND</parameter>
+                    <parameter name="ImportMode">Merge</parameter>
+                    <parameter name="ImportFailedHandling">ERROR</parameter>
+                    <parameter name="AfterImportFileHandling">Archive Zipped</parameter>
+                    <parameter name="ArchiveFolder">archive/plugin-seller</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="ImportPrices" type="ImportPriceBook" enforce-restart="false">
+                <description>ImportPrices</description>
+                <parameters>
+                    <parameter name="WorkingFolder">plugin-seller/sync/pricebook</parameter>
+                    <parameter name="FileNamePattern">.*\.xml</parameter>
+                    <parameter name="NoFilesFoundHandling">NO_FILES_FOUND</parameter>
+                    <parameter name="ImportMode">Merge</parameter>
+                    <parameter name="ImportFailedHandling">ERROR</parameter>
+                    <parameter name="AfterImportFileHandling">Archive Zipped</parameter>
+                    <parameter name="ArchiveFolder">archive/plugin-seller</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="ImportProducts" type="ImportCatalog" enforce-restart="false">
+                <description>ImportProducts</description>
+                <parameters>
+                    <parameter name="WorkingFolder">plugin-seller/sync/catalog</parameter>
+                    <parameter name="FileNamePattern">.*\.xml</parameter>
+                    <parameter name="NoFilesFoundHandling">NO_FILES_FOUND</parameter>
+                    <parameter name="ImportMode">Merge</parameter>
+                    <parameter name="ImportFailedHandling">ERROR</parameter>
+                    <parameter name="AfterImportFileHandling">Archive Zipped</parameter>
+                    <parameter name="ArchiveFolder">archive/plugin-seller</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Confirm" type="custom.MarketplaceSeller.SyncConfirm" enforce-restart="false">
+                <description>Confirm</description>
+                <parameters>
+
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>15m</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-OrderSync" priority="0">
+        <description>Create and advance seller orders and book earnings</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="OrderSync" type="custom.MarketplaceSeller.OrderSync" enforce-restart="false">
+                <description>OrderSync</description>
+                <parameters>
+                    <parameter name="MaxItems">500</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>15m</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-Settlements" priority="0">
+        <description>Create settlements and reconcile them with the ledger</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Settlements" type="custom.MarketplaceSeller.Settlements" enforce-restart="false">
+                <description>Settlements</description>
+                <parameters>
+                    <parameter name="MaxItems">200</parameter>
+                    <parameter name="AutoRequestPayout">false</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="Reconcile" type="custom.MarketplaceSeller.Reconcile" enforce-restart="false">
+                <description>Reconcile</description>
+                <parameters>
+                    <parameter name="MaxItems">200</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-Performance" priority="0">
+        <description>Seller performance metrics and ratings</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Performance" type="custom.MarketplaceSeller.Performance" enforce-restart="false">
+                <description>Performance</description>
+                <parameters>
+                    <parameter name="MaxItems">200</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-Notifications" priority="0">
+        <description>Deliver queued notification e-mails</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Notifications" type="custom.MarketplaceSeller.Notifications" enforce-restart="false">
+                <description>Notifications</description>
+                <parameters>
+                    <parameter name="MaxItems">500</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>5m</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-Reminders" priority="0">
+        <description>Remind admins about waiting reviews</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Reminders" type="custom.MarketplaceSeller.Reminders" enforce-restart="false">
+                <description>Reminders</description>
+                <parameters>
+
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-DocumentExpiry" priority="0">
+        <description>Warn about and handle expiring documents</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="DocumentExpiry" type="custom.MarketplaceSeller.DocumentExpiry" enforce-restart="false">
+                <description>DocumentExpiry</description>
+                <parameters>
+                    <parameter name="MaxItems">500</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-Recovery" priority="0">
+        <description>Retry failed verifications and flag unanswered payouts</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Recovery" type="custom.MarketplaceSeller.Recovery" enforce-restart="false">
+                <description>Recovery</description>
+                <parameters>
+                    <parameter name="MaxItems">100</parameter>
+                    <parameter name="StalePayoutHours">48</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1h</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="MarketplaceSeller-Cleanup" priority="0">
+        <description>Remove expired technical records and purge retained documents</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Cleanup" type="custom.MarketplaceSeller.Cleanup" enforce-restart="false">
+                <description>Cleanup</description>
+                <parameters>
+                    <parameter name="MaxItems">1000</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+</jobs>
