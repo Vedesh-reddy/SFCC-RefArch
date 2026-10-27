@@ -34,8 +34,9 @@ function Bytes(value) {
 Bytes.prototype.byteAt = function (i) { return this.buffer[i]; };
 
 function compare(a, b, op) {
-    var left = a instanceof Date ? a.getTime() : a;
-    var right = b instanceof Date ? b.getTime() : b;
+    // the platform compares datetimes in queries to the second
+    var left = a instanceof Date ? Math.floor(a.getTime() / 1000) : a;
+    var right = b instanceof Date ? Math.floor(b.getTime() / 1000) : b;
     if (left === undefined) left = null;
     if (Array.isArray(left) && (op === '===' || op === '!==')) {
         var has = left.indexOf(right) >= 0;
