@@ -63,6 +63,30 @@ After the `MarketplaceSeller-SyncOffers` job, the offer appears on the product p
 
 ![Public seller page](images/public-seller-page.png)
 
+### Buying from a seller
+
+The shopper adds the offer from the product page. The cart names the seller and charges the offer price ($27.50 here, while the catalog price is $29.99).
+
+![Seller line in the cart](images/cart-sold-by.png)
+
+The order confirmation and order details also name the seller.
+
+![Seller named on the order](images/order-sold-by.png)
+
+### Commission, seller orders and shipping
+
+Marketplace › Finance holds the commission rules. Here a DEFAULT rule takes 10%.
+
+![DEFAULT commission rule](images/bm-marketplace-rules.png)
+
+Once the order is paid, the `MarketplaceSeller-OrderSync` job creates the seller's own order, with the seller's lines and the commission already booked.
+
+![Orders to ship in Seller Central](images/seller-orders.png)
+
+The seller ships from Seller Central with a carrier and tracking number. Earnings become available after the return window, and the `MarketplaceSeller-Settlements` job pays them out.
+
+![Seller order with net amount and shipment form](images/seller-order-ship.png)
+
 ### Shipping and return settings
 
 ![Seller settings](images/seller-settings.png)
@@ -110,5 +134,5 @@ These must be resolved and signed off before production use. They are explained 
 2. **Identity and payout-account verification**: integrate a verification provider, or keep manual review and get it approved by compliance.
 3. **Malware scanning** of uploaded documents and images (`app.plugin.seller.scan`), or keep `sellerRequireCleanDocumentScan` on and scan out of band.
 4. **Marketplace facilitator tax**: decide how sales tax is collected and remitted for third-party sales. The plugin uses the site's tax calculation unchanged.
-5. **Sandbox verification**: S1 (install) and the offer sync of S10 passed on `zyeu-002` on 2026-10-27, together with onboarding, review and approval. Run the remaining spikes in [TESTING.md](TESTING.md#sandbox-verification-plan).
+5. **Sandbox verification**: S1 (install), S2 (buying an offer: offer price, "Sold by", seller order with commission, shipment) and S10 (all ten jobs ran OK) passed on `zyeu-002` on 2026-10-27, together with onboarding, review and approval. S3–S9 remain open; see [TESTING.md](TESTING.md#sandbox-verification-plan).
 6. **Legal**: the seller agreement, privacy notice and document retention period need legal approval.

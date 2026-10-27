@@ -140,4 +140,26 @@ describe('plugin_seller checkout', function () {
         var b = line(h, { productID: 'P1', catalogCents: 12000, quantityValue: 3, custom: { mktOfferId: 'SELLERA:P1', mktSellerId: 'SELLERA', mktOfferValid: true, mktUnitPriceCents: 11500 }, productInventoryListID: 'marketplace-sellera' });
         assert.equal(offerHelpers.validateOfferLines(basket(h, [a, b])).problems[0].reason, 'insufficient-stock');
     });
+
+    it('shows the offer price, availability and seller on an offer line although base defines them read-only', function () {
+        var Module = require('module');
+        var hm = harness({ mocks: {
+            '*/cartridge/models/price/default': function DefaultPrice(money) { this.sales = { value: money.value }; },
+            '*/cartridge/scripts/helpers/offerHelpers': { canChangeQuantity: function () { return true; } }
+        } });
+        hm.create('MarketplaceSeller', 'SELLERA', { displayName: 'Seller A' });
+        // like the platform's price and availability decorators: enumerable but not writable
+        Module.prototype.superModule = function base(product) {
+            ['price', 'available', 'availability'].forEach(function (key) { Object.defineProperty(product, key, { enumerable: true, value: 'catalog' }); });
+        };
+        var model;
+        try {
+            model = hm.require('models/productLineItem/productLineItem')({}, {}, { lineItem: { quantityValue: 1, custom: { mktOfferId: 'SELLERA:P1', mktSellerId: 'SELLERA', mktUnitPriceCents: 2750 } } });
+        } finally {
+            delete Module.prototype.superModule;
+        }
+        assert.equal(model.price.sales.value, 27.5);
+        assert.isTrue(model.available);
+        assert.equal(model.marketplace.sellerName, 'Seller A');
+    });
 });

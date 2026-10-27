@@ -19,9 +19,13 @@ module.exports = function productLineItem(product, apiProduct, options) {
     var DefaultPrice = require('*/cartridge/models/price/default');
     var seller = require('dw/object/CustomObjectMgr').getCustomObject('MarketplaceSeller', pli.custom.mktSellerId);
     var available = require('*/cartridge/scripts/helpers/offerHelpers').canChangeQuantity(pli, pli.quantityValue);
-    if (pli.custom.mktUnitPriceCents) product.price = new DefaultPrice(new Money(pli.custom.mktUnitPriceCents / 100, 'USD')); // eslint-disable-line no-param-reassign
-    product.available = available; // eslint-disable-line no-param-reassign
-    product.availability = { messages: [available ? Resource.msg('label.instock', 'common', null) : Resource.msg('error.offer.offer-unavailable', 'seller', null)], inStockDate: null }; // eslint-disable-line no-param-reassign
-    product.marketplace = { offerId: pli.custom.mktOfferId, sellerId: pli.custom.mktSellerId, sellerName: seller ? seller.custom.displayName : pli.custom.mktSellerId }; // eslint-disable-line no-param-reassign
-    return product;
+    // base decorators define price and availability read-only, so offer lines return a copy;
+    // the product factory uses the returned model
+    var model = {};
+    Object.keys(product).forEach(function (key) { model[key] = product[key]; });
+    if (pli.custom.mktUnitPriceCents) model.price = new DefaultPrice(new Money(pli.custom.mktUnitPriceCents / 100, 'USD'));
+    model.available = available;
+    model.availability = { messages: [available ? Resource.msg('label.instock', 'common', null) : Resource.msg('error.offer.offer-unavailable', 'seller', null)], inStockDate: null };
+    model.marketplace = { offerId: pli.custom.mktOfferId, sellerId: pli.custom.mktSellerId, sellerName: seller ? seller.custom.displayName : pli.custom.mktSellerId };
+    return model;
 };
