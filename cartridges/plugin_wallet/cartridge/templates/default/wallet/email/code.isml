@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" /><title>${Resource.msg('email.code.subject', 'wallet', null)}</title></head>
+<body>
+    <p>${Resource.msgf('email.code.body', 'wallet', null, pdict.code, pdict.minutes)}</p>
+    <isif condition="${pdict.amount}"><p>${Resource.msgf('email.code.amount', 'wallet', null, pdict.amount)}</p></isif>
+</body>
+</html>

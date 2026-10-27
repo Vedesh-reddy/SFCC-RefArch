@@ -1,0 +1,134 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/wallet.css');
+        var w = pdict.wallet;
+        var formatCents = require('*/cartridge/scripts/helpers/walletHelpers').formatCents;
+        var tf = pdict.topUpForm;
+    </isscript>
+    <div class="container wallet-page py-4">
+        <h1 class="wallet-title">${Resource.msg('dashboard.heading', 'wallet', null)}</h1>
+        <isif condition="${pdict.sandbox}">
+            <p class="alert alert-warning wallet-sandbox-banner" role="note">${Resource.msg('sandbox.banner', 'wallet', null)}</p>
+        </isif>
+        <isinclude template="wallet/components/flash" />
+
+        <div class="row">
+            <div class="col-12 col-md-6 mb-3">
+                <section class="card h-100" aria-labelledby="wallet-balance-title">
+                    <div class="card-body">
+                        <h2 class="h5" id="wallet-balance-title">${Resource.msg('dashboard.balance', 'wallet', null)}</h2>
+                        <p class="h2 mb-1 wallet-available">${formatCents(w.availableCents)}</p>
+                        <p class="small text-muted mb-1">${Resource.msgf('dashboard.held', 'wallet', null, formatCents(w.heldCents))}</p>
+                        <isif condition="${w.status !== 'ACTIVE'}">
+                            <p class="alert alert-danger mt-2 mb-0" role="alert">${Resource.msg('status.' + w.status, 'wallet', w.status)}</p>
+                        </isif>
+                    </div>
+                </section>
+            </div>
+            <div class="col-12 col-md-6 mb-3">
+                <section class="card h-100" aria-labelledby="wallet-topup-title">
+                    <div class="card-body">
+                        <h2 class="h5" id="wallet-topup-title">${Resource.msg('dashboard.topup', 'wallet', null)}</h2>
+                        <isif condition="${pdict.topUpsAllowed && w.status === 'ACTIVE'}">
+                            <form action="${URLUtils.url('Wallet-TopUp')}" method="post">
+                                <fieldset>
+                                    <legend class="sr-only visually-hidden">${Resource.msg('dashboard.topup.suggested', 'wallet', null)}</legend>
+                                    <div class="d-flex flex-wrap mb-2">
+                                        <isloop items="${pdict.suggested}" var="cents" status="loopState">
+                                            <div class="custom-control custom-radio form-check mr-3 me-3">
+                                                <input class="custom-control-input form-check-input" type="radio" name="${tf.amount.htmlName}" id="topup-${loopState.index.toFixed(0)}" value="${(cents / 100).toFixed(2)}" <isif condition="${loopState.first}">checked</isif> />
+                                                <label class="custom-control-label form-check-label" for="topup-${loopState.index.toFixed(0)}">${formatCents(cents)}</label>
+                                            </div>
+                                        </isloop>
+                                    </div>
+                                </fieldset>
+                                <div class="form-group">
+                                    <label class="form-control-label" for="topup-custom">${Resource.msg('dashboard.topup.custom', 'wallet', null)}</label>
+                                    <input class="form-control wallet-topup-custom" id="topup-custom" name="${tf.customAmount.htmlName}" inputmode="decimal" pattern="\d{1,9}(\.\d{1,2})?" />
+                                </div>
+                                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                                <button class="btn btn-primary" type="submit">${Resource.msg('dashboard.topup.submit', 'wallet', null)}</button>
+                            </form>
+                        <iselse/>
+                            <p class="mb-0 text-muted">${Resource.msg('dashboard.topup.unavailable', 'wallet', null)}</p>
+                        </isif>
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <isif condition="${pdict.allowance}">
+            <section class="card mb-3" aria-labelledby="wallet-allowance-title">
+                <div class="card-body">
+                    <h2 class="h5" id="wallet-allowance-title">${Resource.msg('dashboard.allowance', 'wallet', null)}</h2>
+                    <p class="mb-0">${Resource.msgf('dashboard.allowance.text', 'wallet', null, formatCents(pdict.allowance.remainingTodayCents), formatCents(pdict.allowance.remainingThisMonthCents), formatCents(pdict.allowance.perOrderLimitCents))}</p>
+                </div>
+            </section>
+        </isif>
+
+        <section class="mb-4" aria-labelledby="wallet-history-title">
+            <div class="d-flex justify-content-between align-items-center">
+                <h2 class="h5" id="wallet-history-title">${Resource.msg('dashboard.history', 'wallet', null)}</h2>
+                <a href="${URLUtils.url('Wallet-History')}">${Resource.msg('dashboard.history.all', 'wallet', null)}</a>
+            </div>
+            <isset name="historyItems" value="${pdict.history.items}" scope="page" />
+            <isinclude template="wallet/components/history-table" />
+        </section>
+
+        <isif condition="${pdict.topUps.items.length > 0}">
+            <section class="mb-4" aria-labelledby="wallet-topups-title">
+                <h2 class="h5" id="wallet-topups-title">${Resource.msg('dashboard.topups', 'wallet', null)}</h2>
+                <ul class="list-group">
+                    <isloop items="${pdict.topUps.items}" var="t">
+                        <li class="list-group-item d-flex justify-content-between"><span>${t.createdAt.toISOString().slice(0, 10)} &middot; ${formatCents(t.amountCents)}</span><span>${Resource.msg('topup.' + t.status, 'wallet', t.status)}</span></li>
+                    </isloop>
+                </ul>
+            </section>
+        </isif>
+
+        <section class="mb-4" aria-labelledby="wallet-insights-title">
+            <h2 class="h5" id="wallet-insights-title">${Resource.msg('dashboard.insights', 'wallet', null)}</h2>
+            <div class="table-responsive">
+                <table class="table table-sm">
+                    <thead><tr><th scope="col">${Resource.msg('insights.month', 'wallet', null)}</th><th scope="col">${Resource.msg('insights.topups', 'wallet', null)}</th><th scope="col">${Resource.msg('insights.spent', 'wallet', null)}</th><th scope="col">${Resource.msg('insights.family', 'wallet', null)}</th><th scope="col">${Resource.msg('insights.refunds', 'wallet', null)}</th></tr></thead>
+                    <tbody>
+                        <isloop items="${pdict.insights}" var="row">
+                            <tr><td>${row.month}</td><td>${formatCents(row.topUpCents)}</td><td>${formatCents(row.spentCents)}</td><td>${formatCents(row.familySpentCents)}</td><td>${formatCents(row.refundCents)}</td></tr>
+                        </isloop>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <isif condition="${pdict.familyEnabled}">
+            <isinclude template="wallet/components/family" />
+        </isif>
+
+        <section class="card mb-4" aria-labelledby="wallet-security-title">
+            <div class="card-body">
+                <h2 class="h5" id="wallet-security-title">${Resource.msg('dashboard.security', 'wallet', null)}</h2>
+                <isif condition="${w.status === 'ACTIVE'}">
+                    <form action="${URLUtils.url('Wallet-Lock')}" method="post">
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                        <button class="btn btn-outline-danger btn-sm" type="submit">${Resource.msg('dashboard.lock', 'wallet', null)}</button>
+                    </form>
+                <iselseif condition="${w.status === 'LOCKED' && w.lockedReason === 'owner-request'}">
+                    <form class="d-inline" action="${URLUtils.url('Wallet-UnlockCode')}" method="post">
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                        <button class="btn btn-outline-primary btn-sm" type="submit">${Resource.msg('dashboard.unlock.code', 'wallet', null)}</button>
+                    </form>
+                    <form class="d-flex align-items-end mt-2" action="${URLUtils.url('Wallet-Unlock')}" method="post">
+                        <label class="sr-only visually-hidden" for="unlock-code">${Resource.msg('checkout.code', 'wallet', null)}</label>
+                        <input class="form-control form-control-sm mr-2 me-2 wallet-code-input" id="unlock-code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6,8}" required />
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                        <button class="btn btn-primary btn-sm" type="submit">${Resource.msg('dashboard.unlock', 'wallet', null)}</button>
+                    </form>
+                <iselse/>
+                    <p class="mb-0">${Resource.msg('dashboard.locked.support', 'wallet', null)}</p>
+                </isif>
+                <p class="small mt-3 mb-0"><a href="${URLUtils.url('Wallet-Notifications')}">${Resource.msgf('dashboard.notifications', 'wallet', null, String(pdict.unread))}</a></p>
+            </div>
+        </section>
+    </div>
+</isdecorate>

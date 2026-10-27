@@ -1,0 +1,30 @@
+<isdecorate template="common/layout/page">
+    <div class="container wallet-page py-5">
+        <h1 class="wallet-title">${Resource.msg('invitation.heading', 'wallet', null)}</h1>
+        <isinclude template="wallet/components/flash" />
+        <isif condition="${pdict.valid}">
+            <p>${Resource.msg('invitation.text', 'wallet', null)}</p>
+            <form class="mb-3" action="${URLUtils.url('Wallet-InvitationCode')}" method="post">
+                <input type="hidden" name="token" value="${pdict.token}" />
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                <button class="btn btn-outline-primary btn-sm" type="submit">${Resource.msg('checkout.sendcode', 'wallet', null)}</button>
+            </form>
+            <form class="d-flex flex-wrap align-items-end" action="${URLUtils.url('Wallet-AcceptInvitation')}" method="post">
+                <div class="form-group mr-2 me-2 mb-0">
+                    <label class="form-control-label" for="invitation-code">${Resource.msg('checkout.code', 'wallet', null)}</label>
+                    <input class="form-control wallet-code-input" id="invitation-code" name="code" inputmode="numeric" autocomplete="one-time-code" pattern="\d{6,8}" />
+                </div>
+                <input type="hidden" name="token" value="${pdict.token}" />
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                <button class="btn btn-primary" type="submit">${Resource.msg('invitation.accept', 'wallet', null)}</button>
+            </form>
+            <form class="mt-3" action="${URLUtils.url('Wallet-DeclineInvitation')}" method="post">
+                <input type="hidden" name="token" value="${pdict.token}" />
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                <button class="btn btn-link p-0" type="submit">${Resource.msg('invitation.decline', 'wallet', null)}</button>
+            </form>
+        <iselse/>
+            <p>${Resource.msg('invitation.invalid', 'wallet', null)}</p>
+        </isif>
+    </div>
+</isdecorate>

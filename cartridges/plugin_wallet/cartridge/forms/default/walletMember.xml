@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field formid="email" type="string" mandatory="false" max-length="254" regexp="^[\w.%+\-]+@[\w.\-]+\.\w{2,}$" />
+    <field formid="nickname" type="string" mandatory="false" max-length="40" />
+    <field formid="perOrderLimit" type="string" mandatory="false" regexp="^\d{1,9}(\.\d{1,2})?$" />
+    <field formid="dailyLimit" type="string" mandatory="false" regexp="^\d{1,9}(\.\d{1,2})?$" />
+    <field formid="monthlyLimit" type="string" mandatory="false" regexp="^\d{1,9}(\.\d{1,2})?$" />
+    <field formid="allowedCategoryIds" type="string" mandatory="false" max-length="2000" />
+    <field formid="requireOwnerApproval" type="boolean" mandatory="false" />
+</form>

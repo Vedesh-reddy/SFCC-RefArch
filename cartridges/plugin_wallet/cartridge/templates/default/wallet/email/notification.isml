@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" /><title>${pdict.subject}</title></head>
+<body>
+    <h1>${pdict.subject}</h1>
+    <p>${pdict.body}</p>
+    <p><a href="${URLUtils.https('Wallet-Show')}">${Resource.msg('dashboard.heading', 'wallet', null)}</a></p>
+</body>
+</html>

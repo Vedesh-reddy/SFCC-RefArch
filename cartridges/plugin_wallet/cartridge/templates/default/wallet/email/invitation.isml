@@ -1,0 +1,8 @@
+<!DOCTYPE html>
+<html lang="en">
+<head><meta charset="UTF-8" /><title>${Resource.msg('email.invite.subject', 'wallet', null)}</title></head>
+<body>
+    <p>${Resource.msgf('email.invite.body', 'wallet', null, pdict.hours)}</p>
+    <p><a href="${pdict.url}">${Resource.msg('email.invite.link', 'wallet', null)}</a></p>
+</body>
+</html>

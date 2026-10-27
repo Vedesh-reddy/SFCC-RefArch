@@ -1,0 +1,14 @@
+<isscript>var formatCents = require('*/cartridge/scripts/helpers/walletHelpers').formatCents;</isscript>
+<isdecorate template="common/layout/page">
+    <div class="container wallet-page py-5">
+        <h1 class="wallet-title">${Resource.msg('sandbox.heading', 'wallet', null)}</h1>
+        <p class="alert alert-warning wallet-sandbox-banner" role="note">${Resource.msg('sandbox.banner', 'wallet', null)}</p>
+        <p>${Resource.msgf('sandbox.text', 'wallet', null, formatCents(pdict.topUp.amountCents))}</p>
+        <form class="d-flex" action="${URLUtils.url('Wallet-SandboxComplete')}" method="post">
+            <input type="hidden" name="id" value="${pdict.topUp.topUpId}" />
+            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+            <button class="btn btn-primary mr-2 me-2" type="submit" name="outcome" value="APPROVED">${Resource.msg('sandbox.approve', 'wallet', null)}</button>
+            <button class="btn btn-outline-secondary" type="submit" name="outcome" value="DECLINED">${Resource.msg('sandbox.decline', 'wallet', null)}</button>
+        </form>
+    </div>
+</isdecorate>

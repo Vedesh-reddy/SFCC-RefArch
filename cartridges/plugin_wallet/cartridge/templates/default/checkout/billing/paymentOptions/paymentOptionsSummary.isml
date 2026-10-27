@@ -1,0 +1,12 @@
+<isscript>
+    var walletMethodId = require('dw/system/Site').getCurrent().getCustomPreferenceValue('walletPaymentMethodId');
+</isscript>
+<div class="payment-details">
+    <isloop items="${pdict.order.billing.payment.selectedPaymentInstruments}" var="payment">
+        <isif condition="${payment.paymentMethod === 'CREDIT_CARD'}">
+            <isinclude template="checkout/billing/paymentOptions/creditCardSummary" />
+        <iselseif condition="${payment.paymentMethod === walletMethodId}">
+            <isinclude template="wallet/checkout/summary" />
+        </isif>
+    </isloop>
+</div>

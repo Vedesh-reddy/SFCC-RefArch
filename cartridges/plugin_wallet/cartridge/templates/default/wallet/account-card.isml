@@ -1,0 +1,12 @@
+<isscript>var formatCents = require('*/cartridge/scripts/helpers/walletHelpers').formatCents;</isscript>
+<isif condition="${pdict.wallet}">
+    <div class="card wallet-account-card mt-3">
+        <div class="card-header clearfix">
+            <h2 class="float-start">${Resource.msg('dashboard.heading', 'wallet', null)}</h2>
+            <a href="${URLUtils.url('Wallet-Show')}" class="float-end">${Resource.msg('account.view', 'wallet', null)}</a>
+        </div>
+        <div class="card-body">
+            <p class="mb-0">${Resource.msgf('account.balance', 'wallet', null, formatCents(pdict.wallet.availableCents))}</p>
+        </div>
+    </div>
+</isif>
