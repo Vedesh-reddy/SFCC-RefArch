@@ -1,0 +1,397 @@
+openapi: 3.0.3
+info:
+  title: Marketplace Admin API
+  version: 1.0.0
+components:
+  securitySchemes:
+    AmOAuth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://account.demandware.com/dwsso/oauth2/access_token
+          scopes:
+            c_mkt_admin: Marketplace back-office integration
+  parameters:
+    siteId:
+      name: siteId
+      in: query
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    c_offset:
+      name: c_offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    c_limit:
+      name: c_limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    c_status:
+      name: c_status
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 40
+  schemas:
+    Body:
+      type: object
+    Result:
+      type: object
+    Error:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+paths:
+  /seller-orders:
+    get:
+      operationId: listSellerOrders
+      summary: Seller orders for fulfillment systems
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - $ref: '#/components/parameters/c_offset'
+        - $ref: '#/components/parameters/c_limit'
+        - $ref: '#/components/parameters/c_status'
+        - name: c_sellerId
+          in: query
+          required: false
+          schema:
+            type: string
+            maxLength: 128
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - AmOAuth2:
+            - c_mkt_admin
+  /seller-orders/{orderNo}/{sellerId}/events:
+    post:
+      operationId: postSellerOrderEvent
+      summary: Shipment, delivery, cancellation, return or refund event
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: orderNo
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+        - name: sellerId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - AmOAuth2:
+            - c_mkt_admin
+  /sellers/{sellerId}:
+    get:
+      operationId: getSeller
+      summary: Seller account
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: sellerId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - AmOAuth2:
+            - c_mkt_admin
+  /settlements:
+    get:
+      operationId: listSettlements
+      summary: Settlements
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - $ref: '#/components/parameters/c_offset'
+        - $ref: '#/components/parameters/c_limit'
+        - $ref: '#/components/parameters/c_status'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - AmOAuth2:
+            - c_mkt_admin
+  /settlements/{settlementId}/payout-result:
+    post:
+      operationId: postPayoutResult
+      summary: Confirm or fail a payout
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: settlementId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - AmOAuth2:
+            - c_mkt_admin

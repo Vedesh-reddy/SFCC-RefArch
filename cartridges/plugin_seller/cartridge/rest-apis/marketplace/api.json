@@ -1,0 +1,99 @@
+{
+    "endpoints": [
+        {
+            "endpoint": "getProductOffers",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getSellerProfile",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getMyAccount",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "createApplication",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listSubmissions",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "createSubmission",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getSubmission",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "updateSubmission",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "submitSubmission",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listOffers",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "upsertOffer",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "setOfferStock",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listOrders",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getOrder",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "createShipment",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listLedger",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listSettlements",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getSettlement",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listNotifications",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        }
+    ]
+}

@@ -1,0 +1,29 @@
+{
+    "endpoints": [
+        {
+            "endpoint": "listSellerOrders",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "postSellerOrderEvent",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getSeller",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listSettlements",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "postPayoutResult",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        }
+    ]
+}
