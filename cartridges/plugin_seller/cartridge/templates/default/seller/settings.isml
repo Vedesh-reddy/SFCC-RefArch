@@ -1,0 +1,71 @@
+<isdecorate template="seller/components/shell">
+    <isset name="sf" value="${pdict.settingsForm}" scope="page" />
+    <h1 id="seller-page-title">${Resource.msg('settings.heading', 'seller', null)}</h1>
+    <form class="seller-settings-form" action="${URLUtils.url('Seller-SaveSettings')}" method="post">
+        <fieldset class="mb-3">
+            <legend class="h5">${Resource.msg('settings.contact', 'seller', null)}</legend>
+            <div class="form-row row">
+                <div class="form-group col-12 col-md-4">
+                    <label class="form-control-label" for="settings-contact-name">${Resource.msg('apply.contactname', 'seller', null)}</label>
+                    <input class="form-control" id="settings-contact-name" name="${sf.contactName.htmlName}" maxlength="80" value="${sf.contactName.htmlValue}" autocomplete="name" />
+                </div>
+                <div class="form-group col-12 col-md-4">
+                    <label class="form-control-label" for="settings-contact-phone">${Resource.msg('apply.contactphone', 'seller', null)}</label>
+                    <input class="form-control" id="settings-contact-phone" name="${sf.contactPhone.htmlName}" type="tel" value="${sf.contactPhone.htmlValue}" autocomplete="tel" />
+                </div>
+                <div class="form-group col-12 col-md-4">
+                    <label class="form-control-label" for="settings-service-email">${Resource.msg('settings.service', 'seller', null)}</label>
+                    <input class="form-control" id="settings-service-email" name="${sf.customerServiceEmail.htmlName}" type="email" value="${sf.customerServiceEmail.htmlValue}" />
+                </div>
+            </div>
+        </fieldset>
+        <fieldset class="mb-3">
+            <legend class="h5">${Resource.msg('settings.shipping', 'seller', null)}</legend>
+            <div class="form-row row">
+                <div class="form-group col-12 col-md-4">
+                    <label class="form-control-label" for="settings-handling">${Resource.msg('settings.handling', 'seller', null)}</label>
+                    <input class="form-control" id="settings-handling" name="${sf.handlingDays.htmlName}" type="number" min="0" max="30" value="${sf.handlingDays.htmlValue}" />
+                </div>
+                <isif condition="${pdict.shippingFeesEnabled}">
+                    <div class="form-group col-12 col-md-4">
+                        <label class="form-control-label" for="settings-fee">${Resource.msg('settings.fee', 'seller', null)}</label>
+                        <input class="form-control" id="settings-fee" name="${sf.shippingFee.htmlName}" inputmode="decimal" pattern="\d{1,9}(\.\d{1,2})?" value="${sf.shippingFee.htmlValue}" />
+                    </div>
+                    <div class="form-group col-12 col-md-4">
+                        <label class="form-control-label" for="settings-free-over">${Resource.msg('settings.freeover', 'seller', null)}</label>
+                        <input class="form-control" id="settings-free-over" name="${sf.freeShippingOver.htmlName}" inputmode="decimal" pattern="\d{1,9}(\.\d{1,2})?" value="${sf.freeShippingOver.htmlValue}" />
+                    </div>
+                <iselse/>
+                    <p class="col-12 small text-muted">${Resource.msg('settings.fees.off', 'seller', null)}</p>
+                </isif>
+            </div>
+        </fieldset>
+        <fieldset class="mb-3">
+            <legend class="h5">${Resource.msg('settings.returns', 'seller', null)}</legend>
+            <div class="form-group custom-control custom-checkbox form-check">
+                <input class="custom-control-input form-check-input" type="checkbox" id="settings-returns" name="${sf.returnsAccepted.htmlName}" value="true" <isif condition="${sf.returnsAccepted.checked}">checked</isif> />
+                <label class="custom-control-label form-check-label" for="settings-returns">${Resource.msg('settings.returnsaccepted', 'seller', null)}</label>
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" for="settings-return-days">${Resource.msg('settings.returndays', 'seller', null)}</label>
+                <input class="form-control" id="settings-return-days" name="${sf.returnDays.htmlName}" type="number" min="0" max="365" value="${sf.returnDays.htmlValue}" />
+            </div>
+            <div class="form-group">
+                <label class="form-control-label" for="settings-return-policy">${Resource.msg('settings.returnpolicy', 'seller', null)}</label>
+                <textarea class="form-control" id="settings-return-policy" name="${sf.returnPolicy.htmlName}" rows="4" maxlength="2000">${sf.returnPolicy.htmlValue}</textarea>
+            </div>
+        </fieldset>
+        <input type="hidden" name="revision" value="${pdict.seller.revision.toFixed(0)}" />
+        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+        <button class="btn btn-primary" type="submit">${Resource.msg('settings.save', 'seller', null)}</button>
+    </form>
+    <isif condition="${pdict.role === 'OWNER'}">
+        <section class="card mt-4" aria-labelledby="settings-docs-title">
+            <div class="card-body">
+                <h2 class="h5" id="settings-docs-title">${Resource.msg('settings.documents', 'seller', null)}</h2>
+                <isinclude template="seller/components/document-list" />
+                <isinclude template="seller/components/document-upload" />
+            </div>
+        </section>
+    </isif>
+</isdecorate>

@@ -1,0 +1,13 @@
+<iscomment>Base extension point for extra buttons. Seller offers load as a cacheable remote include (no shopper data); for a master, the script loads them once a variant is selected.</iscomment>
+<isif condition="${typeof product !== 'undefined' && product && product.id && product.productType !== 'set' && product.productType !== 'bundle'}">
+    <div class="marketplace-offers-slot" data-url="${URLUtils.url('Marketplace-Offers')}">
+        <isif condition="${product.productType !== 'master'}">
+            <isinclude url="${URLUtils.url('Marketplace-Offers', 'pid', product.id)}" />
+        </isif>
+    </div>
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addJs('/js/marketplace-offers.js');
+        assets.addCss('/css/seller-central.css');
+    </isscript>
+</isif>

@@ -1,0 +1,35 @@
+<isdecorate template="seller/components/shell">
+    <h1 id="seller-page-title">${Resource.msg('cases.heading', 'seller', null)}</h1>
+    <isif condition="${pdict.list.items.length === 0}">
+        <p>${Resource.msg('cases.empty', 'seller', null)}</p>
+    </isif>
+    <isloop items="${pdict.list.items}" var="c">
+        <article class="card mb-3 seller-case" aria-labelledby="case-${c.caseId}">
+            <div class="card-body">
+                <h2 class="h6" id="case-${c.caseId}">${Resource.msg('casetype.' + c.caseType, 'seller', c.caseType)} &middot; ${Resource.msg('status.' + c.status, 'seller', c.status)}</h2>
+                <p class="small text-muted mb-2">
+                    ${c.caseId}
+                    <isif condition="${!empty(c.productId)}"> &middot; ${Resource.msg('cases.product', 'seller', null)} ${c.productId}</isif>
+                    <isif condition="${!empty(c.orderNo)}"> &middot; ${Resource.msg('cases.order', 'seller', null)} ${c.orderNo}</isif>
+                </p>
+                <ul class="list-unstyled small">
+                    <isloop items="${c.thread}" var="message">
+                        <li class="mb-1"><span class="font-weight-bold fw-bold">${message.by}</span> ${message.at.slice(0, 10)}: ${message.text}</li>
+                    </isloop>
+                </ul>
+                <isif condition="${pdict.can['cases.write'] && c.status !== 'RESOLVED' && c.status !== 'DISMISSED'}">
+                    <form action="${URLUtils.url('Seller-RespondCase')}" method="post">
+                        <label class="form-control-label" for="case-answer-${c.caseId}">${Resource.msg('cases.respond', 'seller', null)}</label>
+                        <textarea class="form-control" id="case-answer-${c.caseId}" name="message" rows="2" maxlength="2000" required></textarea>
+                        <input type="hidden" name="caseId" value="${c.caseId}" />
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                        <button class="btn btn-outline-primary btn-sm mt-2" type="submit">${Resource.msg('cases.send', 'seller', null)}</button>
+                    </form>
+                </isif>
+            </div>
+        </article>
+    </isloop>
+    <isset name="pagerTotal" value="${pdict.list.total}" scope="page" />
+    <isset name="pagerRoute" value="Seller-Cases" scope="page" />
+    <isinclude template="seller/components/pager" />
+</isdecorate>

@@ -1,0 +1,37 @@
+<isdecorate template="common/layout/page">
+    <div class="container py-4 marketplace-report">
+        <h1>${Resource.msg('report.heading', 'seller', null)}</h1>
+        <p>${Resource.msgf('report.subject', 'seller', null, pdict.sellerName, pdict.productId)}</p>
+        <isif condition="${pdict.sent}">
+            <p class="alert alert-success" role="status">${Resource.msg('report.sent', 'seller', null)}</p>
+        <iselse/>
+            <isif condition="${!empty(pdict.error)}">
+                <p class="alert alert-danger" role="alert">${Resource.msgf('report.error', 'seller', null, pdict.error)}</p>
+            </isif>
+            <form action="${URLUtils.url('Marketplace-SubmitReport')}" method="post">
+                <fieldset class="form-group">
+                    <legend class="form-control-label h6">${Resource.msg('report.type', 'seller', null)}</legend>
+                    <div class="custom-control custom-radio form-check">
+                        <input class="custom-control-input form-check-input" type="radio" id="report-counterfeit" name="caseType" value="COUNTERFEIT_REPORT" required />
+                        <label class="custom-control-label form-check-label" for="report-counterfeit">${Resource.msg('report.type.COUNTERFEIT_REPORT', 'seller', null)}</label>
+                    </div>
+                    <div class="custom-control custom-radio form-check">
+                        <input class="custom-control-input form-check-input" type="radio" id="report-issue" name="caseType" value="CUSTOMER_ISSUE" />
+                        <label class="custom-control-label form-check-label" for="report-issue">${Resource.msg('report.type.CUSTOMER_ISSUE', 'seller', null)}</label>
+                    </div>
+                </fieldset>
+                <div class="form-group">
+                    <label class="form-control-label" for="report-description">${Resource.msg('report.description', 'seller', null)}</label>
+                    <textarea class="form-control" id="report-description" name="description" rows="5" minlength="20" maxlength="2000" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="form-control-label" for="report-order">${Resource.msg('report.order', 'seller', null)}</label>
+                    <input class="form-control" id="report-order" name="orderNo" maxlength="40" pattern="[A-Za-z0-9_\-]+" />
+                </div>
+                <input type="hidden" name="offerId" value="${pdict.offerId}" />
+                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                <button class="btn btn-primary" type="submit">${Resource.msg('report.submit', 'seller', null)}</button>
+            </form>
+        </isif>
+    </div>
+</isdecorate>

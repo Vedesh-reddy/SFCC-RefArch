@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field formid="mode" type="string" mandatory="false">
+        <options>
+            <option optionid="NEW" label="product.mode.NEW" value="NEW" />
+            <option optionid="UPDATE" label="product.mode.UPDATE" value="UPDATE" />
+        </options>
+    </field>
+    <field formid="productId" type="string" mandatory="false" max-length="100" regexp="^[A-Za-z0-9._-]+$" />
+    <field formid="sellerSku" type="string" mandatory="false" max-length="40" />
+    <field formid="name" type="string" mandatory="false" max-length="200" />
+    <field formid="shortDescription" type="string" mandatory="false" max-length="1000" />
+    <field formid="longDescription" type="string" mandatory="false" max-length="8000" />
+    <field formid="brand" type="string" mandatory="false" max-length="80" />
+    <field formid="categoryId" type="string" mandatory="false" max-length="256" />
+    <field formid="productType" type="string" mandatory="false">
+        <options>
+            <option optionid="SIMPLE" label="product.type.SIMPLE" value="SIMPLE" />
+            <option optionid="MASTER" label="product.type.MASTER" value="MASTER" />
+        </options>
+    </field>
+    <field formid="gtin" type="string" mandatory="false" max-length="14" />
+    <field formid="price" type="string" mandatory="false" regexp="^\d{1,9}(\.\d{1,2})?$" />
+    <field formid="quantity" type="string" mandatory="false" regexp="^\d{1,6}$" />
+    <field formid="taxClassId" type="string" mandatory="false" max-length="60" />
+    <field formid="weightOz" type="string" mandatory="false" regexp="^\d{1,5}$" />
+    <field formid="lengthIn" type="string" mandatory="false" regexp="^\d{1,3}$" />
+    <field formid="widthIn" type="string" mandatory="false" regexp="^\d{1,3}$" />
+    <field formid="heightIn" type="string" mandatory="false" regexp="^\d{1,3}$" />
+    <field formid="returnable" type="boolean" mandatory="false" />
+    <field formid="returnDays" type="string" mandatory="false" regexp="^\d{1,3}$" />
+    <field formid="warranty" type="string" mandatory="false" max-length="500" />
+    <field formid="specifications" type="string" mandatory="false" max-length="6000" />
+    <field formid="complianceDocumentIds" type="string" mandatory="false" max-length="200" />
+    <field formid="variants" type="string" mandatory="false" max-length="10000" />
+</form>

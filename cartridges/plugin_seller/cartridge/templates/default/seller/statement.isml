@@ -1,0 +1,40 @@
+<isdecorate template="seller/components/shell">
+    <isscript>var formatCents = require('*/cartridge/scripts/helpers/marketplaceHelpers').formatCents;</isscript>
+    <isset name="st" value="${pdict.statement}" scope="page" />
+    <h1 id="seller-page-title">${Resource.msgf('statement.heading', 'seller', null, st.settlementId)}</h1>
+    <p><span class="badge badge-info bg-info">${Resource.msg('status.' + st.status, 'seller', st.status)}</span></p>
+    <dl class="row">
+        <dt class="col-sm-5">${Resource.msg('statement.period', 'seller', null)}</dt><dd class="col-sm-7">${st.periodStart.toISOString().slice(0, 10)} &ndash; ${st.periodEnd.toISOString().slice(0, 10)}</dd>
+        <dt class="col-sm-5">${Resource.msg('statement.gross', 'seller', null)}</dt><dd class="col-sm-7">${formatCents(st.grossCents)}</dd>
+        <dt class="col-sm-5">${Resource.msg('statement.shipping', 'seller', null)}</dt><dd class="col-sm-7">${formatCents(st.shippingCents)}</dd>
+        <dt class="col-sm-5">${Resource.msg('statement.commission', 'seller', null)}</dt><dd class="col-sm-7">${formatCents(st.commissionCents)}</dd>
+        <dt class="col-sm-5">${Resource.msg('statement.fees', 'seller', null)}</dt><dd class="col-sm-7">${formatCents(st.feeCents)}</dd>
+        <dt class="col-sm-5">${Resource.msg('statement.refunds', 'seller', null)}</dt><dd class="col-sm-7">${formatCents(st.refundCents)}</dd>
+        <dt class="col-sm-5">${Resource.msg('statement.reversals', 'seller', null)}</dt><dd class="col-sm-7">${formatCents(st.reversalCents)}</dd>
+        <dt class="col-sm-5">${Resource.msg('statement.adjustments', 'seller', null)}</dt><dd class="col-sm-7">${formatCents(st.adjustmentCents)}</dd>
+        <dt class="col-sm-5">${Resource.msg('statement.net', 'seller', null)}</dt><dd class="col-sm-7 font-weight-bold fw-bold">${formatCents(st.netCents)}</dd>
+        <isif condition="${!empty(st.payoutReference)}"><dt class="col-sm-5">${Resource.msg('statement.reference', 'seller', null)}</dt><dd class="col-sm-7">${st.payoutReference}</dd></isif>
+    </dl>
+    <div class="table-responsive">
+        <table class="table table-sm seller-table">
+            <thead>
+                <tr>
+                    <th scope="col">${Resource.msg('finance.date', 'seller', null)}</th>
+                    <th scope="col">${Resource.msg('finance.type', 'seller', null)}</th>
+                    <th scope="col">${Resource.msg('finance.order', 'seller', null)}</th>
+                    <th scope="col" class="text-right text-end">${Resource.msg('finance.amount', 'seller', null)}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <isloop items="${st.entries}" var="entry">
+                    <tr>
+                        <td>${entry.createdAt.toISOString().slice(0, 10)}</td>
+                        <td>${Resource.msg('ledger.' + entry.entryType, 'seller', entry.entryType)}</td>
+                        <td>${entry.orderNo || ''}</td>
+                        <td class="text-right text-end">${formatCents(entry.amountCents)}</td>
+                    </tr>
+                </isloop>
+            </tbody>
+        </table>
+    </div>
+</isdecorate>

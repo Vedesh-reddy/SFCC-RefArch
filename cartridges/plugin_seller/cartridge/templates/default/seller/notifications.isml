@@ -1,0 +1,29 @@
+<isdecorate template="seller/components/shell">
+    <h1 id="seller-page-title">${Resource.msg('notifications.heading', 'seller', null)}</h1>
+    <isif condition="${pdict.inbox.items.length === 0}">
+        <p>${Resource.msg('notifications.empty', 'seller', null)}</p>
+    </isif>
+    <ul class="list-group">
+        <isloop items="${pdict.inbox.items}" var="n">
+            <li class="list-group-item d-flex justify-content-between align-items-start flex-wrap ${n.read ? '' : 'seller-unread'}">
+                <span>
+                    <span class="font-weight-bold fw-bold d-block">${n.subject}
+                        <isif condition="${!n.read}"><span class="badge badge-primary bg-primary ml-1 ms-1">${Resource.msg('notifications.unread', 'seller', null)}</span></isif>
+                    </span>
+                    <span class="d-block">${n.body}</span>
+                    <span class="small text-muted">${n.createdAt.toISOString().slice(0, 16).replace('T', ' ')}</span>
+                </span>
+                <isif condition="${!n.read}">
+                    <form action="${URLUtils.url('Seller-MarkRead')}" method="post">
+                        <input type="hidden" name="id" value="${n.id}" />
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                        <button class="btn btn-link btn-sm" type="submit">${Resource.msg('notifications.markread', 'seller', null)}</button>
+                    </form>
+                </isif>
+            </li>
+        </isloop>
+    </ul>
+    <isset name="pagerTotal" value="${pdict.inbox.total}" scope="page" />
+    <isset name="pagerRoute" value="Seller-Notifications" scope="page" />
+    <isinclude template="seller/components/pager" />
+</isdecorate>

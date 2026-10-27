@@ -1,0 +1,22 @@
+<isdecorate template="common/layout/page">
+    <div class="container seller-central py-5">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 text-center">
+                <h1 class="seller-landing-title">${Resource.msg('landing.heading', 'seller', null)}</h1>
+                <p class="lead">${Resource.msg('landing.body', 'seller', null)}</p>
+                <isif condition="${pdict.open}">
+                    <isif condition="${pdict.signedIn}">
+                        <a class="btn btn-primary" href="${URLUtils.url('Seller-Apply')}">${Resource.msg('landing.apply', 'seller', null)}</a>
+                    <iselse/>
+                        <a class="btn btn-primary" href="${URLUtils.url('Login-Show', 'rurl', '7')}">${Resource.msg('landing.signin', 'seller', null)}</a>
+                    </isif>
+                <iselse/>
+                    <p class="alert alert-info" role="status">${Resource.msg('landing.closed', 'seller', null)}</p>
+                </isif>
+                <isif condition="${!empty(pdict.agreementAssetId)}">
+                    <p class="mt-3"><a href="${URLUtils.url('Page-Show', 'cid', pdict.agreementAssetId)}">${Resource.msg('landing.agreement', 'seller', null)}</a></p>
+                </isif>
+            </div>
+        </div>
+    </div>
+</isdecorate>

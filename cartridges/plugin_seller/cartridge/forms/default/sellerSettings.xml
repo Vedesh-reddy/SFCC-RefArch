@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field formid="contactName" type="string" mandatory="false" min-length="2" max-length="80" />
+    <field formid="contactPhone" type="string" mandatory="false" regexp="^\+?[0-9 ()-]{7,20}$" />
+    <field formid="customerServiceEmail" type="string" mandatory="false" max-length="254" regexp="^[\w.%+\-]+@[\w.\-]+\.\w{2,}$" />
+    <field formid="handlingDays" type="string" mandatory="false" regexp="^\d{1,2}$" />
+    <field formid="shippingFee" type="string" mandatory="false" regexp="^\d{1,9}(\.\d{1,2})?$" />
+    <field formid="freeShippingOver" type="string" mandatory="false" regexp="^\d{1,9}(\.\d{1,2})?$" />
+    <field formid="returnsAccepted" type="boolean" mandatory="false" />
+    <field formid="returnDays" type="string" mandatory="false" regexp="^\d{1,3}$" />
+    <field formid="returnPolicy" type="string" mandatory="false" max-length="2000" />
+</form>

@@ -1,0 +1,19 @@
+<isdecorate template="common/layout/page">
+    <isscript>var formatCents = require('*/cartridge/scripts/helpers/marketplaceHelpers').formatCents;</isscript>
+    <isset name="profile" value="${pdict.profile}" scope="page" />
+    <div class="container py-4 marketplace-seller-page">
+        <h1>${profile.displayName}</h1>
+        <p>
+            <isif condition="${profile.ratingCount > 0}">${Resource.msgf('offers.block.rating', 'seller', null, profile.rating.toFixed(1), profile.ratingCount.toFixed(0))}<iselse/>${Resource.msg('offers.block.norating', 'seller', null)}</isif>
+        </p>
+        <ul class="list-unstyled">
+            <li>${Resource.msgf('offers.block.handling', 'seller', null, profile.terms.handlingDays.toFixed(0))}</li>
+            <li><isif condition="${profile.terms.returnsAccepted && profile.terms.returnDays > 0}">${Resource.msgf('offers.block.returns', 'seller', null, profile.terms.returnDays.toFixed(0))}<iselse/>${Resource.msg('offers.block.noreturns', 'seller', null)}</isif></li>
+            <isif condition="${profile.terms.shippingFeeCents > 0}"><li>${Resource.msgf('offers.block.shipping', 'seller', null, formatCents(profile.terms.shippingFeeCents))}</li></isif>
+        </ul>
+        <isif condition="${!empty(profile.returnPolicy)}">
+            <h2 class="h5">${Resource.msg('seller.page.policy', 'seller', null)}</h2>
+            <p class="marketplace-return-policy">${profile.returnPolicy}</p>
+        </isif>
+    </div>
+</isdecorate>

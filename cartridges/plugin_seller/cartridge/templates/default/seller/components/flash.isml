@@ -1,0 +1,26 @@
+<isscript>
+    var flash = pdict.flash || pdict.error || null;
+    var fieldErrors = {};
+    if (flash && flash.fields) {
+        Object.keys(flash.fields).forEach(function (k) {
+            var code = flash.fields[k];
+            // helper results carry a code such as "taken", SFRA form errors carry the message itself
+            fieldErrors[k] = /^[a-z-]+$/.test(code) ? Resource.msg('field.' + code, 'seller', Resource.msg('field.invalid', 'seller', null)) : code;
+        });
+    }
+    var problemsText = flash && flash.problems ? flash.problems.join(', ') : '';
+</isscript>
+<isif condition="${flash && flash.message}">
+    <div class="alert alert-success seller-flash" role="status">${Resource.msg('flash.' + flash.message, 'seller', Resource.msg('flash.saved', 'seller', null))}</div>
+</isif>
+<isif condition="${flash && flash.error}">
+    <div class="alert alert-danger seller-flash" role="alert" data-fields="${JSON.stringify(fieldErrors)}">
+        <p class="mb-0">${Resource.msg('error.' + flash.error, 'seller', Resource.msg('error.general', 'seller', null))}</p>
+        <isif condition="${problemsText.length > 0}">
+            <p class="mb-0 small">${Resource.msgf('flash.problems', 'seller', null, problemsText)}</p>
+        </isif>
+    </div>
+    <isscript>
+        require('*/cartridge/scripts/assets.js').addJs('/js/seller-central.js');
+    </isscript>
+</isif>

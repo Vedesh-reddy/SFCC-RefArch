@@ -1,0 +1,16 @@
+<isif condition="${lineItem.isBonusProductLineItem}" />
+    <div>${Resource.msg('msg.bonus.product','cart',null)}</div>
+</isif>
+<div class="line-item-header">
+    <div class="line-item-name">
+        ${lineItem.productName}
+        <isif condition="${lineItem.marketplace}">
+            <span class="d-block small text-muted marketplace-sold-by">${Resource.msgf('cart.soldby', 'seller', null, lineItem.marketplace.sellerName)}</span>
+        </isif>
+    </div>
+    <isif condition="${!lineItem.isBonusProductLineItem}"/>
+        <div class="remove-line-item d-lg-none">
+            <isinclude template="components/deleteButton" />
+        </div>
+    </isif>
+</div>
