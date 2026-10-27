@@ -126,7 +126,8 @@ stock and return terms. Product pages show **Offers from sellers**, cart and che
 and marketplace staff review sellers, documents, offers, cases, commission and settlements in
 Merchant Tools › Marketplace. Sandbox and demo use only.
 
-[Feature guide with sandbox screenshots](docs/plugin_seller/README.md)
+[Feature guide with sandbox screenshots](docs/plugin_seller/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-seller-central)
 
 ![Seller offers on the product page](docs/plugin_seller/images/pdp-seller-offers.png)
 
@@ -141,7 +142,8 @@ a card, invite family members with limits, and lock the wallet. Payments from a 
 one-time e-mail code. Customer service works wallets, cases and the audit trail in Business Manager.
 Sandbox use only: Not for Live Money.
 
-[Feature guide with sandbox screenshots](docs/plugin_wallet/README.md)
+[Feature guide with sandbox screenshots](docs/plugin_wallet/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-smart-wallet)
 
 ![My wallet](docs/plugin_wallet/images/wallet-dashboard.png)
 
@@ -155,7 +157,8 @@ that anyone can recompute), winner verification and single-use coupon prizes. Gu
 rewards every qualifying entry where chance promotions are not allowed. Legal approval is mandatory
 before production use.
 
-[Feature guide with sandbox screenshots](docs/plugin_luckydraw/README.md)
+[Feature guide with sandbox screenshots](docs/plugin_luckydraw/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-lucky-draw)
 
 ![Draw with seed commitment, snapshot hash and result seal](docs/plugin_luckydraw/images/bm-luckydraw-draw.png)
 
