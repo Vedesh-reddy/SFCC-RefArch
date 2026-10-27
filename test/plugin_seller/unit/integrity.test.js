@@ -228,6 +228,8 @@ describe('plugin_seller integrity', function () {
     });
 
     it('keeps the base cartridges untouched', function () {
+        // only meaningful where the SFRA base cartridges live in the same repository (SFCC-RefArch)
+        if (!require('fs').existsSync(require('path').join(repo, 'cartridges/app_storefront_base'))) this.skip();
         var childProcess = require('child_process');
         var changed = childProcess.execFileSync('git', ['status', '--porcelain', '--', 'cartridges/app_storefront_base', 'cartridges/bm_app_storefront_base', 'cartridges/modules'], { cwd: repo }).toString().trim();
         assert.equal(changed, '');
