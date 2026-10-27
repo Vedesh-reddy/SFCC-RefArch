@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="OrderPaymentInstrument">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="walletMode">
+                <display-name xml:lang="x-default">walletMode</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletPayerCustomerNo">
+                <display-name xml:lang="x-default">walletPayerCustomerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletRequestedCents">
+                <display-name xml:lang="x-default">walletRequestedCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletBasketId">
+                <display-name xml:lang="x-default">walletBasketId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletHoldId">
+                <display-name xml:lang="x-default">walletHoldId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginWallet">
+                <display-name xml:lang="x-default">Wallet (plugin_wallet)</display-name>
+                <attribute attribute-id="walletMode"/>
+                <attribute attribute-id="walletPayerCustomerNo"/>
+                <attribute attribute-id="walletRequestedCents"/>
+                <attribute attribute-id="walletBasketId"/>
+                <attribute attribute-id="walletHoldId"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="walletEnabled">
+                <display-name xml:lang="x-default">Enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletCurrency">
+                <display-name xml:lang="x-default">Currency</display-name>
+                <description xml:lang="x-default">Required. Must be USD, the site default currency.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletPaymentMethodId">
+                <display-name xml:lang="x-default">Payment method ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>WALLET</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletGatewayMode">
+                <display-name xml:lang="x-default">Gateway mode</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">SANDBOX</display>
+                        <value>SANDBOX</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">EXTERNAL</display>
+                        <value>EXTERNAL</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletLiveMoneyApproved">
+                <display-name xml:lang="x-default">Live money approved</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletTopUpMinimumCents">
+                <display-name xml:lang="x-default">Top up minimum (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>100</min-value>
+                <max-value>100000000</max-value>
+                <default-value>500</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletTopUpMaximumCents">
+                <display-name xml:lang="x-default">Top up maximum (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>100</min-value>
+                <max-value>100000000</max-value>
+                <default-value>50000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletSuggestedTopUpCents">
+                <display-name xml:lang="x-default">Suggested top up (cents)</display-name>
+                <description xml:lang="x-default">Amounts in cents. Empty means only a custom amount.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletMaximumBalanceCents">
+                <display-name xml:lang="x-default">Maximum balance (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>100</min-value>
+                <max-value>100000000</max-value>
+                <default-value>100000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletTopUpDailyCountLimit">
+                <display-name xml:lang="x-default">Top up daily count limit</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>50</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletTopUpDailyAmountCents">
+                <display-name xml:lang="x-default">Top up daily amount (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>100</min-value>
+                <max-value>100000000</max-value>
+                <default-value>100000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletTopUpPendingMinutes">
+                <display-name xml:lang="x-default">Top up pending minutes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>5</min-value>
+                <max-value>1440</max-value>
+                <default-value>60</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletMaxTransactionCents">
+                <display-name xml:lang="x-default">Max transaction (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>100</min-value>
+                <max-value>100000000</max-value>
+                <default-value>50000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletDailySpendLimitCents">
+                <display-name xml:lang="x-default">Daily spend limit (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>100</min-value>
+                <max-value>100000000</max-value>
+                <default-value>100000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletMonthlySpendLimitCents">
+                <display-name xml:lang="x-default">Monthly spend limit (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>100</min-value>
+                <max-value>100000000</max-value>
+                <default-value>500000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletHoldTtlMinutes">
+                <display-name xml:lang="x-default">Hold TTL minutes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>10</min-value>
+                <max-value>1440</max-value>
+                <default-value>60</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletStepUpThresholdCents">
+                <display-name xml:lang="x-default">Step up threshold (cents)</display-name>
+                <description xml:lang="x-default">Payments from this amount need a code; 0 means every payment.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>100000000</max-value>
+                <default-value>0</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletRecentSessionsTracked">
+                <display-name xml:lang="x-default">Recent sessions tracked</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletLockAfterLockedCodes">
+                <display-name xml:lang="x-default">Lock after locked codes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10</max-value>
+                <default-value>2</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletFamilyEnabled">
+                <display-name xml:lang="x-default">Family enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletFamilyMaxMembers">
+                <display-name xml:lang="x-default">Family max members</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletFamilyRequireCode">
+                <display-name xml:lang="x-default">Family require code</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletFamilyDefaultDailyLimitCents">
+                <display-name xml:lang="x-default">Family default daily limit (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>100000000</max-value>
+                <default-value>5000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletFamilyDefaultMonthlyLimitCents">
+                <display-name xml:lang="x-default">Family default monthly limit (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>100000000</max-value>
+                <default-value>20000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletFamilyDefaultPerOrderLimitCents">
+                <display-name xml:lang="x-default">Family default per order limit (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>100000000</max-value>
+                <default-value>5000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletInvitationTtlHours">
+                <display-name xml:lang="x-default">Invitation TTL hours</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>720</max-value>
+                <default-value>72</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletApprovalTtlMinutes">
+                <display-name xml:lang="x-default">Approval TTL minutes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>5</min-value>
+                <max-value>1440</max-value>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletOtpLength">
+                <display-name xml:lang="x-default">OTP length</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>6</min-value>
+                <max-value>8</max-value>
+                <default-value>6</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletOtpTtlMinutes">
+                <display-name xml:lang="x-default">OTP TTL minutes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>2</min-value>
+                <max-value>60</max-value>
+                <default-value>10</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletOtpMaxAttempts">
+                <display-name xml:lang="x-default">OTP max attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletOtpResendCooldownSeconds">
+                <display-name xml:lang="x-default">OTP resend cooldown seconds</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>30</min-value>
+                <max-value>3600</max-value>
+                <default-value>60</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletOtpMaxSendsPerHour">
+                <display-name xml:lang="x-default">OTP max sends per hour</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletRefundAbuseCount">
+                <display-name xml:lang="x-default">Refund abuse count</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>100</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletRefundAbuseWindowDays">
+                <display-name xml:lang="x-default">Refund abuse window days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>365</max-value>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletCardRefundToWalletAllowed">
+                <display-name xml:lang="x-default">Card refund to wallet allowed</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletAdjustmentMaxCents">
+                <display-name xml:lang="x-default">Adjustment max (cents)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>100000000</max-value>
+                <default-value>50000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletFundsExpiryDays">
+                <display-name xml:lang="x-default">Funds expiry days</display-name>
+                <description xml:lang="x-default">0 means off; otherwise at least 1825 (five years).</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>3650</max-value>
+                <default-value>0</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletShippingBenefitEnabled">
+                <display-name xml:lang="x-default">Shipping benefit enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletShippingBenefitMinShareBps">
+                <display-name xml:lang="x-default">Shipping benefit min share (basis points)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10000</max-value>
+                <default-value>10000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletAdvisorEnabled">
+                <display-name xml:lang="x-default">Advisor enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletAdvisorCategoryId">
+                <display-name xml:lang="x-default">Advisor category ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>root</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletAdvisorMaxSuggestions">
+                <display-name xml:lang="x-default">Advisor max suggestions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>12</max-value>
+                <default-value>4</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletAdvisorPriceBandPercent">
+                <display-name xml:lang="x-default">Advisor price band percent</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>100</max-value>
+                <default-value>25</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletNotificationChannels">
+                <display-name xml:lang="x-default">Notification channels</display-name>
+                <description xml:lang="x-default">Empty means INBOX.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletNotificationMaxAttempts">
+                <display-name xml:lang="x-default">Notification max attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletFromEmail">
+                <display-name xml:lang="x-default">From email</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletAdminNotificationEmails">
+                <display-name xml:lang="x-default">Admin notification emails</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletHistoryPageSize">
+                <display-name xml:lang="x-default">History page size</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>5</min-value>
+                <max-value>100</max-value>
+                <default-value>20</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletApiMaxPageSize">
+                <display-name xml:lang="x-default">API max page size</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>200</max-value>
+                <default-value>50</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletWriteRateLimitPerHour">
+                <display-name xml:lang="x-default">Write rate limit per hour</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10000</max-value>
+                <default-value>60</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletWebhookToleranceSeconds">
+                <display-name xml:lang="x-default">Webhook tolerance seconds</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>60</min-value>
+                <max-value>900</max-value>
+                <default-value>300</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletRequestKeyRetentionDays">
+                <display-name xml:lang="x-default">Request key retention days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>365</max-value>
+                <default-value>30</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginWallet">
+                <display-name xml:lang="x-default">Wallet (plugin_wallet)</display-name>
+                <attribute attribute-id="walletEnabled"/>
+                <attribute attribute-id="walletCurrency"/>
+                <attribute attribute-id="walletPaymentMethodId"/>
+                <attribute attribute-id="walletGatewayMode"/>
+                <attribute attribute-id="walletLiveMoneyApproved"/>
+                <attribute attribute-id="walletTopUpMinimumCents"/>
+                <attribute attribute-id="walletTopUpMaximumCents"/>
+                <attribute attribute-id="walletSuggestedTopUpCents"/>
+                <attribute attribute-id="walletMaximumBalanceCents"/>
+                <attribute attribute-id="walletTopUpDailyCountLimit"/>
+                <attribute attribute-id="walletTopUpDailyAmountCents"/>
+                <attribute attribute-id="walletTopUpPendingMinutes"/>
+                <attribute attribute-id="walletMaxTransactionCents"/>
+                <attribute attribute-id="walletDailySpendLimitCents"/>
+                <attribute attribute-id="walletMonthlySpendLimitCents"/>
+                <attribute attribute-id="walletHoldTtlMinutes"/>
+                <attribute attribute-id="walletStepUpThresholdCents"/>
+                <attribute attribute-id="walletRecentSessionsTracked"/>
+                <attribute attribute-id="walletLockAfterLockedCodes"/>
+                <attribute attribute-id="walletFamilyEnabled"/>
+                <attribute attribute-id="walletFamilyMaxMembers"/>
+                <attribute attribute-id="walletFamilyRequireCode"/>
+                <attribute attribute-id="walletFamilyDefaultDailyLimitCents"/>
+                <attribute attribute-id="walletFamilyDefaultMonthlyLimitCents"/>
+                <attribute attribute-id="walletFamilyDefaultPerOrderLimitCents"/>
+                <attribute attribute-id="walletInvitationTtlHours"/>
+                <attribute attribute-id="walletApprovalTtlMinutes"/>
+                <attribute attribute-id="walletOtpLength"/>
+                <attribute attribute-id="walletOtpTtlMinutes"/>
+                <attribute attribute-id="walletOtpMaxAttempts"/>
+                <attribute attribute-id="walletOtpResendCooldownSeconds"/>
+                <attribute attribute-id="walletOtpMaxSendsPerHour"/>
+                <attribute attribute-id="walletRefundAbuseCount"/>
+                <attribute attribute-id="walletRefundAbuseWindowDays"/>
+                <attribute attribute-id="walletCardRefundToWalletAllowed"/>
+                <attribute attribute-id="walletAdjustmentMaxCents"/>
+                <attribute attribute-id="walletFundsExpiryDays"/>
+                <attribute attribute-id="walletShippingBenefitEnabled"/>
+                <attribute attribute-id="walletShippingBenefitMinShareBps"/>
+                <attribute attribute-id="walletAdvisorEnabled"/>
+                <attribute attribute-id="walletAdvisorCategoryId"/>
+                <attribute attribute-id="walletAdvisorMaxSuggestions"/>
+                <attribute attribute-id="walletAdvisorPriceBandPercent"/>
+                <attribute attribute-id="walletNotificationChannels"/>
+                <attribute attribute-id="walletNotificationMaxAttempts"/>
+                <attribute attribute-id="walletFromEmail"/>
+                <attribute attribute-id="walletAdminNotificationEmails"/>
+                <attribute attribute-id="walletHistoryPageSize"/>
+                <attribute attribute-id="walletApiMaxPageSize"/>
+                <attribute attribute-id="walletWriteRateLimitPerHour"/>
+                <attribute attribute-id="walletWebhookToleranceSeconds"/>
+                <attribute attribute-id="walletRequestKeyRetentionDays"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

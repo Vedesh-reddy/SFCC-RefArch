@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<payment-settings xmlns="http://www.demandware.com/xml/impex/paymentsettings/2009-09-15">
+    <payment-method method-id="WALLET">
+        <name xml:lang="x-default">Wallet</name>
+        <description xml:lang="x-default">Pay with the customer wallet (sandbox: not for live money)</description>
+        <enabled-flag>true</enabled-flag>
+        <processor-id>WALLET</processor-id>
+        <currencies>
+            <currency>USD</currency>
+        </currencies>
+    </payment-method>
+</payment-settings>

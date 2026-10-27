@@ -1,0 +1,1383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="WalletAccount">
+        <display-name xml:lang="x-default">WalletAccount</display-name>
+        <description xml:lang="x-default">Customer wallet (key = owner customer number) with its balance snapshot</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="walletId">
+            <display-name xml:lang="x-default">walletId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="availableCents">
+                <display-name xml:lang="x-default">availableCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="heldCents">
+                <display-name xml:lang="x-default">heldCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sequence">
+                <display-name xml:lang="x-default">sequence</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="currency">
+                <display-name xml:lang="x-default">currency</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="lockedReason">
+                <display-name xml:lang="x-default">lockedReason</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="lockedAt">
+                <display-name xml:lang="x-default">lockedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="lockedCodeCount">
+                <display-name xml:lang="x-default">lockedCodeCount</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="shortfallCents">
+                <display-name xml:lang="x-default">shortfallCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="recentSessions">
+                <display-name xml:lang="x-default">recentSessions</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastActivityAt">
+                <display-name xml:lang="x-default">lastActivityAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletAccount">
+                <display-name xml:lang="x-default">WalletAccount</display-name>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="availableCents"/>
+                <attribute attribute-id="heldCents"/>
+                <attribute attribute-id="sequence"/>
+                <attribute attribute-id="currency"/>
+                <attribute attribute-id="lockedReason"/>
+                <attribute attribute-id="lockedAt"/>
+                <attribute attribute-id="lockedCodeCount"/>
+                <attribute attribute-id="shortfallCents"/>
+                <attribute attribute-id="recentSessions"/>
+                <attribute attribute-id="lastActivityAt"/>
+                <attribute attribute-id="createdAt"/>
+                <attribute attribute-id="revision"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletEntry">
+        <display-name xml:lang="x-default">WalletEntry</display-name>
+        <description xml:lang="x-default">Sequenced wallet ledger entry (key walletId:sequence; the unique key serializes writers)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="entryId">
+            <display-name xml:lang="x-default">entryId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="sequence">
+                <display-name xml:lang="x-default">sequence</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="journalId">
+                <display-name xml:lang="x-default">journalId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="txType">
+                <display-name xml:lang="x-default">txType</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="availableDeltaCents">
+                <display-name xml:lang="x-default">availableDeltaCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="heldDeltaCents">
+                <display-name xml:lang="x-default">heldDeltaCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="availableAfterCents">
+                <display-name xml:lang="x-default">availableAfterCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="heldAfterCents">
+                <display-name xml:lang="x-default">heldAfterCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">orderNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="memberCustomerNo">
+                <display-name xml:lang="x-default">memberCustomerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="reference">
+                <display-name xml:lang="x-default">reference</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="actorType">
+                <display-name xml:lang="x-default">actorType</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="actorRef">
+                <display-name xml:lang="x-default">actorRef</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletEntry">
+                <display-name xml:lang="x-default">WalletEntry</display-name>
+                <attribute attribute-id="entryId"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="sequence"/>
+                <attribute attribute-id="journalId"/>
+                <attribute attribute-id="txType"/>
+                <attribute attribute-id="availableDeltaCents"/>
+                <attribute attribute-id="heldDeltaCents"/>
+                <attribute attribute-id="availableAfterCents"/>
+                <attribute attribute-id="heldAfterCents"/>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="memberCustomerNo"/>
+                <attribute attribute-id="reference"/>
+                <attribute attribute-id="actorType"/>
+                <attribute attribute-id="actorRef"/>
+                <attribute attribute-id="createdAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletJournal">
+        <display-name xml:lang="x-default">WalletJournal</display-name>
+        <description xml:lang="x-default">Balanced double-entry journal (key = idempotency key)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="journalId">
+            <display-name xml:lang="x-default">journalId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="targetWalletId">
+                <display-name xml:lang="x-default">targetWalletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="txType">
+                <display-name xml:lang="x-default">txType</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="amountCents">
+                <display-name xml:lang="x-default">amountCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="currency">
+                <display-name xml:lang="x-default">currency</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="postings">
+                <display-name xml:lang="x-default">postings</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">orderNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="holdId">
+                <display-name xml:lang="x-default">holdId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="topUpId">
+                <display-name xml:lang="x-default">topUpId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="memberCustomerNo">
+                <display-name xml:lang="x-default">memberCustomerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="reference">
+                <display-name xml:lang="x-default">reference</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="reason">
+                <display-name xml:lang="x-default">reason</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="actorType">
+                <display-name xml:lang="x-default">actorType</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="actorRef">
+                <display-name xml:lang="x-default">actorRef</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletJournal">
+                <display-name xml:lang="x-default">WalletJournal</display-name>
+                <attribute attribute-id="journalId"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="targetWalletId"/>
+                <attribute attribute-id="txType"/>
+                <attribute attribute-id="amountCents"/>
+                <attribute attribute-id="currency"/>
+                <attribute attribute-id="postings"/>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="holdId"/>
+                <attribute attribute-id="topUpId"/>
+                <attribute attribute-id="memberCustomerNo"/>
+                <attribute attribute-id="reference"/>
+                <attribute attribute-id="reason"/>
+                <attribute attribute-id="actorType"/>
+                <attribute attribute-id="actorRef"/>
+                <attribute attribute-id="createdAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletTopUp">
+        <display-name xml:lang="x-default">WalletTopUp</display-name>
+        <description xml:lang="x-default">Wallet top-up and its gateway state</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="topUpId">
+            <display-name xml:lang="x-default">topUpId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="amountCents">
+                <display-name xml:lang="x-default">amountCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="provider">
+                <display-name xml:lang="x-default">provider</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="providerReference">
+                <display-name xml:lang="x-default">providerReference</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="sandboxOutcome">
+                <display-name xml:lang="x-default">sandboxOutcome</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="journalId">
+                <display-name xml:lang="x-default">journalId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="failureReason">
+                <display-name xml:lang="x-default">failureReason</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="attempts">
+                <display-name xml:lang="x-default">attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastCheckedAt">
+                <display-name xml:lang="x-default">lastCheckedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="creditedAt">
+                <display-name xml:lang="x-default">creditedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="reversedAt">
+                <display-name xml:lang="x-default">reversedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="reversedCents">
+                <display-name xml:lang="x-default">reversedCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="shortfallCents">
+                <display-name xml:lang="x-default">shortfallCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletTopUp">
+                <display-name xml:lang="x-default">WalletTopUp</display-name>
+                <attribute attribute-id="topUpId"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="amountCents"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="provider"/>
+                <attribute attribute-id="providerReference"/>
+                <attribute attribute-id="sandboxOutcome"/>
+                <attribute attribute-id="journalId"/>
+                <attribute attribute-id="failureReason"/>
+                <attribute attribute-id="attempts"/>
+                <attribute attribute-id="lastCheckedAt"/>
+                <attribute attribute-id="creditedAt"/>
+                <attribute attribute-id="reversedAt"/>
+                <attribute attribute-id="reversedCents"/>
+                <attribute attribute-id="shortfallCents"/>
+                <attribute attribute-id="createdAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletHold">
+        <display-name xml:lang="x-default">WalletHold</display-name>
+        <description xml:lang="x-default">Wallet payment hold for an order</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="holdId">
+            <display-name xml:lang="x-default">holdId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">orderNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="amountCents">
+                <display-name xml:lang="x-default">amountCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="capturedCents">
+                <display-name xml:lang="x-default">capturedCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="refundedCents">
+                <display-name xml:lang="x-default">refundedCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="memberCustomerNo">
+                <display-name xml:lang="x-default">memberCustomerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="approvalId">
+                <display-name xml:lang="x-default">approvalId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="capturedAt">
+                <display-name xml:lang="x-default">capturedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="releasedAt">
+                <display-name xml:lang="x-default">releasedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="releaseReason">
+                <display-name xml:lang="x-default">releaseReason</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletHold">
+                <display-name xml:lang="x-default">WalletHold</display-name>
+                <attribute attribute-id="holdId"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="amountCents"/>
+                <attribute attribute-id="capturedCents"/>
+                <attribute attribute-id="refundedCents"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="memberCustomerNo"/>
+                <attribute attribute-id="approvalId"/>
+                <attribute attribute-id="expiresAt"/>
+                <attribute attribute-id="createdAt"/>
+                <attribute attribute-id="capturedAt"/>
+                <attribute attribute-id="releasedAt"/>
+                <attribute attribute-id="releaseReason"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletMember">
+        <display-name xml:lang="x-default">WalletMember</display-name>
+        <description xml:lang="x-default">Family member allowed to pay from a wallet (one wallet per member)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="customerNo">
+            <display-name xml:lang="x-default">customerNo</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="nickname">
+                <display-name xml:lang="x-default">nickname</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="dailyLimitCents">
+                <display-name xml:lang="x-default">dailyLimitCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="monthlyLimitCents">
+                <display-name xml:lang="x-default">monthlyLimitCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="perOrderLimitCents">
+                <display-name xml:lang="x-default">perOrderLimitCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="allowedCategoryIds">
+                <display-name xml:lang="x-default">allowedCategoryIds</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="requireOwnerApproval">
+                <display-name xml:lang="x-default">requireOwnerApproval</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="acceptedAt">
+                <display-name xml:lang="x-default">acceptedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="revokedAt">
+                <display-name xml:lang="x-default">revokedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletMember">
+                <display-name xml:lang="x-default">WalletMember</display-name>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="nickname"/>
+                <attribute attribute-id="dailyLimitCents"/>
+                <attribute attribute-id="monthlyLimitCents"/>
+                <attribute attribute-id="perOrderLimitCents"/>
+                <attribute attribute-id="allowedCategoryIds"/>
+                <attribute attribute-id="requireOwnerApproval"/>
+                <attribute attribute-id="acceptedAt"/>
+                <attribute attribute-id="revokedAt"/>
+                <attribute attribute-id="revision"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletInvitation">
+        <display-name xml:lang="x-default">WalletInvitation</display-name>
+        <description xml:lang="x-default">Family wallet invitation (token stored hashed)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="invitationId">
+            <display-name xml:lang="x-default">invitationId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="emailHash">
+                <display-name xml:lang="x-default">emailHash</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="tokenHash">
+                <display-name xml:lang="x-default">tokenHash</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="limits">
+                <display-name xml:lang="x-default">limits</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="acceptedBy">
+                <display-name xml:lang="x-default">acceptedBy</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletInvitation">
+                <display-name xml:lang="x-default">WalletInvitation</display-name>
+                <attribute attribute-id="invitationId"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="emailHash"/>
+                <attribute attribute-id="tokenHash"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="limits"/>
+                <attribute attribute-id="expiresAt"/>
+                <attribute attribute-id="acceptedBy"/>
+                <attribute attribute-id="createdAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletApproval">
+        <display-name xml:lang="x-default">WalletApproval</display-name>
+        <description xml:lang="x-default">Step-up approval bound to payer, basket and amount</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="approvalId">
+            <display-name xml:lang="x-default">approvalId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="payerCustomerNo">
+                <display-name xml:lang="x-default">payerCustomerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="memberCustomerNo">
+                <display-name xml:lang="x-default">memberCustomerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="basketHash">
+                <display-name xml:lang="x-default">basketHash</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="amountCents">
+                <display-name xml:lang="x-default">amountCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="method">
+                <display-name xml:lang="x-default">method</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="decidedAt">
+                <display-name xml:lang="x-default">decidedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="usedAt">
+                <display-name xml:lang="x-default">usedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletApproval">
+                <display-name xml:lang="x-default">WalletApproval</display-name>
+                <attribute attribute-id="approvalId"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="payerCustomerNo"/>
+                <attribute attribute-id="memberCustomerNo"/>
+                <attribute attribute-id="basketHash"/>
+                <attribute attribute-id="amountCents"/>
+                <attribute attribute-id="method"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="expiresAt"/>
+                <attribute attribute-id="decidedAt"/>
+                <attribute attribute-id="usedAt"/>
+                <attribute attribute-id="createdAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletAuditEvent">
+        <display-name xml:lang="x-default">WalletAuditEvent</display-name>
+        <description xml:lang="x-default">Append-only wallet audit event</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="eventId">
+            <display-name xml:lang="x-default">eventId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="entityType">
+                <display-name xml:lang="x-default">entityType</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="entityId">
+                <display-name xml:lang="x-default">entityId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="action">
+                <display-name xml:lang="x-default">action</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="actorType">
+                <display-name xml:lang="x-default">actorType</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="actorRef">
+                <display-name xml:lang="x-default">actorRef</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="fromStatus">
+                <display-name xml:lang="x-default">fromStatus</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="toStatus">
+                <display-name xml:lang="x-default">toStatus</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="reason">
+                <display-name xml:lang="x-default">reason</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="detail">
+                <display-name xml:lang="x-default">detail</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="occurredAt">
+                <display-name xml:lang="x-default">occurredAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletAuditEvent">
+                <display-name xml:lang="x-default">WalletAuditEvent</display-name>
+                <attribute attribute-id="eventId"/>
+                <attribute attribute-id="entityType"/>
+                <attribute attribute-id="entityId"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="action"/>
+                <attribute attribute-id="actorType"/>
+                <attribute attribute-id="actorRef"/>
+                <attribute attribute-id="fromStatus"/>
+                <attribute attribute-id="toStatus"/>
+                <attribute attribute-id="reason"/>
+                <attribute attribute-id="detail"/>
+                <attribute attribute-id="occurredAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletNotification">
+        <display-name xml:lang="x-default">WalletNotification</display-name>
+        <description xml:lang="x-default">Wallet notification (inbox or queued e-mail)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="notificationId">
+            <display-name xml:lang="x-default">notificationId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="recipient">
+                <display-name xml:lang="x-default">recipient</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="type">
+                <display-name xml:lang="x-default">type</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="channel">
+                <display-name xml:lang="x-default">channel</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="params">
+                <display-name xml:lang="x-default">params</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="attempts">
+                <display-name xml:lang="x-default">attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="nextAttemptAt">
+                <display-name xml:lang="x-default">nextAttemptAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sentAt">
+                <display-name xml:lang="x-default">sentAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="readAt">
+                <display-name xml:lang="x-default">readAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletNotification">
+                <display-name xml:lang="x-default">WalletNotification</display-name>
+                <attribute attribute-id="notificationId"/>
+                <attribute attribute-id="recipient"/>
+                <attribute attribute-id="type"/>
+                <attribute attribute-id="channel"/>
+                <attribute attribute-id="params"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="attempts"/>
+                <attribute attribute-id="nextAttemptAt"/>
+                <attribute attribute-id="sentAt"/>
+                <attribute attribute-id="readAt"/>
+                <attribute attribute-id="createdAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletCase">
+        <display-name xml:lang="x-default">WalletCase</display-name>
+        <description xml:lang="x-default">Security or finance review case</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="caseId">
+            <display-name xml:lang="x-default">caseId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="caseType">
+                <display-name xml:lang="x-default">caseType</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="severity">
+                <display-name xml:lang="x-default">severity</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="walletId">
+                <display-name xml:lang="x-default">walletId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="entityId">
+                <display-name xml:lang="x-default">entityId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="dedupeKey">
+                <display-name xml:lang="x-default">dedupeKey</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="detail">
+                <display-name xml:lang="x-default">detail</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="notes">
+                <display-name xml:lang="x-default">notes</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="revision">
+                <display-name xml:lang="x-default">revision</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletCase">
+                <display-name xml:lang="x-default">WalletCase</display-name>
+                <attribute attribute-id="caseId"/>
+                <attribute attribute-id="caseType"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="severity"/>
+                <attribute attribute-id="walletId"/>
+                <attribute attribute-id="entityId"/>
+                <attribute attribute-id="dedupeKey"/>
+                <attribute attribute-id="detail"/>
+                <attribute attribute-id="notes"/>
+                <attribute attribute-id="createdAt"/>
+                <attribute attribute-id="updatedAt"/>
+                <attribute attribute-id="revision"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletOtp">
+        <display-name xml:lang="x-default">WalletOtp</display-name>
+        <description xml:lang="x-default">Hashed one-time code (key purpose:subject)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <retention-days>7</retention-days>
+        <key-definition attribute-id="otpId">
+            <display-name xml:lang="x-default">otpId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="codeHash">
+                <display-name xml:lang="x-default">codeHash</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="salt">
+                <display-name xml:lang="x-default">salt</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="sessionHash">
+                <display-name xml:lang="x-default">sessionHash</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="attempts">
+                <display-name xml:lang="x-default">attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastSentAt">
+                <display-name xml:lang="x-default">lastSentAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="consumedAt">
+                <display-name xml:lang="x-default">consumedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletOtp">
+                <display-name xml:lang="x-default">WalletOtp</display-name>
+                <attribute attribute-id="otpId"/>
+                <attribute attribute-id="codeHash"/>
+                <attribute attribute-id="salt"/>
+                <attribute attribute-id="sessionHash"/>
+                <attribute attribute-id="expiresAt"/>
+                <attribute attribute-id="attempts"/>
+                <attribute attribute-id="lastSentAt"/>
+                <attribute attribute-id="consumedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletJobState">
+        <display-name xml:lang="x-default">WalletJobState</display-name>
+        <description xml:lang="x-default">Resumable job state</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="jobId">
+            <display-name xml:lang="x-default">jobId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="state">
+                <display-name xml:lang="x-default">state</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletJobState">
+                <display-name xml:lang="x-default">WalletJobState</display-name>
+                <attribute attribute-id="jobId"/>
+                <attribute attribute-id="state"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletRateBucket">
+        <display-name xml:lang="x-default">WalletRateBucket</display-name>
+        <description xml:lang="x-default">Fixed-window rate limit counter</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <retention-days>2</retention-days>
+        <key-definition attribute-id="bucketId">
+            <display-name xml:lang="x-default">bucketId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="count">
+                <display-name xml:lang="x-default">count</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="expiresAt">
+                <display-name xml:lang="x-default">expiresAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletRateBucket">
+                <display-name xml:lang="x-default">WalletRateBucket</display-name>
+                <attribute attribute-id="bucketId"/>
+                <attribute attribute-id="count"/>
+                <attribute attribute-id="expiresAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="WalletRequestKey">
+        <display-name xml:lang="x-default">WalletRequestKey</display-name>
+        <description xml:lang="x-default">Idempotency key and webhook replay guard</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="requestKeyId">
+            <display-name xml:lang="x-default">requestKeyId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="requestHash">
+                <display-name xml:lang="x-default">requestHash</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="result">
+                <display-name xml:lang="x-default">result</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="WalletRequestKey">
+                <display-name xml:lang="x-default">WalletRequestKey</display-name>
+                <attribute attribute-id="requestKeyId"/>
+                <attribute attribute-id="requestHash"/>
+                <attribute attribute-id="result"/>
+                <attribute attribute-id="createdAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>

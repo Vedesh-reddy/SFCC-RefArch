@@ -1,0 +1,12 @@
+{
+    "hooks": [
+        {
+            "name": "app.payment.processor.wallet",
+            "script": "./cartridge/scripts/hooks/payment/walletProcessor.js"
+        },
+        {
+            "name": "app.payment.form.processor.wallet",
+            "script": "./cartridge/scripts/hooks/payment/walletForm.js"
+        }
+    ]
+}
