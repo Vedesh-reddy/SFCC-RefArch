@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+    <menuitem id="plugin-seller-menu" position="99000" site="true">
+        <name xml:lang="x-default">Marketplace</name>
+        <short_description xml:lang="x-default">Seller Central marketplace administration</short_description>
+        <description xml:lang="x-default">Sellers, product submissions, offers, cases, commission, settlements and audit</description>
+        <sldsIconName>store</sldsIconName>
+    </menuitem>
+    <menuaction id="plugin-seller-home" menupath="plugin-seller-menu" position="10" site="true">
+        <name xml:lang="x-default">Overview</name>
+        <short_description xml:lang="x-default">Marketplace overview and configuration health</short_description>
+        <description xml:lang="x-default">Marketplace overview and configuration health</description>
+        <exec pipeline="MarketplaceAdmin" node="Home"/>
+        <sub-pipelines>
+            <pipeline name="MarketplaceAdmin-Home"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-seller-sellers" menupath="plugin-seller-menu" position="20" site="true">
+        <name xml:lang="x-default">Sellers</name>
+        <short_description xml:lang="x-default">Review seller applications, documents, members and status</short_description>
+        <description xml:lang="x-default">Review seller applications, documents, members and status</description>
+        <exec pipeline="MarketplaceAdmin" node="Sellers"/>
+        <sub-pipelines>
+            <pipeline name="MarketplaceAdmin-Sellers"/>
+            <pipeline name="MarketplaceAdmin-Seller"/>
+            <pipeline name="MarketplaceAdmin-SellerAction"/>
+            <pipeline name="MarketplaceAdmin-Document"/>
+            <pipeline name="MarketplaceAdmin-DocumentAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-seller-catalog" menupath="plugin-seller-menu" position="30" site="true">
+        <name xml:lang="x-default">Products and offers</name>
+        <short_description xml:lang="x-default">Review product submissions and seller offers</short_description>
+        <description xml:lang="x-default">Review product submissions and seller offers</description>
+        <exec pipeline="MarketplaceAdmin" node="Submissions"/>
+        <sub-pipelines>
+            <pipeline name="MarketplaceAdmin-Submissions"/>
+            <pipeline name="MarketplaceAdmin-Submission"/>
+            <pipeline name="MarketplaceAdmin-SubmissionAction"/>
+            <pipeline name="MarketplaceAdmin-Offers"/>
+            <pipeline name="MarketplaceAdmin-OfferAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-seller-trust" menupath="plugin-seller-menu" position="40" site="true">
+        <name xml:lang="x-default">Trust and safety</name>
+        <short_description xml:lang="x-default">Work counterfeit reports, customer issues and automatic flags</short_description>
+        <description xml:lang="x-default">Work counterfeit reports, customer issues and automatic flags</description>
+        <exec pipeline="MarketplaceAdmin" node="Cases"/>
+        <sub-pipelines>
+            <pipeline name="MarketplaceAdmin-Cases"/>
+            <pipeline name="MarketplaceAdmin-Case"/>
+            <pipeline name="MarketplaceAdmin-CaseAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-seller-finance" menupath="plugin-seller-menu" position="50" site="true">
+        <name xml:lang="x-default">Finance</name>
+        <short_description xml:lang="x-default">Commission rules, seller orders, settlements and payouts</short_description>
+        <description xml:lang="x-default">Commission rules, seller orders, settlements and payouts</description>
+        <exec pipeline="MarketplaceAdmin" node="Rules"/>
+        <sub-pipelines>
+            <pipeline name="MarketplaceAdmin-Rules"/>
+            <pipeline name="MarketplaceAdmin-RuleAction"/>
+            <pipeline name="MarketplaceAdmin-Settlements"/>
+            <pipeline name="MarketplaceAdmin-Settlement"/>
+            <pipeline name="MarketplaceAdmin-SettlementAction"/>
+            <pipeline name="MarketplaceAdmin-SellerOrders"/>
+            <pipeline name="MarketplaceAdmin-SellerOrder"/>
+            <pipeline name="MarketplaceAdmin-SellerOrderAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-seller-audit" menupath="plugin-seller-menu" position="60" site="true">
+        <name xml:lang="x-default">Audit trail</name>
+        <short_description xml:lang="x-default">Read the marketplace audit trail</short_description>
+        <description xml:lang="x-default">Read the marketplace audit trail</description>
+        <exec pipeline="MarketplaceAdmin" node="Audit"/>
+        <sub-pipelines>
+            <pipeline name="MarketplaceAdmin-Audit"/>
+        </sub-pipelines>
+    </menuaction>
+</extensions>
