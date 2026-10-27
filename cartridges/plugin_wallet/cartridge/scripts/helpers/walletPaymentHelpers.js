@@ -375,8 +375,6 @@ function captureHold(holdId, by) {
             c.capturedCents = c.amountCents;
             c.capturedAt = new Date();
             walletHelpers.logAudit({ entityType: 'HOLD', entityId: holdId, walletId: c.walletId, action: 'CAPTURE', actor: by, to: 'CAPTURED' });
-            walletHelpers.notify(c.walletId, c.memberCustomerNo ? 'FAMILY_PAYMENT_MADE' : 'WALLET_PAYMENT', { amount: walletHelpers.formatCents(c.amountCents), orderNo: c.orderNo });
-            if (c.memberCustomerNo) walletHelpers.notify(c.memberCustomerNo, 'WALLET_PAYMENT', { amount: walletHelpers.formatCents(c.amountCents), orderNo: c.orderNo });
         });
     } catch (e) {
         return walletHelpers.toErrorResult(e);
@@ -594,6 +592,7 @@ function expireApprovals(limit) {
 function processHolds(limit) {
     var Order = require('dw/order/Order');
     var OrderMgr = require('dw/order/OrderMgr');
+    var startedAt = new Date();
     var counts = { captured: 0, released: 0, review: 0, failed: 0 };
     var by = walletHelpers.actor('SYSTEM', 'hold-job');
     walletHelpers.queryPage('WalletHold', 'custom.status = {0} OR custom.status = {1}', 'custom.createdAt asc', ['ACTIVE', 'REVIEW'], 0, limit).items.forEach(function (h) {
@@ -619,7 +618,42 @@ function processHolds(limit) {
             log.error('Hold {0} could not be settled: {1}', c.holdId, result.errorCode);
         }
     });
+    counts.notified = notifyCapturedHolds(limit, startedAt);
     return counts;
+}
+
+/**
+ * Payment notifications for holds captured since the last run. They are sent here and not at
+ * capture, because a storefront request may create at most 10 custom objects
+ * (api.dw.object.CustomObjectMgr.create()@SF) and place-order already writes the ledger.
+ * @param {number} limit - maximum holds
+ * @param {Date} firstRunFrom - on the first run, notify holds captured from this time on
+ * @returns {number} holds notified
+ */
+function notifyCapturedHolds(limit, firstRunFrom) {
+    var second = function (date) { return Math.floor(date.getTime() / 1000) * 1000; };
+    var state = walletHelpers.getJobState('capture-notifications');
+    // queries compare datetimes to the second, so the cursor is a whole second plus the holds
+    // already notified within it
+    var after = new Date(second(state.after ? new Date(state.after) : firstRunFrom));
+    var done = state.ids || [];
+    var holds = walletHelpers.queryPage('WalletHold', 'custom.status = {0} AND custom.capturedAt >= {1}', 'custom.capturedAt asc', ['CAPTURED', after], 0, limit + done.length).items
+        .filter(function (h) { return done.indexOf(h.custom.holdId) < 0; })
+        .slice(0, limit);
+    holds.forEach(function (h) {
+        var c = h.custom;
+        var params = { amount: walletHelpers.formatCents(c.capturedCents || c.amountCents), orderNo: c.orderNo };
+        Transaction.wrap(function () {
+            walletHelpers.notify(c.walletId, c.memberCustomerNo ? 'FAMILY_PAYMENT_MADE' : 'WALLET_PAYMENT', params);
+            if (c.memberCustomerNo) walletHelpers.notify(c.memberCustomerNo, 'WALLET_PAYMENT', params);
+        });
+    });
+    if (holds.length || !state.after) {
+        var last = holds.length ? second(holds[holds.length - 1].custom.capturedAt) : after.getTime();
+        var ids = holds.filter(function (h) { return second(h.custom.capturedAt) === last; }).map(function (h) { return h.custom.holdId; });
+        walletHelpers.saveJobState('capture-notifications', { after: new Date(last).toISOString(), ids: last === after.getTime() ? done.concat(ids) : ids });
+    }
+    return holds.length;
 }
 
 /**

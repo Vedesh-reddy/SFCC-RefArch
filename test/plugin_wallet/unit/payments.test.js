@@ -141,6 +141,21 @@ describe('plugin_wallet payments', function () {
         assert.equal(payments.refundToWallet({ refundId: 'refund-0003', kind: 'STORE_CREDIT', walletId: 'C1', amountCents: 100 }, admin).errorCode, 'forbidden');
     });
 
+    it('notifies each captured hold once, also when captures share a second across job runs', function () {
+        fixtures.fundedWallet(h, 'C1', 9000);
+        var first = payments.authorizePayment('ORD1', applied(1000).pi, h.customer('C1'), 'session-1');
+        fixtures.order(h, 'ORD1', ORDER_NEW, [], 1000);
+        assert.equal(payments.processHolds(10).notified, 1);
+        var second = payments.authorizePayment('ORD2', applied(1000).pi, h.customer('C1'), 'session-1');
+        fixtures.order(h, 'ORD2', ORDER_NEW, [], 1000);
+        // same second as the cursor: platform queries compare datetimes to the second
+        h.get('WalletHold', second.holdId).custom.capturedAt = null;
+        assert.equal(payments.processHolds(10).notified, 1);
+        assert.equal(payments.processHolds(10).notified, 0);
+        assert.lengthOf(h.rows('WalletNotification').filter(function (n) { return n.custom.type === 'WALLET_PAYMENT' && n.custom.channel === 'INBOX'; }), 2);
+        assert.isTrue([first.holdId, second.holdId].every(function (id) { return h.get('WalletHold', id).custom.status === 'CAPTURED'; }));
+    });
+
     it('settles holds by order status in the hold job, sending unplaced orders to review', function () {
         fixtures.fundedWallet(h, 'C1', 9000);
         var placed = payments.authorizePayment('ORD1', applied(1000).pi, h.customer('C1'), 'session-1');
@@ -150,7 +165,10 @@ describe('plugin_wallet payments', function () {
         fixtures.order(h, 'ORD2', ORDER_FAILED, [], 1000);
         fixtures.order(h, 'ORD3', ORDER_CREATED, [], 1000);
         h.get('WalletHold', stuck.holdId).custom.expiresAt = new Date(Date.now() - 1000);
-        assert.deepEqual(payments.processHolds(10), { captured: 1, released: 1, review: 1, failed: 0 });
+        assert.deepEqual(payments.processHolds(10), { captured: 1, released: 1, review: 1, failed: 0, notified: 1 });
+        // payment notifications come from the job, once per capture
+        assert.lengthOf(h.rows('WalletNotification').filter(function (n) { return n.custom.type === 'WALLET_PAYMENT'; }), 1);
+        assert.equal(payments.processHolds(10).notified, 0);
         assert.equal(h.get('WalletHold', placed.holdId).custom.status, 'CAPTURED');
         assert.equal(h.get('WalletHold', failed.holdId).custom.status, 'RELEASED');
         assert.equal(h.get('WalletHold', stuck.holdId).custom.status, 'REVIEW');

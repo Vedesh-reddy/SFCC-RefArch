@@ -30,7 +30,7 @@ PENDING -> AWAITING_PAYMENT -> CREDITED -> REVERSED
 3. **Step-up**: a code is required when the amount is at least `walletStepUpThresholdCents` (0 = always), or when the session has not paid with this wallet before. The code is e-mailed (`Wallet-PaymentCode`), bound to the payer, basket and amount, and used once.
 4. If the wallet covers the total, the shopper submits with the wallet only. Otherwise they also enter a card; the card gets the rest.
 5. **Place order**: the pre-check re-validates approval, limits and member categories. Authorize places a hold (available → held). After the order is placed the hold is captured; if placement fails it is released.
-6. The owner gets `WALLET_PAYMENT` (or `FAMILY_PAYMENT_MADE` for a member payment).
+6. The owner gets `WALLET_PAYMENT` (or `FAMILY_PAYMENT_MADE` for a member payment, and the member gets `WALLET_PAYMENT`). The `Wallet-Holds` job sends these for holds captured since its last run, not place-order itself, because a storefront request may create at most 10 custom objects and place-order already writes the ledger.
 
 Hold states: `ACTIVE -> CAPTURED | RELEASED | REVIEW`, `REVIEW -> CAPTURED | RELEASED`. A captured hold is never released.
 

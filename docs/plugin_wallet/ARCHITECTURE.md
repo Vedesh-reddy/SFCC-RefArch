@@ -84,7 +84,7 @@ Place:   PlaceOrder prepend: preCheck (approval, limits, categories)
          base: createOrder -> handlePayments -> Authorize -> ledger PURCHASE_HOLD (WalletHold ACTIVE)
          PlaceOrder append: order placed -> PURCHASE_CAPTURE (CAPTURED)
                             order failed  -> HOLD_RELEASE   (RELEASED)
-Job:     Wallet-Holds settles holds left behind (placed -> capture, failed/cancelled -> release,
+Job:     Wallet-Holds sends the payment notifications of captured holds, and settles holds left behind (placed -> capture, failed/cancelled -> release,
          still CREATED after walletHoldTtlMinutes -> REVIEW case)
 ```
 
