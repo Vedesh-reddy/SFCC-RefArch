@@ -1,0 +1,464 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.MarketplaceSeller.ProvisionPrepare",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Prepare approved product submissions (import files or SCAPI Admin calls)",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "provisionPrepare",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "50",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.ProvisionVerify",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Verify provisioned products and publish complete submissions",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "provisionVerify",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.SyncPrepare",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Write changed seller stock, featured prices and aggregates",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "syncPrepare",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "1000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.SyncConfirm",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Confirm the offer sync after the imports and flag missing inventory records",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "syncConfirm",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.OrderSync",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Create and advance seller orders, close finished ones, book deferred earnings",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "orderSync",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.Settlements",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Create seller settlements and optionally request payouts",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "settlements",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        },
+                        {
+                            "@name": "AutoRequestPayout",
+                            "@type": "boolean",
+                            "@required": "false",
+                            "description": "Request payouts for open settlements (EXTERNAL payout provider only)",
+                            "default-value": "false"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.Reconcile",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Reconcile settlements against the ledger",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "reconcile",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.Performance",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Evaluate seller performance metrics and ratings",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "performance",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.Notifications",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Send queued seller and admin e-mail notifications with retries",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "notifications",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.Reminders",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Remind admins about reviews waiting too long",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "reminders",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.DocumentExpiry",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Warn about and handle expiring seller documents",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "documentExpiry",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.Recovery",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Retry failed verification calls and flag unanswered payouts",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "recovery",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "100",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        },
+                        {
+                            "@name": "StalePayoutHours",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Hours after which an unanswered payout request opens a case",
+                            "default-value": "48"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.Cleanup",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Remove expired technical records and purge documents past retention",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "cleanup",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "1000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

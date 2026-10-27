@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="ProductLineItem">
+        <custom-attribute-definitions>
+                <attribute-definition attribute-id="mktOfferId">
+                    <display-name xml:lang="x-default">mktOfferId</display-name>
+                    <type>string</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                    <min-length>0</min-length>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktSellerId">
+                    <display-name xml:lang="x-default">mktSellerId</display-name>
+                    <type>string</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                    <min-length>0</min-length>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktOfferValid">
+                    <display-name xml:lang="x-default">mktOfferValid</display-name>
+                    <type>boolean</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktUnitPriceCents">
+                    <display-name xml:lang="x-default">mktUnitPriceCents</display-name>
+                    <type>int</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktShippingFeeCents">
+                    <display-name xml:lang="x-default">mktShippingFeeCents</display-name>
+                    <type>int</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginSeller">
+                <display-name xml:lang="x-default">Marketplace (plugin_seller)</display-name>
+                <attribute attribute-id="mktOfferId"/>
+                <attribute attribute-id="mktSellerId"/>
+                <attribute attribute-id="mktOfferValid"/>
+                <attribute attribute-id="mktUnitPriceCents"/>
+                <attribute attribute-id="mktShippingFeeCents"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Product">
+        <custom-attribute-definitions>
+                <attribute-definition attribute-id="mktOwnerSellerId">
+                    <display-name xml:lang="x-default">mktOwnerSellerId</display-name>
+                    <type>string</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                    <min-length>0</min-length>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktSubmissionId">
+                    <display-name xml:lang="x-default">mktSubmissionId</display-name>
+                    <type>string</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                    <min-length>0</min-length>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktSpecifications">
+                    <display-name xml:lang="x-default">mktSpecifications</display-name>
+                    <type>text</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktWarranty">
+                    <display-name xml:lang="x-default">mktWarranty</display-name>
+                    <type>text</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktDimensions">
+                    <display-name xml:lang="x-default">mktDimensions</display-name>
+                    <type>text</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktFeaturedSellerId">
+                    <display-name xml:lang="x-default">mktFeaturedSellerId</display-name>
+                    <type>string</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                    <min-length>0</min-length>
+                </attribute-definition>
+                <attribute-definition attribute-id="mktOfferCount">
+                    <display-name xml:lang="x-default">mktOfferCount</display-name>
+                    <type>int</type>
+                    <mandatory-flag>false</mandatory-flag>
+                    <externally-managed-flag>false</externally-managed-flag>
+                </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginSeller">
+                <display-name xml:lang="x-default">Marketplace (plugin_seller)</display-name>
+                <attribute attribute-id="mktOwnerSellerId"/>
+                <attribute attribute-id="mktSubmissionId"/>
+                <attribute attribute-id="mktSpecifications"/>
+                <attribute attribute-id="mktWarranty"/>
+                <attribute attribute-id="mktDimensions"/>
+                <attribute attribute-id="mktFeaturedSellerId"/>
+                <attribute attribute-id="mktOfferCount"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="sellerMarketplaceEnabled">
+                <display-name xml:lang="x-default">Marketplace enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerRegistrationEnabled">
+                <display-name xml:lang="x-default">Registration enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerCurrency">
+                <display-name xml:lang="x-default">Currency</display-name>
+                <description xml:lang="x-default">Required. Must be USD, the site default currency.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerApprovalRequired">
+                <display-name xml:lang="x-default">Approval required</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerProductApprovalRequired">
+                <display-name xml:lang="x-default">Product approval required</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerOfferApprovalRequired">
+                <display-name xml:lang="x-default">Offer approval required</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerAgreementVersion">
+                <display-name xml:lang="x-default">Agreement version</display-name>
+                <description xml:lang="x-default">Required.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerAgreementContentAssetId">
+                <display-name xml:lang="x-default">Agreement content asset ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerOtpLength">
+                <display-name xml:lang="x-default">OTP length</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>6</min-value>
+                <max-value>8</max-value>
+                <default-value>6</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerOtpTtlMinutes">
+                <display-name xml:lang="x-default">OTP TTL minutes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>2</min-value>
+                <max-value>60</max-value>
+                <default-value>10</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerOtpMaxAttempts">
+                <display-name xml:lang="x-default">OTP max attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerOtpResendCooldownSeconds">
+                <display-name xml:lang="x-default">OTP resend cooldown seconds</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>30</min-value>
+                <max-value>3600</max-value>
+                <default-value>60</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerOtpMaxSendsPerHour">
+                <display-name xml:lang="x-default">OTP max sends per hour</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerKycProvider">
+                <display-name xml:lang="x-default">KYC provider</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">MANUAL</display>
+                        <value>MANUAL</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">EXTERNAL</display>
+                        <value>EXTERNAL</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerBankVerificationProvider">
+                <display-name xml:lang="x-default">Bank verification provider</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">MANUAL</display>
+                        <value>MANUAL</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">EXTERNAL</display>
+                        <value>EXTERNAL</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerPayoutProvider">
+                <display-name xml:lang="x-default">Payout provider</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">MANUAL</display>
+                        <value>MANUAL</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">EXTERNAL</display>
+                        <value>EXTERNAL</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerDocumentScanProvider">
+                <display-name xml:lang="x-default">Document scan provider</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">NONE</display>
+                        <value>NONE</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">EXTERNAL</display>
+                        <value>EXTERNAL</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerRequireCleanDocumentScan">
+                <display-name xml:lang="x-default">Require clean document scan</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerRequiredDocumentTypes">
+                <display-name xml:lang="x-default">Required document types</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerDocumentMaxBytes">
+                <display-name xml:lang="x-default">Document max bytes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>10240</min-value>
+                <max-value>10485760</max-value>
+                <default-value>5242880</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerDocumentAllowedTypes">
+                <display-name xml:lang="x-default">Document allowed types</display-name>
+                <description xml:lang="x-default">Empty means application/pdf, image/png and image/jpeg.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerDocumentRetentionDays">
+                <display-name xml:lang="x-default">Document retention days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>30</min-value>
+                <max-value>3650</max-value>
+                <default-value>2555</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerDocumentExpiryWarningDays">
+                <display-name xml:lang="x-default">Document expiry warning days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>365</max-value>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerSuspendOnExpiredDocuments">
+                <display-name xml:lang="x-default">Suspend on expired documents</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaximumProducts">
+                <display-name xml:lang="x-default">Maximum products</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>100000</max-value>
+                <default-value>500</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaxImagesPerProduct">
+                <display-name xml:lang="x-default">Max images per product</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>8</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerImageMaxBytes">
+                <display-name xml:lang="x-default">Image max bytes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>10240</min-value>
+                <max-value>10485760</max-value>
+                <default-value>2097152</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerProductIdPattern">
+                <display-name xml:lang="x-default">Product ID pattern</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>{sellerId}-{sku}</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMasterCatalogId">
+                <display-name xml:lang="x-default">Master catalog ID</display-name>
+                <description xml:lang="x-default">Required.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerSiteCatalogId">
+                <display-name xml:lang="x-default">Site catalog ID</display-name>
+                <description xml:lang="x-default">Required.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerAllowedCategoryIds">
+                <display-name xml:lang="x-default">Allowed category IDs</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerRestrictedCategoryIds">
+                <display-name xml:lang="x-default">Restricted category IDs</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerAllowedTaxClassIds">
+                <display-name xml:lang="x-default">Allowed tax class IDs</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerColorAttributeId">
+                <display-name xml:lang="x-default">Color attribute ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>color</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerSizeAttributeId">
+                <display-name xml:lang="x-default">Size attribute ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>size</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerPriceBookId">
+                <display-name xml:lang="x-default">Price book ID</display-name>
+                <description xml:lang="x-default">Required.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerSiteInventoryListId">
+                <display-name xml:lang="x-default">Site inventory list ID</display-name>
+                <description xml:lang="x-default">Required.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerInventoryListPrefix">
+                <display-name xml:lang="x-default">Inventory list prefix</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>marketplace-</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerProvisioningStrategy">
+                <display-name xml:lang="x-default">Provisioning strategy</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">IMPEX</display>
+                        <value>IMPEX</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">SCAPI_ADMIN</display>
+                        <value>SCAPI_ADMIN</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerScapiOrganizationId">
+                <display-name xml:lang="x-default">SCAPI organization ID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerProvisioningMaxAttempts">
+                <display-name xml:lang="x-default">Provisioning max attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerProvisioningRetryMinutes">
+                <display-name xml:lang="x-default">Provisioning retry minutes</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>5</min-value>
+                <max-value>1440</max-value>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMinPriceCents">
+                <display-name xml:lang="x-default">Min price cents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>100000000</max-value>
+                <default-value>100</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaxPriceCents">
+                <display-name xml:lang="x-default">Max price cents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>100000000</max-value>
+                <default-value>10000000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerPriceDeviationPercent">
+                <display-name xml:lang="x-default">Price deviation percent</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>5</min-value>
+                <max-value>95</max-value>
+                <default-value>40</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerFeaturedOfferStrategy">
+                <display-name xml:lang="x-default">Featured offer strategy</display-name>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">LOWEST_PRICE</display>
+                        <value>LOWEST_PRICE</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">WEIGHTED</display>
+                        <value>WEIGHTED</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerFeaturedOfferWeights">
+                <display-name xml:lang="x-default">Featured offer weights</display-name>
+                <description xml:lang="x-default">JSON with price, rating and handling weights adding up to 100, e.g. {&quot;price&quot;:60,&quot;rating&quot;:25,&quot;handling&quot;:15}. Used by the WEIGHTED strategy.</description>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerDefaultHandlingDays">
+                <display-name xml:lang="x-default">Default handling days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>30</max-value>
+                <default-value>2</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaxHandlingDays">
+                <display-name xml:lang="x-default">Max handling days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>30</max-value>
+                <default-value>10</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerShippingFeesEnabled">
+                <display-name xml:lang="x-default">Shipping fees enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaxShippingFeeCents">
+                <display-name xml:lang="x-default">Max shipping fee cents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>100000</max-value>
+                <default-value>5000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaxReturnDays">
+                <display-name xml:lang="x-default">Max return days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>365</max-value>
+                <default-value>90</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerOrderSyncLookbackHours">
+                <display-name xml:lang="x-default">Order sync lookback hours</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>720</max-value>
+                <default-value>72</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerSettlementHoldDays">
+                <display-name xml:lang="x-default">Settlement hold days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>180</max-value>
+                <default-value>14</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerSettlementMinimumCents">
+                <display-name xml:lang="x-default">Settlement minimum cents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>100000000</max-value>
+                <default-value>1000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerOrderFeeCents">
+                <display-name xml:lang="x-default">Order fee cents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>0</min-value>
+                <max-value>100000</max-value>
+                <default-value>0</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerUpdateOrderShippingStatus">
+                <display-name xml:lang="x-default">Update order shipping status</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerPerformanceWindowDays">
+                <display-name xml:lang="x-default">Performance window days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>7</min-value>
+                <max-value>365</max-value>
+                <default-value>90</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerPerformanceMinOrders">
+                <display-name xml:lang="x-default">Performance min orders</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>100000</max-value>
+                <default-value>20</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaxDefectRateBps">
+                <display-name xml:lang="x-default">Max defect rate (basis points)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10000</max-value>
+                <default-value>100</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaxLateShipmentRateBps">
+                <display-name xml:lang="x-default">Max late shipment rate (basis points)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10000</max-value>
+                <default-value>400</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerMaxCancellationRateBps">
+                <display-name xml:lang="x-default">Max cancellation rate (basis points)</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10000</max-value>
+                <default-value>250</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerAutoSuspendOnBreach">
+                <display-name xml:lang="x-default">Auto suspend on breach</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerNotificationChannels">
+                <display-name xml:lang="x-default">Notification channels</display-name>
+                <description xml:lang="x-default">Empty means INBOX.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerNotificationMaxAttempts">
+                <display-name xml:lang="x-default">Notification max attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>20</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerFromEmail">
+                <display-name xml:lang="x-default">From email</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerAdminNotificationEmails">
+                <display-name xml:lang="x-default">Admin notification emails</display-name>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerApprovalReminderHours">
+                <display-name xml:lang="x-default">Approval reminder hours</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>720</max-value>
+                <default-value>48</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerApiMaxPageSize">
+                <display-name xml:lang="x-default">API max page size</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>200</max-value>
+                <default-value>50</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerWriteRateLimitPerHour">
+                <display-name xml:lang="x-default">Write rate limit per hour</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10000</max-value>
+                <default-value>300</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerReportRateLimitPerDay">
+                <display-name xml:lang="x-default">Report rate limit per day</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>100</max-value>
+                <default-value>5</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerWebhookToleranceSeconds">
+                <display-name xml:lang="x-default">Webhook tolerance seconds</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>60</min-value>
+                <max-value>900</max-value>
+                <default-value>300</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="sellerRequestKeyRetentionDays">
+                <display-name xml:lang="x-default">Request key retention days</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>365</max-value>
+                <default-value>30</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginSeller">
+                <display-name xml:lang="x-default">Marketplace (plugin_seller)</display-name>
+                <attribute attribute-id="sellerMarketplaceEnabled"/>
+                <attribute attribute-id="sellerRegistrationEnabled"/>
+                <attribute attribute-id="sellerCurrency"/>
+                <attribute attribute-id="sellerApprovalRequired"/>
+                <attribute attribute-id="sellerProductApprovalRequired"/>
+                <attribute attribute-id="sellerOfferApprovalRequired"/>
+                <attribute attribute-id="sellerAgreementVersion"/>
+                <attribute attribute-id="sellerAgreementContentAssetId"/>
+                <attribute attribute-id="sellerOtpLength"/>
+                <attribute attribute-id="sellerOtpTtlMinutes"/>
+                <attribute attribute-id="sellerOtpMaxAttempts"/>
+                <attribute attribute-id="sellerOtpResendCooldownSeconds"/>
+                <attribute attribute-id="sellerOtpMaxSendsPerHour"/>
+                <attribute attribute-id="sellerKycProvider"/>
+                <attribute attribute-id="sellerBankVerificationProvider"/>
+                <attribute attribute-id="sellerPayoutProvider"/>
+                <attribute attribute-id="sellerDocumentScanProvider"/>
+                <attribute attribute-id="sellerRequireCleanDocumentScan"/>
+                <attribute attribute-id="sellerRequiredDocumentTypes"/>
+                <attribute attribute-id="sellerDocumentMaxBytes"/>
+                <attribute attribute-id="sellerDocumentAllowedTypes"/>
+                <attribute attribute-id="sellerDocumentRetentionDays"/>
+                <attribute attribute-id="sellerDocumentExpiryWarningDays"/>
+                <attribute attribute-id="sellerSuspendOnExpiredDocuments"/>
+                <attribute attribute-id="sellerMaximumProducts"/>
+                <attribute attribute-id="sellerMaxImagesPerProduct"/>
+                <attribute attribute-id="sellerImageMaxBytes"/>
+                <attribute attribute-id="sellerProductIdPattern"/>
+                <attribute attribute-id="sellerMasterCatalogId"/>
+                <attribute attribute-id="sellerSiteCatalogId"/>
+                <attribute attribute-id="sellerAllowedCategoryIds"/>
+                <attribute attribute-id="sellerRestrictedCategoryIds"/>
+                <attribute attribute-id="sellerAllowedTaxClassIds"/>
+                <attribute attribute-id="sellerColorAttributeId"/>
+                <attribute attribute-id="sellerSizeAttributeId"/>
+                <attribute attribute-id="sellerPriceBookId"/>
+                <attribute attribute-id="sellerSiteInventoryListId"/>
+                <attribute attribute-id="sellerInventoryListPrefix"/>
+                <attribute attribute-id="sellerProvisioningStrategy"/>
+                <attribute attribute-id="sellerScapiOrganizationId"/>
+                <attribute attribute-id="sellerProvisioningMaxAttempts"/>
+                <attribute attribute-id="sellerProvisioningRetryMinutes"/>
+                <attribute attribute-id="sellerMinPriceCents"/>
+                <attribute attribute-id="sellerMaxPriceCents"/>
+                <attribute attribute-id="sellerPriceDeviationPercent"/>
+                <attribute attribute-id="sellerFeaturedOfferStrategy"/>
+                <attribute attribute-id="sellerFeaturedOfferWeights"/>
+                <attribute attribute-id="sellerDefaultHandlingDays"/>
+                <attribute attribute-id="sellerMaxHandlingDays"/>
+                <attribute attribute-id="sellerShippingFeesEnabled"/>
+                <attribute attribute-id="sellerMaxShippingFeeCents"/>
+                <attribute attribute-id="sellerMaxReturnDays"/>
+                <attribute attribute-id="sellerOrderSyncLookbackHours"/>
+                <attribute attribute-id="sellerSettlementHoldDays"/>
+                <attribute attribute-id="sellerSettlementMinimumCents"/>
+                <attribute attribute-id="sellerOrderFeeCents"/>
+                <attribute attribute-id="sellerUpdateOrderShippingStatus"/>
+                <attribute attribute-id="sellerPerformanceWindowDays"/>
+                <attribute attribute-id="sellerPerformanceMinOrders"/>
+                <attribute attribute-id="sellerMaxDefectRateBps"/>
+                <attribute attribute-id="sellerMaxLateShipmentRateBps"/>
+                <attribute attribute-id="sellerMaxCancellationRateBps"/>
+                <attribute attribute-id="sellerAutoSuspendOnBreach"/>
+                <attribute attribute-id="sellerNotificationChannels"/>
+                <attribute attribute-id="sellerNotificationMaxAttempts"/>
+                <attribute attribute-id="sellerFromEmail"/>
+                <attribute attribute-id="sellerAdminNotificationEmails"/>
+                <attribute attribute-id="sellerApprovalReminderHours"/>
+                <attribute attribute-id="sellerApiMaxPageSize"/>
+                <attribute attribute-id="sellerWriteRateLimitPerHour"/>
+                <attribute attribute-id="sellerReportRateLimitPerDay"/>
+                <attribute attribute-id="sellerWebhookToleranceSeconds"/>
+                <attribute attribute-id="sellerRequestKeyRetentionDays"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
