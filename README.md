@@ -118,6 +118,21 @@ refunds, and a job charges late fees.
 Import `metadata/rentals`, then schedule **Rentals-ReleaseHolds** and **Rentals-LateFees** at
 **Administration → Operations → Jobs**.
 
+## Marketplace sellers (Seller Central)
+
+This workspace includes `plugin_seller`: third-party sellers apply, verify their e-mail, upload
+documents and, once approved in Business Manager, offer catalog products with their own price,
+stock and return terms. Product pages show **Offers from sellers**, cart and checkout show "Sold by",
+and marketplace staff review sellers, documents, offers, cases, commission and settlements in
+Merchant Tools › Marketplace. Sandbox and demo use only.
+
+[Feature guide with sandbox screenshots](docs/plugin_seller/README.md)
+
+![Seller offers on the product page](docs/plugin_seller/images/pdp-seller-offers.png)
+
+Import `metadata/plugin_seller` after setting the cartridge paths, then create the
+`IMPEX/plugin-seller-private/documents` and `.../images` folders (see `docs/plugin_seller/DEPLOYMENT.md`).
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
