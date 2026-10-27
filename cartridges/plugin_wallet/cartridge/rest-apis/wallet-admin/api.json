@@ -1,0 +1,29 @@
+{
+    "endpoints": [
+        {
+            "endpoint": "postRefund",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "postChargeback",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getWallet",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "setWalletStatus",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listHolds",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        }
+    ]
+}
