@@ -147,6 +147,21 @@ Sandbox use only: Not for Live Money.
 
 Import `metadata/plugin_wallet`; it adds the `WALLET` payment method and processor.
 
+## Lucky draw campaigns
+
+This workspace includes `plugin_luckydraw`: US sweepstakes with entries from paid orders and a free
+alternative method of entry, verifiable draws (committed seed, entry snapshot hash and result seal
+that anyone can recompute), winner verification and single-use coupon prizes. Guaranteed mode
+rewards every qualifying entry where chance promotions are not allowed. Legal approval is mandatory
+before production use.
+
+[Feature guide with sandbox screenshots](docs/plugin_luckydraw/README.md)
+
+![Draw with seed commitment, snapshot hash and result seal](docs/plugin_luckydraw/images/bm-luckydraw-draw.png)
+
+Import `metadata/plugin_luckydraw`, then create the prize coupon and promotion and the official-rules
+content asset before scheduling a campaign.
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
