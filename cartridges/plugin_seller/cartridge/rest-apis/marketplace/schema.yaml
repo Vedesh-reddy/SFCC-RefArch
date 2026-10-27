@@ -1,0 +1,1288 @@
+openapi: 3.0.3
+info:
+  title: Marketplace Shopper API
+  version: 1.0.0
+components:
+  securitySchemes:
+    ShopperToken:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: https://{shortCode}.api.commercecloud.salesforce.com/shopper/auth/v1/organizations/{organizationId}/oauth2/token
+          scopes:
+            c_mkt_shopper: Read marketplace offers and seller profiles
+            c_mkt_seller: Seller self-service
+  parameters:
+    siteId:
+      name: siteId
+      in: query
+      required: true
+      schema:
+        type: string
+        minLength: 1
+    c_offset:
+      name: c_offset
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    c_limit:
+      name: c_limit
+      in: query
+      required: false
+      schema:
+        type: integer
+        minimum: 0
+    c_status:
+      name: c_status
+      in: query
+      required: false
+      schema:
+        type: string
+        maxLength: 40
+  schemas:
+    Body:
+      type: object
+    Result:
+      type: object
+    Error:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+paths:
+  /offers:
+    get:
+      operationId: getProductOffers
+      summary: Ranked offers for a product
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: c_productId
+          in: query
+          required: true
+          schema:
+            type: string
+            maxLength: 128
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_shopper
+  /sellers/{sellerId}:
+    get:
+      operationId: getSellerProfile
+      summary: Public profile of an approved seller
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: sellerId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_shopper
+  /me:
+    get:
+      operationId: getMyAccount
+      summary: Seller account of the signed-in shopper
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/application:
+    post:
+      operationId: createApplication
+      summary: Start a seller application
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/submissions:
+    get:
+      operationId: listSubmissions
+      summary: Product submissions
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - $ref: '#/components/parameters/c_offset'
+        - $ref: '#/components/parameters/c_limit'
+        - $ref: '#/components/parameters/c_status'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+    post:
+      operationId: createSubmission
+      summary: Create a draft submission
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/submissions/{submissionId}:
+    get:
+      operationId: getSubmission
+      summary: One submission
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+    patch:
+      operationId: updateSubmission
+      summary: Update a draft submission
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/submissions/{submissionId}/submit:
+    post:
+      operationId: submitSubmission
+      summary: Send a submission to review
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: submissionId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/offers:
+    get:
+      operationId: listOffers
+      summary: Seller offers
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - $ref: '#/components/parameters/c_offset'
+        - $ref: '#/components/parameters/c_limit'
+        - $ref: '#/components/parameters/c_status'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/offers/{productId}:
+    put:
+      operationId: upsertOffer
+      summary: Create or update the offer for a product
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/offers/{productId}/stock:
+    put:
+      operationId: setOfferStock
+      summary: Set offer stock
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/orders:
+    get:
+      operationId: listOrders
+      summary: Seller orders
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - $ref: '#/components/parameters/c_offset'
+        - $ref: '#/components/parameters/c_limit'
+        - $ref: '#/components/parameters/c_status'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/orders/{orderNo}:
+    get:
+      operationId: getOrder
+      summary: One seller order with ship-to address while open
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: orderNo
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/orders/{orderNo}/shipments:
+    post:
+      operationId: createShipment
+      summary: Record a shipment (idempotencyKey in body)
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: orderNo
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Body'
+      responses:
+        '201':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/ledger:
+    get:
+      operationId: listLedger
+      summary: Earnings ledger and balances
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - $ref: '#/components/parameters/c_offset'
+        - $ref: '#/components/parameters/c_limit'
+        - name: c_entryType
+          in: query
+          required: false
+          schema:
+            type: string
+            maxLength: 128
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/settlements:
+    get:
+      operationId: listSettlements
+      summary: Settlements
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - $ref: '#/components/parameters/c_offset'
+        - $ref: '#/components/parameters/c_limit'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/settlements/{settlementId}:
+    get:
+      operationId: getSettlement
+      summary: Settlement statement
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - name: settlementId
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 1
+            maxLength: 128
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
+  /me/notifications:
+    get:
+      operationId: listNotifications
+      summary: Inbox
+      parameters:
+        - $ref: '#/components/parameters/siteId'
+        - $ref: '#/components/parameters/c_offset'
+        - $ref: '#/components/parameters/c_limit'
+      responses:
+        '200':
+          description: Success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Result'
+        '400':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '403':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '429':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '503':
+          description: Error
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      security:
+        - ShopperToken:
+            - c_mkt_seller
