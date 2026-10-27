@@ -1,0 +1,29 @@
+<isif condition="${pdict.name === null}">
+    <div class="user hidden-md-down">
+        <a href="${URLUtils.https('Login-Show')}" role="button" aria-label="${Resource.msg('label.header.loginbutton', 'account', null)}">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+            <span class="user-message">${Resource.msg('link.header.login', 'account', null)}</span>
+        </a>
+    </div>
+<iselse/>
+    <isif condition="${pdict.walletHeader}">
+        <div class="wallet-header nav-item d-inline-block align-middle mr-3 me-3">
+            <a href="${URLUtils.https('Wallet-Show')}" class="wallet-header-link d-inline-flex align-items-center text-decoration-none" aria-label="${Resource.msgf('header.wallet.label', 'wallet', null, pdict.walletHeader.balance)}">
+                <isinclude template="wallet/components/header-icon" />
+                <span class="wallet-header-amount ml-1 ms-1">${pdict.walletHeader.balance}</span>
+            </a>
+        </div>
+    </isif>
+    <div class="user hidden-md-down nav-item">
+        <a href="${'#'}" id="myaccount" aria-haspopup="true" aria-label="${Resource.msg('link.header.myaccount', 'account', null)}" role="button">
+            <i class="fa fa-sign-in" aria-hidden="true"></i><span class="user-message btn dropdown-toggle">${pdict.name}</span>
+        </a>
+        <div class="popover popover-bottom">
+            <ul class="nav" role="menu" aria-label="${Resource.msg('label.profile.myaccountlink', 'account', null)}">
+                <li class="nav-item" role="presentation"><a href="${URLUtils.https('Account-Show')}" role="menuitem" tabindex="0">${Resource.msg('link.header.myaccount', 'account', null)}</a></li>
+                <li class="nav-item" role="presentation"><a href="${URLUtils.url('Order-History')}" role="menuitem" tabindex="0">${Resource.msg('label.myorders', 'account', null)}</a></li>
+                <li class="nav-item" role="presentation"><a href="${URLUtils.url('Login-Logout')}" role="menuitem" tabindex="0">${Resource.msg('link.header.logout', 'account', null)}</a></li>
+            </ul>
+        </div>
+    </div>
+</isif>

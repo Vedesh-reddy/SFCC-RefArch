@@ -21,7 +21,7 @@ npx sgmf-scripts --uploadCartridge bm_wallet
 | Storefront (e.g. `RefArch`) | `plugin_wallet:<other plugins>:app_storefront_base` |
 | Business Manager | `bm_wallet:plugin_wallet` (prepend to the existing BM path) |
 
-`plugin_wallet` overrides these templates: `account/paymentCard`, `checkout/billing/paymentOptions`, `checkout/billing/paymentOptions/paymentOptionsSummary`, `checkout/confirmation/confirmationPaymentInfo`, `cart/cartApproachingDiscount`. If another cartridge left of it overrides one of them, merge the wallet include into that override. It also wraps `scripts/checkout/checkoutHelpers` with `module.superModule`, so other cartridges that wrap the same module keep working when they also use `superModule`.
+`plugin_wallet` overrides these templates: `account/header` and `account/mobileHeader` (the wallet balance in the header, filled by an `Account-Header` append), `account/paymentCard`, `checkout/billing/paymentOptions`, `checkout/billing/paymentOptions/paymentOptionsSummary`, `checkout/confirmation/confirmationPaymentInfo`, `cart/cartApproachingDiscount`. If another cartridge left of it overrides one of them, merge the wallet include into that override. It also wraps `scripts/checkout/checkoutHelpers` with `module.superModule`, so other cartridges that wrap the same module keep working when they also use `superModule`.
 
 Re-activate the code version after the first deployment and after any `schema.yaml` or `api.json` change, so the Custom APIs register.
 
