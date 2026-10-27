@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+    <menuitem id="plugin-analytics-menu" position="99040" site="true">
+        <name xml:lang="x-default">Storefront Analytics</name>
+        <short_description xml:lang="x-default">Storefront traffic, product, checkout and order analytics</short_description>
+        <description xml:lang="x-default">Storefront traffic, product engagement, checkout conversion and order performance</description>
+        <sldsIconName>chart</sldsIconName>
+    </menuitem>
+    <menuaction id="plugin-analytics-overview" menupath="plugin-analytics-menu" position="10" site="true">
+        <name xml:lang="x-default">Overview</name>
+        <short_description xml:lang="x-default">Totals, trends and comparison with the previous period</short_description>
+        <description xml:lang="x-default">Totals, trends and comparison with the previous period</description>
+        <exec pipeline="AnalyticsAdmin" node="Overview"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Overview"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-analytics-products" menupath="plugin-analytics-menu" position="20" site="true">
+        <name xml:lang="x-default">Products</name>
+        <short_description xml:lang="x-default">Product table and product drill-down</short_description>
+        <description xml:lang="x-default">Product table and product drill-down</description>
+        <exec pipeline="AnalyticsAdmin" node="Products"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Products"/>
+            <pipeline name="AnalyticsAdmin-Product"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-analytics-rankings" menupath="plugin-analytics-menu" position="30" site="true">
+        <name xml:lang="x-default">Rankings</name>
+        <short_description xml:lang="x-default">Top 10 and bottom 10 products</short_description>
+        <description xml:lang="x-default">Top 10 and bottom 10 products</description>
+        <exec pipeline="AnalyticsAdmin" node="Rankings"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Rankings"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-analytics-categories" menupath="plugin-analytics-menu" position="40" site="true">
+        <name xml:lang="x-default">Categories</name>
+        <short_description xml:lang="x-default">Category performance</short_description>
+        <description xml:lang="x-default">Category performance</description>
+        <exec pipeline="AnalyticsAdmin" node="Categories"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Categories"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-analytics-funnel" menupath="plugin-analytics-menu" position="50" site="true">
+        <name xml:lang="x-default">Checkout funnel</name>
+        <short_description xml:lang="x-default">Session and event funnel, conversion and abandonment</short_description>
+        <description xml:lang="x-default">Session and event funnel, conversion and abandonment</description>
+        <exec pipeline="AnalyticsAdmin" node="Funnel"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Funnel"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-analytics-orders" menupath="plugin-analytics-menu" position="60" site="true">
+        <name xml:lang="x-default">Orders</name>
+        <short_description xml:lang="x-default">Orders, sales, discounts, refunds and cancellations</short_description>
+        <description xml:lang="x-default">Orders, sales, discounts, refunds and cancellations</description>
+        <exec pipeline="AnalyticsAdmin" node="Orders"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Orders"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-analytics-search" menupath="plugin-analytics-menu" position="70" site="true">
+        <name xml:lang="x-default">Search</name>
+        <short_description xml:lang="x-default">Search terms and searches without results</short_description>
+        <description xml:lang="x-default">Search terms and searches without results</description>
+        <exec pipeline="AnalyticsAdmin" node="Search"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Search"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-analytics-health" menupath="plugin-analytics-menu" position="80" site="true">
+        <name xml:lang="x-default">Health</name>
+        <short_description xml:lang="x-default">Collection, jobs and integrity checks</short_description>
+        <description xml:lang="x-default">Collection, jobs and integrity checks</description>
+        <exec pipeline="AnalyticsAdmin" node="Health"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Health"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-analytics-export" menupath="plugin-analytics-menu" position="90" site="true">
+        <name xml:lang="x-default">CSV export</name>
+        <short_description xml:lang="x-default">Download reports as CSV</short_description>
+        <description xml:lang="x-default">Download reports as CSV</description>
+        <exec pipeline="AnalyticsAdmin" node="Export"/>
+        <sub-pipelines>
+            <pipeline name="AnalyticsAdmin-Export"/>
+        </sub-pipelines>
+    </menuaction>
+</extensions>
