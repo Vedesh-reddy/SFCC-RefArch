@@ -1,0 +1,109 @@
+<isdecorate template="application/MenuFrame">
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isinclude template="inc/Modules"/>
+<isset name="m" value="${pdict.model}" scope="page"/>
+<div class="wallet-desk">
+    <h1 class="wallet-desk-title">${m.title}</h1>
+    <isif condition="${!empty(m.back)}"><p><a href="${m.back}">&larr; Back</a></p></isif>
+    <isif condition="${!m.enabled}"><p class="wallet-desk-warning" role="alert">The wallet is disabled or not configured for USD on this site.</p></isif>
+    <isif condition="${!empty(m.message)}"><p class="wallet-desk-message" role="status">Saved.</p></isif>
+    <isif condition="${!empty(m.error)}"><p class="wallet-desk-error" role="alert">Not applied: ${m.error}</p></isif>
+
+    <isloop items="${m.sections}" var="section" status="sectionState">
+        <isif condition="${!empty(section.title)}"><h2 class="wallet-desk-section">${section.title}</h2></isif>
+
+        <isif condition="${section.type === 'notice'}">
+            <p class="wallet-desk-notice">${section.text}</p>
+
+        <iselseif condition="${section.type === 'kv'}">
+            <table class="wallet-desk-table" role="presentation">
+                <isloop items="${section.rows}" var="row">
+                    <tr><th scope="row" class="table_detail">${row[0]}</th><td class="table_detail">${row[1]}</td></tr>
+                </isloop>
+            </table>
+
+        <iselseif condition="${section.type === 'table'}">
+            <isif condition="${section.rows.length > 0}">
+                <table class="wallet-desk-table">
+                    <thead><tr><isloop items="${section.columns}" var="column"><th scope="col" class="table_header">${column}</th></isloop></tr></thead>
+                    <tbody>
+                        <isloop items="${section.rows}" var="row">
+                            <tr>
+                                <isloop items="${row.cells}" var="cell" status="cellState">
+                                    <td class="table_detail">
+                                        <isif condition="${cellState.first && !empty(row.link)}"><a href="${row.link}">${cell}</a><iselse/>${cell}</isif>
+                                    </td>
+                                </isloop>
+                                <isif condition="${row.form}">
+                                    <td class="table_detail">
+                                        <form action="${row.form.action}" method="post">
+                                            <label class="wallet-desk-hidden-label" for="row-action-${row.cells[0]}">Action</label>
+                                            <select id="row-action-${row.cells[0]}" name="action">
+                                                <isloop items="${row.form.options}" var="opt"><option value="${opt.value}">${opt.label}</option></isloop>
+                                            </select>
+                                            <label class="wallet-desk-hidden-label" for="row-reason-${row.cells[0]}">Reason</label>
+                                            <input id="row-reason-${row.cells[0]}" name="reason" placeholder="Reason" maxlength="1000"/>
+                                            <input type="hidden" name="${m.csrf.name}" value="${m.csrf.token}"/>
+                                            <button type="submit" class="button">Apply</button>
+                                        </form>
+                                    </td>
+                                </isif>
+                            </tr>
+                        </isloop>
+                    </tbody>
+                </table>
+            <iselse/>
+                <p>None.</p>
+            </isif>
+
+        <iselseif condition="${section.type === 'form'}">
+            <form class="wallet-desk-form" action="${section.action}" method="${section.method || 'post'}">
+                <isloop items="${section.fields}" var="f">
+                    <isif condition="${f.type === 'hidden'}">
+                        <input type="hidden" name="${f.name}" value="${f.value}"/>
+                    <iselse/>
+                        <p>
+                            <label for="field-${sectionState.index.toFixed(0)}-${f.name}">${f.label}</label><br/>
+                            <isif condition="${f.type === 'select'}">
+                                <select id="field-${sectionState.index.toFixed(0)}-${f.name}" name="${f.name}">
+                                    <isloop items="${f.options}" var="opt"><option value="${opt.value}" <isif condition="${opt.value === f.value}">selected="selected"</isif>>${opt.label}</option></isloop>
+                                </select>
+                            <iselseif condition="${f.type === 'textarea'}">
+                                <textarea id="field-${sectionState.index.toFixed(0)}-${f.name}" name="${f.name}" rows="3" cols="60" maxlength="2000">${f.value}</textarea>
+                            <iselse/>
+                                <input id="field-${sectionState.index.toFixed(0)}-${f.name}" name="${f.name}" value="${f.value}" size="50" <isif condition="${f.required}">required="required"</isif>/>
+                            </isif>
+                        </p>
+                    </isif>
+                </isloop>
+                <isif condition="${(section.method || 'post') === 'post'}"><input type="hidden" name="${m.csrf.name}" value="${m.csrf.token}"/></isif>
+                <button type="submit" class="button">${section.submit}</button>
+            </form>
+
+        <iselseif condition="${section.type === 'filter'}">
+            <p class="wallet-desk-filter">
+                <isloop items="${section.links}" var="link">
+                    <isif condition="${link.active}"><strong>${link.label}</strong><iselse/><a href="${link.url}">${link.label}</a></isif>&nbsp;
+                </isloop>
+            </p>
+
+        <iselseif condition="${section.type === 'links'}">
+            <ul><isloop items="${section.links}" var="link"><li><a href="${link.url}">${link.label}</a></li></isloop></ul>
+
+        <iselseif condition="${section.type === 'pager'}">
+            <p class="wallet-desk-pager">
+                Total: ${section.total}
+                <isif condition="${!empty(section.previous)}"> &middot; <a href="${section.previous}">Previous</a></isif>
+                <isif condition="${!empty(section.next)}"> &middot; <a href="${section.next}">Next</a></isif>
+            </p>
+
+        <iselseif condition="${section.type === 'document'}">
+            <isif condition="${section.contentType === 'application/pdf'}">
+                <object class="wallet-desk-document" data="${section.dataUri}" type="application/pdf" aria-label="Document"></object>
+            <iselse/>
+                <img class="wallet-desk-document" src="${section.dataUri}" alt="Document"/>
+            </isif>
+        </isif>
+    </isloop>
+</div>
+</isdecorate>
