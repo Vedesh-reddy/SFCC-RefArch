@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences xmlns="http://www.demandware.com/xml/impex/preferences/2007-03-31">
+    <custom-preferences>
+        <all-instances>
+            <preference preference-id="walletEnabled">true</preference>
+            <preference preference-id="walletCurrency">USD</preference>
+            <preference preference-id="walletGatewayMode">SANDBOX</preference>
+            <preference preference-id="walletLiveMoneyApproved">false</preference>
+            <preference preference-id="walletSuggestedTopUpCents">
+                <value>1000</value>
+                <value>2500</value>
+                <value>5000</value>
+                <value>10000</value>
+            </preference>
+            <preference preference-id="walletFamilyEnabled">true</preference>
+            <preference preference-id="walletStepUpThresholdCents">20000</preference>
+            <preference preference-id="walletNotificationChannels">
+                <value>INBOX</value>
+                <value>EMAIL</value>
+            </preference>
+            <preference preference-id="walletFromEmail">no-reply@example.com</preference>
+            <preference preference-id="walletAdminNotificationEmails">
+                <value>wallet-admin@example.com</value>
+            </preference>
+        </all-instances>
+    </custom-preferences>
+</preferences>

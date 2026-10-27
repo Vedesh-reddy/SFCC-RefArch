@@ -1,0 +1,258 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.Wallet.Holds",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Capture holds of placed orders, release failed/cancelled ones, review stuck holds, expire approvals and invitations",
+                "module": "plugin_wallet/cartridge/scripts/jobs/wallet.js",
+                "function": "holds",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed, partial or mismatches found; see the plugin-wallet log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Wallet.TopUps",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Verify open top-ups with the gateway and expire stale ones",
+                "module": "plugin_wallet/cartridge/scripts/jobs/wallet.js",
+                "function": "topUps",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed, partial or mismatches found; see the plugin-wallet log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Wallet.Reconcile",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Replay wallets against balances, check journal balance and captured holds against orders",
+                "module": "plugin_wallet/cartridge/scripts/jobs/wallet.js",
+                "function": "reconcile",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "200",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed, partial or mismatches found; see the plugin-wallet log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Wallet.Expiry",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Expire inactive balances (off unless walletFundsExpiryDays is set)",
+                "module": "plugin_wallet/cartridge/scripts/jobs/wallet.js",
+                "function": "expiry",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "100",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed, partial or mismatches found; see the plugin-wallet log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Wallet.Risk",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Flag wallets with suspicious refund activity",
+                "module": "plugin_wallet/cartridge/scripts/jobs/wallet.js",
+                "function": "risk",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "5000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed, partial or mismatches found; see the plugin-wallet log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Wallet.Notifications",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Send queued wallet e-mails with retries",
+                "module": "plugin_wallet/cartridge/scripts/jobs/wallet.js",
+                "function": "notifications",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed, partial or mismatches found; see the plugin-wallet log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Wallet.Cleanup",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Remove expired technical records",
+                "module": "plugin_wallet/cartridge/scripts/jobs/wallet.js",
+                "function": "cleanup",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "1000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed, partial or mismatches found; see the plugin-wallet log"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

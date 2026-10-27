@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="Wallet-Holds" priority="0">
+        <description>Settle wallet holds by order status; expire approvals and invitations</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Holds" type="custom.Wallet.Holds" enforce-restart="false">
+                <description>Holds</description>
+                <parameters>
+                    <parameter name="MaxItems">500</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>5m</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="Wallet-TopUps" priority="0">
+        <description>Verify pending top-ups with the gateway</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="TopUps" type="custom.Wallet.TopUps" enforce-restart="false">
+                <description>TopUps</description>
+                <parameters>
+                    <parameter name="MaxItems">200</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>10m</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="Wallet-Reconcile" priority="0">
+        <description>Ledger and order reconciliation</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Reconcile" type="custom.Wallet.Reconcile" enforce-restart="false">
+                <description>Reconcile</description>
+                <parameters>
+                    <parameter name="MaxItems">200</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="Wallet-Risk" priority="0">
+        <description>Suspicious activity review</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Risk" type="custom.Wallet.Risk" enforce-restart="false">
+                <description>Risk</description>
+                <parameters>
+                    <parameter name="MaxItems">5000</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="Wallet-Expiry" priority="0">
+        <description>Funds expiry (off by default)</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Expiry" type="custom.Wallet.Expiry" enforce-restart="false">
+                <description>Expiry</description>
+                <parameters>
+                    <parameter name="MaxItems">100</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="Wallet-Notifications" priority="0">
+        <description>Deliver wallet e-mails</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Notifications" type="custom.Wallet.Notifications" enforce-restart="false">
+                <description>Notifications</description>
+                <parameters>
+                    <parameter name="MaxItems">500</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>5m</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+    <job job-id="Wallet-Cleanup" priority="0">
+        <description>Remove expired technical records</description>
+        <parameters/>
+        <flow>
+            <context site-id="RefArch_Practice"/>
+            <step step-id="Cleanup" type="custom.Wallet.Cleanup" enforce-restart="false">
+                <description>Cleanup</description>
+                <parameters>
+                    <parameter name="MaxItems">1000</parameter>
+                </parameters>
+            </step>
+        </flow>
+        <rules/>
+        <triggers>
+            <run-recurring enabled="false">
+                <recurrence>
+                    <date-from>2026-01-01Z</date-from>
+                    <start-time>00:00:00.000Z</start-time>
+                    <interval>1d</interval>
+                    <day-of-week>
+                        <weekday>Monday</weekday>
+                        <weekday>Tuesday</weekday>
+                        <weekday>Wednesday</weekday>
+                        <weekday>Thursday</weekday>
+                        <weekday>Friday</weekday>
+                        <weekday>Saturday</weekday>
+                        <weekday>Sunday</weekday>
+                    </day-of-week>
+                </recurrence>
+            </run-recurring>
+        </triggers>
+    </job>
+</jobs>
