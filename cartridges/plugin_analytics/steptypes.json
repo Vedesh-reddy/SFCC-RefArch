@@ -1,0 +1,204 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.Analytics.AggregateEvents",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Fold storefront event batches into the daily product, category, search and site aggregates",
+                "module": "plugin_analytics/cartridge/scripts/jobs/analytics.js",
+                "function": "aggregateEvents",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxBatches",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum event batches per run",
+                            "default-value": "5000",
+                            "min-value": "1",
+                            "max-value": "100000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed (also DISABLED or LOCKED)"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or found problems; see the plugin-analytics log and Storefront Analytics > Health"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Analytics.ReconcileOrders",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Bring purchase, cancellation and refund figures in line with changed orders",
+                "module": "plugin_analytics/cartridge/scripts/jobs/analytics.js",
+                "function": "reconcileOrders",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxOrders",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum orders per run",
+                            "default-value": "2000",
+                            "min-value": "1",
+                            "max-value": "50000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed (also DISABLED or LOCKED)"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or found problems; see the plugin-analytics log and Storefront Analytics > Health"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Analytics.GenerateRankings",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Precompute top and bottom 10 product lists for the standard periods",
+                "module": "plugin_analytics/cartridge/scripts/jobs/analytics.js",
+                "function": "generateRankings",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxRecords",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum daily product records read per period",
+                            "default-value": "200000",
+                            "min-value": "1",
+                            "max-value": "1000000"
+                        },
+                        {
+                            "@name": "MaxProducts",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum catalog products read",
+                            "default-value": "20000",
+                            "min-value": "1",
+                            "max-value": "200000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed (also DISABLED or LOCKED)"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or found problems; see the plugin-analytics log and Storefront Analytics > Health"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Analytics.Cleanup",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Remove aggregates older than the retention period and never-aggregated stale batches",
+                "module": "plugin_analytics/cartridge/scripts/jobs/analytics.js",
+                "function": "cleanup",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records removed per run",
+                            "default-value": "10000",
+                            "min-value": "1",
+                            "max-value": "100000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed (also DISABLED or LOCKED)"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or found problems; see the plugin-analytics log and Storefront Analytics > Health"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Analytics.IntegrityCheck",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Check recent aggregates against each other and against orders",
+                "module": "plugin_analytics/cartridge/scripts/jobs/analytics.js",
+                "function": "integrityCheck",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "Days",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Days checked, ending yesterday",
+                            "default-value": "7",
+                            "min-value": "1",
+                            "max-value": "62"
+                        },
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records read per day",
+                            "default-value": "50000",
+                            "min-value": "1",
+                            "max-value": "200000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed (also DISABLED or LOCKED)"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or found problems; see the plugin-analytics log and Storefront Analytics > Health"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

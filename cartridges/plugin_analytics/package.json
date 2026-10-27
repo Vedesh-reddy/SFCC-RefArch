@@ -1,0 +1,6 @@
+{
+  "name": "plugin_analytics",
+  "version": "1.0.0",
+  "private": true,
+  "hooks": "./hooks.json"
+}

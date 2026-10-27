@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="Order">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="analyticsFlowId">
+                <display-name xml:lang="x-default">analyticsFlowId</display-name>
+                <description xml:lang="x-default">Checkout attempt of the order (hash of the basket)</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsFlowDay">
+                <display-name xml:lang="x-default">analyticsFlowDay</display-name>
+                <description xml:lang="x-default">Day the checkout attempt began</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsSessionToken">
+                <display-name xml:lang="x-default">analyticsSessionToken</display-name>
+                <description xml:lang="x-default">Opaque analytics session token</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsSnapshot">
+                <display-name xml:lang="x-default">analyticsSnapshot</display-name>
+                <description xml:lang="x-default">What the order last contributed to the reports</description>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="analyticsFlowId"/>
+                <attribute attribute-id="analyticsFlowDay"/>
+                <attribute attribute-id="analyticsSessionToken"/>
+                <attribute attribute-id="analyticsSnapshot"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="analyticsEnabled">
+                <display-name xml:lang="x-default">Enabled</display-name>
+                <description xml:lang="x-default">Master switch. Analytics runs only on sites whose default currency is USD.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsProductTrackingEnabled">
+                <display-name xml:lang="x-default">Product tracking</display-name>
+                <description xml:lang="x-default">Product impressions, selections, product page views and add to cart.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsCheckoutTrackingEnabled">
+                <display-name xml:lang="x-default">Checkout tracking</display-name>
+                <description xml:lang="x-default">Begin checkout, shipping and payment steps.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsPurchaseTrackingEnabled">
+                <display-name xml:lang="x-default">Purchase tracking</display-name>
+                <description xml:lang="x-default">Order reconciliation (purchases, cancellations, refunds).</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsSearchTrackingEnabled">
+                <display-name xml:lang="x-default">Search tracking</display-name>
+                <description xml:lang="x-default">Search terms and searches without results. Terms that look like e-mail addresses or long numbers are never stored.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsRequireConsent">
+                <display-name xml:lang="x-default">Require tracking consent</display-name>
+                <description xml:lang="x-default">Only sessions with tracking allowed (SFRA consent) are tracked.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsSampleRate">
+                <display-name xml:lang="x-default">Sample rate (%)</display-name>
+                <description xml:lang="x-default">Share of sessions tracked. Orders are never sampled; reports show the rate.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>100</max-value>
+                <default-value>100</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsBatchSize">
+                <display-name xml:lang="x-default">Events per batch</display-name>
+                <description xml:lang="x-default">Most browser events sent and accepted per request.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>50</max-value>
+                <default-value>20</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsMaxBatchesPerMinute">
+                <display-name xml:lang="x-default">Batches per session and minute</display-name>
+                <description xml:lang="x-default">Rate limit per session; further events are dropped and counted.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>120</max-value>
+                <default-value>12</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsMaxBacklog">
+                <display-name xml:lang="x-default">Maximum event backlog</display-name>
+                <description xml:lang="x-default">Collection pauses while more event batches than this wait for aggregation.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1000</min-value>
+                <max-value>10000000</max-value>
+                <default-value>200000</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsRetentionDays">
+                <display-name xml:lang="x-default">Retention (days)</display-name>
+                <description xml:lang="x-default">Daily aggregates older than this are removed by Analytics-Cleanup.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>31</min-value>
+                <max-value>1100</max-value>
+                <default-value>400</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsMinRankingViews">
+                <display-name xml:lang="x-default">Ranking minimum sessions</display-name>
+                <description xml:lang="x-default">Sessions viewing (or adding) a product before it takes part in conversion rankings.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>1000000</max-value>
+                <default-value>20</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsMinRankingImpressions">
+                <display-name xml:lang="x-default">Ranking minimum impressions</display-name>
+                <description xml:lang="x-default">Impressions before a product takes part in the impressions-without-selections list.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>10000000</max-value>
+                <default-value>100</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsQualifyingOrders">
+                <display-name xml:lang="x-default">Qualifying orders</display-name>
+                <description xml:lang="x-default">PLACED: placed orders (NEW, OPEN, COMPLETED) count as purchases. PAID: only once the payment status is PAID.</description>
+                <type>enum-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <value-definitions>
+                    <value-definition default="true">
+                        <display xml:lang="x-default">PLACED</display>
+                        <value>PLACED</value>
+                    </value-definition>
+                    <value-definition>
+                        <display xml:lang="x-default">PAID</display>
+                        <value>PAID</value>
+                    </value-definition>
+                </value-definitions>
+            </attribute-definition>
+            <attribute-definition attribute-id="analyticsAbandonmentHours">
+                <display-name xml:lang="x-default">Abandonment after (hours)</display-name>
+                <description xml:lang="x-default">A checkout attempt counts as abandoned once its day ended this many hours ago without an order.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-value>1</min-value>
+                <max-value>720</max-value>
+                <default-value>24</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Storefront Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="analyticsEnabled"/>
+                <attribute attribute-id="analyticsProductTrackingEnabled"/>
+                <attribute attribute-id="analyticsCheckoutTrackingEnabled"/>
+                <attribute attribute-id="analyticsPurchaseTrackingEnabled"/>
+                <attribute attribute-id="analyticsSearchTrackingEnabled"/>
+                <attribute attribute-id="analyticsRequireConsent"/>
+                <attribute attribute-id="analyticsSampleRate"/>
+                <attribute attribute-id="analyticsBatchSize"/>
+                <attribute attribute-id="analyticsMaxBatchesPerMinute"/>
+                <attribute attribute-id="analyticsMaxBacklog"/>
+                <attribute attribute-id="analyticsRetentionDays"/>
+                <attribute attribute-id="analyticsMinRankingViews"/>
+                <attribute attribute-id="analyticsMinRankingImpressions"/>
+                <attribute attribute-id="analyticsQualifyingOrders"/>
+                <attribute attribute-id="analyticsAbandonmentHours"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>
