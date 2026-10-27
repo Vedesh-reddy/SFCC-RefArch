@@ -232,6 +232,8 @@ function harness(options) {
             Object.keys(db).forEach(function (id) { if (db[id] === obj) delete db[id]; });
         },
         queryCustomObjects: function (type, query, sort) {
+            // platform quota api.query.customAttrExpr: at most 4 custom attribute expressions per query
+            if ((String(query).match(/custom\.\w+/g) || []).length > 4) throw new Error('QuotaLimitExceededException api.query.customAttrExpr: ' + query);
             var args = Array.prototype.slice.call(arguments, 3);
             var test = predicate(query, args);
             var rows = Object.keys(db).filter(function (id) { return db[id].type === type; }).map(function (id) { return db[id]; }).filter(test);

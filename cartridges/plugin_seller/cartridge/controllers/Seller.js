@@ -237,6 +237,8 @@ server.get('Application', server.middleware.https, requireLogin, csrfProtection.
                 line1: view.address.line1, line2: view.address.line2, city: view.address.city, stateCode: view.address.stateCode, postalCode: view.address.postalCode,
                 contactName: view.contactName, contactEmail: view.contactEmail, contactPhone: view.contactPhone, website: view.website
             });
+            // SFRA copyFrom only flags the options of an options field; the select renders from htmlValue
+            applicationForm.businessType.htmlValue = view.businessType;
         }
         data = {
             flash: flash,
@@ -356,6 +358,9 @@ server.get('Product', server.middleware.https, requireLogin, csrfProtection.gene
                 variants: (p.variants || []).map(function (v) { return [v.sellerSku, v.values.color || '', v.values.size || '', v.quantity, v.priceCents ? (v.priceCents / 100).toFixed(2) : '', v.gtin || ''].join(','); }).join('\n')
             });
             productForm.returnable.checked = p.returnable !== false;
+            // options fields: copyFrom does not set htmlValue, which the selects render from
+            productForm.mode.htmlValue = p.mode;
+            productForm.productType.htmlValue = p.productType;
         }
         data = {
             productForm: productForm,
@@ -449,6 +454,8 @@ server.get('Offer', server.middleware.https, requireLogin, csrfProtection.genera
             offerForm.copyFrom({ price: (view.priceCents / 100).toFixed(2), sellerSku: view.sellerSku, condition: view.condition, handlingDays: view.handlingDays, returnDays: view.returnDays, warranty: view.warranty });
             offerForm.returnable.checked = view.returnable !== false;
             offerForm.active.checked = view.status === 'ACTIVE';
+            // options field: copyFrom does not set htmlValue, which the select renders from
+            offerForm.condition.htmlValue = view.condition;
         } else {
             offerForm.returnable.checked = true;
         }

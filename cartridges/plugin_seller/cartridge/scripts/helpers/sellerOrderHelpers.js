@@ -867,7 +867,10 @@ function evaluatePerformance(seller) {
     var orders = marketplaceHelpers.queryPage('MarketplaceSellerOrder', 'custom.sellerId = {0} AND custom.orderCreatedAt >= {1}', null, [sellerId, since], 0, 5000).items.map(function (r) {
         return { status: r.custom.status, lines: marketplaceHelpers.parseJson(r.custom.lines, []), promisedShipBy: r.custom.promisedShipBy, shippedAt: r.custom.shippedAt };
     });
-    var complaints = marketplaceHelpers.queryCount('MarketplaceCase', 'custom.sellerId = {0} AND custom.createdAt >= {1} AND (custom.caseType = {2} OR custom.caseType = {3}) AND custom.status != {4}', [sellerId, since, 'COUNTERFEIT_REPORT', 'CUSTOMER_ISSUE', 'DISMISSED']);
+    // one count per case type: a query may use at most 4 custom attribute expressions (quota api.query.customAttrExpr)
+    var complaints = ['COUNTERFEIT_REPORT', 'CUSTOMER_ISSUE'].reduce(function (sum, caseType) {
+        return sum + marketplaceHelpers.queryCount('MarketplaceCase', 'custom.sellerId = {0} AND custom.createdAt >= {1} AND custom.caseType = {2} AND custom.status != {3}', [sellerId, since, caseType, 'DISMISSED']);
+    }, 0);
     var metrics = getPerformanceMetrics(orders, complaints, now);
     var breaches = [];
     if (metrics.orders >= site.getCustomPreferenceValue('sellerPerformanceMinOrders')) {
