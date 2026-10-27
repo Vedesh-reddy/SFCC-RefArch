@@ -1,0 +1,29 @@
+{
+    "endpoints": [
+        {
+            "endpoint": "postOrderEvent",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "listExecutions",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getReport",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "getExecution",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        },
+        {
+            "endpoint": "verifyExecution",
+            "schema": "schema.yaml",
+            "implementation": "script"
+        }
+    ]
+}
