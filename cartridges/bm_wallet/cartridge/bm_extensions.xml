@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+    <menuitem id="plugin-wallet-menu" position="99010" site="true">
+        <name xml:lang="x-default">Wallet</name>
+        <short_description xml:lang="x-default">Smart Wallet administration</short_description>
+        <description xml:lang="x-default">Wallet accounts, holds, top-ups, refunds, cases and audit</description>
+        <sldsIconName>moneybag</sldsIconName>
+    </menuitem>
+    <menuaction id="plugin-wallet-home" menupath="plugin-wallet-menu" position="10" site="true">
+        <name xml:lang="x-default">Overview</name>
+        <short_description xml:lang="x-default">Wallet liability, attention items and configuration</short_description>
+        <description xml:lang="x-default">Wallet liability, attention items and configuration</description>
+        <exec pipeline="WalletAdmin" node="Home"/>
+        <sub-pipelines>
+            <pipeline name="WalletAdmin-Home"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-wallet-accounts" menupath="plugin-wallet-menu" position="20" site="true">
+        <name xml:lang="x-default">Wallets</name>
+        <short_description xml:lang="x-default">Wallet accounts, holds, top-ups, adjustments, refunds and chargebacks</short_description>
+        <description xml:lang="x-default">Wallet accounts, holds, top-ups, adjustments, refunds and chargebacks</description>
+        <exec pipeline="WalletAdmin" node="Wallets"/>
+        <sub-pipelines>
+            <pipeline name="WalletAdmin-Wallets"/>
+            <pipeline name="WalletAdmin-Wallet"/>
+            <pipeline name="WalletAdmin-WalletAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-wallet-cases" menupath="plugin-wallet-menu" position="30" site="true">
+        <name xml:lang="x-default">Cases</name>
+        <short_description xml:lang="x-default">Security and finance review cases</short_description>
+        <description xml:lang="x-default">Security and finance review cases</description>
+        <exec pipeline="WalletAdmin" node="Cases"/>
+        <sub-pipelines>
+            <pipeline name="WalletAdmin-Cases"/>
+            <pipeline name="WalletAdmin-Case"/>
+            <pipeline name="WalletAdmin-CaseAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="plugin-wallet-audit" menupath="plugin-wallet-menu" position="40" site="true">
+        <name xml:lang="x-default">Audit trail</name>
+        <short_description xml:lang="x-default">Read the wallet audit trail</short_description>
+        <description xml:lang="x-default">Read the wallet audit trail</description>
+        <exec pipeline="WalletAdmin" node="Audit"/>
+        <sub-pipelines>
+            <pipeline name="WalletAdmin-Audit"/>
+        </sub-pipelines>
+    </menuaction>
+</extensions>
