@@ -1,0 +1,71 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/luckydraw.css');
+        assets.addJs('/js/luckydraw-countdown.js');
+    </isscript>
+    <div class="container luckydraw-page py-4">
+        <h1 class="luckydraw-title">${Resource.msg('overview.heading', 'luckydraw', null)}</h1>
+        <isinclude template="luckydraw/components/flash" />
+
+        <isif condition="${pdict.campaigns.length === 0}">
+            <p>${Resource.msg('overview.empty', 'luckydraw', null)}</p>
+        </isif>
+
+        <div class="row">
+            <isloop items="${pdict.campaigns}" var="c">
+                <div class="col-12 col-md-6 mb-3">
+                    <section class="card h-100" aria-labelledby="luckydraw-card-${c.campaignId}">
+                        <div class="card-body d-flex flex-column">
+                            <h2 class="h5" id="luckydraw-card-${c.campaignId}">${c.name}</h2>
+                            <isif condition="${c.demonstration}">
+                                <p class="badge badge-warning bg-warning text-dark align-self-start">${Resource.msg('demo.banner', 'luckydraw', null)}</p>
+                            </isif>
+                            <p class="mb-2"><span class="badge badge-secondary bg-secondary">${Resource.msg('status.' + c.status, 'luckydraw', c.status)}</span></p>
+                            <p class="small text-muted mb-2">${Resource.msgf('campaign.period', 'luckydraw', null, c.startFormatted, c.endFormatted, c.timeZone)}</p>
+                            <isif condition="${c.prizes.length}">
+                                <p class="mb-1 font-weight-bold fw-bold">${Resource.msg('overview.prizes', 'luckydraw', null)}</p>
+                                <ul class="mb-2">
+                                    <isloop items="${c.prizes}" var="p"><li>${p.label}</li></isloop>
+                                </ul>
+                            </isif>
+                            <isif condition="${c.nextDraw}">
+                                <p class="mb-2">
+                                    ${Resource.msgf('overview.nextdraw', 'luckydraw', null, c.nextDraw.formatted, c.timeZone)}
+                                    <span class="luckydraw-countdown d-block small text-muted" data-target="${c.nextDraw.iso}" aria-hidden="true"></span>
+                                </p>
+                            </isif>
+                            <a class="btn btn-primary mt-auto align-self-start" href="${URLUtils.url('LuckyDraw-Campaign', 'id', c.campaignId)}">${Resource.msg('overview.view', 'luckydraw', null)}<span class="sr-only visually-hidden">: ${c.name}</span></a>
+                        </div>
+                    </section>
+                </div>
+            </isloop>
+        </div>
+
+        <isif condition="${pdict.inbox}">
+            <section class="mt-4" aria-labelledby="luckydraw-inbox-title">
+                <h2 class="h4" id="luckydraw-inbox-title">${Resource.msg('notifications.heading', 'luckydraw', null)}</h2>
+                <isif condition="${pdict.inbox.items.length === 0}">
+                    <p>${Resource.msg('notifications.empty', 'luckydraw', null)}</p>
+                </isif>
+                <ul class="list-group">
+                    <isloop items="${pdict.inbox.items}" var="n">
+                        <li class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-md-center">
+                            <div>
+                                <p class="mb-1 <isif condition="${!n.read}">font-weight-bold fw-bold</isif>">${n.subject}</p>
+                                <p class="mb-0 small">${n.body}</p>
+                            </div>
+                            <isif condition="${!n.read}">
+                                <form action="${URLUtils.url('LuckyDraw-MarkRead')}" method="post" class="mt-2 mt-md-0">
+                                    <input type="hidden" name="id" value="${n.id}" />
+                                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                                    <button type="submit" class="btn btn-link p-0">${Resource.msg('notifications.markread', 'luckydraw', null)}</button>
+                                </form>
+                            </isif>
+                        </li>
+                    </isloop>
+                </ul>
+            </section>
+        </isif>
+    </div>
+</isdecorate>

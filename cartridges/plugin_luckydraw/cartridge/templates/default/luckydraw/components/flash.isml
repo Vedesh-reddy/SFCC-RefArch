@@ -1,0 +1,10 @@
+<isset name="luckyDrawFlash" value="${pdict.flash}" scope="page" />
+<isif condition="${luckyDrawFlash && luckyDrawFlash.message}">
+    <p class="alert alert-success luckydraw-flash" role="status">${Resource.msg('flash.' + luckyDrawFlash.message, 'luckydraw', Resource.msg('flash.saved', 'luckydraw', null))}</p>
+</isif>
+<isif condition="${luckyDrawFlash && luckyDrawFlash.error}">
+    <p class="alert alert-danger luckydraw-flash" role="alert">
+        ${Resource.msg('error.' + luckyDrawFlash.error, 'luckydraw', Resource.msg('error.general', 'luckydraw', null))}
+        <isif condition="${!empty(luckyDrawFlash.reason)}">${Resource.msg('reason.' + luckyDrawFlash.reason, 'luckydraw', '')}</isif>
+    </p>
+</isif>

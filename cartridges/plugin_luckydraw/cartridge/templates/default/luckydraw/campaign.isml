@@ -1,0 +1,159 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/luckydraw.css');
+        assets.addJs('/js/luckydraw-countdown.js');
+        var c = pdict.campaign;
+        var me = pdict.me;
+        var ff = pdict.freeEntryForm;
+        var excludedText = c.excludedRegions.join(', ');
+        // top-level pdict arrays arrive as dw.util.List, hence toArray()
+        var regions = pdict.states.toArray().filter(function (s) { return c.excludedRegions.indexOf(s) < 0; });
+        var sweepstakes = c.mode === 'SWEEPSTAKES';
+    </isscript>
+    <div class="container luckydraw-page py-4">
+        <p><a href="${URLUtils.url('LuckyDraw-Show')}">&larr; ${Resource.msg('campaign.back', 'luckydraw', null)}</a></p>
+        <h1 class="luckydraw-title">${c.name}</h1>
+        <isif condition="${c.demonstration}">
+            <p class="alert alert-warning" role="note">${Resource.msg('demo.banner', 'luckydraw', null)}</p>
+        </isif>
+        <isinclude template="luckydraw/components/flash" />
+        <p class="mb-1"><span class="badge badge-secondary bg-secondary">${Resource.msg('status.' + c.status, 'luckydraw', c.status)}</span></p>
+        <p class="small text-muted">${Resource.msgf('campaign.period', 'luckydraw', null, c.startFormatted, c.endFormatted, c.timeZone)}</p>
+        <isif condition="${c.status === 'PAUSED'}"><p class="alert alert-info" role="status">${Resource.msg('campaign.paused', 'luckydraw', null)}</p></isif>
+        <isif condition="${c.status === 'COMPLETED'}"><p class="alert alert-info" role="status">${Resource.msg('campaign.ended', 'luckydraw', null)}</p></isif>
+        <isif condition="${c.status === 'SCHEDULED'}"><p class="alert alert-info" role="status">${Resource.msg('campaign.notstarted', 'luckydraw', null)}</p></isif>
+        <isif condition="${!empty(c.description)}"><p>${c.description}</p></isif>
+
+        <section class="border rounded p-3 mb-4 luckydraw-legal" aria-label="${Resource.msg('legal.terms', 'luckydraw', null)}">
+            <isif condition="${sweepstakes}">
+                <p class="font-weight-bold fw-bold mb-1">${Resource.msgf('legal.nopurchase', 'luckydraw', null, c.minimumAge.toFixed(0))}</p>
+                <isif condition="${!empty(excludedText)}"><p class="mb-1">${Resource.msgf('legal.excluded', 'luckydraw', null, excludedText)}</p></isif>
+                <p class="mb-1">${Resource.msg('legal.odds', 'luckydraw', null)}</p>
+            <iselse/>
+                <p class="font-weight-bold fw-bold mb-1">${Resource.msg('legal.guaranteed', 'luckydraw', null)}</p>
+            </isif>
+            <p class="mb-0"><a href="${URLUtils.url('LuckyDraw-Terms', 'id', c.campaignId)}">${Resource.msg('legal.terms', 'luckydraw', null)}</a> <span class="small text-muted">${Resource.msgf('terms.version', 'luckydraw', null, c.termsVersion)}</span></p>
+        </section>
+
+        <div class="row">
+            <div class="col-12 col-lg-6 mb-4">
+                <section aria-labelledby="luckydraw-eligibility-title">
+                    <h2 class="h4" id="luckydraw-eligibility-title">${Resource.msg('eligibility.heading', 'luckydraw', null)}</h2>
+                    <ul>
+                        <li>${Resource.msgf('eligibility.min', 'luckydraw', null, c.minOrderFormatted)}</li>
+                        <isif condition="${c.entryMethod === 'PER_INCREMENT'}">
+                            <li>${Resource.msgf('eligibility.perincrement', 'luckydraw', null, c.incrementFormatted)}</li>
+                        <iselse/>
+                            <li>${Resource.msg('eligibility.perorder', 'luckydraw', null)}</li>
+                        </isif>
+                        <li>${Resource.msgf('eligibility.maxorder', 'luckydraw', null, c.maxEntriesPerOrder.toFixed(0))}</li>
+                        <li>${Resource.msgf('eligibility.maxcustomer', 'luckydraw', null, c.maxEntriesPerCustomer.toFixed(0))}</li>
+                        <isif condition="${c.hasCategoryRule}"><li>${Resource.msg('eligibility.categories', 'luckydraw', null)}</li></isif>
+                        <li>${Resource.msg('eligibility.signin', 'luckydraw', null)}</li>
+                        <li>${Resource.msg('eligibility.hold', 'luckydraw', null)}</li>
+                    </ul>
+                </section>
+                <section aria-labelledby="luckydraw-prizes-title">
+                    <h2 class="h4" id="luckydraw-prizes-title">${Resource.msg('prizes.heading', 'luckydraw', null)}</h2>
+                    <ul>
+                        <isloop items="${c.prizes}" var="p">
+                            <li>${Resource.msgf('prizes.item', 'luckydraw', null, p.label, p.winners.toFixed(0), p.validityDays.toFixed(0))}</li>
+                        </isloop>
+                    </ul>
+                </section>
+                <section aria-labelledby="luckydraw-schedule-title">
+                    <h2 class="h4" id="luckydraw-schedule-title">${Resource.msg('schedule.heading', 'luckydraw', null)}</h2>
+                    <p class="mb-1">${Resource.msgf('schedule.' + c.drawFrequency, 'luckydraw', null, c.drawTime || '')}</p>
+                    <isif condition="${pdict.nextDraw}">
+                        <p class="mb-1">${Resource.msgf('schedule.next', 'luckydraw', null, pdict.nextDraw.formatted, c.timeZone)}</p>
+                        <p class="luckydraw-countdown h5" data-target="${pdict.nextDraw.iso}" aria-hidden="true"></p>
+                    <iselse/>
+                        <p>${Resource.msg('schedule.none', 'luckydraw', null)}</p>
+                    </isif>
+                </section>
+            </div>
+
+            <div class="col-12 col-lg-6 mb-4">
+                <isif condition="${sweepstakes && c.freeEntryEnabled}">
+                    <section class="card mb-4" aria-labelledby="luckydraw-free-title">
+                        <div class="card-body">
+                            <h2 class="h4" id="luckydraw-free-title">${Resource.msg('free.heading', 'luckydraw', null)}</h2>
+                            <p>${Resource.msgf('free.text', 'luckydraw', null, c.freeEntriesPerDay.toFixed(0))}</p>
+                            <isif condition="${!me.signedIn}">
+                                <p><a href="${URLUtils.url('Login-Show', 'rurl', '9')}">${Resource.msg('free.signin', 'luckydraw', null)}</a></p>
+                            <iselseif condition="${me.optedOut}">
+                                <p>${Resource.msg('me.optedout', 'luckydraw', null)}</p>
+                            <iselseif condition="${!pdict.open}">
+                                <p>${Resource.msg('free.closed', 'luckydraw', null)}</p>
+                            <iselse/>
+                                <p class="small">${Resource.msgf('free.left', 'luckydraw', null, me.freeEntriesLeftToday.toFixed(0))}</p>
+                                <form action="${URLUtils.url('LuckyDraw-FreeEntry')}" method="post" class="luckydraw-free-form">
+                                    <input type="hidden" name="${ff.campaignId.htmlName}" value="${c.campaignId}" />
+                                    <input type="hidden" name="${ff.termsVersion.htmlName}" value="${c.termsVersion}" />
+                                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                                    <div class="form-group mb-3">
+                                        <label class="form-control-label form-label" for="luckydraw-region">${Resource.msg('free.region', 'luckydraw', null)}</label>
+                                        <select class="form-control form-select" id="luckydraw-region" name="${ff.region.htmlName}" required="required">
+                                            <option value="">${Resource.msg('free.region.choose', 'luckydraw', null)}</option>
+                                            <isloop items="${regions}" var="state"><option value="${state}">${state}</option></isloop>
+                                        </select>
+                                    </div>
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" type="checkbox" id="luckydraw-terms" name="${ff.acceptTerms.htmlName}" value="true" required="required" />
+                                        <label class="form-check-label" for="luckydraw-terms">${Resource.msgf('free.terms', 'luckydraw', null, c.termsVersion)}</label>
+                                    </div>
+                                    <div class="form-check mb-3">
+                                        <input class="form-check-input" type="checkbox" id="luckydraw-age" name="${ff.ageConfirmed.htmlName}" value="true" required="required" />
+                                        <label class="form-check-label" for="luckydraw-age">${Resource.msgf('free.age', 'luckydraw', null, c.minimumAge.toFixed(0))}</label>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary" <isif condition="${me.freeEntriesLeftToday === 0}">disabled="disabled"</isif>>${Resource.msg('free.submit', 'luckydraw', null)}</button>
+                                </form>
+                            </isif>
+                        </div>
+                    </section>
+                </isif>
+
+                <isif condition="${me.signedIn}">
+                    <isinclude template="luckydraw/components/mine" />
+                </isif>
+            </div>
+        </div>
+
+        <section class="mb-4" aria-labelledby="luckydraw-winners-title">
+            <h2 class="h4" id="luckydraw-winners-title">${Resource.msg('winners.heading', 'luckydraw', null)}</h2>
+            <isif condition="${pdict.winners.length === 0}">
+                <p>${Resource.msg('winners.empty', 'luckydraw', null)}</p>
+            <iselse/>
+                <ul>
+                    <isloop items="${pdict.winners}" var="w"><li>${Resource.msgf('winners.item', 'luckydraw', null, w.displayName, w.prize)}</li></isloop>
+                </ul>
+            </isif>
+        </section>
+
+        <section class="mb-4" aria-labelledby="luckydraw-draws-title">
+            <h2 class="h4" id="luckydraw-draws-title">${Resource.msg('draws.heading', 'luckydraw', null)}</h2>
+            <p class="small">${Resource.msg('draws.text', 'luckydraw', null)}</p>
+            <isif condition="${pdict.draws.length === 0}">
+                <p>${Resource.msg('draws.empty', 'luckydraw', null)}</p>
+            <iselse/>
+                <ul>
+                    <isloop items="${pdict.draws}" var="d">
+                        <li>${Resource.msgf('draw.window', 'luckydraw', null, d.windowStart, d.windowEnd, d.timeZone)} &middot; <a href="${URLUtils.url('LuckyDraw-Draw', 'id', d.executionId)}">${Resource.msg('draws.view', 'luckydraw', null)}</a></li>
+                    </isloop>
+                </ul>
+            </isif>
+        </section>
+
+        <isif condition="${pdict.recommendations.length}">
+            <section class="mb-4" aria-labelledby="luckydraw-products-title">
+                <h2 class="h4" id="luckydraw-products-title">${Resource.msg('recommendations.heading', 'luckydraw', null)}</h2>
+                <ul class="list-unstyled d-flex flex-wrap">
+                    <isloop items="${pdict.recommendations}" var="product">
+                        <li class="mr-3 me-3 mb-2"><a href="${product.url}">${product.name}</a> <span class="text-muted">${product.price}</span></li>
+                    </isloop>
+                </ul>
+            </section>
+        </isif>
+    </div>
+</isdecorate>

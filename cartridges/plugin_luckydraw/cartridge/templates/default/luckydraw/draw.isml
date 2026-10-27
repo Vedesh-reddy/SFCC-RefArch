@@ -1,0 +1,28 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/luckydraw.css');
+        var d = pdict.draw;
+        var picks = d.picks.join(', ');
+    </isscript>
+    <div class="container luckydraw-page py-4">
+        <p><a href="${URLUtils.url('LuckyDraw-Campaign', 'id', d.campaignId)}">&larr; ${pdict.campaignName}</a></p>
+        <h1 class="luckydraw-title">${Resource.msg('draw.heading', 'luckydraw', null)}</h1>
+        <p>${Resource.msgf('draw.window', 'luckydraw', null, d.windowStart, d.windowEnd, d.timeZone)}</p>
+        <dl class="luckydraw-facts">
+            <dt>${Resource.msg('draw.status', 'luckydraw', null)}</dt><dd>${d.status}</dd>
+            <dt>${Resource.msg('draw.algorithm', 'luckydraw', null)}</dt><dd><code>${d.algorithm}</code></dd>
+            <dt>${Resource.msg('draw.seedhash', 'luckydraw', null)}</dt><dd><code class="text-break">${d.seedHash || '-'}</code></dd>
+            <dt>${Resource.msg('draw.seed', 'luckydraw', null)}</dt><dd><code class="text-break">${d.seed || Resource.msg('draw.seed.hidden', 'luckydraw', null)}</code></dd>
+            <dt>${Resource.msg('draw.entries', 'luckydraw', null)}</dt><dd>${d.entryCount.toFixed(0)}</dd>
+            <dt>${Resource.msg('draw.weight', 'luckydraw', null)}</dt><dd>${d.totalWeight.toFixed(0)}</dd>
+            <dt>${Resource.msg('draw.snapshothash', 'luckydraw', null)}</dt><dd><code class="text-break">${d.snapshotHash || '-'}</code></dd>
+            <dt>${Resource.msg('draw.picks', 'luckydraw', null)}</dt><dd><code class="text-break">${picks || '-'}</code></dd>
+            <dt>${Resource.msg('draw.result', 'luckydraw', null)}</dt><dd><code class="text-break">${d.resultHash || '-'}</code></dd>
+        </dl>
+        <isif condition="${d.status === 'FINALIZED' || d.status === 'VOID'}">
+            <p><a href="${URLUtils.url('LuckyDraw-Snapshot', 'id', d.executionId)}">${Resource.msg('draw.snapshot', 'luckydraw', null)}</a></p>
+        </isif>
+        <p class="small">${Resource.msg('draw.how', 'luckydraw', null)}</p>
+    </div>
+</isdecorate>

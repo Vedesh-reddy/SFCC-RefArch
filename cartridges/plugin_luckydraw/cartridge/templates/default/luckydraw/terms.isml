@@ -1,0 +1,10 @@
+<isdecorate template="common/layout/page">
+    <div class="container luckydraw-page py-4">
+        <p><a href="${URLUtils.url('LuckyDraw-Campaign', 'id', pdict.campaign.campaignId)}">&larr; ${pdict.campaign.name}</a></p>
+        <h1 class="luckydraw-title">${Resource.msgf('terms.heading', 'luckydraw', null, pdict.campaign.name)}</h1>
+        <p class="small text-muted">${Resource.msgf('terms.version', 'luckydraw', null, pdict.campaign.termsVersion)}</p>
+        <div class="luckydraw-terms">
+            <isprint value="${pdict.content.custom.body}" encoding="off" />
+        </div>
+    </div>
+</isdecorate>
