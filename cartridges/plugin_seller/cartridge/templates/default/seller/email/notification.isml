@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>${pdict.subject}</title>
+</head>
+<body>
+    <h1>${pdict.subject}</h1>
+    <p>${pdict.body}</p>
+    <p><a href="${URLUtils.https('Seller-Dashboard')}">${Resource.msg('title.sellercentral', 'seller', null)}</a></p>
+</body>
+</html>

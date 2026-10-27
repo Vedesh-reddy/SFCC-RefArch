@@ -1,0 +1,24 @@
+// Visual accents only; layout comes from Bootstrap utilities in the templates.
+// Colors use the storefront's CSS variables, so no SCSS import from the base cartridge is needed.
+.seller-central {
+    .seller-kpi {
+        min-width: 10rem;
+    }
+
+    .seller-nav-link[aria-current="page"] {
+        border-left: 3px solid var(--skin-primary-color-1, currentcolor);
+        padding-left: 0.5rem;
+    }
+
+    .seller-unread {
+        background-color: var(--light, #f8f9fa);
+    }
+
+    .seller-stock-input {
+        max-width: 6rem;
+    }
+}
+
+.marketplace-offer-featured {
+    border-color: var(--success, currentcolor);
+}

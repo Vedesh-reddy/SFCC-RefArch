@@ -1,0 +1,5 @@
+<isdecorate template="common/layout/page">
+    <div class="container py-5">
+        <p>${Resource.msg('seller.page.missing', 'seller', null)}</p>
+    </div>
+</isdecorate>

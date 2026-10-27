@@ -1,0 +1,41 @@
+<isdecorate template="seller/components/shell">
+    <isscript>var formatCents = require('*/cartridge/scripts/helpers/marketplaceHelpers').formatCents;</isscript>
+    <h1 id="seller-page-title">${Resource.msg('orders.heading', 'seller', null)}</h1>
+    <ul class="nav nav-pills mb-3">
+        <li class="nav-item"><a class="nav-link ${!pdict.status ? 'active' : ''}" href="${URLUtils.url('Seller-Orders')}">${Resource.msg('filter.all', 'seller', null)}</a></li>
+        <isloop items="${['AWAITING_FULFILLMENT', 'PARTIALLY_SHIPPED', 'SHIPPED', 'DELIVERED', 'CANCELLED']}" var="filter">
+            <li class="nav-item"><a class="nav-link ${pdict.status === filter ? 'active' : ''}" href="${URLUtils.url('Seller-Orders', 'status', filter)}">${Resource.msg('status.' + filter, 'seller', filter)}</a></li>
+        </isloop>
+    </ul>
+    <isif condition="${pdict.list.items.length === 0}">
+        <p>${Resource.msg('orders.empty', 'seller', null)}</p>
+    <iselse/>
+        <div class="table-responsive">
+            <table class="table table-sm seller-table">
+                <thead>
+                    <tr>
+                        <th scope="col">${Resource.msg('orders.order', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('orders.date', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('orders.amount', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('orders.shipby', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('orders.status', 'seller', null)}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <isloop items="${pdict.list.items}" var="order">
+                        <tr>
+                            <td><a href="${URLUtils.url('Seller-Order', 'orderNo', order.orderNo)}">${order.orderNo}</a></td>
+                            <td>${order.orderCreatedAt ? order.orderCreatedAt.toISOString().slice(0, 10) : ''}</td>
+                            <td>${formatCents(order.merchandiseCents + order.shippingCents)}</td>
+                            <td>${order.promisedShipBy ? order.promisedShipBy.toISOString().slice(0, 10) : ''}</td>
+                            <td>${Resource.msg('status.' + order.status, 'seller', order.status)}</td>
+                        </tr>
+                    </isloop>
+                </tbody>
+            </table>
+        </div>
+        <isset name="pagerTotal" value="${pdict.list.total}" scope="page" />
+        <isset name="pagerRoute" value="Seller-Orders" scope="page" />
+        <isinclude template="seller/components/pager" />
+    </isif>
+</isdecorate>

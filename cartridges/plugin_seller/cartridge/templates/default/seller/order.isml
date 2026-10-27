@@ -1,0 +1,125 @@
+<isdecorate template="seller/components/shell">
+    <isscript>var formatCents = require('*/cartridge/scripts/helpers/marketplaceHelpers').formatCents;</isscript>
+    <isset name="order" value="${pdict.order}" scope="page" />
+    <isset name="orderOpen" value="${order.status === 'AWAITING_FULFILLMENT' || order.status === 'PARTIALLY_SHIPPED'}" scope="page" />
+    <isset name="canShip" value="${orderOpen && pdict.can['orders.write']}" scope="page" />
+    <h1 id="seller-page-title">${Resource.msgf('order.heading', 'seller', null, order.orderNo)}</h1>
+    <p>
+        <span class="badge badge-info bg-info">${Resource.msg('status.' + order.status, 'seller', order.status)}</span>
+        <isif condition="${!empty(order.promisedShipBy)}"><span class="small ml-2 ms-2">${Resource.msg('orders.shipby', 'seller', null)}: ${order.promisedShipBy.toISOString().slice(0, 10)}</span></isif>
+    </p>
+    <p class="small">${Resource.msgf('order.totals', 'seller', null, formatCents(order.merchandiseCents), formatCents(order.commissionCents))}</p>
+
+    <isif condition="${order.shipTo}">
+        <section class="card mb-3" aria-labelledby="order-shipto-title">
+            <div class="card-body">
+                <h2 class="h6" id="order-shipto-title">${Resource.msg('order.shipto', 'seller', null)}</h2>
+                <address class="mb-0">
+                    ${order.shipTo.fullName}<br/>
+                    ${order.shipTo.address1}<br/>
+                    <isif condition="${order.shipTo.address2}">${order.shipTo.address2}<br/></isif>
+                    ${order.shipTo.city}, ${order.shipTo.stateCode} ${order.shipTo.postalCode}<br/>
+                    <isif condition="${!empty(order.shipTo.phone)}">${order.shipTo.phone}</isif>
+                </address>
+            </div>
+        </section>
+    </isif>
+
+    <form action="${URLUtils.url('Seller-Ship')}" method="post">
+        <h2 class="h5">${Resource.msg('order.lines', 'seller', null)}</h2>
+        <div class="table-responsive">
+            <table class="table table-sm seller-table">
+                <thead>
+                    <tr>
+                        <th scope="col">${Resource.msg('offers.product', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('order.qty', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('order.shipped', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('order.cancelled', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('order.returned', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('order.refunded', 'seller', null)}</th>
+                        <isif condition="${canShip}"><th scope="col">${Resource.msg('order.ship', 'seller', null)}</th></isif>
+                    </tr>
+                </thead>
+                <tbody>
+                    <isloop items="${order.lines}" var="line">
+                        <tr>
+                            <td>${line.productName}<span class="d-block small text-muted">${line.productId} &middot; ${formatCents(line.unitCents)}</span></td>
+                            <td>${line.quantity.toFixed(0)}</td>
+                            <td>${line.shippedQty.toFixed(0)}</td>
+                            <td>${line.cancelledQty.toFixed(0)}</td>
+                            <td>${line.returnedQty.toFixed(0)}</td>
+                            <td>${formatCents(line.refundedCents)}</td>
+                            <isif condition="${canShip}">
+                                <td>
+                                    <label class="sr-only visually-hidden" for="ship-${line.lineId}">${Resource.msgf('order.ship.qty', 'seller', null, line.productName)}</label>
+                                    <input class="form-control form-control-sm seller-stock-input" id="ship-${line.lineId}" name="qty_${line.lineId}" type="number" min="0"
+                                        max="${(line.quantity - line.shippedQty - line.cancelledQty).toFixed(0)}" value="${(line.quantity - line.shippedQty - line.cancelledQty).toFixed(0)}" />
+                                </td>
+                            </isif>
+                        </tr>
+                    </isloop>
+                </tbody>
+            </table>
+        </div>
+        <isif condition="${canShip}">
+            <div class="form-row row align-items-end">
+                <div class="form-group col-12 col-md-4">
+                    <label class="form-control-label" for="ship-carrier">${Resource.msg('order.carrier', 'seller', null)}</label>
+                    <select class="form-control custom-select" id="ship-carrier" name="carrier" required>
+                        <isloop items="${pdict.carriers}" var="carrier"><option value="${carrier}">${carrier}</option></isloop>
+                    </select>
+                </div>
+                <div class="form-group col-12 col-md-5">
+                    <label class="form-control-label" for="ship-tracking">${Resource.msg('order.tracking', 'seller', null)}</label>
+                    <input class="form-control" id="ship-tracking" name="trackingNumber" required minlength="4" maxlength="40" pattern="[A-Za-z0-9 \-]+" />
+                </div>
+                <div class="form-group col-12 col-md-3">
+                    <input type="hidden" name="orderNo" value="${order.orderNo}" />
+                    <input type="hidden" name="shipmentKey" value="${pdict.shipmentKey}" />
+                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                    <button class="btn btn-primary" type="submit">${Resource.msg('order.ship.submit', 'seller', null)}</button>
+                </div>
+            </div>
+        </isif>
+    </form>
+
+    <isif condition="${order.shipments.length > 0}">
+        <h2 class="h5 mt-4">${Resource.msg('order.shipments', 'seller', null)}</h2>
+        <ul class="list-unstyled">
+            <isloop items="${order.shipments}" var="shipment">
+                <li>${shipment.shippedAt.slice(0, 10)} &middot; ${shipment.carrier} ${shipment.trackingNumber}</li>
+            </isloop>
+        </ul>
+    </isif>
+
+    <isif condition="${canShip}">
+        <section class="card mt-4" aria-labelledby="order-cancel-title">
+            <div class="card-body">
+                <h2 class="h6" id="order-cancel-title">${Resource.msg('order.cancel', 'seller', null)}</h2>
+                <form class="form-row row align-items-end" action="${URLUtils.url('Seller-RequestCancel')}" method="post">
+                    <div class="form-group col-12 col-md-4">
+                        <label class="form-control-label" for="cancel-line">${Resource.msg('order.cancel.line', 'seller', null)}</label>
+                        <select class="form-control custom-select" id="cancel-line" name="lineId">
+                            <isloop items="${order.lines}" var="line"><option value="${line.lineId}">${line.productName}</option></isloop>
+                        </select>
+                    </div>
+                    <div class="form-group col-6 col-md-2">
+                        <label class="form-control-label" for="cancel-qty">${Resource.msg('order.cancel.qty', 'seller', null)}</label>
+                        <input class="form-control" id="cancel-qty" name="quantity" type="number" min="1" required />
+                    </div>
+                    <div class="form-group col-6 col-md-3">
+                        <label class="form-control-label" for="cancel-reason">${Resource.msg('order.cancel.reason', 'seller', null)}</label>
+                        <select class="form-control custom-select" id="cancel-reason" name="reason">
+                            <isloop items="${['OUT_OF_STOCK', 'PRICING_ERROR', 'CANNOT_SHIP_TO_ADDRESS', 'OTHER']}" var="reason"><option value="${reason}">${Resource.msg('cancel.' + reason, 'seller', reason)}</option></isloop>
+                        </select>
+                    </div>
+                    <div class="form-group col-12 col-md-3">
+                        <input type="hidden" name="orderNo" value="${order.orderNo}" />
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                        <button class="btn btn-outline-danger" type="submit">${Resource.msg('order.cancel.submit', 'seller', null)}</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </isif>
+</isdecorate>

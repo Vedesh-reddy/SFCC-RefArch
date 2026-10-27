@@ -1,0 +1,32 @@
+<isscript>
+    var sellerNav = [
+    { route: 'Seller-Dashboard', key: 'nav.dashboard', page: 'seller/dashboard', show: true },
+    { route: 'Seller-Application', key: 'nav.application', page: 'seller/application', show: pdict.seller && ['APPROVED', 'SUSPENDED', 'TERMINATED'].indexOf(pdict.seller.status) < 0 },
+    { route: 'Seller-Products', key: 'nav.products', page: 'seller/products', show: pdict.can['catalog.read'] },
+    { route: 'Seller-Offers', key: 'nav.offers', page: 'seller/offers', show: pdict.can['catalog.read'] },
+    { route: 'Seller-Orders', key: 'nav.orders', page: 'seller/orders', show: pdict.can['orders.read'] },
+    { route: 'Seller-Finance', key: 'nav.finance', page: 'seller/finance', show: pdict.can['finance.read'] },
+    { route: 'Seller-Cases', key: 'nav.cases', page: 'seller/cases', show: pdict.can['cases.read'] },
+    { route: 'Seller-Notifications', key: 'nav.notifications', page: 'seller/notifications', show: true },
+    { route: 'Seller-Settings', key: 'nav.settings', page: 'seller/settings', show: pdict.can['settings.write'] }
+];
+</isscript>
+<nav class="seller-nav card" aria-label="${Resource.msg('nav.label', 'seller', null)}">
+    <div class="card-body">
+        <p class="h5 mb-1">${Resource.msg('title.sellercentral', 'seller', null)}</p>
+        <isif condition="${pdict.seller}">
+            <p class="text-muted small mb-3">${pdict.seller.displayName} &middot; ${Resource.msg('status.' + pdict.seller.status, 'seller', null)}</p>
+        </isif>
+        <ul class="list-unstyled mb-0">
+            <isloop items="${sellerNav}" var="item">
+                <isif condition="${item.show}">
+                    <li class="mb-1">
+                        <a class="seller-nav-link d-block py-1 ${pdict.active === item.page ? 'font-weight-bold fw-bold' : ''}"
+                            href="${URLUtils.url(item.route)}"
+                            <isif condition="${pdict.active === item.page}">aria-current="page"</isif>>${Resource.msg(item.key, 'seller', null)}</a>
+                    </li>
+                </isif>
+            </isloop>
+        </ul>
+    </div>
+</nav>

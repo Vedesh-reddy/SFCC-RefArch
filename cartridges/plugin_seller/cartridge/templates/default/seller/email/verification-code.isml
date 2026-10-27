@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>${Resource.msg('email.code.subject', 'seller', null)}</title>
+</head>
+<body>
+    <p>${Resource.msgf('email.code.body', 'seller', null, pdict.displayName, pdict.code, pdict.minutes)}</p>
+</body>
+</html>

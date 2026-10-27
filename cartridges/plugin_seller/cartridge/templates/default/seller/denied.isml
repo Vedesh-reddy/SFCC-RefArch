@@ -1,0 +1,10 @@
+<isdecorate template="common/layout/page">
+    <div class="container seller-central py-5">
+        <h1>${Resource.msg('denied.heading', 'seller', null)}</h1>
+        <p>${Resource.msg('denied.' + (pdict.reason || 'forbidden'), 'seller', Resource.msg('denied.forbidden', 'seller', null))}</p>
+        <isif condition="${!empty(pdict.status)}">
+            <p class="text-muted">${Resource.msgf('denied.status', 'seller', null, Resource.msg('status.' + pdict.status, 'seller', pdict.status))}</p>
+        </isif>
+        <a href="${URLUtils.url('Seller-Show')}">${Resource.msg('title.sellercentral', 'seller', null)}</a>
+    </div>
+</isdecorate>

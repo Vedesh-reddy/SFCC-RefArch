@@ -1,0 +1,79 @@
+<iscomment>Business detail fields shared by the application and the application edit page (form sellerApplication).</iscomment>
+<isset name="appForm" value="${pdict.applicationForm}" scope="page" />
+<div class="form-row row">
+    <div class="form-group col-12 col-md-6">
+        <label class="form-control-label" for="seller-display-name">${Resource.msg('apply.displayname', 'seller', null)}</label>
+        <input class="form-control" id="seller-display-name" name="${appForm.displayName.htmlName}" required maxlength="80" value="${appForm.displayName.htmlValue}" />
+    </div>
+    <div class="form-group col-12 col-md-6">
+        <label class="form-control-label" for="seller-legal-name">${Resource.msg('apply.legalname', 'seller', null)}</label>
+        <input class="form-control" id="seller-legal-name" name="${appForm.legalName.htmlName}" required maxlength="120" value="${appForm.legalName.htmlValue}" autocomplete="organization" />
+    </div>
+    <div class="form-group col-12 col-md-6">
+        <label class="form-control-label" for="seller-business-type">${Resource.msg('apply.businesstype', 'seller', null)}</label>
+        <select class="form-control custom-select" id="seller-business-type" name="${appForm.businessType.htmlName}" required>
+            <isloop items="${pdict.businessTypes}" var="type">
+                <option value="${type}" <isif condition="${appForm.businessType.htmlValue === type}">selected</isif>>${Resource.msg('businesstype.' + type, 'seller', type)}</option>
+            </isloop>
+        </select>
+    </div>
+    <div class="form-group col-12 col-md-6">
+        <label class="form-control-label" for="seller-registration">${Resource.msg('apply.registration', 'seller', null)}</label>
+        <input class="form-control" id="seller-registration" name="${appForm.registrationNumber.htmlName}" required maxlength="40" value="${appForm.registrationNumber.htmlValue}" />
+    </div>
+    <div class="form-group col-12 col-md-6">
+        <label class="form-control-label" for="seller-tax-id">${Resource.msg('apply.taxid', 'seller', null)}</label>
+        <input class="form-control" id="seller-tax-id" name="${appForm.taxId.htmlName}" inputmode="numeric" autocomplete="off" maxlength="11"
+            aria-describedby="seller-tax-id-help" <isif condition="${!pdict.taxIdLast4}">required</isif> />
+        <small id="seller-tax-id-help" class="form-text text-muted">
+            <isif condition="${pdict.taxIdLast4}">${Resource.msgf('apply.taxid.keep', 'seller', null, pdict.taxIdLast4)}<iselse/>${Resource.msg('apply.taxid.help', 'seller', null)}</isif>
+        </small>
+    </div>
+</div>
+<fieldset>
+    <legend class="h6">${Resource.msg('apply.address', 'seller', null)}</legend>
+    <div class="form-row row">
+        <div class="form-group col-12">
+            <label class="form-control-label" for="seller-line1">${Resource.msg('apply.line1', 'seller', null)}</label>
+            <input class="form-control" id="seller-line1" name="${appForm.line1.htmlName}" required maxlength="120" value="${appForm.line1.htmlValue}" autocomplete="address-line1" />
+        </div>
+        <div class="form-group col-12">
+            <label class="form-control-label" for="seller-line2">${Resource.msg('apply.line2', 'seller', null)}</label>
+            <input class="form-control" id="seller-line2" name="${appForm.line2.htmlName}" maxlength="120" value="${appForm.line2.htmlValue}" autocomplete="address-line2" />
+        </div>
+        <div class="form-group col-12 col-md-5">
+            <label class="form-control-label" for="seller-city">${Resource.msg('apply.city', 'seller', null)}</label>
+            <input class="form-control" id="seller-city" name="${appForm.city.htmlName}" required maxlength="60" value="${appForm.city.htmlValue}" autocomplete="address-level2" />
+        </div>
+        <div class="form-group col-6 col-md-3">
+            <label class="form-control-label" for="seller-state">${Resource.msg('apply.state', 'seller', null)}</label>
+            <select class="form-control custom-select" id="seller-state" name="${appForm.stateCode.htmlName}" required autocomplete="address-level1">
+                <isloop items="${pdict.states}" var="state">
+                    <option value="${state}" <isif condition="${appForm.stateCode.htmlValue === state}">selected</isif>>${state}</option>
+                </isloop>
+            </select>
+        </div>
+        <div class="form-group col-6 col-md-4">
+            <label class="form-control-label" for="seller-postal">${Resource.msg('apply.postal', 'seller', null)}</label>
+            <input class="form-control" id="seller-postal" name="${appForm.postalCode.htmlName}" required pattern="\d{5}(-\d{4})?" value="${appForm.postalCode.htmlValue}" autocomplete="postal-code" />
+        </div>
+    </div>
+</fieldset>
+<div class="form-row row">
+    <div class="form-group col-12 col-md-4">
+        <label class="form-control-label" for="seller-contact-name">${Resource.msg('apply.contactname', 'seller', null)}</label>
+        <input class="form-control" id="seller-contact-name" name="${appForm.contactName.htmlName}" required maxlength="80" value="${appForm.contactName.htmlValue}" autocomplete="name" />
+    </div>
+    <div class="form-group col-12 col-md-4">
+        <label class="form-control-label" for="seller-contact-email">${Resource.msg('apply.contactemail', 'seller', null)}</label>
+        <input class="form-control" id="seller-contact-email" name="${appForm.contactEmail.htmlName}" type="email" required value="${appForm.contactEmail.htmlValue}" autocomplete="email" />
+    </div>
+    <div class="form-group col-12 col-md-4">
+        <label class="form-control-label" for="seller-contact-phone">${Resource.msg('apply.contactphone', 'seller', null)}</label>
+        <input class="form-control" id="seller-contact-phone" name="${appForm.contactPhone.htmlName}" type="tel" required value="${appForm.contactPhone.htmlValue}" autocomplete="tel" />
+    </div>
+    <div class="form-group col-12">
+        <label class="form-control-label" for="seller-website">${Resource.msg('apply.website', 'seller', null)}</label>
+        <input class="form-control" id="seller-website" name="${appForm.website.htmlName}" type="url" pattern="https://.*" maxlength="200" value="${appForm.website.htmlValue}" />
+    </div>
+</div>

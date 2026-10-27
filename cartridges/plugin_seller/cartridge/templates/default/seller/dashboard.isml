@@ -1,0 +1,35 @@
+<isdecorate template="seller/components/shell">
+    <isscript>var formatCents = require('*/cartridge/scripts/helpers/marketplaceHelpers').formatCents;</isscript>
+    <h1 id="seller-page-title">${Resource.msg('dashboard.heading', 'seller', null)}</h1>
+    <isif condition="${pdict.pending}">
+        <p class="alert alert-info" role="status">${Resource.msg('dashboard.pending', 'seller', null)}</p>
+        <a href="${URLUtils.url('Seller-Application')}">${Resource.msg('nav.application', 'seller', null)}</a>
+    <iselse/>
+        <isif condition="${pdict.seller.status === 'SUSPENDED'}">
+            <p class="alert alert-warning" role="status">${Resource.msg('dashboard.suspended', 'seller', null)}</p>
+        </isif>
+        <ul class="list-unstyled d-flex flex-wrap seller-kpis">
+            <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('dashboard.toship', 'seller', null)}</span><a class="h3" href="${URLUtils.url('Seller-Orders', 'status', 'AWAITING_FULFILLMENT')}">${pdict.counts.awaiting.toFixed(0)}</a></div></li>
+            <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('dashboard.late', 'seller', null)}</span><span class="h3 ${pdict.counts.late > 0 ? 'text-danger' : ''}">${pdict.counts.late.toFixed(0)}</span></div></li>
+            <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('dashboard.offers', 'seller', null)}</span><span class="h3">${pdict.counts.activeOffers.toFixed(0)}</span></div></li>
+            <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('dashboard.review', 'seller', null)}</span><span class="h3">${pdict.counts.inReview.toFixed(0)}</span></div></li>
+            <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('dashboard.cases', 'seller', null)}</span><span class="h3">${pdict.counts.openCases.toFixed(0)}</span></div></li>
+            <isif condition="${pdict.balances}">
+                <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('dashboard.available', 'seller', null)}</span><span class="h3">${formatCents(pdict.balances.availableCents)}</span></div></li>
+                <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('dashboard.pendingearnings', 'seller', null)}</span><span class="h3">${formatCents(pdict.balances.pendingCents)}</span></div></li>
+            </isif>
+        </ul>
+        <isif condition="${pdict.metrics}">
+            <section class="card" aria-labelledby="seller-metrics-title">
+                <div class="card-body">
+                    <h2 class="h5" id="seller-metrics-title">${Resource.msg('dashboard.metrics', 'seller', null)}</h2>
+                    <dl class="row mb-0">
+                        <dt class="col-sm-6">${Resource.msg('dashboard.defect', 'seller', null)}</dt><dd class="col-sm-6">${(pdict.metrics.defectRateBps / 100).toFixed(2)}%</dd>
+                        <dt class="col-sm-6">${Resource.msg('dashboard.lateRate', 'seller', null)}</dt><dd class="col-sm-6">${(pdict.metrics.lateShipmentRateBps / 100).toFixed(2)}%</dd>
+                        <dt class="col-sm-6">${Resource.msg('dashboard.cancelRate', 'seller', null)}</dt><dd class="col-sm-6">${(pdict.metrics.cancellationRateBps / 100).toFixed(2)}%</dd>
+                    </dl>
+                </div>
+            </section>
+        </isif>
+    </isif>
+</isdecorate>

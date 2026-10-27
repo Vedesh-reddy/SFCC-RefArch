@@ -1,0 +1,39 @@
+<isdecorate template="seller/components/shell">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h1 id="seller-page-title" class="mb-0">${Resource.msg('products.heading', 'seller', null)}</h1>
+        <isif condition="${pdict.can['catalog.write']}">
+            <a class="btn btn-primary" href="${URLUtils.url('Seller-Product')}">${Resource.msg('products.add', 'seller', null)}</a>
+        </isif>
+    </div>
+    <isif condition="${pdict.list.items.length === 0}">
+        <p>${Resource.msg('products.empty', 'seller', null)}</p>
+    <iselse/>
+        <div class="table-responsive">
+            <table class="table table-sm seller-table">
+                <thead>
+                    <tr>
+                        <th scope="col">${Resource.msg('products.sku', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('products.name', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('products.status', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('products.updated', 'seller', null)}</th>
+                        <th scope="col"><span class="sr-only visually-hidden">${Resource.msg('products.edit', 'seller', null)}</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <isloop items="${pdict.list.items}" var="sub">
+                        <tr>
+                            <td>${sub.sellerSku}</td>
+                            <td>${sub.payload.name || ''}</td>
+                            <td>${Resource.msg('status.' + sub.status, 'seller', sub.status)}</td>
+                            <td>${sub.updatedAt ? sub.updatedAt.toISOString().slice(0, 10) : ''}</td>
+                            <td><a href="${URLUtils.url('Seller-Product', 'id', sub.submissionId)}">${Resource.msg('products.edit', 'seller', null)}</a></td>
+                        </tr>
+                    </isloop>
+                </tbody>
+            </table>
+        </div>
+        <isset name="pagerTotal" value="${pdict.list.total}" scope="page" />
+        <isset name="pagerRoute" value="Seller-Products" scope="page" />
+        <isinclude template="seller/components/pager" />
+    </isif>
+</isdecorate>

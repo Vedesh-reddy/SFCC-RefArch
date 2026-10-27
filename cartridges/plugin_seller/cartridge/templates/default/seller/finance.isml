@@ -1,0 +1,67 @@
+<isdecorate template="seller/components/shell">
+    <isscript>var formatCents = require('*/cartridge/scripts/helpers/marketplaceHelpers').formatCents;</isscript>
+    <isset name="b" value="${pdict.balances}" scope="page" />
+    <h1 id="seller-page-title">${Resource.msg('finance.heading', 'seller', null)}</h1>
+    <ul class="list-unstyled d-flex flex-wrap seller-kpis">
+        <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('finance.pending', 'seller', null)}</span><span class="h4">${formatCents(b.pendingCents)}</span></div></li>
+        <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('finance.available', 'seller', null)}</span><span class="h4">${formatCents(b.availableCents)}</span></div></li>
+        <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('finance.insettlement', 'seller', null)}</span><span class="h4">${formatCents(b.inSettlementCents)}</span></div></li>
+        <li class="card seller-kpi mr-3 me-3 mb-3"><div class="card-body"><span class="d-block small text-muted">${Resource.msg('finance.paid', 'seller', null)}</span><span class="h4">${formatCents(b.paidCents)}</span></div></li>
+    </ul>
+    <isif condition="${b.truncated}"><p class="small text-muted">${Resource.msg('finance.truncated', 'seller', null)}</p></isif>
+
+    <section class="card mb-4" aria-labelledby="finance-payout-title">
+        <div class="card-body">
+            <h2 class="h5" id="finance-payout-title">${Resource.msg('finance.payout', 'seller', null)}</h2>
+            <p class="mb-2">${Resource.msgf('finance.payout.status', 'seller', null, Resource.msg('bank.' + pdict.seller.bankStatus, 'seller', pdict.seller.bankStatus))}</p>
+            <isif condition="${pdict.seller.payoutAccountLast4}"><p class="small">${Resource.msgf('finance.payout.last4', 'seller', null, pdict.seller.payoutAccountLast4)}</p></isif>
+            <isif condition="${pdict.can['finance.write'] && pdict.seller.bankStatus !== 'VERIFIED' && pdict.seller.bankStatus !== 'MANUAL_REVIEW' && pdict.seller.bankStatus !== 'PENDING'}">
+                <form action="${URLUtils.url('Seller-PayoutAccount')}" method="post">
+                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                    <button class="btn btn-outline-primary btn-sm" type="submit">${Resource.msg('finance.payout.start', 'seller', null)}</button>
+                </form>
+            </isif>
+        </div>
+    </section>
+
+    <h2 class="h5">${Resource.msg('finance.settlements', 'seller', null)}</h2>
+    <isif condition="${pdict.settlements.items.length > 0}">
+        <ul class="list-group mb-4">
+            <isloop items="${pdict.settlements.items}" var="settlement">
+                <li class="list-group-item d-flex justify-content-between">
+                    <a href="${URLUtils.url('Seller-Statement', 'id', settlement.settlementId)}">${settlement.settlementId}</a>
+                    <span>${formatCents(settlement.netCents)} &middot; ${Resource.msg('status.' + settlement.status, 'seller', settlement.status)}</span>
+                </li>
+            </isloop>
+        </ul>
+    <iselse/>
+        <p>${Resource.msg('common.none', 'seller', null)}</p>
+    </isif>
+
+    <h2 class="h5">${Resource.msg('finance.ledger', 'seller', null)}</h2>
+    <div class="table-responsive">
+        <table class="table table-sm seller-table">
+            <thead>
+                <tr>
+                    <th scope="col">${Resource.msg('finance.date', 'seller', null)}</th>
+                    <th scope="col">${Resource.msg('finance.type', 'seller', null)}</th>
+                    <th scope="col">${Resource.msg('finance.order', 'seller', null)}</th>
+                    <th scope="col" class="text-right text-end">${Resource.msg('finance.amount', 'seller', null)}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <isloop items="${pdict.entries.items}" var="entry">
+                    <tr>
+                        <td>${entry.createdAt.toISOString().slice(0, 10)}</td>
+                        <td>${Resource.msg('ledger.' + entry.entryType, 'seller', entry.entryType)}</td>
+                        <td>${entry.orderNo || ''}</td>
+                        <td class="text-right text-end">${formatCents(entry.amountCents)}</td>
+                    </tr>
+                </isloop>
+            </tbody>
+        </table>
+    </div>
+    <isset name="pagerTotal" value="${pdict.entries.total}" scope="page" />
+    <isset name="pagerRoute" value="Seller-Finance" scope="page" />
+    <isinclude template="seller/components/pager" />
+</isdecorate>

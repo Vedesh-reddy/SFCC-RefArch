@@ -1,0 +1,6 @@
+<div class="line-item-name">
+    <span>${lineItem.productName}</span>
+    <isif condition="${lineItem.marketplace}">
+        <span class="d-block small text-muted marketplace-sold-by">${Resource.msgf('cart.soldby', 'seller', null, lineItem.marketplace.sellerName)}</span>
+    </isif>
+</div>

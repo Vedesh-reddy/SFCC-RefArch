@@ -1,0 +1,13 @@
+<iscomment>Expects pdict.offset, pdict.pageSize, page variable pagerTotal and pagerRoute.</iscomment>
+<isif condition="${pagerTotal > pdict.pageSize}">
+    <nav class="seller-pager d-flex justify-content-between mt-3" aria-label="${Resource.msg('pager.label', 'seller', null)}">
+        <isif condition="${pdict.offset > 0}">
+            <a class="btn btn-outline-primary btn-sm" href="${URLUtils.url(pagerRoute, 'offset', Math.max(0, pdict.offset - pdict.pageSize).toFixed(0), 'status', pdict.status || '')}">${Resource.msg('pager.previous', 'seller', null)}</a>
+        <iselse/>
+            <span></span>
+        </isif>
+        <isif condition="${pdict.offset + pdict.pageSize < pagerTotal}">
+            <a class="btn btn-outline-primary btn-sm" href="${URLUtils.url(pagerRoute, 'offset', (pdict.offset + pdict.pageSize).toFixed(0), 'status', pdict.status || '')}">${Resource.msg('pager.next', 'seller', null)}</a>
+        </isif>
+    </nav>
+</isif>

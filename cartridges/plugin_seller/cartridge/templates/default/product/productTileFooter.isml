@@ -1,0 +1,16 @@
+<div class="row tile-body-footer">
+    <div class="ratings col-xs-12 col-sm-6">
+        <span class="visually-hidden">${Resource.msgf('label.product.ratings', 'common', null, product.rating)}</span>
+        <isinclude template="product/components/ratings" />
+    </div>
+</div>
+<isscript>
+    var marketplaceProduct = product && product.id ? require('dw/catalog/ProductMgr').getProduct(product.id) : null;
+    var marketplaceSeller = marketplaceProduct && marketplaceProduct.custom.mktFeaturedSellerId
+        ? require('dw/object/CustomObjectMgr').getCustomObject('MarketplaceSeller', marketplaceProduct.custom.mktFeaturedSellerId) : null;
+</isscript>
+<isif condition="${marketplaceSeller && marketplaceSeller.custom.status === 'APPROVED'}">
+    <div class="small text-muted marketplace-tile-seller">
+        ${Resource.msgf('tile.soldby', 'seller', null, marketplaceSeller.custom.displayName)}<isif condition="${marketplaceProduct.custom.mktOfferCount > 1}"> &middot; ${Resource.msgf('tile.offers', 'seller', null, marketplaceProduct.custom.mktOfferCount.toFixed(0))}</isif>
+    </div>
+</isif>

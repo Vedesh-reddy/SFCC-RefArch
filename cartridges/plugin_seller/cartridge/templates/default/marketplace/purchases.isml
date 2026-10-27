@@ -1,0 +1,39 @@
+<isdecorate template="common/layout/page">
+    <isscript>var formatCents = require('*/cartridge/scripts/helpers/marketplaceHelpers').formatCents;</isscript>
+    <div class="container py-4 marketplace-purchases">
+        <h1>${Resource.msg('purchases.heading', 'seller', null)}</h1>
+        <isif condition="${pdict.rated}"><p class="alert alert-success" role="status">${Resource.msg('purchases.rated', 'seller', null)}</p></isif>
+        <isif condition="${pdict.list.items.length === 0}">
+            <p>${Resource.msg('purchases.empty', 'seller', null)}</p>
+        </isif>
+        <isloop items="${pdict.list.items}" var="purchase">
+            <article class="card mb-3" aria-labelledby="purchase-${purchase.orderNo}-${purchase.sellerId}">
+                <div class="card-body">
+                    <h2 class="h6" id="purchase-${purchase.orderNo}-${purchase.sellerId}">${Resource.msg('orders.order', 'seller', null)} ${purchase.orderNo} &middot; ${Resource.msg('status.' + purchase.status, 'seller', purchase.status)}</h2>
+                    <p class="small mb-2">${Resource.msg('purchases.seller', 'seller', null)}: <a href="${URLUtils.url('Marketplace-Seller', 'id', purchase.sellerId)}">${purchase.sellerName}</a></p>
+                    <ul class="list-unstyled small">
+                        <isloop items="${purchase.lines}" var="line">
+                            <li>${line.quantity.toFixed(0)} &times; ${line.productName} &middot; ${formatCents(line.netCents)}</li>
+                        </isloop>
+                    </ul>
+                    <isif condition="${purchase.rating}">
+                        <p class="small mb-0">${Resource.msgf('purchases.yourrating', 'seller', null, purchase.rating.toFixed(0))}</p>
+                    <iselseif condition="${purchase.status === 'SHIPPED' || purchase.status === 'DELIVERED' || purchase.status === 'CLOSED'}">
+                        <form class="d-flex flex-wrap align-items-end" action="${URLUtils.url('Marketplace-Rate')}" method="post">
+                            <div class="form-group mr-2 me-2 mb-0">
+                                <label class="form-control-label" for="rate-${purchase.orderNo}-${purchase.sellerId}">${Resource.msg('purchases.rate', 'seller', null)}</label>
+                                <select class="form-control custom-select" id="rate-${purchase.orderNo}-${purchase.sellerId}" name="rating">
+                                    <isloop items="${['5', '4', '3', '2', '1']}" var="value"><option value="${value}">${value}</option></isloop>
+                                </select>
+                            </div>
+                            <input type="hidden" name="orderNo" value="${purchase.orderNo}" />
+                            <input type="hidden" name="sellerId" value="${purchase.sellerId}" />
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                            <button class="btn btn-outline-primary btn-sm" type="submit">${Resource.msg('purchases.rating', 'seller', null)}</button>
+                        </form>
+                    </isif>
+                </div>
+            </article>
+        </isloop>
+    </div>
+</isdecorate>

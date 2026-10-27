@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field formid="sellerId" type="string" mandatory="false" max-length="20" missing-error="error.message.required" />
+    <field formid="displayName" type="string" mandatory="true" min-length="2" max-length="80" missing-error="error.message.required" />
+    <field formid="legalName" type="string" mandatory="true" min-length="2" max-length="120" missing-error="error.message.required" />
+    <field formid="businessType" type="string" mandatory="true" missing-error="error.message.required">
+        <options>
+            <option optionid="INDIVIDUAL" label="businesstype.INDIVIDUAL" value="INDIVIDUAL" />
+            <option optionid="SOLE_PROPRIETOR" label="businesstype.SOLE_PROPRIETOR" value="SOLE_PROPRIETOR" />
+            <option optionid="PARTNERSHIP" label="businesstype.PARTNERSHIP" value="PARTNERSHIP" />
+            <option optionid="CORPORATION" label="businesstype.CORPORATION" value="CORPORATION" />
+            <option optionid="LLC" label="businesstype.LLC" value="LLC" />
+            <option optionid="NONPROFIT" label="businesstype.NONPROFIT" value="NONPROFIT" />
+        </options>
+    </field>
+    <field formid="registrationNumber" type="string" mandatory="true" min-length="2" max-length="40" regexp="^[A-Za-z0-9 ./-]+$" missing-error="error.message.required" />
+    <field formid="taxId" type="string" mandatory="false" max-length="11" regexp="^\d{3}-?\d{2}-?\d{4}$|^\d{2}-?\d{7}$" />
+    <field formid="line1" type="string" mandatory="true" min-length="3" max-length="120" missing-error="error.message.required" />
+    <field formid="line2" type="string" mandatory="false" max-length="120" />
+    <field formid="city" type="string" mandatory="true" min-length="2" max-length="60" missing-error="error.message.required" />
+    <field formid="stateCode" type="string" mandatory="true" max-length="2" missing-error="error.message.required" />
+    <field formid="postalCode" type="string" mandatory="true" regexp="^\d{5}(-\d{4})?$" missing-error="error.message.required" />
+    <field formid="contactName" type="string" mandatory="true" min-length="2" max-length="80" missing-error="error.message.required" />
+    <field formid="contactEmail" type="string" mandatory="true" max-length="254" regexp="^[\w.%+\-]+@[\w.\-]+\.\w{2,}$" missing-error="error.message.required" />
+    <field formid="contactPhone" type="string" mandatory="true" regexp="^\+?[0-9 ()-]{7,20}$" missing-error="error.message.required" />
+    <field formid="website" type="string" mandatory="false" max-length="200" regexp="^https://.+$" />
+    <field formid="categories" type="string" mandatory="false" max-length="600" />
+    <field formid="agreementAccepted" type="boolean" mandatory="false" />
+    <field formid="agreementVersion" type="string" mandatory="false" max-length="32" />
+</form>

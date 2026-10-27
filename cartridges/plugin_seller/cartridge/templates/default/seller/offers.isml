@@ -1,0 +1,63 @@
+<isdecorate template="seller/components/shell">
+    <isscript>var formatCents = require('*/cartridge/scripts/helpers/marketplaceHelpers').formatCents;</isscript>
+    <h1 id="seller-page-title">${Resource.msg('offers.heading', 'seller', null)}</h1>
+    <isif condition="${pdict.can['catalog.write']}">
+        <form class="form-inline d-flex flex-wrap align-items-end mb-3" action="${URLUtils.url('Seller-Offer')}" method="get">
+            <div class="form-group mr-2 me-2">
+                <label class="form-control-label d-block" for="offer-new-pid">${Resource.msg('offers.add.pid', 'seller', null)}</label>
+                <input class="form-control" id="offer-new-pid" name="pid" required maxlength="100" aria-describedby="offer-new-help" />
+            </div>
+            <button class="btn btn-outline-primary" type="submit">${Resource.msg('offers.add.go', 'seller', null)}</button>
+            <small id="offer-new-help" class="form-text text-muted w-100">${Resource.msg('offers.add.help', 'seller', null)}</small>
+        </form>
+    </isif>
+    <isif condition="${pdict.list.items.length === 0}">
+        <p>${Resource.msg('offers.empty', 'seller', null)}</p>
+    <iselse/>
+        <div class="table-responsive">
+            <table class="table table-sm seller-table">
+                <thead>
+                    <tr>
+                        <th scope="col">${Resource.msg('offers.product', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('offers.price', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('offers.stock', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('offers.available', 'seller', null)}</th>
+                        <th scope="col">${Resource.msg('offers.status', 'seller', null)}</th>
+                        <th scope="col"><span class="sr-only visually-hidden">${Resource.msg('offers.edit', 'seller', null)}</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <isloop items="${pdict.list.items}" var="offer">
+                        <tr>
+                            <td>${offer.productId}<span class="d-block small text-muted">${offer.sellerSku}</span></td>
+                            <td>
+                                ${formatCents(offer.priceCents)}
+                                <isif condition="${offer.proposedPriceCents > 0}"><span class="d-block small">${Resource.msgf('offers.proposed', 'seller', null, formatCents(offer.proposedPriceCents))}</span></isif>
+                            </td>
+                            <td>
+                                <isif condition="${pdict.can['catalog.write'] && offer.status !== 'SUSPENDED' && offer.status !== 'REJECTED'}">
+                                    <form class="d-flex" action="${URLUtils.url('Seller-SetStock')}" method="post">
+                                        <label class="sr-only visually-hidden" for="stock-${offer.productId}">${Resource.msg('offers.stock', 'seller', null)} ${offer.productId}</label>
+                                        <input class="form-control form-control-sm seller-stock-input" id="stock-${offer.productId}" name="quantity" type="number" min="0" max="100000" value="${offer.quantity.toFixed(0)}" />
+                                        <input type="hidden" name="pid" value="${offer.productId}" />
+                                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                                        <button class="btn btn-link btn-sm" type="submit">${Resource.msg('offers.setstock', 'seller', null)}</button>
+                                    </form>
+                                <iselse/>
+                                    ${offer.quantity.toFixed(0)}
+                                </isif>
+                                <isif condition="${offer.stockPendingSync}"><span class="d-block small text-muted">${Resource.msg('offers.pending-sync', 'seller', null)}</span></isif>
+                            </td>
+                            <td>${offer.available.toFixed(0)}</td>
+                            <td>${Resource.msg('status.' + offer.status, 'seller', offer.status)}</td>
+                            <td><isif condition="${pdict.can['catalog.write']}"><a href="${URLUtils.url('Seller-Offer', 'pid', offer.productId)}">${Resource.msg('offers.edit', 'seller', null)}</a></isif></td>
+                        </tr>
+                    </isloop>
+                </tbody>
+            </table>
+        </div>
+        <isset name="pagerTotal" value="${pdict.list.total}" scope="page" />
+        <isset name="pagerRoute" value="Seller-Offers" scope="page" />
+        <isinclude template="seller/components/pager" />
+    </isif>
+</isdecorate>
