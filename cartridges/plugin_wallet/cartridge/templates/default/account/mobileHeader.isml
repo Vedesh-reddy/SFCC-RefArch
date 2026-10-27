@@ -1,0 +1,34 @@
+<isif condition="${pdict.name === null}">
+    <li class="nav-item d-lg-none" role="menuitem">
+        <a href="${URLUtils.https('Login-Show')}" class="nav-link">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+            <span class="user-message">${Resource.msg('link.header.login', 'account', null)}</span>
+        </a>
+    </li>
+<iselse/>
+    <isif condition="${pdict.walletHeader}">
+        <li class="nav-item d-lg-none wallet-header" role="menuitem">
+            <a href="${URLUtils.https('Wallet-Show')}" class="nav-link d-flex align-items-center" aria-label="${Resource.msgf('header.wallet.label', 'wallet', null, pdict.walletHeader.balance)}">
+                <isinclude template="wallet/components/header-icon" />
+                <span class="user-message ml-1 ms-1">${Resource.msg('header.wallet', 'wallet', null)} ${pdict.walletHeader.balance}</span>
+            </a>
+        </li>
+    </isif>
+    <li class="nav-item d-lg-none dropdown" role="menuitem">
+        <span class="nav-link dropdown-toggle" role="button">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+            <span class="user-message">${pdict.name}</span>
+        </span>
+        <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-item" role="menuitem">
+                <a href="${URLUtils.https('Account-Show')}" class="dropdown-link" role="button">${Resource.msg('link.header.myaccount', 'account', null)}</a>
+            </li>
+            <li class="dropdown-item" role="menuitem">
+                <a href="${URLUtils.url('Order-History')}" class="dropdown-link" role="button">${Resource.msg('label.myorders', 'account', null)}</a>
+            </li>
+            <li class="dropdown-item" role="menuitem">
+                <a href="${URLUtils.url('Login-Logout')}" class="dropdown-link" role="button">${Resource.msg('link.header.logout', 'account', null)}</a>
+            </li>
+        </ul>
+    </li>
+</isif>

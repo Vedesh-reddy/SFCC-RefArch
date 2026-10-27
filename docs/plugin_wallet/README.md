@@ -28,6 +28,16 @@ The dashboard shows:
 
 ![My wallet](images/wallet-dashboard.png)
 
+### Balance in the header
+
+Signed-in shoppers see a wallet icon with their available balance in the header on every page. On phones it appears in the menu. It links to My wallet.
+
+The balance comes from the `Account-Header` include, which SFRA renders uncached, so it is always current. A shopper who has not used the wallet yet sees $0.00, and signed-out visitors see nothing.
+
+![Wallet balance in the header](images/wallet-header.png)
+
+![Wallet in the mobile menu](images/wallet-header-mobile.png)
+
 ### Adding money (sandbox gateway)
 
 **Continue to payment** creates a pending top-up and opens the sandbox payment page. It takes no real money. **Approve** credits the wallet exactly once, even if the approval is replayed. **Decline** marks the top-up as failed.
