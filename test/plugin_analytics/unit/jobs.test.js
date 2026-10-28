@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
+var sinon = require('sinon');
 var harness = require('./harness');
 var fixtures = require('./fixtures');
 
@@ -18,6 +19,17 @@ function create(h, type, key, fields) {
 }
 
 describe('plugin_analytics cleanup and integrity jobs', function () {
+    var clock;
+
+    // Retention and "yesterday" are computed from the clock, so the suite runs at a fixed moment.
+    beforeEach(function () {
+        clock = sinon.useFakeTimers({ now: new Date('2026-10-27T15:00:00Z'), toFake: ['Date'] });
+    });
+
+    afterEach(function () {
+        clock.restore();
+    });
+
     it('removes aggregates older than the retention period and stale batches, in bounded runs', function () {
         var h = harness({ preferences: { analyticsRetentionDays: 31 } });
         h.setNow('2026-10-27T15:00:00Z');
@@ -46,15 +58,17 @@ describe('plugin_analytics cleanup and integrity jobs', function () {
         h.require('controllers/Analytics');
         h.require('controllers/Cart');
         fixtures.product(h, 'P1', { category: 'rings' });
-        h.setNow('2026-10-26T15:00:00Z');
+        // the check covers the days before today on the real clock
+        var yesterday = new Date(Date.now() - 86400000);
+        h.setNow(yesterday.toISOString());
         fixtures.beacon(h, [{ n: 'view_item_list', p: 'P1', l: 'cat:rings', o: 1 }, { n: 'view_item', p: 'P1' }]);
         fixtures.basket(h, [['P1', 2, 10]]);
         h.run('AddProduct', { form: { pid: 'P1', quantity: '2' }, viewData: { error: false, pliUUID: 'pli-0' } });
-        fixtures.order(h, '1', { created: new Date('2026-10-26T16:00:00Z'), lines: [['P1', 2, 20]] });
+        fixtures.order(h, '1', { created: yesterday, lines: [['P1', 2, 20]] });
         var jobs = fixtures.jobs(h);
         jobs.aggregateEvents({});
         jobs.reconcileOrders({});
-        h.setNow('2026-10-27T15:00:00Z');
+        h.setNow(null);
         var status = jobs.integrityCheck({ Days: 2 });
         assert.equal(status.code, 'OK', status.message);
         var result = JSON.parse(h.get('AnalyticsJobCheckpoint', 'integrity-check').custom.counts);
@@ -65,11 +79,12 @@ describe('plugin_analytics cleanup and integrity jobs', function () {
 
     it('reports mismatches, unreconciled orders, misplaced records and stale aggregation', function () {
         var h = harness();
-        h.setNow('2026-10-27T15:00:00Z');
-        create(h, 'AnalyticsSiteDaily', '20261026', { day: '20261026', views: 5, orders: 0 });
-        create(h, 'AnalyticsProductDaily', '20261026_P1', { day: '20261026', productId: 'P1', views: 4 });
-        create(h, 'AnalyticsProductDaily', '20261026_P9', { day: '20261026', productId: 'P2', views: 1 });
-        fixtures.order(h, '1', { created: new Date('2026-10-26T16:00:00Z'), lines: [['P1', 1, 20]] });
+        var yesterday = new Date(Date.now() - 86400000);
+        var day = h.require('scripts/helpers/analyticsHelpers').getDay(yesterday);
+        create(h, 'AnalyticsSiteDaily', day, { day: day, views: 5, orders: 0 });
+        create(h, 'AnalyticsProductDaily', day + '_P1', { day: day, productId: 'P1', views: 4 });
+        create(h, 'AnalyticsProductDaily', day + '_P9', { day: day, productId: 'P2', views: 1 });
+        fixtures.order(h, '1', { created: yesterday, lines: [['P1', 1, 20]] });
         var status = fixtures.jobs(h).integrityCheck({ Days: 1 });
         assert.equal(status.code, 'ATTENTION');
         var problems = JSON.parse(h.get('AnalyticsJobCheckpoint', 'integrity-check').custom.counts).problems.join('\n');

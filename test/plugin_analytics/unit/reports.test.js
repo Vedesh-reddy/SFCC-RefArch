@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
+var sinon = require('sinon');
 var harness = require('./harness');
 var fixtures = require('./fixtures');
 
@@ -32,6 +33,17 @@ function siteDay(h, day, fields) {
 }
 
 describe('plugin_analytics reports', function () {
+    var clock;
+
+    // Retention, settled checkout attempts and "yesterday" are computed from the clock.
+    beforeEach(function () {
+        clock = sinon.useFakeTimers({ now: new Date('2026-10-27T15:00:00Z'), toFake: ['Date'] });
+    });
+
+    afterEach(function () {
+        clock.restore();
+    });
+
     it('resolves the standard reporting ranges in site days', function () {
         var r = harness().require('scripts/helpers/analyticsReportHelpers');
         var range = function (name, from, to) { return r.resolveRange(name, from, to, '20261027'); };

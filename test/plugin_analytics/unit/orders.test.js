@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
+var sinon = require('sinon');
 var harness = require('./harness');
 var fixtures = require('./fixtures');
 
@@ -65,6 +66,17 @@ function later(order, change) {
 }
 
 describe('plugin_analytics order reconciliation job', function () {
+    var clock;
+
+    // Retention and "yesterday" are computed from the clock, so the suite runs at a fixed moment.
+    beforeEach(function () {
+        clock = sinon.useFakeTimers({ now: new Date('2026-10-27T20:00:00Z'), toFake: ['Date'] });
+    });
+
+    afterEach(function () {
+        clock.restore();
+    });
+
     it('counts a placed order from the order record: units, gross, discounts, shipping, tax and net', function () {
         var h = setup();
         fixtures.order(h, '1001', { created: CREATED_AT, lines: [['V1', 2, 100, 80], ['V2', 1, 50, 50], ['P2', 1, 30, 30]], shipping: 7, tax: 13 });

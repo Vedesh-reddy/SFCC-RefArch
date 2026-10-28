@@ -1,6 +1,7 @@
 'use strict';
 
 var assert = require('chai').assert;
+var sinon = require('sinon');
 var harness = require('./harness');
 var fixtures = require('./fixtures');
 
@@ -45,6 +46,17 @@ function cells(model) {
 }
 
 describe('plugin_analytics Business Manager desk', function () {
+    var clock;
+
+    // Retention, settled checkout attempts and "yesterday" are computed from the clock.
+    beforeEach(function () {
+        clock = sinon.useFakeTimers({ now: new Date('2026-10-27T15:00:00Z'), toFake: ['Date'] });
+    });
+
+    afterEach(function () {
+        clock.restore();
+    });
+
     it('refuses every node without an authenticated Business Manager session', function () {
         var h = setup();
         global.session.userAuthenticated = false;
