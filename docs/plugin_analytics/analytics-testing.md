@@ -40,9 +40,9 @@ The tests run in Node with `test/plugin_analytics/unit/harness.js`, an in-memory
 | `npm run lint` | clean |
 | Metadata XML (`metadata.xsd`, `preferences.xsd`, `jobs.xsd`) and `bm_extensions.xml` (`bmext.xsd`) | valid (xmllint) |
 
-## Not covered by unit tests — sandbox validation needed
+## Sandbox run (zyeu-002, 2026-10-28)
 
-See the checklist in [analytics-deployment.md](analytics-deployment.md#sandbox-validation-checklist): real `sendBeacon` delivery, `OrderMgr.searchOrders` on `lastModified`, invoice API availability, Business Manager permission enforcement, quota behaviour under load, storefront performance measurements.
+Results per check are in [analytics-deployment.md](analytics-deployment.md#sandbox-validation-checklist). 9 of 10 checks passed; refunds through invoices (A8) were not tested because the sandbox has no invoices. Still open: a load test and storefront performance measurements.
 
 ## Verifying reporting accuracy by hand
 

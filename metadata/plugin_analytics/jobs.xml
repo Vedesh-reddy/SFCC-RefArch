@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
-    <job job-id="Analytics-AggregateEvents" priority="0">
+    <job job-id="Analytics-AggregateEvents">
         <description>Fold storefront event batches into the daily aggregates</description>
         <parameters/>
         <flow>
@@ -32,7 +32,7 @@
             </run-recurring>
         </triggers>
     </job>
-    <job job-id="Analytics-ReconcileOrders" priority="0">
+    <job job-id="Analytics-ReconcileOrders">
         <description>Reconcile purchases, cancellations and refunds from changed orders</description>
         <parameters/>
         <flow>
@@ -64,7 +64,7 @@
             </run-recurring>
         </triggers>
     </job>
-    <job job-id="Analytics-GenerateRankings" priority="0">
+    <job job-id="Analytics-GenerateRankings">
         <description>Precompute top and bottom 10 product lists</description>
         <parameters/>
         <flow>
@@ -97,7 +97,7 @@
             </run-recurring>
         </triggers>
     </job>
-    <job job-id="Analytics-Cleanup" priority="0">
+    <job job-id="Analytics-Cleanup">
         <description>Apply the analytics retention period</description>
         <parameters/>
         <flow>
@@ -129,7 +129,7 @@
             </run-recurring>
         </triggers>
     </job>
-    <job job-id="Analytics-IntegrityCheck" priority="0">
+    <job job-id="Analytics-IntegrityCheck">
         <description>Check recent aggregates against each other and against orders</description>
         <parameters/>
         <flow>
