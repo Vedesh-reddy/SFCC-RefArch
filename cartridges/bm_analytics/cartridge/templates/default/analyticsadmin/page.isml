@@ -1,0 +1,101 @@
+<isdecorate template="application/MenuFrame">
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isinclude template="inc/Modules"/>
+<isset name="m" value="${pdict.model}" scope="page"/>
+<style>
+    .analytics-desk { padding: 0 1rem 2rem; }
+    .analytics-desk-nav a, .analytics-desk-nav strong { margin-right: 0.75rem; }
+    .analytics-desk-notice { border-left: 4px solid #0176d3; background: #f3f8fd; padding: 0.5rem 0.75rem; }
+    .analytics-desk-table { border-collapse: collapse; margin-bottom: 1rem; }
+    .analytics-desk-table th, .analytics-desk-table td { padding: 0.25rem 0.75rem; text-align: left; }
+    .analytics-desk-form label { display: inline-block; margin-right: 0.75rem; }
+    .analytics-desk-bar-track { display: inline-block; width: 320px; background: #eef1f6; vertical-align: middle; }
+    .analytics-desk-bar { display: block; height: 0.75rem; background: #0176d3; }
+</style>
+<div class="analytics-desk">
+    <h1>${m.title}</h1>
+    <p class="analytics-desk-nav">
+        <isloop items="${m.navigation}" var="nav">
+            <isif condition="${nav.active}"><strong aria-current="page">${nav.label}</strong><iselse/><a href="${nav.url}">${nav.label}</a></isif>
+        </isloop>
+    </p>
+    <isif condition="${!empty(m.back)}"><p><a href="${m.back}">&larr; ${Resource.msg('nav.back', 'analyticsadmin', null)}</a></p></isif>
+    <isif condition="${!empty(m.rangeLabel)}"><p>${m.rangeLabel} (${Resource.msg('label.timezone', 'analyticsadmin', null)})</p></isif>
+    <isloop items="${m.notices}" var="notice">
+        <p class="analytics-desk-notice" role="status">${notice}</p>
+    </isloop>
+
+    <isloop items="${m.sections}" var="section" status="sectionState">
+        <isif condition="${!empty(section.title)}"><h2>${section.title}</h2></isif>
+
+        <isif condition="${section.type === 'kv'}">
+            <table class="analytics-desk-table" role="presentation">
+                <isloop items="${section.rows}" var="row">
+                    <tr><th scope="row" class="table_detail">${row[0]}</th><td class="table_detail">${row[1]}</td></tr>
+                </isloop>
+            </table>
+
+        <iselseif condition="${section.type === 'table'}">
+            <isif condition="${section.rows.length > 0}">
+                <table class="analytics-desk-table">
+                    <thead><tr><isloop items="${section.columns}" var="column"><th scope="col" class="table_header">${column}</th></isloop></tr></thead>
+                    <tbody>
+                        <isloop items="${section.rows}" var="row">
+                            <tr>
+                                <isloop items="${row.cells}" var="cell" status="cellState">
+                                    <td class="table_detail"><isif condition="${cellState.first && !empty(row.link)}"><a href="${row.link}">${cell}</a><iselse/>${cell}</isif></td>
+                                </isloop>
+                            </tr>
+                        </isloop>
+                    </tbody>
+                </table>
+            <iselse/>
+                <p>${Resource.msg('label.no-data', 'analyticsadmin', null)}</p>
+            </isif>
+
+        <iselseif condition="${section.type === 'bars'}">
+            <table class="analytics-desk-table">
+                <tbody>
+                    <isloop items="${section.rows}" var="row">
+                        <tr>
+                            <th scope="row" class="table_detail">${row.label}</th>
+                            <td class="table_detail"><span class="analytics-desk-bar-track" aria-hidden="true"><span class="analytics-desk-bar" style="width: ${row.width}%"></span></span></td>
+                            <td class="table_detail">${row.text}</td>
+                        </tr>
+                    </isloop>
+                </tbody>
+            </table>
+
+        <iselseif condition="${section.type === 'form'}">
+            <form class="analytics-desk-form" action="${section.action}" method="get">
+                <isloop items="${section.fields}" var="f">
+                    <isif condition="${f.type === 'hidden'}">
+                        <input type="hidden" name="${f.name}" value="${f.value}"/>
+                    <iselse/>
+                        <label for="field-${sectionState.index.toFixed(0)}-${f.name}">${f.label}
+                            <isif condition="${f.type === 'select'}">
+                                <select id="field-${sectionState.index.toFixed(0)}-${f.name}" name="${f.name}">
+                                    <isloop items="${f.options}" var="opt"><option value="${opt.value}" <isif condition="${opt.value === f.value}">selected="selected"</isif>>${opt.label}</option></isloop>
+                                </select>
+                            <iselse/>
+                                <input id="field-${sectionState.index.toFixed(0)}-${f.name}" type="${f.type}" name="${f.name}" value="${f.value}" maxlength="100"/>
+                            </isif>
+                        </label>
+                    </isif>
+                </isloop>
+                <button type="submit" class="button">${section.submit}</button>
+            </form>
+
+        <iselseif condition="${section.type === 'links'}">
+            <ul><isloop items="${section.links}" var="link"><li><a href="${link.url}">${link.label}</a></li></isloop></ul>
+
+        <iselseif condition="${section.type === 'pager'}">
+            <p>
+                ${Resource.msg('label.total', 'analyticsadmin', null)}: ${section.total}
+                <isif condition="${!empty(section.previous)}"> &middot; <a href="${section.previous}">${Resource.msg('label.previous', 'analyticsadmin', null)}</a></isif>
+                <isif condition="${!empty(section.next)}"> &middot; <a href="${section.next}">${Resource.msg('label.next', 'analyticsadmin', null)}</a></isif>
+            </p>
+        </isif>
+    </isloop>
+</div>
+</isdecorate>
