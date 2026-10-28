@@ -165,6 +165,22 @@ before production use.
 Import `metadata/plugin_luckydraw`, then create the prize coupon and promotion and the official-rules
 content asset before scheduling a campaign.
 
+## Storefront analytics
+
+This workspace includes `plugin_analytics`: native storefront analytics without GTM or GA4. Product
+impressions, selections, product page views and searches come from validated browser beacons; cart
+and checkout steps are recorded on the server; purchases, cancellations and refunds are reconciled
+from the orders exactly once. Business Manager shows an overview, products, top and bottom 10
+rankings, categories, the checkout funnel, orders, search terms, health and CSV export.
+
+[Feature guide with sandbox screenshots](docs/plugin_analytics/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-storefront-analytics)
+
+![Storefront Analytics overview](docs/plugin_analytics/images/bm-analytics-overview.png)
+
+Import `metadata/plugin_analytics`, add `bm_analytics:plugin_analytics` in front of the Business
+Manager cartridge path, set `analyticsEnabled` and enable the five `Analytics-*` job schedules.
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
