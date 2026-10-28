@@ -1,0 +1,821 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="AnalyticsEventBatch">
+        <display-name xml:lang="x-default">AnalyticsEventBatch</display-name>
+        <description xml:lang="x-default">Bounded batch of storefront events of one request (key = day_batchId), removed when aggregated</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="batchKey">
+            <display-name xml:lang="x-default">batchKey</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="day">
+                <display-name xml:lang="x-default">day</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="receivedAt">
+                <display-name xml:lang="x-default">receivedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="source">
+                <display-name xml:lang="x-default">source</display-name>
+                <description xml:lang="x-default">CLIENT or SERVER</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="sessionToken">
+                <display-name xml:lang="x-default">sessionToken</display-name>
+                <description xml:lang="x-default">Opaque per-session token, not the session ID</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="sampleRate">
+                <display-name xml:lang="x-default">sampleRate</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="rejected">
+                <display-name xml:lang="x-default">rejected</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="dropped">
+                <display-name xml:lang="x-default">dropped</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="events">
+                <display-name xml:lang="x-default">events</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="batchKey"/>
+                <attribute attribute-id="day"/>
+                <attribute attribute-id="receivedAt"/>
+                <attribute attribute-id="source"/>
+                <attribute attribute-id="sessionToken"/>
+                <attribute attribute-id="sampleRate"/>
+                <attribute attribute-id="rejected"/>
+                <attribute attribute-id="dropped"/>
+                <attribute attribute-id="events"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="AnalyticsSiteDaily">
+        <display-name xml:lang="x-default">AnalyticsSiteDaily</display-name>
+        <description xml:lang="x-default">Storefront totals of one day (key = yyyyMMdd, site time zone)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="recordKey">
+            <display-name xml:lang="x-default">recordKey</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="day">
+                <display-name xml:lang="x-default">day</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="sessions">
+                <display-name xml:lang="x-default">sessions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="impressions">
+                <display-name xml:lang="x-default">impressions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="impressionSessions">
+                <display-name xml:lang="x-default">impressionSessions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="selections">
+                <display-name xml:lang="x-default">selections</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="selectionSessions">
+                <display-name xml:lang="x-default">selectionSessions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="views">
+                <display-name xml:lang="x-default">views</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="viewSessions">
+                <display-name xml:lang="x-default">viewSessions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="cartAdds">
+                <display-name xml:lang="x-default">cartAdds</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="unitsAdded">
+                <display-name xml:lang="x-default">unitsAdded</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="cartSessions">
+                <display-name xml:lang="x-default">cartSessions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="checkoutStarts">
+                <display-name xml:lang="x-default">checkoutStarts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="checkoutFlows">
+                <display-name xml:lang="x-default">checkoutFlows</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="shippingSubmits">
+                <display-name xml:lang="x-default">shippingSubmits</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="shippingFlows">
+                <display-name xml:lang="x-default">shippingFlows</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentSubmits">
+                <display-name xml:lang="x-default">paymentSubmits</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentFlows">
+                <display-name xml:lang="x-default">paymentFlows</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="completedFlows">
+                <display-name xml:lang="x-default">completedFlows</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="orders">
+                <display-name xml:lang="x-default">orders</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="unitsSold">
+                <display-name xml:lang="x-default">unitsSold</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="grossCents">
+                <display-name xml:lang="x-default">grossCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="discountCents">
+                <display-name xml:lang="x-default">discountCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="shippingCents">
+                <display-name xml:lang="x-default">shippingCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="taxCents">
+                <display-name xml:lang="x-default">taxCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="totalCents">
+                <display-name xml:lang="x-default">totalCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="refundCents">
+                <display-name xml:lang="x-default">refundCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="netCents">
+                <display-name xml:lang="x-default">netCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="cancelledOrders">
+                <display-name xml:lang="x-default">cancelledOrders</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="refundedOrders">
+                <display-name xml:lang="x-default">refundedOrders</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="searches">
+                <display-name xml:lang="x-default">searches</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="noResultSearches">
+                <display-name xml:lang="x-default">noResultSearches</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="searchSelections">
+                <display-name xml:lang="x-default">searchSelections</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="batches">
+                <display-name xml:lang="x-default">batches</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="eventsAccepted">
+                <display-name xml:lang="x-default">eventsAccepted</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="eventsRejected">
+                <display-name xml:lang="x-default">eventsRejected</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="eventsDropped">
+                <display-name xml:lang="x-default">eventsDropped</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sampleRate">
+                <display-name xml:lang="x-default">sampleRate</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="recordKey"/>
+                <attribute attribute-id="day"/>
+                <attribute attribute-id="sessions"/>
+                <attribute attribute-id="impressions"/>
+                <attribute attribute-id="impressionSessions"/>
+                <attribute attribute-id="selections"/>
+                <attribute attribute-id="selectionSessions"/>
+                <attribute attribute-id="views"/>
+                <attribute attribute-id="viewSessions"/>
+                <attribute attribute-id="cartAdds"/>
+                <attribute attribute-id="unitsAdded"/>
+                <attribute attribute-id="cartSessions"/>
+                <attribute attribute-id="checkoutStarts"/>
+                <attribute attribute-id="checkoutFlows"/>
+                <attribute attribute-id="shippingSubmits"/>
+                <attribute attribute-id="shippingFlows"/>
+                <attribute attribute-id="paymentSubmits"/>
+                <attribute attribute-id="paymentFlows"/>
+                <attribute attribute-id="completedFlows"/>
+                <attribute attribute-id="orders"/>
+                <attribute attribute-id="unitsSold"/>
+                <attribute attribute-id="grossCents"/>
+                <attribute attribute-id="discountCents"/>
+                <attribute attribute-id="shippingCents"/>
+                <attribute attribute-id="taxCents"/>
+                <attribute attribute-id="totalCents"/>
+                <attribute attribute-id="refundCents"/>
+                <attribute attribute-id="netCents"/>
+                <attribute attribute-id="cancelledOrders"/>
+                <attribute attribute-id="refundedOrders"/>
+                <attribute attribute-id="searches"/>
+                <attribute attribute-id="noResultSearches"/>
+                <attribute attribute-id="searchSelections"/>
+                <attribute attribute-id="batches"/>
+                <attribute attribute-id="eventsAccepted"/>
+                <attribute attribute-id="eventsRejected"/>
+                <attribute attribute-id="eventsDropped"/>
+                <attribute attribute-id="sampleRate"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="AnalyticsProductDaily">
+        <display-name xml:lang="x-default">AnalyticsProductDaily</display-name>
+        <description xml:lang="x-default">Product totals of one day, rolled up to the master product (key = yyyyMMdd_productId)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="recordKey">
+            <display-name xml:lang="x-default">recordKey</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="day">
+                <display-name xml:lang="x-default">day</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="productId">
+                <display-name xml:lang="x-default">productId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="categoryId">
+                <display-name xml:lang="x-default">categoryId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="impressions">
+                <display-name xml:lang="x-default">impressions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="uniqueImpressions">
+                <display-name xml:lang="x-default">uniqueImpressions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="selections">
+                <display-name xml:lang="x-default">selections</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="uniqueSelections">
+                <display-name xml:lang="x-default">uniqueSelections</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="views">
+                <display-name xml:lang="x-default">views</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="uniqueViews">
+                <display-name xml:lang="x-default">uniqueViews</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="cartAdds">
+                <display-name xml:lang="x-default">cartAdds</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="uniqueCartAdds">
+                <display-name xml:lang="x-default">uniqueCartAdds</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="unitsAdded">
+                <display-name xml:lang="x-default">unitsAdded</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="orders">
+                <display-name xml:lang="x-default">orders</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="unitsSold">
+                <display-name xml:lang="x-default">unitsSold</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="grossCents">
+                <display-name xml:lang="x-default">grossCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="discountCents">
+                <display-name xml:lang="x-default">discountCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="refundCents">
+                <display-name xml:lang="x-default">refundCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="netCents">
+                <display-name xml:lang="x-default">netCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="recordKey"/>
+                <attribute attribute-id="day"/>
+                <attribute attribute-id="productId"/>
+                <attribute attribute-id="categoryId"/>
+                <attribute attribute-id="impressions"/>
+                <attribute attribute-id="uniqueImpressions"/>
+                <attribute attribute-id="selections"/>
+                <attribute attribute-id="uniqueSelections"/>
+                <attribute attribute-id="views"/>
+                <attribute attribute-id="uniqueViews"/>
+                <attribute attribute-id="cartAdds"/>
+                <attribute attribute-id="uniqueCartAdds"/>
+                <attribute attribute-id="unitsAdded"/>
+                <attribute attribute-id="orders"/>
+                <attribute attribute-id="unitsSold"/>
+                <attribute attribute-id="grossCents"/>
+                <attribute attribute-id="discountCents"/>
+                <attribute attribute-id="refundCents"/>
+                <attribute attribute-id="netCents"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="AnalyticsCategoryDaily">
+        <display-name xml:lang="x-default">AnalyticsCategoryDaily</display-name>
+        <description xml:lang="x-default">Category totals of one day, each product in its primary category only (key = yyyyMMdd_categoryId)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="recordKey">
+            <display-name xml:lang="x-default">recordKey</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="day">
+                <display-name xml:lang="x-default">day</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="categoryId">
+                <display-name xml:lang="x-default">categoryId</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="impressions">
+                <display-name xml:lang="x-default">impressions</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="selections">
+                <display-name xml:lang="x-default">selections</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="views">
+                <display-name xml:lang="x-default">views</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="cartAdds">
+                <display-name xml:lang="x-default">cartAdds</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="unitsAdded">
+                <display-name xml:lang="x-default">unitsAdded</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="orders">
+                <display-name xml:lang="x-default">orders</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="unitsSold">
+                <display-name xml:lang="x-default">unitsSold</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="netCents">
+                <display-name xml:lang="x-default">netCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="recordKey"/>
+                <attribute attribute-id="day"/>
+                <attribute attribute-id="categoryId"/>
+                <attribute attribute-id="impressions"/>
+                <attribute attribute-id="selections"/>
+                <attribute attribute-id="views"/>
+                <attribute attribute-id="cartAdds"/>
+                <attribute attribute-id="unitsAdded"/>
+                <attribute attribute-id="orders"/>
+                <attribute attribute-id="unitsSold"/>
+                <attribute attribute-id="netCents"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="AnalyticsSearchDaily">
+        <display-name xml:lang="x-default">AnalyticsSearchDaily</display-name>
+        <description xml:lang="x-default">Search term totals of one day (key = yyyyMMdd_term)</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="recordKey">
+            <display-name xml:lang="x-default">recordKey</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="day">
+                <display-name xml:lang="x-default">day</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="term">
+                <display-name xml:lang="x-default">term</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="searches">
+                <display-name xml:lang="x-default">searches</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="noResults">
+                <display-name xml:lang="x-default">noResults</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="selections">
+                <display-name xml:lang="x-default">selections</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="recordKey"/>
+                <attribute attribute-id="day"/>
+                <attribute attribute-id="term"/>
+                <attribute attribute-id="searches"/>
+                <attribute attribute-id="noResults"/>
+                <attribute attribute-id="selections"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="AnalyticsJobCheckpoint">
+        <display-name xml:lang="x-default">AnalyticsJobCheckpoint</display-name>
+        <description xml:lang="x-default">Run state, cursor and lock of the analytics jobs</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="jobId">
+            <display-name xml:lang="x-default">jobId</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastRunAt">
+                <display-name xml:lang="x-default">lastRunAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="lastSuccessAt">
+                <display-name xml:lang="x-default">lastSuccessAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="durationMs">
+                <display-name xml:lang="x-default">durationMs</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="counts">
+                <display-name xml:lang="x-default">counts</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="cursorDate">
+                <display-name xml:lang="x-default">cursorDate</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="cursorIds">
+                <display-name xml:lang="x-default">cursorIds</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="collectionPaused">
+                <display-name xml:lang="x-default">collectionPaused</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="backlog">
+                <display-name xml:lang="x-default">backlog</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="jobId"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="lastRunAt"/>
+                <attribute attribute-id="lastSuccessAt"/>
+                <attribute attribute-id="durationMs"/>
+                <attribute attribute-id="counts"/>
+                <attribute attribute-id="cursorDate"/>
+                <attribute attribute-id="cursorIds"/>
+                <attribute attribute-id="collectionPaused"/>
+                <attribute attribute-id="backlog"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="AnalyticsRanking">
+        <display-name xml:lang="x-default">AnalyticsRanking</display-name>
+        <description xml:lang="x-default">Precomputed top and bottom 10 lists of a standard period</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="period">
+            <display-name xml:lang="x-default">period</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="fromDay">
+                <display-name xml:lang="x-default">fromDay</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="toDay">
+                <display-name xml:lang="x-default">toDay</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="generatedAt">
+                <display-name xml:lang="x-default">generatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="data">
+                <display-name xml:lang="x-default">data</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginAnalytics">
+                <display-name xml:lang="x-default">Analytics (plugin_analytics)</display-name>
+                <attribute attribute-id="period"/>
+                <attribute attribute-id="fromDay"/>
+                <attribute attribute-id="toDay"/>
+                <attribute attribute-id="generatedAt"/>
+                <attribute attribute-id="data"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>
