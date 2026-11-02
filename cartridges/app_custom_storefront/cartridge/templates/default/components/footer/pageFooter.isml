@@ -1,0 +1,108 @@
+<footer id="footercontent">
+    <div class="footer-signup">
+        <div class="container d-flex flex-column flex-lg-row align-items-lg-center justify-content-between">
+            <div class="footer-signup-copy">
+                <h2 class="footer-signup-title">${Resource.msg('heading.home.signup', 'storefront', null)}</h2>
+                <p class="m-0">${Resource.msg('description.form.emailsignup', 'homePage', null)}</p>
+            </div>
+            <form role="form" class="footer-signup-form flex-grow-1">
+                <div class="input-group">
+                    <input type="email" class="form-control" name="hpEmailSignUp" autocomplete="email" placeholder="${Resource.msg('placeholdertext.form.emailsignup', 'homePage', null)}" aria-label="${Resource.msg('placeholdertext.form.emailsignup', 'homePage', null)}">
+                    <button type="submit" class="btn btn-primary subscribe-email" data-href="${URLUtils.url('EmailSubscribe-Subscribe')}">${Resource.msg('button.form.emailsignup', 'homePage', null)}</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <ul class="footer-trust d-flex flex-wrap list-unstyled">
+            <li class="d-flex align-items-center flex-grow-1"><svg class="store-icon flex-shrink-0" aria-hidden="true"><use href="${'#'}icon-truck"></use></svg><span>${Resource.msg('trust.shipping', 'storefront', null)}</span></li>
+            <li class="d-flex align-items-center flex-grow-1"><svg class="store-icon flex-shrink-0" aria-hidden="true"><use href="${'#'}icon-shield"></use></svg><span>${Resource.msg('trust.payments', 'storefront', null)}</span></li>
+            <li class="d-flex align-items-center flex-grow-1"><svg class="store-icon flex-shrink-0" aria-hidden="true"><use href="${'#'}icon-pin"></use></svg><span>${Resource.msg('trust.pickup', 'storefront', null)}</span></li>
+            <li class="d-flex align-items-center flex-grow-1"><svg class="store-icon flex-shrink-0" aria-hidden="true"><use href="${'#'}icon-chat"></use></svg><span>${Resource.msg('trust.support', 'storefront', null)}</span></li>
+        </ul>
+
+        <div class="footer-container row">
+            <div class="footer-item col-sm-6 col-lg-3 collapsible-xs">
+                <div>
+                    <button class="title btn text-start text-left w-100 d-sm-none" aria-expanded="false" aria-controls="footer-shop">${Resource.msg('footer.shop', 'storefront', null)}</button>
+                    <h2 class="title d-none d-sm-block">${Resource.msg('footer.shop', 'storefront', null)}</h2>
+                </div>
+                <ul id="footer-shop" class="menu-footer content">
+                    <li><a href="${URLUtils.url('Search-Show', 'cgid', 'newarrivals')}">${Resource.msg('footer.link.new', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Search-Show', 'cgid', 'womens')}">${Resource.msg('footer.link.women', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Search-Show', 'cgid', 'mens')}">${Resource.msg('footer.link.men', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Search-Show', 'cgid', 'Shoes')}">${Resource.msg('footer.link.shoes', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Search-Show', 'cgid', 'womens-jewelry')}">${Resource.msg('footer.link.jewelry', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Search-Show', 'cgid', 'electronics')}">${Resource.msg('footer.link.electronics', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Search-Show', 'cgid', 'Mobiles_U')}">${Resource.msg('footer.link.mobiles', 'storefront', null)}</a></li>
+                </ul>
+            </div>
+            <div class="footer-item col-sm-6 col-lg-3 collapsible-xs">
+                <div>
+                    <button class="title btn text-start text-left w-100 d-sm-none" aria-expanded="false" aria-controls="footer-perks">${Resource.msg('footer.perks', 'storefront', null)}</button>
+                    <h2 class="title d-none d-sm-block">${Resource.msg('footer.perks', 'storefront', null)}</h2>
+                </div>
+                <ul id="footer-perks" class="menu-footer content">
+                    <li><a href="${URLUtils.https('PrimeMembership-Show')}">${Resource.msg('footer.link.prime', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Wallet-Show')}">${Resource.msg('footer.link.wallet', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Loyalty-Show')}">${Resource.msg('footer.link.rewards', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('LuckyDraw-Show')}">${Resource.msg('footer.link.draws', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Affiliate-Show')}">${Resource.msg('footer.link.refer', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Rental-Bookings')}">${Resource.msg('footer.link.rentals', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Registry-Dashboard')}">${Resource.msg('footer.link.registry', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('CustomWishlist-Show')}">${Resource.msg('footer.link.wishlist', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('ProductCompare-Show')}">${Resource.msg('footer.link.compare', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Seller-Show')}">${Resource.msg('footer.link.seller', 'storefront', null)}</a></li>
+                </ul>
+            </div>
+            <div class="footer-item col-sm-6 col-lg-3 collapsible-xs">
+                <div>
+                    <button class="title btn text-start text-left w-100 d-sm-none" aria-expanded="false" aria-controls="footer-account">${Resource.msg('footer.account', 'storefront', null)}</button>
+                    <h2 class="title d-none d-sm-block">${Resource.msg('footer.account', 'storefront', null)}</h2>
+                </div>
+                <ul id="footer-account" class="menu-footer content">
+                    <li><a href="${URLUtils.https('Account-Show')}">${Resource.msg('footer.link.account', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Order-History')}">${Resource.msg('footer.link.orders', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('OrderLookup-Show')}">${Resource.msg('footer.link.track', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Marketplace-Purchases')}">${Resource.msg('footer.link.purchases', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Address-List')}">${Resource.msg('footer.link.addresses', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('PaymentInstruments-List')}">${Resource.msg('footer.link.payments', 'storefront', null)}</a></li>
+                </ul>
+            </div>
+            <div class="footer-item col-sm-6 col-lg-3 collapsible-xs">
+                <div>
+                    <button class="title btn text-start text-left w-100 d-sm-none" aria-expanded="false" aria-controls="footer-help">${Resource.msg('footer.help', 'storefront', null)}</button>
+                    <h2 class="title d-none d-sm-block">${Resource.msg('footer.help', 'storefront', null)}</h2>
+                </div>
+                <ul id="footer-help" class="menu-footer content">
+                    <li><a href="${URLUtils.https('ContactUs-Landing')}">${Resource.msg('footer.link.contact', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.https('Stores-Find')}">${Resource.msg('footer.link.stores', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Page-Show', 'cid', 'about-us')}">${Resource.msg('footer.link.about', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Page-Show', 'cid', 'privacy-policy')}">${Resource.msg('footer.link.privacy', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Page-Show', 'cid', 'terms')}">${Resource.msg('footer.link.terms', 'storefront', null)}</a></li>
+                    <li><a href="${URLUtils.url('Page-Show', 'cid', 'jobs-landing')}">${Resource.msg('footer.link.jobs', 'storefront', null)}</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-legal d-flex flex-column flex-md-row align-items-md-center justify-content-between">
+            <div class="copyright-notice">
+                <iscontentasset aid="footer-copy" />
+            </div>
+            <div class="footer-payments d-flex align-items-center" role="img" aria-label="${Resource.msg('label.payment.methods', 'storefront', null)}">
+                <span class="footer-payment-chip">Visa</span>
+                <span class="footer-payment-chip">Mastercard</span>
+                <span class="footer-payment-chip">Amex</span>
+                <span class="footer-payment-chip">Discover</span>
+            </div>
+            <div class="social d-flex align-items-center">
+                <isslot id="footer-column-m" description="Content in column 1 of the Footer" context="global" />
+                <button class="back-to-top" title="${Resource.msg('button.back_to_top', 'common', null)}" aria-label="${Resource.msg('button.back_to_top', 'common', null)}">
+                    <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-chevron-left"></use></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</footer>
+<script defer src="${URLUtils.staticURL('/js/store-ui.js')}"></script>

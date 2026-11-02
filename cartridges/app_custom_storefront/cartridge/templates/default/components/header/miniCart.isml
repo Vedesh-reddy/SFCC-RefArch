@@ -1,0 +1,16 @@
+<div class="minicart-total hide-link-med">
+    <a class="minicart-link" href="${URLUtils.https('Cart-Show')}" title="${Resource.msgf('minicart.count','common',null, pdict.quantityTotal)}" aria-label="${Resource.msgf('minicart.count','common',null, pdict.quantityTotal)}" aria-haspopup="true">
+        <svg class="store-icon minicart-icon" aria-hidden="true"><use href="${'#'}icon-bag"></use></svg>
+        <span class="minicart-quantity">
+            <isprint value="${pdict.quantityTotal}" formatter="##" />
+        </span>
+    </a>
+</div>
+
+<div class="minicart-total hide-no-link">
+    <svg class="store-icon minicart-icon" aria-hidden="true"><use href="${'#'}icon-bag"></use></svg>
+    <span class="minicart-quantity">
+        <isprint value="${pdict.quantityTotal}" formatter="##" />
+    </span>
+</div>
+<div class="popover popover-bottom"></div>

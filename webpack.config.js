@@ -47,6 +47,13 @@ module.exports = [
                 './cartridges/' + cartridgeName + '/cartridge/static'
             )
         },
+        resolve: {
+            alias: {
+                base: path.resolve(
+                    './cartridges/app_storefront_base/cartridge/client/default/scss'
+                )
+            }
+        },
         module: {
             rules: [
                 {

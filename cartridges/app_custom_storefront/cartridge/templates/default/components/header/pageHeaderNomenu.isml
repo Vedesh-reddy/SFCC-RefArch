@@ -1,0 +1,14 @@
+<isinclude template="/components/header/skipNav" />
+<isinclude template="components/icons/sprite" />
+<header class="site-header sticky-top">
+    <nav role="navigation" aria-label="${Resource.msg('label.header.navigation', 'storefront', null)}">
+        <div class="header container d-flex align-items-center justify-content-center">
+            <div class="navbar-header brand flex-shrink-0">
+                <a class="logo-home d-block" href="${URLUtils.url('Home-Show')}" title="${ Resource.msgf('global.homepage.tooltip', 'common', null, Resource.msg('global.storename', 'common', null), Resource.msg('global.home', 'common', null)) }">
+                    <img class="hidden-md-down" src="${URLUtils.staticURL('/images/logo.svg')}" alt="${Resource.msg('global.storename', 'common', null)}" />
+                    <img class="d-lg-none" src="${URLUtils.staticURL('/images/logo-small.svg')}" alt="${Resource.msg('global.storename', 'common', null)}" />
+                </a>
+            </div>
+        </div>
+    </nav>
+</header>
