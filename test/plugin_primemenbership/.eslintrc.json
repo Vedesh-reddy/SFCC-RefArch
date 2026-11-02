@@ -1,0 +1,16 @@
+{
+  "env": {
+    "node": true,
+    "mocha": true,
+    "es2022": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 2022
+  },
+  "rules": {
+    "require-jsdoc": "off",
+    "valid-jsdoc": "off",
+    "no-template-curly-in-string": "off",
+    "no-param-reassign": ["error", { "props": false }]
+  }
+}
