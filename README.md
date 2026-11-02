@@ -181,6 +181,22 @@ rankings, categories, the checkout funnel, orders, search terms, health and CSV 
 Import `metadata/plugin_analytics`, add `bm_analytics:plugin_analytics` in front of the Business
 Manager cartridge path, set `analyticsEnabled` and enable the five `Analytics-*` job schedules.
 
+## Prime Membership
+
+This workspace includes `plugin_primemenbership`: a paid annual membership with three USD plans,
+verified payment, prorated upgrades, capped member discounts and free shipping, members-only and
+early access products, seven lifecycle jobs and a Business Manager desk. It isn't ready for
+production: the base card processor doesn't take money, so a real payment gateway is needed first.
+
+[Feature guide with sandbox screenshots](docs/plugin_primemenbership/README.md)
+
+![Membership plans](docs/plugin_primemenbership/images/sf-landing.png)
+
+Add `plugin_primemenbership` before `app_storefront_base` and to the right of `plugin_seller`, add
+`bm_primemenbership:plugin_primemenbership` to the Business Manager cartridge path, import
+`metadata/plugin_primemenbership`, then follow the
+[deployment guide](docs/plugin_primemenbership/prime-membership-deployment.md).
+
 This is a repository for the Storefront Reference Architecture reference application.
 
 Storefront Reference Architecture has a base cartridge (`app_storefront_base`) provided by Commerce Cloud that is never directly customized or edited. Instead, customization cartridges are layered on top of the base cartridge. This change is intended to allow for easier adoption of new features and bug fixes.
