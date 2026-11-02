@@ -181,6 +181,15 @@ rankings, categories, the checkout funnel, orders, search terms, health and CSV 
 Import `metadata/plugin_analytics`, add `bm_analytics:plugin_analytics` in front of the Business
 Manager cartridge path, set `analyticsEnabled` and enable the five `Analytics-*` job schedules.
 
+## Storefront Redesign
+
+This workspace includes `app_custom_storefront`: a storefront overlay with a sliding home page, catalog-driven product carousels, a category filter drawer, a product price trend chart, and rebuilt cart, login and account pages. It changes no base or plugin cartridge.
+
+[Install, tokens and template overrides](cartridges/app_custom_storefront/README.md) ·
+[Screenshots](docs/app_custom_storefront/README.md)
+
+![Home page](docs/app_custom_storefront/images/home.jpg)
+
 ## Prime Membership
 
 This workspace includes `plugin_primemenbership`: a paid annual membership with three USD plans,
