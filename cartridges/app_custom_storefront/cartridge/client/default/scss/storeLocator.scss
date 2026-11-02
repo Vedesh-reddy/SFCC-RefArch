@@ -1,0 +1,6 @@
+@import "theme-variables";
+@import "~base/storeLocator";
+
+.store-locator-container .btn-storelocator-search {
+    color: $theme-action-strong;
+}

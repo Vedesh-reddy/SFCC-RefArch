@@ -1,0 +1,43 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/login.css');
+        assets.addJs('/js/login.js');
+    </isscript>
+
+    <div class="login-layout d-flex">
+        <div class="login-visual d-none d-lg-block position-relative flex-grow-1">
+            <img class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/login-visual.jpg')}" alt="" loading="lazy">
+            <div class="login-visual-copy position-absolute bottom-0 start-0">
+                <p class="login-visual-title">${Resource.msg('login.visual.title', 'storefront', null)}</p>
+                <ul class="list-unstyled m-0">
+                    <li><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-wallet"></use></svg>${Resource.msg('login.visual.wallet', 'storefront', null)}</li>
+                    <li><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-crown"></use></svg>${Resource.msg('login.visual.prime', 'storefront', null)}</li>
+                    <li><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-heart"></use></svg>${Resource.msg('login.visual.wishlist', 'storefront', null)}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="login-page login-panel flex-shrink-0">
+            <h1 class="page-title">${Resource.msg('header.hero.image.login', 'login', null)}</h1>
+            <div class="login-form-nav">
+                <isinclude template="account/components/navTabs" />
+                <div class="tab-content">
+                    <div class="tab-pane ${pdict.navTabValue === 'login' ? 'active' : ''}" id="login" role="tabpanel" aria-labelledby="login-tab">
+                        <isinclude template="account/components/loginForm" />
+                        <isinclude template="account/password/requestPasswordResetModal"/>
+                        <isinclude template="account/components/oauth" />
+                    </div>
+                    <div class="tab-pane ${pdict.navTabValue === "register" ? 'active' : ''}" id="register" role="tabpanel" aria-labelledby="register-tab">
+                        <isinclude template="account/components/registerForm" />
+                    </div>
+                </div>
+            </div>
+            <details class="login-track-order">
+                <summary><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-box"></use></svg>${Resource.msg('login.track.summary', 'storefront', null)}</summary>
+                <div class="card">
+                    <isinclude template="account/components/trackOrderForm" />
+                </div>
+            </details>
+        </div>
+    </div>
+</isdecorate>

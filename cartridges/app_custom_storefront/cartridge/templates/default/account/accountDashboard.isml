@@ -1,0 +1,98 @@
+<isdecorate template="common/layout/page">
+
+    <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
+        <isinclude template="reporting/reportingUrls" />
+    </isif>
+
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/account/dashboard.css');
+    </isscript>
+
+    <div class="account-hero">
+        <div class="container">
+            <h1 class="account-hero-title">${Resource.msgf('account.greeting', 'storefront', null, pdict.account.profile.firstName)}</h1>
+            <p class="account-hero-lead">${Resource.msg('account.lead', 'storefront', null)}</p>
+        </div>
+    </div>
+
+    <div class="container account-dashboard">
+        <nav class="account-shortcuts" aria-label="${Resource.msg('label.account.shortcuts', 'storefront', null)}">
+            <ul class="row list-unstyled">
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-orders d-flex align-items-center h-100" href="${URLUtils.https('Order-History')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-box"></use></svg></span>
+                        <span>${Resource.msg('footer.link.orders', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-wallet d-flex align-items-center h-100" href="${URLUtils.https('Wallet-Show')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-wallet"></use></svg></span>
+                        <span>${Resource.msg('footer.link.wallet', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-prime d-flex align-items-center h-100" href="${URLUtils.https('PrimeMembership-Dashboard')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-crown"></use></svg></span>
+                        <span>${Resource.msg('footer.link.prime', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-wishlist d-flex align-items-center h-100" href="${URLUtils.https('CustomWishlist-Show')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-heart"></use></svg></span>
+                        <span>${Resource.msg('footer.link.wishlist', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-rewards d-flex align-items-center h-100" href="${URLUtils.https('Loyalty-Show')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-star"></use></svg></span>
+                        <span>${Resource.msg('footer.link.rewards', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-rentals d-flex align-items-center h-100" href="${URLUtils.https('Rental-Bookings')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-calendar"></use></svg></span>
+                        <span>${Resource.msg('footer.link.rentals', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-registry d-flex align-items-center h-100" href="${URLUtils.https('Registry-Dashboard')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-list"></use></svg></span>
+                        <span>${Resource.msg('footer.link.registry', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-refer d-flex align-items-center h-100" href="${URLUtils.https('Affiliate-Dashboard')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-share"></use></svg></span>
+                        <span>${Resource.msg('footer.link.refer', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-addresses d-flex align-items-center h-100" href="${URLUtils.https('Address-List')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-home"></use></svg></span>
+                        <span>${Resource.msg('footer.link.addresses', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-payments d-flex align-items-center h-100" href="${URLUtils.https('PaymentInstruments-List')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-card"></use></svg></span>
+                        <span>${Resource.msg('footer.link.payments', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-draws d-flex align-items-center h-100" href="${URLUtils.https('LuckyDraw-Show')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-gift"></use></svg></span>
+                        <span>${Resource.msg('footer.link.draws', 'storefront', null)}</span>
+                    </a>
+                </li>
+                <li class="col-6 col-md-3">
+                    <a class="account-shortcut account-shortcut-seller d-flex align-items-center h-100" href="${URLUtils.https('Seller-Show')}">
+                        <span class="account-shortcut-icon d-inline-flex align-items-center justify-content-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-store"></use></svg></span>
+                        <span>${Resource.msg('footer.link.seller', 'storefront', null)}</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <isinclude template="account/dashboardProfileCards"/>
+    </div>
+</isdecorate>

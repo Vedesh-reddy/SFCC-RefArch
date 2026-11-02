@@ -1,0 +1,91 @@
+@import "theme-variables";
+@import "~base/login";
+
+.login-layout {
+    min-height: 44rem;
+}
+
+.login-visual {
+    color: $white;
+
+    // Wash behind the benefits list, so it stays readable on the photo.
+    &::after {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 74%) 0%, rgba(0, 0, 0, 0%) 60%);
+        content: "";
+        inset: 0;
+        position: absolute;
+    }
+}
+
+.login-visual-copy {
+    padding: 3rem;
+    z-index: 1;
+
+    li {
+        align-items: center;
+        display: flex;
+        gap: 0.625rem;
+        margin-bottom: 0.625rem;
+    }
+}
+
+.login-visual-title {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+}
+
+.login-panel {
+    max-width: 100%;
+    padding: 1rem 1.25rem 3.75rem;
+    width: 100%;
+
+    @include media-breakpoint-up(lg) {
+        padding: 1rem 3.5rem 3.75rem;
+        width: 36rem;
+    }
+
+    h1.page-title {
+        text-align: left;
+    }
+
+    .nav-tabs {
+        border-bottom: 1px solid $theme-hairline;
+        margin-bottom: 1.5rem;
+    }
+
+    .nav-tabs .nav-link {
+        font-size: 1.0625rem;
+    }
+
+    .btn {
+        min-height: 3rem;
+    }
+}
+
+.login-track-order {
+    border-top: 1px solid $theme-hairline;
+    margin-top: 2rem;
+
+    summary {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        font-weight: 600;
+        gap: 0.625rem;
+        min-height: 3.5rem;
+    }
+
+    .card {
+        border: 0;
+        margin: 0;
+    }
+
+    .card-header,
+    .card-body {
+        border: 0;
+        padding-left: 0;
+        padding-right: 0;
+    }
+}
