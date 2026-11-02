@@ -188,7 +188,8 @@ verified payment, prorated upgrades, capped member discounts and free shipping, 
 early access products, seven lifecycle jobs and a Business Manager desk. It isn't ready for
 production: the base card processor doesn't take money, so a real payment gateway is needed first.
 
-[Feature guide with sandbox screenshots](docs/plugin_primemenbership/README.md)
+[Feature guide with sandbox screenshots](docs/plugin_primemenbership/README.md) ·
+[Dedicated repository and code documentation](https://github.com/Vedesh-reddy/sfcc-prime-membership)
 
 ![Membership plans](docs/plugin_primemenbership/images/sf-landing.png)
 
