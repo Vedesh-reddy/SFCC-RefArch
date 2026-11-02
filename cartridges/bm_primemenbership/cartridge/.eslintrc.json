@@ -1,0 +1,10 @@
+{
+  "globals": {
+    "request": "readonly",
+    "response": "readonly",
+    "session": "readonly"
+  },
+  "rules": {
+    "no-param-reassign": ["error", { "props": false }]
+  }
+}

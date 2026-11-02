@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<extensions xmlns="http://www.demandware.com/xml/bmmodules/2007-12-11"
+            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.demandware.com/xml/bmmodules/2007-12-11 bmext.xsd">
+    <menuitem id="prime-membership-menu" position="99040" site="true">
+        <name xml:lang="x-default">Prime Membership</name>
+        <short_description xml:lang="x-default">Prime Membership administration</short_description>
+        <description xml:lang="x-default">Plans, memberships, reconciliation, reports and audit</description>
+        <sldsIconName>trailhead</sldsIconName>
+    </menuitem>
+    <menuaction id="prime-membership-home" menupath="prime-membership-menu" position="10" site="true">
+        <name xml:lang="x-default">Overview and reports</name>
+        <short_description xml:lang="x-default">Configuration check, member counts and revenue</short_description>
+        <description xml:lang="x-default">Configuration check, member counts and revenue</description>
+        <exec pipeline="PrimeMembershipAdmin" node="Home"/>
+        <sub-pipelines>
+            <pipeline name="PrimeMembershipAdmin-Home"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="prime-membership-plans" menupath="prime-membership-menu" position="20" site="true">
+        <name xml:lang="x-default">Plans and benefits</name>
+        <short_description xml:lang="x-default">Prices, benefits, savings caps and exclusions</short_description>
+        <description xml:lang="x-default">Prices, benefits, savings caps and exclusions</description>
+        <exec pipeline="PrimeMembershipAdmin" node="Plans"/>
+        <sub-pipelines>
+            <pipeline name="PrimeMembershipAdmin-Plans"/>
+            <pipeline name="PrimeMembershipAdmin-SavePlan"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="prime-membership-members" menupath="prime-membership-menu" position="30" site="true">
+        <name xml:lang="x-default">Memberships</name>
+        <short_description xml:lang="x-default">Search memberships and review their history</short_description>
+        <description xml:lang="x-default">Search memberships and review their history</description>
+        <exec pipeline="PrimeMembershipAdmin" node="Members"/>
+        <sub-pipelines>
+            <pipeline name="PrimeMembershipAdmin-Members"/>
+            <pipeline name="PrimeMembershipAdmin-Member"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="prime-membership-operations" menupath="prime-membership-menu" position="40" site="true">
+        <name xml:lang="x-default">Reconciliation and corrections</name>
+        <short_description xml:lang="x-default">Payment reviews, refunds, suspensions (grant this role separately)</short_description>
+        <description xml:lang="x-default">Payment reviews, refunds, suspensions (grant this role separately)</description>
+        <exec pipeline="PrimeMembershipAdmin" node="Reviews"/>
+        <sub-pipelines>
+            <pipeline name="PrimeMembershipAdmin-Reviews"/>
+            <pipeline name="PrimeMembershipAdmin-ResolveReview"/>
+            <pipeline name="PrimeMembershipAdmin-MemberAction"/>
+        </sub-pipelines>
+    </menuaction>
+    <menuaction id="prime-membership-audit" menupath="prime-membership-menu" position="50" site="true">
+        <name xml:lang="x-default">Audit trail</name>
+        <short_description xml:lang="x-default">Read the membership audit trail</short_description>
+        <description xml:lang="x-default">Read the membership audit trail</description>
+        <exec pipeline="PrimeMembershipAdmin" node="Audit"/>
+        <sub-pipelines>
+            <pipeline name="PrimeMembershipAdmin-Audit"/>
+        </sub-pipelines>
+    </menuaction>
+</extensions>
