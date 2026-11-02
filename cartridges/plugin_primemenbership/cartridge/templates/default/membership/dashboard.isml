@@ -1,0 +1,137 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/prime-membership.css');
+    </isscript>
+    <div class="container prime-membership-page py-4">
+        <h1>${Resource.msg('dashboard.heading', 'primemembership', null)}</h1>
+        <isinclude template="membership/components/flash" />
+        <isif condition="${pdict.membership}">
+            <section class="card mb-3" aria-labelledby="prime-membership-current">
+                <div class="card-body">
+                    <h2 class="h4" id="prime-membership-current">${pdict.membership.planName}</h2>
+                    <p><span class="badge badge-secondary bg-secondary">${Resource.msg('status.' + pdict.membership.status, 'primemembership', null)}</span></p>
+                    <dl class="prime-membership-facts mb-2">
+                        <dt>${Resource.msg('dashboard.start', 'primemembership', null)}</dt><dd>${pdict.membership.startDate}</dd>
+                        <dt>${Resource.msg('dashboard.expiration', 'primemembership', null)}</dt><dd>${pdict.membership.expirationDate}</dd>
+                        <dt>${Resource.msg('dashboard.remaining', 'primemembership', null)}</dt><dd>${pdict.membership.remainingDays}</dd>
+                    </dl>
+                    <div class="d-flex flex-row flex-wrap align-items-center">
+                        <isif condition="${pdict.membership.canRenew}"><a class="btn btn-primary mr-2 me-2 mb-2" href="${URLUtils.https('PrimeMembership-Renew')}">${Resource.msg('action.renew', 'primemembership', null)}</a></isif>
+                        <isif condition="${pdict.membership.canCancel}"><a class="btn btn-outline-secondary mr-2 me-2 mb-2" href="${URLUtils.https('PrimeMembership-Cancel')}">${Resource.msg('action.cancel', 'primemembership', null)}</a></isif>
+                        <isif condition="${pdict.membership.canReactivate}">
+                            <form action="${URLUtils.https('PrimeMembership-Reactivate')}" method="post" class="mb-2">
+                                <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                                <button type="submit" class="btn btn-primary">${Resource.msg('action.reactivate', 'primemembership', null)}</button>
+                            </form>
+                        </isif>
+                        <isif condition="${pdict.membership.canJoin}"><a class="btn btn-primary mb-2" href="${URLUtils.https('PrimeMembership-Show')}">${Resource.msg('action.join', 'primemembership', null)}</a></isif>
+                    </div>
+                </div>
+            </section>
+
+            <isif condition="${pdict.benefits.length > 0}">
+                <section class="mb-3" aria-labelledby="prime-membership-benefits">
+                    <h2 class="h4" id="prime-membership-benefits">${Resource.msg('dashboard.benefits', 'primemembership', null)}</h2>
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead><tr>
+                                <th scope="col">${Resource.msg('dashboard.benefit', 'primemembership', null)}</th>
+                                <th scope="col">${Resource.msg('dashboard.benefit-status', 'primemembership', null)}</th>
+                                <th scope="col">${Resource.msg('dashboard.used', 'primemembership', null)}</th>
+                                <th scope="col">${Resource.msg('dashboard.left', 'primemembership', null)}</th>
+                            </tr></thead>
+                            <tbody>
+                                <isloop items="${pdict.benefits}" var="benefit">
+                                    <tr>
+                                        <td>${benefit.text}</td>
+                                        <td>${Resource.msg('benefit.status.' + benefit.status, 'primemembership', null)}</td>
+                                        <td><isif condition="${benefit.hasCap}">${benefit.used}<iselse/>${benefit.uses}</isif></td>
+                                        <td><isif condition="${benefit.hasCap}">${benefit.remaining}</isif></td>
+                                    </tr>
+                                </isloop>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+            </isif>
+
+            <section class="mb-3" aria-labelledby="prime-membership-settings">
+                <h2 class="h4" id="prime-membership-settings">${Resource.msg('dashboard.settings', 'primemembership', null)}</h2>
+                <form action="${URLUtils.https('PrimeMembership-UpdateSettings')}" method="post">
+                    <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                    <isif condition="${pdict.membership.autoRenewAvailable}">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" id="prime-membership-auto-renew" name="${pdict.settingsForm.autoRenew.htmlName}" value="true" <isif condition="${pdict.membership.autoRenew}">checked="checked"</isif> />
+                            <label class="form-check-label" for="prime-membership-auto-renew">${Resource.msg('dashboard.auto-renew', 'primemembership', null)}</label>
+                        </div>
+                    <iselse/>
+                        <p class="small text-muted">${Resource.msg('dashboard.auto-renew-off', 'primemembership', null)}</p>
+                    </isif>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" id="prime-membership-marketing" name="${pdict.settingsForm.marketingEmails.htmlName}" value="true" <isif condition="${pdict.membership.marketingEmails}">checked="checked"</isif> />
+                        <label class="form-check-label" for="prime-membership-marketing">${Resource.msg('dashboard.marketing', 'primemembership', null)}</label>
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">${Resource.msg('dashboard.save', 'primemembership', null)}</button>
+                </form>
+            </section>
+        <iselse/>
+            <p>${Resource.msg('dashboard.none', 'primemembership', null)}</p>
+            <a class="btn btn-primary mb-3" href="${URLUtils.https('PrimeMembership-Show')}">${Resource.msg('action.join', 'primemembership', null)}</a>
+        </isif>
+
+        <isif condition="${pdict.upgrades.length > 0}">
+            <section class="mb-3" aria-labelledby="prime-membership-upgrades">
+                <h2 class="h4" id="prime-membership-upgrades">${Resource.msg('dashboard.upgrades', 'primemembership', null)}</h2>
+                <ul class="list-unstyled">
+                    <isloop items="${pdict.upgrades}" var="plan">
+                        <li class="mb-2"><a href="${plan.actionUrl}">${Resource.msgf('dashboard.upgrade-to', 'primemembership', null, plan.planName, plan.price)}</a></li>
+                    </isloop>
+                </ul>
+            </section>
+        </isif>
+
+        <isif condition="${pdict.usage.length > 0}">
+            <section class="mb-3" aria-labelledby="prime-membership-savings">
+                <h2 class="h4" id="prime-membership-savings">${Resource.msg('dashboard.savings', 'primemembership', null)}</h2>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead><tr>
+                            <th scope="col">${Resource.msg('dashboard.date', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('dashboard.order', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('dashboard.amount', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('dashboard.reward', 'primemembership', null)}</th>
+                        </tr></thead>
+                        <tbody>
+                            <isloop items="${pdict.usage}" var="row">
+                                <tr><td>${row.date}</td><td>${row.orderNo}</td><td>${row.amount}</td><td>${row.rewardCode}</td></tr>
+                            </isloop>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </isif>
+
+        <isif condition="${pdict.transactions.length > 0}">
+            <section class="mb-3" aria-labelledby="prime-membership-transactions">
+                <h2 class="h4" id="prime-membership-transactions">${Resource.msg('dashboard.transactions', 'primemembership', null)}</h2>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead><tr>
+                            <th scope="col">${Resource.msg('dashboard.date', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('dashboard.type', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('dashboard.amount', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('dashboard.benefit-status', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('dashboard.order', 'primemembership', null)}</th>
+                        </tr></thead>
+                        <tbody>
+                            <isloop items="${pdict.transactions}" var="row">
+                                <tr><td>${row.date}</td><td>${Resource.msg('transaction.type.' + row.type, 'primemembership', null)}</td><td>${row.total}</td><td>${Resource.msg('transaction.status.' + row.status, 'primemembership', null)}</td><td>${row.orderNo}</td></tr>
+                            </isloop>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </isif>
+    </div>
+</isdecorate>

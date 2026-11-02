@@ -1,0 +1,6 @@
+<isdecorate template="common/layout/page">
+    <div class="container prime-membership-page py-4">
+        <h1>${pdict.name}</h1>
+        <isif condition="${pdict.body}"><isprint value="${pdict.body}" encoding="off" /></isif>
+    </div>
+</isdecorate>

@@ -1,0 +1,5 @@
+<ul class="prime-membership-benefits list-unstyled mb-3">
+    <isloop items="${pdict.listBenefits}" var="benefit">
+        <li class="d-flex mb-2"><span class="prime-membership-check mr-2 me-2" aria-hidden="true">&#10003;</span><span>${benefit.text}</span></li>
+    </isloop>
+</ul>

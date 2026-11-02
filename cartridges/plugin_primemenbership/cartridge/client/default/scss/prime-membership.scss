@@ -1,0 +1,33 @@
+// Membership visual treatment only; layout comes from Bootstrap utilities in the templates.
+
+$prime-membership-accent: #7a5c00;
+
+.prime-membership-banner {
+    background-color: #fdf6e3;
+    border-radius: 0.5rem;
+}
+
+.prime-membership-plan {
+    border-top: 0.25rem solid $prime-membership-accent;
+}
+
+.prime-membership-price,
+.prime-membership-check {
+    color: $prime-membership-accent;
+}
+
+.prime-membership-facts dd {
+    margin-bottom: 0.5rem;
+}
+
+.prime-membership-terms-box {
+    max-height: 16rem;
+    overflow-y: auto;
+    border: 1px solid #dee2e6;
+    padding: 0.75rem;
+}
+
+// The deployed base can ship Bootstrap 4, which draws no tick on this class without custom controls.
+.prime-membership-page .form-check-input {
+    appearance: auto;
+}

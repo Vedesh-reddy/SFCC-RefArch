@@ -1,0 +1,82 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/prime-membership.css');
+    </isscript>
+    <div class="container prime-membership-page py-4">
+        <header class="prime-membership-banner p-4 mb-4 text-center">
+            <h1>${Resource.msg('landing.heading', 'primemembership', null)}</h1>
+            <p class="mb-0">${Resource.msg('landing.intro', 'primemembership', null)}</p>
+        </header>
+        <isinclude template="membership/components/flash" />
+        <isif condition="${pdict.tier}">
+            <p class="alert alert-info" role="status">
+                ${Resource.msgf('landing.current', 'primemembership', null, pdict.tier.planName)}
+                <a href="${URLUtils.https('PrimeMembership-Dashboard')}">${Resource.msg('landing.dashboard', 'primemembership', null)}</a>
+            </p>
+        </isif>
+        <isif condition="${pdict.plans.length === 0}">
+            <p>${Resource.msg('landing.empty', 'primemembership', null)}</p>
+        </isif>
+
+        <div class="row">
+            <isloop items="${pdict.plans}" var="plan">
+                <div class="col-12 col-md-4 mb-3">
+                    <section class="card h-100 prime-membership-plan" aria-labelledby="prime-membership-plan-${plan.planID}">
+                        <div class="card-body d-flex flex-column">
+                            <h2 class="h4" id="prime-membership-plan-${plan.planID}">${plan.planName}</h2>
+                            <isif condition="${plan.current}">
+                                <p class="badge badge-success bg-success align-self-start">${Resource.msg('plan.current', 'primemembership', null)}</p>
+                            </isif>
+                            <p class="prime-membership-price h3">${plan.price}<span class="h6"> ${Resource.msg('plan.per-year', 'primemembership', null)}</span></p>
+                            <isset name="listBenefits" value="${plan.benefits}" scope="pdict" />
+                            <isinclude template="membership/components/benefit-list" />
+                            <a class="mb-2 mt-auto" href="${URLUtils.https('PrimeMembership-Details', 'plan', plan.planID)}">${Resource.msg('plan.details', 'primemembership', null)}<span class="sr-only visually-hidden">: ${plan.planName}</span></a>
+                            <isif condition="${plan.actionUrl}">
+                                <a class="btn btn-primary" href="${plan.actionUrl}">${Resource.msg('action.' + plan.actionLabel, 'primemembership', null)}<span class="sr-only visually-hidden">: ${plan.planName}</span></a>
+                            </isif>
+                        </div>
+                    </section>
+                </div>
+            </isloop>
+        </div>
+
+        <isif condition="${pdict.plans.length > 0}">
+            <section class="mt-4" aria-labelledby="prime-membership-compare">
+                <h2 class="h4" id="prime-membership-compare">${Resource.msg('landing.compare', 'primemembership', null)}</h2>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead><tr>
+                            <th scope="col">${Resource.msg('compare.plan', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('compare.price', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('compare.term', 'primemembership', null)}</th>
+                            <th scope="col">${Resource.msg('compare.benefits', 'primemembership', null)}</th>
+                        </tr></thead>
+                        <tbody>
+                            <isloop items="${pdict.plans}" var="plan">
+                                <tr>
+                                    <th scope="row">${plan.planName}</th>
+                                    <td>${plan.price}</td>
+                                    <td>${Resource.msgf('plan.months', 'primemembership', null, plan.validityMonths)}</td>
+                                    <td><isprint value="${plan.benefits.length}" formatter="#" /></td>
+                                </tr>
+                            </isloop>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </isif>
+        <isif condition="${pdict.faq}">
+            <section class="mt-4" aria-labelledby="prime-membership-faq">
+                <h2 class="h4" id="prime-membership-faq">${Resource.msg('landing.faq', 'primemembership', null)}</h2>
+                <isprint value="${pdict.faq}" encoding="off" />
+            </section>
+        </isif>
+        <isif condition="${pdict.terms}">
+            <section class="mt-4" aria-labelledby="prime-membership-terms">
+                <h2 class="h4" id="prime-membership-terms">${Resource.msg('landing.terms', 'primemembership', null)}</h2>
+                <isprint value="${pdict.terms}" encoding="off" />
+            </section>
+        </isif>
+    </div>
+</isdecorate>

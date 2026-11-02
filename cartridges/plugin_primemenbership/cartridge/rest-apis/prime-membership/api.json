@@ -1,0 +1,29 @@
+{
+  "endpoints": [
+    {
+      "endpoint": "listPlans",
+      "schema": "schema.yaml",
+      "implementation": "script"
+    },
+    {
+      "endpoint": "getUpgradeQuote",
+      "schema": "schema.yaml",
+      "implementation": "script"
+    },
+    {
+      "endpoint": "getMyMembership",
+      "schema": "schema.yaml",
+      "implementation": "script"
+    },
+    {
+      "endpoint": "cancelMyMembership",
+      "schema": "schema.yaml",
+      "implementation": "script"
+    },
+    {
+      "endpoint": "listMyTransactions",
+      "schema": "schema.yaml",
+      "implementation": "script"
+    }
+  ]
+}

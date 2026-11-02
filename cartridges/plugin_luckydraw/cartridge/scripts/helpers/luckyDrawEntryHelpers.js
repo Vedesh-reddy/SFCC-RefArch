@@ -149,7 +149,8 @@ function evaluateOrder(r, order) {
     var bonus = false;
     var needCategories = r.eligibleCategoryIds.length > 0 || r.bonusCategoryIds.length > 0;
     order.productLineItems.toArray().forEach(function (pli) {
-        if (pli.bonusProductLineItem) return;
+        // Non-catalog lines, such as a membership fee, are not merchandise and earn no entries.
+        if (pli.bonusProductLineItem || pli.catalogProduct === false) return;
         var facts = needCategories || r.excludedProductIds.length ? getProductFacts(pli.productID) : { ids: [pli.productID], categories: [] };
         if (facts.ids.some(function (id) { return r.excludedProductIds.indexOf(id) >= 0; })) return;
         var inCategory = function (ids) { return facts.categories.some(function (c) { return ids.indexOf(c) >= 0; }); };

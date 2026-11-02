@@ -1,0 +1,11 @@
+<isdecorate template="common/layout/page">
+    <div class="container prime-membership-page py-4">
+        <h1>${Resource.msg('cancel.heading', 'primemembership', null)}</h1>
+        <p>${Resource.msgf('cancel.body', 'primemembership', null, pdict.effectiveDate)}</p>
+        <form action="${URLUtils.https('PrimeMembership-CancelSubmit')}" method="post" class="d-inline-block mr-2 me-2">
+            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+            <button type="submit" class="btn btn-danger">${Resource.msg('cancel.confirm', 'primemembership', null)}</button>
+        </form>
+        <a class="btn btn-outline-secondary" href="${URLUtils.https('PrimeMembership-Dashboard')}">${Resource.msg('cancel.keep', 'primemembership', null)}</a>
+    </div>
+</isdecorate>

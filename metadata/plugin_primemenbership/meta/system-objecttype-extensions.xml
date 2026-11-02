@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <type-extension type-id="Basket">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="primeMembershipTransactionID">
+                <display-name xml:lang="x-default">primeMembershipTransactionID</display-name>
+                <description xml:lang="x-default">Set on membership fee orders: the membership transaction</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipSubscriptionID">
+                <display-name xml:lang="x-default">primeMembershipSubscriptionID</display-name>
+                <description xml:lang="x-default">Membership that received benefits on this order</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipSavingsCents">
+                <display-name xml:lang="x-default">primeMembershipSavingsCents</display-name>
+                <description xml:lang="x-default">Member discount on this order, in cents</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipShippingSavingsCents">
+                <display-name xml:lang="x-default">primeMembershipShippingSavingsCents</display-name>
+                <description xml:lang="x-default">Member shipping savings on this order, in cents</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipReturnDays">
+                <display-name xml:lang="x-default">primeMembershipReturnDays</display-name>
+                <description xml:lang="x-default">Member return window for fulfilment and returns systems</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipGiftWrap">
+                <display-name xml:lang="x-default">primeMembershipGiftWrap</display-name>
+                <description xml:lang="x-default">Free gift wrapping for fulfilment</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginPrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="primeMembershipTransactionID"/>
+                <attribute attribute-id="primeMembershipSubscriptionID"/>
+                <attribute attribute-id="primeMembershipSavingsCents"/>
+                <attribute attribute-id="primeMembershipShippingSavingsCents"/>
+                <attribute attribute-id="primeMembershipReturnDays"/>
+                <attribute attribute-id="primeMembershipGiftWrap"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Order">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="primeMembershipTransactionID">
+                <display-name xml:lang="x-default">primeMembershipTransactionID</display-name>
+                <description xml:lang="x-default">Set on membership fee orders: the membership transaction</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipSubscriptionID">
+                <display-name xml:lang="x-default">primeMembershipSubscriptionID</display-name>
+                <description xml:lang="x-default">Membership that received benefits on this order</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipSavingsCents">
+                <display-name xml:lang="x-default">primeMembershipSavingsCents</display-name>
+                <description xml:lang="x-default">Member discount on this order, in cents</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipShippingSavingsCents">
+                <display-name xml:lang="x-default">primeMembershipShippingSavingsCents</display-name>
+                <description xml:lang="x-default">Member shipping savings on this order, in cents</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipReturnDays">
+                <display-name xml:lang="x-default">primeMembershipReturnDays</display-name>
+                <description xml:lang="x-default">Member return window for fulfilment and returns systems</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipGiftWrap">
+                <display-name xml:lang="x-default">primeMembershipGiftWrap</display-name>
+                <description xml:lang="x-default">Free gift wrapping for fulfilment</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginPrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="primeMembershipTransactionID"/>
+                <attribute attribute-id="primeMembershipSubscriptionID"/>
+                <attribute attribute-id="primeMembershipSavingsCents"/>
+                <attribute attribute-id="primeMembershipShippingSavingsCents"/>
+                <attribute attribute-id="primeMembershipReturnDays"/>
+                <attribute attribute-id="primeMembershipGiftWrap"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="Product">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="primeMembershipMinRank">
+                <display-name xml:lang="x-default">primeMembershipMinRank</display-name>
+                <description xml:lang="x-default">Only members of this plan rank or higher can buy this product</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipPublicAt">
+                <display-name xml:lang="x-default">primeMembershipPublicAt</display-name>
+                <description xml:lang="x-default">Public start of the sale; members with early access buy earlier</description>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipLaunchAt">
+                <display-name xml:lang="x-default">primeMembershipLaunchAt</display-name>
+                <description xml:lang="x-default">Public launch; members with launch access buy earlier</description>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginPrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="primeMembershipMinRank"/>
+                <attribute attribute-id="primeMembershipPublicAt"/>
+                <attribute attribute-id="primeMembershipLaunchAt"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+    <type-extension type-id="SitePreferences">
+        <custom-attribute-definitions>
+            <attribute-definition attribute-id="primeMembershipEnabled">
+                <display-name xml:lang="x-default">primeMembershipEnabled</display-name>
+                <description xml:lang="x-default">Master switch. Stays off until the configuration check in Business Manager passes.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipCurrency">
+                <display-name xml:lang="x-default">primeMembershipCurrency</display-name>
+                <description xml:lang="x-default">Membership currency. Only USD is supported.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>USD</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipQuoteMinutes">
+                <display-name xml:lang="x-default">primeMembershipQuoteMinutes</display-name>
+                <description xml:lang="x-default">How long a price quote stays valid. Keep below 15: temporary baskets are deleted after 15 minutes.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>14</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipMinUpgradeChargeCents">
+                <display-name xml:lang="x-default">primeMembershipMinUpgradeChargeCents</display-name>
+                <description xml:lang="x-default">Smallest upgrade charge in cents; below this the customer is asked to renew instead.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>100</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipRenewalWindowDays">
+                <display-name xml:lang="x-default">primeMembershipRenewalWindowDays</display-name>
+                <description xml:lang="x-default">Days before expiration when renewal opens.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>30</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipReminderDays">
+                <display-name xml:lang="x-default">primeMembershipReminderDays</display-name>
+                <description xml:lang="x-default">Comma-separated days before expiration for reminder e-mails.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>30,7,1</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipPaymentMethods">
+                <display-name xml:lang="x-default">primeMembershipPaymentMethods</display-name>
+                <description xml:lang="x-default">Payment method IDs accepted for membership fees. Wallet-type methods are only used when listed here.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipBillingCountries">
+                <display-name xml:lang="x-default">primeMembershipBillingCountries</display-name>
+                <description xml:lang="x-default">Country codes accepted for membership billing addresses.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipFeeProductID">
+                <display-name xml:lang="x-default">primeMembershipFeeProductID</display-name>
+                <description xml:lang="x-default">Product ID of the membership fee line. Must not exist in the catalog.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+                <default-value>prime-membership-fee</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipFeeTaxClass">
+                <display-name xml:lang="x-default">primeMembershipFeeTaxClass</display-name>
+                <description xml:lang="x-default">Tax class of the membership fee line. Empty uses the default tax class.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipExportFeeOrders">
+                <display-name xml:lang="x-default">primeMembershipExportFeeOrders</display-name>
+                <description xml:lang="x-default">Export membership orders to the order management system.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipMaxDiscountPercent">
+                <display-name xml:lang="x-default">primeMembershipMaxDiscountPercent</display-name>
+                <description xml:lang="x-default">Highest discount percent a plan can be configured with.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>50</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipDiscountSellerOffers">
+                <display-name xml:lang="x-default">primeMembershipDiscountSellerOffers</display-name>
+                <description xml:lang="x-default">Apply member discounts to marketplace seller offers. Needs an approved funding policy.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipLoyaltyEnabled">
+                <display-name xml:lang="x-default">primeMembershipLoyaltyEnabled</display-name>
+                <description xml:lang="x-default">Apply loyalty point multipliers through the loyalty adapter.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipAutoRenewEnabled">
+                <display-name xml:lang="x-default">primeMembershipAutoRenewEnabled</display-name>
+                <description xml:lang="x-default">Offer automatic renewal. Needs a recurring payment adapter and customer consent.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>false</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipConnectedIntegrations">
+                <display-name xml:lang="x-default">primeMembershipConnectedIntegrations</display-name>
+                <description xml:lang="x-default">External systems confirmed as connected: returns, gift-wrap, support.</description>
+                <type>set-of-string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipFromEmail">
+                <display-name xml:lang="x-default">primeMembershipFromEmail</display-name>
+                <description xml:lang="x-default">Sender of membership e-mails.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipTermsAssetId">
+                <display-name xml:lang="x-default">primeMembershipTermsAssetId</display-name>
+                <description xml:lang="x-default">Content asset with the membership terms.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipFaqAssetId">
+                <display-name xml:lang="x-default">primeMembershipFaqAssetId</display-name>
+                <description xml:lang="x-default">Content asset with the membership FAQ.</description>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipJoinLinkEnabled">
+                <display-name xml:lang="x-default">primeMembershipJoinLinkEnabled</display-name>
+                <description xml:lang="x-default">Show the Join link in the header for nonmembers.</description>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>true</default-value>
+            </attribute-definition>
+            <attribute-definition attribute-id="primeMembershipNotificationMaxAttempts">
+                <display-name xml:lang="x-default">primeMembershipNotificationMaxAttempts</display-name>
+                <description xml:lang="x-default">E-mail delivery attempts before a notification is marked failed.</description>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <default-value>5</default-value>
+            </attribute-definition>
+        </custom-attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PluginPrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="primeMembershipEnabled"/>
+                <attribute attribute-id="primeMembershipCurrency"/>
+                <attribute attribute-id="primeMembershipQuoteMinutes"/>
+                <attribute attribute-id="primeMembershipMinUpgradeChargeCents"/>
+                <attribute attribute-id="primeMembershipRenewalWindowDays"/>
+                <attribute attribute-id="primeMembershipReminderDays"/>
+                <attribute attribute-id="primeMembershipPaymentMethods"/>
+                <attribute attribute-id="primeMembershipBillingCountries"/>
+                <attribute attribute-id="primeMembershipFeeProductID"/>
+                <attribute attribute-id="primeMembershipFeeTaxClass"/>
+                <attribute attribute-id="primeMembershipExportFeeOrders"/>
+                <attribute attribute-id="primeMembershipMaxDiscountPercent"/>
+                <attribute attribute-id="primeMembershipDiscountSellerOffers"/>
+                <attribute attribute-id="primeMembershipLoyaltyEnabled"/>
+                <attribute attribute-id="primeMembershipAutoRenewEnabled"/>
+                <attribute attribute-id="primeMembershipConnectedIntegrations"/>
+                <attribute attribute-id="primeMembershipFromEmail"/>
+                <attribute attribute-id="primeMembershipTermsAssetId"/>
+                <attribute attribute-id="primeMembershipFaqAssetId"/>
+                <attribute attribute-id="primeMembershipJoinLinkEnabled"/>
+                <attribute attribute-id="primeMembershipNotificationMaxAttempts"/>
+            </attribute-group>
+        </group-definitions>
+    </type-extension>
+</metadata>

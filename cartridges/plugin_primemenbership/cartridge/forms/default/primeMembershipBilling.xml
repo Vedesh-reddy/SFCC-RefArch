@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field formid="firstName" type="string" mandatory="true" max-length="50" />
+    <field formid="lastName" type="string" mandatory="true" max-length="50" />
+    <field formid="address1" type="string" mandatory="true" max-length="50" />
+    <field formid="address2" type="string" mandatory="false" max-length="50" />
+    <field formid="city" type="string" mandatory="true" min-length="2" max-length="50" />
+    <field formid="stateCode" type="string" mandatory="true" regexp="^[A-Z]{2}$" />
+    <field formid="postalCode" type="string" mandatory="true" regexp="^\d{5}(-\d{4})?$" />
+    <field formid="countryCode" type="string" mandatory="true" regexp="^[A-Z]{2}$" />
+    <field formid="phone" type="string" mandatory="true" regexp="^[0-9()+. -]{7,20}$" />
+</form>

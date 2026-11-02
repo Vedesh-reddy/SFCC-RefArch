@@ -1,0 +1,258 @@
+{
+    "step-types": {
+        "script-module-step": [
+            {
+                "@type-id": "custom.PrimeMembership.Expiration",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Send reminders and expire memberships",
+                "module": "plugin_primemenbership/cartridge/scripts/jobs/membership.js",
+                "function": "expiration",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "2000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partial; see the prime-membership log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.PrimeMembership.Renewal",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Open renewals and charge consented automatic renewals through the adapter",
+                "module": "plugin_primemenbership/cartridge/scripts/jobs/membership.js",
+                "function": "renewal",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partial; see the prime-membership log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.PrimeMembership.BenefitReset",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Advance benefit periods and issue monthly vouchers",
+                "module": "plugin_primemenbership/cartridge/scripts/jobs/membership.js",
+                "function": "benefitReset",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "2000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partial; see the prime-membership log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.PrimeMembership.BirthdayReward",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Issue birthday rewards",
+                "module": "plugin_primemenbership/cartridge/scripts/jobs/membership.js",
+                "function": "birthdayReward",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "2000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partial; see the prime-membership log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.PrimeMembership.Reconciliation",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Activate paid memberships and repair pending records",
+                "module": "plugin_primemenbership/cartridge/scripts/jobs/membership.js",
+                "function": "reconciliation",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partial; see the prime-membership log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.PrimeMembership.Reporting",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Build daily membership metrics",
+                "module": "plugin_primemenbership/cartridge/scripts/jobs/membership.js",
+                "function": "reporting",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "5000",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partial; see the prime-membership log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.PrimeMembership.Notifications",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Deliver queued membership e-mails",
+                "module": "plugin_primemenbership/cartridge/scripts/jobs/membership.js",
+                "function": "notifications",
+                "transactional": "false",
+                "timeout-in-seconds": 1800,
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "MaxItems",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Maximum records per run",
+                            "default-value": "500",
+                            "min-value": "1",
+                            "max-value": "10000"
+                        }
+                    ]
+                },
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "Completed"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "Failed or partial; see the prime-membership log"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

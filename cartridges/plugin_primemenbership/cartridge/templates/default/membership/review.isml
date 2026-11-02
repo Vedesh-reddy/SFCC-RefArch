@@ -1,0 +1,48 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/prime-membership.css');
+    </isscript>
+    <div class="container prime-membership-page py-4">
+        <h1>${Resource.msgf('review.heading.' + pdict.type, 'primemembership', null, pdict.plan.planName)}</h1>
+        <isinclude template="membership/components/flash" />
+        <div class="row">
+            <div class="col-12 col-md-7 mb-3">
+                <isif condition="${pdict.upgrade}">
+                    <dl class="prime-membership-facts">
+                        <dt>${Resource.msg('upgrade.current', 'primemembership', null)}</dt><dd>${pdict.upgrade.current.planName}</dd>
+                        <dt>${Resource.msg('upgrade.target', 'primemembership', null)}</dt><dd>${pdict.plan.planName}</dd>
+                        <dt>${Resource.msg('upgrade.remaining', 'primemembership', null)}</dt><dd>${Resource.msgf('upgrade.remaining.value', 'primemembership', null, pdict.upgrade.remainingDays, pdict.upgrade.expires)}</dd>
+                        <dt>${Resource.msg('upgrade.target-cost', 'primemembership', null)}</dt><dd>${pdict.upgrade.targetCost}</dd>
+                        <dt>${Resource.msg('upgrade.credit', 'primemembership', null)}</dt><dd>-${pdict.upgrade.credit}</dd>
+                    </dl>
+                </isif>
+                <h2 class="h5">${Resource.msg('details.benefits', 'primemembership', null)}</h2>
+                <isset name="listBenefits" value="${pdict.plan.benefits}" scope="pdict" />
+                <isinclude template="membership/components/benefit-list" />
+                <p>${Resource.msgf('details.validity', 'primemembership', null, pdict.plan.validityMonths)} ${Resource.msg('details.cancellation', 'primemembership', null)} ${Resource.msg('details.renewal', 'primemembership', null)}</p>
+                <isif condition="${pdict.terms}"><div class="prime-membership-terms-box mb-3"><isprint value="${pdict.terms}" encoding="off" /></div></isif>
+            </div>
+            <div class="col-12 col-md-5">
+                <section class="card" aria-labelledby="prime-membership-summary">
+                    <div class="card-body">
+                        <h2 class="h5" id="prime-membership-summary">${Resource.msg('review.summary', 'primemembership', null)}</h2>
+                        <p class="d-flex justify-content-between"><span>${Resource.msg('review.amount', 'primemembership', null)}</span><strong>${pdict.amount}</strong></p>
+                        <p class="small text-muted">${Resource.msg('review.tax', 'primemembership', null)}</p>
+                        <form action="${URLUtils.https('PrimeMembership-StartCheckout')}" method="post" class="prime-membership-review-form">
+                            <input type="hidden" name="${pdict.form.planID.htmlName}" value="${pdict.plan.planID}" />
+                            <input type="hidden" name="${pdict.form.transactionType.htmlName}" value="${pdict.type}" />
+                            <input type="hidden" name="${pdict.form.nonce.htmlName}" value="${pdict.nonce}" />
+                            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                            <div class="form-check mb-3">
+                                <input class="form-check-input" type="checkbox" id="prime-membership-accept" name="${pdict.form.acceptTerms.htmlName}" value="true" required="required" />
+                                <label class="form-check-label" for="prime-membership-accept">${Resource.msg('review.accept', 'primemembership', null)}</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">${Resource.msg('review.continue', 'primemembership', null)}</button>
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</isdecorate>

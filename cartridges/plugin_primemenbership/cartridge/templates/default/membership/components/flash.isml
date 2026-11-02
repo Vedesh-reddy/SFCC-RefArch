@@ -1,0 +1,7 @@
+<isset name="membershipFlash" value="${pdict.flash}" scope="page" />
+<isif condition="${membershipFlash && membershipFlash.message}">
+    <p class="alert alert-success" role="status">${Resource.msg('flash.' + membershipFlash.message, 'primemembership', Resource.msg('flash.saved', 'primemembership', null))}</p>
+</isif>
+<isif condition="${membershipFlash && membershipFlash.error}">
+    <p class="alert alert-danger" role="alert">${Resource.msg('error.' + membershipFlash.error, 'primemembership', Resource.msg('error.general', 'primemembership', null))}</p>
+</isif>

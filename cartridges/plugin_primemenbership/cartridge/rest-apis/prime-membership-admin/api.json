@@ -1,0 +1,19 @@
+{
+  "endpoints": [
+    {
+      "endpoint": "getMembership",
+      "schema": "schema.yaml",
+      "implementation": "script"
+    },
+    {
+      "endpoint": "recordRefund",
+      "schema": "schema.yaml",
+      "implementation": "script"
+    },
+    {
+      "endpoint": "listReviewTransactions",
+      "schema": "schema.yaml",
+      "implementation": "script"
+    }
+  ]
+}
