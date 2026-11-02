@@ -1,0 +1,19 @@
+<section class="product-carousel" data-store-carousel aria-labelledby="${carousel.id}-title">
+    <div class="container">
+        <div class="product-carousel-head d-flex align-items-end justify-content-between">
+            <h2 class="store-section-title m-0" id="${carousel.id}-title">${Resource.msg(carousel.titleKey, 'storefront', null)}</h2>
+            <div class="d-flex align-items-center gap-2 flex-shrink-0">
+                <a class="store-link" href="${carousel.url}">${Resource.msg('link.view.all', 'storefront', null)}</a>
+                <button type="button" class="store-carousel-arrow d-none d-md-inline-flex" data-carousel-prev aria-label="${Resource.msg('label.carousel.previous', 'storefront', null)}"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-chevron-left"></use></svg></button>
+                <button type="button" class="store-carousel-arrow d-none d-md-inline-flex" data-carousel-next aria-label="${Resource.msg('label.carousel.next', 'storefront', null)}"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-chevron-right"></use></svg></button>
+            </div>
+        </div>
+        <div class="store-carousel-track d-flex" data-carousel-track>
+            <isloop items="${carousel.productIds}" var="carouselProductId">
+                <div class="store-carousel-item flex-shrink-0">
+                    <isinclude url="${URLUtils.url('Tile-Show', 'pid', carouselProductId, 'swatches', true, 'ratings', true)}" />
+                </div>
+            </isloop>
+        </div>
+    </div>
+</section>
