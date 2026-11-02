@@ -147,6 +147,10 @@ Merchant Tools > Prime Membership. Each menu item is a separate permission, so s
 
 ![Jobs](images/bm-jobs.png)
 
+## Dedicated repository
+
+The same cartridges are published on their own, with tooling and CI, in [sfcc-prime-membership](https://github.com/Vedesh-reddy/sfcc-prime-membership).
+
 ## What is in the repository
 
 | Path | Contents |
