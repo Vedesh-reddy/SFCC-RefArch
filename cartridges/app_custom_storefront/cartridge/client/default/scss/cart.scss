@@ -1,0 +1,176 @@
+/* stylelint-disable no-descending-specificity */
+
+@import "theme-variables";
+@import "~base/cart";
+
+.cart-hero,
+.cart-empty {
+    padding-top: 3rem;
+}
+
+.cart-empty {
+    padding-bottom: 4rem;
+}
+
+.cart-empty-art {
+    height: 10rem;
+    margin-bottom: 1rem;
+    overflow: visible;
+    width: 10rem;
+}
+
+.cart-empty-ring {
+    animation: cart-empty-pulse 3.2s ease-in-out infinite;
+    fill: $theme-surface;
+    transform-origin: 50% 50%;
+}
+
+.cart-empty-ring-delayed {
+    animation-delay: 0.6s;
+    fill: $grey2;
+}
+
+.cart-empty-bag,
+.cart-empty-handle {
+    fill: $white;
+    stroke: $theme-ink;
+    stroke-linejoin: round;
+    stroke-width: 3;
+}
+
+.cart-empty-handle {
+    fill: none;
+    stroke-linecap: round;
+}
+
+.cart-empty-lead {
+    @include theme-type-lead;
+
+    color: $theme-ink-muted;
+    font-size: 1.3125rem;
+    margin: 0 auto 1.5rem;
+    max-width: 34rem;
+}
+
+@keyframes cart-empty-pulse {
+    50% {
+        transform: scale(1.06);
+    }
+}
+
+.cart-hero-title {
+    @include theme-type-hero;
+
+    margin-bottom: 0.75rem;
+
+    .grand-total {
+        white-space: nowrap;
+    }
+}
+
+.cart-hero-meta {
+    @include theme-type-small;
+
+    color: $theme-ink-muted;
+    margin-bottom: 1.5rem;
+
+    .number-of-items {
+        display: inline;
+        font-size: inherit;
+        font-weight: 400;
+        margin-right: 0.75rem;
+    }
+}
+
+.cart-hero-action {
+    max-width: 20rem;
+
+    .checkout-btn {
+        min-height: 3.5rem;
+    }
+}
+
+.cart-page {
+    border-top: 1px solid $theme-hairline;
+    margin-bottom: 3.75rem;
+    margin-top: 2.5rem;
+    padding-top: 1rem;
+
+    .card.product-info {
+        border: 0;
+        border-bottom: 1px solid $theme-hairline;
+        border-radius: 0;
+        margin-bottom: 0;
+        padding: 1.5rem 0;
+        position: relative;
+    }
+
+    .line-item-header {
+        margin-bottom: 0.75rem;
+    }
+
+    .line-item-name {
+        font-size: 1.3125rem;
+        font-weight: 600;
+        line-height: 1.19;
+        white-space: normal;
+        width: auto;
+    }
+
+    .item-image {
+        flex: 0 0 7.5rem;
+        height: auto;
+        margin-right: 1.25rem;
+        width: 7.5rem;
+
+        img.product-image {
+            background-color: $theme-surface;
+            border-radius: $theme-radius-card;
+            max-height: none;
+        }
+    }
+
+    .line-item-attributes,
+    .line-item-availability,
+    .line-item-pricing-info,
+    .item-attributes {
+        @include theme-type-small;
+    }
+
+    .line-item-price-info,
+    .line-item-total-text {
+        color: $theme-ink-muted;
+    }
+
+    .product-edit a {
+        display: inline-block;
+        padding: 0.375rem 0.25rem 0.375rem 0;
+    }
+
+    .totals {
+        @include media-breakpoint-up(lg) {
+            align-self: flex-start;
+            background-color: $theme-surface;
+            border-radius: 1.125rem;
+            padding: 1.5rem;
+            position: sticky;
+            top: 3.5rem;
+        }
+
+        .checkout-btn {
+            min-height: 3rem;
+        }
+    }
+}
+
+.grand-total-label,
+.grand-total-sum,
+.totals .grand-total {
+    font-size: 1.3125rem;
+    font-weight: 600;
+}
+
+// Base leaves this at 2, which would put cart errors behind the sticky header.
+.cart-error-messaging.cart-error {
+    z-index: 1040;
+}

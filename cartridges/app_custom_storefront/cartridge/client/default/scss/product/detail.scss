@@ -1,0 +1,490 @@
+/* stylelint-disable no-descending-specificity */
+
+@import "../theme-variables";
+@import "~base/product/detail";
+
+.prices-add-to-cart-actions {
+    @include media-breakpoint-down(sm) {
+        background-color: rgba(255, 255, 255, 92%);
+        backdrop-filter: saturate(180%) blur(20px);
+        border-top: 1px solid $theme-hairline;
+        box-shadow: none;
+        padding: 0.5rem 0.9375rem;
+    }
+
+    @include media-breakpoint-up(sm) {
+        padding: 0;
+    }
+}
+
+.product-detail {
+    padding-top: 1.5rem;
+
+    .primary-images {
+        @include media-breakpoint-up(lg) {
+            flex: 0 0 auto;
+            width: 58.3333%;
+        }
+
+        // Keeps the gallery in view while the options column scrolls past it.
+        @include media-breakpoint-up(sm) {
+            align-self: flex-start;
+            position: sticky;
+            top: 3.5rem;
+        }
+
+        .carousel {
+            background-color: $theme-surface;
+            border-radius: $theme-radius-panel;
+            overflow: hidden;
+        }
+
+        // Catalog images vary in size; centring keeps a small one from leaving an empty block.
+        .carousel-item img {
+            margin: 0 auto;
+            max-height: 40rem;
+
+            // Catalog photos have white backgrounds; multiply lets them sit on the panel colour.
+            mix-blend-mode: multiply;
+            object-fit: contain;
+        }
+    }
+
+    .product-buy-column {
+        @include media-breakpoint-up(lg) {
+            padding-left: 2.5rem;
+        }
+    }
+
+    .product-breadcrumb .breadcrumb {
+        margin-left: 0;
+    }
+
+    h1.product-name {
+        @include theme-type-section;
+
+        border: 0;
+        margin-bottom: 0.5rem;
+    }
+
+    .prices {
+        padding: 0 0 1rem;
+        text-align: left;
+
+        .price {
+            @include theme-type-lead;
+
+            text-align: left;
+        }
+    }
+
+    .product-number-rating {
+        border-bottom: 1px solid $theme-hairline;
+        border-top: 1px solid $theme-hairline;
+    }
+
+    .product-number {
+        @include theme-type-small;
+
+        color: $theme-ink-muted;
+    }
+
+    .product-number-rating .ratings {
+        margin-right: 0;
+        margin-top: 0.625rem;
+        position: relative;
+    }
+
+    .ratings .row {
+        --bs-gutter-x: 0;
+    }
+
+    .attributes {
+        margin-top: 1.5rem;
+        padding-left: 0;
+        padding-right: 0;
+
+        label,
+        .non-input-label {
+            font-size: 1.0625rem;
+            font-weight: 600;
+        }
+
+        .form-select {
+            min-height: 3.5rem;
+        }
+
+        .swatch-circle {
+            height: 2.75rem;
+            width: 2.75rem;
+        }
+    }
+
+    .availability,
+    .promotions {
+        @include theme-type-small;
+    }
+
+    .prices-add-to-cart-actions {
+        margin-top: 1.5rem;
+    }
+
+    .cart-and-ipay {
+        padding-bottom: 0;
+
+        > div {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .btn {
+            flex: 1 1 auto;
+            font-weight: 400;
+            margin: 0;
+            min-height: 3.5rem;
+            width: auto;
+        }
+    }
+
+    .social-container .social-icons.justify-content-center {
+        justify-content: flex-start !important;
+    }
+
+    .social-icons,
+    .social-icons a,
+    .social-icons i {
+        color: $theme-ink-muted;
+        font-size: 1.25rem;
+    }
+
+    // Full-bleed band without leaving the base container markup.
+    .description-and-detail {
+        background-color: $theme-surface;
+        box-shadow: 0 0 0 100vmax $theme-surface;
+        clip-path: inset(0 -100vmax);
+        margin-top: 3.75rem;
+        padding: 3rem 0;
+
+        .title {
+            font-family: inherit;
+            font-size: 1.3125rem;
+            font-weight: 600;
+        }
+
+        .content {
+            max-width: 46rem;
+        }
+
+        hr {
+            display: none;
+        }
+
+        ul {
+            padding-left: 1.125rem;
+        }
+
+        h3,
+        h4 {
+            font-size: 1.0625rem;
+            font-weight: 600;
+        }
+    }
+
+    .review-content,
+    #review-form {
+        max-width: 60rem;
+    }
+}
+
+.smart-product-panel {
+    margin-top: 1.5rem;
+
+    .form-label {
+        @include theme-type-small;
+
+        font-weight: 600;
+    }
+
+    .form-control {
+        margin-bottom: 0.625rem;
+    }
+
+    .smart-compare-toggle {
+        @include theme-type-small;
+
+        align-items: center;
+        display: inline-flex;
+        font-weight: 600;
+        gap: 0.5rem;
+        min-height: 2.75rem;
+        padding: 0;
+        text-decoration: none;
+    }
+}
+
+.smart-panel-hint {
+    @include theme-type-small;
+
+    color: $theme-ink-muted;
+    margin-bottom: 0.625rem;
+}
+
+.smart-form-message {
+    @include theme-type-small;
+
+    margin: 0.5rem 0 0;
+}
+
+.price-insight {
+    background-color: $theme-surface;
+    border-radius: $theme-radius-panel;
+    margin-bottom: 1rem;
+    padding: 1.25rem;
+}
+
+.price-insight-head {
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.price-insight-title {
+    align-items: center;
+    display: flex;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    gap: 0.5rem;
+}
+
+.price-insight-trend {
+    @include theme-type-small;
+
+    border-radius: $theme-radius-pill;
+    font-weight: 600;
+    padding: 0.25rem 0.75rem;
+    white-space: nowrap;
+}
+
+.price-insight-trend-down {
+    background-color: #e3f6e8;
+    color: #1d6a35;
+}
+
+.price-insight-trend-up {
+    background-color: #fdeaea;
+    color: #a4161a;
+}
+
+.price-insight-trend-flat {
+    background-color: $grey2;
+    color: $theme-ink;
+}
+
+.price-chart {
+    display: block;
+    height: 9rem;
+    overflow: visible;
+}
+
+.price-chart-axis {
+    stroke: $theme-hairline;
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+}
+
+.price-chart-line {
+    animation: price-chart-draw 1.2s ease-out both;
+    fill: none;
+    stroke: $theme-action;
+    stroke-dasharray: 1;
+    stroke-linejoin: round;
+    stroke-width: 2.5;
+}
+
+.price-chart-mark {
+    fill: $white;
+    stroke: $theme-action;
+    stroke-width: 2;
+}
+
+.price-chart-dates {
+    @include theme-type-micro;
+
+    color: $theme-ink-muted;
+    margin: 0.375rem 0 1rem;
+}
+
+.price-insight-stats {
+    gap: 1rem;
+
+    dt {
+        @include theme-type-micro;
+
+        color: $theme-ink-muted;
+        font-weight: 400;
+    }
+
+    dd {
+        font-size: 1.0625rem;
+        font-weight: 600;
+        margin: 0;
+    }
+}
+
+.price-insight-list {
+    @include theme-type-small;
+
+    border-top: 1px solid $theme-hairline;
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+
+    summary {
+        cursor: pointer;
+        font-weight: 600;
+        min-height: 1.5rem;
+    }
+
+    li {
+        border-bottom: 1px solid $theme-hairline;
+        padding: 0.5rem 0;
+    }
+}
+
+.smart-actions {
+    border: 1px solid $theme-hairline;
+    border-radius: $theme-radius-panel;
+    margin-bottom: 0.5rem;
+    overflow: hidden;
+}
+
+.smart-action {
+    border-bottom: 1px solid $theme-hairline;
+
+    &:last-child {
+        border-bottom: 0;
+    }
+
+    summary {
+        align-items: center;
+        cursor: pointer;
+        display: flex;
+        font-weight: 600;
+        gap: 0.75rem;
+        list-style: none;
+        min-height: 3.5rem;
+        padding: 0.75rem 1.25rem;
+
+        &::-webkit-details-marker {
+            display: none;
+        }
+
+        // Chevron drawn in CSS because the summary content comes from resource strings.
+        &::after {
+            border-bottom: 2px solid $theme-ink-muted;
+            border-right: 2px solid $theme-ink-muted;
+            content: "";
+            height: 0.5rem;
+            margin-left: auto;
+            transform: rotate(45deg);
+            transition: transform 0.2s ease-out;
+            width: 0.5rem;
+        }
+
+        &:hover {
+            background-color: $theme-surface;
+        }
+    }
+
+    &[open] summary::after {
+        transform: rotate(-135deg);
+    }
+
+    > form,
+    > p,
+    > a,
+    > .smart-store-results {
+        margin: 0;
+        padding: 0 1.25rem 1.25rem;
+    }
+
+    > a {
+        margin: 0 1.25rem 1.25rem;
+        padding: 0.6875rem 1.3125rem;
+        width: calc(100% - 2.5rem) !important;
+    }
+}
+
+.review-content {
+    padding-top: 2.5rem;
+
+    .review-heading {
+        @include theme-type-section;
+
+        margin-bottom: 1.5rem;
+    }
+
+    .review-summary {
+        font-size: 1.3125rem;
+        font-weight: 600;
+    }
+}
+
+#review-form {
+    background-color: $theme-surface;
+    border: 0 !important;
+    border-radius: $theme-radius-panel;
+    margin-bottom: 3rem;
+    padding: 2rem !important;
+
+    h3 {
+        font-size: 1.3125rem;
+        font-weight: 600;
+    }
+
+    legend {
+        font-size: 0.875rem;
+        font-weight: 600;
+    }
+
+    .review-rating-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .form-check-inline {
+        align-items: center;
+        background-color: $white;
+        border: 1px solid $theme-hairline;
+        border-radius: $theme-radius-pill;
+        display: inline-flex;
+        gap: 0.5rem;
+        margin: 0;
+        min-height: 2.75rem;
+        padding: 0 1rem;
+
+        &:has(input:checked) {
+            border-color: $theme-action;
+            box-shadow: 0 0 0 1px $theme-action;
+        }
+
+        .form-check-input {
+            float: none;
+            margin: 0;
+        }
+    }
+
+    .form-control {
+        background-color: $white;
+    }
+}
+
+@keyframes price-chart-draw {
+    from {
+        stroke-dashoffset: 1;
+    }
+
+    to {
+        stroke-dashoffset: 0;
+    }
+}
