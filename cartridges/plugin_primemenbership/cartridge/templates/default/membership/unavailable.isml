@@ -1,0 +1,6 @@
+<isdecorate template="common/layout/page">
+    <div class="container prime-membership-page py-4">
+        <h1>${Resource.msg('unavailable.heading', 'primemembership', null)}</h1>
+        <p>${Resource.msg('unavailable.body', 'primemembership', null)}</p>
+    </div>
+</isdecorate>

@@ -1,0 +1,11 @@
+<isdecorate template="common/layout/page">
+    <div class="container prime-membership-page py-4">
+        <h1>${Resource.msg('confirmation.heading.' + pdict.transaction.status, 'primemembership', Resource.msg('confirmation.heading.AWAITING_PAYMENT', 'primemembership', null))}</h1>
+        <p role="status">${Resource.msg('confirmation.body.' + pdict.transaction.status, 'primemembership', Resource.msg('confirmation.body.AWAITING_PAYMENT', 'primemembership', null))}</p>
+        <dl>
+            <dt>${Resource.msg('confirmation.total', 'primemembership', null)}</dt><dd>${pdict.transaction.total}</dd>
+            <isif condition="${!empty(pdict.transaction.orderNo)}"><dt>${Resource.msg('confirmation.order', 'primemembership', null)}</dt><dd>${pdict.transaction.orderNo}</dd></isif>
+        </dl>
+        <a class="btn btn-primary" href="${URLUtils.https('PrimeMembership-Dashboard')}">${Resource.msg('landing.dashboard', 'primemembership', null)}</a>
+    </div>
+</isdecorate>

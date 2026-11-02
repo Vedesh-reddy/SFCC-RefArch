@@ -1,0 +1,36 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/prime-membership.css');
+    </isscript>
+    <div class="container prime-membership-page py-4">
+        <p><a href="${URLUtils.https('PrimeMembership-Show')}">${Resource.msg('action.all-plans', 'primemembership', null)}</a></p>
+        <h1>${pdict.plan.planName}</h1>
+        <p class="prime-membership-price h3">${pdict.plan.price}<span class="h6"> ${Resource.msg('plan.per-year', 'primemembership', null)}</span></p>
+        <isif condition="${pdict.plan.current}"><p class="badge badge-success bg-success">${Resource.msg('plan.current', 'primemembership', null)}</p></isif>
+
+        <h2 class="h4 mt-3">${Resource.msg('details.benefits', 'primemembership', null)}</h2>
+        <isset name="listBenefits" value="${pdict.plan.benefits}" scope="pdict" />
+        <isinclude template="membership/components/benefit-list" />
+
+        <h2 class="h4 mt-3">${Resource.msg('details.conditions', 'primemembership', null)}</h2>
+        <ul>
+            <li>${Resource.msgf('details.validity', 'primemembership', null, pdict.plan.validityMonths)}</li>
+            <isif condition="${pdict.savingsLimits}">
+                <li>${Resource.msgf('details.limits', 'primemembership', null, pdict.savingsLimits.perOrder, pdict.savingsLimits.annual)}</li>
+            </isif>
+            <li>${Resource.msg('details.restrictions', 'primemembership', null)}</li>
+            <li>${Resource.msg('details.cancellation', 'primemembership', null)}</li>
+            <li>${Resource.msg('details.renewal', 'primemembership', null)}</li>
+        </ul>
+        <isif condition="${pdict.plan.actionUrl}">
+            <a class="btn btn-primary" href="${pdict.plan.actionUrl}">${Resource.msg('action.' + pdict.plan.actionLabel, 'primemembership', null)}</a>
+        </isif>
+        <isif condition="${pdict.terms}">
+            <section class="mt-4" aria-labelledby="prime-membership-terms">
+                <h2 class="h4" id="prime-membership-terms">${Resource.msg('landing.terms', 'primemembership', null)}</h2>
+                <isprint value="${pdict.terms}" encoding="off" />
+            </section>
+        </isif>
+    </div>
+</isdecorate>

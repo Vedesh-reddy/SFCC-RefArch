@@ -1,0 +1,772 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://www.demandware.com/xml/impex/metadata/2006-10-31">
+    <custom-type type-id="PrimeMembershipPlan">
+        <display-name xml:lang="x-default">PrimeMembershipPlan</display-name>
+        <description xml:lang="x-default">Membership plan and its benefit configuration</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="planID">
+            <display-name xml:lang="x-default">planID</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="planName">
+                <display-name xml:lang="x-default">planName</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="planRank">
+                <display-name xml:lang="x-default">planRank</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="annualPriceCents">
+                <display-name xml:lang="x-default">annualPriceCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="currency">
+                <display-name xml:lang="x-default">currency</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="validityMonths">
+                <display-name xml:lang="x-default">validityMonths</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="enabled">
+                <display-name xml:lang="x-default">enabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="benefits">
+                <display-name xml:lang="x-default">benefits</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="configurationVersion">
+                <display-name xml:lang="x-default">configurationVersion</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="planID"/>
+                <attribute attribute-id="planName"/>
+                <attribute attribute-id="planRank"/>
+                <attribute attribute-id="annualPriceCents"/>
+                <attribute attribute-id="currency"/>
+                <attribute attribute-id="validityMonths"/>
+                <attribute attribute-id="enabled"/>
+                <attribute attribute-id="benefits"/>
+                <attribute attribute-id="configurationVersion"/>
+                <attribute attribute-id="createdAt"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="PrimeMembershipSubscription">
+        <display-name xml:lang="x-default">PrimeMembershipSubscription</display-name>
+        <description xml:lang="x-default">One membership per customer on this site; authoritative for status and entitlements</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="subscriptionID">
+            <display-name xml:lang="x-default">subscriptionID</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">customerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="siteID">
+                <display-name xml:lang="x-default">siteID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="planID">
+                <display-name xml:lang="x-default">planID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="planVersion">
+                <display-name xml:lang="x-default">planVersion</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="previousStatus">
+                <display-name xml:lang="x-default">previousStatus</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="statusReason">
+                <display-name xml:lang="x-default">statusReason</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="startDate">
+                <display-name xml:lang="x-default">startDate</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="expirationDate">
+                <display-name xml:lang="x-default">expirationDate</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="renewalDate">
+                <display-name xml:lang="x-default">renewalDate</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="paidThroughDate">
+                <display-name xml:lang="x-default">paidThroughDate</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="autoRenewEnabled">
+                <display-name xml:lang="x-default">autoRenewEnabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="autoRenewConsentAt">
+                <display-name xml:lang="x-default">autoRenewConsentAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="marketingEmailsEnabled">
+                <display-name xml:lang="x-default">marketingEmailsEnabled</display-name>
+                <type>boolean</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sourceOrderNo">
+                <display-name xml:lang="x-default">sourceOrderNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="pendingTransactionID">
+                <display-name xml:lang="x-default">pendingTransactionID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="creditBaseCents">
+                <display-name xml:lang="x-default">creditBaseCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="creditFromDate">
+                <display-name xml:lang="x-default">creditFromDate</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="benefitPeriodStart">
+                <display-name xml:lang="x-default">benefitPeriodStart</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="benefitPeriodEnd">
+                <display-name xml:lang="x-default">benefitPeriodEnd</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="benefitCounters">
+                <display-name xml:lang="x-default">benefitCounters</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="subscriptionID"/>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="siteID"/>
+                <attribute attribute-id="planID"/>
+                <attribute attribute-id="planVersion"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="previousStatus"/>
+                <attribute attribute-id="statusReason"/>
+                <attribute attribute-id="startDate"/>
+                <attribute attribute-id="expirationDate"/>
+                <attribute attribute-id="renewalDate"/>
+                <attribute attribute-id="paidThroughDate"/>
+                <attribute attribute-id="autoRenewEnabled"/>
+                <attribute attribute-id="autoRenewConsentAt"/>
+                <attribute attribute-id="marketingEmailsEnabled"/>
+                <attribute attribute-id="sourceOrderNo"/>
+                <attribute attribute-id="pendingTransactionID"/>
+                <attribute attribute-id="creditBaseCents"/>
+                <attribute attribute-id="creditFromDate"/>
+                <attribute attribute-id="benefitPeriodStart"/>
+                <attribute attribute-id="benefitPeriodEnd"/>
+                <attribute attribute-id="benefitCounters"/>
+                <attribute attribute-id="createdAt"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="PrimeMembershipTransaction">
+        <display-name xml:lang="x-default">PrimeMembershipTransaction</display-name>
+        <description xml:lang="x-default">Financial record; the key is the idempotency key, so a repeat cannot create a second record</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="transactionID">
+            <display-name xml:lang="x-default">transactionID</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="subscriptionID">
+                <display-name xml:lang="x-default">subscriptionID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">customerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="transactionType">
+                <display-name xml:lang="x-default">transactionType</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="sourcePlanID">
+                <display-name xml:lang="x-default">sourcePlanID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="targetPlanID">
+                <display-name xml:lang="x-default">targetPlanID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="amountCents">
+                <display-name xml:lang="x-default">amountCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="taxCents">
+                <display-name xml:lang="x-default">taxCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="totalCents">
+                <display-name xml:lang="x-default">totalCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="currency">
+                <display-name xml:lang="x-default">currency</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="paymentReference">
+                <display-name xml:lang="x-default">paymentReference</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">orderNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="idempotencyKey">
+                <display-name xml:lang="x-default">idempotencyKey</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="quoteExpiresAt">
+                <display-name xml:lang="x-default">quoteExpiresAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="quoteData">
+                <display-name xml:lang="x-default">quoteData</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="basketUUID">
+                <display-name xml:lang="x-default">basketUUID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="subscriptionStamp">
+                <display-name xml:lang="x-default">subscriptionStamp</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="planVersion">
+                <display-name xml:lang="x-default">planVersion</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="reviewReason">
+                <display-name xml:lang="x-default">reviewReason</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="correlationID">
+                <display-name xml:lang="x-default">correlationID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="transactionID"/>
+                <attribute attribute-id="subscriptionID"/>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="transactionType"/>
+                <attribute attribute-id="sourcePlanID"/>
+                <attribute attribute-id="targetPlanID"/>
+                <attribute attribute-id="amountCents"/>
+                <attribute attribute-id="taxCents"/>
+                <attribute attribute-id="totalCents"/>
+                <attribute attribute-id="currency"/>
+                <attribute attribute-id="paymentReference"/>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="idempotencyKey"/>
+                <attribute attribute-id="quoteExpiresAt"/>
+                <attribute attribute-id="quoteData"/>
+                <attribute attribute-id="basketUUID"/>
+                <attribute attribute-id="subscriptionStamp"/>
+                <attribute attribute-id="planVersion"/>
+                <attribute attribute-id="reviewReason"/>
+                <attribute attribute-id="correlationID"/>
+                <attribute attribute-id="createdAt"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="PrimeMembershipBenefitUsage">
+        <display-name xml:lang="x-default">PrimeMembershipBenefitUsage</display-name>
+        <description xml:lang="x-default">Benefit redemption; the key makes a redemption unique per order or period</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="usageID">
+            <display-name xml:lang="x-default">usageID</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="subscriptionID">
+                <display-name xml:lang="x-default">subscriptionID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">customerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="benefitID">
+                <display-name xml:lang="x-default">benefitID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="usagePeriod">
+                <display-name xml:lang="x-default">usagePeriod</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="orderNo">
+                <display-name xml:lang="x-default">orderNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="discountCents">
+                <display-name xml:lang="x-default">discountCents</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="details">
+                <display-name xml:lang="x-default">details</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="usageStatus">
+                <display-name xml:lang="x-default">usageStatus</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="rewardCode">
+                <display-name xml:lang="x-default">rewardCode</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="loyaltyMultiplier">
+                <display-name xml:lang="x-default">loyaltyMultiplier</display-name>
+                <type>double</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="loyaltyStatus">
+                <display-name xml:lang="x-default">loyaltyStatus</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="usageID"/>
+                <attribute attribute-id="subscriptionID"/>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="benefitID"/>
+                <attribute attribute-id="usagePeriod"/>
+                <attribute attribute-id="orderNo"/>
+                <attribute attribute-id="discountCents"/>
+                <attribute attribute-id="details"/>
+                <attribute attribute-id="usageStatus"/>
+                <attribute attribute-id="rewardCode"/>
+                <attribute attribute-id="loyaltyMultiplier"/>
+                <attribute attribute-id="loyaltyStatus"/>
+                <attribute attribute-id="createdAt"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="PrimeMembershipAudit">
+        <display-name xml:lang="x-default">PrimeMembershipAudit</display-name>
+        <description xml:lang="x-default">Audit trail of lifecycle and financial changes</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="auditID">
+            <display-name xml:lang="x-default">auditID</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="actorReference">
+                <display-name xml:lang="x-default">actorReference</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="action">
+                <display-name xml:lang="x-default">action</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="subscriptionID">
+                <display-name xml:lang="x-default">subscriptionID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="previousState">
+                <display-name xml:lang="x-default">previousState</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="newState">
+                <display-name xml:lang="x-default">newState</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="correlationID">
+                <display-name xml:lang="x-default">correlationID</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="timestamp">
+                <display-name xml:lang="x-default">timestamp</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="auditID"/>
+                <attribute attribute-id="actorReference"/>
+                <attribute attribute-id="action"/>
+                <attribute attribute-id="subscriptionID"/>
+                <attribute attribute-id="previousState"/>
+                <attribute attribute-id="newState"/>
+                <attribute attribute-id="correlationID"/>
+                <attribute attribute-id="timestamp"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="PrimeMembershipNotification">
+        <display-name xml:lang="x-default">PrimeMembershipNotification</display-name>
+        <description xml:lang="x-default">E-mail outbox; the key prevents a duplicate notification during retries</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="notificationID">
+            <display-name xml:lang="x-default">notificationID</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="customerNo">
+                <display-name xml:lang="x-default">customerNo</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="type">
+                <display-name xml:lang="x-default">type</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="params">
+                <display-name xml:lang="x-default">params</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="status">
+                <display-name xml:lang="x-default">status</display-name>
+                <type>string</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+                <min-length>0</min-length>
+            </attribute-definition>
+            <attribute-definition attribute-id="attempts">
+                <display-name xml:lang="x-default">attempts</display-name>
+                <type>int</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="nextAttemptAt">
+                <display-name xml:lang="x-default">nextAttemptAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="sentAt">
+                <display-name xml:lang="x-default">sentAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="createdAt">
+                <display-name xml:lang="x-default">createdAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="notificationID"/>
+                <attribute attribute-id="customerNo"/>
+                <attribute attribute-id="type"/>
+                <attribute attribute-id="params"/>
+                <attribute attribute-id="status"/>
+                <attribute attribute-id="attempts"/>
+                <attribute attribute-id="nextAttemptAt"/>
+                <attribute attribute-id="sentAt"/>
+                <attribute attribute-id="createdAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+    <custom-type type-id="PrimeMembershipJobState">
+        <display-name xml:lang="x-default">PrimeMembershipJobState</display-name>
+        <description xml:lang="x-default">Job checkpoints, daily report aggregates and customer locks</description>
+        <staging-mode>no-staging</staging-mode>
+        <storage-scope>site</storage-scope>
+        <key-definition attribute-id="jobID">
+            <display-name xml:lang="x-default">jobID</display-name>
+            <type>string</type>
+            <min-length>0</min-length>
+        </key-definition>
+        <attribute-definitions>
+            <attribute-definition attribute-id="state">
+                <display-name xml:lang="x-default">state</display-name>
+                <type>text</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+            <attribute-definition attribute-id="updatedAt">
+                <display-name xml:lang="x-default">updatedAt</display-name>
+                <type>datetime</type>
+                <mandatory-flag>false</mandatory-flag>
+                <externally-managed-flag>false</externally-managed-flag>
+            </attribute-definition>
+        </attribute-definitions>
+        <group-definitions>
+            <attribute-group group-id="PrimeMembership">
+                <display-name xml:lang="x-default">Prime Membership</display-name>
+                <attribute attribute-id="jobID"/>
+                <attribute attribute-id="state"/>
+                <attribute attribute-id="updatedAt"/>
+            </attribute-group>
+        </group-definitions>
+    </custom-type>
+</metadata>

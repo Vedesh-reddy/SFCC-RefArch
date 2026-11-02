@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<custom-objects xmlns="http://www.demandware.com/xml/impex/customobject/2006-10-31">
+    <custom-object type-id="PrimeMembershipPlan" object-id="prime">
+        <object-attribute attribute-id="planName">Prime</object-attribute>
+        <object-attribute attribute-id="planRank">1</object-attribute>
+        <object-attribute attribute-id="annualPriceCents">100000</object-attribute>
+        <object-attribute attribute-id="currency">USD</object-attribute>
+        <object-attribute attribute-id="validityMonths">12</object-attribute>
+        <object-attribute attribute-id="enabled">false</object-attribute>
+        <object-attribute attribute-id="configurationVersion">1</object-attribute>
+        <object-attribute attribute-id="benefits">{"free-shipping":{"excludedProductIDs":[],"excludedCategoryIDs":[],"includedCategoryIDs":[],"countries":[],"enabled":true,"methodIDs":[],"perOrderCapCents":2500,"annualCapCents":30000,"reversal":"restore"},"member-discount":{"excludedProductIDs":[],"excludedCategoryIDs":[],"includedCategoryIDs":[],"countries":[],"enabled":true,"percent":5,"perOrderCapCents":10000,"annualCapCents":60000,"promotionPolicy":"exclude-promoted","reversal":"restore"},"early-access":{"enabled":true,"hours":12},"exclusive-deals":{"enabled":true,"deals":[],"perOrderCapCents":5000,"annualCapCents":30000},"birthday-reward":{"enabled":true,"couponID":"","windowDays":7}}</object-attribute>
+    </custom-object>
+    <custom-object type-id="PrimeMembershipPlan" object-id="ultra-prime">
+        <object-attribute attribute-id="planName">Ultra Prime</object-attribute>
+        <object-attribute attribute-id="planRank">2</object-attribute>
+        <object-attribute attribute-id="annualPriceCents">250000</object-attribute>
+        <object-attribute attribute-id="currency">USD</object-attribute>
+        <object-attribute attribute-id="validityMonths">12</object-attribute>
+        <object-attribute attribute-id="enabled">false</object-attribute>
+        <object-attribute attribute-id="configurationVersion">1</object-attribute>
+        <object-attribute attribute-id="benefits">{"free-shipping":{"excludedProductIDs":[],"excludedCategoryIDs":[],"includedCategoryIDs":[],"countries":[],"enabled":true,"methodIDs":[],"perOrderCapCents":5000,"annualCapCents":75000,"reversal":"restore"},"member-discount":{"excludedProductIDs":[],"excludedCategoryIDs":[],"includedCategoryIDs":[],"countries":[],"enabled":true,"percent":10,"perOrderCapCents":25000,"annualCapCents":150000,"promotionPolicy":"exclude-promoted","reversal":"restore"},"early-access":{"enabled":true,"hours":24},"exclusive-deals":{"enabled":true,"deals":[],"perOrderCapCents":10000,"annualCapCents":75000},"birthday-reward":{"enabled":true,"couponID":"","windowDays":7},"priority-support":{"enabled":true,"contact":""},"extended-returns":{"enabled":true,"days":45},"loyalty-multiplier":{"enabled":true,"multiplier":2}}</object-attribute>
+    </custom-object>
+    <custom-object type-id="PrimeMembershipPlan" object-id="ultra-prime-max">
+        <object-attribute attribute-id="planName">Ultra Prime Max</object-attribute>
+        <object-attribute attribute-id="planRank">3</object-attribute>
+        <object-attribute attribute-id="annualPriceCents">500000</object-attribute>
+        <object-attribute attribute-id="currency">USD</object-attribute>
+        <object-attribute attribute-id="validityMonths">12</object-attribute>
+        <object-attribute attribute-id="enabled">false</object-attribute>
+        <object-attribute attribute-id="configurationVersion">1</object-attribute>
+        <object-attribute attribute-id="benefits">{"free-shipping":{"excludedProductIDs":[],"excludedCategoryIDs":[],"includedCategoryIDs":[],"countries":[],"enabled":true,"methodIDs":[],"perOrderCapCents":10000,"annualCapCents":150000,"reversal":"restore"},"member-discount":{"excludedProductIDs":[],"excludedCategoryIDs":[],"includedCategoryIDs":[],"countries":[],"enabled":true,"percent":15,"perOrderCapCents":50000,"annualCapCents":300000,"promotionPolicy":"exclude-promoted","reversal":"restore"},"early-access":{"enabled":true,"hours":48},"exclusive-deals":{"enabled":true,"deals":[],"perOrderCapCents":20000,"annualCapCents":150000},"birthday-reward":{"enabled":true,"couponID":"","windowDays":14},"priority-support":{"enabled":true,"contact":"","vip":true},"extended-returns":{"enabled":true,"days":60},"loyalty-multiplier":{"enabled":true,"multiplier":3},"gift-wrap":{"enabled":true},"launch-access":{"enabled":true,"hours":72},"monthly-voucher":{"enabled":true,"couponID":""},"vip-event":{"enabled":true,"events":[]}}</object-attribute>
+    </custom-object>
+</custom-objects>

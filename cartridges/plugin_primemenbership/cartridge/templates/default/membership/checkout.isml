@@ -1,0 +1,65 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/prime-membership.css');
+        assets.addJs('/js/prime-membership-checkout.js');
+    </isscript>
+    <div class="container prime-membership-page py-4">
+        <h1>${Resource.msg('checkout.heading', 'primemembership', null)}</h1>
+        <isinclude template="membership/components/flash" />
+        <div class="row">
+            <div class="col-12 col-md-7 mb-3">
+                <isif condition="${pdict.hasAddress}">
+                    <h2 class="h5">${Resource.msg('checkout.payment', 'primemembership', null)}</h2>
+                    <form action="${URLUtils.https('PrimeMembership-PlaceOrder', 'id', pdict.transaction.transactionID)}" method="post" class="prime-membership-payment-form" autocomplete="on">
+                        <input type="hidden" name="${pdict.forms.billingForm.paymentMethod.htmlName}" value="${pdict.paymentMethod}" />
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                        <isinclude template="checkout/billing/creditCardForm" />
+                        <button type="submit" class="btn btn-primary mt-3">${Resource.msgf('checkout.pay', 'primemembership', null, pdict.transaction.total)}</button>
+                    </form>
+                <iselse/>
+                    <h2 class="h5">${Resource.msg('checkout.billing', 'primemembership', null)}</h2>
+                    <isset name="billing" value="${pdict.billingForm}" scope="page" />
+                    <form action="${URLUtils.https('PrimeMembership-SaveBilling', 'id', pdict.transaction.transactionID)}" method="post" class="prime-membership-billing-form">
+                        <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+                        <div class="row">
+                            <div class="col-6 mb-3"><label class="form-label" for="prime-membership-first-name">${Resource.msg('billing.first-name', 'primemembership', null)}</label><input class="form-control" id="prime-membership-first-name" name="${billing.firstName.htmlName}" maxlength="50" required="required" autocomplete="given-name" /></div>
+                            <div class="col-6 mb-3"><label class="form-label" for="prime-membership-last-name">${Resource.msg('billing.last-name', 'primemembership', null)}</label><input class="form-control" id="prime-membership-last-name" name="${billing.lastName.htmlName}" maxlength="50" required="required" autocomplete="family-name" /></div>
+                        </div>
+                        <div class="mb-3"><label class="form-label" for="prime-membership-address1">${Resource.msg('billing.address1', 'primemembership', null)}</label><input class="form-control" id="prime-membership-address1" name="${billing.address1.htmlName}" maxlength="50" required="required" autocomplete="address-line1" /></div>
+                        <div class="mb-3"><label class="form-label" for="prime-membership-address2">${Resource.msg('billing.address2', 'primemembership', null)}</label><input class="form-control" id="prime-membership-address2" name="${billing.address2.htmlName}" maxlength="50" autocomplete="address-line2" /></div>
+                        <div class="row">
+                            <div class="col-12 col-sm-6 mb-3"><label class="form-label" for="prime-membership-city">${Resource.msg('billing.city', 'primemembership', null)}</label><input class="form-control" id="prime-membership-city" name="${billing.city.htmlName}" maxlength="50" required="required" autocomplete="address-level2" /></div>
+                            <div class="col-6 col-sm-3 mb-3"><label class="form-label" for="prime-membership-state">${Resource.msg('billing.state', 'primemembership', null)}</label><input class="form-control text-uppercase" id="prime-membership-state" name="${billing.stateCode.htmlName}" maxlength="2" pattern="[A-Za-z]{2}" required="required" autocomplete="address-level1" /></div>
+                            <div class="col-6 col-sm-3 mb-3"><label class="form-label" for="prime-membership-postal">${Resource.msg('billing.postal', 'primemembership', null)}</label><input class="form-control" id="prime-membership-postal" name="${billing.postalCode.htmlName}" maxlength="10" required="required" autocomplete="postal-code" /></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6 mb-3">
+                                <label class="form-label" for="prime-membership-country">${Resource.msg('billing.country', 'primemembership', null)}</label>
+                                <select class="form-control form-select" id="prime-membership-country" name="${billing.countryCode.htmlName}" required="required" autocomplete="country">
+                                    <isloop items="${pdict.countries}" var="country"><option value="${country}">${country}</option></isloop>
+                                </select>
+                            </div>
+                            <div class="col-6 mb-3"><label class="form-label" for="prime-membership-phone">${Resource.msg('billing.phone', 'primemembership', null)}</label><input class="form-control" type="tel" id="prime-membership-phone" name="${billing.phone.htmlName}" maxlength="20" required="required" autocomplete="tel" /></div>
+                        </div>
+                        <button type="submit" class="btn btn-primary">${Resource.msg('checkout.continue', 'primemembership', null)}</button>
+                    </form>
+                </isif>
+            </div>
+            <div class="col-12 col-md-5">
+                <section class="card" aria-labelledby="prime-membership-summary">
+                    <div class="card-body">
+                        <h2 class="h5" id="prime-membership-summary">${pdict.plan.planName}</h2>
+                        <p class="d-flex justify-content-between mb-1"><span>${Resource.msg('checkout.fee', 'primemembership', null)}</span><span>${pdict.transaction.amount}</span></p>
+                        <isif condition="${pdict.hasAddress}">
+                            <p class="d-flex justify-content-between mb-1"><span>${Resource.msg('checkout.tax', 'primemembership', null)}</span><span>${pdict.transaction.tax}</span></p>
+                            <p class="d-flex justify-content-between font-weight-bold fw-bold mb-0"><span>${Resource.msg('checkout.total', 'primemembership', null)}</span><span>${pdict.transaction.total}</span></p>
+                        <iselse/>
+                            <p class="small text-muted mb-0">${Resource.msg('review.tax', 'primemembership', null)}</p>
+                        </isif>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</isdecorate>

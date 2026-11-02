@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<form xmlns="http://www.demandware.com/xml/form/2008-04-19" secure="false">
+    <field formid="planID" type="string" mandatory="true" regexp="^[a-z0-9][a-z0-9-]{1,40}$" />
+    <field formid="transactionType" type="string" mandatory="true" regexp="^(PURCHASE|UPGRADE|RENEWAL)$" />
+    <field formid="nonce" type="string" mandatory="true" regexp="^[A-Za-z0-9-]{8,64}$" />
+    <field formid="acceptTerms" type="boolean" mandatory="true" />
+</form>
