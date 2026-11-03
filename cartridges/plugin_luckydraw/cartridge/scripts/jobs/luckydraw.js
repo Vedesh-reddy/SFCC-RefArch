@@ -24,12 +24,32 @@ function maxItems(params, fallback) {
 }
 
 /**
+ * Keeps a step on its own timing, because it shares one job with faster steps. The run is claimed
+ * up front, so a failed step waits for its next turn, as it would with its own schedule.
+ * @param {string} name - step name
+ * @param {Object} params - job parameters
+ * @returns {boolean} true when the step should run now
+ */
+function claimRun(name, params) {
+    var minutes = Number(params && params.RunEveryMinutes);
+    if (!(minutes > 0)) return true;
+    var key = 'last-run-' + name;
+    var lastRun = luckyDrawHelpers.getJobState(key).at;
+    // One minute of grace, because the job never starts exactly on time.
+    if (lastRun && Date.now() - lastRun < (minutes - 1) * 60000) return false;
+    luckyDrawHelpers.saveJobState(key, { at: Date.now() });
+    return true;
+}
+
+/**
  * @param {string} name - step name
  * @param {Function} fn - work returning counts
+ * @param {Object} params - job parameters
  * @returns {dw.system.Status} OK, or ERROR when the step threw or reported failures or mismatches
  */
-function run(name, fn) {
+function run(name, fn, params) {
     if (!luckyDrawHelpers.isLuckyDrawEnabled()) return new Status(Status.OK, 'DISABLED', 'Lucky draw disabled');
+    if (!claimRun(name, params)) return new Status(Status.OK, 'NOT_DUE', name + ' is not due yet');
     try {
         var counts = fn() || {};
         var summary = JSON.stringify(counts);
@@ -44,43 +64,43 @@ function run(name, fn) {
 exports.status = function (params) {
     return run('status', function () {
         return require('*/cartridge/scripts/helpers/luckyDrawCampaignHelpers').advanceCampaigns(maxItems(params, 200));
-    });
+    }, params);
 };
 
 exports.entries = function (params) {
     return run('entries', function () {
         return require('*/cartridge/scripts/helpers/luckyDrawEntryHelpers').processOrders(maxItems(params, 1000));
-    });
+    }, params);
 };
 
 exports.reconcile = function (params) {
     return run('reconcile', function () {
         return require('*/cartridge/scripts/helpers/luckyDrawEntryHelpers').reconcileEntries(maxItems(params, 1000));
-    });
+    }, params);
 };
 
 exports.draw = function (params) {
     return run('draw', function () {
         return require('*/cartridge/scripts/helpers/luckyDrawDrawHelpers').runDraws(maxItems(params, 1000));
-    });
+    }, params);
 };
 
 exports.verify = function (params) {
     return run('verify', function () {
         return require('*/cartridge/scripts/helpers/luckyDrawDrawHelpers').verifyWinners(maxItems(params, 200));
-    });
+    }, params);
 };
 
 exports.rewards = function (params) {
     return run('rewards', function () {
         return require('*/cartridge/scripts/helpers/luckyDrawRewardHelpers').processRewards(maxItems(params, 200));
-    });
+    }, params);
 };
 
 exports.notifications = function (params) {
     return run('notifications', function () {
         return luckyDrawHelpers.deliverNotifications(maxItems(params, 500));
-    });
+    }, params);
 };
 
 /**
@@ -104,7 +124,7 @@ exports.cleanup = function (params) {
             buckets: removeWhere('LuckyDrawRateBucket', 'custom.expiresAt <= {0}', [now]),
             requestKeys: removeWhere('LuckyDrawRequestKey', 'custom.createdAt <= {0}', [new Date(now.getTime() - luckyDrawHelpers.getPreference('luckyDrawRequestKeyRetentionDays') * 86400000)])
         };
-    });
+    }, params);
 };
 
 /**
@@ -136,5 +156,33 @@ exports.auditExport = function (params) {
         }
         luckyDrawHelpers.saveJobState('audit-export', { after: events[events.length - 1].custom.occurredAt.toISOString() });
         return { exported: events.length, file: file.name };
-    });
+    }, params);
+};
+
+/**
+ * Notes failed steps in the job context. A job carries on after a failed step, so the job would
+ * end OK unless its last step reports them.
+ */
+Object.keys(exports).forEach(function (name) {
+    var step = exports[name];
+    exports[name] = function (params, stepExecution) {
+        var status = step(params);
+        if (status.error && stepExecution) {
+            var context = stepExecution.getJobExecution().getContext();
+            var failed = context.get('failedSteps');
+            context.put('failedSteps', (failed ? failed + ', ' : '') + stepExecution.getStepID());
+        }
+        return status;
+    };
+});
+
+/**
+ * Last step of the job: fails the job when an earlier step failed.
+ * @param {Object} params - job parameters
+ * @param {dw.job.JobStepExecution} stepExecution - the running step
+ * @returns {dw.system.Status} ERROR naming the failed steps, otherwise OK
+ */
+exports.reportFailures = function (params, stepExecution) {
+    var failed = stepExecution.getJobExecution().getContext().get('failedSteps');
+    return failed ? new Status(Status.ERROR, 'ATTENTION', 'Failed steps: ' + failed) : new Status(Status.OK, 'OK', 'No failed steps');
 };

@@ -139,7 +139,7 @@ exports.Home = function () {
             rows: Object.keys(live.byPlan).map(function (plan) { return [plan, String(live.byPlan[plan])]; })
         });
     } else {
-        sections.push({ type: 'notice', title: 'Members', text: 'Run MembershipReportingJob to see member counts.' });
+        sections.push({ type: 'notice', title: 'Members', text: 'Run PrimeMembership-Job to see member counts.' });
     }
     sections.push({
         type: 'table',

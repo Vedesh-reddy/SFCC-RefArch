@@ -21,6 +21,14 @@
                             "default-value": "5000",
                             "min-value": "1",
                             "max-value": "100000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -57,6 +65,14 @@
                             "default-value": "2000",
                             "min-value": "1",
                             "max-value": "50000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -102,6 +118,14 @@
                             "default-value": "20000",
                             "min-value": "1",
                             "max-value": "200000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -138,6 +162,14 @@
                             "default-value": "10000",
                             "min-value": "1",
                             "max-value": "100000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -183,6 +215,14 @@
                             "default-value": "50000",
                             "min-value": "1",
                             "max-value": "200000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -195,6 +235,30 @@
                         {
                             "@code": "ERROR",
                             "description": "Failed or found problems; see the plugin-analytics log and Storefront Analytics > Health"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Analytics.ReportFailures",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Fails the job when an earlier step failed, so Business Manager shows it",
+                "module": "plugin_analytics/cartridge/scripts/jobs/analytics.js",
+                "function": "reportFailures",
+                "transactional": "false",
+                "timeout-in-seconds": 60,
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "No failed steps"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "An earlier step failed; the message names it"
                         }
                     ]
                 }

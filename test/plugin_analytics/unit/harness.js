@@ -364,7 +364,7 @@ function harness(options) {
         'dw/system/Transaction': { wrap: transactionWrap },
         'dw/system/Site': Site,
         'dw/system/Logger': { getLogger: logger },
-        'dw/system/Status': Object.assign(function (status, code, message) { this.status = status; this.code = code; this.message = message; }, { OK: 0, ERROR: 1 }),
+        'dw/system/Status': Object.assign(function (status, code, message) { this.status = status; this.error = status === 1; this.code = code; this.message = message; }, { OK: 0, ERROR: 1 }),
         'dw/crypto/SecureRandom': function () {
             this.nextBytes = function (n) { return new Bytes(crypto.randomBytes(n)); };
             this.nextInt = function (n) { return opts.randomInt !== undefined ? opts.randomInt : crypto.randomInt(n); };

@@ -7,11 +7,22 @@
                 "@supports-site-context": "true",
                 "@supports-organization-context": "false",
                 "description": "Records a price change point for every online product whose price changed since the last run.",
-                "module": "plugin_smartcommerce/cartridge/scripts/jobs/recordPriceHistory.js",
-                "function": "execute",
+                "module": "plugin_smartcommerce/cartridge/scripts/jobs/jobSteps.js",
+                "function": "recordPriceHistory",
                 "transactional": "false",
                 "timeout-in-seconds": "7200",
-                "parameters": {},
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "RunAtHourUTC",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Run this step only during this hour, 0 to 23 UTC. Empty runs it every time the job runs.",
+                            "min-value": "0",
+                            "max-value": "23"
+                        }
+                    ]
+                },
                 "status-codes": {
                     "status": [
                         { "@code": "ERROR", "description": "One or more products could not be recorded" },
@@ -25,8 +36,8 @@
                 "@supports-site-context": "true",
                 "@supports-organization-context": "false",
                 "description": "Emails triggered back-in-stock and price-drop alerts and expires old ones.",
-                "module": "plugin_smartcommerce/cartridge/scripts/jobs/sendProductAlerts.js",
-                "function": "execute",
+                "module": "plugin_smartcommerce/cartridge/scripts/jobs/jobSteps.js",
+                "function": "sendProductAlerts",
                 "transactional": "false",
                 "timeout-in-seconds": "3600",
                 "parameters": {},
@@ -43,8 +54,8 @@
                 "@supports-site-context": "true",
                 "@supports-organization-context": "false",
                 "description": "Marks pending and active price locks past their expiry as expired.",
-                "module": "plugin_smartcommerce/cartridge/scripts/jobs/expirePriceLocks.js",
-                "function": "execute",
+                "module": "plugin_smartcommerce/cartridge/scripts/jobs/jobSteps.js",
+                "function": "expirePriceLocks",
                 "transactional": "false",
                 "timeout-in-seconds": "1800",
                 "parameters": {},
@@ -52,6 +63,30 @@
                     "status": [
                         { "@code": "ERROR", "description": "One or more locks failed" },
                         { "@code": "OK", "description": "All locks processed" }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.SmartCommerce.ReportFailures",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Fails the job when an earlier step failed, so Business Manager shows it",
+                "module": "plugin_smartcommerce/cartridge/scripts/jobs/jobSteps.js",
+                "function": "reportFailures",
+                "transactional": "false",
+                "timeout-in-seconds": 60,
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "No failed steps"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "An earlier step failed; the message names it"
+                        }
                     ]
                 }
             }

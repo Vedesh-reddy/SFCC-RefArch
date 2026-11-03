@@ -182,4 +182,11 @@ describe('plugin_luckydraw integrity', function () {
         var changed = require('child_process').execFileSync('git', ['status', '--porcelain', '--', 'cartridges/app_storefront_base', 'cartridges/bm_app_storefront_base', 'cartridges/modules'], { cwd: repo }).toString().trim();
         assert.equal(changed, '');
     });
+
+    it('skips a step until RunEveryMinutes has passed', function () {
+        var jobs = harness().require('scripts/jobs/luckydraw');
+        assert.equal(jobs.cleanup({ RunEveryMinutes: 60 }).code, 'OK');
+        assert.equal(jobs.cleanup({ RunEveryMinutes: 60 }).code, 'NOT_DUE');
+        assert.equal(jobs.cleanup({}).code, 'OK', 'runs every time without the setting');
+    });
 });

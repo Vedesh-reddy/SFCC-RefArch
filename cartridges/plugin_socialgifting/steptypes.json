@@ -7,8 +7,8 @@
         "@supports-site-context": "true",
         "@supports-organization-context": "false",
         "description": "RegistryLifecycleJob",
-        "module": "plugin_socialgifting/cartridge/scripts/jobs/registryLifecycle.js",
-        "function": "execute",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/jobSteps.js",
+        "function": "registryLifecycle",
         "transactional": "false",
         "timeout-in-seconds": 300,
         "parameters": {},
@@ -31,8 +31,8 @@
         "@supports-site-context": "true",
         "@supports-organization-context": "false",
         "description": "ReconcileRegistryOrders",
-        "module": "plugin_socialgifting/cartridge/scripts/jobs/reconcileOrders.js",
-        "function": "execute",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/jobSteps.js",
+        "function": "reconcileOrders",
         "transactional": "false",
         "timeout-in-seconds": 300,
         "parameters": {},
@@ -55,8 +55,8 @@
         "@supports-site-context": "true",
         "@supports-organization-context": "false",
         "description": "SendRegistryNotifications",
-        "module": "plugin_socialgifting/cartridge/scripts/jobs/sendNotifications.js",
-        "function": "execute",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/jobSteps.js",
+        "function": "sendNotifications",
         "transactional": "false",
         "timeout-in-seconds": 300,
         "parameters": {},
@@ -79,8 +79,8 @@
         "@supports-site-context": "true",
         "@supports-organization-context": "false",
         "description": "Fulfill funded campaigns through the merchant funding integration",
-        "module": "plugin_socialgifting/cartridge/scripts/jobs/fulfillGroupGifts.js",
-        "function": "execute",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/jobSteps.js",
+        "function": "fulfillGroupGifts",
         "transactional": "false",
         "timeout-in-seconds": 300,
         "parameters": {},
@@ -93,6 +93,30 @@
             {
               "@code": "ERROR",
               "description": "Partial failure; retry and inspect logs"
+            }
+          ]
+        }
+      },
+      {
+        "@type-id": "custom.SocialGifting.ReportFailures",
+        "@supports-parallel-execution": "false",
+        "@supports-site-context": "true",
+        "@supports-organization-context": "false",
+        "description": "Fails the job when an earlier step failed, so Business Manager shows it",
+        "module": "plugin_socialgifting/cartridge/scripts/jobs/jobSteps.js",
+        "function": "reportFailures",
+        "transactional": "false",
+        "timeout-in-seconds": 60,
+        "parameters": {},
+        "status-codes": {
+          "status": [
+            {
+              "@code": "OK",
+              "description": "No failed steps"
+            },
+            {
+              "@code": "ERROR",
+              "description": "An earlier step failed; the message names it"
             }
           ]
         }

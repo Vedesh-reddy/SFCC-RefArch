@@ -1,135 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
-    <job job-id="MembershipExpirationJob" priority="0">
-        <description>Send reminders and expire memberships</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
-            <step step-id="Expiration" type="custom.PrimeMembership.Expiration" enforce-restart="false">
-                <description>Send reminders and expire memberships</description>
-                <parameters>
-                    <parameter name="MaxItems">2000</parameter>
-                </parameters>
-            </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>00:00:00.000Z</start-time>
-                    <interval>1d</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="MembershipRenewalJob" priority="0">
-        <description>Open renewals and charge consented automatic renewals through the adapter</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
-            <step step-id="Renewal" type="custom.PrimeMembership.Renewal" enforce-restart="false">
-                <description>Open renewals and charge consented automatic renewals through the adapter</description>
-                <parameters>
-                    <parameter name="MaxItems">500</parameter>
-                </parameters>
-            </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>00:00:00.000Z</start-time>
-                    <interval>1d</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="MembershipBenefitResetJob" priority="0">
-        <description>Advance benefit periods and issue monthly vouchers</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
-            <step step-id="BenefitReset" type="custom.PrimeMembership.BenefitReset" enforce-restart="false">
-                <description>Advance benefit periods and issue monthly vouchers</description>
-                <parameters>
-                    <parameter name="MaxItems">2000</parameter>
-                </parameters>
-            </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>00:00:00.000Z</start-time>
-                    <interval>1d</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="MembershipBirthdayRewardJob" priority="0">
-        <description>Issue birthday rewards</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
-            <step step-id="BirthdayReward" type="custom.PrimeMembership.BirthdayReward" enforce-restart="false">
-                <description>Issue birthday rewards</description>
-                <parameters>
-                    <parameter name="MaxItems">2000</parameter>
-                </parameters>
-            </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>00:00:00.000Z</start-time>
-                    <interval>1d</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="MembershipReconciliationJob" priority="0">
-        <description>Activate paid memberships and repair pending records</description>
+    <job job-id="PrimeMembership-Job">
+        <description>All Prime membership tasks. Runs every 15 minutes; daily steps wait for their own RunEveryMinutes.</description>
         <parameters/>
         <flow>
             <context site-id="RefArch_Practice"/>
@@ -138,70 +10,91 @@
                 <parameters>
                     <parameter name="MaxItems">500</parameter>
                 </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
             </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>00:00:00.000Z</start-time>
-                    <interval>15m</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="MembershipReportingJob" priority="0">
-        <description>Build daily membership metrics</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
+            <step step-id="Expiration" type="custom.PrimeMembership.Expiration" enforce-restart="false">
+                <description>Send reminders and expire memberships</description>
+                <parameters>
+                    <parameter name="MaxItems">2000</parameter>
+                    <parameter name="RunEveryMinutes">1440</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="Renewal" type="custom.PrimeMembership.Renewal" enforce-restart="false">
+                <description>Open renewals and charge consented automatic renewals through the adapter</description>
+                <parameters>
+                    <parameter name="MaxItems">500</parameter>
+                    <parameter name="RunEveryMinutes">1440</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="BenefitReset" type="custom.PrimeMembership.BenefitReset" enforce-restart="false">
+                <description>Advance benefit periods and issue monthly vouchers</description>
+                <parameters>
+                    <parameter name="MaxItems">2000</parameter>
+                    <parameter name="RunEveryMinutes">1440</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="BirthdayReward" type="custom.PrimeMembership.BirthdayReward" enforce-restart="false">
+                <description>Issue birthday rewards</description>
+                <parameters>
+                    <parameter name="MaxItems">2000</parameter>
+                    <parameter name="RunEveryMinutes">1440</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
             <step step-id="Reporting" type="custom.PrimeMembership.Reporting" enforce-restart="false">
                 <description>Build daily membership metrics</description>
                 <parameters>
                     <parameter name="MaxItems">5000</parameter>
+                    <parameter name="RunEveryMinutes">1440</parameter>
                 </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
             </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>00:00:00.000Z</start-time>
-                    <interval>1d</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="MembershipNotificationJob" priority="0">
-        <description>Deliver queued membership e-mails</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
             <step step-id="Notifications" type="custom.PrimeMembership.Notifications" enforce-restart="false">
                 <description>Deliver queued membership e-mails</description>
                 <parameters>
                     <parameter name="MaxItems">500</parameter>
                 </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="ReportFailures" type="custom.PrimeMembership.ReportFailures" enforce-restart="false">
+                <description>Fails the job when an earlier step failed, so Business Manager shows it</description>
+                <parameters/>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
             </step>
         </flow>
         <rules/>

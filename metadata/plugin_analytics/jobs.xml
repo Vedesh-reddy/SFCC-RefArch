@@ -1,47 +1,78 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
-    <job job-id="Analytics-AggregateEvents">
-        <description>Fold storefront event batches into the daily aggregates</description>
+    <job job-id="Analytics-Job">
+        <description>All analytics tasks. Runs every 15 minutes; daily steps wait for their own RunEveryMinutes.</description>
         <parameters/>
         <flow>
             <context site-id="RefArch_Practice"/>
             <step step-id="AggregateEvents" type="custom.Analytics.AggregateEvents" enforce-restart="false">
-                <description>AggregateEvents</description>
+                <description>Fold storefront event batches into the daily product, category, search and site aggregates</description>
                 <parameters>
                     <parameter name="MaxBatches">5000</parameter>
                 </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
             </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>00:00:00.000Z</start-time>
-                    <interval>15m</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="Analytics-ReconcileOrders">
-        <description>Reconcile purchases, cancellations and refunds from changed orders</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
             <step step-id="ReconcileOrders" type="custom.Analytics.ReconcileOrders" enforce-restart="false">
-                <description>ReconcileOrders</description>
+                <description>Bring purchase, cancellation and refund figures in line with changed orders</description>
                 <parameters>
                     <parameter name="MaxOrders">2000</parameter>
                 </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="Cleanup" type="custom.Analytics.Cleanup" enforce-restart="false">
+                <description>Remove aggregates older than the retention period and never-aggregated stale batches</description>
+                <parameters>
+                    <parameter name="MaxItems">10000</parameter>
+                    <parameter name="RunEveryMinutes">1440</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="GenerateRankings" type="custom.Analytics.GenerateRankings" enforce-restart="false">
+                <description>Precompute top and bottom 10 product lists for the standard periods</description>
+                <parameters>
+                    <parameter name="MaxRecords">200000</parameter>
+                    <parameter name="MaxProducts">20000</parameter>
+                    <parameter name="RunEveryMinutes">1440</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="IntegrityCheck" type="custom.Analytics.IntegrityCheck" enforce-restart="false">
+                <description>Check recent aggregates against each other and against orders</description>
+                <parameters>
+                    <parameter name="Days">7</parameter>
+                    <parameter name="MaxItems">50000</parameter>
+                    <parameter name="RunEveryMinutes">1440</parameter>
+                </parameters>
+                <rules>
+                    <on-exit status="ERROR">
+                        <continue/>
+                    </on-exit>
+                </rules>
+            </step>
+            <step step-id="ReportFailures" type="custom.Analytics.ReportFailures" enforce-restart="false">
+                <description>Fails the job when an earlier step failed, so Business Manager shows it</description>
+                <parameters/>
+                <rules>
+                    <on-exit status="ERROR">
+                        <stop-job/>
+                    </on-exit>
+                </rules>
             </step>
         </flow>
         <rules/>
@@ -51,104 +82,6 @@
                     <date-from>2026-01-01Z</date-from>
                     <start-time>00:00:00.000Z</start-time>
                     <interval>15m</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="Analytics-GenerateRankings">
-        <description>Precompute top and bottom 10 product lists</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
-            <step step-id="GenerateRankings" type="custom.Analytics.GenerateRankings" enforce-restart="false">
-                <description>GenerateRankings</description>
-                <parameters>
-                    <parameter name="MaxRecords">200000</parameter>
-                    <parameter name="MaxProducts">20000</parameter>
-                </parameters>
-            </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>03:00:00.000Z</start-time>
-                    <interval>1d</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="Analytics-Cleanup">
-        <description>Apply the analytics retention period</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
-            <step step-id="Cleanup" type="custom.Analytics.Cleanup" enforce-restart="false">
-                <description>Cleanup</description>
-                <parameters>
-                    <parameter name="MaxItems">10000</parameter>
-                </parameters>
-            </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>03:00:00.000Z</start-time>
-                    <interval>1d</interval>
-                    <day-of-week>
-                        <weekday>Monday</weekday>
-                        <weekday>Tuesday</weekday>
-                        <weekday>Wednesday</weekday>
-                        <weekday>Thursday</weekday>
-                        <weekday>Friday</weekday>
-                        <weekday>Saturday</weekday>
-                        <weekday>Sunday</weekday>
-                    </day-of-week>
-                </recurrence>
-            </run-recurring>
-        </triggers>
-    </job>
-    <job job-id="Analytics-IntegrityCheck">
-        <description>Check recent aggregates against each other and against orders</description>
-        <parameters/>
-        <flow>
-            <context site-id="RefArch_Practice"/>
-            <step step-id="IntegrityCheck" type="custom.Analytics.IntegrityCheck" enforce-restart="false">
-                <description>IntegrityCheck</description>
-                <parameters>
-                    <parameter name="Days">7</parameter>
-                    <parameter name="MaxItems">50000</parameter>
-                </parameters>
-            </step>
-        </flow>
-        <rules/>
-        <triggers>
-            <run-recurring enabled="false">
-                <recurrence>
-                    <date-from>2026-01-01Z</date-from>
-                    <start-time>03:00:00.000Z</start-time>
-                    <interval>1d</interval>
                     <day-of-week>
                         <weekday>Monday</weekday>
                         <weekday>Tuesday</weekday>

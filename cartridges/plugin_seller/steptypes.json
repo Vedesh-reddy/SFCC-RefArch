@@ -21,6 +21,14 @@
                             "default-value": "50",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -57,6 +65,14 @@
                             "default-value": "200",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -93,6 +109,14 @@
                             "default-value": "1000",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -119,7 +143,18 @@
                 "function": "syncConfirm",
                 "transactional": "false",
                 "timeout-in-seconds": 1800,
-                "parameters": {},
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
+                        }
+                    ]
+                },
                 "status-codes": {
                     "status": [
                         {
@@ -153,6 +188,14 @@
                             "default-value": "500",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -196,6 +239,14 @@
                             "@required": "false",
                             "description": "Request payouts for open settlements (EXTERNAL payout provider only)",
                             "default-value": "false"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -232,6 +283,14 @@
                             "default-value": "200",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -268,6 +327,14 @@
                             "default-value": "200",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -304,6 +371,14 @@
                             "default-value": "500",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -330,7 +405,18 @@
                 "function": "reminders",
                 "transactional": "false",
                 "timeout-in-seconds": 1800,
-                "parameters": {},
+                "parameters": {
+                    "parameter": [
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
+                        }
+                    ]
+                },
                 "status-codes": {
                     "status": [
                         {
@@ -364,6 +450,14 @@
                             "default-value": "500",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -407,6 +501,14 @@
                             "@required": "false",
                             "description": "Hours after which an unanswered payout request opens a case",
                             "default-value": "48"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -443,6 +545,14 @@
                             "default-value": "1000",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -455,6 +565,30 @@
                         {
                             "@code": "ERROR",
                             "description": "Failed or partially failed; see the plugin-seller log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.MarketplaceSeller.ReportFailures",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Fails the job when an earlier step failed, so Business Manager shows it",
+                "module": "plugin_seller/cartridge/scripts/jobs/marketplace.js",
+                "function": "reportFailures",
+                "transactional": "false",
+                "timeout-in-seconds": 60,
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "No failed steps"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "An earlier step failed; the message names it"
                         }
                     ]
                 }

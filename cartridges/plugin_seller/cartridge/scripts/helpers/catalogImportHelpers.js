@@ -319,12 +319,25 @@ function failPublishing(submission, problem) {
 }
 
 /**
+ * Creates the import folders, because a platform import step logs an error when its folder is
+ * missing, even with nothing to import.
+ * @param {Object} folders - catalog, pricebook and inventory folders
+ */
+function ensureImportFolders(folders) {
+    Object.keys(folders).forEach(function (key) {
+        var dir = new File(File.IMPEX + '/src/' + folders[key]);
+        if (!dir.exists()) dir.mkdirs();
+    });
+}
+
+/**
  * Job step: builds (or sends) the catalog data of due submissions.
  * @param {number} limit - maximum submissions per run
  * @returns {{prepared: number, failed: number}} counts
  */
 function preparePublishing(limit) {
     var counts = { prepared: 0, failed: 0 };
+    ensureImportFolders(FOLDERS.provision);
     if (!canPublish()) {
         log.error('Publishing skipped: marketplace catalog preferences are incomplete');
         return counts;
@@ -485,6 +498,7 @@ function getEstimatedStock(offer, seller) {
  */
 function prepareOfferSync(limit) {
     var counts = { offers: 0, products: 0, failed: 0 };
+    ensureImportFolders(FOLDERS.sync);
     if (!canPublish()) {
         log.error('Offer sync skipped: marketplace catalog preferences are incomplete');
         return counts;

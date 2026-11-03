@@ -26,15 +26,35 @@ function maxItems(params, fallback) {
 }
 
 /**
+ * Keeps a step on its own timing, because it shares one job with faster steps. The run is claimed
+ * up front, so a failed step waits for its next turn, as it would with its own schedule.
+ * @param {string} name - step name
+ * @param {Object} params - job parameters
+ * @returns {boolean} true when the step should run now
+ */
+function claimRun(name, params) {
+    var minutes = Number(params && params.RunEveryMinutes);
+    if (!(minutes > 0)) return true;
+    var key = 'last-run-' + name;
+    var lastRun = marketplaceHelpers.getJobState(key).at;
+    // One minute of grace, because the job never starts exactly on time.
+    if (lastRun && Date.now() - lastRun < (minutes - 1) * 60000) return false;
+    marketplaceHelpers.saveJobState(key, { at: Date.now() });
+    return true;
+}
+
+/**
  * @param {string} name - step name
  * @param {Function} fn - work returning counts
+ * @param {Object} params - job parameters
  * @returns {dw.system.Status} OK, or ERROR when the step threw or reported failures
  */
-function run(name, fn) {
+function run(name, fn, params) {
     if (!marketplaceHelpers.isMarketplaceEnabled()) {
         log.info('{0}: marketplace disabled, nothing to do', name);
         return new Status(Status.OK, 'DISABLED', 'Marketplace disabled');
     }
+    if (!claimRun(name, params)) return new Status(Status.OK, 'NOT_DUE', name + ' is not due yet');
     try {
         var counts = fn() || {};
         var summary = JSON.stringify(counts);
@@ -56,25 +76,25 @@ function isExternalPayout() {
 exports.provisionPrepare = function (params) {
     return run('provision-prepare', function () {
         return require('*/cartridge/scripts/helpers/catalogImportHelpers').preparePublishing(maxItems(params, 50));
-    });
+    }, params);
 };
 
 exports.provisionVerify = function (params) {
     return run('provision-verify', function () {
         return require('*/cartridge/scripts/helpers/catalogImportHelpers').verifyPublishing(maxItems(params, 200));
-    });
+    }, params);
 };
 
 exports.syncPrepare = function (params) {
     return run('sync-prepare', function () {
         return require('*/cartridge/scripts/helpers/catalogImportHelpers').prepareOfferSync(maxItems(params, 1000));
-    });
+    }, params);
 };
 
-exports.syncConfirm = function () {
+exports.syncConfirm = function (params) {
     return run('sync-confirm', function () {
         return require('*/cartridge/scripts/helpers/catalogImportHelpers').confirmOfferSync();
-    });
+    }, params);
 };
 
 /**
@@ -119,7 +139,7 @@ exports.orderSync = function (params) {
         counts.closed = orderHelpers.closeFinishedOrders(limit);
         counts.rebooked = orderHelpers.bookMissedEarnings(limit);
         return counts;
-    });
+    }, params);
 };
 
 /**
@@ -166,7 +186,7 @@ exports.settlements = function (params) {
             });
         }
         return counts;
-    });
+    }, params);
 };
 
 exports.reconcile = function (params) {
@@ -181,7 +201,7 @@ exports.reconcile = function (params) {
             if (settlementHelpers.reconcileSettlement(s) === 'MISMATCH') counts.mismatches += 1;
         });
         return counts;
-    });
+    }, params);
 };
 
 exports.performance = function (params) {
@@ -204,21 +224,22 @@ exports.performance = function (params) {
         // The cursor wraps around once every approved seller has been evaluated.
         marketplaceHelpers.saveJobState('performance', { cursor: counts.evaluated + counts.failed < limit ? '' : last });
         return counts;
-    });
+    }, params);
 };
 
 exports.notifications = function (params) {
     return run('notifications', function () {
         return marketplaceHelpers.deliverNotifications(maxItems(params, 500));
-    });
+    }, params);
 };
 
 /**
  * One admin reminder per run when sellers, submissions or offers wait longer than
  * sellerApprovalReminderHours.
+ * @param {Object} params - job step parameters
  * @returns {dw.system.Status} step status
  */
-exports.reminders = function () {
+exports.reminders = function (params) {
     return run('reminders', function () {
         var before = new Date(Date.now() - Site.getCurrent().getCustomPreferenceValue('sellerApprovalReminderHours') * 3600000);
         var sellers = marketplaceHelpers.queryCount('MarketplaceSeller', '(custom.status = {0} OR custom.status = {1}) AND custom.submittedAt <= {2}', ['PENDING_VERIFICATION', 'PENDING_APPROVAL', before]);
@@ -230,13 +251,13 @@ exports.reminders = function () {
             });
         }
         return { sellers: sellers, submissions: submissions, offers: offers };
-    });
+    }, params);
 };
 
 exports.documentExpiry = function (params) {
     return run('document-expiry', function () {
         return require('*/cartridge/scripts/helpers/sellerDocumentHelpers').processExpiringDocuments(maxItems(params, 500));
-    });
+    }, params);
 };
 
 /**
@@ -277,7 +298,7 @@ exports.recovery = function (params) {
             });
         }
         return counts;
-    });
+    }, params);
 };
 
 /**
@@ -303,5 +324,33 @@ exports.cleanup = function (params) {
             otps: removeWhere('MarketplaceOtp', 'custom.expiresAt <= {0}', [new Date(now.getTime() - 86400000)]),
             documents: require('*/cartridge/scripts/helpers/sellerDocumentHelpers').purgeExpiredFiles(limit)
         };
-    });
+    }, params);
+};
+
+/**
+ * Notes failed steps in the job context. A job carries on after a failed step, so the job would
+ * end OK unless its last step reports them.
+ */
+Object.keys(exports).forEach(function (name) {
+    var step = exports[name];
+    exports[name] = function (params, stepExecution) {
+        var status = step(params);
+        if (status.error && stepExecution) {
+            var context = stepExecution.getJobExecution().getContext();
+            var failed = context.get('failedSteps');
+            context.put('failedSteps', (failed ? failed + ', ' : '') + stepExecution.getStepID());
+        }
+        return status;
+    };
+});
+
+/**
+ * Last step of the job: fails the job when an earlier step failed.
+ * @param {Object} params - job parameters
+ * @param {dw.job.JobStepExecution} stepExecution - the running step
+ * @returns {dw.system.Status} ERROR naming the failed steps, otherwise OK
+ */
+exports.reportFailures = function (params, stepExecution) {
+    var failed = stepExecution.getJobExecution().getContext().get('failedSteps');
+    return failed ? new Status(Status.ERROR, 'ATTENTION', 'Failed steps: ' + failed) : new Status(Status.OK, 'OK', 'No failed steps');
 };

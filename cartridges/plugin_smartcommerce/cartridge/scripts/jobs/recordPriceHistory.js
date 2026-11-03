@@ -14,9 +14,15 @@ var priceHistory = require('*/cartridge/scripts/priceHistory');
 var customLogger = Logger.getLogger('smart-commerce', 'price-history-job');
 
 /**
+ * @param {Object} params - job parameters
  * @returns {dw.system.Status} OK, or ERROR when any product failed
  */
-function execute() {
+function execute(params) {
+    // Shares a job with steps that run all day; this one only runs in its own hour.
+    var hour = params && params.RunAtHourUTC;
+    if (hour !== null && hour !== undefined && new Date().getUTCHours() !== Number(hour)) {
+        return new Status(Status.OK, 'NOT_DUE', 'Runs in hour ' + hour + ' UTC');
+    }
     var now = Date.now();
     var products = ProductMgr.queryAllSiteProducts();
     var changed = 0;

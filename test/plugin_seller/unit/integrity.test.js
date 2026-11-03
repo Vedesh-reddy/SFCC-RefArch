@@ -234,4 +234,11 @@ describe('plugin_seller integrity', function () {
         var changed = childProcess.execFileSync('git', ['status', '--porcelain', '--', 'cartridges/app_storefront_base', 'cartridges/bm_app_storefront_base', 'cartridges/modules'], { cwd: repo }).toString().trim();
         assert.equal(changed, '');
     });
+
+    it('skips a step until RunEveryMinutes has passed', function () {
+        var jobs = harness().require('scripts/jobs/marketplace');
+        assert.equal(jobs.cleanup({ RunEveryMinutes: 60 }).code, 'OK');
+        assert.equal(jobs.cleanup({ RunEveryMinutes: 60 }).code, 'NOT_DUE');
+        assert.equal(jobs.cleanup({}).code, 'OK', 'runs every time without the setting');
+    });
 });

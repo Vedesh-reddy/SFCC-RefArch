@@ -21,6 +21,14 @@
                             "default-value": "500",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -57,6 +65,14 @@
                             "default-value": "200",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -93,6 +109,14 @@
                             "default-value": "200",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -129,6 +153,14 @@
                             "default-value": "100",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -165,6 +197,14 @@
                             "default-value": "5000",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -201,6 +241,14 @@
                             "default-value": "500",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -237,6 +285,14 @@
                             "default-value": "1000",
                             "min-value": "1",
                             "max-value": "10000"
+                        },
+                        {
+                            "@name": "RunEveryMinutes",
+                            "@type": "long",
+                            "@required": "false",
+                            "description": "Skip this step until this many minutes have passed since it last ran. Empty runs it every time the job runs.",
+                            "min-value": "1",
+                            "max-value": "10080"
                         }
                     ]
                 },
@@ -249,6 +305,30 @@
                         {
                             "@code": "ERROR",
                             "description": "Failed, partial or mismatches found; see the plugin-wallet log"
+                        }
+                    ]
+                }
+            },
+            {
+                "@type-id": "custom.Wallet.ReportFailures",
+                "@supports-parallel-execution": "false",
+                "@supports-site-context": "true",
+                "@supports-organization-context": "false",
+                "description": "Fails the job when an earlier step failed, so Business Manager shows it",
+                "module": "plugin_wallet/cartridge/scripts/jobs/wallet.js",
+                "function": "reportFailures",
+                "transactional": "false",
+                "timeout-in-seconds": 60,
+                "parameters": {},
+                "status-codes": {
+                    "status": [
+                        {
+                            "@code": "OK",
+                            "description": "No failed steps"
+                        },
+                        {
+                            "@code": "ERROR",
+                            "description": "An earlier step failed; the message names it"
                         }
                     ]
                 }
