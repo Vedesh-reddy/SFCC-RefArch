@@ -116,8 +116,7 @@
         </div>
     </isif>
 
-    <button type="button" class="btn btn-link smart-compare-toggle" data-pid="${pdict.pid}" data-name="${pdict.name}" aria-pressed="false">
-        <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-scale"></use></svg>
+    <button type="button" class="btn btn-link d-inline-flex align-items-center smart-compare-toggle" data-pid="${pdict.pid}" data-name="${pdict.name}" aria-pressed="false">
         ${Resource.msg('compare.add', 'smartcommerce', null)}
     </button>
 </section>

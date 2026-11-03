@@ -117,7 +117,7 @@ if (config && !window.smartCommerceReady) {
             var link = tile.querySelector('.pdp-link a');
             var button = document.createElement('button');
             button.type = 'button';
-            button.className = 'btn btn-link btn-sm px-0 smart-compare-toggle';
+            button.className = 'btn btn-link btn-sm d-inline-flex align-items-center smart-compare-toggle';
             button.dataset.pid = tile.closest('.product').dataset.pid;
             button.dataset.name = link ? link.textContent.trim() : button.dataset.pid;
             tile.appendChild(button);
