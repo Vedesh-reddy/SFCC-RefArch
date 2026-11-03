@@ -137,7 +137,7 @@
             </attribute-definition>
             <attribute-definition attribute-id="analyticsRetentionDays">
                 <display-name xml:lang="x-default">Retention (days)</display-name>
-                <description xml:lang="x-default">Daily aggregates older than this are removed by Analytics-Cleanup.</description>
+                <description xml:lang="x-default">Daily aggregates older than this are removed by the Cleanup step of Analytics-Job.</description>
                 <type>int</type>
                 <mandatory-flag>false</mandatory-flag>
                 <externally-managed-flag>false</externally-managed-flag>

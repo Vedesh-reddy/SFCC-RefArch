@@ -19,7 +19,7 @@ describe('jobs', function () {
 
     it('every step does nothing and reports OK while the plugin is off', function () {
         h.preferences.primeMembershipEnabled = false;
-        Object.keys(jobs).forEach(function (step) {
+        Object.keys(jobs).filter(function (step) { return step !== 'reportFailures'; }).forEach(function (step) {
             assert.equal(jobs[step]({}).code, 'DISABLED', step);
         });
     });

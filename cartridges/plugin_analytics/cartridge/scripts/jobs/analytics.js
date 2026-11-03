@@ -26,13 +26,30 @@ function limit(params, name, fallback, max) {
 }
 
 /**
+ * Keeps a step on its own timing, because it shares one job with faster steps.
+ * @param {string} jobId - checkpoint ID
+ * @param {Object} params - job parameters
+ * @returns {boolean} true when the step should run now
+ */
+function isDue(jobId, params) {
+    var minutes = Number(params && params.RunEveryMinutes);
+    if (!(minutes > 0)) return true;
+    var checkpoint = aggregationHelpers.getCheckpoint(jobId);
+    var lastRun = checkpoint && checkpoint.custom.lastRunAt;
+    // One minute of grace, because the job never starts exactly on time.
+    return !lastRun || Date.now() - lastRun.getTime() >= (minutes - 1) * 60000;
+}
+
+/**
  * @param {string} jobId - checkpoint ID
  * @param {boolean} writer - takes the writer lock
  * @param {Function} fn - work returning counts
+ * @param {Object} params - job parameters
  * @returns {dw.system.Status} OK, or ERROR when the step threw or reported failures or problems
  */
-function run(jobId, writer, fn) {
+function run(jobId, writer, fn, params) {
     if (!analyticsHelpers.isEnabled(null)) return new Status(Status.OK, 'DISABLED', 'Analytics disabled or the site currency is not USD');
+    if (!isDue(jobId, params)) return new Status(Status.OK, 'NOT_DUE', jobId + ' is not due yet');
     if (writer && !aggregationHelpers.acquireLock(jobId)) return new Status(Status.OK, 'LOCKED', 'Another analytics job is writing; skipped');
     var startedAt = new Date();
     var status;
@@ -64,7 +81,7 @@ function run(jobId, writer, fn) {
 exports.aggregateEvents = function (params) {
     return run('aggregate-events', true, function () {
         return aggregationHelpers.aggregateEvents(limit(params, 'MaxBatches', 5000, 100000));
-    });
+    }, params);
 };
 
 /**
@@ -76,7 +93,7 @@ exports.reconcileOrders = function (params) {
     return run('reconcile-orders', true, function () {
         if (!analyticsHelpers.isEnabled('purchase')) return { skipped: 'purchase tracking disabled' };
         return aggregationHelpers.reconcileOrders(limit(params, 'MaxOrders', 2000, 50000));
-    });
+    }, params);
 };
 
 /**
@@ -87,7 +104,7 @@ exports.reconcileOrders = function (params) {
 exports.generateRankings = function (params) {
     return run('generate-rankings', false, function () {
         return require('*/cartridge/scripts/helpers/analyticsReportHelpers').generateRankings(limit(params, 'MaxRecords', 200000, 1000000), limit(params, 'MaxProducts', 20000, 200000));
-    });
+    }, params);
 };
 
 /**
@@ -98,7 +115,7 @@ exports.generateRankings = function (params) {
 exports.cleanup = function (params) {
     return run('cleanup', true, function () {
         return aggregationHelpers.cleanup(limit(params, 'MaxItems', 10000, 100000));
-    });
+    }, params);
 };
 
 /**
@@ -109,5 +126,33 @@ exports.cleanup = function (params) {
 exports.integrityCheck = function (params) {
     return run('integrity-check', false, function () {
         return aggregationHelpers.checkIntegrity(limit(params, 'Days', 7, 62), limit(params, 'MaxItems', 50000, 200000));
-    });
+    }, params);
+};
+
+/**
+ * Notes failed steps in the job context. A job carries on after a failed step, so the job would
+ * end OK unless its last step reports them.
+ */
+Object.keys(exports).forEach(function (name) {
+    var step = exports[name];
+    exports[name] = function (params, stepExecution) {
+        var status = step(params);
+        if (status.error && stepExecution) {
+            var context = stepExecution.getJobExecution().getContext();
+            var failed = context.get('failedSteps');
+            context.put('failedSteps', (failed ? failed + ', ' : '') + stepExecution.getStepID());
+        }
+        return status;
+    };
+});
+
+/**
+ * Last step of the job: fails the job when an earlier step failed.
+ * @param {Object} params - job parameters
+ * @param {dw.job.JobStepExecution} stepExecution - the running step
+ * @returns {dw.system.Status} ERROR naming the failed steps, otherwise OK
+ */
+exports.reportFailures = function (params, stepExecution) {
+    var failed = stepExecution.getJobExecution().getContext().get('failedSteps');
+    return failed ? new Status(Status.ERROR, 'ATTENTION', 'Failed steps: ' + failed) : new Status(Status.OK, 'OK', 'No failed steps');
 };

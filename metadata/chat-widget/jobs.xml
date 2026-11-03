@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
     <!-- Replace RefArch with your storefront site ID before importing. Schedule the job in Business Manager. -->
-    <job job-id="ChatWidget-PurgeJourneyData" priority="0">
+    <job job-id="ChatWidget-PurgeJourneyData">
         <description>Shopping assistant journal retention (ChatWidgetJourney / ChatWidgetActivity)</description>
         <parameters/>
         <flow>

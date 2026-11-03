@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
-    <job job-id="CustomWishlist-PriceDropCheck" priority="0">
+    <job job-id="CustomWishlist-PriceDropCheck">
         <description>Daily wishlist price-drop check: flags login popups and emails owners.</description>
         <parameters/>
         <flow>

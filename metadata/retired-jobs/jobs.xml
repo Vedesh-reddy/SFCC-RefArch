@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jobs xmlns="http://www.demandware.com/xml/impex/jobs/2015-07-01">
+    <job job-id="Wallet-Holds" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Wallet-TopUps" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Wallet-Reconcile" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Wallet-Risk" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Wallet-Expiry" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Wallet-Notifications" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Wallet-Cleanup" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-Status" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-Entries" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-Reconcile" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-Draw" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-Verify" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-Rewards" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-Notifications" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-Cleanup" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="LuckyDraw-AuditExport" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MembershipExpirationJob" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MembershipRenewalJob" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MembershipBenefitResetJob" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MembershipBirthdayRewardJob" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MembershipReconciliationJob" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MembershipReportingJob" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MembershipNotificationJob" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Analytics-AggregateEvents" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Analytics-ReconcileOrders" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Analytics-GenerateRankings" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Analytics-Cleanup" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Analytics-IntegrityCheck" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-ProvisionProducts" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-SyncOffers" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-OrderSync" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-Settlements" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-Performance" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-Notifications" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-Reminders" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-DocumentExpiry" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-Recovery" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="MarketplaceSeller-Cleanup" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="AffiliateProduct-ProcessRewards" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="AffiliateProduct-MaintainRewards" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Loyalty-ProcessOrders" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Loyalty-Maintain" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Rentals-ReleaseHolds" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="Rentals-LateFees" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="SmartCommerce-PriceHistory" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="SmartCommerce-Hourly" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="SocialGifting-RegistryLifecycleJob" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="SocialGifting-ReconcileRegistryOrders" mode="delete">
+        <triggers/>
+    </job>
+    <job job-id="SocialGifting-SendRegistryNotifications" mode="delete">
+        <triggers/>
+    </job>
+</jobs>

@@ -169,4 +169,30 @@ describe('plugin_analytics integrity', function () {
         var changed = require('child_process').execFileSync('git', ['status', '--porcelain', '--', 'cartridges/app_storefront_base', 'cartridges/bm_app_storefront_base', 'cartridges/modules'], { cwd: repo }).toString().trim();
         assert.equal(changed, '');
     });
+
+    it('skips a step until RunEveryMinutes has passed', function () {
+        var jobs = harness().require('scripts/jobs/analytics');
+        assert.notEqual(jobs.integrityCheck({ RunEveryMinutes: 60 }).code, 'NOT_DUE');
+        assert.equal(jobs.integrityCheck({ RunEveryMinutes: 60 }).code, 'NOT_DUE');
+        assert.notEqual(jobs.integrityCheck({}).code, 'NOT_DUE', 'runs every time without the setting');
+    });
+
+    it('fails the job through reportFailures when an earlier step failed', function () {
+        var jobs = harness().require('scripts/jobs/analytics');
+        var values = {};
+        var execution = {
+            getStepID: function () { return 'IntegrityCheck'; },
+            getJobExecution: function () {
+                return {
+                    getContext: function () {
+                        return { get: function (key) { return values[key]; }, put: function (key, value) { values[key] = value; } };
+                    }
+                };
+            }
+        };
+        assert.equal(jobs.reportFailures({}, execution).code, 'OK');
+        assert.equal(jobs.integrityCheck({}, execution).code, 'ATTENTION');
+        assert.equal(values.failedSteps, 'IntegrityCheck');
+        assert.equal(jobs.reportFailures({}, execution).code, 'ATTENTION');
+    });
 });

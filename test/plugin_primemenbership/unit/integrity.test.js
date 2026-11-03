@@ -98,9 +98,7 @@ describe('plugin_primemenbership integrity', function () {
         jobsXml.replace(/type="(custom\.[^"]+)"/g, function (m, t) { used.push(t); return m; });
         assert.sameMembers(used, steptypes.map(function (s) { return s['@type-id']; }));
         assert.notMatch(jobsXml, /run-recurring enabled="true"/, 'schedules ship disabled');
-        ['MembershipExpirationJob', 'MembershipRenewalJob', 'MembershipBenefitResetJob', 'MembershipBirthdayRewardJob', 'MembershipReconciliationJob', 'MembershipReportingJob'].forEach(function (job) {
-            assert.include(jobsXml, 'job-id="' + job + '"');
-        });
+        assert.include(jobsXml, 'job-id="PrimeMembership-Job"');
     });
 
     it('maps every Custom API endpoint to a public function with a schema operation', function () {
@@ -233,5 +231,12 @@ describe('plugin_primemenbership integrity', function () {
         if (!fs.existsSync(path.join(repo, 'cartridges/app_storefront_base'))) this.skip();
         var changed = require('child_process').execFileSync('git', ['status', '--porcelain', '--', 'cartridges/app_storefront_base', 'cartridges/bm_app_storefront_base', 'cartridges/modules'], { cwd: repo }).toString().trim();
         assert.equal(changed, '');
+    });
+
+    it('skips a step until RunEveryMinutes has passed', function () {
+        var jobs = harness().require('scripts/jobs/membership');
+        assert.equal(jobs.notifications({ RunEveryMinutes: 60 }).code, 'OK');
+        assert.equal(jobs.notifications({ RunEveryMinutes: 60 }).code, 'NOT_DUE');
+        assert.equal(jobs.notifications({}).code, 'OK', 'runs every time without the setting');
     });
 });
