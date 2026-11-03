@@ -1,0 +1,13 @@
+<isslot id="noresults-help" description="Recommendations for no result search" context="global" />
+
+<nav class="search-empty d-flex flex-wrap align-items-center" aria-label="${Resource.msg('label.search.empty', 'storefront', null)}">
+    <span class="search-empty-title w-100">${Resource.msg('label.search.empty', 'storefront', null)}</span>
+    <a class="search-empty-link" href="${URLUtils.url('Search-Show', 'cgid', 'newarrivals')}">${Resource.msg('footer.link.new', 'storefront', null)}</a>
+    <a class="search-empty-link" href="${URLUtils.url('Search-Show', 'cgid', 'womens')}">${Resource.msg('footer.link.women', 'storefront', null)}</a>
+    <a class="search-empty-link" href="${URLUtils.url('Search-Show', 'cgid', 'mens')}">${Resource.msg('footer.link.men', 'storefront', null)}</a>
+    <a class="search-empty-link" href="${URLUtils.url('Search-Show', 'cgid', 'Shoes')}">${Resource.msg('footer.link.shoes', 'storefront', null)}</a>
+    <a class="search-empty-link" href="${URLUtils.url('Search-Show', 'cgid', 'electronics')}">${Resource.msg('footer.link.electronics', 'storefront', null)}</a>
+    <a class="search-empty-link" href="${URLUtils.url('Search-Show', 'cgid', 'Mobiles_U')}">${Resource.msg('footer.link.mobiles', 'storefront', null)}</a>
+</nav>
+
+<isslot id="noresult-recommendations" description="Recommendations for no result search" context="global" />

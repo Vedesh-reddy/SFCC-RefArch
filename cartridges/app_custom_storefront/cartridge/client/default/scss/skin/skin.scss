@@ -28,6 +28,14 @@
     border-color: $theme-action-pressed;
 }
 
+.btn-primary:disabled,
+.btn-primary.disabled {
+    background-color: $grey2;
+    border-color: $grey2;
+    color: $theme-ink-muted;
+    opacity: 1;
+}
+
 .btn-outline-primary {
     --bs-btn-hover-color: #{$white};
     --bs-btn-hover-bg: #{$theme-action-strong};

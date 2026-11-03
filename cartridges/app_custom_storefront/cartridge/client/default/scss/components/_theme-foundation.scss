@@ -202,7 +202,115 @@ h2,
 
 // Plugin badges carry long notices; base keeps badges on one line, which overflows phones.
 .badge {
+    border-radius: $theme-radius-pill;
     white-space: normal;
+}
+
+.alert {
+    border: 0;
+    border-radius: $theme-radius-field;
+}
+
+.alert-success {
+    background-color: $theme-status-green-soft;
+    color: $theme-status-green;
+}
+
+.alert-danger {
+    background-color: $theme-status-red-soft;
+    color: $theme-status-red;
+}
+
+.alert-warning {
+    background-color: $theme-status-amber-soft;
+    color: $theme-status-amber;
+}
+
+.alert-info {
+    background-color: $theme-action-soft;
+    color: $theme-action-strong;
+}
+
+.fa-star,
+.fa-star-half-o,
+.fa-star-o {
+    color: $theme-rating;
+}
+
+.price del + .sales {
+    color: $theme-status-green;
+    font-weight: 600;
+}
+
+.order-discount-total,
+.shipping-discount-total {
+    color: $theme-status-green;
+    font-weight: 600;
+}
+
+.order-receipt-label {
+    color: $theme-ink-muted;
+}
+
+.line-item-availability .line-item-attributes {
+    color: $theme-status-green;
+    font-weight: 600;
+}
+
+.line-item-availability .line-item-stock-note,
+.line-item-availability .line-item-instock-date {
+    color: $theme-status-amber;
+}
+
+.dashboard-order-card-status {
+    background-color: $theme-action-soft;
+    border-radius: $theme-radius-pill;
+    color: $theme-action-strong;
+    font-weight: 600;
+    padding: 0.125rem 0.625rem;
+}
+
+.search-keywords {
+    color: $theme-action-strong;
+}
+
+.search-empty {
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+}
+
+.search-empty-title {
+    color: $theme-ink;
+    font-size: 1.0625rem;
+    font-weight: 600;
+}
+
+header ~ #maincontent .container a.search-empty-link {
+    background-color: $white;
+    border: 1px solid $theme-hairline;
+    border-radius: $theme-radius-pill;
+    color: $theme-action-strong;
+    font-weight: 600;
+    padding: 0.625rem 1rem;
+    text-decoration: none;
+
+    &:hover {
+        background-color: $theme-action-soft;
+        border-color: $theme-action-strong;
+    }
+}
+
+header ~ #maincontent .container .product-tile .pdp-link a:hover {
+    color: $theme-action-strong;
+}
+
+.smart-compare-tray {
+    border-radius: $theme-radius-panel $theme-radius-panel 0 0;
+    gap: 0.5rem;
+
+    .me-3 {
+        font-weight: 600;
+    }
 }
 
 // Keeps the chat button clear of the sticky Add to Cart and Checkout bars on phones.

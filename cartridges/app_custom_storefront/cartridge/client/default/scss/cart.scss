@@ -109,6 +109,17 @@
         margin-bottom: 0.75rem;
     }
 
+    // Base paints this full-height grey, which reads as a stray column beside the item.
+    .card.product-info .remove-btn-lg {
+        background-color: transparent;
+        color: $theme-ink-muted;
+
+        &:hover {
+            background-color: transparent;
+            color: $theme-status-red;
+        }
+    }
+
     .line-item-name {
         font-size: 1.3125rem;
         font-weight: 600;

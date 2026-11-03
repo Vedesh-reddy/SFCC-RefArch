@@ -22,6 +22,11 @@
                     <isinclude url="${URLUtils.url('Account-Header')}" />
                     <isinclude url="${URLUtils.url('Page-Locale')}" />
                 </div>
+                <div class="site-header-wishlist">
+                    <a class="d-flex align-items-center justify-content-center" href="${URLUtils.https('CustomWishlist-Show')}" aria-label="${Resource.msg('feature.wishlist', 'storefront', null)}" title="${Resource.msg('feature.wishlist', 'storefront', null)}">
+                        <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-heart"></use></svg>
+                    </a>
+                </div>
                 <div class="minicart" data-action-url="${URLUtils.url('Cart-MiniCartShow')}">
                     <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
                 </div>
