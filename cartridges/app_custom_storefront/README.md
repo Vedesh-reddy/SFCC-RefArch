@@ -19,7 +19,7 @@ No site import is needed. Copy lives in `templates/resources/storefront.properti
 |---|---|
 | Home | Sliding hero, benefit marquee, category rail, three product carousels, editorial banners, feature cards |
 | Category and search | Title band with category links, toolbar, filter drawer, card grid |
-| Product | Sticky gallery, price under the name, price trend chart, collapsible alert, pickup and price-lock actions, related carousel |
+| Product | Sticky gallery with thumbnails, hover zoom and full view, share and wishlist on the image, size buttons, stock status, price trend chart, collapsible alert, pickup and price-lock actions, related carousel |
 | Cart | Total-first summary, totals panel, animated empty state, carousel |
 | Login | Photo panel beside one form column, order lookup collapsed |
 | Account | Greeting band, shortcut tiles, restyled cards |
@@ -52,6 +52,12 @@ All tokens are in `client/default/scss/_theme-variables.scss`. They load before 
 | `$theme-nav-height` | `3.25rem` | Header bar, icon targets |
 | `$theme-radius-panel` | `1.125rem` | Product cards, feature cards, panels |
 | `$theme-tile-gap` | `0.75rem` | Space between home tiles |
+| `$theme-status-green` | `#007600` | In stock, discounted prices, savings, selected compare |
+| `$theme-status-red` | `#b12704` | Out of stock, errors, price rising |
+| `$theme-status-amber` | `#a35200` | Back order, pre-order, warnings |
+| `$theme-rating` | `#d9730d` | Review stars |
+
+Each status colour reaches at least 4.5:1 on white and on `$theme-surface`, and has a `-soft` background token. The action colour has one too, `$theme-action-soft`.
 
 Type scale, as size/line height at desktop:
 
@@ -90,17 +96,25 @@ Breakpoints are unchanged from base, because base JS reads them.
 | `smart/product/panel.isml` | Replaces the `plugin_smartcommerce` panel with the price chart and collapsible actions; its form classes must stay |
 | `account/accountDashboard.isml` | Greeting and shortcuts above the base cards |
 | `search/searchResults.isml`, `search/searchResultsNoDecorator.isml`, `search/components/productTiles.isml`, `search/sortOrderMenu.isml` | Plain title with no photo banner, toolbar, filter drawer, four-column cards. The sort menu is skipped when a site has no sort rules |
-| `product/productDetails.isml` | Price moves under the name; wider gallery |
+| `product/productDetails.isml` | Breadcrumb above the gallery, price under the name, shipping and pickup rows, registry button below the Add to Cart bar |
 | `cart/cart.isml` | Total-first summary, items beside a totals panel, empty state with a way back |
 | `account/login.isml` | One centered column, no photo banner |
 | `components/footer/pageFooter.isml` | Keeps the four-column footer independent of whichever base is deployed |
-| `product/components/imageCarousel.isml` | Accessibility fix: names the slide buttons and drops an invalid `listbox` role |
+| `product/components/imageCarousel.isml` | Gallery markup for thumbnails, zoom, share and wishlist. Also names the slide buttons and drops an invalid `listbox` role |
+| `product/components/productAvailability.isml` | Gives `store-ui.js` the in-stock label it compares messages with |
+| `product/components/ratings.isml`, `product/components/productRating.isml`, `experience/components/commerce_assets/product/productTileRating.isml` | Empty on purpose. Base ratings are a hash of the product ID, not customer data |
+| `wishlist/button.isml` | Replaces the `plugin_customwishlist` button with an icon for the product image |
+| `cart/productCard/cartProductCardAvailability.isml` | Marks stock messages that are not plain in stock, so they can be amber |
+| `search/noResultsProduct.isml` | Adds category links to the no-results page |
 | `checkout/customer/customerCard.isml` | Accessibility fix: links the guest email label to its input |
 
 `common/layout/page.isml` is deliberately not overridden, because `plugin_chatwidget` owns it.
 
 ## Compatibility notes
 
+- `plugin_seller` is first on the usual cartridge path, so its `product/components/addToCartButtonExtension.isml` hides the copies in `plugin_customwishlist` and `plugin_socialgifting`. That is why the wishlist button is on the product image and the registry button is in `product/productDetails.isml`.
+- `store-ui.js` hides the variation select and shows buttons in its place. The select stays in the page and still drives base's variation requests.
+- The hover zoom shows the catalog's large image at 2x, so its sharpness depends on that image's size.
 - Overlay templates emit both `data-bs-*` and `data-*` attributes, and `global.scss` maps `.custom-select`, so it works whether the deployed base is Bootstrap 4 or 5. This matters on a shared sandbox, where another developer's base upload can change the version.
 - Keep these classes if you change the header, because base JS selects them: `.navbar-header`, `.user`, `.country-selector`, `.main-menu`, `.menu-toggleable-left`, `.navbar-toggler`, `.search-mobile`.
 - The sticky header uses `z-index` 1020. Anything fixed to the top of the page needs a higher value.

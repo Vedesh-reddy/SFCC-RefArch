@@ -18,6 +18,18 @@ Captured from the `RefArch_Practice` sandbox site as a guest. Install steps and 
 
 ![Product page with price insights](images/product.jpg)
 
+## Product image zoom
+
+Hovering the image shows a lens over it and a magnified view beside it. Thumbnails sit on the left, with share and wishlist on the image.
+
+![Product image with lens and magnified view](images/product-zoom.jpg)
+
+## Stock and delivery
+
+Sizes are buttons. Stock status and the shipping offer are coloured so they stand out.
+
+![Size buttons, green In Stock and shipping rows](images/product-buy.jpg)
+
 ## Empty cart
 
 ![Empty cart](images/cart-empty.jpg)
