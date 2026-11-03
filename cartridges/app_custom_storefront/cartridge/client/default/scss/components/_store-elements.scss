@@ -10,6 +10,53 @@
     width: 1.25rem;
 }
 
+// Icons are CSS masks because smart-commerce.js rewrites the label with textContent, which removes child elements.
+.btn.smart-compare-toggle {
+    @include theme-type-small;
+
+    --compare-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='1.75' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 4v16M7 20h10M5 7h14M5 7l-3 7a3.500 3.500 0 0 0 6 0L5 7Zm14 0-3 7a3.500 3.500 0 0 0 6 0l-3-7Z'/%3E%3C/svg%3E");
+
+    background-color: $white;
+    border: 1px solid $theme-hairline;
+    border-radius: $theme-radius-pill;
+    color: $theme-action-strong;
+    font-weight: 600;
+    gap: 0.375rem;
+    min-height: 2.75rem;
+    padding: 0 0.875rem 0 0.75rem;
+    text-decoration: none;
+    transition: background-color 0.15s ease-out, border-color 0.15s ease-out, color 0.15s ease-out;
+
+    &::before {
+        background-color: currentcolor;
+        content: "";
+        flex-shrink: 0;
+        height: 1.125rem;
+        mask: var(--compare-icon) center / contain no-repeat;
+        width: 1.125rem;
+    }
+
+    &:hover {
+        background-color: $theme-action-soft;
+        border-color: $theme-action-strong;
+        color: $theme-action-strong;
+    }
+
+    &[aria-pressed="true"] {
+        --compare-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.500 4.500 4.500L19 7.500'/%3E%3C/svg%3E");
+
+        background-color: $theme-status-green-soft;
+        border-color: $theme-status-green;
+        color: $theme-status-green;
+
+        &:hover {
+            background-color: $theme-status-green-soft;
+            border-color: $theme-status-green;
+            color: $theme-status-green;
+        }
+    }
+}
+
 .store-section {
     padding: 3.5rem 0;
 }

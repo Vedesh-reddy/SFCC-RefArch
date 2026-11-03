@@ -11,7 +11,7 @@
         <div class="store-carousel-track d-flex" data-carousel-track>
             <isloop items="${carousel.productIds}" var="carouselProductId">
                 <div class="store-carousel-item flex-shrink-0">
-                    <isinclude url="${URLUtils.url('Tile-Show', 'pid', carouselProductId, 'swatches', true, 'ratings', true)}" />
+                    <isinclude url="${URLUtils.url('Tile-Show', 'pid', carouselProductId, 'swatches', true)}" />
                 </div>
             </isloop>
         </div>
