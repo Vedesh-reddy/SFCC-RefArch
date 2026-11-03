@@ -1,0 +1,94 @@
+@import "../theme-variables";
+@import "~base/checkout/checkout";
+
+// Base paints the checkout page grey, which fights the white sections and grey summary panel.
+.page {
+    background-color: $white;
+}
+
+// Upcoming steps: base fades the whole card to 50%, which drops the heading below 4.5:1.
+.card.ghost {
+    opacity: 1;
+
+    h2 {
+        color: $theme-ink-muted;
+    }
+}
+
+.card.ghost,
+.card.customer-summary,
+.card.shipping-summary,
+.card.payment-summary {
+    background: none;
+}
+
+.data-checkout-stage .card,
+#checkout-main .card {
+    border-color: $theme-hairline;
+}
+
+#checkout-main .card-header h2,
+#checkout-main .card-header .card-header-custom {
+    @include theme-type-lead;
+
+    font-size: 1.3125rem;
+    margin: 0;
+}
+
+#checkout-main .btn-primary,
+.next-step-button .btn {
+    min-height: 3rem;
+}
+
+.grand-total-label,
+.grand-total-sum {
+    font-size: 1.3125rem;
+    font-weight: 600;
+}
+
+// The summary column is narrow at tablet widths; prices must not break mid-number.
+.order-product-summary .product-line-item .pricing,
+.order-product-summary .product-line-item .line-item-total-price-amount {
+    @include theme-type-small;
+
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+// Sections read as one column separated by hairlines; the order summary is the only panel.
+#checkout-main {
+    padding-bottom: 3.75rem;
+
+    .card {
+        border: 0;
+        border-bottom: 1px solid $theme-hairline;
+        border-radius: 0;
+        margin-bottom: 0;
+    }
+
+    .card-header,
+    .card-body {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .card-header {
+        border-bottom: 0;
+    }
+
+    > .row > [class*="col-"]:last-child {
+        @include media-breakpoint-up(md) {
+            align-self: flex-start;
+            position: sticky;
+            top: 3.5rem;
+        }
+
+        .card {
+            background-color: $theme-surface;
+            border: 0;
+            border-radius: 1.125rem;
+            margin-bottom: 0.75rem;
+            padding: 0 1.25rem;
+        }
+    }
+}

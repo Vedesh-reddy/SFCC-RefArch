@@ -1,0 +1,213 @@
+/* stylelint-disable no-descending-specificity */
+
+@import "theme-variables";
+@import "~base/search";
+
+#maincontent {
+    background-color: $theme-surface;
+}
+
+.search-hero {
+    background: radial-gradient(60rem 24rem at 12% 0%, rgba(0, 113, 227, 55%), rgba(0, 113, 227, 0%)), radial-gradient(50rem 24rem at 90% 100%, rgba(222, 95, 125, 42%), rgba(222, 95, 125, 0%)), $theme-ink;
+    color: $white;
+    padding: 2.5rem 0;
+
+    h1.page-title,
+    h1.header.page-title {
+        color: $white;
+        margin: 0 0 1.25rem;
+    }
+}
+
+.search-hero-links {
+    overflow-x: auto;
+    scrollbar-width: none;
+
+    ul {
+        gap: 0.5rem;
+    }
+}
+
+.search-hero-link {
+    @include theme-type-small;
+
+    align-items: center;
+    border: 1px solid rgba(255, 255, 255, 40%);
+    border-radius: $theme-radius-pill;
+    color: $white;
+    display: inline-flex;
+    min-height: 2.5rem;
+    padding: 0 1rem;
+    text-decoration: none;
+    white-space: nowrap;
+
+    &:hover,
+    &.is-active {
+        background-color: $white;
+        border-color: $white;
+        color: $theme-ink;
+        text-decoration: none;
+    }
+}
+
+.search-results {
+    padding-bottom: 3.75rem;
+}
+
+.search-nav {
+    border: 0;
+}
+
+.search-toolbar {
+    gap: 0.5rem;
+    padding: 1rem 0 1.5rem;
+
+    .result-count {
+        @include theme-type-small;
+
+        color: $theme-ink-muted;
+    }
+
+    .search-sort {
+        @include theme-type-small;
+
+        background-color: $white;
+        border: 0;
+        border-radius: $theme-radius-pill;
+        min-height: 2.75rem;
+        padding-left: 1.3125rem;
+        width: auto;
+    }
+
+    .filter-results {
+        background-color: $white;
+        min-height: 2.75rem;
+    }
+}
+
+// Filters slide in from the right at every width instead of sitting in a left column.
+// The base rule forces display:block from md up, so visibility does the hiding.
+.refinement-bar,
+.refinement-bar.col-md-3 {
+    background-color: $white;
+    box-shadow: $theme-shadow;
+    display: block;
+    height: auto;
+    inset: 0 0 0 auto;
+    max-width: 26rem;
+    overflow-y: auto;
+    padding: 0 1.25rem 2rem;
+    position: fixed;
+    transform: translateX(100%);
+    transition: transform 0.28s ease-out, visibility 0.28s;
+    visibility: hidden;
+    z-index: 1040;
+}
+
+.refinement-bar {
+    .filter-header {
+        margin: 0 -1.25rem;
+    }
+
+    .header-bar.d-md-none {
+        align-items: center;
+        background-color: $white;
+        border-bottom: 1px solid $theme-hairline;
+        display: flex !important;
+        justify-content: space-between;
+        padding: 0.5rem 1.25rem;
+
+        .result-count {
+            @include theme-type-small;
+
+            color: $theme-ink-muted;
+            float: none;
+        }
+
+        button.close {
+            align-items: center;
+            background: none;
+            border: 0;
+            color: $theme-ink;
+            display: inline-flex;
+            float: none;
+            gap: 0.375rem;
+            min-height: 2.75rem;
+        }
+    }
+
+    .secondary-bar {
+        margin: 0;
+        padding: 1rem 0;
+    }
+
+    .refinements .card {
+        border: 0;
+        border-bottom: 1px solid $theme-hairline;
+        border-radius: 0;
+        margin-bottom: 0;
+    }
+
+    .refinements .card-header {
+        @include theme-type-small;
+
+        border: 0;
+        font-weight: 600;
+        padding: 0.875rem 0 0.5rem;
+    }
+
+    .refinements .card-body {
+        @include theme-type-small;
+
+        padding: 0 0 0.875rem;
+
+        li button {
+            padding-bottom: 0.25rem;
+            padding-top: 0.25rem;
+        }
+    }
+}
+
+.search-filter-open {
+    // Visibility flips with no delay: base moves focus into the drawer on the same click.
+    .refinement-bar {
+        display: block !important;
+        transform: none;
+        transition: transform 0.28s ease-out;
+        visibility: visible;
+    }
+
+    .modal-background {
+        z-index: 1030;
+    }
+}
+
+.filter-bar ul {
+    margin-bottom: 0.5rem;
+    padding-left: calc($grid-gutter-width / 2);
+
+    li.filter-value {
+        background-color: $white;
+        border: 0;
+        border-radius: $theme-radius-pill;
+        padding: 0 0.5rem;
+    }
+}
+
+.product-grid {
+    --bs-gutter-x: 1rem;
+    --bs-gutter-y: 1rem;
+
+    .product,
+    .product-tile {
+        height: 100%;
+    }
+
+    .grid-footer .show-more {
+        padding-top: 1.5rem;
+
+        .more {
+            background-color: $white;
+        }
+    }
+}

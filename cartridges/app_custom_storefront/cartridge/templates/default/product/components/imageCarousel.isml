@@ -1,0 +1,30 @@
+<div class="primary-images col-12 col-sm-6">
+    <div id="pdpCarousel-${product.id}" class="carousel slide" data-bs-interval="0" data-interval="0" data-prev="${Resource.msg('button.previous', 'common', null)}" data-next="${Resource.msg('button.next', 'common', null)}">
+        <isif condition="${product.images['large'].length > 1}">
+            <div class="carousel-indicators">
+                <isloop items="${product.images['large']}" var="image" status="loopStatus">
+                    <button type="button" data-bs-target="${"#"}pdpCarousel-${product.id}" data-target="${"#"}pdpCarousel-${product.id}" data-bs-slide-to="${loopStatus.index}" data-slide-to="${loopStatus.index}" aria-label="${Resource.msgf('label.product.image.slide', 'storefront', null, loopStatus.count.toFixed(0))}" class='<isif condition="${loopStatus.index == 0}">active</isif>'>
+                    </button>
+                </isloop>
+            </div>
+        </isif>
+
+        <div class="carousel-inner">
+            <isloop items="${product.images['large']}" var="image" status="loopStatus">
+                <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
+                    <img src="${image.url}" class="d-block img-fluid" alt="${image.alt} image number ${image.index}" itemprop="image" />
+                </div>
+            </isloop>
+        </div>
+        <isif condition="${product.images['large'].length > 1}">
+            <a class="carousel-control-prev" href="${"#"}pdpCarousel-${product.id}" role="button" data-bs-slide="prev" data-slide="prev">
+                <span class="fa icon-prev" aria-hidden="true"></span>
+                <span class="visually-hidden">${Resource.msg('button.previous', 'common', null)}</span>
+            </a>
+            <a class="carousel-control-next" href="${"#"}pdpCarousel-${product.id}" role="button" data-bs-slide="next" data-slide="next">
+                <span class="fa icon-next" aria-hidden="true"></span>
+                <span class="visually-hidden">${Resource.msg('button.next', 'common', null)}</span>
+            </a>
+        </isif>
+    </div>
+</div>
