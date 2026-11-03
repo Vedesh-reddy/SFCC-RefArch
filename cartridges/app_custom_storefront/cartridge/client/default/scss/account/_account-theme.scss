@@ -1,0 +1,167 @@
+.account-hero {
+    background: radial-gradient(50rem 20rem at 10% 0%, rgba(0, 113, 227, 55%), rgba(0, 113, 227, 0%)), radial-gradient(40rem 20rem at 95% 100%, rgba(130, 126, 178, 50%), rgba(130, 126, 178, 0%)), $theme-ink;
+    color: $white;
+    padding: 3rem 0;
+}
+
+.account-hero-title {
+    @include theme-type-hero;
+
+    color: $white;
+    margin-bottom: 0.5rem;
+}
+
+.account-hero-lead {
+    @include theme-type-lead;
+
+    font-size: 1.3125rem;
+    margin: 0;
+}
+
+.account-dashboard {
+    padding-bottom: 3.75rem;
+    padding-top: 2rem;
+}
+
+.account-shortcuts {
+    margin-bottom: 1.5rem;
+
+    .row {
+        --bs-gutter-x: 0.75rem;
+        --bs-gutter-y: 0.75rem;
+
+        margin-bottom: 0;
+    }
+}
+
+.account-shortcut {
+    background-color: $theme-surface;
+    border-radius: $theme-radius-panel;
+    font-weight: 600;
+    gap: 0.75rem;
+    min-height: 4.5rem;
+    padding: 0.875rem 1rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease-out, transform 0.2s ease-out;
+
+    &:hover {
+        background-color: $grey2;
+        text-decoration: none;
+        transform: translateY(-0.125rem);
+    }
+}
+
+// Beats the link colour base applies inside #maincontent containers.
+header ~ #maincontent .container a.account-shortcut {
+    color: $theme-ink;
+}
+
+.account-shortcut-icon {
+    background-color: $theme-action;
+    border-radius: 50%;
+    color: $white;
+    height: 2.5rem;
+    width: 2.5rem;
+}
+
+.account-shortcut-wallet .account-shortcut-icon {
+    background-color: $theme-action-strong;
+}
+
+.account-shortcut-prime .account-shortcut-icon {
+    background-color: #8a6500;
+}
+
+.account-shortcut-wishlist .account-shortcut-icon {
+    background-color: #b8345a;
+}
+
+.account-shortcut-addresses .account-shortcut-icon {
+    background-color: #2f7a4b;
+}
+
+.account-shortcut-payments .account-shortcut-icon {
+    background-color: #5d5896;
+}
+
+.account-shortcut-draws .account-shortcut-icon {
+    background-color: #b5402a;
+}
+
+.account-shortcut-rewards .account-shortcut-icon {
+    background-color: #8a6500;
+}
+
+.account-shortcut-rentals .account-shortcut-icon {
+    background-color: #2f7a4b;
+}
+
+.account-shortcut-registry .account-shortcut-icon {
+    background-color: #5d5896;
+}
+
+.account-shortcut-refer .account-shortcut-icon {
+    background-color: #b8345a;
+}
+
+.account-shortcut-seller .account-shortcut-icon {
+    background-color: $theme-ink;
+}
+
+.card {
+    border-color: $theme-hairline;
+    margin-bottom: 1rem;
+    overflow: hidden;
+}
+
+.card-header {
+    align-items: center;
+    background-color: $white;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 1.25rem;
+
+    &::after {
+        display: none;
+    }
+}
+
+.card-body {
+    padding: 1.25rem;
+
+    dt {
+        @include theme-type-micro;
+
+        color: $theme-ink-muted;
+    }
+
+    dd {
+        margin-bottom: 0.75rem;
+    }
+}
+
+.card-footer,
+.card-footer.card-footer-border {
+    background-color: $white;
+    border-top: 1px solid $theme-hairline;
+}
+
+header ~ #maincontent .container .card-footer a,
+header ~ #maincontent .container .card-header a {
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.card img {
+    border-radius: $theme-radius-card;
+}
+
+.order-list-container .card-body img {
+    max-width: 6rem;
+}
+
+.order-history-select {
+    border-radius: $theme-radius-pill;
+    padding-left: 1.3125rem;
+}
