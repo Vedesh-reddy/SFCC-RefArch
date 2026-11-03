@@ -123,17 +123,17 @@ These are local key holders, not HTTP calls. No secret is in code, preferences o
 
 ## Jobs
 
-`metadata/plugin_wallet/jobs.xml` imports seven jobs with disabled schedules. Enable them after the smoke test.
+Every step below runs in the one job `Wallet-Job`, which runs every 5 minutes. A step set to run less often uses its `RunEveryMinutes` setting. A failing step doesn't stop the others, and the last step, `ReportFailures`, then marks the job `ERROR`. The schedule ships off, so enable it after the smoke test.
 
-| Job | Imported interval | MaxItems |
+| Step | Runs every | MaxItems |
 |---|---|---|
-| `Wallet-Holds` | 5 minutes | 500 |
-| `Wallet-TopUps` | 10 minutes | 200 |
-| `Wallet-Reconcile` | daily | 200 |
-| `Wallet-Risk` | daily | 5000 |
-| `Wallet-Expiry` | daily | 100 |
-| `Wallet-Notifications` | 5 minutes | 500 |
-| `Wallet-Cleanup` | daily | 1000 |
+| `Holds` | 5 minutes | 500 |
+| `TopUps` | 10 minutes | 200 |
+| `Reconcile` | daily | 200 |
+| `Risk` | daily | 5000 |
+| `Expiry` | daily | 100 |
+| `Notifications` | 5 minutes | 500 |
+| `Cleanup` | daily | 1000 |
 
 Change the interval and `MaxItems` in Business Manager to fit your volume.
 

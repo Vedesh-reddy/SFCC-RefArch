@@ -47,6 +47,6 @@ Results per check are in [analytics-deployment.md](analytics-deployment.md#sandb
 ## Verifying reporting accuracy by hand
 
 1. Place 2 orders in the sandbox, cancel one.
-2. Run `Analytics-ReconcileOrders`.
+2. Run `Analytics-Job`.
 3. Orders page for today: 1 order, 1 cancelled; net revenue equals the remaining order's merchandise total minus discounts.
-4. Run `Analytics-IntegrityCheck` the next day: no problems.
+4. Run `Analytics-Job` the next day. Its `IntegrityCheck` step reports no problems.

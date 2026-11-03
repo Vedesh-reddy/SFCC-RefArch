@@ -42,7 +42,7 @@ The plugin adds to the base routes with `server.append` and never replaces them:
 
 On the sandbox, a single session that opened the checkout page twice and placed an order counted as one checkout start, one shipping step, one payment step and one purchase.
 
-Sales figures are read from the orders by the `Analytics-ReconcileOrders` job. Each order keeps what it last contributed (`Order.custom.analyticsSnapshot`), so when an order is paid later, cancelled or refunded, the reports change by exactly the difference. Re-running the job changes nothing.
+Sales figures are read from the orders by the `ReconcileOrders` step of `Analytics-Job`. Each order keeps what it last contributed (`Order.custom.analyticsSnapshot`), so when an order is paid later, cancelled or refunded, the reports change by exactly the difference. Re-running the job changes nothing.
 
 ### Overview
 

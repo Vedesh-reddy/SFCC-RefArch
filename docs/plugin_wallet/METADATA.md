@@ -22,7 +22,7 @@ All are site-scoped and not replicable. Keys are generated server-side (`SecureR
 | `WalletOtp` | purpose + subject | keyed hash of salt + code, session hash, expiry, attempts | yes; retention 7 days |
 | `WalletJobState` | job ID | cursor JSON | yes |
 | `WalletRateBucket` | bucket + window | count | yes; retention 2 days |
-| `WalletRequestKey` | `webhook:<event id>`, idempotency keys, daily limit-notice keys | request hash, result | never; removed by `Wallet-Cleanup` after `walletRequestKeyRetentionDays` |
+| `WalletRequestKey` | `webhook:<event id>`, idempotency keys, daily limit-notice keys | request hash, result | never; removed by `Cleanup` step of `Wallet-Job` after `walletRequestKeyRetentionDays` |
 
 No custom object stores a card number, a code, a token or an e-mail address in clear text.
 
@@ -39,7 +39,7 @@ No custom object stores a card number, a code, a token or an e-mail address in c
 
 ## Jobs
 
-`jobs.xml`: seven jobs `Wallet-Holds`, `Wallet-TopUps`, `Wallet-Reconcile`, `Wallet-Risk`, `Wallet-Expiry`, `Wallet-Notifications`, `Wallet-Cleanup`, each one step of the matching `custom.Wallet.*` type from `steptypes.json`. All recurring triggers ship **disabled**. Replace `RefArch_Practice` with your site ID.
+`jobs.xml`: one job, `Wallet-Job`, with seven steps: `Holds`, `TopUps`, `Reconcile`, `Risk`, `Expiry`, `Notifications` and `Cleanup`, each one step of the matching `custom.Wallet.*` type from `steptypes.json`. All recurring triggers ship **disabled**. Replace `RefArch_Practice` with your site ID.
 
 ## Services
 

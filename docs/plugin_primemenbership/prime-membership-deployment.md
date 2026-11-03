@@ -82,6 +82,6 @@ These confirm what the test harness can't. Items 1 to 4 are the ones most likely
 | Stop everything fast | Set `primeMembershipEnabled` to false | **All member savings and access rules stop, including for paying members.** Jobs and pages stop too. Payments in flight wait; nothing is lost. Tell members |
 | Remove the code | Disable the job schedules, then remove both cartridges from the paths | Baskets recalculate without savings. Adjustments already on placed orders stay |
 
-Keep the custom objects after a rollback: they are the financial record of what members paid for. Don't delete them unless finance agrees. Re-enabling continues from the records as they are; run `MembershipReconciliationJob` first.
+Keep the custom objects after a rollback: they are the financial record of what members paid for. Don't delete them unless finance agrees. Re-enabling continues from the records as they are; run `Reconciliation` step of `PrimeMembership-Job` first.
 
 The change in `plugin_luckydraw` is independent. It only skips non-catalog lines, so it can stay.

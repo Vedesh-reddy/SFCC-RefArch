@@ -1,14 +1,16 @@
 # Jobs
 
+Everything runs in one job, `Analytics-Job`, every 15 minutes. Daily steps wait for their `RunEveryMinutes` setting, and a failing step doesn't stop the others, and the last step, `ReportFailures`, then marks the job `ERROR`.
+
 Step types are declared in `cartridges/plugin_analytics/steptypes.json` (module `scripts/jobs/analytics.js`); jobs in `metadata/plugin_analytics/jobs.xml` ship with **schedules disabled** and the site `RefArch_Practice` — replace it with your site ID. All steps: site context, not parallel, not transactional, 30-minute timeout.
 
-| Job | Step type | Suggested schedule | Parameters (default / max) | Writer lock |
+| Step | Step type | Runs every | Parameters (default / max) | Writer lock |
 |---|---|---|---|---|
-| `Analytics-AggregateEvents` | `custom.Analytics.AggregateEvents` | every 15 min | `MaxBatches` 5000 / 100000 | yes |
-| `Analytics-ReconcileOrders` | `custom.Analytics.ReconcileOrders` | every 15 min | `MaxOrders` 2000 / 50000 | yes |
-| `Analytics-GenerateRankings` | `custom.Analytics.GenerateRankings` | daily | `MaxRecords` 200000, `MaxProducts` 20000 | no |
-| `Analytics-Cleanup` | `custom.Analytics.Cleanup` | daily | `MaxItems` 10000 / 100000 | yes |
-| `Analytics-IntegrityCheck` | `custom.Analytics.IntegrityCheck` | daily | `Days` 7 / 62, `MaxItems` 50000 | no |
+| `AggregateEvents` | `custom.Analytics.AggregateEvents` | every 15 min | `MaxBatches` 5000 / 100000 | yes |
+| `ReconcileOrders` | `custom.Analytics.ReconcileOrders` | every 15 min | `MaxOrders` 2000 / 50000 | yes |
+| `GenerateRankings` | `custom.Analytics.GenerateRankings` | daily | `MaxRecords` 200000, `MaxProducts` 20000 | no |
+| `Cleanup` | `custom.Analytics.Cleanup` | daily | `MaxItems` 10000 / 100000 | yes |
+| `IntegrityCheck` | `custom.Analytics.IntegrityCheck` | daily | `Days` 7 / 62, `MaxItems` 50000 | no |
 
 The aggregation schedule is the job schedule in Business Manager (**Administration › Operations › Jobs**); there is no preference for it.
 
@@ -53,6 +55,5 @@ For each of the last `Days` days (ending yesterday): product sums of impressions
 ## Running from the CLI
 
 ```bash
-npx @salesforce/b2c-cli job run Analytics-AggregateEvents --wait --show-log
-npx @salesforce/b2c-cli job run Analytics-ReconcileOrders --wait --show-log
+npx @salesforce/b2c-cli job run Analytics-Job --wait --show-log
 ```

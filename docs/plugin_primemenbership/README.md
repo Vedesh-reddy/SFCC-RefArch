@@ -53,7 +53,7 @@ The final amount with tax is shown before paying (2), and the card goes through 
 
 ![Payment](images/sf-join-payment.png)
 
-If the order isn't paid yet, the customer is told so (1), with the order and total (2). Nothing is granted. `MembershipReconciliationJob` activates the membership when the order is verified as paid.
+If the order isn't paid yet, the customer is told so (1), with the order and total (2). Nothing is granted. `Reconciliation` step of `PrimeMembership-Job` activates the membership when the order is verified as paid.
 
 ![Waiting for payment](images/sf-join-confirmation.png)
 

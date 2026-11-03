@@ -11,10 +11,10 @@ Screenshots were captured on sandbox `zyeu-002`, site `RefArch_Practice`, on Oct
 | 3 | [Referral link tracking](#3-referral-link-tracking) | `?aff=CODE` product links | `AffiliateDailyStats`, cookie `affiliate-ref` | — |
 | 4 | [Referral code at checkout](#4-referral-code-at-checkout) | Order summary panel | Basket and order attributes | — |
 | 5 | [Prepaid-only referred orders](#5-prepaid-only-referred-orders) | Place order | — | — |
-| 6 | [Reward engine](#6-reward-engine) | — | `AffiliateOrder`, `AffiliateReward` | `AffiliateProduct-ProcessRewards` |
+| 6 | [Reward engine](#6-reward-engine) | — | `AffiliateOrder`, `AffiliateReward` | `ProcessRewards` step of `AffiliateProduct-Job` |
 | 7 | [Voucher security and redemption](#7-voucher-security-and-redemption) | Cart promo code | `AffiliateReward`, native coupon | — |
 | 8 | [Affiliate dashboard](#8-affiliate-dashboard) | `Affiliate-Dashboard` | All of the above | — |
-| 9 | [Voucher lifecycle](#9-voucher-lifecycle) | Email | `AffiliateReward` | `AffiliateProduct-MaintainRewards` |
+| 9 | [Voucher lifecycle](#9-voucher-lifecycle) | Email | `AffiliateReward` | `MaintainRewards` step of `AffiliateProduct-Job` |
 
 ---
 
@@ -124,7 +124,7 @@ Captured with the preference temporarily set to `COD`, so the card counted as no
 
 ### 6. Reward engine
 
-**What it does.** `AffiliateProduct-ProcessRewards` (every 30 minutes) moves each pending referral order forward:
+**What it does.** `ProcessRewards` step of `AffiliateProduct-Job` (every 30 minutes) moves each pending referral order forward:
 
 | Order state | Result |
 | --- | --- |
@@ -191,7 +191,7 @@ Before any referral:
 
 ### 9. Voucher lifecycle
 
-`AffiliateProduct-MaintainRewards` (daily) handles issued vouchers:
+`MaintainRewards` step of `AffiliateProduct-Job` handles issued vouchers:
 
 - revokes them when the source order was cancelled or has a return case;
 - expires them after `expiresAt`;
@@ -216,7 +216,7 @@ A voucher that was already redeemed is not clawed back when its source order is 
 
    Rename `sites/RefArch_Practice` and the job `site-id` for another site.
 4. Add `<li><a href="$url('Affiliate-Show')$">Affiliate Program</a></li>` to the `footer-account` content asset.
-5. Schedule `AffiliateProduct-ProcessRewards` every 30 minutes and `AffiliateProduct-MaintainRewards` daily.
+5. Schedule `AffiliateProduct-Job` every 30 minutes.
 
 ## Site preferences (Affiliate Product group)
 

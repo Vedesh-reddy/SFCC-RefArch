@@ -11,7 +11,7 @@ All flows need a registered, signed-in customer. When `walletEnabled` is off, ev
    - balance + pending top-ups + amount stays at or below `walletMaximumBalanceCents`;
    - the daily count (`walletTopUpDailyCountLimit`) and amount (`walletTopUpDailyAmountCents`) are not exceeded. Hitting the count opens a `TOPUP_VELOCITY` case.
 4. A `WalletTopUp` is created and the gateway is asked for a payment. The shopper is redirected to the gateway (sandbox page in SANDBOX mode, clearly labelled "Not for Live Money").
-5. On return, webhook or the `Wallet-TopUps` job, the plugin asks the gateway for the verified state. Only a CAPTURED payment with the same amount, USD and reference credits the wallet, exactly once.
+5. On return, webhook or the `TopUps` step of `Wallet-Job`, the plugin asks the gateway for the verified state. Only a CAPTURED payment with the same amount, USD and reference credits the wallet, exactly once.
 6. The shopper gets a `TOPUP_SUCCEEDED` (or `TOPUP_FAILED`) notification.
 
 Top-up states:
@@ -30,7 +30,7 @@ PENDING -> AWAITING_PAYMENT -> CREDITED -> REVERSED
 3. **Step-up**: a code is required when the amount is at least `walletStepUpThresholdCents` (0 = always), or when the session has not paid with this wallet before. The code is e-mailed (`Wallet-PaymentCode`), bound to the payer, basket and amount, and used once.
 4. If the wallet covers the total, the shopper submits with the wallet only. Otherwise they also enter a card; the card gets the rest.
 5. **Place order**: the pre-check re-validates approval, limits and member categories. Authorize places a hold (available → held). After the order is placed the hold is captured; if placement fails it is released.
-6. The owner gets `WALLET_PAYMENT` (or `FAMILY_PAYMENT_MADE` for a member payment, and the member gets `WALLET_PAYMENT`). The `Wallet-Holds` job sends these for holds captured since its last run, not place-order itself, because a storefront request may create at most 10 custom objects and place-order already writes the ledger.
+6. The owner gets `WALLET_PAYMENT` (or `FAMILY_PAYMENT_MADE` for a member payment, and the member gets `WALLET_PAYMENT`). The `Holds` step of `Wallet-Job` sends these for holds captured since its last run, not place-order itself, because a storefront request may create at most 10 custom objects and place-order already writes the ledger.
 
 Hold states: `ACTIVE -> CAPTURED | RELEASED | REVIEW`, `REVIEW -> CAPTURED | RELEASED`. A captured hold is never released.
 
@@ -91,4 +91,4 @@ The cart shows "You are $X away from free shipping" from the live shipping promo
 
 ## 9. Notifications
 
-Inbox messages appear in My Account › Wallet › Notifications at once. E-mail copies (`walletNotificationChannels` contains `EMAIL`) are sent by the `Wallet-Notifications` job with retries; the address is looked up when sending, so records hold no e-mail address. Types: `TOPUP_SUCCEEDED`, `TOPUP_FAILED`, `TOPUP_REVERSED`, `WALLET_PAYMENT`, `FAMILY_PAYMENT_MADE`, `REFUND_CREDITED`, `FAMILY_JOINED`, `FAMILY_DECLINED`, `FAMILY_PAYMENT_REQUEST`, `FAMILY_PAYMENT_APPROVED`, `FAMILY_PAYMENT_DECLINED`, `FAMILY_ACCESS_CHANGED`, `FAMILY_REACTIVATED`, `WALLET_LOCKED`, `WALLET_UNLOCKED`, `FUNDS_EXPIRED`, `LIMIT_REACHED`, `WALLET_ADJUSTED`.
+Inbox messages appear in My Account › Wallet › Notifications at once. E-mail copies (`walletNotificationChannels` contains `EMAIL`) are sent by the `Notifications` step of `Wallet-Job` with retries; the address is looked up when sending, so records hold no e-mail address. Types: `TOPUP_SUCCEEDED`, `TOPUP_FAILED`, `TOPUP_REVERSED`, `WALLET_PAYMENT`, `FAMILY_PAYMENT_MADE`, `REFUND_CREDITED`, `FAMILY_JOINED`, `FAMILY_DECLINED`, `FAMILY_PAYMENT_REQUEST`, `FAMILY_PAYMENT_APPROVED`, `FAMILY_PAYMENT_DECLINED`, `FAMILY_ACCESS_CHANGED`, `FAMILY_REACTIVATED`, `WALLET_LOCKED`, `WALLET_UNLOCKED`, `FUNDS_EXPIRED`, `LIMIT_REACHED`, `WALLET_ADJUSTED`.

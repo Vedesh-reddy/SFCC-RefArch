@@ -56,8 +56,7 @@ store pickup with a pickup code verified in Business Manager, and price lock.
 
 ![Product page panel with price history, alerts, store pickup and price lock](cartridges/plugin_smartcommerce/docs/images/pdp-panel.png)
 
-Run the jobs at **Administration → Operations → Jobs → SmartCommerce-PriceHistory** and
-**SmartCommerce-Hourly**. Verify pickups at **Merchant Tools → Smart Commerce → Store Pickup Desk**.
+Run the job at **Administration → Operations → Jobs → SmartCommerce-Job**. Verify pickups at **Merchant Tools → Smart Commerce → Store Pickup Desk**.
 
 ## Social gifting
 
@@ -84,8 +83,8 @@ orders must be prepaid, and vouchers work only for the affiliate who earned them
 
 ![Affiliate dashboard with a rewarded referral and a redeemed voucher](cartridges/plugin_affiliateproduct/docs/images/dashboard-history.png)
 
-Import `metadata/affiliate-product`, then schedule **AffiliateProduct-ProcessRewards** and
-**AffiliateProduct-MaintainRewards** at **Administration → Operations → Jobs**.
+Import `metadata/affiliate-product`, then schedule **AffiliateProduct-Job** at
+**Administration → Operations → Jobs**.
 
 ## Loyalty program
 
@@ -99,7 +98,7 @@ expire after 12 months, oldest first, with a reminder.
 
 ![My Points with earned, refunded and bonus points](cartridges/plugin_loyalty/docs/images/dashboard-gold.png)
 
-Import `metadata/loyalty-program`, then schedule **Loyalty-ProcessOrders** and **Loyalty-Maintain**.
+Import `metadata/loyalty-program`, then schedule **Loyalty-Job**.
 
 ## Rentals
 
@@ -115,7 +114,7 @@ refunds, and a job charges late fees.
 
 ![Rental dates and live availability on the product page](cartridges/plugin_rentals/docs/images/pdp-rental-dates.png)
 
-Import `metadata/rentals`, then schedule **Rentals-ReleaseHolds** and **Rentals-LateFees** at
+Import `metadata/rentals`, then schedule **Rentals-Job** at
 **Administration → Operations → Jobs**.
 
 ## Marketplace sellers (Seller Central)
@@ -180,6 +179,30 @@ rankings, categories, the checkout funnel, orders, search terms, health and CSV 
 
 Import `metadata/plugin_analytics`, add `bm_analytics:plugin_analytics` in front of the Business
 Manager cartridge path, set `analyticsEnabled` and enable the five `Analytics-*` job schedules.
+
+## Background Jobs
+
+Each plugin has one job in **Administration → Operations → Jobs**. Its steps run in order, one after another.
+
+| Job | Runs every | Steps, with how often each runs when slower than the job |
+|---|---|---|
+| `AffiliateProduct-Job` | 30 minutes | `ProcessRewards`, `MaintainRewards` |
+| `Analytics-Job` | 15 minutes | `AggregateEvents`, `ReconcileOrders`, `Cleanup` (daily), `GenerateRankings` (daily), `IntegrityCheck` (daily) |
+| `ChatWidget-PurgeJourneyData` | set in Business Manager | `PurgeJourneyData` |
+| `CustomWishlist-PriceDropCheck` | day | `PriceDropCheck` |
+| `Loyalty-Job` | 30 minutes | `ProcessOrders`, `Maintain` (daily, in the 02:00 UTC hour) |
+| `LuckyDraw-Job` | 5 minutes | `Status` (15 min), `Entries` (15 min), `Reconcile` (hourly), `Draw`, `Verify` (hourly), `Rewards` (15 min), `AuditExport` (daily), `Notifications`, `Cleanup` (daily) |
+| `MarketplaceSeller-Job` | 5 minutes | `OrderSync` (15 min), `Settlements` (daily), `Reconcile` (daily), `Performance` (daily), `Reminders` (daily), `DocumentExpiry` (daily), `Recovery` (hourly), `Notifications`, `Cleanup` (daily), then offer sync (15 min) and product publishing (30 min) |
+| `PrimeMembership-Job` | 15 minutes | `Reconciliation`, `Expiration` (daily), `Renewal` (daily), `BenefitReset` (daily), `BirthdayReward` (daily), `Reporting` (daily), `Notifications` |
+| `Rentals-Job` | 15 minutes | `ReleaseHolds`, `LateFees` |
+| `SmartCommerce-Job` | hour | `RecordPriceHistory` (daily, in the 01:00 UTC hour), `SendProductAlerts`, `ExpirePriceLocks` |
+| `SocialGifting-Job` | 5 minutes | `RegistryLifecycleJob`, `ReconcileRegistryOrders`, `SendRegistryNotifications` |
+| `Wallet-Job` | 5 minutes | `Holds`, `TopUps` (10 min), `Expiry` (daily), `Risk` (daily), `Reconcile` (daily), `Notifications`, `Cleanup` (daily) |
+
+- **Timing.** To change how often a step runs, edit its `RunEveryMinutes` or `RunAtHourUTC` setting in the job. Skipped steps finish with the status `NOT_DUE`.
+- **Failures.** A failing step doesn't stop the next one. The job's last step, `ReportFailures`, then marks the whole job `ERROR` and names the failed steps, so failures show in the jobs list. The exception is offer sync and product publishing in `MarketplaceSeller-Job`, whose steps depend on each other, so a failure there stops the run until the next one.
+- **Parallel runs.** Steps are not run in parallel: they are marked `supports-parallel-execution: false`, and several change the same balances.
+- **Upgrading.** Import `metadata/retired-jobs/jobs.xml` once to delete the 49 older jobs.
 
 ## Storefront Redesign
 
