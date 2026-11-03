@@ -1,0 +1,235 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addJs('/js/productTile.js');
+        assets.addCss('/css/homePage.css');
+    </isscript>
+
+    <section class="hero-slider position-relative" data-store-carousel data-autoplay="6000" aria-roledescription="carousel" aria-label="${Resource.msg('label.hero.carousel', 'storefront', null)}">
+        <div class="store-carousel-track hero-slider-track d-flex" data-carousel-track>
+            <article class="hero-slide  flex-shrink-0 position-relative" aria-roledescription="slide" aria-label="${Resource.msg('home.women.title', 'storefront', null)}">
+                <img class="hero-slide-image position-absolute top-0 start-0 w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/hero-women.jpg')}" alt="${Resource.msg('home.women.alt', 'storefront', null)}">
+                <div class="hero-slide-copy-wrap container position-relative h-100 d-flex align-items-end align-items-md-center">
+                    <div class="hero-slide-copy">
+                        <h1 class="hero-slide-title">${Resource.msg('home.women.title', 'storefront', null)}</h1>
+                        <p class="hero-slide-lead">${Resource.msg('home.women.lead', 'storefront', null)}</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-primary" href="${URLUtils.url('Search-Show', 'cgid', 'womens')}">${Resource.msg('home.women.primary', 'storefront', null)}</a>
+                            <a class="btn hero-slide-secondary" href="${URLUtils.url('Search-Show', 'cgid', 'womens-clothing-dresses')}">${Resource.msg('home.women.secondary', 'storefront', null)}</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article class="hero-slide hero-slide-end flex-shrink-0 position-relative" aria-roledescription="slide" aria-label="${Resource.msg('home.men.title', 'storefront', null)}">
+                <img class="hero-slide-image position-absolute top-0 start-0 w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/hero-men.jpg')}" alt="${Resource.msg('home.men.alt', 'storefront', null)}" loading="lazy">
+                <div class="hero-slide-copy-wrap container position-relative h-100 d-flex align-items-end align-items-md-center">
+                    <div class="hero-slide-copy">
+                        <h2 class="hero-slide-title">${Resource.msg('home.men.title', 'storefront', null)}</h2>
+                        <p class="hero-slide-lead">${Resource.msg('home.men.lead', 'storefront', null)}</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-primary" href="${URLUtils.url('Search-Show', 'cgid', 'mens')}">${Resource.msg('home.men.primary', 'storefront', null)}</a>
+                            <a class="btn hero-slide-secondary" href="${URLUtils.url('Search-Show', 'cgid', 'mens-clothing-jackets')}">${Resource.msg('home.men.secondary', 'storefront', null)}</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+            <article class="hero-slide  flex-shrink-0 position-relative" aria-roledescription="slide" aria-label="${Resource.msg('home.electronics.title', 'storefront', null)}">
+                <img class="hero-slide-image position-absolute top-0 start-0 w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/hero-electronics.jpg')}" alt="${Resource.msg('home.electronics.alt', 'storefront', null)}" loading="lazy">
+                <div class="hero-slide-copy-wrap container position-relative h-100 d-flex align-items-end align-items-md-center">
+                    <div class="hero-slide-copy">
+                        <h2 class="hero-slide-title">${Resource.msg('home.electronics.title', 'storefront', null)}</h2>
+                        <p class="hero-slide-lead">${Resource.msg('home.electronics.lead', 'storefront', null)}</p>
+                        <div class="d-flex flex-wrap gap-2">
+                            <a class="btn btn-primary" href="${URLUtils.url('Search-Show', 'cgid', 'electronics')}">${Resource.msg('home.electronics.primary', 'storefront', null)}</a>
+                            <a class="btn hero-slide-secondary" href="${URLUtils.url('Search-Show', 'cgid', 'electronics-televisions')}">${Resource.msg('home.electronics.secondary', 'storefront', null)}</a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </div>
+        <div class="hero-slider-controls d-flex align-items-center">
+            <button type="button" class="store-carousel-arrow" data-carousel-prev aria-label="${Resource.msg('label.carousel.previous', 'storefront', null)}"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-chevron-left"></use></svg></button>
+            <button type="button" class="store-carousel-arrow" data-carousel-toggle aria-label="${Resource.msg('label.carousel.pause', 'storefront', null)}" data-label-pause="${Resource.msg('label.carousel.pause', 'storefront', null)}" data-label-play="${Resource.msg('label.carousel.play', 'storefront', null)}"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-pause"></use></svg></button>
+            <button type="button" class="store-carousel-arrow" data-carousel-next aria-label="${Resource.msg('label.carousel.next', 'storefront', null)}"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-chevron-right"></use></svg></button>
+        </div>
+    </section>
+
+    <div class="store-marquee" role="region" aria-label="${Resource.msg('label.store.benefits', 'storefront', null)}">
+        <div class="store-marquee-track d-flex">
+            <ul class="store-marquee-list d-flex list-unstyled m-0 flex-shrink-0">
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-truck"></use></svg>${Resource.msg('benefit.shipping', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-wallet"></use></svg>${Resource.msg('benefit.wallet', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-crown"></use></svg>${Resource.msg('benefit.prime', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-bell"></use></svg>${Resource.msg('benefit.alerts', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-pin"></use></svg>${Resource.msg('benefit.pickup', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-scale"></use></svg>${Resource.msg('benefit.compare', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-gift"></use></svg>${Resource.msg('benefit.draws', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-star"></use></svg>${Resource.msg('benefit.rewards', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-calendar"></use></svg>${Resource.msg('benefit.rentals', 'storefront', null)}</li>
+            </ul>
+            <ul class="store-marquee-list d-flex list-unstyled m-0 flex-shrink-0" aria-hidden="true">
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-truck"></use></svg>${Resource.msg('benefit.shipping', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-wallet"></use></svg>${Resource.msg('benefit.wallet', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-crown"></use></svg>${Resource.msg('benefit.prime', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-bell"></use></svg>${Resource.msg('benefit.alerts', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-pin"></use></svg>${Resource.msg('benefit.pickup', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-scale"></use></svg>${Resource.msg('benefit.compare', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-gift"></use></svg>${Resource.msg('benefit.draws', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-star"></use></svg>${Resource.msg('benefit.rewards', 'storefront', null)}</li>
+                <li class="d-flex align-items-center flex-shrink-0"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-calendar"></use></svg>${Resource.msg('benefit.rentals', 'storefront', null)}</li>
+            </ul>
+        </div>
+    </div>
+
+    <section class="category-rail container" data-store-carousel data-reveal aria-labelledby="category-rail-title">
+        <h2 class="store-section-title text-center" id="category-rail-title">${Resource.msg('heading.home.categories', 'storefront', null)}</h2>
+        <div class="store-carousel-track category-rail-track d-flex" data-carousel-track>
+            <a class="category-rail-item flex-shrink-0 text-center" href="${URLUtils.url('Search-Show', 'cgid', 'newarrivals')}">
+                <span class="category-rail-image d-block"><img class="w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/category-new.jpg')}" alt="" loading="lazy"></span>
+                <span class="category-rail-name d-block">${Resource.msg('category.new', 'storefront', null)}</span>
+            </a>
+            <a class="category-rail-item flex-shrink-0 text-center" href="${URLUtils.url('Search-Show', 'cgid', 'womens')}">
+                <span class="category-rail-image d-block"><img class="w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/category-women.jpg')}" alt="" loading="lazy"></span>
+                <span class="category-rail-name d-block">${Resource.msg('category.women', 'storefront', null)}</span>
+            </a>
+            <a class="category-rail-item flex-shrink-0 text-center" href="${URLUtils.url('Search-Show', 'cgid', 'mens')}">
+                <span class="category-rail-image d-block"><img class="w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/category-men.jpg')}" alt="" loading="lazy"></span>
+                <span class="category-rail-name d-block">${Resource.msg('category.men', 'storefront', null)}</span>
+            </a>
+            <a class="category-rail-item flex-shrink-0 text-center" href="${URLUtils.url('Search-Show', 'cgid', 'womens-clothing-dresses')}">
+                <span class="category-rail-image d-block"><img class="w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/category-dresses.jpg')}" alt="" loading="lazy"></span>
+                <span class="category-rail-name d-block">${Resource.msg('category.dresses', 'storefront', null)}</span>
+            </a>
+            <a class="category-rail-item flex-shrink-0 text-center" href="${URLUtils.url('Search-Show', 'cgid', 'Shoes')}">
+                <span class="category-rail-image d-block"><img class="w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/category-shoes.jpg')}" alt="" loading="lazy"></span>
+                <span class="category-rail-name d-block">${Resource.msg('category.shoes', 'storefront', null)}</span>
+            </a>
+            <a class="category-rail-item flex-shrink-0 text-center" href="${URLUtils.url('Search-Show', 'cgid', 'womens-jewelry')}">
+                <span class="category-rail-image d-block"><img class="w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/category-jewelry.jpg')}" alt="" loading="lazy"></span>
+                <span class="category-rail-name d-block">${Resource.msg('category.jewelry', 'storefront', null)}</span>
+            </a>
+            <a class="category-rail-item flex-shrink-0 text-center" href="${URLUtils.url('Search-Show', 'cgid', 'electronics')}">
+                <span class="category-rail-image d-block"><img class="w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/category-electronics.jpg')}" alt="" loading="lazy"></span>
+                <span class="category-rail-name d-block">${Resource.msg('category.electronics', 'storefront', null)}</span>
+            </a>
+            <a class="category-rail-item flex-shrink-0 text-center" href="${URLUtils.url('Search-Show', 'cgid', 'Mobiles_U')}">
+                <span class="category-rail-image d-block"><img class="w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/category-mobiles.jpg')}" alt="" loading="lazy"></span>
+                <span class="category-rail-name d-block">${Resource.msg('category.mobiles', 'storefront', null)}</span>
+            </a>
+        </div>
+    </section>
+
+    <isloop items="${pdict.productCarousels}" var="carousel" status="carouselStatus">
+        <isif condition="${!!carousel}">
+            <div class="store-section ${carouselStatus.index % 2 === 0 ? 'store-section-surface' : ''}" data-reveal>
+                <isinclude template="components/product-carousel" />
+            </div>
+        </isif>
+        <isif condition="${carouselStatus.first}">
+            <section class="editorial-banner container d-flex flex-column flex-md-row" data-reveal>
+                <div class="editorial-banner-media flex-grow-1 position-relative"><img class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/editorial-jewelry.jpg')}" alt="${Resource.msg('home.jewelry.alt', 'storefront', null)}" loading="lazy"></div>
+                <div class="editorial-banner-copy d-flex flex-column justify-content-center align-items-start">
+                    <h2 class="store-section-title">${Resource.msg('home.jewelry.title', 'storefront', null)}</h2>
+                    <p>${Resource.msg('home.jewelry.lead', 'storefront', null)}</p>
+                    <a class="btn btn-primary" href="${URLUtils.url('Search-Show', 'cgid', 'womens-jewelry')}">${Resource.msg('home.jewelry.primary', 'storefront', null)}</a>
+                </div>
+            </section>
+        <iselseif condition="${carouselStatus.index === 1}">
+            <section class="feature-showcase container" data-reveal aria-labelledby="feature-showcase-title">
+                <h2 class="store-section-title text-center" id="feature-showcase-title">${Resource.msg('heading.home.features', 'storefront', null)}</h2>
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-8">
+                        <a class="feature-card feature-card-prime d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('PrimeMembership-Show')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-crown"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.prime.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.prime.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <a class="feature-card feature-card-wallet d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('Wallet-Show')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-wallet"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.wallet.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.wallet.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <a class="feature-card feature-card-draws d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('LuckyDraw-Show')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-gift"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.draws.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.draws.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <a class="feature-card feature-card-seller d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('Seller-Show')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-store"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.seller.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.seller.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <a class="feature-card feature-card-compare d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('ProductCompare-Show')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-scale"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.compare.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.compare.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <a class="feature-card feature-card-rewards d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('Loyalty-Show')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-star"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.rewards.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.rewards.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <a class="feature-card feature-card-refer d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('Affiliate-Show')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-share"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.refer.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.refer.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <a class="feature-card feature-card-rentals d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('Rental-Bookings')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-calendar"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.rentals.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.rentals.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-3">
+                        <a class="feature-card feature-card-registry d-flex flex-column justify-content-between h-100 position-relative" href="${URLUtils.https('Registry-Dashboard')}">
+                            <span class="feature-orb position-relative d-inline-flex align-items-center justify-content-center" aria-hidden="true"><svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-list"></use></svg></span>
+                            <span class="d-block">
+                                <span class="feature-card-title d-block">${Resource.msg('feature.registry.title', 'storefront', null)}</span>
+                                <span class="feature-card-text d-block">${Resource.msg('feature.registry.text', 'storefront', null)}</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </isif>
+    </isloop>
+
+    <section class="editorial-banner editorial-banner-dark container d-flex flex-column flex-md-row-reverse" data-reveal>
+        <div class="editorial-banner-media flex-grow-1 position-relative"><img class="position-absolute top-0 start-0 w-100 h-100 object-fit-cover" src="${URLUtils.staticURL('/images/store/editorial-electronics.jpg')}" alt="${Resource.msg('home.screens.alt', 'storefront', null)}" loading="lazy"></div>
+        <div class="editorial-banner-copy d-flex flex-column justify-content-center align-items-start">
+            <h2 class="store-section-title">${Resource.msg('home.screens.title', 'storefront', null)}</h2>
+            <p>${Resource.msg('home.screens.lead', 'storefront', null)}</p>
+            <a class="btn btn-primary" href="${URLUtils.url('Search-Show', 'cgid', 'electronics-televisions')}">${Resource.msg('home.screens.primary', 'storefront', null)}</a>
+        </div>
+    </section>
+</isdecorate>
