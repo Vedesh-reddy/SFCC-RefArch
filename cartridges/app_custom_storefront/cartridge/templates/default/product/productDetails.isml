@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-12">
                     <!--Breadcrumbs-->
-                    <div class="product-breadcrumb d-md-none">
+                    <div class="product-breadcrumb">
                         <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
                     </div>
 
@@ -29,16 +29,10 @@
 
             <div class="row">
                 <!-- Product Images Carousel -->
+                <isset name="galleryTools" value="${true}" scope="page" />
                 <isinclude template="product/components/imageCarousel" />
 
                 <div class="product-buy-column col-12 col-sm-6 col-lg-5">
-                    <!--Breadcrumbs-->
-                    <div class="row">
-                        <div class="product-breadcrumb col hidden-sm-down">
-                            <isinclude template="components/breadcrumbs/pageBreadcrumbs"/>
-                        </div>
-                    </div>
-
                     <!-- Product Name -->
                     <div class="row">
                         <div class="col">
@@ -111,6 +105,21 @@
                         <!-- Product Availability -->
                         <isinclude template="product/components/productAvailability" />
 
+                        <ul class="buy-perks list-unstyled d-flex flex-column">
+                            <li class="buy-perk-shipping d-flex align-items-center">
+                                <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-truck"></use></svg>
+                                ${Resource.msg('benefit.shipping', 'storefront', null)}
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-pin"></use></svg>
+                                ${Resource.msg('benefit.pickup', 'storefront', null)}
+                            </li>
+                            <li class="d-flex align-items-center">
+                                <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-shield"></use></svg>
+                                ${Resource.msg('perk.secure', 'storefront', null)}
+                            </li>
+                        </ul>
+
                         <!-- Applicable Promotions -->
                         <div class="row">
                             <div class="col-12 promotions">
@@ -122,6 +131,14 @@
                             <!-- Cart and [Optionally] Apple Pay -->
                             <isinclude template="product/components/addToCartProduct" />
                         </div>
+
+                        <iscomment>Here rather than beside Add to Cart: that bar is fixed to the screen on phones.</iscomment>
+                        <isif condition="${dw.system.Site.current.getCustomPreferenceValue('SocialGiftingEnabled')}">
+                            <div class="registry-slot">
+                                <isinclude template="registry/assets" />
+                                <isinclude url="${URLUtils.https('Registry-Button', 'pid', product.id)}" />
+                            </div>
+                        </isif>
 
                         <!-- Social Sharing Icons -->
                         <div class="row">

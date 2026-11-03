@@ -31,6 +31,87 @@
             align-self: flex-start;
             position: sticky;
             top: 3.5rem;
+
+            // The magnified view opens over the buy column.
+            z-index: 3;
+        }
+
+        .gallery-stage {
+            min-width: 0;
+        }
+
+        .gallery-thumbs {
+            gap: 0.5rem;
+            margin-right: 0.75rem;
+            max-height: 40rem;
+            overflow-y: auto;
+            padding: 0.125rem;
+        }
+
+        .gallery-thumb {
+            background-color: $theme-surface;
+            border: 1px solid $theme-hairline;
+            border-radius: $theme-radius-field;
+            overflow: hidden;
+            width: 3.25rem;
+
+            img {
+                mix-blend-mode: multiply;
+            }
+
+            &:hover {
+                border-color: $theme-action-strong;
+            }
+
+            &.is-active {
+                border-color: $theme-action-strong;
+                box-shadow: 0 0 0 1px $theme-action-strong;
+            }
+        }
+
+        @include media-breakpoint-up(lg) {
+            .has-thumbs {
+                .carousel-indicators,
+                .carousel-control-prev,
+                .carousel-control-next {
+                    display: none;
+                }
+            }
+        }
+
+        .gallery-actions {
+            gap: 0.5rem;
+            right: 0.75rem;
+            top: 0.75rem;
+            z-index: 2;
+        }
+
+        .gallery-lens {
+            background-color: rgba(0, 113, 227, 12%);
+            background-image: radial-gradient(rgba(0, 102, 204, 55%) 1px, transparent 1px);
+            background-size: 4px 4px;
+            border: 1px solid $theme-action-strong;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .gallery-zoom {
+            background-color: $white;
+            background-repeat: no-repeat;
+            border-radius: $theme-radius-panel;
+            box-shadow: $theme-shadow;
+            left: calc(100% + 1rem);
+            pointer-events: none;
+            top: 0;
+            z-index: 5;
+        }
+
+        .gallery-caption {
+            @include theme-type-small;
+
+            color: $theme-ink-muted;
+            gap: 0.25rem 0.75rem;
+            margin-top: 0.25rem;
         }
 
         .carousel {
@@ -41,6 +122,7 @@
 
         // Catalog images vary in size; centring keeps a small one from leaving an empty block.
         .carousel-item img {
+            cursor: zoom-in;
             margin: 0 auto;
             max-height: 40rem;
 
@@ -57,6 +139,7 @@
     }
 
     .product-breadcrumb .breadcrumb {
+        margin-bottom: 0.75rem;
         margin-left: 0;
     }
 
@@ -120,9 +203,97 @@
         }
     }
 
+    .option-chips {
+        gap: 0.5rem;
+    }
+
+    .option-chip {
+        @include theme-type-small;
+
+        background-color: $white;
+        border: 1px solid $theme-hairline;
+        border-radius: $theme-radius-field;
+        color: $theme-ink;
+        font-weight: 600;
+        min-height: 2.75rem;
+        min-width: 2.75rem;
+        padding: 0 0.75rem;
+        transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
+
+        &:hover:not(:disabled) {
+            border-color: $theme-action-strong;
+        }
+
+        &[aria-pressed="true"] {
+            background-color: $theme-action-soft;
+            border-color: $theme-action-strong;
+            box-shadow: 0 0 0 1px $theme-action-strong;
+            color: $theme-action-strong;
+        }
+
+        &:disabled {
+            background-color: $theme-surface;
+            color: $theme-ink-muted;
+            cursor: not-allowed;
+            text-decoration: line-through;
+        }
+    }
+
     .availability,
     .promotions {
         @include theme-type-small;
+    }
+
+    .promotions {
+        color: $theme-status-green;
+        font-weight: 600;
+    }
+
+    .product-availability {
+        .non-input-label {
+            color: $theme-ink-muted;
+        }
+
+        .availability-msg {
+            color: $theme-ink-muted;
+            margin-bottom: 0;
+        }
+
+        &[data-stock="in"] .availability-msg {
+            color: $theme-status-green;
+            font-size: 1.0625rem;
+            font-weight: 600;
+        }
+
+        &[data-stock="limited"] .availability-msg {
+            color: $theme-status-amber;
+            font-weight: 600;
+        }
+
+        &[data-stock="out"] .availability-msg {
+            color: $theme-status-red;
+            font-weight: 600;
+        }
+    }
+
+    .buy-perks {
+        @include theme-type-small;
+
+        border-bottom: 1px solid $theme-hairline;
+        border-top: 1px solid $theme-hairline;
+        color: $theme-ink-muted;
+        gap: 0.5rem;
+        margin: 1rem 0;
+        padding: 0.875rem 0;
+
+        li {
+            gap: 0.625rem;
+        }
+
+        .buy-perk-shipping {
+            color: $theme-status-green;
+            font-weight: 600;
+        }
     }
 
     .prices-add-to-cart-actions {
@@ -144,6 +315,16 @@
             margin: 0;
             min-height: 3.5rem;
             width: auto;
+        }
+    }
+
+    .registry-slot {
+        margin-top: 0.5rem;
+
+        > a {
+            display: inline-block;
+            font-weight: 600;
+            padding: 0.5rem 0;
         }
     }
 
@@ -181,7 +362,13 @@
         }
 
         ul {
-            padding-left: 1.125rem;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        li {
+            background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23007600' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 12.500 4.500 4.500L19 7.500'/%3E%3C/svg%3E") left 0.25rem / 1rem no-repeat;
+            padding-left: 1.5rem;
         }
 
         h3,
@@ -197,6 +384,44 @@
     }
 }
 
+.gallery-action {
+    background-color: $white;
+    border: 1px solid $theme-hairline;
+    border-radius: 50%;
+    color: $theme-action-strong;
+    height: 2.75rem;
+    transition: background-color 0.15s ease-out, border-color 0.15s ease-out;
+    width: 2.75rem;
+
+    &:hover {
+        background-color: $theme-action-soft;
+        border-color: $theme-action-strong;
+    }
+}
+
+.gallery-dialog {
+    border: 0;
+    border-radius: $theme-radius-panel;
+    max-height: 90vh;
+    max-width: min(90vw, 50rem);
+
+    &::backdrop {
+        background-color: rgba(0, 0, 0, 70%);
+    }
+
+    img {
+        max-height: 90vh;
+        object-fit: contain;
+    }
+}
+
+.gallery-dialog-close {
+    font-size: 1.5rem;
+    line-height: 1;
+    right: 0.75rem;
+    top: 0.75rem;
+}
+
 .smart-product-panel {
     margin-top: 1.5rem;
 
@@ -208,18 +433,6 @@
 
     .form-control {
         margin-bottom: 0.625rem;
-    }
-
-    .smart-compare-toggle {
-        @include theme-type-small;
-
-        align-items: center;
-        display: inline-flex;
-        font-weight: 600;
-        gap: 0.5rem;
-        min-height: 2.75rem;
-        padding: 0;
-        text-decoration: none;
     }
 }
 
@@ -266,13 +479,13 @@
 }
 
 .price-insight-trend-down {
-    background-color: #e3f6e8;
-    color: #1d6a35;
+    background-color: $theme-status-green-soft;
+    color: $theme-status-green;
 }
 
 .price-insight-trend-up {
-    background-color: #fdeaea;
-    color: #a4161a;
+    background-color: $theme-status-red-soft;
+    color: $theme-status-red;
 }
 
 .price-insight-trend-flat {

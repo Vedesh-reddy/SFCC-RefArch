@@ -1,30 +1,50 @@
+<isset name="hasGalleryTools" value="${typeof galleryTools !== 'undefined' && galleryTools}" scope="page" />
 <div class="primary-images col-12 col-sm-6">
-    <div id="pdpCarousel-${product.id}" class="carousel slide" data-bs-interval="0" data-interval="0" data-prev="${Resource.msg('button.previous', 'common', null)}" data-next="${Resource.msg('button.next', 'common', null)}">
-        <isif condition="${product.images['large'].length > 1}">
-            <div class="carousel-indicators">
-                <isloop items="${product.images['large']}" var="image" status="loopStatus">
-                    <button type="button" data-bs-target="${"#"}pdpCarousel-${product.id}" data-target="${"#"}pdpCarousel-${product.id}" data-bs-slide-to="${loopStatus.index}" data-slide-to="${loopStatus.index}" aria-label="${Resource.msgf('label.product.image.slide', 'storefront', null, loopStatus.count.toFixed(0))}" class='<isif condition="${loopStatus.index == 0}">active</isif>'>
-                    </button>
-                </isloop>
-            </div>
-        </isif>
+    <div class="gallery d-flex" data-store-gallery="${hasGalleryTools}" data-label-thumb="${Resource.msg('label.gallery.thumb', 'storefront', null)}" data-label-close="${Resource.msg('label.gallery.close', 'storefront', null)}">
+        <div class="gallery-thumbs d-none flex-column flex-shrink-0" data-gallery-thumbs role="group" aria-label="${Resource.msg('label.gallery.thumbs', 'storefront', null)}"></div>
+        <div class="gallery-stage position-relative flex-grow-1" data-gallery-stage>
+            <div id="pdpCarousel-${product.id}" class="carousel slide" data-bs-interval="0" data-interval="0" data-prev="${Resource.msg('button.previous', 'common', null)}" data-next="${Resource.msg('button.next', 'common', null)}">
+                <isif condition="${product.images['large'].length > 1}">
+                    <div class="carousel-indicators">
+                        <isloop items="${product.images['large']}" var="image" status="loopStatus">
+                            <button type="button" data-bs-target="${"#"}pdpCarousel-${product.id}" data-target="${"#"}pdpCarousel-${product.id}" data-bs-slide-to="${loopStatus.index}" data-slide-to="${loopStatus.index}" aria-label="${Resource.msgf('label.product.image.slide', 'storefront', null, loopStatus.count.toFixed(0))}" class='<isif condition="${loopStatus.index == 0}">active</isif>'>
+                            </button>
+                        </isloop>
+                    </div>
+                </isif>
 
-        <div class="carousel-inner">
-            <isloop items="${product.images['large']}" var="image" status="loopStatus">
-                <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
-                    <img src="${image.url}" class="d-block img-fluid" alt="${image.alt} image number ${image.index}" itemprop="image" />
+                <div class="carousel-inner">
+                    <isloop items="${product.images['large']}" var="image" status="loopStatus">
+                        <div class='carousel-item <isif condition="${loopStatus.index == 0}">active</isif>'>
+                            <img src="${image.url}" class="d-block img-fluid" alt="${image.alt} image number ${image.index}" itemprop="image" />
+                        </div>
+                    </isloop>
                 </div>
-            </isloop>
+                <isif condition="${product.images['large'].length > 1}">
+                    <a class="carousel-control-prev" href="${"#"}pdpCarousel-${product.id}" role="button" data-bs-slide="prev" data-slide="prev">
+                        <span class="fa icon-prev" aria-hidden="true"></span>
+                        <span class="visually-hidden">${Resource.msg('button.previous', 'common', null)}</span>
+                    </a>
+                    <a class="carousel-control-next" href="${"#"}pdpCarousel-${product.id}" role="button" data-bs-slide="next" data-slide="next">
+                        <span class="fa icon-next" aria-hidden="true"></span>
+                        <span class="visually-hidden">${Resource.msg('button.next', 'common', null)}</span>
+                    </a>
+                </isif>
+            </div>
+            <isif condition="${hasGalleryTools}">
+                <div class="gallery-actions d-flex position-absolute">
+                    <button type="button" class="gallery-action d-flex align-items-center justify-content-center" data-gallery-share aria-label="${Resource.msg('label.gallery.share', 'storefront', null)}">
+                        <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-share"></use></svg>
+                    </button>
+                    <isinclude url="${URLUtils.url('CustomWishlist-Button', 'pid', product.id)}" />
+                </div>
+            </isif>
         </div>
-        <isif condition="${product.images['large'].length > 1}">
-            <a class="carousel-control-prev" href="${"#"}pdpCarousel-${product.id}" role="button" data-bs-slide="prev" data-slide="prev">
-                <span class="fa icon-prev" aria-hidden="true"></span>
-                <span class="visually-hidden">${Resource.msg('button.previous', 'common', null)}</span>
-            </a>
-            <a class="carousel-control-next" href="${"#"}pdpCarousel-${product.id}" role="button" data-bs-slide="next" data-slide="next">
-                <span class="fa icon-next" aria-hidden="true"></span>
-                <span class="visually-hidden">${Resource.msg('button.next', 'common', null)}</span>
-            </a>
-        </isif>
     </div>
+    <isif condition="${hasGalleryTools}">
+        <div class="gallery-caption d-flex flex-wrap align-items-center justify-content-center">
+            <span class="gallery-zoom-hint d-none d-lg-inline">${Resource.msg('label.gallery.zoom', 'storefront', null)}</span>
+            <button type="button" class="btn btn-link" data-gallery-full>${Resource.msg('label.gallery.full', 'storefront', null)}</button>
+        </div>
+    </isif>
 </div>
