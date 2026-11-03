@@ -1,0 +1,80 @@
+@import "../theme-variables";
+@import "~base/variables";
+@import "~base/skin/skin";
+
+/* stylelint-disable no-descending-specificity */
+
+// skin.css loads after every other stylesheet, so overrides of its own rules live here.
+.header-banner .close-button .btn-close {
+    background-color: transparent;
+}
+
+.nav-item .nav-link:hover,
+.nav-item .nav-link:focus,
+.nav-item.show .nav-link {
+    background-color: transparent;
+    color: $black !important;
+}
+
+.btn-primary:hover,
+.btn-primary:focus-visible {
+    background-color: $theme-action-strong;
+    border-color: $theme-action-strong;
+    color: $white;
+}
+
+.btn-primary:active {
+    background-color: $theme-action-pressed;
+    border-color: $theme-action-pressed;
+}
+
+.btn-outline-primary {
+    --bs-btn-hover-color: #{$white};
+    --bs-btn-hover-bg: #{$theme-action-strong};
+    --bs-btn-hover-border-color: #{$theme-action-strong};
+
+    border-color: $theme-action-strong;
+    color: $theme-action-strong;
+}
+
+.btn-outline-primary:hover {
+    background-color: $theme-action-strong;
+    border-color: $theme-action-strong;
+}
+
+header ~ #maincontent .container a:not(.btn-primary, .btn-outline-primary) {
+    color: var(--skin-link-color-2);
+}
+
+header ~ #maincontent .container .product-tile .pdp-link a:not(.btn-primary, .btn-outline-primary),
+header ~ #maincontent .container .breadcrumb a:not(.btn-primary, .btn-outline-primary) {
+    color: $theme-ink;
+}
+
+.product-tile {
+    border: 0;
+}
+
+.refinements ul li button {
+    color: $theme-ink;
+}
+
+// The base rule above paints every link inside a container blue, which is unreadable on these surfaces.
+header ~ #maincontent .container a.feature-card,
+header ~ #maincontent .container a.category-rail-item,
+header ~ #maincontent .container a.account-shortcut {
+    color: $theme-ink;
+}
+
+header ~ #maincontent .container a.feature-card-prime,
+header ~ #maincontent .container a.feature-card-wallet,
+header ~ #maincontent .container a.hero-slide-secondary,
+header ~ #maincontent .container a.search-hero-link {
+    color: $white;
+}
+
+header ~ #maincontent .container a.hero-slide-secondary:hover,
+header ~ #maincontent .container a.search-hero-link:hover,
+header ~ #maincontent .container a.search-hero-link.is-active {
+    color: $theme-ink;
+}

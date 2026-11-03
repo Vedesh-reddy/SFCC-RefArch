@@ -1,0 +1,34 @@
+<isinclude template="components/icons/sprite" />
+<header class="site-header sticky-top">
+    <nav role="navigation" aria-label="${Resource.msg('label.header.navigation', 'storefront', null)}">
+        <div class="header container d-flex align-items-center">
+            <button class="navbar-toggler d-md-none" type="button" aria-controls="sg-navbar-collapse" aria-expanded="false" aria-label="${Resource.msg('label.header.menu.toggle', 'storefront', null)}">
+                <i class="fa fa-bars" aria-hidden="true"></i>
+            </button>
+            <div class="navbar-header brand flex-shrink-0">
+                <a class="logo-home d-block" href="${URLUtils.url('Home-Show')}" title="${ Resource.msgf('global.homepage.tooltip', 'common', null, Resource.msg('global.storename', 'common', null), Resource.msg('global.home', 'common', null)) }">
+                    <img class="hidden-md-down" src="${URLUtils.staticURL('/images/logo.svg')}" alt="${Resource.msg('global.storename', 'common', null)}" />
+                    <img class="d-lg-none" src="${URLUtils.staticURL('/images/logo-small.svg')}" alt="${Resource.msg('global.storename', 'common', null)}" />
+                </a>
+            </div>
+            <div class="main-menu navbar-toggleable-sm menu-toggleable-left multilevel-dropdown d-none d-md-block flex-grow-1" id="sg-navbar-collapse">
+                <isinclude url="${URLUtils.url('Page-IncludeHeaderMenu')}"/>
+            </div>
+            <div class="navbar-header site-header-actions d-flex align-items-center justify-content-end flex-shrink-0 ms-auto">
+                <div class="search hidden-xs-down">
+                    <isinclude template="components/header/search" />
+                </div>
+                <div class="hidden-md-down d-flex align-items-center">
+                    <isinclude url="${URLUtils.url('Account-Header')}" />
+                    <isinclude url="${URLUtils.url('Page-Locale')}" />
+                </div>
+                <div class="minicart" data-action-url="${URLUtils.url('Cart-MiniCartShow')}">
+                    <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+<div class="search-mobile d-sm-none">
+    <isinclude template="components/header/search" />
+</div>
