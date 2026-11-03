@@ -66,7 +66,7 @@ paid order (job reads order status, payment status, prorated line prices)
 ```
 
 - **Keys:** the entry key is a keyed hash of campaign and source (`ORDER:<orderNo>`, `FREE:<customer>:<day>:<slot>`, `MAIL:<reference>`). An order can therefore create one entry at most, however many jobs see it. The published entry IDs do not reveal order numbers.
-- **No client signals:** entries are never created from browser events. The `LuckyDraw-Entries` job walks paid orders of the last `luckyDrawEntryLookbackHours`. A cursor moves through that period and then starts again, so an order paid late still earns its entry.
+- **No client signals:** entries are never created from browser events. The `Entries` step of `LuckyDraw-Job` walks paid orders of the last `luckyDrawEntryLookbackHours`. A cursor moves through that period and then starts again, so an order paid late still earns its entry.
 - **Late entries:** an entry whose window has already been frozen moves into the current window. A late job never changes a finished draw.
 - **Free entries:** the free method of entry uses per-day slots in the campaign time zone. Concurrent requests for the same slot collide on the key.
 - **Wallet:** orders paid with a wallet (for example by `plugin_wallet`) qualify under the same rules, because only the order's payment status counts. A wallet top-up is not an order and never qualifies.

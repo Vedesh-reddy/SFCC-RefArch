@@ -7,12 +7,12 @@ Screenshots were captured on sandbox `zyeu-002`, site `RefArch_Practice`, on Oct
 | # | Feature | Shopper entry point | Data | Job |
 | --- | --- | --- | --- | --- |
 | 1 | [My Points page](#1-my-points-page) | Footer link, `Loyalty-Show` | `LoyaltyAccount`, `LoyaltyLedger` | — |
-| 2 | [Earning points](#2-earning-points) | Checkout, order confirmation | `LoyaltyOrder` | `Loyalty-ProcessOrders` |
+| 2 | [Earning points](#2-earning-points) | Checkout, order confirmation | `LoyaltyOrder` | `ProcessOrders` step of `Loyalty-Job` |
 | 3 | [Redeeming points](#3-redeeming-points) | Checkout panel | Basket and order attributes, `LoyaltyLot` | — |
-| 4 | [Cancellations and refunds](#4-cancellations-and-refunds) | — | `LoyaltyOrder`, `LoyaltyLedger` | `Loyalty-ProcessOrders` |
+| 4 | [Cancellations and refunds](#4-cancellations-and-refunds) | — | `LoyaltyOrder`, `LoyaltyLedger` | `ProcessOrders` step of `Loyalty-Job` |
 | 5 | [Tiers](#5-tiers) | My Points, checkout | `LoyaltyAccount` | Both jobs |
-| 6 | [Bonus points](#6-bonus-points) | — | `LoyaltyLot` | `Loyalty-Maintain` |
-| 7 | [Expiry and reminders](#7-expiry-and-reminders) | Email | `LoyaltyLot` | `Loyalty-Maintain` |
+| 6 | [Bonus points](#6-bonus-points) | — | `LoyaltyLot` | `Maintain` step of `Loyalty-Job` |
+| 7 | [Expiry and reminders](#7-expiry-and-reminders) | Email | `LoyaltyLot` | `Maintain` step of `Loyalty-Job` |
 
 ---
 
@@ -142,7 +142,7 @@ This path is covered by unit tests, not screenshots.
 2. Build and upload: `npm run compile:js`, then `npx sgmf-scripts --uploadCartridge plugin_loyalty`.
 3. Zip `metadata/loyalty-program` and import it in **Administration > Site Development > Site Import & Export**. It contains the four custom object types, Basket and Order attributes, the **Loyalty Program** site preferences, the two jobs, and `LoyaltyEnabled = true` for `RefArch_Practice`.
 4. Add `<li><a href="$url('Loyalty-Show')$">My Points</a></li>` to the `footer-account` content asset.
-5. Schedule `Loyalty-ProcessOrders` every 30 minutes and `Loyalty-Maintain` daily.
+5. Schedule `Loyalty-Job` every 30 minutes. Its `Maintain` step runs only in the hour set by `RunAtHourUTC`.
 
 `checkout/orderTotalSummary.isml` is an SFRA copy with one include added. It renders the checkout panel only when `Checkout-Begin` sets `loyaltyCheckout`, and the confirmation note only when `Order-Confirm` sets `loyaltyConfirmation`.
 

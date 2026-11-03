@@ -52,7 +52,7 @@ The page shows:
 
 ### Entries
 
-Paid orders earn entries once the `LuckyDraw-Entries` job sees them. Free entries count the same.
+Paid orders earn entries once the `Entries` step of `LuckyDraw-Job` sees them. Free entries count the same.
 
 An order outside the campaign period, or with a billing address outside the eligible regions, earns no entry. The job status counts the reasons, for example `{"region":2,"outside-campaign":1}`.
 
@@ -60,7 +60,7 @@ An order outside the campaign period, or with a billing address outside the elig
 
 ### A verifiable draw
 
-The `LuckyDraw-Draw` job works in three steps:
+The `Draw` step of `LuckyDraw-Job` works in three steps:
 1. It commits to a secret seed before the draw.
 2. It hashes the snapshot of entries.
 3. It selects winners with `ld-hmac-sha256-v1` and seals the result.
@@ -73,7 +73,7 @@ The `LuckyDraw-Draw` job works in three steps:
 
 ### Rewards
 
-After **Confirm eligibility**, the `LuckyDraw-Rewards` job issues a single-use code from the prize coupon. Only the winner sees it, under **My rewards**.
+After **Confirm eligibility**, the `Rewards` step of `LuckyDraw-Job` issues a single-use code from the prize coupon. Only the winner sees it, under **My rewards**.
 
 ![My entries and the won reward](images/luckydraw-my-entries.png)
 

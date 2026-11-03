@@ -62,7 +62,7 @@ Never stored: names, e-mail addresses, phone numbers, addresses, customer number
 
 ## Purchase
 
-There is no purchase event. `Analytics-ReconcileOrders` reads orders and stores what each order contributed:
+There is no purchase event. `ReconcileOrders` step of `Analytics-Job` reads orders and stores what each order contributed:
 
 ```json
 { "v": 1, "d": "20261027", "s": "Q", "fd": "20261027",

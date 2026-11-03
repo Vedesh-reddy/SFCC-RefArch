@@ -59,17 +59,17 @@ In a catalog import, these dates use the format `2027-01-15T12:00:00.000+0000`. 
 
 ## Jobs
 
-All ship with schedules off. Enable them after the sandbox test.
+Every step below runs in one job, `PrimeMembership-Job`, every 15 minutes. Daily steps wait for their `RunEveryMinutes` setting, and a failing step doesn't stop the others, and the last step, `ReportFailures`, then marks the job `ERROR`. The schedule ships off, so enable it after the sandbox test.
 
-| Job | Suggested interval | Does |
+| Step | Runs every | Does |
 |---|---|---|
-| `MembershipReconciliationJob` | 15 minutes | Activates paid memberships, closes abandoned records, settles reservations, reverses cancelled orders, pays loyalty bonuses |
-| `MembershipNotificationJob` | 15 minutes | Sends queued e-mails with backoff |
-| `MembershipExpirationJob` | Daily | Reminders and expirations |
-| `MembershipRenewalJob` | Daily | Automatic renewals; does nothing without the adapter |
-| `MembershipBenefitResetJob` | Daily | Benefit periods, monthly vouchers |
-| `MembershipBirthdayRewardJob` | Daily | Birthday rewards |
-| `MembershipReportingJob` | Daily | Daily figures for the overview |
+| `Reconciliation` | 15 minutes | Activates paid memberships, closes abandoned records, settles reservations, reverses cancelled orders, pays loyalty bonuses |
+| `Notifications` | 15 minutes | Sends queued e-mails with backoff |
+| `Expiration` | Daily | Reminders and expirations |
+| `Renewal` | Daily | Automatic renewals; does nothing without the adapter |
+| `BenefitReset` | Daily | Benefit periods, monthly vouchers |
+| `BirthdayReward` | Daily | Birthday rewards |
+| `Reporting` | Daily | Daily figures for the overview |
 
 Each has a `MaxItems` parameter, can be repeated safely, and resumes from a saved position or from record state. A step reports `ERROR` for real failures such as an exhausted coupon, but not for a customer's declined payment. Logs: `prime-membership` prefix, categories `membership-job`, `membership-payment`, `membership-benefit`, `membership-reward`, `membership-notification`, `membership-integration`, `membership-admin`.
 

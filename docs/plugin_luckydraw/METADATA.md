@@ -39,7 +39,7 @@ Restrict WebDAV access to these folders. Keep the snapshots for as long as the d
 
 ## Jobs
 
-`jobs.xml` defines nine jobs, `LuckyDraw-Status`, `-Entries`, `-Reconcile`, `-Draw`, `-Verify`, `-Rewards`, `-Notifications`, `-Cleanup` and `-AuditExport`. Each has one step of the matching `custom.LuckyDraw.*` type from `steptypes.json`. All recurring triggers ship **disabled**. Replace `RefArch_Practice` with your site ID.
+`jobs.xml` defines one job, `LuckyDraw-Job`, with nine steps: `Status`, `Entries`, `Reconcile`, `Draw`, `Verify`, `Rewards`, `Notifications`, `Cleanup` and `AuditExport`. Each uses the matching `custom.LuckyDraw.*` type from `steptypes.json`. All recurring triggers ship **disabled**. Replace `RefArch_Practice` with your site ID.
 
 ## Services
 

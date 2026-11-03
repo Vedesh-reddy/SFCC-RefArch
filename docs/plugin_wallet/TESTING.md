@@ -62,7 +62,7 @@ Run these on a sandbox, in order, and record the results here.
 | W3 | Wallet-only order | Order below the balance; pay with wallet only | Order placed and PAID; hold CAPTURED; balance reduced; `request.custom.walletHoldIds` reached the PlaceOrder append (hold not left ACTIVE) |
 | W4 | Split payment | Order above the balance; wallet + test card | Card authorized for the rest; wallet hold captured; order total = sum of instruments. If the shipping benefit is on: customer group on `session.custom.walletShippingBenefit` qualifies |
 | W5 | Failed order | Make the card decline after the wallet hold | Order failed; hold RELEASED; balance restored |
-| W6 | Concurrency | Two browsers, same wallet, place orders together whose sum exceeds the balance | Exactly one succeeds; balance never negative; `Wallet-Reconcile` OK |
+| W6 | Concurrency | Two browsers, same wallet, place orders together whose sum exceeds the balance | Exactly one succeeds; balance never negative; `Reconcile` step of `Wallet-Job` OK |
 | W7 | Step-up | Set threshold to $10; pay $20 | Code required; wrong code refused; code for another basket refused |
 | W8 | Family | Invite a second account, accept, pay within and above limits, revoke, pay again | Within: OK; above: `limit-reached`; after revoke: refused |
 | W9 | Custom APIs | `b2c scapi custom status`; call `/me` with a SLAS token; `POST /refunds` with an AM token | Registered; 200; refund credited once on repeat |

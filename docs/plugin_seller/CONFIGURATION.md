@@ -142,19 +142,20 @@ Missing or short keys fail closed: verification codes cannot be issued, and webh
 
 ## Jobs
 
-All jobs are imported with their recurring triggers **disabled**. Enable and schedule them in Administration › Operations › Jobs. The intervals in `jobs.xml` are suggestions. Each step takes `MaxItems`.
+Every step below runs in the one job `MarketplaceSeller-Job`, which runs every 5 minutes. A step set to run less often uses its `RunEveryMinutes` setting. A failing step doesn't stop the others, and the last step, `ReportFailures`, then marks the job `ERROR`, except in the offer sync and product publishing steps, which run last and in order. The schedule ships off, so enable it after the smoke test. Enable it in Administration › Operations › Jobs. The intervals in `jobs.xml` are suggestions. Each step takes `MaxItems`.
 
-| Job | Suggested interval | Notes |
+| Step | Runs every | Notes |
 |---|---|---|
-| `MarketplaceSeller-ProvisionProducts` | 30 min | Prepare (site) → Import catalog, prices, inventory (organization) → Verify (site) |
-| `MarketplaceSeller-SyncOffers` | 15 min | Prepare (site) → imports (organization) → Confirm (site) |
-| `MarketplaceSeller-OrderSync` | 15 min | Watermark kept in `MarketplaceJobState` |
-| `MarketplaceSeller-Settlements` | daily | `AutoRequestPayout` only with an EXTERNAL payout provider |
-| `MarketplaceSeller-Performance` | daily | Cursor-based, wraps around |
-| `MarketplaceSeller-Notifications` | 5 min | Exponential back-off |
-| `MarketplaceSeller-Reminders` | daily | One admin reminder per run |
-| `MarketplaceSeller-DocumentExpiry` | daily | |
-| `MarketplaceSeller-Recovery` | hourly | `StalePayoutHours` |
-| `MarketplaceSeller-Cleanup` | daily | Also purges documents past retention |
+| `ProvisionPrepare` | 30 min | Then import catalog, prices, inventory (organization) → `ProvisionVerify` (site) |
+| `SyncPrepare` | 15 min | Then imports (organization) → `SyncConfirm` (site) |
+| `OrderSync` | 15 min | Watermark kept in `MarketplaceJobState` |
+| `Settlements` | daily | `AutoRequestPayout` only with an EXTERNAL payout provider |
+| `Reconcile` | daily | Settlements against the ledger |
+| `Performance` | daily | Cursor-based, wraps around |
+| `Notifications` | 5 min | Exponential back-off |
+| `Reminders` | daily | One admin reminder per run |
+| `DocumentExpiry` | daily | |
+| `Recovery` | hourly | `StalePayoutHours` |
+| `Cleanup` | daily | Also purges documents past retention |
 
 Replace the site ID `RefArch_Practice` in `jobs.xml` with your site before importing.

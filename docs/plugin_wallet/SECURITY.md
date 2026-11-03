@@ -18,7 +18,7 @@
 - **Idempotency.** Journals are keyed by business keys (`TOPUP:<id>`, `HOLD:<id>`, `REFUND:<refundId>`), webhook events by event ID. Repeating a request returns the first result; reusing a key with other data is a `CONFLICT`.
 - **Verified top-ups only.** Credits happen only after `verifyPayment` confirms CAPTURED with the same amount, USD and reference. A browser return or a webhook body never credits. Mismatches open a `GATEWAY_MISMATCH` case.
 - **Status flows.** Every status change is checked against the status-flow table of its helper (`walletHelpers.canMove`), so replays, second job runs or stale pages cannot move a record backwards. A captured hold can never be released.
-- **Reconciliation.** `Wallet-Reconcile` replays every wallet against its snapshot, checks journal balance and compares captured holds with order payment instruments.
+- **Reconciliation.** `Reconcile` step of `Wallet-Job` replays every wallet against its snapshot, checks journal balance and compares captured holds with order payment instruments.
 
 ## Authorization
 
@@ -50,7 +50,7 @@ Invitation tokens are 48 hex characters from `SecureRandom`; only their keyed ha
 |---|---|
 | Top-up range, maximum balance (with pending), daily count and amount | `walletTopUpHelpers.startTopUp`; `TOPUP_VELOCITY` case |
 | Spending limits per transaction, day and month; member limits and categories | `walletAccountHelpers.checkSpendLimits`, `walletFamilyHelpers.checkMemberLimits` |
-| Refund cap (captured − refunded) and refund abuse cases | `walletPaymentHelpers.refundToWallet`, `Wallet-Risk` |
+| Refund cap (captured − refunded) and refund abuse cases | `walletPaymentHelpers.refundToWallet`, `Risk` step of `Wallet-Job` |
 | Chargeback reversal, shortfall tracking and lock | `walletTopUpHelpers.reverseTopUp` |
 | Rate limits on top-ups and invitations | `walletHelpers.checkRateLimit` (`walletWriteRateLimitPerHour`) |
 
@@ -66,7 +66,7 @@ All open. None of them can be closed by code alone.
 
 1. **Regulatory classification and approval.** Stored value may be regulated as prepaid access (FinCEN, 31 CFR 1010.100(ww)), as money transmission under state laws, and under gift-card rules (CARD Act / Regulation E 12 CFR 1005.20 and state escheatment). Legal must decide whether the program is closed-loop, which state rules apply, and approve the terms of use, privacy notice and dispute handling. Only then set `walletLiveMoneyApproved`.
 2. **Licensed gateway.** Implement `app.plugin.wallet.gateway` for a PCI DSS compliant provider with server-to-server verification and signed webhooks. Run the provider's certification.
-3. **Funds safeguarding and accounting.** Decide how balances are held and booked (liability / deferred revenue), and reconcile `Wallet-Reconcile`, the provider settlement and the general ledger daily.
+3. **Funds safeguarding and accounting.** Decide how balances are held and booked (liability / deferred revenue), and reconcile `Reconcile` step of `Wallet-Job`, the provider settlement and the general ledger daily.
 4. **Refunds of balances, dormancy and escheatment.** Define cash-out on request, closing a wallet with a balance, and unclaimed-property reporting. Keep `walletFundsExpiryDays = 0` until approved.
 5. **Shipping benefit terms.** If used, the promotion and its customer-group rule need marketing and legal approval.
 6. **Security review and penetration test** of the wallet routes, Custom APIs and webhook on a sandbox.

@@ -12,7 +12,7 @@ Customer balances are liabilities. Before any rollback that ends wallet use, fin
    - jobs exit with `DISABLED`.
 2. Optionally disable the `Wallet-*` job schedules.
 
-Wallet balances, holds and history stay as they are. Before switching off, run `Wallet-Holds` once (or wait for open checkouts to finish) so no hold stays ACTIVE. Holds left ACTIVE are settled by `Wallet-Holds` after the wallet is enabled again.
+Wallet balances, holds and history stay as they are. Before switching off, run `Holds` step of `Wallet-Job` once (or wait for open checkouts to finish) so no hold stays ACTIVE. Holds left ACTIVE are settled by `Holds` step of `Wallet-Job` after the wallet is enabled again.
 
 A softer option is to stop only new money: set `walletGatewayMode = EXTERNAL` without `walletLiveMoneyApproved` (top-ups refused, spending of existing balances still possible).
 

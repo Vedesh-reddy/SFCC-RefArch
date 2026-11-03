@@ -57,7 +57,7 @@ A seller can offer any catalog product with their own price, stock, SKU, conditi
 
 ![Offers list](images/seller-offers.png)
 
-After the `MarketplaceSeller-SyncOffers` job, the offer appears on the product page under **Offers from sellers**, and shoppers can add it to the cart.
+After the `SyncPrepare` step of `MarketplaceSeller-Job`, the offer appears on the product page under **Offers from sellers**, and shoppers can add it to the cart.
 
 ![Seller offers on the product page](images/pdp-seller-offers.png)
 
@@ -79,11 +79,11 @@ Marketplace › Finance holds the commission rules. Here a DEFAULT rule takes 10
 
 ![DEFAULT commission rule](images/bm-marketplace-rules.png)
 
-Once the order is paid, the `MarketplaceSeller-OrderSync` job creates the seller's own order, with the seller's lines and the commission already booked.
+Once the order is paid, the `OrderSync` step of `MarketplaceSeller-Job` creates the seller's own order, with the seller's lines and the commission already booked.
 
 ![Orders to ship in Seller Central](images/seller-orders.png)
 
-The seller ships from Seller Central with a carrier and tracking number. Earnings become available after the return window, and the `MarketplaceSeller-Settlements` job pays them out.
+The seller ships from Seller Central with a carrier and tracking number. Earnings become available after the return window, and the `Settlements` step of `MarketplaceSeller-Job` pays them out.
 
 ![Seller order with net amount and shipment form](images/seller-order-ship.png)
 

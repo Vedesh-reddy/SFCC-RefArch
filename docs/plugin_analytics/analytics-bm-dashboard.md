@@ -28,7 +28,7 @@ Product, category, ranking and product/category/search exports cover at most 93 
 | Highest converting (orders / viewing sessions, ≥ minimum sessions) | Impressions without selections (≥ `analyticsMinRankingImpressions`) |
 | Best cart-to-purchase (orders / adding sessions, ≥ minimum sessions) | |
 
-Ties are broken by a second metric and then by product ID, so lists are stable. For the four standard periods the page shows the lists stored by `Analytics-GenerateRankings`, which include online master/standalone catalog products without any activity. Other periods are computed live from the daily figures and only include products with activity. A "most wishlisted" list is not offered: the storefront has no base wishlist integration (see limitations).
+Ties are broken by a second metric and then by product ID, so lists are stable. For the four standard periods the page shows the lists stored by `GenerateRankings` step of `Analytics-Job`, which include online master/standalone catalog products without any activity. Other periods are computed live from the daily figures and only include products with activity. A "most wishlisted" list is not offered: the storefront has no base wishlist integration (see limitations).
 
 ## Notices on pages
 

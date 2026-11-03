@@ -26,14 +26,14 @@ cartridge; the emails arrived in a real inbox and the orders are real SFCC order
 | # | Feature | Shopper entry point | Data | Job |
 | --- | --- | --- | --- | --- |
 | 1 | [Email OTP sign-in and registration](#1-email-otp-sign-in-and-registration) | Login page button, `EmailOtp-Show` | Session (hashed code), external profile `SmartEmailOtp` | — |
-| 2 | [Price history and lowest price in 30 days](#2-price-history-and-lowest-price-in-30-days) | Product page panel, `SmartProduct-PriceHistory` API | `SmartPriceHistory` | `SmartCommerce-PriceHistory` |
+| 2 | [Price history and lowest price in 30 days](#2-price-history-and-lowest-price-in-30-days) | Product page panel, `SmartProduct-PriceHistory` API | `SmartPriceHistory` | `RecordPriceHistory` step of `SmartCommerce-Job` |
 | 3 | [Price-drop alerts](#3-price-drop-alerts) | Product page panel | `SmartProductAlert` (`price`) | Both jobs |
-| 4 | [Back-in-stock alerts](#4-back-in-stock-alerts) | Product page panel | `SmartProductAlert` (`stock`) | `SmartCommerce-Hourly` |
+| 4 | [Back-in-stock alerts](#4-back-in-stock-alerts) | Product page panel | `SmartProductAlert` (`stock`) | `SmartCommerce-Job` |
 | 5 | [Product comparison](#5-product-comparison) | Tiles, product page, `ProductCompare-Show` | Browser storage | — |
 | 6 | [Order tracking without an account](#6-order-tracking-without-an-account) | Track-order form link, `OrderLookup-Show` | Session | — |
 | 7 | [Order modification window](#7-order-modification-window) | Order details page | Order (`exportAfter`) | — |
 | 8 | [Store pickup (click & collect)](#8-store-pickup-click--collect) | Product page panel; BM Store Pickup Desk | Order pickup-code hash | — |
-| 9 | [Price lock](#9-price-lock) | Product page panel | `SmartPriceLock` | `SmartCommerce-Hourly` |
+| 9 | [Price lock](#9-price-lock) | Product page panel | `SmartPriceLock` | `SmartCommerce-Job` |
 
 Features 2, 3, 4, 8 and 9 share one **product page panel**, inserted below Add to Cart and
 reloaded whenever the shopper selects another variant, so every action applies to the exact SKU.
@@ -105,7 +105,7 @@ customers get an external profile with provider ID `SmartEmailOtp` and their ema
      "history": [{ "date": "2026-10-08T05:29:09.967Z", "price": 79 }, { "date": "2026-10-07T15:21:18.816Z", "price": 99 }] }
    ```
 
-**Configuration.** Schedule `SmartCommerce-PriceHistory` (imported to run daily at 01:00 UTC).
+**Configuration.** `SmartCommerce-Job` is imported with its hourly schedule on. Its `RecordPriceHistory` step runs only in the hour set by `RunAtHourUTC`, imported as 1 (01:00 UTC).
 
 **What it stores.** One `SmartPriceHistory` custom object per SKU and currency, keyed
 `productID|currency`, holding the change points as JSON.
@@ -168,7 +168,7 @@ ordered again.
 
    ![Back in stock email](docs/images/email-back-in-stock.png)
 
-**Configuration.** `smartAlertExpiryDays`; schedule `SmartCommerce-Hourly`.
+**Configuration.** `smartAlertExpiryDays`; schedule `SmartCommerce-Job`.
 
 **What it stores.** A `SmartProductAlert` keyed `stock|SKU|email`, with the same statuses and
 retention as price alerts.
@@ -407,7 +407,7 @@ deleted after 90 days.
    | --- | --- |
    | `meta/custom-objecttype-definitions.xml` | `SmartPriceHistory`, `SmartProductAlert` (90-day retention), `SmartPriceLock` (90-day retention) |
    | `meta/system-objecttype-extensions.xml` | Site preferences group **Smart Commerce**; Order pickup-code attributes; SFRA pickup attributes `ProductLineItem.fromStoreId`, `Shipment.fromStoreId`, `Shipment.shipmentType`, `Store.inventoryListId`, `ShippingMethod.storePickupEnabled` (same IDs as SFRA's in-store pickup plugin, so base basket validation already uses them) |
-   | `jobs.xml` | `SmartCommerce-PriceHistory` (daily 01:00 UTC), `SmartCommerce-Hourly` |
+   | `jobs.xml` | `SmartCommerce-Job` (hourly, price history at 01:00 UTC) |
 
 6. **Site preferences** (**Merchant Tools → Site Preferences → Custom Preferences → Smart Commerce**):
 

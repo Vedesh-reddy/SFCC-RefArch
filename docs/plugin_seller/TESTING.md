@@ -55,7 +55,7 @@ Run these on a sandbox, in order, and record the results here.
 | S1 | Cartridge path and import | Deploy, import metadata, check BM › Marketplace › Overview | No preference problems listed; menu visible for a role with the modules |
 | S2 | Offer pricing hook order | Add an offer line whose price differs from the price book; open the cart | Line shows the offer price; tax and totals are computed on it; promotions apply to it |
 | S3 | Seller inventory reservation | Seller list with stock 1; place an order; try a second order | First order reserves stock in the seller list (BM inventory record shows the reservation); the second add fails |
-| S4 | IMPEX provisioning | Approve a submission; run `MarketplaceSeller-ProvisionProducts` | Product, category assignment, price and inventory exist; submission is PUBLISHED; the product appears in search after indexing |
+| S4 | IMPEX provisioning | Approve a submission; run `ProvisionPrepare` step of `MarketplaceSeller-Job` | Product, category assignment, price and inventory exist; submission is PUBLISHED; the product appears in search after indexing |
 | S5 | SCAPI Admin provisioning | Strategy SCAPI_ADMIN with an Account Manager client | Same result as S4; no 4xx in the service log |
 | S6 | Images | Check the copy to `CATALOGS/<catalog>/default/marketplace/...` | PDP shows the uploaded image |
 | S7 | Large seller orders | An order with 50+ lines for one seller | Seller order saved (text attribute size) |

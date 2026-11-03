@@ -94,19 +94,19 @@ Sandbox values (`metadata/plugin_luckydraw/sites/RefArch_Practice/preferences.xm
 
 ## Jobs
 
-`metadata/plugin_luckydraw/jobs.xml` imports nine jobs with disabled schedules. The draw time is decided by the campaign windows, not by these schedules. The schedules only decide how soon after a draw time the job runs.
+Every step below runs in the one job `LuckyDraw-Job`, which runs every 5 minutes. A step set to run less often uses its `RunEveryMinutes` setting. A failing step doesn't stop the others, and the last step, `ReportFailures`, then marks the job `ERROR`. The schedule ships off, so enable it after the smoke test. The draw time is decided by the campaign windows, not by these schedules. The schedules only decide how soon after a draw time the job runs.
 
-| Job | Imported interval | MaxItems |
+| Step | Runs every | MaxItems |
 |---|---|---|
-| `LuckyDraw-Status` | 15 minutes | 200 |
-| `LuckyDraw-Entries` | 15 minutes | 1000 |
-| `LuckyDraw-Reconcile` | 1 hour | 1000 |
-| `LuckyDraw-Draw` | 5 minutes | 1000 |
-| `LuckyDraw-Verify` | 1 hour | 200 |
-| `LuckyDraw-Rewards` | 15 minutes | 200 |
-| `LuckyDraw-Notifications` | 5 minutes | 500 |
-| `LuckyDraw-Cleanup` | daily | 1000 |
-| `LuckyDraw-AuditExport` | daily | 5000 |
+| `Status` | 15 minutes | 200 |
+| `Entries` | 15 minutes | 1000 |
+| `Reconcile` | 1 hour | 1000 |
+| `Draw` | 5 minutes | 1000 |
+| `Verify` | 1 hour | 200 |
+| `Rewards` | 15 minutes | 200 |
+| `Notifications` | 5 minutes | 500 |
+| `Cleanup` | daily | 1000 |
+| `AuditExport` | daily | 5000 |
 
 ## Custom log file
 

@@ -40,7 +40,7 @@ The prompt's `AnalyticsEventDedup` type is not needed: replays are stopped by th
 | `analyticsFlowId` | string | `PlaceOrder` append (checkout attempt hash) |
 | `analyticsFlowDay` | string | `PlaceOrder` append |
 | `analyticsSessionToken` | string | `PlaceOrder` append (opaque token) |
-| `analyticsSnapshot` | text | `Analytics-ReconcileOrders` |
+| `analyticsSnapshot` | text | `ReconcileOrders` step of `Analytics-Job` |
 
 ## Attribution policies
 

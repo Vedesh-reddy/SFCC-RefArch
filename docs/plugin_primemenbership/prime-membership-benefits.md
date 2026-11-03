@@ -87,7 +87,7 @@ Each plan lists its own values, so a higher tier's 10% replaces the lower tier's
 1. **Calculation:** adjustments are rebuilt on every basket calculation from the current counters.
 2. **Order created:** savings are reserved, and the caps are checked again. If they no longer fit, or the membership ended, the order fails and no savings are given.
 3. **Order placed:** committed. **Payment or placement failed:** released.
-4. **Order cancelled later:** `MembershipReconciliationJob` reverses the usage by the `reversal` rule. It also settles any reservation left open by a crashed request.
+4. **Order cancelled later:** `Reconciliation` step of `PrimeMembership-Job` reverses the usage by the `reversal` rule. It also settles any reservation left open by a crashed request.
 5. **New benefit period:** counters start over. The usage rows stay as history.
 
 The promotion IDs on the adjustments are `prime-membership-discount`, `prime-membership-deal` and `prime-membership-shipping`. The platform refuses custom adjustments with the ID of a real promotion, so don't create promotions with these IDs.

@@ -36,7 +36,7 @@
 The template hook and route extensions are SFRA-only. A headless storefront (PWA Kit / SCAPI) can:
 
 - post the same beacon format to `Analytics-Collect` from the same host (the same-origin check applies), and
-- rely on `Analytics-ReconcileOrders` for purchases, which works for every order regardless of channel.
+- rely on `ReconcileOrders` step of `Analytics-Job` for purchases, which works for every order regardless of channel.
 
 Cart and checkout steps of headless baskets are not recorded; a Custom SCAPI endpoint or SCAPI hooks (`dw.ocapi.shop.basket.*`) would be needed and were not built — no endpoint was invented. Admin OCAPI/SCAPI credentials are never used in the storefront.
 

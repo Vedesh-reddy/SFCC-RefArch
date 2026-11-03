@@ -19,7 +19,7 @@ SFCC inventory counts pieces. It cannot say that unit LEH-RED-M-01 is out from 1
 
 **Concurrency control is the unique key of `RentalUnitDay`.** A claim creates every blocked day (the rental days plus `RentalBufferDays`) in one transaction. If two shoppers commit the same day at the same moment, the database rejects the second claim and its whole transaction rolls back. The engine then tries the next unit of the same size. The availability check that runs first is only a fast path; correctness never depends on it. This is covered by a unit test that hides the first claim from the second request's availability read.
 
-**Cart holds.** Adding a rental to the bag claims a unit before the line is created, with an expiry of `RentalHoldMinutes`. An expired hold no longer blocks anybody: the next claim deletes it (it is re-read inside its own transaction, so a day another shopper has just claimed is never deleted) and then claims the day through the unique key as usual. `Rentals-ReleaseHolds` cleans up whatever nobody reclaimed. `CheckoutServices-PlaceOrder` renews every hold and stops checkout if a line lost its days. A successful `placeOrder` makes the days permanent.
+**Cart holds.** Adding a rental to the bag claims a unit before the line is created, with an expiry of `RentalHoldMinutes`. An expired hold no longer blocks anybody: the next claim deletes it (it is re-read inside its own transaction, so a day another shopper has just claimed is never deleted) and then claims the day through the unique key as usual. `ReleaseHolds` step of `Rentals-Job` cleans up whatever nobody reclaimed. `CheckoutServices-PlaceOrder` renews every hold and stops checkout if a line lost its days. A successful `placeOrder` makes the days permanent.
 
 ## Setup
 
@@ -75,7 +75,7 @@ SFCC inventory counts pieces. It cannot say that unit LEH-RED-M-01 is out from 1
 5. **Inventory.** Mark rental variants *perpetual* in the inventory list. Availability comes from the calendar, so platform stock must never be what stops a rental.
 6. **Units.** Create one `RentalUnit` per physical piece (*Merchant Tools > Custom Objects*). Set `productID` to the variant ID and `status` to `ACTIVE`.
 7. **Desk permission.** Grant the *Rentals > Rental Desk* module to the roles that run the desk.
-8. **Jobs.** Schedule `Rentals-ReleaseHolds` every 15 minutes and `Rentals-LateFees` daily.
+8. **Jobs.** Schedule `Rentals-Job` every 15 minutes.
 
 ## Storefront
 
@@ -169,7 +169,7 @@ The refund due is the deposit minus the damage deduction and the late fee. Staff
 
 ### Late returns
 
-`Rentals-LateFees` updates the running late fee of every overdue rental. It also extends the unit's block until the piece can be back and cleaned. If the next customer has already booked those days, that booking is flagged *at risk*, so the desk can swap in another unit in time.
+`LateFees` step of `Rentals-Job` updates the running late fee of every overdue rental. It also extends the unit's block until the piece can be back and cleaned. If the next customer has already booked those days, that booking is flagged *at risk*, so the desk can swap in another unit in time.
 
 ## Limits
 

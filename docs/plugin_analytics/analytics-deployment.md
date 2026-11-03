@@ -39,7 +39,7 @@ npx @salesforce/b2c-cli job import ./metadata/plugin_analytics
 ## 5. Verify
 
 1. Browse a category page, open a product, add to cart, check out.
-2. Run `Analytics-AggregateEvents` and `Analytics-ReconcileOrders`.
+2. Run `Analytics-Job`.
 3. Open **Merchant Tools › Storefront Analytics › Overview** for Today and **Health**.
 
 ## Sandbox validation checklist

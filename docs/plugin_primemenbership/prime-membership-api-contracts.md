@@ -93,7 +93,7 @@ Keep it read-only. A write through OCAPI bypasses the state machine and the audi
 | `dw.ocapi.shop.basket.items.beforePOST` | Refuses a product the shopper may not buy |
 | `dw.ocapi.shop.order.afterPOST` | Reserves the order's savings; refuses the order when they're no longer allowed |
 
-A headless storefront must also commit or release reservations, which it leaves to `MembershipReconciliationJob`.
+A headless storefront must also commit or release reservations, which it leaves to `Reconciliation` step of `PrimeMembership-Job`.
 
 ## Integration adapters
 
