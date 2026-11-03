@@ -1,0 +1,16 @@
+<div class="custom-wishlist-button">
+    <isif condition="${pdict.loggedIn}">
+        <form class="wishlist-add-form" action="${URLUtils.https('CustomWishlist-Add')}" method="post">
+            <input type="hidden" name="pid" value="${pdict.pid}" />
+            <input type="hidden" name="${pdict.csrf.tokenName}" value="${pdict.csrf.token}" />
+            <button type="submit" class="gallery-action d-flex align-items-center justify-content-center" aria-label="${Resource.msg('button.add', 'customwishlist', null)}">
+                <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-heart"></use></svg>
+            </button>
+        </form>
+        <script defer src="${URLUtils.staticURL('/js/customWishlist.js')}"></script>
+    <iselse/>
+        <a class="gallery-action d-flex align-items-center justify-content-center" href="${URLUtils.https('Login-Show')}" aria-label="${Resource.msg('button.signin', 'customwishlist', null)}">
+            <svg class="store-icon" aria-hidden="true"><use href="${'#'}icon-heart"></use></svg>
+        </a>
+    </isif>
+</div>

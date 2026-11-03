@@ -1,0 +1,4 @@
+<!-- Availability -->
+<div class="row availability product-availability" data-ready-to-order="${product.readyToOrder}" data-available="${product.available}" data-label-in-stock="${Resource.msg('label.instock', 'common', null)}">
+    <isinclude template="product/components/availability" />
+</div>
