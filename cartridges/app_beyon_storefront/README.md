@@ -10,6 +10,10 @@ UI overlay that applies the Beyon designs to the `Vedesh_Beyon` site. It holds m
 
 Images are in `static/`, which is git-ignored because it normally holds build output. Add them with `git add -f cartridges/app_beyon_storefront/cartridge/static/default/images/beyon`.
 
+## Fonts
+
+From the Beyon Revamp design set: Geom is bundled in `static/default/fonts`, and Oooh Baby and Didact Gothic load from Google Fonts. `static/` is git-ignored, so add font files with `git add -f`.
+
 ## Conventions
 
 - SCSS is mobile-first and uses `min-width` queries only.
@@ -23,6 +27,7 @@ Images are in `static/`, which is git-ignored because it normally holds build ou
 | Category and mega menu links | Open the full product list, because the catalog has no jewellery categories yet |
 | Wishlist badge | Fixed at 2 |
 | Beyon Facts, Gifting, NeuPass | No destination yet |
+| Find Store | Opens the Beyon store locator in a new tab, as the design and story 28 specify |
 
 ## PLP placeholders
 
@@ -75,10 +80,6 @@ Nothing here reaches the server yet, so **no shopper can sign in on this site un
 | Terms and Privacy Notice links | No destination yet |
 
 The background is a blurred static capture of the PDP design. The design uses a live iframe of that page.
-
-Fonts: Geom loads from Google Fonts. Devina Garden by Limitype is bundled in `static/default/fonts/devina-garden-regular.otf`, downloaded from [1001 Fonts](https://www.1001fonts.com/devina-garden-font.html), which lists it as free for commercial use. Read [Limitype's EULA](https://www.limitype.com/p/eula-146e3833-1df3-44db-98c1-097d4e799e5f) before production, including whether it allows web embedding. It couldn't be read when the font was added.
-
-`static/` is git-ignored, so add the font with `git add -f cartridges/app_beyon_storefront/cartridge/static/default/fonts`.
 
 ## Cart
 

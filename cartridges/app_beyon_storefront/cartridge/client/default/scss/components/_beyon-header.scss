@@ -35,7 +35,7 @@
 .header-main,
 .mobile-menu,
 .mobile-subpage {
-    font-family: Outfit, sans-serif;
+    font-family: Geom, sans-serif;
     -webkit-font-smoothing: antialiased;
 
     a,
@@ -68,10 +68,11 @@
     max-width: 1280px;
     height: 54px;
     margin: 0 auto;
-    padding: 10px 12px;
-    gap: 16px;
+    padding: 8px 10px;
+    gap: 8px;
 
     @media (min-width: $beyon-md) {
+        gap: 16px;
         padding: 0 24px;
     }
 
@@ -96,9 +97,9 @@
     width: auto;
     min-width: 0;
     height: auto;
-    margin: 0 8px;
-    background: rgba(246, 246, 246, 45%);
-    border: 1.5px solid transparent;
+    margin: 0 6px;
+    background: rgba(240, 240, 240, 75%);
+    border: 1.5px solid rgba(44, 44, 44, 10%);
     border-radius: 12px;
     transition: all 0.3s;
 
@@ -121,16 +122,17 @@
     .search-field {
         flex: 1;
         min-width: 0;
-        padding: 8px 10px 8px 34px;
+        height: auto;
+        padding: 6px 8px 6px 30px;
         color: $beyon-dark;
-        font-size: 12px;
+        font-size: 11px;
         line-height: 1.5;
         background: transparent;
         border: none;
         outline: none;
 
         @media (min-width: $beyon-md) {
-            padding: 10px 14px 10px 40px;
+            padding: 8px 14px 8px 40px;
             font-size: 13px;
         }
 
@@ -166,12 +168,13 @@
 
 .search-placeholder {
     position: absolute;
-    left: 34px;
+    left: 30px;
     right: 8px;
     top: 50%;
     overflow: hidden;
+    text-overflow: ellipsis;
     transform: translateY(-50%);
-    font-size: 12px;
+    font-size: 11px;
     color: $beyon-warm-grey;
     white-space: nowrap;
     pointer-events: none;
@@ -224,20 +227,21 @@
     gap: 5px;
     padding: 7px 16px;
     overflow: hidden;
+    font-family: "Didact Gothic", sans-serif;
     font-size: 11px;
     font-weight: 600;
     letter-spacing: 0.5px;
     border-radius: 8px;
     transition: all 0.3s;
-
-    &,
-    &:hover {
-        color: #fff;
-    }
 }
 
 .cta-facts {
-    background: linear-gradient(135deg, $beyon-dark, #444);
+    border: 1.3px solid rgba(44, 44, 44, 18%);
+
+    &,
+    &:hover {
+        color: $beyon-dark;
+    }
 
     &::before {
         content: "";
@@ -246,13 +250,13 @@
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 15%), transparent);
+        background: linear-gradient(90deg, transparent, rgba(44, 44, 44, 6%), transparent);
         transition: left 0.5s;
     }
 
     &:hover {
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(44, 44, 44, 20%);
+        background: rgba(44, 44, 44, 3%);
+        border-color: rgba(44, 44, 44, 35%);
 
         &::before {
             left: 100%;
@@ -261,10 +265,42 @@
 }
 
 .cta-gift {
+    border: 1.3px solid rgba(191, 14, 35, 30%);
+
+    &,
+    &:hover {
+        color: $beyon-primary;
+    }
+
+    &::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(90deg, transparent, rgba(191, 14, 35, 6%), transparent);
+        transform: translateX(-100%);
+        transition: transform 0.5s;
+    }
+
+    &:hover {
+        background: rgba(191, 14, 35, 3%);
+        border-color: rgba(191, 14, 35, 50%);
+
+        &::before {
+            transform: translateX(100%);
+        }
+    }
+}
+
+.cta-store {
     background: linear-gradient(135deg, $beyon-primary 0%, $beyon-primary-light 50%, $beyon-primary 100%);
     background-size: 200% 200%;
     box-shadow: 0 2px 12px rgba(191, 14, 35, 20%);
     animation: gift-grad 3s ease infinite;
+
+    &,
+    &:hover {
+        color: #fff;
+    }
 
     &::before {
         content: "";
@@ -297,7 +333,7 @@
 }
 
 .header-icons {
-    gap: 12px;
+    gap: 8px;
 
     @media (min-width: $beyon-md) {
         gap: 20px;
@@ -312,6 +348,7 @@
     align-items: center;
     gap: 2px;
     color: $beyon-dark;
+    font-family: "Didact Gothic", sans-serif;
     font-size: 9px;
     font-weight: 500;
     letter-spacing: 0.4px;
@@ -370,12 +407,12 @@
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    gap: 5px;
-    width: 38px;
-    height: 38px;
+    gap: 4px;
+    width: 28px;
+    height: 28px;
     background: none;
     border: none;
-    border-radius: 10px;
+    border-radius: 8px;
     cursor: pointer;
     transition: background 0.2s;
 
@@ -385,34 +422,18 @@
 
     .line {
         display: block;
-        height: 2px;
+        width: 16px;
+        height: 1.6px;
         background: $beyon-dark;
         border-radius: 2px;
         transition: all 0.35s cubic-bezier(0.77, 0.2, 0.05, 1);
-
-        &:nth-child(1) {
-            width: 20px;
-        }
-
-        &:nth-child(2) {
-            align-self: flex-start;
-            width: 16px;
-            margin-left: 9px;
-        }
-
-        &:nth-child(3) {
-            align-self: flex-start;
-            width: 12px;
-            margin-left: 9px;
-        }
     }
 
     &.active .line {
         background: $beyon-primary;
 
         &:nth-child(1) {
-            width: 20px;
-            transform: translateY(7px) rotate(45deg);
+            transform: translateY(5.6px) rotate(45deg);
         }
 
         &:nth-child(2) {
@@ -421,9 +442,7 @@
         }
 
         &:nth-child(3) {
-            width: 20px;
-            margin-left: 9px;
-            transform: translateY(-7px) rotate(-45deg);
+            transform: translateY(-5.6px) rotate(-45deg);
         }
     }
 }
