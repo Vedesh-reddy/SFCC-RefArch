@@ -2,10 +2,6 @@
 $bag-border: #e5ddd3;
 $bag-input-border: #e0d8ce;
 
-html body {
-    background: #efeae3;
-}
-
 ::-webkit-scrollbar {
     width: 5px;
 }
@@ -119,6 +115,7 @@ html body {
 .beyon-cart,
 .beyon-checkout {
     color: $beyon-dark;
+    background: #efeae3;
     font-family: Outfit, sans-serif;
     line-height: 1.5;
     -webkit-font-smoothing: antialiased;

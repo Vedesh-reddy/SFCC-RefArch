@@ -1,5 +1,5 @@
 /* stylelint-disable no-descending-specificity */
-body {
+body:has(.beyon-cart) {
     padding-bottom: 80px;
 
     @media (min-width: $beyon-lg) {
@@ -636,7 +636,8 @@ body {
     }
 }
 
-.beyon-cart .summary-cta {
+.beyon-cart .summary-cta,
+.beyon-checkout .summary-cta {
     display: none;
     gap: 8px;
     margin-top: 24px;
@@ -690,7 +691,8 @@ body {
     }
 }
 
-.beyon-cart .sticky-btn {
+.beyon-cart .sticky-btn,
+.beyon-checkout .sticky-btn {
     flex: 1;
     gap: 8px;
     padding: 14px 6px;
