@@ -76,6 +76,22 @@ The background is a blurred static capture of the PDP design. The design uses a 
 
 The design loads `../fonts/geom.css` and the Devina Garden font, which weren't supplied. This page keeps the design's font stack, so it matches how the HTML renders today and picks up the real fonts once they're added.
 
+## Cart
+
+Cart and checkout use `common/layout/beyon-bare`, the base page layout without the site header, because the designs have their own header. The SFRA footer stays.
+
+Real data: items, images, line prices, quantity, size, subtotal and Remove (base `Cart-RemoveProductLineItem`).
+
+| Item | Current behaviour |
+|---|---|
+| Grand Total | Shows the subtotal minus the placeholder coupon. Real shipping and tax aren't included yet, to match the design's FREE and Included rows |
+| Coupons | The design's three sample codes change the numbers shown here and are remembered for checkout. The basket itself isn't changed |
+| Move to Wishlist | Removes the line from the basket and shows the message. Nothing is saved to a wishlist yet |
+| Pincode check | The design's sample list, then a random result |
+| Weight and metal badge | Fixed sample values |
+
+Coupon amounts are the design's rupee values applied to the site's USD prices, so GOLD500 can take a low total to 0.
+
 ## Deliberate differences from the design
 
 - At 390px the design pushes the cart icon off screen because search can't shrink. Search shrinks here so the cart stays visible.

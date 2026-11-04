@@ -1,0 +1,901 @@
+/* stylelint-disable no-descending-specificity */
+body {
+    padding-bottom: 80px;
+
+    @media (min-width: $beyon-lg) {
+        padding-bottom: 0;
+    }
+}
+
+.confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.confetti-piece {
+    position: absolute;
+    top: -10px;
+    border-radius: 2px;
+    animation: confetti-fall ease-out forwards;
+}
+
+@keyframes confetti-fall {
+    0% {
+        opacity: 1;
+        transform: translateY(-10px) rotate(0deg);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(20px) rotate(360deg);
+    }
+}
+
+.cart-main {
+    max-width: 1152px;
+    margin: 0 auto;
+    padding: 24px 16px;
+
+    @media (min-width: $beyon-sm) {
+        padding: 24px;
+    }
+
+    @media (min-width: $beyon-lg) {
+        padding: 40px 32px;
+    }
+}
+
+.cart-layout {
+    @media (min-width: $beyon-lg) {
+        display: flex;
+        gap: 32px;
+        align-items: flex-start;
+    }
+}
+
+.cart-left {
+    > * + * {
+        margin-top: 16px;
+    }
+
+    @media (min-width: $beyon-lg) {
+        flex: 0 0 calc((100% - 128px) / 5 * 3 + 64px);
+        min-width: 0;
+    }
+}
+
+.cart-right {
+    margin-top: 20px;
+
+    @media (min-width: $beyon-lg) {
+        position: sticky;
+        top: 80px;
+        flex: 1 1 0;
+        min-width: 0;
+        margin-top: 0;
+    }
+}
+
+.cart-right-sticky > * + * {
+    margin-top: 16px;
+}
+
+.pincode-section {
+    padding: 16px;
+
+    @media (min-width: $beyon-sm) {
+        padding: 20px;
+    }
+}
+
+.pincode-head {
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.pincode-icon {
+    width: 40px;
+    height: 40px;
+    background: #fef2f2;
+    border-radius: 16px;
+}
+
+.pincode-row {
+    gap: 8px;
+}
+
+.country-select {
+    width: 80px;
+    height: 42px;
+    padding-right: 28px;
+    font-size: 10px;
+    line-height: 16px;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' fill='none' stroke='%23B0ABAB' stroke-width='2' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1l5 5 5-5'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    cursor: pointer;
+    appearance: none;
+
+    @media (min-width: $beyon-sm) {
+        width: 224px;
+        line-height: 20px;
+    }
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
+
+.pincode-field {
+    flex: 1;
+    min-width: 0;
+    height: 42px;
+}
+
+.beyon-cart .pincode-check {
+    height: 42px;
+    padding: 0 16px;
+    font-size: 10px;
+    line-height: 16px;
+    letter-spacing: 0.05em;
+
+    @media (min-width: $beyon-sm) {
+        padding: 0 20px;
+    }
+
+    @media (min-width: $beyon-md) {
+        font-size: 12px;
+    }
+}
+
+.cart-items > * + * {
+    margin-top: 16px;
+}
+
+.cart-item {
+    overflow: hidden;
+    transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.removing {
+        max-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        opacity: 0;
+        transform: translateX(60px) scale(0.95);
+    }
+}
+
+.cart-item-inner {
+    gap: 16px;
+    padding: 16px;
+
+    @media (min-width: $beyon-sm) {
+        gap: 20px;
+        padding: 20px;
+    }
+}
+
+.product-img {
+    position: relative;
+    width: 112px;
+    height: 112px;
+    overflow: hidden;
+    background: #f5f0eb;
+    border-radius: 18px;
+
+    @media (min-width: $beyon-sm) {
+        width: 128px;
+        height: 128px;
+    }
+
+    &.is-out {
+        opacity: 0.5;
+    }
+
+    img {
+        object-fit: cover;
+        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    &:hover img {
+        transform: scale(1.08);
+    }
+}
+
+.cart-item-body {
+    min-width: 0;
+}
+
+.cart-item-top {
+    gap: 8px;
+}
+
+.item-name {
+    color: $beyon-dark;
+    font-family: Outfit, sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.375;
+
+    @media (min-width: $beyon-md) {
+        font-size: 16px;
+    }
+}
+
+.beyon-cart .item-remove {
+    margin-top: -4px;
+    margin-right: -4px;
+    padding: 6px;
+    line-height: 0;
+    background: none;
+    border: 0;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        background: #fef2f2;
+        transform: rotate(90deg);
+    }
+}
+
+.item-price {
+    margin-top: 4px !important;
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 28px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 20px;
+    }
+}
+
+.item-out {
+    color: $beyon-primary;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
+
+.item-meta {
+    gap: 4px 12px;
+    margin-top: 8px;
+}
+
+.item-qty {
+    padding: 2px 10px;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+    background: $beyon-soft-grey;
+    border-radius: 6px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 12px;
+    }
+}
+
+.item-spec {
+    color: $beyon-warm-grey;
+    font-size: 10px;
+    line-height: 16px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 12px;
+    }
+}
+
+.item-actions {
+    margin-top: 8px;
+}
+
+.metal-badge {
+    position: relative;
+    display: inline-flex;
+    gap: 4px;
+    align-items: center;
+    padding: 3px 10px;
+    overflow: hidden;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-radius: 8px;
+
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 60%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 40%), transparent);
+        animation: shimmer 3s infinite;
+    }
+}
+
+.metal-rose {
+    color: #8b4049;
+    background: linear-gradient(135deg, #e8b4b8, #f5d0d3, #dda0a6);
+    border: 1px solid rgba(232, 180, 184, 50%);
+}
+
+.metal-white {
+    color: #555;
+    background: linear-gradient(135deg, #e8e8e8, #f8f8f8, #d8d8d8);
+    border: 1px solid rgba(200, 200, 200, 50%);
+}
+
+.metal-yellow {
+    color: #6b4e0a;
+    background: linear-gradient(135deg, #d4a84b, #f0d080, #c9952c);
+    border: 1px solid rgba(212, 168, 75, 50%);
+}
+
+.beyon-cart .item-wishlist {
+    gap: 4px;
+    color: $beyon-gold;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: 16px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+    transition: color 0.15s;
+
+    @media (min-width: $beyon-md) {
+        font-size: 12px;
+    }
+
+    svg {
+        transition: transform 0.15s;
+    }
+
+    &:hover {
+        color: $beyon-primary;
+
+        svg {
+            transform: scale(1.25);
+        }
+    }
+}
+
+.delivery-ok {
+    margin-top: 12px;
+    padding: 10px;
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border: 1px solid rgba(46, 125, 50, 15%);
+    border-radius: 12px;
+}
+
+.delivery-ok-row {
+    gap: 8px;
+}
+
+.delivery-ok-icon {
+    width: 28px;
+    height: 28px;
+    background: #16a34a;
+    border-radius: 8px;
+}
+
+.delivery-ok-body {
+    min-width: 0;
+}
+
+.delivery-ok-title {
+    color: #166534;
+    font-size: 9px;
+    font-weight: 700;
+
+    @media (min-width: $beyon-md) {
+        font-size: 11px;
+    }
+}
+
+.delivery-ok-sub {
+    margin-top: 2px !important;
+    color: #16a34a;
+    font-size: 8px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 9px;
+    }
+}
+
+.delivery-bad {
+    margin-top: 12px;
+    padding: 10px 12px;
+    background: #fef2f2;
+    border: 1px solid rgba(191, 14, 35, 15%);
+    border-radius: 12px;
+
+    p {
+        color: $beyon-primary;
+        font-size: 9px;
+        font-weight: 600;
+
+        @media (min-width: $beyon-md) {
+            font-size: 11px;
+        }
+    }
+}
+
+.delivery-bad-row {
+    gap: 8px;
+}
+
+.empty-state {
+    padding: 80px 0;
+}
+
+.empty-icon {
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 20px;
+    background: #efeae3;
+    border-radius: 50%;
+}
+
+.empty-title {
+    margin-bottom: 8px !important;
+    font-family: Outfit, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 28px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 20px;
+    }
+}
+
+.empty-sub {
+    max-width: 320px;
+    margin: 0 auto 32px !important;
+    color: $beyon-warm-grey;
+    font-size: 11px;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
+
+.empty-cta {
+    padding: 14px 40px;
+    font-size: 11px;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
+
+.coupon-card {
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid $bag-border;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(197, 165, 117, 6%);
+    opacity: 0;
+    transition: all 0.3s;
+    animation: fade-up 0.5s ease forwards;
+    animation-delay: 100ms;
+
+    &:hover {
+        box-shadow: 0 8px 32px rgba(197, 165, 117, 12%);
+        transform: translateY(-1px);
+    }
+}
+
+.coupon-section {
+    padding: 16px;
+    cursor: pointer;
+
+    @media (min-width: $beyon-sm) {
+        padding: 20px;
+    }
+}
+
+.coupon-head {
+    gap: 12px;
+}
+
+.coupon-icon {
+    width: 40px;
+    height: 40px;
+    background: rgba(191, 14, 35, 5%);
+    border-radius: 12px;
+}
+
+.coupon-status {
+    margin-top: 2px !important;
+
+    .coupon-code-applied {
+        color: #16a34a;
+        font-weight: 500;
+    }
+}
+
+.beyon-cart .coupon-remove {
+    color: $beyon-primary;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 16px;
+    background: none;
+    border: 0;
+    cursor: pointer;
+
+    @media (min-width: $beyon-md) {
+        font-size: 12px;
+    }
+
+    &:hover {
+        text-decoration: underline;
+    }
+}
+
+.order-summary {
+    padding: 20px;
+    animation-delay: 200ms;
+
+    @media (min-width: $beyon-sm) {
+        padding: 24px;
+    }
+}
+
+.summary-title {
+    gap: 8px;
+    margin-bottom: 20px !important;
+    color: $beyon-dark;
+    font-family: Outfit, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 24px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 16px;
+    }
+}
+
+.summary-rows {
+    font-size: 11px;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+
+    > * + * {
+        margin-top: 12px;
+    }
+}
+
+.summary-label {
+    color: $beyon-warm-grey;
+}
+
+.summary-value {
+    font-weight: 500;
+}
+
+.summary-discount {
+    gap: 4px;
+    color: #16a34a;
+}
+
+.summary-discount-value {
+    color: #16a34a;
+    font-weight: 600;
+}
+
+.summary-free {
+    color: #16a34a;
+    font-weight: 500;
+}
+
+.summary-included {
+    color: $beyon-warm-grey;
+    font-weight: 500;
+}
+
+.summary-total {
+    margin-top: 12px;
+    padding-top: 16px;
+    border-top: 1px dashed #e5e7eb;
+}
+
+.summary-total-label {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 24px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 16px;
+    }
+}
+
+.summary-total-value {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 28px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 18px;
+    }
+}
+
+.beyon-cart .summary-cta {
+    display: none;
+    gap: 8px;
+    margin-top: 24px;
+    padding: 16px 6px;
+    font-size: 14px;
+    line-height: 20px;
+
+    @media (min-width: $beyon-lg) {
+        display: flex;
+    }
+}
+
+.sticky-cta {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 30;
+    background: rgba(250, 247, 242, 95%);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 -6px 32px rgba(197, 165, 117, 12%);
+
+    @media (min-width: $beyon-lg) {
+        display: none;
+    }
+}
+
+.sticky-cta-inner {
+    gap: 16px;
+    padding: 12px 16px;
+}
+
+.sticky-total-label {
+    color: $beyon-warm-grey;
+    font-size: 9px;
+    letter-spacing: 0.025em;
+    text-transform: uppercase;
+
+    @media (min-width: $beyon-md) {
+        font-size: 11px;
+    }
+}
+
+.sticky-total {
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 28px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 18px;
+    }
+}
+
+.beyon-cart .sticky-btn {
+    flex: 1;
+    gap: 8px;
+    padding: 14px 6px;
+    font-size: 11px;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
+
+.coupon-entry {
+    gap: 8px;
+    margin-bottom: 24px;
+}
+
+.coupon-field {
+    flex: 1;
+    min-width: 0;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.beyon-cart .coupon-apply {
+    padding: 12px 24px;
+    font-size: 11px;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
+
+.coupon-message {
+    margin-bottom: 20px;
+}
+
+.coupon-message-inner {
+    gap: 8px;
+    padding: 12px;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 20px;
+    border-radius: 12px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+
+    &.is-ok {
+        color: #15803d;
+        background: #f0fdf4;
+    }
+
+    &.is-error {
+        color: $beyon-primary;
+        background: #fef2f2;
+    }
+}
+
+.coupon-list-title {
+    gap: 4px;
+    margin-bottom: 12px !important;
+    color: $beyon-warm-grey;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+
+    @media (min-width: $beyon-md) {
+        font-size: 11px;
+    }
+}
+
+.coupon-list > * + * {
+    margin-top: 12px;
+}
+
+.coupon-available {
+    padding: 16px;
+    background: #fff;
+    border: 1px solid $bag-border;
+    border-radius: 16px;
+    transition: all 0.25s ease;
+
+    &:hover {
+        border-color: #d5cabc;
+        box-shadow: 0 4px 16px rgba(197, 165, 117, 10%);
+    }
+
+    &.is-applied {
+        background: #f6fff6;
+        border-color: #a5d6a7;
+    }
+}
+
+.coupon-copy {
+    gap: 4px;
+    align-items: flex-start;
+}
+
+.coupon-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 12px;
+    color: $beyon-dark;
+    font-family: Outfit, monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    background: #f8f5f0;
+    border-radius: 8px;
+}
+
+.coupon-desc {
+    margin-top: 4px !important;
+    font-size: 10px;
+    line-height: 16px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 12px;
+    }
+}
+
+.coupon-note {
+    color: $beyon-warm-grey;
+    font-size: 9px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 11px;
+    }
+}
+
+.beyon-cart .coupon-apply-btn {
+    padding: 8px 16px;
+    color: $beyon-primary;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 16px;
+    background: rgba(191, 14, 35, 5%);
+    border: 0;
+    border-radius: 12px;
+    transition: background-color 0.15s;
+
+    @media (min-width: $beyon-md) {
+        font-size: 12px;
+    }
+
+    &:hover {
+        background: rgba(191, 14, 35, 10%);
+    }
+
+    &.is-applied {
+        color: #16a34a;
+        background: #f0fdf4;
+    }
+}
+
+.drawer-inner-remove {
+    padding: 24px;
+}
+
+.remove-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto 16px;
+    background: #fef2f2;
+    border-radius: 50%;
+}
+
+.remove-title {
+    margin-bottom: 4px !important;
+    font-family: Outfit, sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 28px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 18px;
+    }
+}
+
+.remove-sub {
+    margin-bottom: 24px !important;
+    color: $beyon-warm-grey;
+    font-size: 11px;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
+
+.remove-actions {
+    gap: 12px;
+}
+
+.beyon-cart .remove-btn {
+    flex: 1;
+    padding: 14px 0;
+    font-size: 11px;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
