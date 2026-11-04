@@ -40,7 +40,7 @@
                 <div class="cart-left checkout-left">
                     <div class="beyon-card checkout-card anim d-none" id="no-address-card">
                         <div class="d-flex align-items-center justify-content-between card-head">
-                            <h2 class="section-title section-title-flush d-flex align-items-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${Resource.msg('co.deliverto', 'beyon', null)}</h2>
+                            <h2 class="section-title section-title-flush d-flex align-items-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg>${Resource.msg('co.deliverto', 'beyon', null)}</h2>
                         </div>
                         <div class="no-address d-flex flex-column align-items-center text-center">
                             <div class="no-address-icon d-flex align-items-center justify-content-center"><svg aria-hidden="true" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#B0ABAB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg></div>
@@ -52,7 +52,7 @@
 
                     <div class="beyon-card checkout-card anim js-needs-address">
                         <div class="d-flex align-items-center justify-content-between card-head">
-                            <h2 class="section-title section-title-flush d-flex align-items-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${Resource.msg('co.deliverto', 'beyon', null)}</h2>
+                            <h2 class="section-title section-title-flush d-flex align-items-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg>${Resource.msg('co.deliverto', 'beyon', null)}</h2>
                             <button type="button" class="add-new d-flex align-items-center p-0 js-add-address"><svg aria-hidden="true" width="14" height="14" fill="none" stroke="#BF0E23" stroke-width="2.5" stroke-linecap="round"><line x1="7" y1="2" x2="7" y2="12"/><line x1="2" y1="7" x2="12" y2="7"/></svg>${Resource.msg('co.addnew', 'beyon', null)}</button>
                         </div>
                         <div id="selected-address"></div>
@@ -60,7 +60,7 @@
                     </div>
 
                     <div class="beyon-card checkout-card anim anim-delay-50 js-needs-address" id="pan-section">
-                        <h2 class="section-title d-flex align-items-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h4v4H6z"/><path d="M14 8h4"/><path d="M14 12h4"/><path d="M6 16h12"/></svg>${Resource.msg('co.pan.title', 'beyon', null)}</h2>
+                        <h2 class="section-title d-flex align-items-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h4v4H6z"/><path d="M14 8h4"/><path d="M14 12h4"/><path d="M6 16h12"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg>${Resource.msg('co.pan.title', 'beyon', null)}</h2>
                         <p class="pan-intro">${Resource.msg('co.pan.intro', 'beyon', null)}</p>
                         <div id="pan-form-area">
                             <div class="pan-fields">
@@ -151,7 +151,7 @@
                     </div>
 
                     <div class="beyon-card checkout-card anim anim-delay-200 js-needs-address">
-                        <h2 class="section-title d-flex align-items-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="3"/><path d="M1 10h22"/><path d="M6 15h4"/></svg>${Resource.msg('co.pay.title', 'beyon', null)}</h2>
+                        <h2 class="section-title d-flex align-items-center"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="3"/><path d="M1 10h22"/><path d="M6 15h4"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg>${Resource.msg('co.pay.title', 'beyon', null)}</h2>
                         <p class="pay-group-title pay-group-title-spaced">${Resource.msg('co.pay.cards', 'beyon', null)}</p>
                         <div class="pay-card-wrap">
                             <button type="button" class="pay-option selected d-flex align-items-center w-100 text-start js-pay" data-method="card">
@@ -164,7 +164,7 @@
                         </div>
                         <div class="d-flex align-items-center justify-content-between upi-head">
                             <p class="pay-group-title">${Resource.msg('co.pay.upi', 'beyon', null)}</p>
-                            <p class="upi-note d-flex align-items-center"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2.5" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/></svg>${Resource.msg('co.pay.upinote', 'beyon', null)}</p>
+                            <p class="upi-note d-flex align-items-center"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg>${Resource.msg('co.pay.upinote', 'beyon', null)}</p>
                         </div>
                         <div class="d-flex upi-row" id="upi-row">
                                 <button type="button" class="upi-item js-pay" data-method="phonepe"><span class="upi-icon d-flex align-items-center justify-content-center upi-phonepe">Pe</span><span class="upi-name">PhonePe</span></button>
@@ -187,7 +187,7 @@
                 <div class="cart-right">
                     <div class="cart-right-sticky">
                         <div class="beyon-card checkout-card">
-                            <h2 class="section-title d-flex align-items-center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/></svg>${Resource.msg('co.items.title', 'beyon', null)}</h2>
+                            <h2 class="section-title d-flex align-items-center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 01-8 0"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg>${Resource.msg('co.items.title', 'beyon', null)}</h2>
                             <div class="checkout-items" id="checkout-items">
                                 <isloop items="${pdict.order.items.items}" var="orderItem">
                                     <div class="d-flex align-items-center checkout-item">
@@ -200,7 +200,7 @@
                         </div>
 
                         <div class="beyon-card checkout-card">
-                            <h2 class="section-title d-flex align-items-center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h14a2 2 0 012 2v16l-3.5-2-3.5 2-3.5-2L8 20l-3.5-2L1 22V4a2 2 0 012-2z"/><path d="M8 8h8"/><path d="M8 12h6"/></svg>${Resource.msg('co.price.title', 'beyon', null)}</h2>
+                            <h2 class="section-title d-flex align-items-center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h14a2 2 0 012 2v16l-3.5-2-3.5 2-3.5-2L8 20l-3.5-2L1 22V4a2 2 0 012-2z"/><path d="M8 8h8"/><path d="M8 12h6"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg>${Resource.msg('co.price.title', 'beyon', null)}</h2>
                             <div class="summary-rows">
                                 <div class="d-flex justify-content-between"><span class="summary-label">${Resource.msg('cart.summary.subtotal', 'beyon', null)}</span><span class="summary-value" id="ck-subtotal"></span></div>
                                 <div class="justify-content-between d-none" id="ck-coupon-row"><span class="summary-free-text">${Resource.msg('cart.summary.discount', 'beyon', null)}</span><span class="summary-discount-value" id="ck-coupon-disc"></span></div>
@@ -258,7 +258,7 @@
             <div class="drawer-inner">
                 <div class="drawer-handle"></div>
                 <div class="d-flex align-items-center justify-content-between drawer-head drawer-head-tight">
-                    <h3 class="drawer-title d-flex align-items-center" id="all-addr-title"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>${Resource.msg('co.select.title', 'beyon', null)}</h3>
+                    <h3 class="drawer-title d-flex align-items-center" id="all-addr-title"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg>${Resource.msg('co.select.title', 'beyon', null)}</h3>
                     <button type="button" class="drawer-close js-drawer-close" data-drawer="all-addr" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/></svg></button>
                 </div>
                 <div class="all-address-list" id="all-address-list"></div>
@@ -316,7 +316,7 @@
                 <div class="drawer-handle"></div>
                 <div class="d-flex align-items-start justify-content-between popup-head-wrap-lg">
                     <div class="d-flex align-items-center popup-head">
-                        <div class="popup-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
+                        <div class="popup-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg></div>
                         <h3 class="popup-title " id="popup-1-title">${Resource.msg('co.popup.1.title', 'beyon', null)}</h3>
                     </div>
                     <button type="button" class="drawer-close popup-close flex-shrink-0 js-popup-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/></svg></button>
@@ -338,7 +338,7 @@
                 <div class="drawer-handle"></div>
                 <div class="d-flex align-items-start justify-content-between popup-head-wrap">
                     <div class="d-flex align-items-center popup-head">
-                        <div class="popup-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+                        <div class="popup-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg></div>
                         <h3 class="popup-title " id="popup-2-title">${Resource.msg('co.popup.2.title', 'beyon', null)}</h3>
                     </div>
                     <button type="button" class="drawer-close popup-close flex-shrink-0 js-popup-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/></svg></button>
@@ -365,7 +365,7 @@
                 <div class="drawer-handle"></div>
                 <div class="d-flex align-items-start justify-content-between popup-head-wrap">
                     <div class="d-flex align-items-center popup-head">
-                        <div class="popup-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
+                        <div class="popup-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg></div>
                         <h3 class="popup-title popup-title-snug" id="popup-3-title">${Resource.msg('co.popup.3.title', 'beyon', null)}</h3>
                     </div>
                     <button type="button" class="drawer-close popup-close flex-shrink-0 js-popup-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/></svg></button>
@@ -394,7 +394,7 @@
                 <div class="drawer-handle"></div>
                 <div class="d-flex align-items-start justify-content-between popup-head-wrap">
                     <div class="d-flex align-items-center popup-head">
-                        <div class="popup-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+                        <div class="popup-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/><path d="M20 1.8L20.66 3.34L22.2 4L20.66 4.66L20 6.2L19.34 4.66L17.8 4L19.34 3.34Z" fill="#BF0E23" stroke="none"/></svg></div>
                         <h3 class="popup-title popup-title-snug" id="popup-4-title">${Resource.msg('co.popup.4.title', 'beyon', null)}</h3>
                     </div>
                     <button type="button" class="drawer-close popup-close flex-shrink-0 js-popup-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/></svg></button>

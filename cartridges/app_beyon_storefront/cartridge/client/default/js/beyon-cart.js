@@ -1,5 +1,7 @@
 'use strict';
 
+var promoBanner = require('./components/beyon-promo-banner');
+
 var root = document.getElementById('beyon-cart');
 var STORAGE_KEY = 'beyon-cart';
 var MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -403,3 +405,7 @@ all('.cart-item').forEach(function (item, position) {
     item.style.setProperty('animation-delay', ((position * 80) + 100) + 'ms');
 });
 renderSummary();
+
+if (document.getElementById('promo-banner')) {
+    promoBanner();
+}

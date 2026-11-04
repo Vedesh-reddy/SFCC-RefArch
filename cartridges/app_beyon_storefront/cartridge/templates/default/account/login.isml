@@ -128,8 +128,8 @@
           <svg aria-hidden="true" class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </button>
 
-        <div class="prefs" id="prefs">
-          <button type="button" class="prefs-trigger p-0" id="prefs-trigger" aria-expanded="false" aria-controls="prefs-body">
+        <div class="prefs open" id="prefs">
+          <button type="button" class="prefs-trigger p-0" id="prefs-trigger" aria-expanded="true" aria-controls="prefs-body">
             <span>${Resource.msg('login.prefs', 'beyon', null)}</span>
             <svg aria-hidden="true" class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
           </button>

@@ -1,0 +1,81 @@
+.promo-banner {
+    height: 85px;
+    overflow: hidden;
+    background: linear-gradient(120deg, $beyon-dark 0%, #1a1a1a 60%, $beyon-dark 100%);
+    border-radius: 16px;
+}
+
+.promo-banner-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    object-fit: cover;
+    opacity: 0.8;
+    mask-image: linear-gradient(to left, #000 50%, transparent 100%);
+}
+
+.promo-banner-copy {
+    padding: 0 24px;
+
+    @media (min-width: $beyon-sm) {
+        padding: 0 40px;
+    }
+}
+
+.promo-banner .promo-banner-title {
+    margin: 0;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    letter-spacing: -0.025em;
+
+    @media (min-width: $beyon-sm) {
+        font-size: 18px;
+        line-height: 28px;
+    }
+
+    em {
+        color: $beyon-gold;
+        font-family: "Oooh Baby", cursive;
+        font-style: normal;
+    }
+}
+
+.promo-banner .promo-banner-sub {
+    margin: 2px 0 0;
+    color: rgba(255, 255, 255, 70%);
+    font-family: "Didact Gothic", sans-serif;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+
+    @media (min-width: $beyon-sm) {
+        font-size: 10px;
+    }
+}
+
+.promo-banner-dots {
+    position: absolute;
+    right: 12px;
+    bottom: 8px;
+    z-index: 10;
+    gap: 4px;
+    padding: 4px 6px;
+    background: rgba(0, 0, 0, 45%);
+    border-radius: 9999px;
+}
+
+.banner-dot {
+    width: 5px;
+    height: 5px;
+    background: rgba(255, 255, 255, 40%);
+    border-radius: 999px;
+    transition: all 0.25s ease;
+
+    &.on {
+        width: 14px;
+        background: #fff;
+    }
+}

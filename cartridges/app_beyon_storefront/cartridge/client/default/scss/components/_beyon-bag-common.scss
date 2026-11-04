@@ -136,6 +136,12 @@ $bag-input-border: #e0d8ce;
     .btn-metallic {
         color: #fff;
     }
+
+    h1,
+    h2,
+    h3 {
+        font-family: "Oooh Baby", cursive;
+    }
 }
 
 .beyon-toast {
@@ -215,11 +221,11 @@ $bag-input-border: #e0d8ce;
 
 .header-bar-logo {
     display: block;
-    height: 36px;
+    height: 52px;
     object-fit: contain;
 
     @media (min-width: $beyon-sm) {
-        height: 44px;
+        height: 63px;
     }
 }
 
@@ -527,9 +533,9 @@ $bag-input-border: #e0d8ce;
     }
 
     .drawer-title {
+        font-family: "Oooh Baby", cursive;
         gap: 8px;
         color: $beyon-dark;
-        font-family: Geom, sans-serif;
         font-size: 14px;
         font-weight: 600;
         line-height: 28px;
