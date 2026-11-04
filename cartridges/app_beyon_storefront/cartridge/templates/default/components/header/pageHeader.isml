@@ -1,5 +1,5 @@
 <isset name="beyonPlpUrl" value="${URLUtils.url('Search-Show', 'cgid', 'root', 'sz', 24)}" scope="page" />
-<header class="header-main" id="site-header">
+<header class="header-main" id="site-header" data-login-css="${URLUtils.staticURL('/css/beyon-login.css')}" data-login-js="${URLUtils.staticURL('/js/beyon-login.js')}">
     <isinclude template="/components/header/skipNav" />
     <div class="header-row-1 d-flex align-items-center">
         <button type="button" class="hamburger mobile-only p-0" id="hamburger-btn" aria-label="${Resource.msg('button.menu', 'beyon', null)}" aria-expanded="false" aria-controls="mobile-menu">

@@ -189,8 +189,96 @@ function initMegaMenu() {
     });
 }
 
+/**
+ * Opens sign-in as a popup over the current page. The markup comes from the Login-Show page by AJAX
+ * on first use and stays hidden in the page after closing. Failure falls back to the full page.
+ */
+function initLoginModal() {
+    var header = document.getElementById('site-header');
+    var modal = null;
+    var loading = false;
+    var returnFocus = null;
+
+    var show = function () {
+        modal.classList.remove('d-none');
+        document.body.style.setProperty('overflow', 'hidden');
+        document.getElementById('phone-input').focus();
+    };
+    var loadStyles = function () {
+        return new window.Promise(function (resolve, reject) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = header.getAttribute('data-login-css');
+            link.onload = resolve;
+            link.onerror = reject;
+            document.head.appendChild(link);
+        });
+    };
+    var loadMarkup = function (url) {
+        return fetch(url, { credentials: 'same-origin' }).then(function (response) {
+            if (!response.ok) {
+                throw new Error(response.statusText);
+            }
+            return response.text();
+        }).then(function (html) {
+            var content = new DOMParser().parseFromString(html, 'text/html').querySelector('.beyon-login');
+            if (!content) {
+                throw new Error('Login markup not found');
+            }
+            return content;
+        });
+    };
+    var loadScript = function () {
+        var script = document.createElement('script');
+        script.src = header.getAttribute('data-login-js');
+        document.body.appendChild(script);
+    };
+
+    document.addEventListener('beyon-login:closed', function () {
+        if (returnFocus) {
+            returnFocus.focus();
+        }
+    });
+    document.addEventListener('click', function (event) {
+        var link = event.target.closest('.js-login-open');
+        if (!link) {
+            return;
+        }
+        event.preventDefault();
+        var dropdown = document.getElementById('profile-dropdown');
+        if (dropdown) {
+            dropdown.classList.remove('open');
+            setExpanded(document.getElementById('account-btn'), false);
+        }
+        if (link.closest('#mobile-menu')) {
+            document.getElementById('mobile-close-btn').click();
+            returnFocus = document.getElementById('hamburger-btn');
+        } else {
+            returnFocus = document.getElementById('account-btn');
+        }
+        if (modal) {
+            show();
+            return;
+        }
+        if (loading) {
+            return;
+        }
+        loading = true;
+        window.Promise.all([loadMarkup(link.href), loadStyles()]).then(function (results) {
+            modal = document.importNode(results[0], true);
+            modal.setAttribute('data-modal', 'true');
+            document.body.appendChild(modal);
+            loadScript();
+            show();
+        }).catch(function () {
+            window.location.href = link.href;
+        });
+    });
+}
+
 initSearchPlaceholder();
 initScroll();
 initMobileMenu();
 initProfileDropdown();
 initMegaMenu();
+initLoginModal();

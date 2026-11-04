@@ -63,7 +63,9 @@ Placeholders, as in the design's sample data:
 
 ## Login
 
-The page is the design's sign-in card. Nothing here reaches the server yet, so **no shopper can sign in on this site until the backend exists**. Account pages redirect to this screen.
+The header's Login links open the design's sign-in card as a popup over the current page, with no reload. `beyon-header.js` fetches the markup from `Login-Show` by AJAX on first use, loads `beyon-login.css` and `beyon-login.js`, and keeps the popup in the page after closing. If the fetch fails, the link opens the full page. Direct visits and account redirects still get `Login-Show` as a page.
+
+Nothing here reaches the server yet, so **no shopper can sign in on this site until the backend exists**. Account pages redirect to this screen.
 
 | Item | Current behaviour |
 |---|---|

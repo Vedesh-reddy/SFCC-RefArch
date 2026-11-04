@@ -6,7 +6,7 @@
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#B0ABAB" stroke-width="1.5" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
                 <div class="dd-guest-title">${Resource.msg('msg.welcome', 'beyon', null)}</div>
                 <div class="dd-guest-sub">${Resource.msg('msg.welcome.sub', 'beyon', null)}</div>
-                <a class="dd-guest-login" href="${URLUtils.https('Login-Show')}">${Resource.msg('button.login', 'beyon', null)}</a>
+                <a class="dd-guest-login js-login-open" href="${URLUtils.https('Login-Show')}">${Resource.msg('button.login', 'beyon', null)}</a>
             </div>
         <iselse/>
             <img src="${URLUtils.staticURL('/images/beyon/y-mark.png')}" class="watermark" alt="" />
