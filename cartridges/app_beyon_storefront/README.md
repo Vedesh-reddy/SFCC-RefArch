@@ -74,7 +74,9 @@ The page is the design's sign-in card. Nothing here reaches the server yet, so *
 
 The background is a blurred static capture of the PDP design. The design uses a live iframe of that page.
 
-The design loads `../fonts/geom.css` and the Devina Garden font, which weren't supplied. This page keeps the design's font stack, so it matches how the HTML renders today and picks up the real fonts once they're added.
+Fonts: Geom loads from Google Fonts. Devina Garden by Limitype is bundled in `static/default/fonts/devina-garden-regular.otf`, downloaded from [1001 Fonts](https://www.1001fonts.com/devina-garden-font.html), which lists it as free for commercial use. Read [Limitype's EULA](https://www.limitype.com/p/eula-146e3833-1df3-44db-98c1-097d4e799e5f) before production, including whether it allows web embedding. It couldn't be read when the font was added.
+
+`static/` is git-ignored, so add the font with `git add -f cartridges/app_beyon_storefront/cartridge/static/default/fonts`.
 
 ## Cart
 
