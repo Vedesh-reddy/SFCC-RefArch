@@ -1,0 +1,61 @@
+.btn-cta {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    background: linear-gradient(135deg, $beyon-primary 0%, #d4162e 40%, $beyon-primary-light 60%, $beyon-primary 100%);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(191, 14, 35, 25%);
+    cursor: pointer;
+    transition: all 0.3s;
+    animation: gradient-shift 3s ease infinite;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 20%), transparent);
+        transition: left 0.6s;
+    }
+
+    &:hover {
+        box-shadow: 0 8px 28px rgba(191, 14, 35, 35%);
+        transform: translateY(-2px);
+
+        &::before {
+            left: 100%;
+        }
+    }
+}
+
+.btn-outline-beyon {
+    color: $beyon-dark;
+    font-weight: 600;
+    background: #fff;
+    border: 1.5px solid #e5ddd3;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+        color: $beyon-primary;
+        border-color: $beyon-primary;
+    }
+}
+
+@keyframes gradient-shift {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}

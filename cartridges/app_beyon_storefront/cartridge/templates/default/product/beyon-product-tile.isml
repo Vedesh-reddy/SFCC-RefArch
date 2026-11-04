@@ -1,0 +1,53 @@
+<iscomment>Ribbons, colour dots, the offer tag and the first card's on-request state are design placeholders keyed on grid position.</iscomment>
+<isset name="tileIndex" value="${request.httpParameterMap.beyonIndex.intValue}" scope="page" />
+<isset name="tilePrice" value="${product.price}" scope="page" />
+<isset name="tileSales" value="${tilePrice.type === 'range' ? tilePrice.min.sales : tilePrice.sales}" scope="page" />
+<isset name="tileList" value="${tilePrice.type === 'range' ? null : tilePrice.list}" scope="page" />
+<isset name="onRequest" value="${tileIndex === 0}" scope="page" />
+<isset name="ribbonKey" value="${[0, 8, 17, 33].indexOf(tileIndex) > -1 ? 'sellingfast' : ([2, 11, 20, 26].indexOf(tileIndex) > -1 ? 'justdropped' : ([5, 14, 23, 40].indexOf(tileIndex) > -1 ? 'stackable' : ''))}" scope="page" />
+<isset name="showDots" value="${tileIndex < 24 && tileIndex % 3 === 0}" scope="page" />
+<div class="product-card anim" data-pid="${product.id}" data-index="${tileIndex.toFixed(0)}" data-price="${tileSales && tileSales.decimalPrice ? tileSales.decimalPrice : 0}">
+    <div class="img-wrap">
+        <isif condition="${!empty(ribbonKey)}">
+            <span class="ribbon ribbon-${ribbonKey}">${Resource.msg('ribbon.' + ribbonKey, 'beyon', null)}</span>
+        </isif>
+        <a href="${pdict.urls.product}" tabindex="-1" aria-hidden="true">
+            <img class="${onRequest ? 'is-on-request' : ''}" src="${product.images.medium[0].url}" alt="${product.productName}" loading="lazy" />
+        </a>
+        <button type="button" class="wishlist-btn p-0" data-pid="${product.id}" aria-pressed="false" aria-label="${Resource.msgf('button.wishlist', 'beyon', null, product.productName)}">
+            <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>
+        </button>
+    </div>
+    <a class="card-body-link" href="${pdict.urls.product}">
+        <span class="card-body d-block">
+            <span class="card-name text-truncate d-block">${product.productName}</span>
+            <span class="card-row d-flex align-items-center justify-content-between">
+                <isif condition="${onRequest}">
+                    <span class="card-on-request">${Resource.msg('label.availableonrequest', 'beyon', null)}</span>
+                <iselseif condition="${tileList || tileIndex === 2}">
+                    <span class="d-block">
+                        <span class="d-flex align-items-center card-prices">
+                            <span class="card-price">${tileSales && tileSales.formatted ? tileSales.formatted : ''}</span>
+                            <isif condition="${tileList}">
+                                <span class="card-mrp">${tileList.formatted}</span>
+                            </isif>
+                        </span>
+                        <span class="card-offer d-flex align-items-center">
+                            <svg aria-hidden="true" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+                            <span>${Resource.msg('label.offer', 'beyon', null)}</span>
+                        </span>
+                    </span>
+                <iselse/>
+                    <span class="card-price">${tileSales && tileSales.formatted ? tileSales.formatted : ''}</span>
+                </isif>
+                <isif condition="${showDots}">
+                    <span class="d-flex align-items-center card-dots" aria-hidden="true">
+                        <span class="color-dot color-dot-rose active"></span>
+                        <span class="color-dot color-dot-yellow"></span>
+                        <span class="color-dot color-dot-white"></span>
+                    </span>
+                </isif>
+            </span>
+        </span>
+    </a>
+</div>
