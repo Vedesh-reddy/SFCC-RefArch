@@ -31,15 +31,18 @@ From the Beyon Revamp design set: Geom is bundled in `static/default/fonts`, and
 
 ## PLP placeholders
 
-The grid shows real catalog products, prices and images, and Load More uses the base `Search-UpdateGrid` route. These parts are client-side only:
+The grid shows real catalog products, prices and images, 12 per page, and Load More uses the base `Search-UpdateGrid` route. These parts are client-side only:
 
-| Item | Current behaviour |
-|---|---|
-| Filter drawer | Chips select and list under the toolbar, but the grid isn't filtered |
-| Sort | Price and New Arrivals reorder loaded cards. Best Sellers and Popularity keep best-match order |
-| Wishlist hearts | Kept in `sessionStorage` for the visit |
-| Ribbons, colour dots, offer tag, first card's Available On Request | Set by grid position, as in the design's sample data |
-| In-grid banners | Fixed copy on the design's gradient |
+| Part | Current behaviour |
+| --- | --- |
+| Filters (sidebar and sheet) | Controls stay in step and list under the title, but the grid isn't filtered. Facets and counts are the design's sample values |
+| Sort | Price orders the loaded cards and New Arrivals reverses them. Best Sellers, Popularity and Discount keep best-match order |
+| Wishlist hearts | Saved in `sessionStorage` for the browser session |
+| Bag button and Select Size popup | The three sizes come from the design. Confirm shows the toast and adds nothing to the basket |
+| Request Design popup | Validates in the browser and shows the toast. Nothing is sent |
+| Ribbons, offer tag, fourth card's request state | Set by grid position, as in the design's sample data |
+
+To review states with no live trigger, add `?preview=no-results` or `?preview=wishlisted` to the listing URL.
 
 ## PDP
 

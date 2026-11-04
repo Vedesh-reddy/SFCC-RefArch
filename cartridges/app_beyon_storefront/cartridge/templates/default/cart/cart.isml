@@ -96,7 +96,7 @@
                         </div>
                         <h2 class="empty-title">${Resource.msg('cart.empty.title', 'beyon', null)}</h2>
                         <p class="empty-sub">${Resource.msg('cart.empty.sub', 'beyon', null)}</p>
-                        <a href="${URLUtils.url('Search-Show', 'cgid', 'root', 'sz', 24)}" class="btn-cta empty-cta d-inline-block">${Resource.msg('cart.empty.cta', 'beyon', null)}</a>
+                        <a href="${URLUtils.url('Search-Show', 'cgid', 'root')}" class="btn-cta empty-cta d-inline-block">${Resource.msg('cart.empty.cta', 'beyon', null)}</a>
                     </div>
                 </div>
 

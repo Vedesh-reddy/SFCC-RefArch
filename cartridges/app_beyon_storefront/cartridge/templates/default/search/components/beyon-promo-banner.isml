@@ -1,7 +1,0 @@
-<div class="promo-banner anim d-flex align-items-end align-self-start" data-banner-index="${beyonIndex.toFixed(0)}">
-    <div class="banner-inner">
-        <p class="banner-title">${Resource.msg('banner.' + beyonBanner.toFixed(0) + '.title', 'beyon', null)}</p>
-        <p class="banner-sub">${Resource.msg('banner.' + beyonBanner.toFixed(0) + '.sub', 'beyon', null)}</p>
-        <button type="button" class="banner-cta">${Resource.msg('banner.' + beyonBanner.toFixed(0) + '.cta', 'beyon', null)}</button>
-    </div>
-</div>

@@ -1,0 +1,61 @@
+<div class="facet"><p class="facet-title">Price Range</p>
+<div class="d-flex flex-wrap facet-chips"><button type="button" class="filter-chip" data-filter="price" data-val="under-10k" aria-pressed="false">Under ₹10K</button><button type="button" class="filter-chip" data-filter="price" data-val="10k-25k" aria-pressed="false">₹10K–25K</button><button type="button" class="filter-chip" data-filter="price" data-val="25k-50k" aria-pressed="false">₹25K–50K</button><button type="button" class="filter-chip" data-filter="price" data-val="50k-plus" aria-pressed="false">₹50K+</button></div>
+</div>
+<div class="facet"><p class="facet-title">Product Category</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="bangle" />Bangle</span><span class="count">(0)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="bracelet" />Bracelet</span><span class="count">(6)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="charm" />Charm</span><span class="count">(0)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="earrings" />Earrings</span><span class="count">(5)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="ring" />Finger Ring</span><span class="count">(6)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="mangalsutra" />Mangalsutra</span><span class="count">(0)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="necklace" />Necklace</span><span class="count">(3)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="necklace-set" />Necklace Set</span><span class="count">(0)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="nose-pin" />Nose Pin</span><span class="count">(0)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="pendant" />Pendant</span><span class="count">(3)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="cat" data-val="chain" />Pendant With Chain</span><span class="count">(1)</span></label>
+</div>
+<div class="facet"><p class="facet-title">Karatage</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="karatage" data-val="9" />9 Karat Gold</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="karatage" data-val="14" />14 Karat Gold</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="karatage" data-val="18" />18 Karat Gold</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="karatage" data-val="925" />925 Silver</span></label>
+</div>
+<div class="facet"><p class="facet-title">Jewellery Type</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="jtype" data-val="gold" />Gold Jewellery</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="jtype" data-val="silver" />Silver Jewellery</span></label>
+</div>
+<div class="facet"><p class="facet-title">Metal Colour</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="metal" data-val="rose" />Rose</span><span class="count">(7)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="metal" data-val="silver" />Silver</span><span class="count">(0)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="metal" data-val="white" />White</span><span class="count">(9)</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="metal" data-val="yellow" />Yellow</span><span class="count">(8)</span></label>
+</div>
+<div class="facet"><p class="facet-title">Metal</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="metaltype" data-val="gold" />Gold</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="metaltype" data-val="silver" />Silver</span></label>
+</div>
+<div class="facet"><p class="facet-title">Diamond Clarity</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="clarity" data-val="si" />SI</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="clarity" data-val="vs" />VS</span></label>
+</div>
+<div class="facet"><p class="facet-title">Diamond Carat</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="carat" data-val="under-030" />Under 0.30 carat</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="carat" data-val="030-050" />0.30 - 0.50 carat</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="carat" data-val="050-1" />0.50 - 1 carat</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="carat" data-val="1-2" />1 - 2 carat</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="carat" data-val="2-3" />2 - 3 carat</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="carat" data-val="3-plus" />3 carat and above</span></label>
+</div>
+<div class="facet"><p class="facet-title">Size</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="size" data-val="16.80mm" />16.80 MM</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="size" data-val="16in" />16 INCHES</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="size" data-val="17.20mm" />17.20 MM</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="size" data-val="18cms" />18.00 CMS</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="size" data-val="45x55mm" />45 * 55 MM</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="size" data-val="47x57mm" />47 * 57 MM</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="size" data-val="57.50mm" />57.50 MM</span></label>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="size" data-val="na" />NA</span></label>
+</div>
+<div class="facet"><p class="facet-title">Shop For</p>
+<label class="brand-check"><span class="d-flex align-items-center brand-check-label"><input type="checkbox" data-filter="shopfor" data-val="women" />Women</span></label>
+</div>

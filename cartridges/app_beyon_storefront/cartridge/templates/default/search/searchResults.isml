@@ -9,66 +9,146 @@
         <isinclude template="reporting/reportingUrls" />
     </isif>
 
-    <div class="promo-ribbon d-flex align-items-center justify-content-center" id="promo-ribbon">
-        <span>${Resource.msg('label.promo', 'beyon', null)}</span>
-        <a href="${'#'}">${Resource.msg('link.shopnow', 'beyon', null)}</a>
-        <button type="button" class="ribbon-close p-0" id="promo-ribbon-close" aria-label="${Resource.msg('button.close', 'beyon', null)}">
-            <svg aria-hidden="true" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-        </button>
-    </div>
-
     <isset name="beyonTitle" value="${pdict.productSearch.isCategorySearch && pdict.productSearch.category.id !== 'root' ? pdict.productSearch.category.name : Resource.msg('label.allcollections', 'beyon', null)}" scope="page" />
-    <main class="beyon-plp">
-        <nav class="breadcrumb-trail anim d-flex flex-wrap align-items-center" aria-label="${Resource.msg('label.home', 'beyon', null)}">
-            <a href="${URLUtils.url('Home-Show')}">${Resource.msg('label.home', 'beyon', null)}</a>
-            <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B0ABAB" stroke-width="3" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-            <a href="${URLUtils.url('Search-Show', 'cgid', 'root', 'sz', 24)}">${Resource.msg('label.jewellery', 'beyon', null)}</a>
-            <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#B0ABAB" stroke-width="3" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
-            <span class="active" aria-current="page"><isprint value="${beyonTitle}" /></span>
-        </nav>
-
-        <div class="title-row anim anim-delay-50 d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-baseline title-group">
-                <h1 class="plp-title"><isprint value="${beyonTitle}" /></h1>
-                <span class="plp-count" id="product-count">(${pdict.productSearch.count.toFixed(0)})</span>
-            </div>
-            <div class="plp-toolbar d-flex align-items-center">
-                <button type="button" class="tool-pill" id="filter-open" aria-haspopup="dialog" aria-controls="filter-drawer" aria-label="${Resource.msg('label.filters', 'beyon', null)}">
-                    <svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="18" x2="20" y2="18"/><circle cx="8" cy="6" r="2" fill="currentColor" stroke="none"/><circle cx="16" cy="12" r="2" fill="currentColor" stroke="none"/><circle cx="10" cy="18" r="2" fill="currentColor" stroke="none"/></svg>
-                    <span class="tool-label">${Resource.msg('label.filters', 'beyon', null)}</span>
-                </button>
-                <div class="tool-divider"></div>
-                <select class="sort-select" id="sort-select" aria-label="${Resource.msg('label.sort', 'beyon', null)}">
-                    <option value="best-matches">${Resource.msg('sort.bestmatches', 'beyon', null)}</option>
-                    <option value="new-arrivals">${Resource.msg('sort.newarrivals', 'beyon', null)}</option>
-                    <option value="best-sellers">${Resource.msg('sort.bestsellers', 'beyon', null)}</option>
-                    <option value="popularity">${Resource.msg('sort.popularity', 'beyon', null)}</option>
-                    <option value="price-low">${Resource.msg('sort.pricelow', 'beyon', null)}</option>
-                    <option value="price-high">${Resource.msg('sort.pricehigh', 'beyon', null)}</option>
-                    <option value="discount">${Resource.msg('sort.discount', 'beyon', null)}</option>
-                </select>
-                <div class="tool-divider tool-divider-grid"></div>
-                <div class="grid-toggle align-items-center" id="grid-toggle" role="group" aria-label="${Resource.msg('label.gridsize', 'beyon', null)}">
-                    <button type="button" class="grid-pick p-0" data-cols="3" aria-pressed="false">3</button>
-                    <button type="button" class="grid-pick p-0 active" data-cols="4" aria-pressed="true">4</button>
-                    <button type="button" class="grid-pick p-0" data-cols="5" aria-pressed="false">5</button>
+    <div class="pdp-toast" id="plp-toast" role="status"></div>
+    <main class="beyon-plp" id="beyon-plp"
+          data-total="${pdict.productSearch.count.toFixed(0)}"
+          data-showing-template="${Resource.msg('label.showing', 'beyon', null)}"
+          data-msg-wishlisted="${Resource.msg('label.wishlisted', 'beyon', null)}"
+          data-msg-added="${Resource.msg('plp.addedtobag', 'beyon', null)}"
+          data-msg-request="${Resource.msg('plp.requestdone', 'beyon', null)}">
+        <div class="plp-mobile-head">
+            <isinclude template="search/components/beyon-crumbs" />
+            <div class="d-flex align-items-center justify-content-between plp-mobile-title">
+                <h1 class="plp-title-mobile"><isprint value="${beyonTitle}" /> <span class="plp-count-mobile">(${pdict.productSearch.count.toFixed(0)})</span></h1>
+                <div class="sort-pill d-flex align-items-center">
+                    <button type="button" class="sort-pill-btn p-0 js-open-filters" aria-label="${Resource.msg('label.filters', 'beyon', null)}" aria-haspopup="dialog"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/><circle cx="9" cy="7" r="1.6" fill="#2C2C2C" stroke="none"/><circle cx="15" cy="12" r="1.6" fill="#2C2C2C" stroke="none"/><circle cx="9" cy="17" r="1.6" fill="#2C2C2C" stroke="none"/></svg></button>
+                    <span class="sort-pill-line"></span>
+                    <button type="button" class="sort-pill-btn sort-pill-label d-flex align-items-center p-0 js-open-sort" aria-haspopup="dialog"><span id="sort-label-mobile">${Resource.msg('plp.bestmatches', 'beyon', null)}</span><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#2C2C2C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></button>
                 </div>
             </div>
         </div>
-
         <div class="active-filters d-none flex-wrap" id="active-filters" data-clear-label="${Resource.msg('button.clear', 'beyon', null)}"></div>
 
-        <isif condition="${pdict.productSearch.productIds.length > 0}">
-            <div class="product-grid d-flex flex-wrap pt-0" id="product-grid" data-total="${pdict.productSearch.count.toFixed(0)}" data-showing-template="${Resource.msg('label.showing', 'beyon', null)}" data-wishlisted-label="${Resource.msg('label.wishlisted', 'beyon', null)}">
-                <isinclude template="search/productGrid" />
+        <div class="plp-layout">
+            <aside class="plp-sidebar" aria-label="${Resource.msg('label.filters', 'beyon', null)}">
+                <isinclude template="search/components/beyon-crumbs" />
+                <h1 class="plp-title"><isprint value="${beyonTitle}" /></h1>
+                <p class="plp-count">${pdict.productSearch.count.toFixed(0)} ${Resource.msg('plp.items', 'beyon', null)}</p>
+                <select class="sort-select w-100" id="sort-select" aria-label="${Resource.msg('label.sort', 'beyon', null)}">
+                        <option value="best-matches">${Resource.msg('plp.sortby', 'beyon', null)} Best-Matches</option>
+                        <option value="new-arrivals">${Resource.msg('plp.sortby', 'beyon', null)} New Arrivals</option>
+                        <option value="best-sellers">${Resource.msg('plp.sortby', 'beyon', null)} Best Sellers</option>
+                        <option value="popularity">${Resource.msg('plp.sortby', 'beyon', null)} Popularity</option>
+                        <option value="price-low">${Resource.msg('plp.sortby', 'beyon', null)} Price (Low To High)</option>
+                        <option value="price-high">${Resource.msg('plp.sortby', 'beyon', null)} Price (High To Low)</option>
+                        <option value="discount">${Resource.msg('plp.sortby', 'beyon', null)} Discount</option>
+                </select>
+                <div class="d-flex align-items-center justify-content-between filter-head">
+                    <h2 class="filter-title">${Resource.msg('plp.filterby', 'beyon', null)}</h2>
+                    <button type="button" class="clear-all p-0 js-clear-filters">${Resource.msg('button.clearall', 'beyon', null)}</button>
+                </div>
+                <isinclude template="search/components/beyon-filter-groups" />
+            </aside>
+
+            <div class="plp-content">
+                <div class="plp-banner position-relative w-100" id="plp-banner" data-slides="${Resource.msg('plp.banners', 'beyon', null)}">
+                    <img class="plp-banner-image h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-1.webp')}" alt="" />
+                    <div class="plp-banner-copy position-relative h-100 d-flex flex-column justify-content-center">
+                        <p class="plp-banner-title">beYon <em id="plp-banner-title"></em></p>
+                        <p class="plp-banner-sub" id="plp-banner-sub"></p>
+                    </div>
+                    <div class="plp-banner-dots d-flex align-items-center" id="plp-banner-dots" aria-hidden="true"></div>
+                </div>
+
+                <div class="plp-loader" id="plp-loader" aria-hidden="true"><span></span><span></span><span></span></div>
+                <isif condition="${pdict.productSearch.productIds.length > 0}">
+                    <div class="product-grid d-flex flex-wrap pt-0" id="product-grid">
+                        <isinclude template="search/productGrid" />
+                    </div>
+                </isif>
+                <div class="plp-empty flex-column align-items-center text-center ${pdict.productSearch.productIds.length > 0 ? 'd-none' : 'd-flex'}" id="plp-empty">
+                    <isinclude template="search/components/beyon-cat-sketch" />
+                    <h3 class="plp-empty-title">${Resource.msg('plp.empty.title', 'beyon', null)}</h3>
+                    <p class="plp-empty-text">${Resource.msg('plp.empty.text', 'beyon', null)}</p>
+                    <button type="button" class="plp-empty-btn js-clear-filters">${Resource.msg('plp.empty.cta', 'beyon', null)}</button>
+                </div>
             </div>
-        <iselse/>
-            <p class="plp-empty">${Resource.msg('label.noresults', 'beyon', null)}</p>
-        </isif>
+        </div>
     </main>
 
     <div class="plp-overlay" id="filter-overlay"></div>
-    <div class="plp-drawer" id="filter-drawer" role="dialog" aria-modal="true" aria-labelledby="filter-drawer-title">
-        <isinclude template="search/components/beyon-filter-drawer" />
+    <div class="plp-sheet" id="filter-sheet" role="dialog" aria-modal="true" aria-labelledby="filter-sheet-title">
+        <div class="sheet-inner">
+            <div class="sheet-handle sheet-handle-mobile"></div>
+            <div class="d-flex align-items-center justify-content-between sheet-head">
+                <h3 class="sheet-title" id="filter-sheet-title">${Resource.msg('plp.filterby', 'beyon', null)}</h3>
+                <button type="button" class="sheet-close p-0 js-close-filters" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <div class="sheet-facets"><isinclude template="search/components/beyon-filter-groups" /></div>
+            <div class="d-flex sheet-actions">
+                <button type="button" class="sheet-btn-clear js-clear-filters">${Resource.msg('button.clearall', 'beyon', null)}</button>
+                <button type="button" class="sheet-btn-apply js-close-filters">${Resource.msg('button.apply', 'beyon', null)}</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="plp-overlay" id="sort-overlay"></div>
+    <div class="plp-sheet plp-sheet-sort" id="sort-sheet" role="dialog" aria-modal="true" aria-labelledby="sort-sheet-title">
+        <div class="sheet-inner">
+            <div class="sheet-handle"></div>
+            <h3 class="sheet-title sheet-title-sort" id="sort-sheet-title">${Resource.msg('plp.sorttitle', 'beyon', null)}</h3>
+            <div class="sort-options">
+                    <button type="button" class="sort-option active w-100 text-left" data-sort="best-matches">Best-Matches</button>
+                    <button type="button" class="sort-option w-100 text-left" data-sort="new-arrivals">New Arrivals</button>
+                    <button type="button" class="sort-option w-100 text-left" data-sort="best-sellers">Best Sellers</button>
+                    <button type="button" class="sort-option w-100 text-left" data-sort="popularity">Popularity</button>
+                    <button type="button" class="sort-option w-100 text-left" data-sort="price-low">Price (Low To High)</button>
+                    <button type="button" class="sort-option w-100 text-left" data-sort="price-high">Price (High To Low)</button>
+                    <button type="button" class="sort-option w-100 text-left" data-sort="discount">Discount</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="size-overlay" id="size-overlay"></div>
+    <div class="size-modal" id="size-modal" role="dialog" aria-modal="true" aria-labelledby="size-modal-title">
+        <div class="size-modal-inner h-100 d-flex flex-column">
+            <div class="d-flex align-items-center justify-content-between size-modal-head">
+                <h3 class="size-modal-title" id="size-modal-title">${Resource.msg('plp.selectsize', 'beyon', null)}</h3>
+                <button type="button" class="size-modal-close p-0" id="size-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <div class="d-flex flex-wrap size-options" id="size-options">
+                <button type="button" class="size-pill selected">17.20 MM</button>
+                <button type="button" class="size-pill">16.80 MM</button>
+                <button type="button" class="size-pill">16.40 MM</button>
+            </div>
+            <div class="size-modal-foot">
+                <div class="text-right size-guide-row"><a class="size-guide-link" href="${'#'}">${Resource.msg('plp.sizeguide', 'beyon', null)}</a></div>
+                <div class="d-flex align-items-center justify-content-between size-total"><span class="size-total-label">${Resource.msg('plp.totalprice', 'beyon', null)}</span><span class="size-total-value" id="size-total-price"></span></div>
+                <button type="button" class="size-confirm w-100" id="size-confirm">${Resource.msg('plp.confirmadd', 'beyon', null)}</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="rd-overlay d-none" id="request-popup" role="dialog" aria-modal="true" aria-labelledby="request-popup-title">
+        <div class="rd-modal">
+            <div class="d-flex align-items-center justify-content-between rd-head">
+                <div><h3 class="rd-title" id="request-popup-title">${Resource.msg('form.request.title', 'beyon', null)}</h3><p class="rd-sub">${Resource.msg('form.request.sub', 'beyon', null)}</p></div>
+                <button type="button" class="sheet-close flex-shrink-0 p-0 js-request-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+            </div>
+            <form id="request-form" novalidate>
+                <div class="rd-fields">
+                    <div><input type="text" class="rd-input w-100" placeholder="${Resource.msg('form.name', 'beyon', null)}" aria-label="${Resource.msg('form.name', 'beyon', null)}" autocomplete="name" data-required="true" /><p class="rd-error">${Resource.msg('form.name.error', 'beyon', null)}</p></div>
+                    <div><input type="email" class="rd-input w-100" placeholder="${Resource.msg('form.email', 'beyon', null)}" aria-label="${Resource.msg('form.email', 'beyon', null)}" autocomplete="email" data-required="email" /><p class="rd-error">${Resource.msg('form.email.error', 'beyon', null)}</p></div>
+                    <div>
+                        <div class="d-flex rd-phone-row"><select class="rd-input rd-country flex-shrink-0" aria-label="${Resource.msg('form.countrycode', 'beyon', null)}"><option value="+91">🇮🇳 +91</option><option value="+1">🇺🇸 +1</option><option value="+44">🇬🇧 +44</option><option value="+971">🇦🇪 +971</option></select><div class="flex-grow-1"><input type="tel" class="rd-input w-100" placeholder="${Resource.msg('form.phone', 'beyon', null)}" aria-label="${Resource.msg('form.phone', 'beyon', null)}" maxlength="10" autocomplete="tel" data-required="phone" /></div></div>
+                        <p class="rd-error">${Resource.msg('form.phone.error', 'beyon', null)}</p>
+                    </div>
+                    <div><input type="text" class="rd-input w-100" placeholder="${Resource.msg('form.city', 'beyon', null)}" aria-label="${Resource.msg('form.city', 'beyon', null)}" autocomplete="address-level2" data-required="true" /><p class="rd-error">${Resource.msg('form.city.error', 'beyon', null)}</p></div>
+                </div>
+                <button type="submit" class="rd-submit w-100">${Resource.msg('button.submitrequest', 'beyon', null)}</button>
+            </form>
+            <p class="rd-terms text-center">${Resource.msg('form.request.terms', 'beyon', null)}</p>
+        </div>
     </div>
 </isdecorate>
