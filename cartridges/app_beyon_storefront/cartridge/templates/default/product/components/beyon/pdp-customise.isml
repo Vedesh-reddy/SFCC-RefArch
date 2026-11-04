@@ -1,0 +1,76 @@
+<div class="pdp-customise section-gold-bg">
+    <div class="d-flex align-items-center customise-head">
+        <div class="customise-bar flex-shrink-0"></div>
+        <span class="customise-title">${Resource.msg('label.customise', 'beyon', null)}</span>
+        <span class="customise-chip">${Resource.msg('label.personalise', 'beyon', null)}</span>
+    </div>
+    <div class="customise-group">
+        <div class="d-flex align-items-center justify-content-between customise-label-row">
+            <p class="customise-label">${Resource.msg('label.size', 'beyon', null)}</p>
+            <button type="button" class="size-chart-link d-flex align-items-center p-0" id="size-chart-open"><svg aria-hidden="true" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>${Resource.msg('label.sizechart', 'beyon', null)}</button>
+        </div>
+        <div class="d-flex flex-wrap customise-pills-8" id="size-pills">
+            <isif condition="${sizeAttr}">
+                <isloop items="${sizeAttr.values}" var="attrValue">
+                    <button type="button" class="pill pill-wide js-variation ${attrValue.selected ? 'pill-selected' : 'pill-default'}" data-attr="size" data-url="${attrValue.url}" data-value="${attrValue.id}" ${attrValue.selectable ? '' : 'disabled'}><isprint value="${attrValue.displayValue}" /></button>
+                </isloop>
+            <iselse/>
+                <button type="button" class="pill pill-wide pill-selected" data-pill-group="size">16 INCHES</button>
+                <button type="button" class="pill pill-wide pill-default" data-pill-group="size">18 INCHES</button>
+            </isif>
+        </div>
+    </div>
+    <div class="customise-group">
+        <p class="customise-label customise-label-block">${Resource.msg('spec.grossweight', 'beyon', null)}</p>
+        <span class="pill pill-static pill-selected d-inline-flex align-items-center">3.135 g</span>
+    </div>
+    <isif condition="${hasCustomisation}">
+        <div class="customise-group">
+            <p class="customise-label customise-label-block">${Resource.msg('label.metalcolour', 'beyon', null)}</p>
+            <div class="d-flex align-items-center customise-metals flex-wrap" id="metal-pills">
+                <isif condition="${colorAttr}">
+                    <isloop items="${colorAttr.values}" var="attrValue">
+                        <button type="button" class="metal-btn d-flex flex-column align-items-center p-0 js-variation ${attrValue.selected ? 'selected' : ''}" data-attr="color" data-url="${attrValue.url}" data-value="${attrValue.id}" ${attrValue.selectable ? '' : 'disabled'}><span class="metal-circle" <isif condition="${attrValue.images && attrValue.images.swatch && attrValue.images.swatch.length > 0}">style="background-image:url(${attrValue.images.swatch[0].url})"</isif>></span><span class="metal-label"><isprint value="${attrValue.displayValue}" /></span></button>
+                    </isloop>
+                <iselse/>
+                    <button type="button" class="metal-btn d-flex flex-column align-items-center p-0 selected" data-pill-group="metal"><span class="metal-circle metal-yellow"></span><span class="metal-label">Yellow</span></button>
+                    <button type="button" class="metal-btn d-flex flex-column align-items-center p-0" data-pill-group="metal"><span class="metal-circle metal-rose"></span><span class="metal-label">Rose</span></button>
+                    <button type="button" class="metal-btn d-flex flex-column align-items-center p-0" data-pill-group="metal"><span class="metal-circle metal-white"></span><span class="metal-label">White</span></button>
+                </isif>
+            </div>
+        </div>
+        <div class="customise-group">
+            <p class="customise-label customise-label-block">${Resource.msg('label.goldfinish', 'beyon', null)}</p>
+            <div class="d-flex align-items-center customise-pills-6">
+                    <button type="button" class="pill pill-tight pill-default" data-pill-group="karat">9KT</button>
+                    <button type="button" class="pill pill-tight pill-default" data-pill-group="karat">14KT</button>
+                    <button type="button" class="pill pill-tight pill-selected" data-pill-group="karat">18KT</button>
+            </div>
+        </div>
+        <div class="customise-group">
+            <p class="customise-label customise-label-block">${Resource.msg('label.diamondshape', 'beyon', null)}</p>
+            <div class="d-flex align-items-center flex-wrap customise-pills-6">
+                    <button type="button" class="pill pill-shape d-flex align-items-center pill-selected" data-pill-group="shape"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke-width="1.8"/><line x1="12" y1="3.5" x2="12" y2="7" stroke-width="1.2" opacity=".6"/><line x1="12" y1="17" x2="12" y2="20.5" stroke-width="1.2" opacity=".6"/><line x1="3.5" y1="12" x2="7" y2="12" stroke-width="1.2" opacity=".6"/><line x1="17" y1="12" x2="20.5" y2="12" stroke-width="1.2" opacity=".6"/></svg> Round</button>
+                    <button type="button" class="pill pill-shape d-flex align-items-center pill-default" data-pill-group="shape"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none"><ellipse cx="12" cy="12" rx="6.5" ry="9.5" stroke-width="1.8"/><line x1="12" y1="2.5" x2="12" y2="5.5" stroke-width="1.2" opacity=".6"/><line x1="12" y1="18.5" x2="12" y2="21.5" stroke-width="1.2" opacity=".6"/></svg> Oval</button>
+                    <button type="button" class="pill pill-shape d-flex align-items-center pill-default" data-pill-group="shape"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 20.5C12 20.5 3 14 3 8.5C3 6 5 4 7.5 4C9.5 4 11 5.5 12 7C13 5.5 14.5 4 16.5 4C19 4 21 6 21 8.5C21 14 12 20.5 12 20.5Z" stroke-width="1.8" stroke-linejoin="round"/></svg> Heart</button>
+                    <button type="button" class="pill pill-shape d-flex align-items-center pill-default" data-pill-group="shape"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="8,3 16,3 21,7 21,17 16,21 8,21 3,17 3,7" stroke-width="1.8" stroke-linejoin="round"/><line x1="3" y1="8.5" x2="21" y2="8.5" stroke-width="1" opacity=".5"/><line x1="3" y1="15.5" x2="21" y2="15.5" stroke-width="1" opacity=".5"/></svg> Emerald</button>
+                    <button type="button" class="pill pill-shape d-flex align-items-center pill-default" data-pill-group="shape"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none"><polygon points="12,2 20,6.5 20,17.5 12,22 4,17.5 4,6.5" stroke-width="1.8" stroke-linejoin="round"/><line x1="12" y1="2" x2="12" y2="22" stroke-width="1" opacity=".5"/></svg> Hexagon</button>
+            </div>
+        </div>
+        <div class="customise-group">
+            <p class="customise-label customise-label-block">${Resource.msg('label.diamondsize', 'beyon', null)}</p>
+            <div class="d-flex align-items-center customise-pills-6">
+                    <button type="button" class="pill pill-tight pill-selected" data-pill-group="diamond-size">0.33 ct</button>
+                    <button type="button" class="pill pill-tight pill-default" data-pill-group="diamond-size">0.4 ct</button>
+                    <button type="button" class="pill pill-tight pill-default" data-pill-group="diamond-size">0.5 ct</button>
+            </div>
+        </div>
+    </isif>
+    <button type="button" class="cta-customise d-flex align-items-center w-100" id="customisation-open">
+        <span class="cta-customise-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
+        <span class="d-flex flex-column align-items-start">
+            <span class="cta-customise-title">${Resource.msg('label.customisecta', 'beyon', null)}</span>
+            <span class="cta-customise-sub">${Resource.msg('label.customisesub', 'beyon', null)}</span>
+        </span>
+    </button>
+</div>

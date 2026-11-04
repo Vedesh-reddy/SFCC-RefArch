@@ -1,0 +1,24 @@
+<isset name="pdpImages" value="${product.images.large}" scope="page" />
+<iscomment>Phone and tablet carousel</iscomment>
+<div class="pdp-gallery-mobile position-relative">
+    <div class="gallery-thumbs">
+        <isloop items="${pdpImages}" var="image" status="imageState">
+            <button type="button" class="gallery-thumb p-0 ${imageState.first ? 'active' : ''}" data-gallery-index="${imageState.index.toFixed(0)}" aria-label="${image.alt}"><img class="w-100 h-100" src="${image.url}" alt="" /></button>
+        </isloop>
+    </div>
+    <div class="gallery-main position-relative" id="gallery-swipe">
+        <isloop items="${pdpImages}" var="image" status="imageState">
+            <img class="gallery-slide w-100 h-100 ${imageState.first ? 'active' : ''}" src="${image.url}" alt="${image.alt}" draggable="false" data-lightbox-index="${imageState.index.toFixed(0)}" />
+        </isloop>
+        <span class="ribbon ribbon-red">${Resource.msg('ribbon.sellingfast', 'beyon', null)}</span>
+        <button type="button" class="gallery-arrow gallery-prev p-0" aria-label="${Resource.msg('button.previous', 'beyon', null)}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button type="button" class="gallery-arrow gallery-next p-0" aria-label="${Resource.msg('button.next', 'beyon', null)}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+        <button type="button" class="gallery-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+        <button type="button" class="stack-btn stack-btn-mobile js-stack d-flex align-items-center"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg><span>${Resource.msg('label.stackit', 'beyon', null)}</span></button>
+        <div class="gallery-dots d-flex align-items-center">
+            <isloop items="${pdpImages}" var="image" status="imageState">
+                <button type="button" class="gallery-dot p-0 ${imageState.first ? 'active' : ''}" data-gallery-index="${imageState.index.toFixed(0)}" aria-label="${image.alt}"></button>
+            </isloop>
+        </div>
+    </div>
+</div>

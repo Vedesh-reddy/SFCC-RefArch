@@ -1,0 +1,118 @@
+<div class="pdp-toast" id="pdp-toast" role="status"></div>
+
+<div class="size-overlay d-none" id="size-chart" role="dialog" aria-modal="true" aria-labelledby="size-chart-title">
+    <div class="size-modal">
+        <div class="d-flex align-items-center justify-content-between size-head">
+            <h3 class="size-title" id="size-chart-title">${Resource.msg('label.sizechart', 'beyon', null)}</h3>
+            <button type="button" class="modal-close p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="size-body">
+            <p class="size-guide-label">${Resource.msg('label.chainguide', 'beyon', null)}</p>
+            <table class="size-table w-100">
+                <thead><tr><th>${Resource.msg('label.size', 'beyon', null)}</th><th>${Resource.msg('label.length', 'beyon', null)}</th><th>${Resource.msg('label.fits', 'beyon', null)}</th></tr></thead>
+                <tbody>
+                    <tr><td class="size-col-strong">16 INCHES</td><td>40.6 cm</td><td>Choker / Collar</td></tr>
+                    <tr><td class="size-col-strong">18 INCHES</td><td>45.7 cm</td><td>Princess (most popular)</td></tr>
+                    <tr><td class="size-col-strong">20 INCHES</td><td>50.8 cm</td><td>Matinee</td></tr>
+                    <tr><td class="size-col-strong">22 INCHES</td><td>55.9 cm</td><td>Opera</td></tr>
+                </tbody>
+            </table>
+            <div class="size-note"><p>${Resource.msg('msg.sizenote.1', 'beyon', null)} <strong>${Resource.msg('msg.sizenote.18', 'beyon', null)}</strong> ${Resource.msg('msg.sizenote.2', 'beyon', null)} <strong>${Resource.msg('msg.sizenote.16', 'beyon', null)}</strong>.</p></div>
+        </div>
+    </div>
+</div>
+
+<div class="cr-overlay d-none" id="customisation-popup" role="dialog" aria-modal="true" aria-labelledby="customisation-popup-title" data-toast="${Resource.msg('form.custom.toast', 'beyon', null)}">
+    <div class="cr-modal">
+        <div class="d-flex align-items-center justify-content-between cr-head">
+            <div>
+                <h3 class="cr-title" id="customisation-popup-title">${Resource.msg('form.custom.title', 'beyon', null)}</h3>
+                <p class="cr-sub">${Resource.msg('form.custom.sub', 'beyon', null)}</p>
+            </div>
+            <button type="button" class="modal-close flex-shrink-0 p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <form class="js-request-form" novalidate>
+            <div class="cr-fields">
+                <div><input type="text" name="name" class="cr-input w-100" placeholder="${Resource.msg('form.name', 'beyon', null)}" aria-label="${Resource.msg('form.name', 'beyon', null)}" autocomplete="name" data-required="true" /><p class="cr-error">${Resource.msg('form.name.error', 'beyon', null)}</p></div>
+                <div><input type="email" name="email" class="cr-input w-100" placeholder="${Resource.msg('form.email', 'beyon', null)}" aria-label="${Resource.msg('form.email', 'beyon', null)}" autocomplete="email" data-required="email" /><p class="cr-error">${Resource.msg('form.email.error', 'beyon', null)}</p></div>
+                <div>
+                    <div class="d-flex cr-phone-row">
+                        <select class="cr-input cr-country flex-shrink-0" aria-label="${Resource.msg('form.countrycode', 'beyon', null)}">
+                            <option value="+91">🇮🇳 +91</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+966">🇸🇦 +966</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+65">🇸🇬 +65</option>
+                            <option value="+61">🇦🇺 +61</option>
+                            <option value="+60">🇲🇾 +60</option>
+                            <option value="+974">🇶🇦 +974</option>
+                            <option value="+968">🇴🇲 +968</option>
+                            <option value="+965">🇰🇼 +965</option>
+                        </select>
+                        <div class="flex-grow-1"><input type="tel" name="phone" class="cr-input w-100" placeholder="${Resource.msg('form.phone', 'beyon', null)}" aria-label="${Resource.msg('form.phone', 'beyon', null)}" maxlength="10" autocomplete="tel" data-required="phone" /></div>
+                    </div>
+                    <p class="cr-error">${Resource.msg('form.phone.error', 'beyon', null)}</p>
+                </div>
+                <div><input type="text" name="city" class="cr-input w-100" placeholder="${Resource.msg('form.city', 'beyon', null)}" aria-label="${Resource.msg('form.city', 'beyon', null)}" autocomplete="address-level2" data-required="true" /><p class="cr-error">${Resource.msg('form.city.error', 'beyon', null)}</p></div>
+                <div><textarea class="cr-input w-100" rows="3" placeholder="${Resource.msg('form.custom.placeholder', 'beyon', null)}" aria-label="${Resource.msg('form.custom.placeholder', 'beyon', null)}"></textarea></div>
+            </div>
+            <button type="submit" class="btn-request-design cr-submit w-100">${Resource.msg('button.submitrequest', 'beyon', null)}</button>
+        </form>
+        <p class="cr-terms text-center">${Resource.msg('form.custom.terms', 'beyon', null)}</p>
+    </div>
+</div>
+
+<div class="cr-overlay d-none" id="request-popup" role="dialog" aria-modal="true" aria-labelledby="request-popup-title" data-toast="${Resource.msg('form.request.toast', 'beyon', null)}">
+    <div class="cr-modal">
+        <div class="d-flex align-items-center justify-content-between cr-head">
+            <div>
+                <h3 class="cr-title" id="request-popup-title">${Resource.msg('form.request.title', 'beyon', null)}</h3>
+                <p class="cr-sub">${Resource.msg('form.request.sub', 'beyon', null)}</p>
+            </div>
+            <button type="button" class="modal-close flex-shrink-0 p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <form class="js-request-form" novalidate>
+            <div class="cr-fields">
+                <div><input type="text" name="name" class="cr-input w-100" placeholder="${Resource.msg('form.name', 'beyon', null)}" aria-label="${Resource.msg('form.name', 'beyon', null)}" autocomplete="name" data-required="true" /><p class="cr-error">${Resource.msg('form.name.error', 'beyon', null)}</p></div>
+                <div><input type="email" name="email" class="cr-input w-100" placeholder="${Resource.msg('form.email', 'beyon', null)}" aria-label="${Resource.msg('form.email', 'beyon', null)}" autocomplete="email" data-required="email" /><p class="cr-error">${Resource.msg('form.email.error', 'beyon', null)}</p></div>
+                <div>
+                    <div class="d-flex cr-phone-row">
+                        <select class="cr-input cr-country flex-shrink-0" aria-label="${Resource.msg('form.countrycode', 'beyon', null)}">
+                            <option value="+91">🇮🇳 +91</option>
+                            <option value="+1">🇺🇸 +1</option>
+                            <option value="+44">🇬🇧 +44</option>
+                            <option value="+971">🇦🇪 +971</option>
+                            <option value="+966">🇸🇦 +966</option>
+                            <option value="+49">🇩🇪 +49</option>
+                            <option value="+65">🇸🇬 +65</option>
+                            <option value="+61">🇦🇺 +61</option>
+                            <option value="+60">🇲🇾 +60</option>
+                            <option value="+974">🇶🇦 +974</option>
+                            <option value="+968">🇴🇲 +968</option>
+                            <option value="+965">🇰🇼 +965</option>
+                        </select>
+                        <div class="flex-grow-1"><input type="tel" name="phone" class="cr-input w-100" placeholder="${Resource.msg('form.phone', 'beyon', null)}" aria-label="${Resource.msg('form.phone', 'beyon', null)}" maxlength="10" autocomplete="tel" data-required="phone" /></div>
+                    </div>
+                    <p class="cr-error">${Resource.msg('form.phone.error', 'beyon', null)}</p>
+                </div>
+                <div><input type="text" name="city" class="cr-input w-100" placeholder="${Resource.msg('form.city', 'beyon', null)}" aria-label="${Resource.msg('form.city', 'beyon', null)}" autocomplete="address-level2" data-required="true" /><p class="cr-error">${Resource.msg('form.city.error', 'beyon', null)}</p></div>
+
+            </div>
+            <button type="submit" class="btn-request-design cr-submit w-100">${Resource.msg('button.submitrequest', 'beyon', null)}</button>
+        </form>
+        <p class="cr-terms text-center">${Resource.msg('form.request.terms', 'beyon', null)}</p>
+    </div>
+</div>
+
+<div class="lightbox d-none align-items-center justify-content-center" id="lightbox" role="dialog" aria-modal="true" aria-label="${Resource.msg('label.productimages', 'beyon', null)}">
+    <div class="lightbox-frame position-relative" id="lightbox-frame">
+        <img class="lightbox-image w-100 h-100" id="lightbox-image" src="" alt="" draggable="false" />
+        <button type="button" class="lightbox-close p-0" id="lightbox-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div class="lightbox-counter-wrap"><span class="lightbox-counter" id="lightbox-counter"></span></div>
+        <button type="button" class="lightbox-arrow lightbox-prev p-0" id="lightbox-prev" aria-label="${Resource.msg('button.previous', 'beyon', null)}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button type="button" class="lightbox-arrow lightbox-next p-0" id="lightbox-next" aria-label="${Resource.msg('button.next', 'beyon', null)}"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button>
+        <div class="lightbox-dots d-flex align-items-center" id="lightbox-dots"></div>
+    </div>
+</div>

@@ -1,0 +1,53 @@
+<div class="pdp-info">
+    <div class="d-flex align-items-center justify-content-between pdp-tabs-row">
+        <div class="flex-grow-1">
+            <div class="d-flex pdp-tabs" role="tablist">
+                <button type="button" class="pdp-tab active" role="tab" aria-selected="true" aria-controls="pdp-tab-details" data-tab="pdp-tab-details">${Resource.msg('label.productdetails', 'beyon', null)}</button>
+                <isif condition="${!isOutOfStock}">
+                    <button type="button" class="pdp-tab" role="tab" aria-selected="false" aria-controls="pdp-tab-breakup" data-tab="pdp-tab-breakup">${Resource.msg('label.pricebreakup', 'beyon', null)}</button>
+                </isif>
+            </div>
+        </div>
+        <button type="button" class="share-btn flex-shrink-0 d-flex align-items-center justify-content-center p-0" id="share-btn" aria-label="${Resource.msg('button.share', 'beyon', null)}">
+            <svg class="share-icon" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            <svg class="share-done" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </button>
+    </div>
+    <div id="pdp-tab-details" class="pdp-tab-panel" role="tabpanel">
+        <table class="spec-table spec-first w-100">
+            <tr><td class="spec-label"><span class="metal-text-shine-gold spec-strong">${Resource.msg('spec.metal', 'beyon', null)}</span></td><td class="spec-gap"></td><td class="spec-muted spec-pad-left">${Resource.msg('spec.weight', 'beyon', null)}</td><td class="spec-strong text-end">3.075 g</td></tr>
+        </table>
+        <div class="spec-section">
+            <div class="d-flex align-items-center lgd-head">
+                <p class="lgd-title">${Resource.msg('spec.lgd', 'beyon', null)}</p>
+                <button type="button" class="lgd-link d-inline-flex align-items-center js-faq-scroll"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg> ${Resource.msg('spec.lgdfacts', 'beyon', null)}</button>
+            </div>
+            <table class="spec-table spec-rows w-100">
+                <tr><td class="spec-muted spec-label">${Resource.msg('spec.count', 'beyon', null)}</td><td class="spec-strong spec-gap">7</td><td class="spec-muted spec-pad-left spec-label">${Resource.msg('spec.shape', 'beyon', null)}</td><td class="spec-strong text-end">${Resource.msg('spec.round', 'beyon', null)}</td></tr>
+                <tr><td class="spec-muted spec-label">${Resource.msg('spec.clarity', 'beyon', null)}</td><td class="spec-strong spec-gap">VS FG</td><td class="spec-muted spec-pad-left spec-label">${Resource.msg('spec.weight', 'beyon', null)}</td><td class="spec-strong text-end">0.3 Ct</td></tr>
+            </table>
+        </div>
+        <div class="spec-section">
+            <table class="spec-table spec-last w-100">
+                <tr><td class="spec-muted spec-label">${Resource.msg('spec.designcode', 'beyon', null)}</td><td class="spec-strong spec-gap"><isprint value="${product.id}" /></td><td class="spec-muted spec-label">${Resource.msg('spec.grossweight', 'beyon', null)}</td><td class="spec-strong text-end">3.135 g</td></tr>
+            </table>
+        </div>
+        <p class="spec-description"><isprint value="${product.shortDescription || product.longDescription || ''}" encoding="off" /></p>
+    </div>
+    <isif condition="${!isOutOfStock}">
+        <div id="pdp-tab-breakup" class="pdp-tab-panel d-none" role="tabpanel">
+            <div class="breakup-row d-flex align-items-start justify-content-between"><p class="spec-muted">${Resource.msg('spec.grossweight', 'beyon', null)}</p><p class="spec-strong breakup-value">3.135 g</p></div>
+            <div class="breakup-row d-flex align-items-start justify-content-between"><div><p class="spec-muted">${Resource.msg('breakup.goldvalue', 'beyon', null)}</p><p class="breakup-sub">${Resource.msg('breakup.goldweight', 'beyon', null)}</p><p class="breakup-sub">${Resource.msg('breakup.goldrate', 'beyon', null)}</p></div><p class="spec-strong breakup-value">${Resource.msg('breakup.goldamount', 'beyon', null)}</p></div>
+            <div class="breakup-row d-flex align-items-start justify-content-between"><div><p class="spec-muted">${Resource.msg('breakup.stone', 'beyon', null)}</p><p class="breakup-sub">${Resource.msg('breakup.stonespec', 'beyon', null)}</p></div><p class="spec-strong breakup-value breakup-value-low">${Resource.msg('breakup.stoneamount', 'beyon', null)}</p></div>
+            <div class="breakup-row d-flex align-items-start justify-content-between"><p class="spec-muted">${Resource.msg('breakup.making', 'beyon', null)}</p><p class="spec-strong breakup-value">${Resource.msg('breakup.makingamount', 'beyon', null)}</p></div>
+            <div class="breakup-row breakup-row-last d-flex align-items-start justify-content-between"><p class="spec-muted">${Resource.msg('breakup.gst', 'beyon', null)}</p><p class="spec-strong breakup-value">${Resource.msg('breakup.gstamount', 'beyon', null)}</p></div>
+            <div class="breakup-total">
+                <div class="breakup-row breakup-row-last d-flex align-items-start justify-content-between">
+                    <div><p class="breakup-total-label">${Resource.msg('breakup.total', 'beyon', null)}</p><p class="breakup-sub">${Resource.msg('label.inclusivetaxes', 'beyon', null)}</p></div>
+                    <p class="breakup-total-value">${Resource.msg('breakup.totalamount', 'beyon', null)}</p>
+                </div>
+            </div>
+            <p class="breakup-policy text-center">${Resource.msg('breakup.policy', 'beyon', null)}</p>
+        </div>
+    </isif>
+</div>
