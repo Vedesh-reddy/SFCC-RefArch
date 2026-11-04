@@ -1,0 +1,5 @@
+<a class="minicart-link icon-btn" href="${URLUtils.https('Cart-Show')}" title="${Resource.msgf('minicart.count', 'common', null, pdict.quantityTotal)}" aria-label="${Resource.msgf('minicart.count', 'common', null, pdict.quantityTotal)}">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+    <span class="desktop-only">${Resource.msg('label.cart', 'beyon', null)}</span>
+    <span class="icon-badge minicart-quantity"><isprint value="${pdict.quantityTotal}" formatter="##" /></span>
+</a>

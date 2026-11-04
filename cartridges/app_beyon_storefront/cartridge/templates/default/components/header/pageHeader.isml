@@ -1,0 +1,75 @@
+<isset name="beyonPlpUrl" value="${URLUtils.url('Search-Show', 'cgid', 'root')}" scope="page" />
+<header class="header-main" id="site-header">
+    <isinclude template="/components/header/skipNav" />
+    <div class="header-row-1 d-flex align-items-center">
+        <button type="button" class="hamburger mobile-only p-0" id="hamburger-btn" aria-label="${Resource.msg('button.menu', 'beyon', null)}" aria-expanded="false" aria-controls="mobile-menu">
+            <span class="line"></span><span class="line"></span><span class="line"></span>
+        </button>
+        <a class="header-logo flex-shrink-0" href="${URLUtils.url('Home-Show')}">
+            <img src="${URLUtils.staticURL('/images/beyon/logo.png')}" alt="${Resource.msg('label.logo', 'beyon', null)}" />
+        </a>
+        <div class="site-search search-wrap">
+            <form class="d-flex align-items-center" role="search" action="${URLUtils.url('Search-Show')}" method="get" name="simpleSearch">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.3-4.3"/></svg>
+                <input class="search-field" type="text" name="q" value="" placeholder=" "
+                       role="combobox"
+                       aria-describedby="search-assistive-text"
+                       aria-haspopup="listbox"
+                       aria-owns="search-results"
+                       aria-expanded="false"
+                       aria-autocomplete="list"
+                       aria-activedescendant=""
+                       aria-controls="search-results"
+                       aria-label="${Resource.msg('label.search', 'beyon', null)}"
+                       autocomplete="off" />
+                <div class="search-placeholder" aria-hidden="true" data-placeholders="${Resource.msg('label.search.placeholders', 'beyon', null)}"></div>
+                <div class="suggestions-wrapper" data-url="${URLUtils.url('SearchServices-GetSuggestions', 'q')}"></div>
+                <input type="hidden" value="${pdict.locale}" name="lang" />
+            </form>
+        </div>
+        <div class="header-cta-group desktop-only align-items-center">
+            <a href="${'#'}" class="header-cta cta-facts"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>${Resource.msg('label.facts', 'beyon', null)}</a>
+            <a href="${'#'}" class="header-cta cta-gift"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="3" y="8" width="18" height="13" rx="2"/><path d="M12 8V21"/><path d="M3 13h18"/></svg>${Resource.msg('label.gifting', 'beyon', null)}</a>
+        </div>
+        <div class="header-icons d-flex align-items-center">
+            <a class="icon-btn desktop-only" href="${URLUtils.url('Stores-Find')}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>${Resource.msg('label.stores', 'beyon', null)}</span></a>
+            <div class="account-wrap desktop-only" id="account-wrap">
+                <isinclude url="${URLUtils.url('Account-Header')}" />
+            </div>
+            <a class="icon-btn" href="${URLUtils.url('CustomWishlist-Show')}" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.3l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg><span class="desktop-only">${Resource.msg('label.wishlist', 'beyon', null)}</span><span class="icon-badge">2</span></a>
+            <div class="minicart">
+                <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
+            </div>
+        </div>
+    </div>
+
+    <div class="header-row-2 desktop-only" >
+        <nav class="nav-cat d-flex align-items-center justify-content-center" id="nav-cat" aria-label="${Resource.msg('button.menu', 'beyon', null)}">
+            <a href="${beyonPlpUrl}" data-mega="rings">Rings</a>
+            <a href="${beyonPlpUrl}" data-mega="earrings">Earrings</a>
+            <a href="${beyonPlpUrl}" data-mega="bracelets">Bracelets &amp; Bangles</a>
+            <a href="${beyonPlpUrl}" data-mega="solitaires">Solitaires</a>
+            <a href="${beyonPlpUrl}" data-mega="neckwear">Neckwear &amp; Pendants</a>
+            <a href="${beyonPlpUrl}" data-mega="silver">Silver</a>
+            <a href="${beyonPlpUrl}" data-mega="gifting">Gifting</a>
+            <a href="${beyonPlpUrl}" data-mega="collections">Collections</a>
+            <a href="${beyonPlpUrl}" data-mega="more">More Jewellery</a>
+            <a href="${beyonPlpUrl}" data-mega="trending" class="nav-cat-hot">Trending</a>
+        </nav>
+        <isinclude template="/components/header/beyon-mega-menu" />
+    </div>
+</header>
+
+<div class="mega-overlay" id="mega-overlay"></div>
+
+<nav class="mobile-menu mobile-only flex-column" id="mobile-menu" aria-label="${Resource.msg('button.menu', 'beyon', null)}">
+    <button type="button" class="mobile-close-btn p-0" id="mobile-close-btn" aria-label="${Resource.msg('button.menu.close', 'beyon', null)}">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <isinclude url="${URLUtils.url('Account-Header', 'mobile', true)}" />
+    <isinclude template="/components/header/beyon-mobile-sections" />
+</nav>
+
+<isinclude template="/components/header/beyon-mobile-subpages" />
+
+<script defer src="${URLUtils.staticURL('/js/beyon-header.js')}"></script>
