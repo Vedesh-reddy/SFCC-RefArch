@@ -1,0 +1,3 @@
+<nav class="crumbs d-flex align-items-center" aria-label="${Resource.msg('label.home', 'beyon', null)}">
+    <a href="${URLUtils.url('Home-Show')}">${Resource.msg('label.home', 'beyon', null)}</a><svg aria-hidden="true" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#B0ABAB" stroke-width="3" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg><a href="${URLUtils.url('Search-Show', 'cgid', 'root')}">${Resource.msg('label.jewellery', 'beyon', null)}</a><svg aria-hidden="true" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#B0ABAB" stroke-width="3" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg><span class="crumbs-active" aria-current="page"><isprint value="${beyonTitle}" /></span>
+</nav>

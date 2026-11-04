@@ -19,7 +19,7 @@
          data-copy="${checkoutCopyJson}"
          data-subtotal="${pdict.order.totals.subTotal}"
          data-cart-url="${URLUtils.https('Cart-Show')}"
-         data-shop-url="${URLUtils.url('Search-Show', 'cgid', 'root', 'sz', 24)}">
+         data-shop-url="${URLUtils.url('Search-Show', 'cgid', 'root')}">
         <div class="beyon-toast d-none" id="beyon-toast" role="status"></div>
 
         <isset name="beyonShowLogo" value="${false}" scope="page" />
@@ -249,7 +249,7 @@
                     <p class="confirmation-address js-confirm-line2"></p>
                     <p class="confirmation-amount">${Resource.msg('co.confirm.amount', 'beyon', null)} <span class="js-confirm-amount"></span></p>
                 </div>
-                <a class="btn-cta confirmation-cta d-inline-block js-continue-shopping" href="${URLUtils.url('Search-Show', 'cgid', 'root', 'sz', 24)}">${Resource.msg('co.confirm.cta', 'beyon', null)}</a>
+                <a class="btn-cta confirmation-cta d-inline-block js-continue-shopping" href="${URLUtils.url('Search-Show', 'cgid', 'root')}">${Resource.msg('co.confirm.cta', 'beyon', null)}</a>
             </div>
         </div>
 

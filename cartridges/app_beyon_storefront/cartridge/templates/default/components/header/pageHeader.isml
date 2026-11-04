@@ -1,4 +1,4 @@
-<isset name="beyonPlpUrl" value="${URLUtils.url('Search-Show', 'cgid', 'root', 'sz', 24)}" scope="page" />
+<isset name="beyonPlpUrl" value="${URLUtils.url('Search-Show', 'cgid', 'root')}" scope="page" />
 <header class="header-main" id="site-header" data-login-css="${URLUtils.staticURL('/css/beyon-login.css')}" data-login-js="${URLUtils.staticURL('/js/beyon-login.js')}">
     <isinclude template="/components/header/skipNav" />
     <div class="header-row-1 d-flex align-items-center">
@@ -25,7 +25,6 @@
                 <div class="search-placeholder" aria-hidden="true" data-placeholders="${Resource.msg('label.search.placeholders', 'beyon', null)}" data-placeholders-mobile="${Resource.msg('label.search.placeholders.mobile', 'beyon', null)}"></div>
                 <div class="suggestions-wrapper" data-url="${URLUtils.url('SearchServices-GetSuggestions', 'q')}"></div>
                 <input type="hidden" value="${pdict.locale}" name="lang" />
-                <input type="hidden" value="24" name="sz" />
             </form>
         </div>
         <div class="header-cta-group desktop-only align-items-center">
@@ -38,7 +37,7 @@
                 <isinclude url="${URLUtils.url('Account-Header')}" />
             </div>
             <a class="icon-btn" href="${URLUtils.url('CustomWishlist-Show')}" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l1 1.1L12 21.3l7.8-7.8 1-1.1a5.5 5.5 0 0 0 0-7.8z"/></svg><span class="desktop-only">${Resource.msg('label.wishlist', 'beyon', null)}</span><span class="icon-badge">2</span></a>
-            <div class="minicart">
+            <div class="minicart mt-0">
                 <isinclude url="${URLUtils.url('Cart-MiniCart')}" />
             </div>
         </div>
