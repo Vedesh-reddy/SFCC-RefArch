@@ -1,0 +1,11 @@
+<isset name="beyonStart" value="${pdict.productSearch.pageNumber * pdict.productSearch.pageSize}" scope="page" />
+<isloop items="${pdict.productSearch.productIds}" var="product" status="loopState">
+    <isset name="beyonIndex" value="${beyonStart + loopState.index}" scope="page" />
+    <isif condition="${beyonIndex === 3 || beyonIndex === 9 || beyonIndex === 18}">
+        <isset name="beyonBanner" value="${beyonIndex === 3 ? 1 : (beyonIndex === 9 ? 2 : 3)}" scope="page" />
+        <isinclude template="search/components/beyon-promo-banner" />
+    </isif>
+    <isobject object="${product.productSearchHit}" view="searchhit">
+        <isinclude url="${URLUtils.url('Tile-Show', 'pid', product.productID, 'swatches', false, 'ratings', false, 'showQuickView', false, 'beyonIndex', beyonIndex.toFixed(0))}" />
+    </isobject>
+</isloop>

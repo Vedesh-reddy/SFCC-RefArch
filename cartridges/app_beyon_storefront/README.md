@@ -24,6 +24,18 @@ Images are in `static/`, which is git-ignored because it normally holds build ou
 | Wishlist badge | Fixed at 2 |
 | Beyon Facts, Gifting, NeuPass | No destination yet |
 
+## PLP placeholders
+
+The grid shows real catalog products, prices and images, and Load More uses the base `Search-UpdateGrid` route. These parts are client-side only:
+
+| Item | Current behaviour |
+|---|---|
+| Filter drawer | Chips select and list under the toolbar, but the grid isn't filtered |
+| Sort | Price and New Arrivals reorder loaded cards. Best Sellers and Popularity keep best-match order |
+| Wishlist hearts | Kept in `sessionStorage` for the visit |
+| Ribbons, colour dots, offer tag, first card's Available On Request | Set by grid position, as in the design's sample data |
+| In-grid banners | Fixed copy on the design's gradient |
+
 ## Deliberate differences from the design
 
 - At 390px the design pushes the cart icon off screen because search can't shrink. Search shrinks here so the cart stays visible.

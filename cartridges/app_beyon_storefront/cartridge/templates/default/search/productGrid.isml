@@ -1,0 +1,19 @@
+<isinclude template="search/components/productTiles" />
+
+<div class="w-100 grid-footer text-center"
+     data-sort-options="${JSON.stringify(pdict.productSearch.productSort)}"
+     data-page-size="${pdict.productSearch.pageSize}"
+     data-page-number="${pdict.productSearch.pageNumber}"
+>
+    <isif condition="${pdict.productSearch.showMoreUrl !== ''}">
+        <div class="show-more">
+            <button type="button" class="btn-outline-beyon more" data-url="${('' + pdict.productSearch.showMoreUrl).replace(/sz=\d+/, 'sz=12')}">${Resource.msg('button.loadmore', 'beyon', null)}</button>
+        </div>
+    </isif>
+    <p class="showing-text" id="showing-text"></p>
+
+    <input type="hidden" class="permalink" value="${pdict.productSearch.permalink}" />
+    <isif condition="${pdict.productSearch.category != null}">
+        <input type="hidden" class="category-id" value="${pdict.productSearch.category.id}" />
+    </isif>
+</div>
