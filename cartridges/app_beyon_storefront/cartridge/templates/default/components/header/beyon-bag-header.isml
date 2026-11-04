@@ -1,0 +1,21 @@
+<nav class="header-bar">
+    <div class="header-bar-inner position-relative d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center header-bar-left">
+            <a href="${pdict.beyonBackUrl || URLUtils.url('Home-Show')}" class="header-icon js-back" title="${Resource.msg('button.back', 'beyon', null)}" aria-label="${Resource.msg('button.back', 'beyon', null)}">
+                <svg aria-hidden="true" width="18" height="18" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9H4M8 5l-4 4 4 4"/></svg>
+            </a>
+            <isif condition="${beyonShowLogo}">
+                <a href="${URLUtils.url('Home-Show')}"><img class="header-bar-logo" src="${URLUtils.staticURL('/images/beyon/logo.png')}" alt="${Resource.msg('label.logo', 'beyon', null)}" /></a>
+            </isif>
+        </div>
+        <div class="header-bar-title d-flex align-items-center justify-content-center">
+            <div class="d-flex align-items-center header-bar-title-inner">
+                <isif condition="${beyonHeaderIconTemplate}"><isinclude template="${beyonHeaderIconTemplate}" /></isif>
+                <h1 class="brand-text">${beyonHeaderTitle}</h1>
+            </div>
+        </div>
+        <a href="${URLUtils.url('CustomWishlist-Show')}" class="header-icon header-bar-right" title="${Resource.msg('label.wishlist', 'beyon', null)}" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}">
+            <svg aria-hidden="true" width="18" height="18" fill="none" stroke="#2C2C2C" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>
+        </a>
+    </div>
+</nav>

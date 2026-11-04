@@ -1,0 +1,208 @@
+<isdecorate template="common/layout/beyon-bare">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/cart.css');
+        assets.addJs('/js/beyon-cart.js');
+    </isscript>
+
+    <isif condition="${pdict.reportingURLs && pdict.reportingURLs.length}">
+        <isinclude template="reporting/reportingUrls" />
+    </isif>
+
+    <div class="beyon-cart" id="beyon-cart"
+         data-checkout-url="${URLUtils.https('Checkout-Begin')}"
+         data-msg-removed="${Resource.msg('cart.msg.removed', 'beyon', null)}"
+         data-msg-moved="${Resource.msg('cart.msg.moved', 'beyon', null)}"
+         data-msg-remove-failed="${Resource.msg('cart.msg.removefailed', 'beyon', null)}"
+         data-msg-postal="${Resource.msg('cart.msg.postal', 'beyon', null)}"
+         data-msg-available="${Resource.msg('cart.msg.available', 'beyon', null)}"
+         data-msg-unavailable="${Resource.msg('cart.msg.unavailable', 'beyon', null)}"
+         data-msg-enter-code="${Resource.msg('cart.msg.entercode', 'beyon', null)}"
+         data-msg-invalid="${Resource.msg('cart.msg.invalid', 'beyon', null)}"
+         data-msg-already="${Resource.msg('cart.msg.already', 'beyon', null)}"
+         data-msg-applied="${Resource.msg('cart.msg.applied', 'beyon', null)}"
+         data-msg-coupon-removed="${Resource.msg('cart.msg.couponremoved', 'beyon', null)}"
+         data-msg-saving="${Resource.msg('cart.msg.saving', 'beyon', null)}"
+         data-msg-status="${Resource.msg('cart.coupon.status', 'beyon', null)}"
+         data-msg-delivery-by="${Resource.msg('cart.delivery.by', 'beyon', null)}"
+         data-msg-free-express="${Resource.msg('cart.delivery.free', 'beyon', null)}"
+         data-msg-no-delivery="${Resource.msg('msg.nodelivery', 'beyon', null)}"
+         data-msg-no-stock="${Resource.msg('cart.delivery.nostock', 'beyon', null)}">
+        <div class="beyon-toast d-none" id="beyon-toast" role="status"></div>
+        <div class="confetti-container" id="confetti-container" aria-hidden="true"></div>
+
+        <isset name="beyonShowLogo" value="${true}" scope="page" />
+        <isset name="beyonHeaderTitle" value="${Resource.msg('cart.title', 'beyon', null)}" scope="page" />
+        <isset name="beyonHeaderIconTemplate" value="cart/beyon-bag-icon" scope="page" />
+        <isinclude template="components/header/beyon-bag-header" />
+
+        <main class="cart-main">
+            <isif condition="${pdict.valid.error && pdict.items.length !== 0}">
+                <div class="alert alert-danger valid-cart-error" role="alert"><isprint value="${pdict.valid.message}" /></div>
+            </isif>
+            <div class="cart-layout">
+                <div class="cart-left">
+                    <div class="beyon-card pincode-section anim ${pdict.items.length === 0 ? 'd-none' : ''}" id="pincode-section">
+                        <div class="d-flex align-items-center pincode-head">
+                            <div class="pincode-icon d-flex align-items-center justify-content-center flex-shrink-0">
+                                <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10"/></svg>
+                            </div>
+                            <div>
+                                <p class="card-heading">${Resource.msg('cart.delivery.title', 'beyon', null)}</p>
+                                <p class="card-sub">${Resource.msg('cart.delivery.sub', 'beyon', null)}</p>
+                            </div>
+                        </div>
+                        <div class="d-flex pincode-row">
+                            <div class="position-relative flex-shrink-0">
+                                <select id="country-select" class="input-field country-select" aria-label="${Resource.msg('cart.delivery.country', 'beyon', null)}">
+                                <option value="IN" data-flag="🇮🇳" data-name="India">🇮🇳  India</option>
+                                <option value="AE" data-flag="🇦🇪" data-name="UAE">🇦🇪  UAE</option>
+                                <option value="DE" data-flag="🇩🇪" data-name="Germany">🇩🇪  Germany</option>
+                                <option value="SA" data-flag="🇸🇦" data-name="Saudi Arabia">🇸🇦  Saudi Arabia</option>
+                                <option value="NL" data-flag="🇳🇱" data-name="Netherlands">🇳🇱  Netherlands</option>
+                                <option value="MY" data-flag="🇲🇾" data-name="Malaysia">🇲🇾  Malaysia</option>
+                                <option value="KE" data-flag="🇰🇪" data-name="Kenya">🇰🇪  Kenya</option>
+                                <option value="RO" data-flag="🇷🇴" data-name="Romania">🇷🇴  Romania</option>
+                                <option value="ES" data-flag="🇪🇸" data-name="Spain">🇪🇸  Spain</option>
+                                <option value="PT" data-flag="🇵🇹" data-name="Portugal">🇵🇹  Portugal</option>
+                                <option value="QA" data-flag="🇶🇦" data-name="Qatar">🇶🇦  Qatar</option>
+                                <option value="IT" data-flag="🇮🇹" data-name="Italy">🇮🇹  Italy</option>
+                                <option value="OM" data-flag="🇴🇲" data-name="Oman">🇴🇲  Oman</option>
+                                <option value="KW" data-flag="🇰🇼" data-name="Kuwait">🇰🇼  Kuwait</option>
+                                <option value="BH" data-flag="🇧🇭" data-name="Bahrain">🇧🇭  Bahrain</option>
+                                <option value="ZA" data-flag="🇿🇦" data-name="South Africa">🇿🇦  South Africa</option>
+                                <option value="CA" data-flag="🇨🇦" data-name="Canada">🇨🇦  Canada</option>
+                                <option value="NZ" data-flag="🇳🇿" data-name="New Zealand">🇳🇿  New Zealand</option>
+                                <option value="AU" data-flag="🇦🇺" data-name="Australia">🇦🇺  Australia</option>
+                                <option value="SG" data-flag="🇸🇬" data-name="Singapore">🇸🇬  Singapore</option>
+                                <option value="US" data-flag="🇺🇸" data-name="USA">🇺🇸  USA</option>
+                                <option value="GB" data-flag="🇬🇧" data-name="United Kingdom">🇬🇧  United Kingdom</option>
+                                </select>
+                            </div>
+                            <input type="text" inputmode="numeric" maxlength="10" placeholder="${Resource.msg('cart.delivery.pincode', 'beyon', null)}" aria-label="${Resource.msg('cart.delivery.pincode', 'beyon', null)}" id="pincode-input" class="input-field pincode-field" />
+                            <button type="button" class="btn-metallic pincode-check flex-shrink-0" id="pincode-check">${Resource.msg('button.check', 'beyon', null)}</button>
+                        </div>
+                    </div>
+
+                    <div class="cart-items" id="cart-items">
+                        <isloop items="${pdict.items}" var="lineItem" status="lineState">
+                            <isinclude template="cart/beyon-line-item" />
+                        </isloop>
+                    </div>
+
+                    <div class="empty-state text-center anim ${pdict.items.length === 0 ? '' : 'd-none'}" id="empty-state">
+                        <div class="empty-icon d-flex align-items-center justify-content-center float">
+                            <svg aria-hidden="true" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 002 1.61h9.72a2 2 0 002-1.61L23 6H6"/></svg>
+                        </div>
+                        <h2 class="empty-title">${Resource.msg('cart.empty.title', 'beyon', null)}</h2>
+                        <p class="empty-sub">${Resource.msg('cart.empty.sub', 'beyon', null)}</p>
+                        <a href="${URLUtils.url('Search-Show', 'cgid', 'root', 'sz', 24)}" class="btn-cta empty-cta d-inline-block">${Resource.msg('cart.empty.cta', 'beyon', null)}</a>
+                    </div>
+                </div>
+
+                <div class="cart-right ${pdict.items.length === 0 ? 'd-none' : ''}" id="sidebar-wrap">
+                    <div class="cart-right-sticky">
+                        <div class="coupon-card coupon-section" id="coupon-section" role="button" tabindex="0" aria-haspopup="dialog">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center coupon-head">
+                                    <div class="coupon-icon d-flex align-items-center justify-content-center flex-shrink-0">
+                                        <svg aria-hidden="true" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M2 7h20v5H2z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 010-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 000-5C13 2 12 7 12 7z"/></svg>
+                                    </div>
+                                    <div>
+                                        <p class="card-heading">${Resource.msg('cart.coupon.title', 'beyon', null)}</p>
+                                        <p class="card-sub coupon-status" id="coupon-status">${Resource.msg('cart.coupon.status', 'beyon', null)}</p>
+                                    </div>
+                                </div>
+                                <div id="coupon-action">
+                                    <svg class="coupon-chevron" aria-hidden="true" width="18" height="18" fill="none" stroke="#B0ABAB" stroke-width="2" stroke-linecap="round"><path d="M7 4l5 5-5 5"/></svg>
+                                    <button type="button" class="coupon-remove d-none p-0" id="coupon-remove">${Resource.msg('cart.coupon.remove', 'beyon', null)}</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="beyon-card order-summary anim" id="order-summary">
+                            <h2 class="summary-title d-flex align-items-center"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 2h14a2 2 0 012 2v16l-3.5-2-3.5 2-3.5-2-3.5 2-3.5-2L1 22V4a2 2 0 012-2z"/><path d="M8 8h8"/><path d="M8 12h6"/></svg>${Resource.msg('cart.summary.title', 'beyon', null)}</h2>
+                            <div class="summary-rows">
+                                <div class="d-flex justify-content-between"><span class="summary-label">${Resource.msg('cart.summary.subtotal', 'beyon', null)}</span><span class="summary-value" id="summary-subtotal" data-amount="${pdict.totals.subTotal}">${pdict.totals.subTotal}</span></div>
+                                <div class="justify-content-between d-none" id="discount-row">
+                                    <span class="summary-discount d-flex align-items-center"><svg aria-hidden="true" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M1 6l3.5 3.5L11 3"/></svg>${Resource.msg('cart.summary.discount', 'beyon', null)}</span>
+                                    <span class="summary-discount-value" id="summary-discount"></span>
+                                </div>
+                                <div class="d-flex justify-content-between"><span class="summary-label">${Resource.msg('cart.summary.delivery', 'beyon', null)}</span><span class="summary-free">${Resource.msg('cart.summary.free', 'beyon', null)}</span></div>
+                                <div class="d-flex justify-content-between"><span class="summary-label">${Resource.msg('cart.summary.taxes', 'beyon', null)}</span><span class="summary-included">${Resource.msg('cart.summary.included', 'beyon', null)}</span></div>
+                                <div class="summary-total d-flex justify-content-between align-items-center">
+                                    <span class="summary-total-label">${Resource.msg('cart.summary.total', 'beyon', null)}</span>
+                                    <span class="summary-total-value js-total" id="summary-total">${pdict.totals.subTotal}</span>
+                                </div>
+                            </div>
+                            <button type="button" class="btn-cta summary-cta align-items-center justify-content-center w-100 js-checkout">
+                                ${Resource.msg('cart.summary.cta', 'beyon', null)}
+                                <svg aria-hidden="true" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 8h6M8 5l3 3-3 3"/></svg>
+                            </button>
+                        </div>
+
+                        <isinclude template="components/beyon-trust-ticker" />
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <div class="sticky-cta ${pdict.items.length === 0 ? 'd-none' : ''}" id="sticky-cta">
+            <div class="d-flex align-items-center sticky-cta-inner">
+                <div class="flex-shrink-0">
+                    <p class="sticky-total-label">${Resource.msg('cart.sticky.total', 'beyon', null)}</p>
+                    <p class="sticky-total js-total" id="cta-total">${pdict.totals.subTotal}</p>
+                </div>
+                <button type="button" class="btn-cta sticky-btn d-flex align-items-center justify-content-center js-checkout">
+                    ${Resource.msg('cart.sticky.cta', 'beyon', null)}
+                    <svg aria-hidden="true" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M5 7h4M7 5l2 2-2 2"/></svg>
+                </button>
+            </div>
+        </div>
+
+        <div class="beyon-overlay" id="coupon-overlay"></div>
+        <div class="beyon-drawer" id="coupon-drawer" role="dialog" aria-modal="true" aria-labelledby="coupon-drawer-title">
+            <div class="drawer-inner">
+                <div class="drawer-handle"></div>
+                <div class="d-flex align-items-center justify-content-between drawer-head">
+                    <h3 class="drawer-title d-flex align-items-center" id="coupon-drawer-title"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>${Resource.msg('cart.coupon.title', 'beyon', null)}</h3>
+                    <button type="button" class="drawer-close js-coupon-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="14" y2="14"/><line x1="14" y1="4" x2="4" y2="14"/></svg></button>
+                </div>
+                <div class="d-flex coupon-entry">
+                    <input type="text" id="coupon-input" placeholder="${Resource.msg('cart.coupon.placeholder', 'beyon', null)}" aria-label="${Resource.msg('cart.coupon.placeholder', 'beyon', null)}" maxlength="20" class="input-field coupon-field" />
+                    <button type="button" class="btn-cta coupon-apply" id="coupon-apply">${Resource.msg('button.apply', 'beyon', null)}</button>
+                </div>
+                <div class="coupon-message d-none" id="coupon-message" role="status"></div>
+                <p class="coupon-list-title d-flex align-items-center"><svg aria-hidden="true" width="12" height="12" fill="none" stroke="#BF0E23" stroke-width="2.5" stroke-linecap="round"><path d="M1 6l3.5 3.5L11 3"/></svg>${Resource.msg('cart.coupon.available', 'beyon', null)}</p>
+                <div class="coupon-list" id="coupon-list">
+                    <isloop items="${['WELCOME10', 'GOLD500', 'FIRSTORDER']}" var="couponCode" status="couponState">
+                        <div class="coupon-available anim-scale" data-coupon="${couponCode}" data-kind="${couponCode === 'GOLD500' ? 'flat' : 'percent'}" data-discount="${couponCode === 'WELCOME10' ? '10' : (couponCode === 'GOLD500' ? '500' : '15')}" data-max="${couponCode === 'WELCOME10' ? '5000' : (couponCode === 'GOLD500' ? '500' : '8000')}" data-icon="${couponCode === 'WELCOME10' ? '\uD83C\uDF89' : (couponCode === 'GOLD500' ? '\uD83D\uDC8E' : '\u2B50')}">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex flex-column coupon-copy">
+                                    <span class="coupon-chip">${couponCode}</span>
+                                    <p class="coupon-desc">${Resource.msg('cart.coupon.' + couponCode + '.desc', 'beyon', null)}</p>
+                                    <p class="coupon-note">${Resource.msg('cart.coupon.' + couponCode + '.note', 'beyon', null)}</p>
+                                </div>
+                                <button type="button" class="coupon-apply-btn flex-shrink-0" data-applied-label="${Resource.msg('cart.coupon.appliedlabel', 'beyon', null)}" data-apply-label="${Resource.msg('cart.coupon.applylabel', 'beyon', null)}">${Resource.msg('cart.coupon.applylabel', 'beyon', null)}</button>
+                            </div>
+                        </div>
+                    </isloop>
+                </div>
+            </div>
+        </div>
+
+        <div class="beyon-overlay" id="remove-overlay"></div>
+        <div class="beyon-drawer" id="remove-drawer" role="dialog" aria-modal="true" aria-labelledby="remove-title">
+            <div class="drawer-inner-remove text-center">
+                <div class="drawer-handle"></div>
+                <div class="remove-icon d-flex align-items-center justify-content-center"><svg aria-hidden="true" width="28" height="28" fill="none" stroke="#BF0E23" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg></div>
+                <h3 class="remove-title" id="remove-title">${Resource.msg('cart.remove.title', 'beyon', null)}</h3>
+                <p class="remove-sub">${Resource.msg('cart.remove.sub', 'beyon', null)}</p>
+                <div class="d-flex remove-actions">
+                    <button type="button" class="btn-outline-metal remove-btn js-remove-cancel">${Resource.msg('cart.remove.cancel', 'beyon', null)}</button>
+                    <button type="button" class="btn-cta remove-btn" id="remove-confirm">${Resource.msg('cart.remove.confirm', 'beyon', null)}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</isdecorate>

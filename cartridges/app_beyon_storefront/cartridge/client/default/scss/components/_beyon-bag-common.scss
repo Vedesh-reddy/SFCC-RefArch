@@ -1,0 +1,609 @@
+/* stylelint-disable no-descending-specificity */
+$bag-border: #e5ddd3;
+$bag-input-border: #e0d8ce;
+
+html body {
+    background: #efeae3;
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #d5d5d5;
+    border-radius: 10px;
+}
+
+@keyframes fade-up {
+    from {
+        opacity: 0;
+        transform: translateY(16px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-in-right {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes scale-in {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes shimmer {
+    0% {
+        background-position: -200% 0;
+    }
+
+    100% {
+        background-position: 200% 0;
+    }
+}
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes gradient-shift {
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+@keyframes badge-ticker {
+    0% {
+        transform: translate(0);
+    }
+
+    100% {
+        transform: translate(-50%);
+    }
+}
+
+.anim {
+    opacity: 0;
+    animation: fade-up 0.5s ease forwards;
+}
+
+.anim-slide {
+    opacity: 0;
+    animation: slide-in-right 0.5s ease forwards;
+}
+
+.anim-scale {
+    opacity: 0;
+    animation: scale-in 0.4s ease forwards;
+}
+
+.float {
+    animation: float 3s ease-in-out infinite;
+}
+
+.beyon-cart,
+.beyon-checkout {
+    color: $beyon-dark;
+    font-family: Outfit, sans-serif;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+
+    p,
+    h1,
+    h2,
+    h3 {
+        margin: 0;
+    }
+
+    button {
+        color: inherit;
+        font-family: inherit;
+    }
+
+    .btn-cta,
+    .btn-metallic {
+        color: #fff;
+    }
+}
+
+.beyon-toast {
+    position: fixed;
+    top: 28px;
+    left: 50%;
+    z-index: 100;
+    padding: 14px 28px;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+    border-radius: 16px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 12%);
+    transform: translateX(-50%) translateY(-160%);
+    transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.show {
+        transform: translateX(-50%) translateY(0);
+    }
+
+    &.success {
+        color: #2e7d32;
+        background: rgba(232, 245, 233, 95%);
+    }
+
+    &.error {
+        color: $beyon-primary;
+        background: rgba(255, 240, 240, 95%);
+    }
+}
+
+.header-bar {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: #fff;
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(197, 165, 117, 15%);
+
+    &::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(197, 165, 117, 30%), transparent);
+    }
+}
+
+.header-bar-inner {
+    max-width: 1152px;
+    height: 64px;
+    margin: 0 auto;
+    padding: 0 16px;
+
+    @media (min-width: $beyon-sm) {
+        padding: 0 24px;
+    }
+
+    @media (min-width: $beyon-lg) {
+        padding: 0 32px;
+    }
+}
+
+.header-bar-left {
+    position: relative;
+    z-index: 10;
+    gap: 10px;
+}
+
+.header-bar-right {
+    position: relative;
+    z-index: 10;
+}
+
+.header-bar-logo {
+    display: block;
+    height: 36px;
+    object-fit: contain;
+
+    @media (min-width: $beyon-sm) {
+        height: 44px;
+    }
+}
+
+.header-bar-title {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+.header-bar-title-inner {
+    gap: 12px;
+    pointer-events: auto;
+}
+
+.header-count {
+    position: absolute;
+    top: -4px;
+    right: -6px;
+    width: 16px;
+    height: 16px;
+    color: #fff;
+    font-size: 8px;
+    font-weight: 700;
+    line-height: 13.5px;
+    background: $beyon-primary;
+    border-radius: 50%;
+
+    @media (min-width: $beyon-md) {
+        font-size: 9px;
+    }
+}
+
+.brand-text {
+    color: $beyon-dark;
+    font-family: Outfit, sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 28px;
+    letter-spacing: 0.2em;
+    background: linear-gradient(135deg, $beyon-dark, #555, $beyon-dark);
+    background-size: 200% 200%;
+    background-clip: text;
+    animation: gradient-shift 4s ease infinite;
+    -webkit-text-fill-color: transparent;
+
+    @media (min-width: $beyon-md) {
+        font-size: 18px;
+    }
+}
+
+.header-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: transparent;
+    border: 1.5px solid rgba(197, 165, 117, 20%);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    svg {
+        transition: all 0.3s;
+    }
+
+    &:hover {
+        background: rgba(191, 14, 35, 4%);
+        border-color: $beyon-primary;
+        transform: scale(1.05);
+
+        svg {
+            stroke: $beyon-primary;
+        }
+    }
+}
+
+.beyon-card {
+    background: #fff;
+    border: 1px solid $bag-border;
+    border-radius: 16px;
+    box-shadow: 0 2px 8px rgba(197, 165, 117, 6%);
+    transition: all 0.3s ease;
+
+    &:hover {
+        box-shadow: 0 8px 32px rgba(197, 165, 117, 12%);
+        transform: translateY(-1px);
+    }
+}
+
+.card-heading {
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 20px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 14px;
+    }
+}
+
+.card-sub {
+    color: $beyon-warm-grey;
+    font-size: 10px;
+    line-height: 16px;
+
+    @media (min-width: $beyon-md) {
+        font-size: 12px;
+    }
+}
+
+.btn-cta {
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, $beyon-primary 0%, #d4162e 40%, $beyon-primary-light 60%, $beyon-primary 100%);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(191, 14, 35, 30%), inset 0 1px 0 rgba(255, 255, 255, 20%), 0 0 0 1px rgba(191, 14, 35, 10%);
+    cursor: pointer;
+    transition: all 0.3s;
+    animation: gradient-shift 3s ease infinite;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 20%), transparent);
+        transition: left 0.6s;
+    }
+
+    &:hover {
+        color: #fff;
+        text-decoration: none;
+        box-shadow: 0 8px 32px rgba(191, 14, 35, 40%), 0 0 0 1px rgba(191, 14, 35, 20%);
+        transform: translateY(-2px);
+
+        &::before {
+            left: 100%;
+        }
+    }
+
+    &:active {
+        transform: scale(0.97) translateY(0);
+    }
+
+    &:disabled {
+        cursor: not-allowed;
+        opacity: 0.7;
+    }
+}
+
+.btn-metallic {
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 15%);
+    background: linear-gradient(135deg, $beyon-gold 0%, #dcc9a8 30%, #e8d8be 50%, $beyon-gold 70%, #a88d60 100%);
+    background-size: 200% 200%;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 4px 16px rgba(197, 165, 117, 30%), inset 0 1px 0 rgba(255, 255, 255, 30%), 0 0 0 1px rgba(197, 165, 117, 20%);
+    cursor: pointer;
+    transition: all 0.3s;
+    animation: gradient-shift 4s ease infinite;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 25%), transparent);
+        transition: left 0.5s;
+    }
+
+    &:hover {
+        box-shadow: 0 6px 24px rgba(197, 165, 117, 40%);
+        transform: translateY(-1px);
+
+        &::before {
+            left: 100%;
+        }
+    }
+}
+
+.btn-outline-metal {
+    color: $beyon-dark;
+    font-weight: 600;
+    background: linear-gradient(#fff, #fff) padding-box, linear-gradient(135deg, $beyon-gold, #e8d8be, $beyon-gold) border-box;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+
+    &:hover {
+        background: linear-gradient(#fffbf5, #fffbf5) padding-box, linear-gradient(135deg, $beyon-primary, $beyon-primary-light, $beyon-primary) border-box;
+        transform: translateY(-1px);
+    }
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 16px;
+    color: $beyon-dark;
+    font-family: inherit;
+    font-size: 14px;
+    background: #fff;
+    border: 1.5px solid $bag-input-border;
+    border-radius: 14px;
+    transition: all 0.3s;
+
+    &::placeholder {
+        color: $beyon-warm-grey;
+    }
+
+    &:focus {
+        border-color: $beyon-gold !important;
+        outline: none;
+        box-shadow: 0 0 0 3px rgba(197, 165, 117, 12%);
+    }
+}
+
+.beyon-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    background: rgba(0, 0, 0, 40%);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+.beyon-drawer {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 50;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #fff;
+    border-radius: 28px 28px 0 0;
+    transform: translateY(100%);
+    visibility: hidden;
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.35s, visibility 0.4s;
+
+    &.open {
+        transform: translateY(0);
+        visibility: visible;
+    }
+
+    @media (min-width: $beyon-md) {
+        inset: 50% auto auto 50%;
+        width: 500px;
+        max-height: 82vh;
+        border-radius: 28px;
+        box-shadow: 0 32px 80px rgba(0, 0, 0, 20%);
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.92);
+        pointer-events: none;
+
+        &.open {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+            pointer-events: auto;
+        }
+    }
+
+    .drawer-inner {
+        padding: 20px;
+
+        @media (min-width: $beyon-sm) {
+            padding: 24px;
+        }
+    }
+
+    .drawer-handle {
+        width: 40px;
+        height: 4px;
+        margin: 0 auto 20px;
+        background: #e5e7eb;
+        border-radius: 9999px;
+
+        @media (min-width: $beyon-md) {
+            display: none;
+        }
+    }
+
+    .drawer-head {
+        margin-bottom: 24px;
+    }
+
+    .drawer-title {
+        gap: 8px;
+        color: $beyon-dark;
+        font-family: Outfit, sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 28px;
+
+        @media (min-width: $beyon-md) {
+            font-size: 18px;
+        }
+    }
+
+    .drawer-close {
+        padding: 8px;
+        line-height: 0;
+        background: none;
+        border: 0;
+        border-radius: 9999px;
+        cursor: pointer;
+        transition: background-color 0.15s;
+
+        &:hover {
+            background: $beyon-soft-grey;
+        }
+    }
+}
+
+.trust-ticker {
+    padding: 12px 0;
+    overflow: hidden;
+    border-top: 1px solid $bag-border;
+}
+
+.badge-ticker-track {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    width: max-content;
+    animation: 27s linear infinite badge-ticker;
+
+    &:hover {
+        animation-play-state: paused;
+    }
+}
+
+.ticker-item {
+    gap: 4px;
+}
+
+.ticker-icon {
+    width: 16px;
+    height: 16px;
+    background: rgba(184, 134, 11, 10%);
+    border-radius: 6px;
+}
+
+.ticker-text {
+    color: #5a4a2a;
+    font-size: 8px;
+    font-weight: 600;
+    white-space: nowrap;
+
+    @media (min-width: $beyon-md) {
+        font-size: 9px;
+    }
+}
+
+.ticker-text-soft {
+    color: #9a8a6a;
+    font-weight: 400;
+}
+
+.ticker-dot {
+    margin: 0 3px;
+    color: #d4c5a4;
+    font-size: 6px;
+}

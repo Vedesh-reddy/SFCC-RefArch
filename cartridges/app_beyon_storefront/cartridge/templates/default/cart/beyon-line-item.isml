@@ -1,0 +1,40 @@
+<isset name="metalIndex" value="${lineState.index % 3}" scope="page" />
+<isset name="lineAvailable" value="${lineItem.available !== false}" scope="page" />
+<div class="cart-item beyon-card anim-slide" data-uuid="${lineItem.UUID}" data-pid="${lineItem.id}" data-out="${lineAvailable ? 'false' : 'true'}" data-index="${lineState.index.toFixed(0)}" data-remove-url="${pdict.actionUrls.removeProductLineItemUrl + '?pid=' + lineItem.id + '&uuid=' + lineItem.UUID}">
+    <div class="d-flex cart-item-inner">
+        <div class="product-img flex-shrink-0 ${lineAvailable ? '' : 'is-out'}">
+            <isif condition="${lineItem.images && lineItem.images.small && lineItem.images.small.length > 0}">
+                <img class="w-100 h-100" src="${lineItem.images.small[0].url}" alt="${lineItem.productName}" loading="lazy" />
+            </isif>
+        </div>
+        <div class="flex-grow-1 cart-item-body">
+            <div class="d-flex align-items-start justify-content-between cart-item-top">
+                <h3 class="item-name text-truncate">${lineItem.productName}</h3>
+                <button type="button" class="item-remove flex-shrink-0 js-request-remove" title="${Resource.msg('cart.remove.title', 'beyon', null)}" aria-label="${Resource.msg('cart.remove.title', 'beyon', null)}"><svg aria-hidden="true" width="16" height="16" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round"><line x1="4" y1="4" x2="12" y2="12"/><line x1="12" y1="4" x2="4" y2="12"/></svg></button>
+            </div>
+            <p class="item-price">
+                <isif condition="${lineAvailable}">
+                    ${lineItem.priceTotal.price}
+                <iselse/>
+                    <span class="item-out">${Resource.msg('cart.item.outofstock', 'beyon', null)}</span>
+                </isif>
+            </p>
+            <div class="d-flex flex-wrap align-items-center item-meta">
+                <span class="item-qty">${Resource.msg('cart.item.qty', 'beyon', null)} ${lineItem.quantity.toFixed(0)}</span>
+                <isif condition="${lineItem.variationAttributes}">
+                    <isloop items="${lineItem.variationAttributes}" var="attribute">
+                        <isif condition="${attribute.attributeId === 'size'}">
+                            <span class="item-spec">${Resource.msg('cart.item.size', 'beyon', null)} <isprint value="${attribute.displayValue}" /></span>
+                        </isif>
+                    </isloop>
+                </isif>
+                <span class="item-spec">${Resource.msg('cart.item.weight', 'beyon', null)} ${Resource.msg('cart.item.weight.sample', 'beyon', null)}</span>
+            </div>
+            <div class="d-flex align-items-center justify-content-between item-actions">
+                <span class="metal-badge ${metalIndex === 0 ? 'metal-rose' : (metalIndex === 1 ? 'metal-white' : 'metal-yellow')}">${Resource.msg('cart.item.metal.' + metalIndex.toFixed(0), 'beyon', null)}</span>
+                <button type="button" class="item-wishlist d-flex align-items-center p-0 js-move-wishlist"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>${Resource.msg('label.wishlist', 'beyon', null)}</button>
+            </div>
+            <div class="item-delivery"></div>
+        </div>
+    </div>
+</div>
