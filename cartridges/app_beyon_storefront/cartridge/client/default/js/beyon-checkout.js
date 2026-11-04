@@ -26,7 +26,10 @@ var PIN_LOCATIONS = {
 
 var addresses = [
     { id: 'a1', type: 'HOME', firstName: 'Rahul', lastName: 'Sharma', phone: '9876543210', country: 'India', pincode: '110001', state: 'Delhi', city: 'New Delhi', building: 'B-204, Sunrise Apartments', street: 'MG Road, Connaught Place', landmark: 'Near Metro Station', isDefault: true },
-    { id: 'a2', type: 'WORK', firstName: 'Rahul', lastName: 'Sharma', phone: '9876543210', country: 'India', pincode: '400001', state: 'Maharashtra', city: 'Mumbai', building: 'Office 1502, Tower A', street: 'BKC, Bandra East', landmark: '', isDefault: false }
+    { id: 'a2', type: 'WORK', firstName: 'Rahul', lastName: 'Sharma', phone: '9876543210', country: 'India', pincode: '400001', state: 'Maharashtra', city: 'Mumbai', building: 'Office 1502, Tower A', street: 'BKC, Bandra East', landmark: '', isDefault: false },
+    { id: 'a3', type: 'HOME', firstName: 'Priya', lastName: 'Sharma', phone: '9988776655', country: 'India', pincode: '560001', state: 'Karnataka', city: 'Bengaluru', building: 'Flat 7B, Lake View Residency', street: 'Indiranagar 100ft Road', landmark: 'Opposite City Park', isDefault: false },
+    { id: 'a4', type: 'OTHER', firstName: 'Rahul', lastName: 'Sharma', phone: '9876543210', country: 'India', pincode: '600001', state: 'Tamil Nadu', city: 'Chennai', building: 'No. 12, Greenways Road', street: 'Raja Annamalaipuram', landmark: 'Near Temple', isDefault: false },
+    { id: 'a5', type: 'WORK', firstName: 'Priya', lastName: 'Sharma', phone: '9988776655', country: 'India', pincode: '700001', state: 'West Bengal', city: 'Kolkata', building: '3rd Floor, Camac Towers', street: 'Camac Street', landmark: '', isDefault: false }
 ];
 var selectedAddressId = 'a1';
 var editingId = null;

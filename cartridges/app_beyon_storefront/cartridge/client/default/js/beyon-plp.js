@@ -1,5 +1,7 @@
 'use strict';
 
+var promoBanner = require('./components/beyon-promo-banner');
+
 // Filters, wishlist hearts, Select Size and Request Design are placeholders until the backend exists.
 var WISHLIST_KEY = 'beyon-wishlist';
 var root = document.getElementById('beyon-plp');
@@ -363,33 +365,6 @@ function submitRequest(form) {
     }
 }
 
-/**
- * Runs the rotating banner.
- */
-function initBanner() {
-    var banner = byId('plp-banner');
-    var slides = banner.getAttribute('data-slides').split('||').map(function (slide) {
-        return slide.split('|');
-    });
-    var dots = byId('plp-banner-dots');
-    var index = 0;
-    var draw = function () {
-        byId('plp-banner-title').textContent = slides[index][0];
-        byId('plp-banner-sub').textContent = slides[index][1];
-        dots.innerHTML = '';
-        slides.forEach(function (slide, position) {
-            var dot = document.createElement('span');
-            dot.className = 'banner-dot' + (position === index ? ' on' : '');
-            dots.appendChild(dot);
-        });
-    };
-    draw();
-    setInterval(function () {
-        index = (index + 1) % slides.length;
-        draw();
-    }, 2000);
-}
-
 document.addEventListener('click', function (event) {
     var target = event.target;
     var match = function (selector) {
@@ -456,7 +431,7 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
-initBanner();
+promoBanner();
 decorateCards();
 
 // Review aid for the design's states, which have no live trigger until the backend exists.

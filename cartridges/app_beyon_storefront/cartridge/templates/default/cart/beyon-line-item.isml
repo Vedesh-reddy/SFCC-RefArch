@@ -1,4 +1,4 @@
-<isset name="metalIndex" value="${lineState.index % 3}" scope="page" />
+<isset name="metalIndex" value="${lineState.index % 4}" scope="page" />
 <isset name="lineAvailable" value="${lineItem.available !== false}" scope="page" />
 <div class="cart-item beyon-card anim-slide" data-uuid="${lineItem.UUID}" data-pid="${lineItem.id}" data-out="${lineAvailable ? 'false' : 'true'}" data-index="${lineState.index.toFixed(0)}" data-remove-url="${pdict.actionUrls.removeProductLineItemUrl + '?pid=' + lineItem.id + '&uuid=' + lineItem.UUID}">
     <div class="d-flex cart-item-inner">
@@ -31,7 +31,7 @@
                 <span class="item-spec">${Resource.msg('cart.item.weight', 'beyon', null)} ${Resource.msg('cart.item.weight.sample', 'beyon', null)}</span>
             </div>
             <div class="d-flex align-items-center justify-content-between item-actions">
-                <span class="metal-badge ${metalIndex === 0 ? 'metal-rose' : (metalIndex === 1 ? 'metal-white' : 'metal-yellow')}">${Resource.msg('cart.item.metal.' + metalIndex.toFixed(0), 'beyon', null)}</span>
+                <span class="metal-badge ${metalIndex === 0 ? 'metal-rose' : (metalIndex === 1 ? 'metal-white' : (metalIndex === 2 ? 'metal-yellow' : 'metal-silver'))}">${Resource.msg('cart.item.metal.' + metalIndex.toFixed(0), 'beyon', null)}</span>
                 <button type="button" class="item-wishlist d-flex align-items-center p-0 js-move-wishlist"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 000-7.78z"/></svg>${Resource.msg('label.wishlist', 'beyon', null)}</button>
             </div>
             <div class="item-delivery"></div>

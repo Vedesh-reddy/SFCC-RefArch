@@ -49,6 +49,14 @@ body:has(.beyon-cart) {
     @media (min-width: $beyon-lg) {
         padding: 40px 32px;
     }
+
+    .beyon-cart & {
+        padding-top: 8px;
+
+        @media (min-width: $beyon-lg) {
+            padding-top: 12px;
+        }
+    }
 }
 
 .cart-layout {
@@ -219,7 +227,6 @@ body:has(.beyon-cart) {
 
 .item-name {
     color: $beyon-dark;
-    font-family: Geom, sans-serif;
     font-size: 11px;
     font-weight: 600;
     line-height: 1.375;
@@ -336,6 +343,12 @@ body:has(.beyon-cart) {
     border: 1px solid rgba(200, 200, 200, 50%);
 }
 
+.metal-silver {
+    color: #4a4a4a;
+    background: linear-gradient(135deg, #d8d8d8, #f0f0f0, #c4c4c4);
+    border: 1px solid rgba(196, 196, 196, 50%);
+}
+
 .metal-yellow {
     color: #6b4e0a;
     background: linear-gradient(135deg, #d4a84b, #f0d080, #c9952c);
@@ -449,7 +462,6 @@ body:has(.beyon-cart) {
 
 .empty-title {
     margin-bottom: 8px !important;
-    font-family: Geom, sans-serif;
     font-size: 14px;
     font-weight: 600;
     line-height: 28px;
@@ -559,7 +571,6 @@ body:has(.beyon-cart) {
     gap: 8px;
     margin-bottom: 20px !important;
     color: $beyon-dark;
-    font-family: Geom, sans-serif;
     font-size: 13px;
     font-weight: 600;
     line-height: 24px;
@@ -671,6 +682,7 @@ body:has(.beyon-cart) {
 }
 
 .sticky-total-label {
+    font-family: "Didact Gothic", sans-serif;
     color: $beyon-warm-grey;
     font-size: 9px;
     letter-spacing: 0.025em;
@@ -755,6 +767,7 @@ body:has(.beyon-cart) {
 }
 
 .coupon-list-title {
+    font-family: "Didact Gothic", sans-serif;
     gap: 4px;
     margin-bottom: 12px !important;
     color: $beyon-warm-grey;
@@ -800,7 +813,7 @@ body:has(.beyon-cart) {
     align-items: center;
     padding: 5px 12px;
     color: $beyon-dark;
-    font-family: Geom, monospace;
+    font-family: monospace;
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 1.5px;
@@ -866,7 +879,6 @@ body:has(.beyon-cart) {
 
 .remove-title {
     margin-bottom: 4px !important;
-    font-family: Geom, sans-serif;
     font-size: 14px;
     font-weight: 600;
     line-height: 28px;

@@ -52,14 +52,8 @@
             </aside>
 
             <div class="plp-content">
-                <div class="plp-banner position-relative w-100" id="plp-banner" data-slides="${Resource.msg('plp.banners', 'beyon', null)}">
-                    <img class="plp-banner-image h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-1.webp')}" alt="" />
-                    <div class="plp-banner-copy position-relative h-100 d-flex flex-column justify-content-center">
-                        <p class="plp-banner-title">beYon <em id="plp-banner-title"></em></p>
-                        <p class="plp-banner-sub" id="plp-banner-sub"></p>
-                    </div>
-                    <div class="plp-banner-dots d-flex align-items-center" id="plp-banner-dots" aria-hidden="true"></div>
-                </div>
+                <isset name="promoBannerImage" value="${URLUtils.staticURL('/images/beyon/pdp/pd-1.webp')}" scope="page" />
+                <isinclude template="components/beyon-promo-banner" />
 
                 <div class="plp-loader" id="plp-loader" aria-hidden="true"><span></span><span></span><span></span></div>
                 <isif condition="${pdict.productSearch.productIds.length > 0}">

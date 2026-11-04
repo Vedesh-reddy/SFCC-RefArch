@@ -173,7 +173,6 @@ body:has(.beyon-checkout) {
     gap: 10px;
     margin-bottom: 16px !important;
     color: $beyon-dark;
-    font-family: Geom, sans-serif;
     font-size: 14px;
     font-weight: 600;
     line-height: 1.5;
@@ -426,6 +425,7 @@ body:has(.beyon-checkout) {
 }
 
 .field-label {
+    font-family: "Didact Gothic", sans-serif;
     margin-bottom: 6px;
     color: $beyon-warm-grey;
     font-size: 9px;
@@ -914,6 +914,7 @@ body:has(.beyon-checkout) {
 }
 
 .pay-group-title {
+    font-family: "Didact Gothic", sans-serif;
     color: $beyon-warm-grey;
     font-size: 10px;
     font-weight: 600;
@@ -1278,7 +1279,6 @@ body:has(.beyon-checkout) {
 
 .confirmation-title {
     margin-bottom: 8px !important;
-    font-family: Geom, sans-serif;
     font-size: 14px;
     font-weight: 700;
     line-height: 32px;
@@ -1386,6 +1386,7 @@ body:has(.beyon-checkout) {
 }
 
 .form-group-title {
+    font-family: "Didact Gothic", sans-serif;
     margin-bottom: 12px !important;
     color: $beyon-warm-grey;
     font-size: 10px;
@@ -1539,7 +1540,6 @@ body:has(.beyon-checkout) {
 
 .popup-title {
     color: $beyon-dark;
-    font-family: Geom, sans-serif;
     font-size: 16px;
     font-weight: 700;
     line-height: 24px;

@@ -1,0 +1,8 @@
+<div class="promo-banner position-relative w-100" id="promo-banner" data-slides="${Resource.msg('plp.banners', 'beyon', null)}">
+    <img class="promo-banner-image h-100" src="${promoBannerImage}" alt="" />
+    <div class="promo-banner-copy position-relative h-100 d-flex flex-column justify-content-center">
+        <p class="promo-banner-title">beYon <em id="promo-banner-title"></em></p>
+        <p class="promo-banner-sub" id="promo-banner-sub"></p>
+    </div>
+    <div class="promo-banner-dots d-flex align-items-center" id="promo-banner-dots" aria-hidden="true"></div>
+</div>

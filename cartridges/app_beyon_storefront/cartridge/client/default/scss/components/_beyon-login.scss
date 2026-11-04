@@ -350,6 +350,7 @@ $login-display: "Oooh Baby", "Cormorant Garamond", ui-serif, georgia, cursive;
         }
 
         .lbl {
+            font-family: "Didact Gothic", sans-serif;
             color: $login-muted;
             font-size: 10px;
             line-height: 1.3;
@@ -555,6 +556,7 @@ $login-display: "Oooh Baby", "Cormorant Garamond", ui-serif, georgia, cursive;
     }
 
     .login-btn {
+        font-family: "Didact Gothic", sans-serif;
         position: relative;
         display: flex;
         gap: 10px;
@@ -565,7 +567,6 @@ $login-display: "Oooh Baby", "Cormorant Garamond", ui-serif, georgia, cursive;
         padding: 15px 20px;
         overflow: hidden;
         color: #fff;
-        font-family: inherit;
         font-size: 13px;
         font-weight: 400;
         letter-spacing: 0.06em;
