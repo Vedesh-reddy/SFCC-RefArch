@@ -11,15 +11,7 @@ $login-gold-2: #8a6d45;
 $login-red: #b91c1c;
 $login-ink-soft: rgba(44, 44, 44, 6%);
 $login-sans: "Geom", ui-sans-serif, system-ui, -apple-system, sans-serif;
-$login-display: "Devina Garden", "Cormorant Garamond", ui-serif, georgia, cursive;
-
-@font-face {
-    font-family: "Devina Garden";
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url("../fonts/devina-garden-regular.otf") format("opentype");
-}
+$login-display: "Oooh Baby", "Cormorant Garamond", ui-serif, georgia, cursive;
 
 @keyframes drift-1 {
     0%,

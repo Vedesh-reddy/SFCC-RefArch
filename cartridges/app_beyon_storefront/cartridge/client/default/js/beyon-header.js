@@ -19,14 +19,19 @@ function initSearchPlaceholder() {
     if (!placeholder) {
         return;
     }
-    var phrases = placeholder.getAttribute('data-placeholders').split('|');
+    var desktop = window.matchMedia('(min-width: 768px)');
+    var phrases = {
+        desktop: placeholder.getAttribute('data-placeholders').split('|'),
+        mobile: placeholder.getAttribute('data-placeholders-mobile').split('|')
+    };
     var index = 0;
     var update = function () {
+        var list = desktop.matches ? phrases.desktop : phrases.mobile;
         placeholder.innerHTML = '';
         var phrase = document.createElement('span');
-        phrase.textContent = phrases[index];
+        phrase.textContent = list[index];
         placeholder.appendChild(phrase);
-        index = (index + 1) % phrases.length;
+        index = (index + 1) % list.length;
     };
     update();
     setInterval(update, 3000);
