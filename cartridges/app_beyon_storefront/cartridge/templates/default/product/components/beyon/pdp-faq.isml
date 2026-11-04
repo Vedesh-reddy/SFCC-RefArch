@@ -1,0 +1,21 @@
+<div class="lgd-faq-section" id="lgd-faq">
+    <div class="d-flex align-items-center section-head">
+        <div class="section-bar"></div>
+        <h2 class="section-title">${Resource.msg('label.faq', 'beyon', null)}</h2>
+    </div>
+    <div class="faq-list">
+        <isloop items="${[1, 2, 3, 4, 5, 6, 7, 8, 9]}" var="faqNumber">
+            <isset name="faqKey" value="${'faq.' + faqNumber.toFixed(0)}" scope="page" />
+            <div class="faq-item">
+                <button type="button" class="faq-toggle d-flex align-items-center justify-content-between w-100 text-start" aria-expanded="false">
+                    <span class="d-flex align-items-center faq-summary">
+                        <span class="faq-tag flex-shrink-0">${Resource.msg(faqKey + '.tag', 'beyon', null)}</span>
+                        <span class="faq-question text-truncate">${Resource.msg(faqKey + '.q', 'beyon', null)}</span>
+                    </span>
+                    <svg class="flex-shrink-0 faq-chevron" aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                </button>
+                <div class="faq-body d-none"><p>${Resource.msg(faqKey + '.a', 'beyon', null)}</p></div>
+            </div>
+        </isloop>
+    </div>
+</div>

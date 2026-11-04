@@ -1,0 +1,78 @@
+<div class="stack-it-section" id="stack-it">
+    <div class="d-flex align-items-center section-head">
+        <div class="section-bar section-bar-stack"></div>
+        <h2 class="section-title section-title-stack">${Resource.msg('label.stackittitle', 'beyon', null)}</h2>
+    </div>
+    <div class="rec-grid d-flex flex-wrap">
+        <div class="rec-card d-flex flex-column">
+            <div class="rec-image position-relative">
+                <img class="w-100 h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-1.webp')}" alt="Lunar Arc Bangle" draggable="false" loading="lazy" />
+                <button type="button" class="rec-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+            </div>
+            <div class="rec-body">
+                <p class="rec-name text-truncate">Lunar Arc Bangle</p>
+                <p class="rec-price">₹38,200</p>
+            </div>
+        </div>
+        <div class="rec-card d-flex flex-column">
+            <div class="rec-image position-relative">
+                <img class="w-100 h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-2.webp')}" alt="Parallel Lines Ring" draggable="false" loading="lazy" />
+                <button type="button" class="rec-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+            </div>
+            <div class="rec-body">
+                <p class="rec-name text-truncate">Parallel Lines Ring</p>
+                <p class="rec-price">₹22,750</p>
+            </div>
+        </div>
+        <div class="rec-card d-flex flex-column">
+            <div class="rec-image position-relative">
+                <img class="w-100 h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-3.webp')}" alt="Diamond Solitaire Stud" draggable="false" loading="lazy" />
+                <button type="button" class="rec-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+            </div>
+            <div class="rec-body">
+                <p class="rec-name text-truncate">Diamond Solitaire Stud</p>
+                <p class="rec-price">₹31,400</p>
+            </div>
+        </div>
+        <div class="rec-card d-flex flex-column">
+            <div class="rec-image position-relative">
+                <img class="w-100 h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-4.webp')}" alt="Gold Hoop Earrings" draggable="false" loading="lazy" />
+                <button type="button" class="rec-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+            </div>
+            <div class="rec-body">
+                <p class="rec-name text-truncate">Gold Hoop Earrings</p>
+                <p class="rec-price">₹18,900</p>
+            </div>
+        </div>
+        <div class="rec-card d-flex flex-column">
+            <div class="rec-image position-relative">
+                <img class="w-100 h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-5.webp')}" alt="Constellation Pendant" draggable="false" loading="lazy" />
+                <button type="button" class="rec-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+            </div>
+            <div class="rec-body">
+                <p class="rec-name text-truncate">Constellation Pendant</p>
+                <p class="rec-price">₹44,600</p>
+            </div>
+        </div>
+        <div class="rec-card d-flex flex-column">
+            <div class="rec-image position-relative">
+                <img class="w-100 h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-1.webp')}" alt="Twisted Band Ring" draggable="false" loading="lazy" />
+                <button type="button" class="rec-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+            </div>
+            <div class="rec-body">
+                <p class="rec-name text-truncate">Twisted Band Ring</p>
+                <p class="rec-price">₹19,800</p>
+            </div>
+        </div>
+        <div class="rec-card d-flex flex-column">
+            <div class="rec-image position-relative">
+                <img class="w-100 h-100" src="${URLUtils.staticURL('/images/beyon/pdp/pd-2.webp')}" alt="Tennis Bracelet" draggable="false" loading="lazy" />
+                <button type="button" class="rec-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+            </div>
+            <div class="rec-body">
+                <p class="rec-name text-truncate">Tennis Bracelet</p>
+                <p class="rec-price">₹67,500</p>
+            </div>
+        </div>
+    </div>
+</div>

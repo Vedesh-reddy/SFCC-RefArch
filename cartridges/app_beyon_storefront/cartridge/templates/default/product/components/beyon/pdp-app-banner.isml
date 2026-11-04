@@ -1,0 +1,9 @@
+<div class="app-banner d-flex align-items-center" id="app-banner">
+    <button type="button" class="app-banner-close flex-shrink-0 p-0" id="app-banner-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="#999" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <img class="app-banner-icon flex-shrink-0" src="${URLUtils.staticURL('/images/beyon/pdp/app-icon.png')}" alt="${Resource.msg('label.logo', 'beyon', null)}" />
+    <div class="d-flex flex-column app-banner-text">
+        <span class="app-banner-title">${Resource.msg('label.getapp', 'beyon', null)}</span>
+        <span class="app-banner-sub">${Resource.msg('label.getappsub', 'beyon', null)}</span>
+    </div>
+    <button type="button" class="app-banner-install flex-shrink-0">${Resource.msg('button.install', 'beyon', null)}</button>
+</div>

@@ -1,0 +1,67 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets');
+        assets.addJs('/js/beyon-pdp.js');
+        assets.addCss('/css/product/detail.css');
+
+        var pdpSales = pdict.product.price.type === 'range' ? pdict.product.price.min.sales : pdict.product.price.sales;
+        var pdpList = pdict.product.price.type === 'range' ? null : pdict.product.price.list;
+        var variationAttributes = pdict.product.variationAttributes || [];
+        var findAttribute = function (id) {
+            return variationAttributes.filter(function (attr) {
+                return attr.id === id;
+            })[0] || null;
+        };
+        var pdpImageData = JSON.stringify(pdict.product.images.large.map(function (image) {
+            return { url: image.url, alt: image.alt };
+        }));
+        var savedMoney = pdpList && pdpSales ? new dw.value.Money(pdpList.value - pdpSales.value, pdpSales.currency) : null;
+    </isscript>
+
+    <isset name="product" value="${pdict.product}" scope="page" />
+    <isset name="sizeAttr" value="${findAttribute('size')}" scope="page" />
+    <isset name="colorAttr" value="${findAttribute('color')}" scope="page" />
+    <isset name="hasCustomisation" value="${variationAttributes.length > 0}" scope="page" />
+    <isset name="isOutOfStock" value="${!product.available}" scope="page" />
+    <isset name="salesPrice" value="${pdpSales && pdpSales.formatted ? pdpSales.formatted : ''}" scope="page" />
+    <isset name="listPrice" value="${pdpList && pdpList.formatted ? pdpList.formatted : ''}" scope="page" />
+    <isset name="savedAmount" value="${savedMoney ? dw.util.StringUtils.formatMoney(savedMoney) : ''}" scope="page" />
+
+    <isobject object="${product.raw}" view="detail">
+        <div class="beyon-pdp ${isOutOfStock ? 'is-oos' : ''}" id="beyon-pdp"
+             data-pid="${product.id}"
+             data-ready="${product.readyToOrder ? 'true' : 'false'}"
+             data-add-url="${pdict.addToCartUrl}"
+             data-cart-url="${URLUtils.https('Cart-Show')}"
+             data-images="${pdpImageData}"
+             data-msg-added="${Resource.msg('msg.addedtobag', 'beyon', null)}"
+             data-msg-copied="${Resource.msg('msg.linkcopied', 'beyon', null)}"
+             data-msg-select="${Resource.msg('msg.selectoptions', 'beyon', null)}"
+             data-msg-failed="${Resource.msg('msg.addfailed', 'beyon', null)}"
+             data-msg-gotobag="${Resource.msg('button.gotobag', 'beyon', null)}">
+            <isinclude template="product/components/beyon/pdp-app-banner" />
+            <div class="pdp-shell">
+                <div class="pdp-main pdp-container">
+                    <div class="pdp-gallery-col">
+                        <isinclude template="product/components/beyon/pdp-gallery" />
+                        <isinclude template="product/components/beyon/pdp-gallery-desktop" />
+                    </div>
+                    <div class="pdp-side">
+                        <div class="pdp-panel-header"><isinclude template="product/components/beyon/pdp-header" /></div>
+                        <div class="pdp-panel pdp-panel-info"><isinclude template="product/components/beyon/pdp-info" /></div>
+                        <isif condition="${!isOutOfStock}">
+                            <div class="pdp-panel pdp-panel-bordered"><isinclude template="product/components/beyon/pdp-delivery" /></div>
+                        </isif>
+                        <div class="pdp-panel pdp-panel-bordered"><isinclude template="product/components/beyon/pdp-customise" /></div>
+                    </div>
+                </div>
+                <div class="brand-image"><img class="w-100 h-100 d-block" src="${URLUtils.staticURL('/images/beyon/pdp/pd-1.webp')}" alt="${Resource.msg('label.logo', 'beyon', null)}" loading="lazy" /></div>
+                <div class="pdp-container"><isinclude template="product/components/beyon/pdp-stack" /></div>
+                <div class="pdp-container"><isinclude template="product/components/beyon/pdp-faq" /></div>
+                <div class="pdp-spacer"></div>
+            </div>
+            <isinclude template="product/components/beyon/pdp-bars" />
+            <isinclude template="product/components/beyon/pdp-modals" />
+        </div>
+    </isobject>
+</isdecorate>

@@ -1,0 +1,65 @@
+<div class="pdp-delivery section-delivery-bg">
+    <div class="d-flex align-items-center delivery-head">
+        <div class="delivery-bar flex-shrink-0"></div>
+        <div class="delivery-heading-anim">
+            <span class="truck-icon" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span>
+            <span class="truck-text">${Resource.msg('label.deliverydetails', 'beyon', null)}</span>
+        </div>
+    </div>
+    <div class="pincode-box d-flex align-items-center">
+        <div class="position-relative flex-shrink-0">
+            <button type="button" class="country-trigger d-flex align-items-center" id="country-trigger" aria-haspopup="listbox" aria-expanded="false">
+                <span class="country-trigger-flag" id="country-flag">🇮🇳</span>
+                <span class="country-trigger-code" id="country-code">IN</span>
+                <svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="country-list d-none" id="country-list" role="listbox">
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start selected" data-code="IN" data-flag="🇮🇳" data-name="India"><span class="country-flag">🇮🇳</span><span class="country-name">India</span><span class="country-code">IN</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="AE" data-flag="🇦🇪" data-name="UAE"><span class="country-flag">🇦🇪</span><span class="country-name">UAE</span><span class="country-code">AE</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="DE" data-flag="🇩🇪" data-name="Germany"><span class="country-flag">🇩🇪</span><span class="country-name">Germany</span><span class="country-code">DE</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="SA" data-flag="🇸🇦" data-name="Saudi Arabia"><span class="country-flag">🇸🇦</span><span class="country-name">Saudi Arabia</span><span class="country-code">SA</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="NL" data-flag="🇳🇱" data-name="Netherlands"><span class="country-flag">🇳🇱</span><span class="country-name">Netherlands</span><span class="country-code">NL</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="MY" data-flag="🇲🇾" data-name="Malaysia"><span class="country-flag">🇲🇾</span><span class="country-name">Malaysia</span><span class="country-code">MY</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="KE" data-flag="🇰🇪" data-name="Kenya"><span class="country-flag">🇰🇪</span><span class="country-name">Kenya</span><span class="country-code">KE</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="RO" data-flag="🇷🇴" data-name="Romania"><span class="country-flag">🇷🇴</span><span class="country-name">Romania</span><span class="country-code">RO</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="ES" data-flag="🇪🇸" data-name="Spain"><span class="country-flag">🇪🇸</span><span class="country-name">Spain</span><span class="country-code">ES</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="PT" data-flag="🇵🇹" data-name="Portugal"><span class="country-flag">🇵🇹</span><span class="country-name">Portugal</span><span class="country-code">PT</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="QA" data-flag="🇶🇦" data-name="Qatar"><span class="country-flag">🇶🇦</span><span class="country-name">Qatar</span><span class="country-code">QA</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="IT" data-flag="🇮🇹" data-name="Italy"><span class="country-flag">🇮🇹</span><span class="country-name">Italy</span><span class="country-code">IT</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="OM" data-flag="🇴🇲" data-name="Oman"><span class="country-flag">🇴🇲</span><span class="country-name">Oman</span><span class="country-code">OM</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="KW" data-flag="🇰🇼" data-name="Kuwait"><span class="country-flag">🇰🇼</span><span class="country-name">Kuwait</span><span class="country-code">KW</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="BH" data-flag="🇧🇭" data-name="Bahrain"><span class="country-flag">🇧🇭</span><span class="country-name">Bahrain</span><span class="country-code">BH</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="ZA" data-flag="🇿🇦" data-name="South Africa"><span class="country-flag">🇿🇦</span><span class="country-name">South Africa</span><span class="country-code">ZA</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="CA" data-flag="🇨🇦" data-name="Canada"><span class="country-flag">🇨🇦</span><span class="country-name">Canada</span><span class="country-code">CA</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="NZ" data-flag="🇳🇿" data-name="New Zealand"><span class="country-flag">🇳🇿</span><span class="country-name">New Zealand</span><span class="country-code">NZ</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="AU" data-flag="🇦🇺" data-name="Australia"><span class="country-flag">🇦🇺</span><span class="country-name">Australia</span><span class="country-code">AU</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="SG" data-flag="🇸🇬" data-name="Singapore"><span class="country-flag">🇸🇬</span><span class="country-name">Singapore</span><span class="country-code">SG</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="US" data-flag="🇺🇸" data-name="USA"><span class="country-flag">🇺🇸</span><span class="country-name">USA</span><span class="country-code">US</span></button>
+                    <button type="button" class="country-option d-flex align-items-center w-100 text-start" data-code="GB" data-flag="🇬🇧" data-name="United Kingdom"><span class="country-flag">🇬🇧</span><span class="country-name">United Kingdom</span><span class="country-code">GB</span></button>
+            </div>
+        </div>
+        <input type="tel" maxlength="6" class="pincode-input flex-grow-1" id="pincode-input" placeholder="${Resource.msg('label.pincode', 'beyon', null)}" aria-label="${Resource.msg('label.pincode', 'beyon', null)}" />
+        <div class="pincode-action flex-shrink-0">
+            <button type="button" class="pincode-check" id="pincode-check">${Resource.msg('button.check', 'beyon', null)}</button>
+        </div>
+    </div>
+    <div class="pincode-result pincode-ok d-none align-items-center" id="pincode-ok">
+        <svg aria-hidden="true" width="14" height="14" fill="none" stroke="#2E7D32" stroke-width="2.5" stroke-linecap="round"><path d="M3 7l3.5 3.5L13 4"/></svg>
+        <p>${Resource.msg('msg.deliveryto', 'beyon', null)} <strong id="pincode-ok-country"></strong> ${Resource.msg('msg.expectedby', 'beyon', null)} <strong id="pincode-ok-date"></strong></p>
+    </div>
+    <div class="pincode-result pincode-bad d-none align-items-center" id="pincode-bad">
+        <svg aria-hidden="true" width="14" height="14" fill="none" stroke="#BF0E23" stroke-width="2" stroke-linecap="round"><circle cx="7" cy="7" r="6"/><line x1="5" y1="5" x2="9" y2="9"/><line x1="9" y1="5" x2="5" y2="9"/></svg>
+        <p>${Resource.msg('msg.nodelivery', 'beyon', null)} <strong id="pincode-bad-value"></strong></p>
+    </div>
+    <div class="delivery-estimate d-flex align-items-start" id="delivery-estimate">
+        <svg class="flex-shrink-0" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="#d30b39" stroke="none"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        <p>${Resource.msg('msg.deliveryestimate', 'beyon', null)}</p>
+    </div>
+    <div class="trust-row d-flex">
+        <div class="trust-badge d-flex flex-column align-items-center text-center"><span class="trust-icon d-flex align-items-center justify-content-center trust-anim-0"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.51"/></svg></span><span class="trust-label">7 Days Free Returns</span></div>
+        <div class="trust-badge d-flex flex-column align-items-center text-center"><span class="trust-icon d-flex align-items-center justify-content-center trust-anim-1"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 5v4h-7V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg></span><span class="trust-label">Free Shipping in India</span></div>
+        <div class="trust-badge d-flex flex-column align-items-center text-center"><span class="trust-icon d-flex align-items-center justify-content-center trust-anim-2"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 21v-6h6v6"/></svg></span><span class="trust-label">From<br/>HOUSE OF TITAN</span></div>
+        <div class="trust-badge d-flex flex-column align-items-center text-center"><span class="trust-icon d-flex align-items-center justify-content-center trust-anim-3"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"/><path d="M3 11V9a4 4 0 0 1 4-4h14"/><polyline points="7 23 3 19 7 15"/><path d="M21 13v2a4 4 0 0 1-4 4H3"/></svg></span><span class="trust-label">Lifetime Gold Exchange*</span></div>
+        <div class="trust-badge d-flex flex-column align-items-center text-center"><span class="trust-icon d-flex align-items-center justify-content-center trust-anim-4"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg></span><span class="trust-label">Secure Payments<br/>TATA TRUST</span></div>
+    </div>
+</div>
