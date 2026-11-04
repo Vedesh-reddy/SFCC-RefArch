@@ -1,0 +1,108 @@
+<div class="mobile-subpage" id="sp-rings">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Rings</div></div>
+<div class="subpage-body">
+<div class="sub-section-title">Featured</div>
+<a href="${beyonPlpUrl}" class="sub-link featured">Latest Designs</a><a href="${beyonPlpUrl}" class="sub-link featured">Bestsellers</a><a href="${beyonPlpUrl}" class="sub-link featured">Fast Delivery</a>
+<div class="sub-section-title">By Style</div>
+<a href="${beyonPlpUrl}" class="sub-link">All Rings</a><a href="${beyonPlpUrl}" class="sub-link">Engagement</a><a href="${beyonPlpUrl}" class="sub-link">Dailywear</a><a href="${beyonPlpUrl}" class="sub-link">Infinity</a><a href="${beyonPlpUrl}" class="sub-link">Cocktail</a><a href="${beyonPlpUrl}" class="sub-link">Solitaire</a><a href="${beyonPlpUrl}" class="sub-link">Couple Rings</a><a href="${beyonPlpUrl}" class="sub-link">Bands</a><a href="${beyonPlpUrl}" class="sub-link">Promise Rings</a><a href="${beyonPlpUrl}" class="sub-link">Silver By Shaya</a>
+<div class="sub-section-title">By Metal &amp; Stone</div>
+<a href="${beyonPlpUrl}" class="sub-link">Diamond</a><a href="${beyonPlpUrl}" class="sub-link">Pearl</a><a href="${beyonPlpUrl}" class="sub-link">Navratna</a><a href="${beyonPlpUrl}" class="sub-link">Gemstone</a><a href="${beyonPlpUrl}" class="sub-link">Platinum</a><a href="${beyonPlpUrl}" class="sub-link">Gold</a><a href="${beyonPlpUrl}" class="sub-link">Rose Gold</a><a href="${beyonPlpUrl}" class="sub-link">Yellow Gold</a><a href="${beyonPlpUrl}" class="sub-link">White Gold</a><a href="${beyonPlpUrl}" class="sub-link">22KT Gold</a>
+<div class="sub-section-title">By Price</div>
+<a href="${beyonPlpUrl}" class="sub-link">Under ₹ 10k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 10k - ₹ 20k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 20k - ₹ 30k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 30k - ₹ 50k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 50k - ₹ 75k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 75k &amp; Above</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-earrings">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Earrings</div></div>
+<div class="subpage-body">
+<div class="sub-section-title">Featured</div>
+<a href="${beyonPlpUrl}" class="sub-link featured">Latest Designs</a><a href="${beyonPlpUrl}" class="sub-link featured">Bestsellers</a>
+<div class="sub-section-title">By Style</div>
+<a href="${beyonPlpUrl}" class="sub-link">All Earrings</a><a href="${beyonPlpUrl}" class="sub-link">Studs</a><a href="${beyonPlpUrl}" class="sub-link">Hoops</a><a href="${beyonPlpUrl}" class="sub-link">Drops</a><a href="${beyonPlpUrl}" class="sub-link">Earcuffs</a><a href="${beyonPlpUrl}" class="sub-link">Sui Dhagas</a><a href="${beyonPlpUrl}" class="sub-link">Jhumkas</a><a href="${beyonPlpUrl}" class="sub-link">Silver Earrings</a>
+<div class="sub-section-title">By Metal &amp; Stone</div>
+<a href="${beyonPlpUrl}" class="sub-link">Diamond</a><a href="${beyonPlpUrl}" class="sub-link">Pearl</a><a href="${beyonPlpUrl}" class="sub-link">Navratna</a><a href="${beyonPlpUrl}" class="sub-link">Gemstone</a><a href="${beyonPlpUrl}" class="sub-link">Platinum</a><a href="${beyonPlpUrl}" class="sub-link">Rose Gold</a><a href="${beyonPlpUrl}" class="sub-link">Yellow Gold</a><a href="${beyonPlpUrl}" class="sub-link">White Gold</a><a href="${beyonPlpUrl}" class="sub-link">22kt Gold</a>
+<div class="sub-section-title">By Price</div>
+<a href="${beyonPlpUrl}" class="sub-link">Under ₹ 10k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 10k - ₹ 20k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 20k - ₹ 30k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 30k - ₹ 50k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 50k - ₹ 75k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 75K &amp; Above</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-bracelets">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Bracelets &amp; Bangles</div></div>
+<div class="subpage-body">
+<div class="sub-section-title">Featured</div>
+<a href="${beyonPlpUrl}" class="sub-link featured">Latest Designs</a><a href="${beyonPlpUrl}" class="sub-link featured">Bestsellers</a><a href="${beyonPlpUrl}" class="sub-link featured">Fast Delivery</a><a href="${beyonPlpUrl}" class="sub-link featured">Special Deals</a>
+<div class="sub-section-title">By Style</div>
+<a href="${beyonPlpUrl}" class="sub-link">All Bracelets &amp; Bangles</a><a href="${beyonPlpUrl}" class="sub-link">Adjustable Bracelets</a><a href="${beyonPlpUrl}" class="sub-link">Chain Bracelets</a><a href="${beyonPlpUrl}" class="sub-link">Flexible Bracelets</a><a href="${beyonPlpUrl}" class="sub-link">Tennis Bracelets</a><a href="${beyonPlpUrl}" class="sub-link">Bridal Bangles</a><a href="${beyonPlpUrl}" class="sub-link">Lightweight Bangles</a><a href="${beyonPlpUrl}" class="sub-link">Silver Bracelets</a><a href="${beyonPlpUrl}" class="sub-link">Oval Bracelets</a>
+<div class="sub-section-title">By Metal &amp; Stone</div>
+<a href="${beyonPlpUrl}" class="sub-link">Diamond</a><a href="${beyonPlpUrl}" class="sub-link">Gemstone</a><a href="${beyonPlpUrl}" class="sub-link">Rose Gold</a><a href="${beyonPlpUrl}" class="sub-link">Platinum</a><a href="${beyonPlpUrl}" class="sub-link">Pearl</a><a href="${beyonPlpUrl}" class="sub-link">Navratna</a><a href="${beyonPlpUrl}" class="sub-link">Yellow Gold</a><a href="${beyonPlpUrl}" class="sub-link">White Gold</a><a href="${beyonPlpUrl}" class="sub-link">22kt Gold</a>
+<div class="sub-section-title">By Price</div>
+<a href="${beyonPlpUrl}" class="sub-link">Under ₹ 10K</a><a href="${beyonPlpUrl}" class="sub-link">₹ 10k - ₹ 20k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 20k - ₹ 30k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 30k - ₹ 50k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 50k - ₹ 75k</a><a href="${beyonPlpUrl}" class="sub-link">Above ₹ 75k</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-solitaires">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Solitaires</div></div>
+<div class="subpage-body">
+<div class="sub-section-title">Featured</div>
+<a href="${beyonPlpUrl}" class="sub-link featured">Latest Designs</a><a href="${beyonPlpUrl}" class="sub-link featured">Bestsellers</a><a href="${beyonPlpUrl}" class="sub-link featured">Fast Delivery</a><a href="${beyonPlpUrl}" class="sub-link featured">Special Deals</a>
+<div class="sub-section-title">By Style</div>
+<a href="${beyonPlpUrl}" class="sub-link">All Solitaires</a><a href="${beyonPlpUrl}" class="sub-link">Rings</a><a href="${beyonPlpUrl}" class="sub-link">Earrings</a><a href="${beyonPlpUrl}" class="sub-link">Bridal Sets</a><a href="${beyonPlpUrl}" class="sub-link">Mangalsutras</a><a href="${beyonPlpUrl}" class="sub-link">Pendants</a><a href="${beyonPlpUrl}" class="sub-link">Necklaces</a><a href="${beyonPlpUrl}" class="sub-link">Bracelets</a>
+<div class="sub-section-title">By Metal &amp; Stones</div>
+<a href="${beyonPlpUrl}" class="sub-link">Diamond</a><a href="${beyonPlpUrl}" class="sub-link">Platinum</a><a href="${beyonPlpUrl}" class="sub-link">Rose Gold</a><a href="${beyonPlpUrl}" class="sub-link">White Gold</a><a href="${beyonPlpUrl}" class="sub-link">Yellow Gold</a>
+<div class="sub-section-title">By Price</div>
+<a href="${beyonPlpUrl}" class="sub-link">₹ 30K to ₹ 50K</a><a href="${beyonPlpUrl}" class="sub-link">₹ 50K to ₹ 75K</a><a href="${beyonPlpUrl}" class="sub-link">₹ 75K to ₹ 1L</a><a href="${beyonPlpUrl}" class="sub-link">₹ 1L to ₹ 1.5L</a><a href="${beyonPlpUrl}" class="sub-link">₹ 1.5L to ₹ 2L</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-neckwear">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Neckwear &amp; Pendants</div></div>
+<div class="subpage-body">
+<div class="sub-section-title">Featured</div>
+<a href="${beyonPlpUrl}" class="sub-link featured">Latest Designs</a><a href="${beyonPlpUrl}" class="sub-link featured">Bestsellers</a><a href="${beyonPlpUrl}" class="sub-link featured">Fast Delivery</a><a href="${beyonPlpUrl}" class="sub-link featured">Special Deals</a>
+<div class="sub-section-title">By Style</div>
+<a href="${beyonPlpUrl}" class="sub-link">Mangalsutra</a><a href="${beyonPlpUrl}" class="sub-link">All Necklaces</a><a href="${beyonPlpUrl}" class="sub-link">Lightweight</a><a href="${beyonPlpUrl}" class="sub-link">Bridal</a><a href="${beyonPlpUrl}" class="sub-link">Evil Eye</a><a href="${beyonPlpUrl}" class="sub-link">Choker</a><a href="${beyonPlpUrl}" class="sub-link">All Pendants</a><a href="${beyonPlpUrl}" class="sub-link">Alphabet Pendants</a><a href="${beyonPlpUrl}" class="sub-link">Heart Pendants</a><a href="${beyonPlpUrl}" class="sub-link">Butterfly Pendants</a><a href="${beyonPlpUrl}" class="sub-link">Silver Necklaces</a>
+<div class="sub-section-title">By Metal &amp; Stone</div>
+<a href="${beyonPlpUrl}" class="sub-link">Gold</a><a href="${beyonPlpUrl}" class="sub-link">Diamond</a><a href="${beyonPlpUrl}" class="sub-link">Pearl</a><a href="${beyonPlpUrl}" class="sub-link">Gemstone</a><a href="${beyonPlpUrl}" class="sub-link">Yellow Gold</a><a href="${beyonPlpUrl}" class="sub-link">Rose Gold</a><a href="${beyonPlpUrl}" class="sub-link">White Gold</a><a href="${beyonPlpUrl}" class="sub-link">22KT Gold</a><a href="${beyonPlpUrl}" class="sub-link">Platinum</a>
+<div class="sub-section-title">By Price</div>
+<a href="${beyonPlpUrl}" class="sub-link">Under ₹ 10K</a><a href="${beyonPlpUrl}" class="sub-link">₹ 10K to ₹ 20K</a><a href="${beyonPlpUrl}" class="sub-link">₹ 20K to ₹ 30K</a><a href="${beyonPlpUrl}" class="sub-link">₹ 30K to ₹ 50K</a><a href="${beyonPlpUrl}" class="sub-link">₹ 50k to ₹ 75k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 75K &amp; Above</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-silver">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Silver</div></div>
+<div class="subpage-body">
+<div class="sub-section-title">By Style</div>
+<a href="${beyonPlpUrl}" class="sub-link">Earrings</a><a href="${beyonPlpUrl}" class="sub-link">Necklaces</a><a href="${beyonPlpUrl}" class="sub-link">Bracelets</a><a href="${beyonPlpUrl}" class="sub-link">Rings</a><a href="${beyonPlpUrl}" class="sub-link">Coins &amp; Articles</a><a href="${beyonPlpUrl}" class="sub-link">More Styles</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-gifting">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Gifting</div></div>
+<div class="subpage-body">
+<div class="sub-section-title">By Occasions</div>
+<a href="${beyonPlpUrl}" class="sub-link">Anniversary Gifts</a><a href="${beyonPlpUrl}" class="sub-link">Personalised</a><a href="${beyonPlpUrl}" class="sub-link">Bracelet &amp; Bangles</a><a href="${beyonPlpUrl}" class="sub-link">Charms</a><a href="${beyonPlpUrl}" class="sub-link">Earrings</a><a href="${beyonPlpUrl}" class="sub-link">Necklaces &amp; Pendants</a><a href="${beyonPlpUrl}" class="sub-link">Rings</a><a href="${beyonPlpUrl}" class="sub-link">Solitaires</a>
+<div class="sub-section-title">By Price</div>
+<a href="${beyonPlpUrl}" class="sub-link">Under ₹ 10k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 10k to ₹ 20k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 20k to ₹ 30k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 30k to ₹ 50k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 50k to ₹ 75k</a><a href="${beyonPlpUrl}" class="sub-link">₹ 75k &amp; Above</a>
+<div class="sub-section-title">Gifting For</div>
+<a href="${beyonPlpUrl}" class="sub-link">Wife</a><a href="${beyonPlpUrl}" class="sub-link">Daughter</a><a href="${beyonPlpUrl}" class="sub-link">Kids</a><a href="${beyonPlpUrl}" class="sub-link">Men</a><a href="${beyonPlpUrl}" class="sub-link">Mother</a><a href="${beyonPlpUrl}" class="sub-link">Self</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-collections">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Collections</div></div>
+<div class="subpage-body">
+<a href="${beyonPlpUrl}" class="sub-link">Evil Eye</a><a href="${beyonPlpUrl}" class="sub-link">Celestial</a><a href="${beyonPlpUrl}" class="sub-link">Forever Love</a><a href="${beyonPlpUrl}" class="sub-link">Minimalist</a><a href="${beyonPlpUrl}" class="sub-link">Nature</a><a href="${beyonPlpUrl}" class="sub-link">Heritage</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-trending">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">Trending</div></div>
+<div class="subpage-body">
+<a href="${beyonPlpUrl}" class="sub-link featured">Trending Now</a><a href="${beyonPlpUrl}" class="sub-link featured">New Arrivals</a><a href="${beyonPlpUrl}" class="sub-link featured">Most Wishlisted</a><a href="${beyonPlpUrl}" class="sub-link featured">Celebrity Picks</a><a href="${beyonPlpUrl}" class="sub-link featured">Flash Deals</a>
+</div>
+</div>
+<div class="mobile-subpage" id="sp-more">
+<div class="subpage-header"><button type="button" class="back-btn p-0" data-back aria-label="${Resource.msg('button.back','beyon',null)}"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg></button><div class="subpage-title">More Jewellery</div></div>
+<div class="subpage-body">
+<div class="sub-section-title">Shop For Women</div>
+<a href="${beyonPlpUrl}" class="sub-link">Nose Rings</a><a href="${beyonPlpUrl}" class="sub-link">Nose Pins</a><a href="${beyonPlpUrl}" class="sub-link">Watch Charms</a><a href="${beyonPlpUrl}" class="sub-link">Charms</a><a href="${beyonPlpUrl}" class="sub-link">22kt Jewellery</a><a href="${beyonPlpUrl}" class="sub-link">Silver Jewellery</a><a href="${beyonPlpUrl}" class="sub-link">Platinum Jewellery</a><a href="${beyonPlpUrl}" class="sub-link">Gold Chains</a>
+<div class="sub-section-title">Shop For Men</div>
+<a href="${beyonPlpUrl}" class="sub-link">Rings</a><a href="${beyonPlpUrl}" class="sub-link">Studs</a><a href="${beyonPlpUrl}" class="sub-link">Chains</a><a href="${beyonPlpUrl}" class="sub-link">Pendants</a><a href="${beyonPlpUrl}" class="sub-link">Bracelets</a><a href="${beyonPlpUrl}" class="sub-link">Kadas</a>
+<div class="sub-section-title">Shop For Kids</div>
+<a href="${beyonPlpUrl}" class="sub-link">Earrings</a><a href="${beyonPlpUrl}" class="sub-link">Rings</a><a href="${beyonPlpUrl}" class="sub-link">Bracelets</a><a href="${beyonPlpUrl}" class="sub-link">Necklaces</a><a href="${beyonPlpUrl}" class="sub-link">Pendants</a><a href="${beyonPlpUrl}" class="sub-link">Baby Bangles</a>
+<div class="sub-section-title">By Metal &amp; Stone</div>
+<a href="${beyonPlpUrl}" class="sub-link">Gold</a><a href="${beyonPlpUrl}" class="sub-link">Diamond</a><a href="${beyonPlpUrl}" class="sub-link">Pearl</a><a href="${beyonPlpUrl}" class="sub-link">Gemstone</a><a href="${beyonPlpUrl}" class="sub-link">Yellow Gold</a><a href="${beyonPlpUrl}" class="sub-link">Rose Gold</a><a href="${beyonPlpUrl}" class="sub-link">White Gold</a><a href="${beyonPlpUrl}" class="sub-link">22kt Gold</a>
+</div>
+</div>
