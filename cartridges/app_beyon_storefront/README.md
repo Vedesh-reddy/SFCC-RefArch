@@ -61,6 +61,21 @@ Placeholders, as in the design's sample data:
 
 `sizes.html` and `ring-size-guide-1080x1440.html` aren't built because no design page links to them. The PDP's own size chart is included.
 
+## Login
+
+The page is the design's sign-in card. Nothing here reaches the server yet, so **no shopper can sign in on this site until the backend exists**. Account pages redirect to this screen.
+
+| Item | Current behaviour |
+|---|---|
+| Send code | Checks the number format in the browser, then shows the code screen. No code is sent |
+| Verify & sign in | Shows a placeholder note. The design shows a demo alert |
+| Marketing and personalisation choices | Not saved |
+| Terms and Privacy Notice links | No destination yet |
+
+The background is a blurred static capture of the PDP design. The design uses a live iframe of that page.
+
+The design loads `../fonts/geom.css` and the Devina Garden font, which weren't supplied. This page keeps the design's font stack, so it matches how the HTML renders today and picks up the real fonts once they're added.
+
 ## Deliberate differences from the design
 
 - At 390px the design pushes the cart icon off screen because search can't shrink. Search shrinks here so the cart stays visible.
