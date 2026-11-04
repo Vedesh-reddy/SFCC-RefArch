@@ -1,0 +1,66 @@
+@import "beyon-variables";
+
+.not-found-page {
+    min-height: 100vh;
+    padding: 24px;
+    color: $beyon-dark;
+    font-family: Geom, sans-serif;
+    line-height: normal;
+    background: #fff;
+    -webkit-font-smoothing: antialiased;
+}
+
+.not-found {
+    max-width: 380px;
+
+    svg {
+        width: 110px;
+        height: 100px;
+        margin-bottom: 8px;
+        vertical-align: baseline;
+    }
+}
+
+.not-found-code {
+    color: #d30b39;
+    font-family: "Oooh Baby", cursive;
+    font-size: 96px;
+    line-height: 1;
+}
+
+.not-found-title {
+    margin: 8px 0 0;
+    color: $beyon-dark;
+    font-family: Geom, sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: normal;
+}
+
+.not-found-text {
+    margin: 8px 0 0;
+    color: #8a8a8a;
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.not-found-link,
+.not-found-link:hover {
+    gap: 8px;
+    margin-top: 28px;
+    padding: 13px 28px;
+    color: #fff;
+    font-family: "Didact Gothic", sans-serif;
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, #c62828, #991b1b);
+    border-radius: 999px;
+    box-shadow: 0 10px 30px -10px rgba(211, 11, 57, 50%);
+    transition: transform 0.2s;
+}
+
+.not-found-link:active {
+    transform: scale(0.97);
+}

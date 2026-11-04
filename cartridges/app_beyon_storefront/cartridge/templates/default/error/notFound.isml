@@ -1,0 +1,24 @@
+<iscontent type="text/html" charset="UTF-8" compact="true"/>
+<isscript>
+    var assets = require('*/cartridge/scripts/assets');
+    assets.addCss('/css/not-found.css');
+    request.pageMetaData.setTitle(Resource.msg('notfound.pagetitle', 'beyon', null));
+</isscript>
+
+<isinclude template="/components/modules" sf-toolkit="off" />
+
+<!DOCTYPE html>
+<html lang="${require('dw/util/Locale').getLocale(request.getLocale()).getLanguage()}">
+    <head>
+        <isinclude template="/common/htmlHead" />
+    </head>
+    <body class="not-found-page d-flex align-items-center justify-content-center">
+        <main class="not-found text-center">
+            <isinclude template="search/components/beyon-cat-sketch" />
+            <div class="not-found-code">404</div>
+            <h1 class="not-found-title">${Resource.msg('notfound.title', 'beyon', null)}</h1>
+            <p class="not-found-text">${Resource.msg('notfound.text', 'beyon', null)}</p>
+            <a class="not-found-link d-inline-flex align-items-center justify-content-center" href="${URLUtils.url('Search-Show', 'cgid', 'root')}">${Resource.msg('notfound.cta', 'beyon', null)}</a>
+        </main>
+    </body>
+</html>

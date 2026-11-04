@@ -123,8 +123,13 @@ The base `Order-Confirm` template isn't restyled, because this flow never reache
 | `?preview=popup-3` | Items can't be shipped internationally |
 | `?preview=popup-4` | Some items out of stock, remove and continue |
 
+## 404
+
+`error/notFound` is a standalone page with no header or footer, used wherever the base cartridge returns 404: missing URLs and unknown products. A request for a route that doesn't exist still gets the base 500 error page.
+
 ## Deliberate differences from the design
 
+- The browser tab title on the 404 page keeps the base site name and version suffix.
 - The Revamp `Login/` folder has no font files, so its HTML renders in a system font. The live page uses Geom, the font the rest of the design set specifies, so its body text is slightly narrower.
 - Cart coupons are the codes in `cart.html` (WELCOME10, GOLD500, FIRSTORDER). Story 21 names different codes, and the HTML takes priority.
 - The login button says Send code, from the HTML. Story 29 says Get OTP.
