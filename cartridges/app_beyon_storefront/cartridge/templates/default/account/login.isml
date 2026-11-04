@@ -1,0 +1,193 @@
+<isdecorate template="common/layout/page">
+    <isscript>
+        var assets = require('*/cartridge/scripts/assets.js');
+        assets.addCss('/css/login.css');
+        assets.addJs('/js/beyon-login.js');
+    </isscript>
+
+    <div class="beyon-login">
+<!-- Diamond cut SVG library -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="cut-round" viewBox="0 0 24 24">
+    <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <polygon points="12,3 20.5,12 12,21 3.5,12" fill="none" stroke="currentColor" stroke-width="0.9"/>
+    <circle cx="12" cy="12" r="3.2" fill="none" stroke="currentColor" stroke-width="0.9"/>
+    <path d="M12 3v3.5M12 21v-3.5M3.5 12h3.5M21 12h-3.5" stroke="currentColor" stroke-width="0.7" opacity="0.7"/>
+  </symbol>
+  <symbol id="cut-marquise" viewBox="0 0 24 24">
+    <path d="M12 3 C 6 9 6 15 12 21 C 18 15 18 9 12 3 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M4.5 12h15" stroke="currentColor" stroke-width="0.8" opacity="0.6"/>
+    <path d="M12 3l-3 9 3 9M12 3l3 9-3 9" stroke="currentColor" stroke-width="0.7" opacity="0.5" fill="none"/>
+  </symbol>
+  <symbol id="cut-pear" viewBox="0 0 24 24">
+    <path d="M12 3 C 7 9 6 14 8 18 C 10 21 14 21 16 18 C 18 14 17 9 12 3 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M12 3v18M7 14h10" stroke="currentColor" stroke-width="0.7" opacity="0.55" fill="none"/>
+  </symbol>
+  <symbol id="cut-princess" viewBox="0 0 24 24">
+    <rect x="3.5" y="3.5" width="17" height="17" fill="none" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M3.5 3.5 L20.5 20.5 M20.5 3.5 L3.5 20.5" stroke="currentColor" stroke-width="0.75" opacity="0.55"/>
+    <rect x="8.5" y="8.5" width="7" height="7" fill="none" stroke="currentColor" stroke-width="0.9"/>
+  </symbol>
+  <symbol id="cut-emerald" viewBox="0 0 24 24">
+    <path d="M6 4 L18 4 L21 8 L21 16 L18 20 L6 20 L3 16 L3 8 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M6 4 L8.5 8 L15.5 8 L18 4 M6 20 L8.5 16 L15.5 16 L18 20 M3 8 L8.5 8 L8.5 16 L3 16 M21 8 L15.5 8 L15.5 16 L21 16" stroke="currentColor" stroke-width="0.7" opacity="0.55" fill="none"/>
+  </symbol>
+  <symbol id="cut-trillion" viewBox="0 0 24 24">
+    <path d="M12 3 L21 19 L3 19 Z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M12 3 L12 19 M7.5 11 L16.5 11" stroke="currentColor" stroke-width="0.7" opacity="0.55" fill="none"/>
+  </symbol>
+</svg>
+
+<div class="pdp-bg" aria-hidden="true"></div>
+<div class="aurora" aria-hidden="true">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+
+<div class="login-overlay" id="login-overlay" role="dialog" aria-modal="true" aria-label="${Resource.msg('login.dialog', 'beyon', null)}" data-home-url="${URLUtils.url('Home-Show')}">
+  <div class="glass d-flex flex-column" id="glass-card">
+    <button type="button" class="close-x p-0" id="login-close" aria-label="${Resource.msg('button.close', 'beyon', null)}">
+      <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#2C2C2C" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+
+    <!-- LEFT: editorial -->
+    <div class="page-left">
+      <div>
+        <div class="quote">
+          <span class="word"><em>${Resource.msg('login.quote.1', 'beyon', null)}</em></span>
+          <span class="word">${Resource.msg('login.quote.2', 'beyon', null)}</span>
+        </div>
+      </div>
+
+      <div class="promises">
+        <div class="promise">
+          <span class="cut"><svg aria-hidden="true" width="18" height="18"><use href="${'#'}cut-marquise"/></svg></span>
+          <div class="metric"><em>${Resource.msg('login.promise.1', 'beyon', null)}</em></div>
+          <div class="lbl">${Resource.msg('login.promise.1.label', 'beyon', null)}</div>
+        </div>
+        <div class="promise">
+          <span class="cut"><svg aria-hidden="true" width="18" height="18"><use href="${'#'}cut-round"/></svg></span>
+          <div class="metric">${Resource.msg('login.promise.2.a', 'beyon', null)}<em>${Resource.msg('login.promise.2.b', 'beyon', null)}</em></div>
+          <div class="lbl">${Resource.msg('login.promise.2.label', 'beyon', null)}</div>
+        </div>
+        <div class="promise">
+          <span class="cut"><svg aria-hidden="true" width="18" height="18"><use href="${'#'}cut-emerald"/></svg></span>
+          <div class="metric"><em>${Resource.msg('login.promise.3', 'beyon', null)}</em></div>
+          <div class="lbl">${Resource.msg('login.promise.3.label', 'beyon', null)}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: form -->
+    <div class="page-right">
+      <div class="form-panel" id="form-panel">
+        <h2 class="head">${Resource.msg('login.head.1', 'beyon', null)} <em>${Resource.msg('login.head.2', 'beyon', null)}</em> ${Resource.msg('login.head.3', 'beyon', null)} <em>${Resource.msg('login.head.4', 'beyon', null)}</em>.</h2>
+
+        <div class="phone-row">
+          <select class="cc-select" id="cc-select" aria-label="${Resource.msg('form.countrycode', 'beyon', null)}">
+            <option value="+91" selected>🇮🇳 IN +91</option>
+            <option value="+971">🇦🇪 AE +971</option>
+            <option value="+49">🇩🇪 DE +49</option>
+            <option value="+966">🇸🇦 SA +966</option>
+            <option value="+31">🇳🇱 NL +31</option>
+            <option value="+60">🇲🇾 MY +60</option>
+            <option value="+254">🇰🇪 KE +254</option>
+            <option value="+40">🇷🇴 RO +40</option>
+            <option value="+34">🇪🇸 ES +34</option>
+            <option value="+351">🇵🇹 PT +351</option>
+            <option value="+974">🇶🇦 QA +974</option>
+            <option value="+39">🇮🇹 IT +39</option>
+            <option value="+968">🇴🇲 OM +968</option>
+            <option value="+965">🇰🇼 KW +965</option>
+            <option value="+973">🇧🇭 BH +973</option>
+            <option value="+27">🇿🇦 ZA +27</option>
+            <option value="+1-ca">🇨🇦 CA +1</option>
+            <option value="+64">🇳🇿 NZ +64</option>
+            <option value="+61">🇦🇺 AU +61</option>
+            <option value="+65">🇸🇬 SG +65</option>
+            <option value="+1-us">🇺🇸 US +1</option>
+            <option value="+44">🇬🇧 UK +44</option>
+          </select>
+          <input type="tel" class="phone-input" id="phone-input" inputmode="numeric" maxlength="15" placeholder="${Resource.msg('login.phone', 'beyon', null)}" aria-label="${Resource.msg('login.phone', 'beyon', null)}" autocomplete="tel-national" />
+        </div>
+        <div class="phone-err d-none" id="phone-err" role="alert">${Resource.msg('login.phone.error', 'beyon', null)}</div>
+
+        <label class="terms-line">
+          <span class="check check-tight">
+            <input type="checkbox" id="terms-ack" checked />
+            <span class="box"></span>
+          </span>
+          <span>${Resource.msg('login.terms.1', 'beyon', null)} <a href="${'#'}">${Resource.msg('login.terms.2', 'beyon', null)}</a> &amp; ${Resource.msg('login.terms.3', 'beyon', null)} <a href="${'#'}">${Resource.msg('login.terms.4', 'beyon', null)}</a>.</span>
+        </label>
+
+        <button type="button" class="login-btn" id="send-code-btn" disabled>
+          <span class="cut"><svg aria-hidden="true" width="12" height="12"><use href="${'#'}cut-princess"/></svg></span>
+          ${Resource.msg('login.sendcode', 'beyon', null)}
+          <svg aria-hidden="true" class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+
+        <div class="prefs" id="prefs">
+          <button type="button" class="prefs-trigger p-0" id="prefs-trigger" aria-expanded="false" aria-controls="prefs-body">
+            <span>${Resource.msg('login.prefs', 'beyon', null)}</span>
+            <svg aria-hidden="true" class="chev" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <div class="prefs-body" id="prefs-body">
+            <div class="prefs-item">
+              <label class="check">
+                <input type="checkbox" id="mkt-consent" checked />
+                <span class="box"></span>
+                <span>${Resource.msg('login.marketing', 'beyon', null)} <a href="${'#'}">${Resource.msg('login.terms.4', 'beyon', null)}</a>.</span>
+              </label>
+              <div class="chan-row" id="chan-row">
+                <label class="chan"><input type="checkbox" checked /><span>Email</span></label>
+                <label class="chan"><input type="checkbox" checked /><span>WhatsApp</span></label>
+                <label class="chan"><input type="checkbox" checked /><span>Call</span></label>
+                <label class="chan"><input type="checkbox" checked /><span>SMS</span></label>
+                <label class="chan"><input type="checkbox" checked /><span>RCS</span></label>
+              </div>
+            </div>
+            <div class="prefs-item">
+              <label class="check">
+                <input type="checkbox" id="personalize-consent" checked />
+                <span class="box"></span>
+                <span>${Resource.msg('login.personalize', 'beyon', null)}</span>
+              </label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="otp-panel" id="otp-panel">
+        <button type="button" class="back-link" id="otp-back">
+          <svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+          ${Resource.msg('button.back', 'beyon', null)}
+        </button>
+        <h2 class="head">${Resource.msg('login.code.1', 'beyon', null)} <em>${Resource.msg('login.code.2', 'beyon', null)}</em>.</h2>
+        <p class="sub">${Resource.msg('login.sentto', 'beyon', null)} <b class="otp-to" id="otp-to"></b></p>
+        <div class="otp-boxes" role="group" aria-label="${Resource.msg('login.code.2', 'beyon', null)}">
+          <input type="tel" inputmode="numeric" maxlength="1" aria-label="${Resource.msg('login.code.2', 'beyon', null)}" />
+          <input type="tel" inputmode="numeric" maxlength="1" aria-label="${Resource.msg('login.code.2', 'beyon', null)}" />
+          <input type="tel" inputmode="numeric" maxlength="1" aria-label="${Resource.msg('login.code.2', 'beyon', null)}" />
+          <input type="tel" inputmode="numeric" maxlength="1" aria-label="${Resource.msg('login.code.2', 'beyon', null)}" />
+          <input type="tel" inputmode="numeric" maxlength="1" aria-label="${Resource.msg('login.code.2', 'beyon', null)}" />
+          <input type="tel" inputmode="numeric" maxlength="1" aria-label="${Resource.msg('login.code.2', 'beyon', null)}" />
+        </div>
+        <div class="otp-timer">
+          <span id="timer-text">${Resource.msg('login.resendin', 'beyon', null)} <b class="timer-num" id="timer-num">30</b>${Resource.msg('login.seconds', 'beyon', null)}</span>
+          <button type="button" class="link d-none" id="resend-btn">${Resource.msg('login.resend', 'beyon', null)}</button>
+        </div>
+        <button type="button" class="login-btn" id="otp-verify">
+          <span class="cut"><svg aria-hidden="true" width="12" height="12"><use href="${'#'}cut-round"/></svg></span>
+          ${Resource.msg('login.verify', 'beyon', null)}
+          <svg aria-hidden="true" class="arr" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+        </button>
+        <p class="otp-note d-none" id="otp-note" role="status">${Resource.msg('login.demo', 'beyon', null)}</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+    </div>
+</isdecorate>
