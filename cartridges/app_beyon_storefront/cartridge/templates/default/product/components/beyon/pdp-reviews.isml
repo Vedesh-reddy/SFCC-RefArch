@@ -1,0 +1,66 @@
+<iscomment>Sample reviews from the design.</iscomment>
+<div class="reviews-section" id="reviews" data-more="${Resource.msg('button.readmore', 'beyon', null)}" data-less="${Resource.msg('button.showless', 'beyon', null)}">
+    <div class="d-flex align-items-center section-head reviews-head">
+        <div class="section-bar"></div>
+        <h2 class="section-title">${Resource.msg('label.reviewstitle', 'beyon', null)}</h2>
+        <span class="reviews-rating d-flex align-items-center"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>4.9<span class="reviews-count">${Resource.msg('label.reviewscount', 'beyon', null)}</span></span>
+    </div>
+    <p class="reviews-sub">${Resource.msg('label.reviewssub', 'beyon', null)}</p>
+    <div class="reviews-row d-flex">
+        <div class="review-cell d-flex">
+            <div class="review-card d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#B91C1C" opacity=".18"><path d="M3 21h7l2-8V3H3v10h4zM14 21h7l2-8V3h-9v10h4z" transform="scale(.9) translate(-1 0)"/></svg><span class="review-stars d-flex"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span></div>
+                <p class="review-text">So tbh, for a very long time, I wanted to purchase dainty jewellery from BEYON from my first salary because the pieces felt so personal. The packaging, the sparkle and the certificate made it a day I will never forget.</p>
+                <button type="button" class="review-more p-0 js-review-toggle">${Resource.msg('button.readmore', 'beyon', null)}</button>
+                <div class="d-flex align-items-center justify-content-between review-foot">
+                    <div class="review-author"><p class="review-name text-truncate">Sanjana Sahu</p><p class="review-date">October 12, 2025</p></div>
+                    <span class="review-verified flex-shrink-0">${Resource.msg('label.verified', 'beyon', null)}</span>
+                </div>
+            </div>
+        </div>
+        <div class="review-cell d-flex">
+            <div class="review-card d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#B91C1C" opacity=".18"><path d="M3 21h7l2-8V3H3v10h4zM14 21h7l2-8V3h-9v10h4z" transform="scale(.9) translate(-1 0)"/></svg><span class="review-stars d-flex"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span></div>
+                <p class="review-text">BEYON, to me, represents timeless elegance with a modern touch. I love jewellery that feels classic yet effortless enough to wear every single day, and this pendant does exactly that.</p>
+                <button type="button" class="review-more p-0 js-review-toggle">${Resource.msg('button.readmore', 'beyon', null)}</button>
+                <div class="d-flex align-items-center justify-content-between review-foot">
+                    <div class="review-author"><p class="review-name text-truncate">Drswati Mishra</p><p class="review-date">October 12, 2025</p></div>
+                    <span class="review-verified flex-shrink-0">${Resource.msg('label.verified', 'beyon', null)}</span>
+                </div>
+            </div>
+        </div>
+        <div class="review-cell d-flex">
+            <div class="review-card d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#B91C1C" opacity=".18"><path d="M3 21h7l2-8V3H3v10h4zM14 21h7l2-8V3h-9v10h4z" transform="scale(.9) translate(-1 0)"/></svg><span class="review-stars d-flex"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span></div>
+                <p class="review-text">My husband gifted me my first BEYON jewellery for our wedding anniversary after my second delivery, and I felt so special. The diamonds are brilliant and the finish is flawless.</p>
+                <button type="button" class="review-more p-0 js-review-toggle">${Resource.msg('button.readmore', 'beyon', null)}</button>
+                <div class="d-flex align-items-center justify-content-between review-foot">
+                    <div class="review-author"><p class="review-name text-truncate">Blessy Sherline</p><p class="review-date">October 12, 2025</p></div>
+                    <span class="review-verified flex-shrink-0">${Resource.msg('label.verified', 'beyon', null)}</span>
+                </div>
+            </div>
+        </div>
+        <div class="review-cell d-flex">
+            <div class="review-card d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#B91C1C" opacity=".18"><path d="M3 21h7l2-8V3H3v10h4zM14 21h7l2-8V3h-9v10h4z" transform="scale(.9) translate(-1 0)"/></svg><span class="review-stars d-flex"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span></div>
+                <p class="review-text">It means an opportunity to return the love I have received. I want to gift my mom a diamond earring, she does not own one. The delivery was quick and the team helped me pick the perfect size.</p>
+                <button type="button" class="review-more p-0 js-review-toggle">${Resource.msg('button.readmore', 'beyon', null)}</button>
+                <div class="d-flex align-items-center justify-content-between review-foot">
+                    <div class="review-author"><p class="review-name text-truncate">Priyadarshini</p><p class="review-date">October 12, 2025</p></div>
+                    <span class="review-verified flex-shrink-0">${Resource.msg('label.verified', 'beyon', null)}</span>
+                </div>
+            </div>
+        </div>
+        <div class="review-cell d-flex">
+            <div class="review-card d-flex flex-column">
+                <div class="d-flex align-items-center justify-content-between"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 24 24" fill="#B91C1C" opacity=".18"><path d="M3 21h7l2-8V3H3v10h4zM14 21h7l2-8V3h-9v10h4z" transform="scale(.9) translate(-1 0)"/></svg><span class="review-stars d-flex"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="#C5A575"><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span></div>
+                <p class="review-text">It means a lot to me. Tata hai toh trust hai. I bought my first gold jewellery from BEYON, and I was also the first in my family to choose a laboratory-grown diamond. Absolutely love it.</p>
+                <button type="button" class="review-more p-0 js-review-toggle">${Resource.msg('button.readmore', 'beyon', null)}</button>
+                <div class="d-flex align-items-center justify-content-between review-foot">
+                    <div class="review-author"><p class="review-name text-truncate">Neha Gajendra</p><p class="review-date">November 12, 2025</p></div>
+                    <span class="review-verified flex-shrink-0">${Resource.msg('label.verified', 'beyon', null)}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

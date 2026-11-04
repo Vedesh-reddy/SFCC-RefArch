@@ -1,0 +1,12 @@
+<div class="pdp-extras">
+    <div class="extra-card extra-card-gold section-gold-bg">
+        <div class="d-flex align-items-center extra-head"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="#d30b39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13,6 21,16 13,26 5,16"/><polygon points="28,18 42,18 42,30 28,30"/><path d="M18 12a16 16 0 0 1 16-3"/><path d="M14 8l4 1-1 4"/><path d="M30 36a16 16 0 0 1-16 3"/><path d="M34 40l-4-1 1-4"/><path d="M39 4.5L40.05 6.95L42.5 8L40.05 9.05L39 11.5L37.95 9.05L35.5 8L37.95 6.95Z" fill="#B91C1C" stroke="none"/><path d="M6 33L6.9 35.1L9 36L6.9 36.9L6 39L5.1 36.9L3 36L5.1 35.1Z" fill="#B91C1C" stroke="none"/></svg><span class="extra-title">${Resource.msg('label.goldexchange', 'beyon', null)}</span></div>
+        <p class="extra-text">${Resource.msg('label.goldexchangetext', 'beyon', null)} <strong>${Resource.msg('label.goldexchangerate', 'beyon', null)}</strong></p>
+        <button type="button" class="cta-customise extra-btn extra-btn-gold w-100 js-exchange-open">${Resource.msg('button.checkexchange', 'beyon', null)}</button>
+    </div>
+    <div class="extra-card extra-card-store section-delivery-bg">
+        <div class="d-flex align-items-center extra-head"><svg aria-hidden="true" width="20" height="20" viewBox="0 0 48 48" fill="none" stroke="#d30b39" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M24 4C15 4 9 11 9 19c0 12 15 25 15 25s15-13 15-25c0-8-6-15-15-15z"/><circle cx="24" cy="19" r="6"/><path d="M38 4.5L39.05 6.95L41.5 8L39.05 9.05L38 11.5L36.95 9.05L34.5 8L36.95 6.95Z" fill="#B91C1C" stroke="none"/><path d="M8 33L8.9 35.1L11 36L8.9 36.9L8 39L7.1 36.9L5 36L7.1 35.1Z" fill="#B91C1C" stroke="none"/></svg><span class="extra-title">${Resource.msg('label.storeavailability', 'beyon', null)}</span></div>
+        <p class="extra-text">${Resource.msg('label.storetext', 'beyon', null)}</p>
+        <a class="extra-btn extra-btn-store ${isOutOfStock ? 'btn-request-design' : 'btn-add-to-bag'} d-flex align-items-center justify-content-center w-100" href="https://www.beyon.co.in/en_IN/stores" target="_blank" rel="noopener">${Resource.msg('button.checkstore', 'beyon', null)}</a>
+    </div>
+</div>

@@ -1,26 +1,6 @@
 <div class="pdp-toast" id="pdp-toast" role="status"></div>
 
-<div class="size-overlay d-none" id="size-chart" role="dialog" aria-modal="true" aria-labelledby="size-chart-title">
-    <div class="size-modal">
-        <div class="d-flex align-items-center justify-content-between size-head">
-            <h3 class="size-title" id="size-chart-title">${Resource.msg('label.sizechart', 'beyon', null)}</h3>
-            <button type="button" class="modal-close p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-        </div>
-        <div class="size-body">
-            <p class="size-guide-label">${Resource.msg('label.chainguide', 'beyon', null)}</p>
-            <table class="size-table w-100">
-                <thead><tr><th>${Resource.msg('label.size', 'beyon', null)}</th><th>${Resource.msg('label.length', 'beyon', null)}</th><th>${Resource.msg('label.fits', 'beyon', null)}</th></tr></thead>
-                <tbody>
-                    <tr><td class="size-col-strong">16 INCHES</td><td>40.6 cm</td><td>Choker / Collar</td></tr>
-                    <tr><td class="size-col-strong">18 INCHES</td><td>45.7 cm</td><td>Princess (most popular)</td></tr>
-                    <tr><td class="size-col-strong">20 INCHES</td><td>50.8 cm</td><td>Matinee</td></tr>
-                    <tr><td class="size-col-strong">22 INCHES</td><td>55.9 cm</td><td>Opera</td></tr>
-                </tbody>
-            </table>
-            <div class="size-note"><p>${Resource.msg('msg.sizenote.1', 'beyon', null)} <strong>${Resource.msg('msg.sizenote.18', 'beyon', null)}</strong> ${Resource.msg('msg.sizenote.2', 'beyon', null)} <strong>${Resource.msg('msg.sizenote.16', 'beyon', null)}</strong>.</p></div>
-        </div>
-    </div>
-</div>
+<isinclude template="product/components/beyon/pdp-sheets" />
 
 <div class="cr-overlay d-none" id="customisation-popup" role="dialog" aria-modal="true" aria-labelledby="customisation-popup-title" data-toast="${Resource.msg('form.custom.toast', 'beyon', null)}">
     <div class="cr-modal">

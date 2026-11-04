@@ -5,5 +5,5 @@
         <span class="app-banner-title">${Resource.msg('label.getapp', 'beyon', null)}</span>
         <span class="app-banner-sub">${Resource.msg('label.getappsub', 'beyon', null)}</span>
     </div>
-    <button type="button" class="app-banner-install flex-shrink-0">${Resource.msg('button.install', 'beyon', null)}</button>
+    <a class="app-banner-install flex-shrink-0" href="https://dev.qrplus.ai/api/v1/r/1200058" target="_blank" rel="noopener">${Resource.msg('button.install', 'beyon', null)}</a>
 </div>

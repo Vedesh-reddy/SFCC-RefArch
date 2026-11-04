@@ -1,0 +1,85 @@
+<iscomment>Size charts are the design's reference data. The exchange rates and product price are its samples, so the calculator is a placeholder.</iscomment>
+<div class="cr-overlay d-none" id="guide-ring" role="dialog" aria-modal="true" aria-labelledby="guide-ring-title">
+    <div class="cr-modal sheet-modal">
+        <div class="d-flex align-items-start justify-content-between cr-head">
+            <div><h3 class="cr-title" id="guide-ring-title">Ring Size</h3><p class="cr-sub">Inner diameter by ring stick (mm)</p></div>
+            <button type="button" class="modal-close flex-shrink-0 p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="sheet-scroll"><table class="size-table w-100"><thead><tr><th>Inner Dia</th><th>Circumference</th><th>Category</th></tr></thead><tbody><tr><td class="size-strong">12.4</td><td>39</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">12.8</td><td>40</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">13.2</td><td>41</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">13.6</td><td>43</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">14</td><td>44</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">14.4</td><td>45</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">14.8</td><td>47</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">15.2</td><td>48</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">15.6</td><td>49</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">16</td><td>50</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">16.4</td><td>52</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">16.8</td><td>53</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">17.2</td><td>54</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">17.6</td><td>55</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">18</td><td>57</td><td><span class="cat cat-u">Unisex</span></td></tr><tr><td class="size-strong">18.4</td><td>58</td><td><span class="cat cat-u">Unisex</span></td></tr><tr><td class="size-strong">18.8</td><td>59</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">19.1</td><td>60</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">19.5</td><td>61</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">19.9</td><td>63</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">20.3</td><td>64</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">20.7</td><td>65</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">21.1</td><td>66</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">21.5</td><td>68</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">21.9</td><td>69</td><td><span class="cat cat-g">Gents</span></td></tr></tbody></table></div>
+    </div>
+</div>
+
+<div class="cr-overlay d-none" id="guide-bangle" role="dialog" aria-modal="true" aria-labelledby="guide-bangle-title">
+    <div class="cr-modal sheet-modal">
+        <div class="d-flex align-items-start justify-content-between cr-head">
+            <div><h3 class="cr-title" id="guide-bangle-title">Round Bangle Size</h3><p class="cr-sub">Measure the inner diameter of a bangle you own.</p></div>
+            <button type="button" class="modal-close flex-shrink-0 p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="sheet-scroll"><table class="size-table w-100"><thead><tr><th>Size (Anna)</th><th>Circumference (mm)</th><th>Diameter (mm)</th><th>Titan Code</th></tr></thead><tbody><tr><td class="size-strong">2-0</td><td>159.59</td><td>50.8</td><td>N</td></tr><tr><td class="size-strong">2-1</td><td>164.62</td><td>52.4</td><td>O</td></tr><tr><td class="size-strong">2-2</td><td>169.4</td><td>54</td><td>P</td></tr><tr><td class="size-strong">2-3</td><td>174.67</td><td>55.6</td><td>P</td></tr><tr><td class="size-strong">2-4</td><td>179.6</td><td>57.2</td><td>Q</td></tr><tr><td class="size-strong">2-5</td><td>184.41</td><td>58.7</td><td>Q</td></tr><tr><td class="size-strong">2-6</td><td>189.5</td><td>60.3</td><td>R</td></tr><tr><td class="size-strong">2-7</td><td>194.46</td><td>61.9</td><td>S</td></tr><tr><td class="size-strong">2-8</td><td>199.4</td><td>63.5</td><td>S</td></tr><tr><td class="size-strong">2-9</td><td>204.52</td><td>65.1</td><td>T</td></tr><tr><td class="size-strong">2-10</td><td>209.3</td><td>66.7</td><td>U</td></tr><tr><td class="size-strong">2-11</td><td>214.57</td><td>68.3</td><td>U</td></tr><tr><td class="size-strong">2-12</td><td>219.5</td><td>69.87</td><td>V</td></tr><tr><td class="size-strong">3</td><td>239.3</td><td>76.17</td><td>X</td></tr></tbody></table></div>
+    </div>
+</div>
+
+<div class="cr-overlay d-none" id="guide-bracelet" role="dialog" aria-modal="true" aria-labelledby="guide-bracelet-title">
+    <div class="cr-modal sheet-modal">
+        <div class="d-flex align-items-start justify-content-between cr-head">
+            <div><h3 class="cr-title" id="guide-bracelet-title">Bracelet Length</h3><p class="cr-sub">In CM</p></div>
+            <button type="button" class="modal-close flex-shrink-0 p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="sheet-scroll"><table class="size-table w-100"><thead><tr><th>Length (CM)</th><th>Category</th></tr></thead><tbody><tr><td class="size-strong">12</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">12.5</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">13</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">13.5</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">14</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">14.5</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">15</td><td><span class="cat cat-k">Kids</span></td></tr><tr><td class="size-strong">15.5</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">16</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">16.5</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">17</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">17.5</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">18</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">18.5</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">19</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">19.5</td><td><span class="cat cat-l">Ladies</span></td></tr><tr><td class="size-strong">20</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">20.5</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">21</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">21.5</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">22</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">22.5</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">23</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">23.5</td><td><span class="cat cat-g">Gents</span></td></tr><tr><td class="size-strong">24</td><td><span class="cat cat-g">Gents</span></td></tr></tbody></table></div>
+    </div>
+</div>
+
+<div class="cr-overlay d-none" id="guide-chain" role="dialog" aria-modal="true" aria-labelledby="guide-chain-title">
+    <div class="cr-modal sheet-modal">
+        <div class="d-flex align-items-start justify-content-between cr-head">
+            <div><h3 class="cr-title" id="guide-chain-title">Chain Size</h3><p class="cr-sub">Length in inches &amp; CM</p></div>
+            <button type="button" class="modal-close flex-shrink-0 p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <div class="sheet-scroll"><table class="size-table w-100"><thead><tr><th>In Inches</th><th>In CM</th></tr></thead><tbody><tr><td class="size-strong">15</td><td>38</td></tr><tr><td class="size-strong">16</td><td>41</td></tr><tr><td class="size-strong">17</td><td>44</td></tr><tr><td class="size-strong">18</td><td>46</td></tr><tr><td class="size-strong">19</td><td>49</td></tr><tr><td class="size-strong">20</td><td>51</td></tr><tr><td class="size-strong">21</td><td>54</td></tr><tr><td class="size-strong">22</td><td>56</td></tr><tr><td class="size-strong">23</td><td>59</td></tr><tr><td class="size-strong">24</td><td>61</td></tr><tr><td class="size-strong">25</td><td>64</td></tr><tr><td class="size-strong">26</td><td>66</td></tr><tr><td class="size-strong">27</td><td>69</td></tr><tr><td class="size-strong">28</td><td>72</td></tr><tr><td class="size-strong">29</td><td>74</td></tr><tr><td class="size-strong">30</td><td>77</td></tr><tr><td class="size-strong">31</td><td>80</td></tr><tr><td class="size-strong">32</td><td>82</td></tr><tr><td class="size-strong">33</td><td>84</td></tr><tr><td class="size-strong">34</td><td>87</td></tr><tr><td class="size-strong">35</td><td>90</td></tr><tr><td class="size-strong">36</td><td>92</td></tr><tr><td class="size-strong">37</td><td>95</td></tr></tbody></table></div>
+    </div>
+</div>
+
+<div class="cr-overlay d-none" id="exchange-sheet" role="dialog" aria-modal="true" aria-labelledby="exchange-title" data-price="49389" data-rate-template="${Resource.msg('exchange.rate', 'beyon', null)}">
+    <div class="cr-modal sheet-modal">
+        <div class="d-flex align-items-start justify-content-between cr-head">
+            <div><h3 class="cr-title" id="exchange-title">${Resource.msg('exchange.title', 'beyon', null)}</h3><p class="cr-sub">${Resource.msg('exchange.sub', 'beyon', null)}</p></div>
+            <button type="button" class="modal-close flex-shrink-0 p-0 js-modal-close" aria-label="${Resource.msg('button.close', 'beyon', null)}"><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        </div>
+        <p class="sheet-label">${Resource.msg('exchange.karatage', 'beyon', null)}</p>
+        <div class="d-flex flex-wrap exchange-pills"><button type="button" class="pill pill-wide pill-default js-exchange-karat" data-karat="9" aria-pressed="false">9 KT</button><button type="button" class="pill pill-wide pill-default js-exchange-karat" data-karat="14" aria-pressed="false">14 KT</button><button type="button" class="pill pill-wide pill-default js-exchange-karat" data-karat="18" aria-pressed="false">18 KT</button><button type="button" class="pill pill-wide pill-selected js-exchange-karat" data-karat="22" aria-pressed="true">22 KT</button><button type="button" class="pill pill-wide pill-default js-exchange-karat" data-karat="24" aria-pressed="false">24 KT</button></div>
+        <p class="exchange-rate" id="exchange-rate"></p>
+        <p class="sheet-label sheet-label-gap">${Resource.msg('exchange.weight', 'beyon', null)}</p>
+        <div class="d-flex align-items-center exchange-weight">
+            <button type="button" class="exchange-step p-0 js-exchange-step" data-step="-0.5" aria-label="${Resource.msg('exchange.decrease', 'beyon', null)}">-</button>
+            <input id="exchange-weight" type="number" min="0" step="0.1" inputmode="decimal" placeholder="${Resource.msg('exchange.typehere', 'beyon', null)}" aria-label="${Resource.msg('exchange.weight', 'beyon', null)}" class="cr-input exchange-weight-input w-100" />
+            <button type="button" class="exchange-step p-0 js-exchange-step" data-step="0.5" aria-label="${Resource.msg('exchange.increase', 'beyon', null)}">+</button>
+        </div>
+        <div id="exchange-form">
+            <p class="sheet-label sheet-label-gap">${Resource.msg('exchange.name', 'beyon', null)}</p>
+            <input id="exchange-name" type="text" autocomplete="name" placeholder="${Resource.msg('exchange.nameplaceholder', 'beyon', null)}" aria-label="${Resource.msg('exchange.name', 'beyon', null)}" class="cr-input w-100" />
+            <p class="cr-error" id="exchange-name-error">${Resource.msg('exchange.nameerror', 'beyon', null)}</p>
+            <p class="sheet-label sheet-label-gap">${Resource.msg('exchange.mobile', 'beyon', null)}</p>
+            <input id="exchange-mobile" type="tel" maxlength="10" autocomplete="tel" placeholder="${Resource.msg('exchange.mobileplaceholder', 'beyon', null)}" aria-label="${Resource.msg('exchange.mobile', 'beyon', null)}" class="cr-input w-100" />
+            <p class="cr-error" id="exchange-mobile-error">${Resource.msg('exchange.mobileerror', 'beyon', null)}</p>
+            <p class="cr-error" id="exchange-weight-error">${Resource.msg('exchange.weighterror', 'beyon', null)}</p>
+            <button type="button" class="exchange-cta btn-add-to-bag w-100 js-exchange-submit">${Resource.msg('exchange.show', 'beyon', null)}</button>
+        </div>
+        <div class="d-none" id="exchange-result">
+            <div class="exchange-value text-center">
+                <p class="exchange-value-label">${Resource.msg('exchange.value', 'beyon', null)}</p>
+                <p class="exchange-value-amount" id="exchange-value"></p>
+            </div>
+            <isif condition="${!isOutOfStock}">
+                <div class="exchange-breakdown">
+                    <div class="d-flex align-items-center justify-content-between exchange-line"><span class="exchange-line-label">${Resource.msg('exchange.price', 'beyon', null)}</span><span class="exchange-line-value" id="exchange-price"></span></div>
+                    <div class="d-flex align-items-center justify-content-between exchange-line exchange-line-gap"><span class="exchange-line-label">${Resource.msg('exchange.valueline', 'beyon', null)}</span><span class="exchange-line-value exchange-line-gold" id="exchange-minus"></span></div>
+                    <div class="exchange-rule"></div>
+                    <div class="d-flex align-items-center justify-content-between exchange-pay"><span>${Resource.msg('exchange.pay', 'beyon', null)}</span><span id="exchange-pay"></span></div>
+                    <p class="exchange-covered d-none" id="exchange-covered">${Resource.msg('exchange.covered', 'beyon', null)}</p>
+                </div>
+            </isif>
+            <a class="exchange-cta exchange-stores ${isOutOfStock ? 'btn-request-design' : 'btn-add-to-bag'} d-flex align-items-center justify-content-center w-100" href="https://www.beyon.co.in/en_IN/stores" target="_blank" rel="noopener">${Resource.msg('exchange.stores', 'beyon', null)}</a>
+            <p class="exchange-note text-center">${Resource.msg('exchange.note', 'beyon', null)}</p>
+        </div>
+    </div>
+</div>
