@@ -378,7 +378,6 @@
                             <div class="flex-grow-1 popup-product-body">
                                 <p class="popup-product-name text-truncate">${popupItem.productName}</p>
                                 <p class="popup-product-weight">${Resource.msg('co.popup.weight', 'beyon', null)}</p>
-                                
                             </div>
                         </div>
                     </isloop>

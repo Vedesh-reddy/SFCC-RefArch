@@ -1,6 +1,7 @@
 'use strict';
 
 // Sign-in is a placeholder: no code is sent and nothing reaches the server until the backend exists.
+var root = document.querySelector('.beyon-login');
 var card = document.getElementById('glass-card');
 var overlay = document.getElementById('login-overlay');
 var phone = document.getElementById('phone-input');
@@ -58,6 +59,12 @@ function startTimer() {
  * Leaves the sign-in screen for the previous page, or home when there is none.
  */
 function closeLogin() {
+    if (root.hasAttribute('data-modal')) {
+        root.classList.add('d-none');
+        document.body.style.removeProperty('overflow');
+        root.dispatchEvent(new CustomEvent('beyon-login:closed', { bubbles: true }));
+        return;
+    }
     var referrer = document.referrer;
     if (referrer && referrer.indexOf(window.location.host) > -1 && referrer !== window.location.href) {
         window.location.href = referrer;
@@ -132,7 +139,7 @@ overlay.addEventListener('click', function (event) {
     }
 });
 document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
+    if (event.key === 'Escape' && !root.classList.contains('d-none')) {
         closeLogin();
     }
 });
