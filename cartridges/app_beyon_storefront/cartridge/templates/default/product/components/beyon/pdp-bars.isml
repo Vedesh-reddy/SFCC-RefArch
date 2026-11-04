@@ -5,45 +5,38 @@
         </div>
     </div>
     <div class="bar-desktop">
-        <div class="pdp-container bar-desktop-inner d-flex align-items-center justify-content-between">
-            <div class="d-flex align-items-center bar-oos-info">
-                <p class="bar-oos-name text-truncate"><isprint value="${product.productName}" /></p>
-                <span class="oos-chip-bar flex-shrink-0">${Resource.msg('label.availableonrequest.pdp', 'beyon', null)}</span>
+        <div class="bar-pill d-flex align-items-center">
+            <div class="bar-info">
+                <p class="bar-name text-truncate"><isprint value="${product.productName}" /></p>
+                <span class="oos-chip-bar d-inline-flex align-items-center"><svg aria-hidden="true" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${Resource.msg('label.availableonrequest.pdp', 'beyon', null)}</span>
             </div>
-            <div class="d-flex align-items-center flex-shrink-0 bar-actions">
-                <button type="button" class="bar-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                <button type="button" class="btn-request-design bar-desktop-btn bar-desktop-btn-dark d-flex align-items-center justify-content-center flex-shrink-0 js-request-open"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>${Resource.msg('button.requestdesign', 'beyon', null)}</button>
-            </div>
+            <button type="button" class="bar-btn bar-btn-request d-flex align-items-center justify-content-center flex-shrink-0 js-request-open"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>${Resource.msg('button.requestdesign', 'beyon', null)}</button>
         </div>
     </div>
 <iselse/>
     <div class="bar-mobile">
         <div class="bar-mobile-inner">
+            <isif condition="${!noOffer}">
             <div class="bar-offer d-flex align-items-center justify-content-center">
                 <svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
                 <span class="bar-offer-title">${Resource.msg('label.offer', 'beyon', null)}</span>
                 <span class="bar-offer-save js-save ${savedAmount ? '' : 'd-none'}">${Resource.msg('label.yousave', 'beyon', null)} <span class="js-save-amount">${savedAmount}</span></span>
             </div>
+            </isif>
             <button type="button" class="btn-add-to-bag bar-mobile-btn d-flex align-items-center justify-content-between w-100 js-add-to-bag">
-                <span class="d-flex align-items-center bar-mobile-prices"><span class="js-price">${salesPrice}</span><span class="bar-mobile-mrp js-mrp ${listPrice ? '' : 'd-none'}">${listPrice}</span></span>
+                <span class="d-flex align-items-center bar-mobile-prices"><span class="js-price">${salesPrice}</span><isif condition="${!noOffer}"><span class="bar-mobile-mrp js-mrp ${listPrice ? '' : 'd-none'}">${listPrice}</span></isif></span>
                 <span class="d-flex align-items-center bar-mobile-label"><span class="js-add-label">${Resource.msg('button.addtobag', 'beyon', null)}</span><svg aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg></span>
             </button>
         </div>
     </div>
     <div class="bar-desktop">
-        <div class="pdp-container bar-desktop-inner d-flex align-items-center justify-content-between">
-            <div class="d-flex flex-column bar-info">
-                <p class="bar-title text-truncate"><span class="js-price">${salesPrice}</span><span class="bar-mrp js-mrp ${listPrice ? '' : 'd-none'}">${listPrice}</span><span class="bar-name"><isprint value="${product.productName}" /></span></p>
-                <div class="d-flex align-items-center bar-offer-row">
-                    <svg aria-hidden="true" width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
-                    <span class="bar-offer-title">${Resource.msg('label.offer', 'beyon', null)}</span>
-                    <span class="bar-offer-save js-save ${savedAmount ? '' : 'd-none'}">${Resource.msg('label.yousave', 'beyon', null)} <span class="js-save-amount">${savedAmount}</span></span>
-                </div>
+        <div class="bar-pill d-flex align-items-center">
+            <div class="bar-info">
+                <p class="bar-name text-truncate"><isprint value="${product.productName}" /></p>
+                <p class="bar-price-row d-flex align-items-baseline"><span class="bar-price js-price">${salesPrice}</span><isif condition="${!noOffer}"><span class="bar-mrp js-mrp ${listPrice ? '' : 'd-none'}">${listPrice}</span><span class="bar-offer-tag">${Resource.msg('label.offershort', 'beyon', null)}</span></isif></p>
             </div>
-            <div class="d-flex align-items-center flex-shrink-0 bar-actions">
-                <button type="button" class="bar-wishlist js-wishlist p-0" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
-                <button type="button" class="btn-add-to-bag bar-desktop-btn d-flex align-items-center justify-content-center flex-shrink-0 js-add-to-bag"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="js-add-label">${Resource.msg('button.addtobag', 'beyon', null)}</span></button>
-            </div>
+            <button type="button" class="bar-btn bar-btn-bag d-flex align-items-center justify-content-center flex-shrink-0 js-add-to-bag"><svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg><span class="js-add-label">${Resource.msg('button.addtobag', 'beyon', null)}</span></button>
+            <button type="button" class="bar-btn bar-btn-buy d-flex align-items-center justify-content-between flex-shrink-0 js-buy-now">${Resource.msg('button.buynow', 'beyon', null)}<span class="bar-logos d-flex align-items-center"><img class="bar-logo" src="${URLUtils.staticURL('/images/beyon/pdp/upi-logo.webp')}" alt="UPI" /><img class="bar-logo bar-logo-visa" src="${URLUtils.staticURL('/images/beyon/pdp/visa-logo.png')}" alt="Visa" /><img class="bar-logo" src="${URLUtils.staticURL('/images/beyon/pdp/mastercard-logo.webp')}" alt="Mastercard" /></span></button>
         </div>
     </div>
 </isif>

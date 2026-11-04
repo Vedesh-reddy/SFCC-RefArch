@@ -16,13 +16,23 @@
             return { url: image.url, alt: image.alt };
         }));
         var savedMoney = pdpList && pdpSales ? new dw.value.Money(pdpList.value - pdpSales.value, pdpSales.currency) : null;
+        var previewState = request.httpParameterMap.preview.stringValue;
+        var previewMetals = {
+            rose14: { label: 'spec.metal.rose14', shine: 'metal-text-shine-rose' },
+            white14: { label: 'spec.metal.white14', shine: 'metal-text-shine-silver' },
+            silver925: { label: 'spec.metal.silver925', shine: 'metal-text-shine-silver' }
+        };
+        var metal = previewMetals[previewState] || { label: 'spec.metal', shine: 'metal-text-shine-gold' };
     </isscript>
 
     <isset name="product" value="${pdict.product}" scope="page" />
     <isset name="sizeAttr" value="${findAttribute('size')}" scope="page" />
     <isset name="colorAttr" value="${findAttribute('color')}" scope="page" />
-    <isset name="hasCustomisation" value="${variationAttributes.length > 0}" scope="page" />
-    <isset name="isOutOfStock" value="${!product.available}" scope="page" />
+    <isset name="isOutOfStock" value="${!product.available || previewState === 'oos'}" scope="page" />
+    <isset name="hasCustomisation" value="${isOutOfStock || previewState === 'withcustom'}" scope="page" />
+    <isset name="noOffer" value="${previewState === 'nooffer'}" scope="page" />
+    <isset name="metalLabel" value="${Resource.msg(metal.label, 'beyon', null)}" scope="page" />
+    <isset name="metalShine" value="${metal.shine}" scope="page" />
     <isset name="salesPrice" value="${pdpSales && pdpSales.formatted ? pdpSales.formatted : ''}" scope="page" />
     <isset name="listPrice" value="${pdpList && pdpList.formatted ? pdpList.formatted : ''}" scope="page" />
     <isset name="savedAmount" value="${savedMoney ? dw.util.StringUtils.formatMoney(savedMoney) : ''}" scope="page" />
@@ -38,7 +48,10 @@
              data-msg-copied="${Resource.msg('msg.linkcopied', 'beyon', null)}"
              data-msg-select="${Resource.msg('msg.selectoptions', 'beyon', null)}"
              data-msg-failed="${Resource.msg('msg.addfailed', 'beyon', null)}"
-             data-msg-gotobag="${Resource.msg('button.gotobag', 'beyon', null)}">
+             data-msg-gotobag="${Resource.msg('button.gotobag', 'beyon', null)}"
+             data-msg-checkout="${Resource.msg('msg.checkout', 'beyon', null)}"
+             data-msg-coupon="${Resource.msg('msg.couponcopied', 'beyon', null)}"
+             data-preview="${previewState || ''}">
             <isinclude template="product/components/beyon/pdp-app-banner" />
             <div class="pdp-shell">
                 <div class="pdp-main pdp-container">
@@ -49,13 +62,16 @@
                     <div class="pdp-side">
                         <div class="pdp-panel-header"><isinclude template="product/components/beyon/pdp-header" /></div>
                         <div class="pdp-panel pdp-panel-info"><isinclude template="product/components/beyon/pdp-info" /></div>
+                        <div class="pdp-coupons"><isinclude template="product/components/beyon/pdp-coupons" /></div>
                         <isif condition="${!isOutOfStock}">
                             <div class="pdp-panel pdp-panel-bordered"><isinclude template="product/components/beyon/pdp-delivery" /></div>
                         </isif>
-                        <div class="pdp-panel pdp-panel-bordered"><isinclude template="product/components/beyon/pdp-customise" /></div>
+                        <div class="pdp-panel pdp-panel-bordered pdp-panel-customise"><isinclude template="product/components/beyon/pdp-customise" /></div>
+                        <isinclude template="product/components/beyon/pdp-extras" />
                     </div>
                 </div>
-                <div class="brand-image"><img class="w-100 h-100 d-block" src="${URLUtils.staticURL('/images/beyon/pdp/pd-1.webp')}" alt="${Resource.msg('label.logo', 'beyon', null)}" loading="lazy" /></div>
+                <div class="brand-image"><img class="w-100 h-100 d-block" src="${URLUtils.staticURL('/images/beyon/pdp/horizontal-banner.png')}" alt="${Resource.msg('label.logo', 'beyon', null)}" loading="lazy" /></div>
+                <div class="pdp-container"><isinclude template="product/components/beyon/pdp-reviews" /></div>
                 <div class="pdp-container"><isinclude template="product/components/beyon/pdp-stack" /></div>
                 <div class="pdp-container"><isinclude template="product/components/beyon/pdp-faq" /></div>
                 <div class="pdp-spacer"></div>

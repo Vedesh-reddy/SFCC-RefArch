@@ -9,13 +9,13 @@
             </div>
         </div>
         <button type="button" class="share-btn flex-shrink-0 d-flex align-items-center justify-content-center p-0" id="share-btn" aria-label="${Resource.msg('button.share', 'beyon', null)}">
-            <svg class="share-icon" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+            <svg class="share-icon" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#555" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="3" x2="9.2" y2="10.1"/><polygon points="22 3 15 21 9.2 10.1 2 8 22 3"/></svg>
             <svg class="share-done" aria-hidden="true" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
         </button>
     </div>
     <div id="pdp-tab-details" class="pdp-tab-panel" role="tabpanel">
         <table class="spec-table spec-first w-100">
-            <tr><td class="spec-label"><span class="metal-text-shine-gold spec-strong">${Resource.msg('spec.metal', 'beyon', null)}</span></td><td class="spec-gap"></td><td class="spec-muted spec-pad-left">${Resource.msg('spec.weight', 'beyon', null)}</td><td class="spec-strong text-end">3.075 g</td></tr>
+            <tr><td class="spec-fill px-0" colspan="2"><span class="${metalShine} spec-strong">${metalLabel}</span></td><td class="spec-muted spec-pad-left pr-0">${Resource.msg('spec.weight', 'beyon', null)}</td><td class="spec-strong spec-right px-0">3.075 g</td></tr>
         </table>
         <div class="spec-section">
             <div class="d-flex align-items-center lgd-head">
@@ -23,13 +23,13 @@
                 <button type="button" class="lgd-link d-inline-flex align-items-center js-faq-scroll"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg> ${Resource.msg('spec.lgdfacts', 'beyon', null)}</button>
             </div>
             <table class="spec-table spec-rows w-100">
-                <tr><td class="spec-muted spec-label">${Resource.msg('spec.count', 'beyon', null)}</td><td class="spec-strong spec-gap">7</td><td class="spec-muted spec-pad-left spec-label">${Resource.msg('spec.shape', 'beyon', null)}</td><td class="spec-strong text-end">${Resource.msg('spec.round', 'beyon', null)}</td></tr>
-                <tr><td class="spec-muted spec-label">${Resource.msg('spec.clarity', 'beyon', null)}</td><td class="spec-strong spec-gap">VS FG</td><td class="spec-muted spec-pad-left spec-label">${Resource.msg('spec.weight', 'beyon', null)}</td><td class="spec-strong text-end">0.3 Ct</td></tr>
+                <tr><td class="spec-muted spec-first-col px-0">${Resource.msg('spec.count', 'beyon', null)}</td><td class="spec-strong spec-fill px-0">7</td><td class="spec-muted spec-pad-left pr-0">${Resource.msg('spec.shape', 'beyon', null)}</td><td class="spec-strong spec-right px-0">${Resource.msg('spec.round', 'beyon', null)}</td></tr>
+                <tr><td class="spec-muted spec-first-col px-0">${Resource.msg('spec.clarity', 'beyon', null)}</td><td class="spec-strong spec-fill px-0">VS &amp; FG</td><td class="spec-muted spec-pad-left pr-0">${Resource.msg('spec.weight', 'beyon', null)}</td><td class="spec-strong spec-right px-0">0.3 Ct</td></tr>
             </table>
         </div>
         <div class="spec-section">
             <table class="spec-table spec-last w-100">
-                <tr><td class="spec-muted spec-label">${Resource.msg('spec.designcode', 'beyon', null)}</td><td class="spec-strong spec-gap"><isprint value="${product.id}" /></td><td class="spec-muted spec-label">${Resource.msg('spec.grossweight', 'beyon', null)}</td><td class="spec-strong text-end">3.135 g</td></tr>
+                <tr><td class="spec-muted spec-first-col px-0">${Resource.msg('spec.designcode', 'beyon', null)}</td><td class="spec-strong spec-fill px-0"><isprint value="${product.id}" /></td><td class="spec-muted spec-pad-left pr-0">${Resource.msg('spec.grossweight', 'beyon', null)}</td><td class="spec-strong spec-right px-0">3.135 g</td></tr>
             </table>
         </div>
         <p class="spec-description"><isprint value="${product.shortDescription || product.longDescription || ''}" encoding="off" /></p>

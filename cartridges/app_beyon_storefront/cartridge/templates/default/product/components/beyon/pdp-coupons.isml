@@ -1,0 +1,35 @@
+<iscomment>Sample coupons from the design. Copying a code only shows the toast.</iscomment>
+<div class="cp-section position-relative" id="coupons">
+    <span class="cp-rail"></span>
+    <div class="cp-arrows d-flex"><button type="button" class="cp-arrow js-coupon-prev d-flex align-items-center justify-content-center p-0" aria-label="${Resource.msg('label.couponprev', 'beyon', null)}"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2C2C2C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button><button type="button" class="cp-arrow js-coupon-next d-flex align-items-center justify-content-center p-0" aria-label="${Resource.msg('label.couponnext', 'beyon', null)}"><svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#2C2C2C" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg></button></div>
+    <div class="cp-track position-relative d-flex">
+        <div class="cp-slide on" data-index="0">
+            <p class="cp-tag d-flex align-items-center"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/></svg>BEYON 500</p>
+            <p class="cp-title">Flat ₹500/- Off</p>
+            <div class="d-flex align-items-center cp-row">
+                <p class="cp-sub flex-grow-1">Applicable for your first purchase</p>
+                <span class="cp-dash flex-shrink-0"></span>
+                <button type="button" class="cp-code d-flex align-items-center flex-shrink-0 js-coupon-copy" data-code="BEYON500" aria-label="${Resource.msg('button.copycode', 'beyon', null)} BEYON500">BEYON500<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg></button>
+            </div>
+        </div>
+        <div class="cp-slide" data-index="1">
+            <p class="cp-tag d-flex align-items-center"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/></svg>ANNIVERSARY</p>
+            <p class="cp-title">Flat ₹1,000/- Off</p>
+            <div class="d-flex align-items-center cp-row">
+                <p class="cp-sub flex-grow-1">On orders above ₹25,000</p>
+                <span class="cp-dash flex-shrink-0"></span>
+                <button type="button" class="cp-code d-flex align-items-center flex-shrink-0 js-coupon-copy" data-code="LOVE1000" aria-label="${Resource.msg('button.copycode', 'beyon', null)} LOVE1000">LOVE1000<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg></button>
+            </div>
+        </div>
+        <div class="cp-slide" data-index="2">
+            <p class="cp-tag d-flex align-items-center"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4z"/></svg>MAKING CHARGES</p>
+            <p class="cp-title">15% Off Making</p>
+            <div class="d-flex align-items-center cp-row">
+                <p class="cp-sub flex-grow-1">On select gold and diamond pieces</p>
+                <span class="cp-dash flex-shrink-0"></span>
+                <button type="button" class="cp-code d-flex align-items-center flex-shrink-0 js-coupon-copy" data-code="MAKE15" aria-label="${Resource.msg('button.copycode', 'beyon', null)} MAKE15">MAKE15<svg aria-hidden="true" width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h8"/></svg></button>
+            </div>
+        </div>
+    </div>
+    <div class="cp-dots d-flex align-items-center justify-content-center"><button type="button" class="cp-dot p-0 on" data-index="0" aria-label="${Resource.msg('label.coupon', 'beyon', null)} 1"></button><button type="button" class="cp-dot p-0" data-index="1" aria-label="${Resource.msg('label.coupon', 'beyon', null)} 2"></button><button type="button" class="cp-dot p-0" data-index="2" aria-label="${Resource.msg('label.coupon', 'beyon', null)} 3"></button></div>
+</div>

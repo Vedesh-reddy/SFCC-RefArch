@@ -46,28 +46,21 @@ To review states with no live trigger, add `?preview=no-results` or `?preview=wi
 
 ## PDP
 
-One template covers all three designs, chosen from the product:
+Product name, images, price, sizes and Add to Bag are real, and sizes and Add to Bag use the base `Product-Variation` and `Cart-AddProduct` routes. Colour pickers stay hidden, as in the design's default view, and the script picks the first colour so the product can still be added. These parts are placeholders:
 
-| Design | Used when |
-|---|---|
-| `PDPnew` | The product has variation attributes |
-| `PDPnocustomise` | The product has no variation attributes |
-| `PDPoos` | The product isn't available |
+| Part | Current behaviour |
+| --- | --- |
+| Product Details, Price Breakup, Customise pickers | Sample values from the design |
+| Coupons | Sample coupons. Copy only shows a toast |
+| Delivery check | The design's sample pincodes, with a random result for others |
+| Gold Exchange calculator | Validates in the browser and uses the design's sample rates and its Rs 49,389 price, not the catalog price. Nothing is sent |
+| Personalise and Request Design popups | Validate in the browser and show a toast. Nothing is sent |
+| Buy Now | Shows the design's toast |
+| Wishlist hearts | Toggle on the page only |
+| Reviews, Stack It, FAQ | Sample content from the design |
+| Size Chart | Always opens the ring guide |
 
-Real data: name, description, images, price, list price, size and colour variations (base `Product-Variation`), and Add to Bag (base `Cart-AddProduct`). The first available value of each attribute is selected on load, so Add to Bag works straight away.
-
-Placeholders, as in the design's sample data:
-
-| Item | Current behaviour |
-|---|---|
-| Metal, diamond and weight specs, price breakup | Fixed sample values in rupees |
-| Gold finish, diamond shape, diamond size | Select locally, don't affect the product |
-| Stack It products, brand image | Fixed design images and prices |
-| Pincode check | The design's sample list, then a random result |
-| Customisation and design request forms | Validate in the browser and show the confirmation. Nothing is sent |
-| Wishlist hearts, ribbon, offer tag | Client-side only |
-
-`sizes.html` and `ring-size-guide-1080x1440.html` aren't built because no design page links to them. The PDP's own size chart is included.
+To review states with no live trigger, add one of these to the product URL as `?preview=`: `oos`, `withcustom`, `nooffer`, `rose14`, `white14`, `silver925`, `pin-ok`, `pin-fail`, `exchange`, `exchange-error`, `guide-ring`, `guide-bangle`, `guide-bracelet`, `guide-chain`.
 
 ## Login
 

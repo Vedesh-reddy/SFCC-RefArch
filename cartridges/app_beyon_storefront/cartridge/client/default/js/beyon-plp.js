@@ -467,7 +467,8 @@ if (previewState === 'no-results' && grid) {
     emptyState.classList.remove('d-none');
     emptyState.classList.add('d-flex');
 } else if (previewState === 'wishlisted' && grid) {
-    all('.wishlist-btn', grid).forEach(function (button) {
-        paintHeart(button, true);
-    });
+    writeWishlist(all('.wishlist-btn', grid).map(function (button) {
+        return button.getAttribute('data-pid');
+    }));
+    decorateCards();
 }

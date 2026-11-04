@@ -7,6 +7,9 @@ var lightboxIndex = 0;
 var added = false;
 var toastTimer = null;
 var lastFocus = null;
+var couponIndex = 0;
+var couponTimer = null;
+var exchangeKarat = 22;
 
 // Sample serviceability from the design. Placeholder until the backend exists.
 var PINCODE_DB = {
@@ -389,6 +392,151 @@ function addToBag() {
 }
 
 /**
+ * Shows one coupon.
+ * @param {number} index - coupon position, wraps at either end
+ */
+function setCoupon(index) {
+    var slides = all('.cp-slide');
+    couponIndex = (index + slides.length) % slides.length;
+    slides.forEach(function (slide, position) {
+        slide.classList.toggle('on', position === couponIndex);
+    });
+    all('.cp-dot').forEach(function (dot, position) {
+        dot.classList.toggle('on', position === couponIndex);
+    });
+}
+
+/**
+ * Starts the coupon rotation unless the visitor prefers reduced motion.
+ */
+function startCoupons() {
+    clearInterval(couponTimer);
+    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        couponTimer = setInterval(function () {
+            setCoupon(couponIndex + 1);
+        }, 4500);
+    }
+}
+
+/**
+ * Copies a coupon code. Nothing is applied until the backend exists.
+ * @param {string} code - coupon code
+ */
+function copyCoupon(code) {
+    if (navigator.clipboard) {
+        navigator.clipboard.writeText(code);
+    }
+    toast(root.getAttribute('data-msg-coupon').replace('{0}', code));
+}
+
+/**
+ * Formats a rupee amount the way the design does.
+ * @param {number} amount - rupees
+ * @returns {string} formatted amount
+ */
+function rupees(amount) {
+    return '\u20B9' + amount.toLocaleString('en-IN');
+}
+
+/**
+ * Sample gold rate from the design.
+ * @param {number} karat - karatage
+ * @returns {number} rupees per gram
+ */
+function goldRate(karat) {
+    return Math.round((13991 * karat) / 24);
+}
+
+/**
+ * Redraws the rate and, once calculated, the exchange result.
+ */
+function drawExchange() {
+    var sheet = document.getElementById('exchange-sheet');
+    var weight = parseFloat(document.getElementById('exchange-weight').value) || 0;
+    var value = Math.round(weight * goldRate(exchangeKarat));
+    var price = parseInt(sheet.getAttribute('data-price'), 10);
+    var left = Math.max(0, price - value);
+    var breakdown = sheet.querySelector('.exchange-breakdown');
+    all('.js-exchange-karat', sheet).forEach(function (pill) {
+        var on = parseInt(pill.getAttribute('data-karat'), 10) === exchangeKarat;
+        pill.classList.toggle('pill-selected', on);
+        pill.classList.toggle('pill-default', !on);
+        pill.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    document.getElementById('exchange-rate').textContent = sheet.getAttribute('data-rate-template')
+        .replace('{0}', exchangeKarat)
+        .replace('{1}', rupees(goldRate(exchangeKarat)));
+    document.getElementById('exchange-value').textContent = rupees(value);
+    if (breakdown) {
+        document.getElementById('exchange-price').textContent = rupees(price);
+        document.getElementById('exchange-minus').textContent = '- ' + rupees(value);
+        document.getElementById('exchange-pay').textContent = rupees(left);
+        document.getElementById('exchange-covered').classList.toggle('d-none', left !== 0);
+    }
+}
+
+/**
+ * Shows the first failing exchange field, in the design's order.
+ * @param {string} [field] - weight, name or mobile; omit to clear errors
+ */
+function showExchangeError(field) {
+    ['weight', 'name', 'mobile'].forEach(function (name) {
+        document.getElementById('exchange-' + name + '-error').classList.toggle('show', name === field);
+        if (name !== 'weight') {
+            document.getElementById('exchange-' + name).classList.toggle('error', name === field);
+        }
+    });
+}
+
+/**
+ * Shows the form or the result.
+ * @param {boolean} computed - show the result
+ */
+function setExchangeResult(computed) {
+    document.getElementById('exchange-form').classList.toggle('d-none', computed);
+    document.getElementById('exchange-result').classList.toggle('d-none', !computed);
+}
+
+/**
+ * Opens the calculator on its form.
+ */
+function openExchange() {
+    setExchangeResult(false);
+    showExchangeError();
+    drawExchange();
+    openDialog(document.getElementById('exchange-sheet'));
+}
+
+/**
+ * Validates the calculator in the browser and shows the result. Nothing is sent.
+ */
+function calculateExchange() {
+    var failed = '';
+    if (!(parseFloat(document.getElementById('exchange-weight').value) > 0)) {
+        failed = 'weight';
+    } else if (!document.getElementById('exchange-name').value.trim()) {
+        failed = 'name';
+    } else if (!/^\d{10}$/.test(document.getElementById('exchange-mobile').value)) {
+        failed = 'mobile';
+    }
+    showExchangeError(failed);
+    if (!failed) {
+        setExchangeResult(true);
+        drawExchange();
+    }
+}
+
+/**
+ * Steps the weight by the design's half gram.
+ * @param {number} step - grams to add
+ */
+function stepExchangeWeight(step) {
+    var input = document.getElementById('exchange-weight');
+    input.value = Math.max(0, (parseFloat(input.value) || 0) + step).toFixed(1);
+    drawExchange();
+}
+
+/**
  * Sample pincode check copied from the design. Placeholder until the backend exists.
  */
 function checkPincode() {
@@ -502,12 +650,12 @@ root.addEventListener('click', function (event) {
     var match = function (selector) {
         return target.closest(selector);
     };
-    var overlay = target.classList.contains('cr-overlay') || target.classList.contains('size-overlay') ? target : null;
+    var overlay = target.classList.contains('cr-overlay') ? target : null;
 
     if (overlay) {
         closeDialog(overlay);
     } else if (match('.js-modal-close')) {
-        closeDialog(match('.js-modal-close').closest('.cr-overlay, .size-overlay'));
+        closeDialog(match('.js-modal-close').closest('.cr-overlay'));
     } else if (match('.js-wishlist')) {
         toggleWishlist(match('.js-wishlist'));
     } else if (match('.js-stack')) {
@@ -539,7 +687,34 @@ root.addEventListener('click', function (event) {
     } else if (match('#customisation-open')) {
         openDialog(document.getElementById('customisation-popup'));
     } else if (match('#size-chart-open')) {
-        openDialog(document.getElementById('size-chart'));
+        openDialog(document.getElementById('guide-ring'));
+    } else if (match('.js-buy-now')) {
+        toast(root.getAttribute('data-msg-checkout'));
+    } else if (match('.js-coupon-prev')) {
+        setCoupon(couponIndex - 1);
+        startCoupons();
+    } else if (match('.js-coupon-next')) {
+        setCoupon(couponIndex + 1);
+        startCoupons();
+    } else if (match('.cp-dot')) {
+        setCoupon(parseInt(match('.cp-dot').getAttribute('data-index'), 10));
+        startCoupons();
+    } else if (match('.js-coupon-copy')) {
+        copyCoupon(match('.js-coupon-copy').getAttribute('data-code'));
+    } else if (match('.js-exchange-open')) {
+        openExchange();
+    } else if (match('.js-exchange-karat')) {
+        exchangeKarat = parseInt(match('.js-exchange-karat').getAttribute('data-karat'), 10);
+        drawExchange();
+    } else if (match('.js-exchange-step')) {
+        stepExchangeWeight(parseFloat(match('.js-exchange-step').getAttribute('data-step')));
+    } else if (match('.js-exchange-submit')) {
+        calculateExchange();
+    } else if (match('.js-review-toggle')) {
+        var more = match('.js-review-toggle');
+        var reviews = document.getElementById('reviews');
+        var expanded = more.previousElementSibling.classList.toggle('is-open');
+        more.textContent = reviews.getAttribute(expanded ? 'data-less' : 'data-more');
     } else if (match('.faq-toggle')) {
         var toggle = match('.faq-toggle');
         var open = toggle.parentElement.querySelector('.faq-body').classList.toggle('d-none');
@@ -598,7 +773,7 @@ document.getElementById('lightbox').addEventListener('click', function (event) {
 document.addEventListener('keydown', function (event) {
     var lightbox = document.getElementById('lightbox');
     if (event.key === 'Escape') {
-        all('.cr-overlay, .size-overlay, .lightbox').forEach(function (dialog) {
+        all('.cr-overlay, .lightbox').forEach(function (dialog) {
             if (!dialog.classList.contains('d-none')) {
                 closeDialog(dialog);
             }
@@ -641,3 +816,29 @@ all('.js-variation').some(function () {
     selectFirstUnset(product, chooseVariation);
     return true;
 });
+
+document.getElementById('exchange-mobile').addEventListener('input', function (event) {
+    var input = event.target;
+    input.value = input.value.replace(/\D/g, '').slice(0, 10);
+});
+var couponSection = document.getElementById('coupons');
+couponSection.addEventListener('mouseenter', function () {
+    clearInterval(couponTimer);
+});
+couponSection.addEventListener('mouseleave', startCoupons);
+startCoupons();
+
+// Review aid for states with no live trigger until the backend exists. Others are read by the template.
+var previewState = root.getAttribute('data-preview');
+var pincodePreviews = { 'pin-ok': '560001', 'pin-fail': '500001' };
+if (pincodePreviews[previewState] && document.getElementById('pincode-input')) {
+    document.getElementById('pincode-input').value = pincodePreviews[previewState];
+    checkPincode();
+} else if (previewState === 'exchange') {
+    openExchange();
+} else if (previewState === 'exchange-error') {
+    openExchange();
+    calculateExchange();
+} else if (/^guide-(ring|bangle|bracelet|chain)$/.test(previewState)) {
+    openDialog(document.getElementById(previewState));
+}

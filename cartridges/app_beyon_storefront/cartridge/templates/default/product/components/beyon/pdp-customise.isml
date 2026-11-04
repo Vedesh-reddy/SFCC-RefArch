@@ -24,8 +24,8 @@
         <p class="customise-label customise-label-block">${Resource.msg('spec.grossweight', 'beyon', null)}</p>
         <span class="pill pill-static pill-selected d-inline-flex align-items-center">3.135 g</span>
     </div>
-    <isif condition="${hasCustomisation}">
-        <div class="customise-group">
+    <iscomment>Colour stays in the page when hidden so the script can still choose a variant.</iscomment>
+    <div class="customise-group ${hasCustomisation ? '' : 'd-none'}">
             <p class="customise-label customise-label-block">${Resource.msg('label.metalcolour', 'beyon', null)}</p>
             <div class="d-flex align-items-center customise-metals flex-wrap" id="metal-pills">
                 <isif condition="${colorAttr}">
@@ -39,6 +39,7 @@
                 </isif>
             </div>
         </div>
+    <isif condition="${hasCustomisation}">
         <div class="customise-group">
             <p class="customise-label customise-label-block">${Resource.msg('label.goldfinish', 'beyon', null)}</p>
             <div class="d-flex align-items-center customise-pills-6">
@@ -66,11 +67,12 @@
             </div>
         </div>
     </isif>
-    <button type="button" class="cta-customise d-flex align-items-center w-100" id="customisation-open">
-        <span class="cta-customise-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1a1a1a" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></span>
-        <span class="d-flex flex-column align-items-start">
-            <span class="cta-customise-title">${Resource.msg('label.customisecta', 'beyon', null)}</span>
-            <span class="cta-customise-sub">${Resource.msg('label.customisesub', 'beyon', null)}</span>
+    <button type="button" class="cta-personalise d-flex align-items-center w-100" id="customisation-open">
+        <span class="cta-personalise-icon d-flex align-items-center justify-content-center flex-shrink-0"><svg aria-hidden="true" width="18" height="18" viewBox="0 0 48 48" fill="none" stroke="#B91C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 23l-9-9h18z"/><path d="M8 14l9 9-9 9"/><path d="M30 15h8l4 8-4 8h-8l-4-8z" fill="none"/><path d="M38 32.5L39.05 34.95L41.5 36L39.05 37.05L38 39.5L36.95 37.05L34.5 36L36.95 34.95Z" fill="#B91C1C" stroke="none"/><path d="M8 29L8.9 31.1L11 32L8.9 32.9L8 35L7.1 32.9L5 32L7.1 31.1Z" fill="#B91C1C" stroke="none"/></svg></span>
+        <span class="d-flex flex-column align-items-start text-left">
+            <span class="cta-personalise-title">${Resource.msg('label.customisecta', 'beyon', null)}</span>
+            <span class="cta-personalise-sub">${Resource.msg('label.customisesub', 'beyon', null)}</span>
         </span>
+        <svg class="cta-personalise-arrow flex-shrink-0" aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#B91C1C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
     </button>
 </div>

@@ -1,5 +1,8 @@
 <div class="pdp-header">
-    <h1 class="pdp-name"><isprint value="${product.productName}" /></h1>
+    <div class="d-flex align-items-start justify-content-between pdp-name-row">
+        <h1 class="pdp-name"><isprint value="${product.productName}" /></h1>
+        <button type="button" class="pdp-wishlist flex-shrink-0 align-items-center justify-content-center p-0 js-wishlist" aria-pressed="false" aria-label="${Resource.msg('label.wishlist', 'beyon', null)}"><svg aria-hidden="true" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#3c3c3c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></button>
+    </div>
     <isif condition="${isOutOfStock}">
         <div class="d-flex align-items-center pdp-oos-row">
             <span class="oos-chip d-inline-flex align-items-center"><svg aria-hidden="true" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#BF0E23" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>${Resource.msg('label.availableonrequest.pdp', 'beyon', null)}</span>
@@ -7,13 +10,15 @@
     <iselse/>
         <div class="pdp-price-row align-items-baseline">
             <span class="price-shine js-price">${salesPrice}</span>
-            <span class="pdp-mrp js-mrp ${listPrice ? '' : 'd-none'}">${listPrice}</span>
+            <isif condition="${!noOffer}"><span class="pdp-mrp js-mrp ${listPrice ? '' : 'd-none'}">${listPrice}</span></isif>
             <span class="pdp-tax">${Resource.msg('label.inclusivetaxes', 'beyon', null)}</span>
         </div>
+        <isif condition="${!noOffer}">
         <div class="pdp-offer-row align-items-center">
             <svg aria-hidden="true" width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#d30b39" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
             <span class="offer-title">${Resource.msg('label.offer', 'beyon', null)}</span>
             <span class="offer-save js-save ${savedAmount ? '' : 'd-none'}">${Resource.msg('label.yousave', 'beyon', null)} <span class="js-save-amount">${savedAmount}</span></span>
         </div>
+        </isif>
     </isif>
 </div>
