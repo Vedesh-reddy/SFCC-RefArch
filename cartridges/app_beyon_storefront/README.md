@@ -92,8 +92,38 @@ Real data: items, images, line prices, quantity, size, subtotal and Remove (base
 
 Coupon amounts are the design's rupee values applied to the site's USD prices, so GOLD500 can take a low total to 0.
 
+## Checkout and order confirmation
+
+Real data: order items, images, quantities, line prices and subtotal from the base `Checkout-Begin` route.
+
+Everything else is a placeholder from the design's sample data. **No order is created and the basket isn't changed.** Place Order only shows the confirmation screen.
+
+| Item | Current behaviour |
+|---|---|
+| Addresses | Two samples kept in the page. Add, edit, delete and select work until reload |
+| PAN | The design's sample list. Nothing is sent to a tax service |
+| NeuCoins | Fixed balance of 500. 1 coin takes 1 unit off the displayed total |
+| Payment options | Select locally. No gateway |
+| Coupon discount | Read from the cart's placeholder value |
+| Order number | `BYN` plus the last 6 digits of the time |
+
+The base `Order-Confirm` template isn't restyled, because this flow never reaches it.
+
+### Previewing design states
+
+`NoAddress.html` and `edge cases.html` are states with no live trigger yet, so they can be opened with a query parameter on `Checkout-Begin`:
+
+| Parameter | State |
+|---|---|
+| `?preview=no-address` | No saved addresses |
+| `?preview=popup-1` | International delivery alert |
+| `?preview=popup-2` | Items out of stock |
+| `?preview=popup-3` | Items can't be shipped internationally |
+| `?preview=popup-4` | Some items out of stock, remove and continue |
+
 ## Deliberate differences from the design
 
 - At 390px the design pushes the cart icon off screen because search can't shrink. Search shrinks here so the cart stays visible.
 - Sign Out is hidden for guests.
+- Edge case popups list the shopper's real basket items, not the design's three samples.
 - The PDP pincode box keeps its CHECK button inside the box at 390px, where the design lets it overflow by 4px.
